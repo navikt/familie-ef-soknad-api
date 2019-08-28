@@ -1,22 +1,26 @@
 package no.nav.familie.ef.søknad.integration
 
-import no.nav.familie.ef.søknad.config.SøknadConfig
+import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.integration.dto.Kvittering
 import no.nav.familie.ef.søknad.integration.dto.Søknad
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
+import org.springframework.web.util.DefaultUriBuilderFactory
 
 @Service
 class SøknadClient(operations: RestOperations,
-                   val søknadConfig: SøknadConfig) : AbstractRestClient(operations) {
+                   mottakConfig: MottakConfig) : AbstractRestClient(operations) {
 
     override val isEnabled: Boolean = true
 
+    private val sendInnUri = DefaultUriBuilderFactory().uriString(mottakConfig.uri).path(PATH_SEND_INN).build()
+
     fun sendInn(søknad: Søknad): Kvittering? {
+        return postForObject(sendInnUri, søknad)
+    }
 
-
-        return Kvittering("""bekreftelse på innsending av "${søknad.text}" """)
-//        return postForObject(søknadConfig.Uri, søknad)
+    companion object {
+        private const val PATH_SEND_INN = "soknad/sendInn"
     }
 
 }

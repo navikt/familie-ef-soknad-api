@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(path = ["/rest/soknad"], produces = [APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/api/soknad"], produces = [APPLICATION_JSON_VALUE])
 class SøknadController(val søknadService: SøknadService) {
 
     @PostMapping("sendInn")

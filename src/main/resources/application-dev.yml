@@ -1,5 +1,5 @@
 server:
-  port:
+  port: 8091
   servlet:
     context-path: /
 
@@ -7,4 +7,4 @@ server:
 familie:
   ef:
     mottak:
-      url: https://api-gw.oera.no/familie-ef-mottak/api/
+      url: http://localhost:8092/api/
