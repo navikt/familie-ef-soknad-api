@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.integration
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.integration.dto.Kvittering
 import no.nav.familie.ef.søknad.integration.dto.Søknad
@@ -11,12 +12,10 @@ import org.springframework.web.util.DefaultUriBuilderFactory
 class SøknadClient(operations: RestOperations,
                    mottakConfig: MottakConfig) : AbstractRestClient(operations) {
 
-    override val isEnabled: Boolean = true
+    private val sendInnUri = DefaultUriBuilderFactory().uriString(mottakConfig.url).path(PATH_SEND_INN).build()
 
-    private val sendInnUri = DefaultUriBuilderFactory().uriString(mottakConfig.uri).path(PATH_SEND_INN).build()
-
-    fun sendInn(søknad: Søknad): Kvittering? {
-        return postForObject(sendInnUri, søknad)
+    fun sendInn(søknad: Søknad): Kvittering {
+        return postForEntity(sendInnUri, ObjectMapper().writeValueAsString(søknad))
     }
 
     companion object {
