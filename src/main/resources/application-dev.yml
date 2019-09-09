@@ -1,0 +1,21 @@
+server:
+  port: 8091
+  servlet:
+    context-path: /
+
+
+familie:
+  ef:
+    mottak:
+      url: http://localhost:8092/api/
+    soknad:
+      s3:
+        endpoint: http://s3.nais-rook.svc.nais.local/
+        region: us-east-1
+        username: user
+        password: pwd
+        passphrase: pass
+        attachmentMazSize: 20
+    virus:
+      enabled: true
+      url: http://clamav.nais.svc.nais.local/scan
