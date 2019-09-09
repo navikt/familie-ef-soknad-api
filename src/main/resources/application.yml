@@ -8,6 +8,10 @@ familie:
   ef:
     mottak:
       url: https://api-gw.oera.no/familie-ef-mottak/api/
+      key: key
+    oppslag:
+      url: https://api-gw.oera.no/familie-ef-oppslag/api/
+      key: key
     soknad:
       s3:
         endpoint: http://s3.nais-rook

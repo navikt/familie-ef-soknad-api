@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.mellomlagring
+package no.nav.familie.ef.søknad.service.mellomlagring
 
 import no.nav.familie.ef.søknad.excpetion.AttachmentConversionException
 import no.nav.familie.ef.søknad.excpetion.AttachmentTypeUnsupportedException
@@ -76,8 +76,8 @@ class Image2PDFConverter private constructor() {
             val scaledImg = ImageScaler.downToA4(origImg, imgFormat)
             try {
                 PDPageContentStream(doc, page).use { contentStream ->
-                    val ximage = PDImageXObject.createFromByteArray(doc, scaledImg, "img")
-                    contentStream.drawImage(ximage, A4.lowerLeftX.toInt().toFloat(), A4.lowerLeftY.toInt().toFloat())
+                    val xImage = PDImageXObject.createFromByteArray(doc, scaledImg, "img")
+                    contentStream.drawImage(xImage, A4.lowerLeftX.toInt().toFloat(), A4.lowerLeftY.toInt().toFloat())
                 }
             } catch (ex: Exception) {
                 throw AttachmentConversionException("Konvertering av vedlegg feilet", ex)

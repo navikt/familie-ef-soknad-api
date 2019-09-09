@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.mellomlagring
+package no.nav.familie.ef.søknad.service.mellomlagring
 
 import org.apache.logging.log4j.util.Strings
 import java.util.*
@@ -20,7 +20,7 @@ class Crypto(passphrase: String, private val iv: String) {
 
     fun encrypt(plainText: String): String {
         try {
-            val cipher = Cipher.getInstance(ALGO)
+            val cipher = Cipher.getInstance(ALGORITME)
             cipher.init(Cipher.ENCRYPT_MODE, key, GCMParameterSpec(128, iv.toByteArray()))
             return Base64.getEncoder().encodeToString(cipher.doFinal(plainText.toByteArray()))
         } catch (ex: Exception) {
@@ -31,7 +31,7 @@ class Crypto(passphrase: String, private val iv: String) {
 
     fun decrypt(encrypted: String): String {
         try {
-            val cipher = Cipher.getInstance(ALGO)
+            val cipher = Cipher.getInstance(ALGORITME)
             cipher.init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(128, iv.toByteArray()))
             return String(cipher.doFinal(Base64.getDecoder().decode(encrypted)))
         } catch (ex: Exception) {
@@ -55,7 +55,7 @@ class Crypto(passphrase: String, private val iv: String) {
 
     companion object {
 
-        private const val ALGO = "AES/GCM/NoPadding"
+        private const val ALGORITME = "AES/GCM/NoPadding"
     }
 
 }

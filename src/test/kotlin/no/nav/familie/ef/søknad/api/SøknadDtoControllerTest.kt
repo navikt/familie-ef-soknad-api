@@ -2,13 +2,13 @@ package no.nav.familie.ef.søknad.api
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.api.dto.KvitteringDto
-import no.nav.familie.ef.søknad.api.dto.SøknadDto
+import no.nav.familie.ef.søknad.api.dto.Kvittering
+import no.nav.familie.ef.søknad.api.dto.Søknad
 import no.nav.familie.ef.søknad.service.SøknadService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class SøknadControllerTest {
+internal class SøknadDtoControllerTest {
 
     private val søknadService: SøknadService = mockk()
 
@@ -16,8 +16,8 @@ internal class SøknadControllerTest {
 
     @Test
     fun `sendInn returnerer samme kvittering som returneres fra søknadService`() {
-        val søknad = SøknadDto("tekst")
-        every { søknadService.sendInn(søknad) } returns KvitteringDto("Mottatt søknad: ${søknad.text}")
+        val søknad = Søknad("tekst")
+        every { søknadService.sendInn(søknad) } returns Kvittering("Mottatt søknad: ${søknad.text}")
 
         val kvitteringDto = søknadController.sendInn(søknad)
 

@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.mellomlagring
+package no.nav.familie.ef.søknad.service.mellomlagring
 
 interface Storage {
 

@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.mellomlagring
+package no.nav.familie.ef.søknad.service.mellomlagring
 
 import no.nav.familie.ef.søknad.config.S3StorageConfiguration
 import org.springframework.stereotype.Component

@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.mellomlagring
+package no.nav.familie.ef.søknad.service.mellomlagring
 
 import com.google.gson.Gson
 import no.nav.familie.ef.søknad.excpetion.AttachmentsTooLargeException
@@ -37,7 +37,6 @@ class Vedlegg private constructor(val filename: String,
     companion object {
 
         private const val MB = 1024L * 1024L
-        const val MAX_TOTAL_VEDLEGG_SIZE = 32 * MB
         private const val MAX_VEDLEGG_SIZE = 8 * MB
 
         fun of(file: MultipartFile): Vedlegg {
@@ -45,7 +44,9 @@ class Vedlegg private constructor(val filename: String,
             if (fileSize > MAX_VEDLEGG_SIZE) {
                 throw AttachmentsTooLargeException(fileSize, MAX_VEDLEGG_SIZE)
             }
-            return Vedlegg(file.originalFilename, getBytes(file), MediaType.valueOf(file.contentType!!),
+            return Vedlegg(file.originalFilename ?: "Unknown",
+                           getBytes(file),
+                           MediaType.valueOf(file.contentType!!),
                            fileSize)
         }
 

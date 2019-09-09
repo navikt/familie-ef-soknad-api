@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.mellomlagring
+package no.nav.familie.ef.søknad.service.mellomlagring
 
 import no.nav.familie.ef.søknad.excpetion.AttachmentConversionException
 import org.apache.pdfbox.pdmodel.common.PDRectangle
@@ -21,14 +21,14 @@ object ImageScaler {
     private val LOG = LoggerFactory.getLogger(ImageScaler::class.java)
 
     fun downToA4(origImage: ByteArray, format: String): ByteArray {
-        val A4 = PDRectangle.A4
+        val a4 = PDRectangle.A4
 
         try {
             var image = ImageIO.read(ByteArrayInputStream(origImage))
 
             image = rotatePortrait(image)
 
-            val pdfPageDim = Dimension(A4.width.toInt(), A4.height.toInt())
+            val pdfPageDim = Dimension(a4.width.toInt(), a4.height.toInt())
             val origDim = Dimension(image.width, image.height)
             val newDim = getScaledDimension(origDim, pdfPageDim)
 

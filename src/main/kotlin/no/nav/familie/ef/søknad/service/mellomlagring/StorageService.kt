@@ -1,8 +1,8 @@
-package no.nav.familie.ef.søknad.mellomlagring
+package no.nav.familie.ef.søknad.service.mellomlagring
 
 import no.nav.familie.ef.søknad.excpetion.AttachmentVirusException
+import no.nav.familie.ef.søknad.service.VirusScanner
 import no.nav.familie.ef.søknad.util.TokenUtil
-import no.nav.familie.ef.søknad.virusscan.VirusScanner
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
@@ -13,14 +13,14 @@ class StorageService(private val tokenHelper: TokenUtil,
                      private val crypto: StorageCrypto) {
 
     fun hentSøknad(): String? {
-        val fnr = tokenHelper.autentisertBruker
+        val fnr = tokenHelper.fødselsnummer
         val directory = crypto.encryptDirectoryName(fnr)
         LOG.trace("Henter søknad fra katalog {}", directory)
         return storage.getTmp(directory, SØKNAD)?.let { crypto.decrypt(it, fnr) }
     }
 
     fun lagreSøknad(søknad: String) {
-        val fnr = tokenHelper.autentisertBruker
+        val fnr = tokenHelper.fødselsnummer
         val directory = crypto.encryptDirectoryName(fnr)
         LOG.trace("Skriver søknad til katalog {}", directory)
         val encryptedValue = crypto.encrypt(søknad, fnr)
@@ -28,14 +28,14 @@ class StorageService(private val tokenHelper: TokenUtil,
     }
 
     fun slettSøknad() {
-        val fnr = tokenHelper.autentisertBruker
+        val fnr = tokenHelper.fødselsnummer
         val directory = crypto.encryptDirectoryName(fnr)
         LOG.info("Fjerner søknad fra katalog {}", directory)
         storage.deleteTmp(directory, SØKNAD)
     }
 
     fun hentVedlegg(key: String): Vedlegg? {
-        val fnr = tokenHelper.autentisertBruker
+        val fnr = tokenHelper.fødselsnummer
         val directory = crypto.encryptDirectoryName(fnr)
         LOG.info("Henter vedlegg med nøkkel {} fra katalog {}", key, directory)
         return storage.getTmp(directory, key)?.let { Vedlegg.fromJson(crypto.decrypt(it, fnr)) }
@@ -45,7 +45,7 @@ class StorageService(private val tokenHelper: TokenUtil,
         if (!virusScanner.scan(vedlegg)) {
             throw AttachmentVirusException(vedlegg)
         }
-        val fnr = tokenHelper.autentisertBruker
+        val fnr = tokenHelper.fødselsnummer
         val directory = crypto.encryptDirectoryName(fnr)
         LOG.info("Skriver vedlegg {} til katalog {}", vedlegg, directory)
         val encryptedValue = crypto.encrypt(vedlegg.toJson(), fnr)
@@ -53,13 +53,13 @@ class StorageService(private val tokenHelper: TokenUtil,
     }
 
     fun slettVedlegg(key: String) {
-        val directory = crypto.encryptDirectoryName(tokenHelper.autentisertBruker)
+        val directory = crypto.encryptDirectoryName(tokenHelper.fødselsnummer)
         LOG.info("Fjerner vedlegg med nøkkel {} fra katalog {}", key, directory)
         storage.deleteTmp(directory, key)
     }
 
     fun hentKvittering(type: String): String? {
-        val fnr = tokenHelper.autentisertBruker
+        val fnr = tokenHelper.fødselsnummer
         val directory = crypto.encryptDirectoryName(fnr)
         LOG.trace("Henter kvittering fra katalog {}", directory)
 
@@ -68,7 +68,7 @@ class StorageService(private val tokenHelper: TokenUtil,
 
 
     fun lagreKvittering(type: String, kvittering: String) {
-        val fnr = tokenHelper.autentisertBruker
+        val fnr = tokenHelper.fødselsnummer
         val directory = crypto.encryptDirectoryName(fnr)
         LOG.trace("Skriver kvittering til katalog {}", directory)
         val encryptedValue = crypto.encrypt(kvittering, fnr)
