@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.excpetion
+package no.nav.familie.ef.søknad.exception
 
 import org.springframework.http.MediaType
 

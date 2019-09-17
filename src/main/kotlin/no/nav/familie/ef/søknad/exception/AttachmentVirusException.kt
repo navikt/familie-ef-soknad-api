@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.excpetion
+package no.nav.familie.ef.søknad.exception
 
 import no.nav.familie.ef.søknad.service.mellomlagring.Vedlegg
 

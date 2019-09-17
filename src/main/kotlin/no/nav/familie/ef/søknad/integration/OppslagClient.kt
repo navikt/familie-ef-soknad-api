@@ -8,9 +8,8 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
 
 @Component
-class OppslagClient(operations: RestOperations, private val config: OppslagConfig) : AbstractRestClient(operations) {
-
-    fun ping(): String = getForEntity(config.pingUri)
+class OppslagClient(operations: RestOperations,
+                    private val config: OppslagConfig) : PingableRestClient(operations, config.pingUri)   {
 
     fun hentPerson(): PersonDto {
         val person: PersonDto = getForEntity(config.personURI)

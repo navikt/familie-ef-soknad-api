@@ -7,13 +7,13 @@ object PersonMapper {
 
     fun mapTilEkstern(personDto: PersonDto): Person {
         return Person(personDto.fnr,
-                                                       personDto.fornavn,
-                                                       personDto.etternavn,
-                                                       personDto.mellomnavn,
-                                                       personDto.kjønn,
-                                                       personDto.fødselsdato,
-                                                       personDto.bankkonto,
-                                                       personDto.barn)
+                      personDto.fornavn,
+                      personDto.etternavn,
+                      personDto.mellomnavn,
+                      personDto.kjønn,
+                      personDto.fødselsdato,
+                      personDto.bankkonto,
+                      personDto.barn)
     }
 
 }

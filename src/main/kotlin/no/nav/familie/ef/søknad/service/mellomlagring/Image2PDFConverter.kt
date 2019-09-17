@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.service.mellomlagring
 
-import no.nav.familie.ef.søknad.excpetion.AttachmentConversionException
-import no.nav.familie.ef.søknad.excpetion.AttachmentTypeUnsupportedException
+import no.nav.familie.ef.søknad.exception.AttachmentConversionException
+import no.nav.familie.ef.søknad.exception.AttachmentTypeUnsupportedException
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage
 import org.apache.pdfbox.pdmodel.PDPageContentStream

@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.service.mellomlagring
 
-import no.nav.familie.ef.søknad.excpetion.AttachmentVirusException
+import no.nav.familie.ef.søknad.exception.AttachmentVirusException
 import no.nav.familie.ef.søknad.service.VirusScanner
 import no.nav.familie.ef.søknad.util.TokenUtil
 import org.slf4j.LoggerFactory

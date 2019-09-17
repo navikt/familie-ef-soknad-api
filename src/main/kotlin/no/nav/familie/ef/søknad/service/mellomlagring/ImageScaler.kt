@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.service.mellomlagring
 
-import no.nav.familie.ef.søknad.excpetion.AttachmentConversionException
+import no.nav.familie.ef.søknad.exception.AttachmentConversionException
 import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.slf4j.LoggerFactory
 import java.awt.Dimension

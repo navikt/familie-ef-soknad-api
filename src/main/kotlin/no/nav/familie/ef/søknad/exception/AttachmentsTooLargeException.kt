@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.excpetion
+package no.nav.familie.ef.søknad.exception
 
 import org.apache.commons.io.FileUtils.byteCountToDisplaySize
 import java.lang.String.format

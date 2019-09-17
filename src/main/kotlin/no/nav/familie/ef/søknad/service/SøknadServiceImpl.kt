@@ -8,7 +8,7 @@ import no.nav.familie.ef.søknad.mapper.SøknadMapper
 import org.springframework.stereotype.Service
 
 @Service
-class SøknadServiceImpl(private val søknadClient: SøknadClient) : SøknadService {
+internal class SøknadServiceImpl(private val søknadClient: SøknadClient) : SøknadService {
 
     override fun sendInn(søknad: Søknad): Kvittering {
 

@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.service.mellomlagring
 
 import com.google.gson.Gson
-import no.nav.familie.ef.søknad.excpetion.AttachmentsTooLargeException
+import no.nav.familie.ef.søknad.exception.AttachmentsTooLargeException
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.multipart.MultipartFile

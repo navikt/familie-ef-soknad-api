@@ -8,7 +8,7 @@ import java.net.URI
 // TODO Endres til ConfigurationProperties ved release av SpringBoot 2.2.0
 //@ConfigurationProperties(prefix = "søknad", ignoreUnknownFields = false)
 @Component
-data class MottakConfig(@Value("\${familie.ef.mottak.url}") val url: String,
+internal data class MottakConfig(@Value("\${familie.ef.mottak.url}") val url: String,
                         @Value("\${familie.ef.mottak.key}") val key: String) {
 
     val sendInnUri: URI get() = DefaultUriBuilderFactory().uriString(url).path(PATH_SEND_INN).build()
