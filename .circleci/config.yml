@@ -169,13 +169,13 @@ workflows:
             only: /^.*/
           branches:
             only: /.*/
-    - deploy_prod:
-        context: familie-ci
-        requires:
-        - deploy_docker
-        - github_app
-        filters:
-          branches:
-            ignore: /.*/
-          tags:
-            only: /^v[0-9]+\.[0-9]+$/
+#    - deploy_prod:
+#        context: familie-ci
+#        requires:
+#        - deploy_docker
+#        - github_app
+#        filters:
+#          branches:
+#            ignore: /.*/
+#          tags:
+#            only: /^v[0-9]+\.[0-9]+$/

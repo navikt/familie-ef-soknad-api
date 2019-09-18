@@ -6,6 +6,9 @@ server:
 
 familie:
   ef:
+    heath:
+      indicator:
+        detailed: true
     mottak:
       url: http://localhost:8092/api/
     soknad:
@@ -19,3 +22,13 @@ familie:
     virus:
       enabled: true
       url: http://clamav.nais.svc.nais.local/scan
+
+management:
+  endpoint.health.show-details: always
+  endpoints.web:
+    exposure.include: info, health, metrics, prometheus
+    base-path: "/internal"
+    path-mapping:
+      info: "status/isAlive"
+  metrics.export.prometheus.enabled: true
+  metrics.web.server.auto-time-requests: true
