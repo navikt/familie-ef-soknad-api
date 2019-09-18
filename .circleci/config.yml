@@ -110,7 +110,7 @@ jobs:
           name: Create github deployment for stable test
           command: |
             deployment-cli deploy create \
-              --cluster=dev-fss \
+              --cluster=dev-sbs \
               --repository=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME \
               --appid=${GITHUB_APP_ID} \
               --team=${TEAM} \
@@ -131,7 +131,7 @@ jobs:
           name: Create github deployment for production
           command: |
             deployment-cli deploy create \
-              --cluster=prod-fss \
+              --cluster=prod-sbs \
               --repository=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME \
               --appid=${GITHUB_APP_ID} \
               --team=${TEAM} \
