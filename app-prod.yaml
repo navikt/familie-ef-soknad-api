@@ -36,7 +36,7 @@ spec:
   secureLogs:
     enabled: true
   ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-    - https://familie-ef-soknad-api.nais.adeo.no
+    - https://familie-ef-soknad-api.nais.oera-q.no
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
