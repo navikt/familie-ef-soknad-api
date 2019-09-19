@@ -34,8 +34,7 @@ spec:
       memory: 512Mi
       cpu: 500m
   ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-    - https://familie-ef-soknad-api.nais.preprod.local
-    - https://familie-ef-soknad-api-q.nav.no
+    - https://familie-ef-soknad-api.nais.oera-q.no
   secureLogs:
     enabled: true
   env:
