@@ -8,7 +8,7 @@ metadata:
 
 spec:
   image: navikt/familie-ef-soknad-api:{{version}}
-  port: 8084
+  port: 8000
   liveness:
     path: /internal/status/isAlive
     initialDelay: 30
@@ -21,7 +21,7 @@ spec:
     enabled: true
     path: /internal/prometheus
   vault:
-    enabled: true
+    enabled: false
   replicas:
     min: 2
     max: 4
@@ -34,7 +34,7 @@ spec:
       memory: 512Mi
       cpu: 500m
   ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-    - https://familie-ef-soknad-api.nais.preprod.local
+    - https://familie-ef-soknad-api.nais.oera-q.no
   secureLogs:
     enabled: true
   env:

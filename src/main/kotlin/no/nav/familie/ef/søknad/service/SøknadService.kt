@@ -1,10 +1,10 @@
 package no.nav.familie.ef.søknad.service
 
-import no.nav.familie.ef.søknad.api.dto.KvitteringDto
-import no.nav.familie.ef.søknad.api.dto.SøknadDto
+import no.nav.familie.ef.søknad.api.dto.Kvittering
+import no.nav.familie.ef.søknad.api.dto.Søknad
 
 interface SøknadService {
 
-    fun sendInn(søknadDto: SøknadDto): KvitteringDto
+    fun sendInn(søknad: Søknad): Kvittering
 
 }

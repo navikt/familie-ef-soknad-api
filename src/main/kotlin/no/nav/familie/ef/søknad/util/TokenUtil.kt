@@ -2,14 +2,15 @@ package no.nav.familie.ef.søknad.util
 
 import com.nimbusds.jwt.JWTClaimsSet
 import no.nav.security.oidc.context.OIDCClaims
-import no.nav.security.oidc.context.OIDCRequestContextHolder
 import no.nav.security.oidc.context.OIDCValidationContext
 import no.nav.security.oidc.exceptions.OIDCTokenValidatorException
 import org.springframework.stereotype.Component
 import java.util.*
 
 @Component
-class TokenUtil(private val ctxHolder: OIDCRequestContextHolder) {
+class TokenUtil(
+//  TODO   private val ctxHolder: OIDCRequestContextHolder
+) {
 
     val expiryDate: Date?
         get() = claimSet()?.expirationTime
@@ -17,7 +18,7 @@ class TokenUtil(private val ctxHolder: OIDCRequestContextHolder) {
     val subject: String?
         get() = claimSet()?.subject
 
-    val autentisertBruker: String
+    val fødselsnummer: String
         get() = subject ?: throw OIDCTokenValidatorException("Fant ikke subject", expiryDate)
 
 
@@ -30,7 +31,8 @@ class TokenUtil(private val ctxHolder: OIDCRequestContextHolder) {
     }
 
     private fun context(): OIDCValidationContext? {
-        return ctxHolder.oidcValidationContext
+        return OIDCValidationContext()
+//  TODO      return ctxHolder.oidcValidationContext
     }
 
     companion object {

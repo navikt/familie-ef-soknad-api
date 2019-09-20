@@ -32,8 +32,8 @@ class S3StorageConfiguration(@Value("\${familie.ef.soknad.s3.endpoint}") val end
     }
 
     @Bean
-    fun enpointConfiguration(): AwsClientBuilder.EndpointConfiguration {
-        log.info("Initializing s3 endpoint configuration with enpoint {} and region {}", endpoint, region)
+    fun endpointConfiguration(): AwsClientBuilder.EndpointConfiguration {
+        log.info("Initializing s3 endpoint configuration with endpoint {} and region {}", endpoint, region)
         return AwsClientBuilder.EndpointConfiguration(endpoint, region)
     }
 

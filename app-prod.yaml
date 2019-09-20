@@ -8,7 +8,7 @@ metadata:
 
 spec:
   image: navikt/familie-ef-soknad-api:{{version}}
-  port: 8084
+  port: 8000
   liveness:
     path: /internal/status/isAlive
     initialDelay: 30
