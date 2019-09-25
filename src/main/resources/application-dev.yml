@@ -32,3 +32,8 @@ management:
       info: "status/isAlive"
   metrics.export.prometheus.enabled: true
   metrics.web.server.auto-time-requests: true
+
+cors:
+  allowed_origins:
+    - "http://localhost:3000"
+

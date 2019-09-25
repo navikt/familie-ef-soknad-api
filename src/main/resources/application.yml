@@ -35,3 +35,9 @@ management:
       info: "status/isAlive"
   metrics.export.prometheus.enabled: true
   metrics.web.server.auto-time-requests: true
+
+cors:
+  allowed_origins:
+    - "https://familie-ef-soknad.nais.oera-q.local"
+
+
