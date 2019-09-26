@@ -7,8 +7,8 @@ import no.finn.unleash.util.UnleashConfig
 import no.nav.familie.ef.søknad.featuretoggle.ByEnvironmentStrategy
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import org.assertj.core.api.Assertions
-import org.junit.Ignore
 import org.junit.jupiter.api.Test
+import kotlin.test.Ignore
 
 @Ignore("Krever at unleash kjører lokalt")
 internal class FeatureToggleControllerIntegrationTest {
@@ -39,7 +39,6 @@ internal class FeatureToggleControllerIntegrationTest {
 
     private val featureToggleController = FeatureToggleController(unleashService)
 
-    @Test
     fun `skal funksjonsbryte på miljø`() {
 
         Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("test")).isTrue()
