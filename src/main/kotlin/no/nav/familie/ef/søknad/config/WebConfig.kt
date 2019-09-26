@@ -11,10 +11,8 @@ class WebConfigDev(private val corsProperties: CorsProperties) : WebMvcConfigure
     override fun addCorsMappings(registry: CorsRegistry) {
         registry.addMapping("/**")
                 .allowedOrigins(*corsProperties.allowedOrigins)
-                .allowedMethods("GET, POST, PUT, DELETE, OPTIONS, HEAD")
+                .allowedMethods("GET", "POST")
                 .allowCredentials(true).maxAge(3600)
-                .allowedHeaders("origin, content-type, accept, authorization")
-
     }
 
     companion object {
