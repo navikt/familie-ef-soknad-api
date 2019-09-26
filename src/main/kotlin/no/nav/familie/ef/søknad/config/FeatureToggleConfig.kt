@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val enabled: Boolean,
-                          @Value("\${familie.ef.funksjonsbrytere.unleash.apiUrl}") val unleashApiUrl: String,
-                          @Value("\${familie.ef.funksjonsbrytere.unleash.environment}") val unleashEnv: String,
-                          @Value("\${familie.ef.funksjonsbrytere.unleash.applicationName}") val unleashAppName: String) {
+                          @Value("\${familie.ef.funksjonsbrytere.unleash.apiUrl:}") val unleashApiUrl: String,
+                          @Value("\${familie.ef.funksjonsbrytere.unleash.environment:}") val unleashEnv: String,
+                          @Value("\${familie.ef.funksjonsbrytere.unleash.applicationName:}") val unleashAppName: String) {
     @Bean
     fun featureToggle(): FeatureToggleService =
             if (enabled)

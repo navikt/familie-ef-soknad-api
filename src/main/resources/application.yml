@@ -25,6 +25,8 @@ familie:
     virus:
       enabled: true
       url: http://clamav.nais.svc.nais.local/scan
+    funksjonsbrytere:
+      enabled: false
 
 management:
   endpoint.health.show-details: always

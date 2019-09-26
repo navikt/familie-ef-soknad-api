@@ -22,11 +22,7 @@ familie:
       enabled: true
       url: http://clamav.nais.svc.nais.local/scan
     funksjonsbrytere:
-      enabled: true
-      unleash:
-        apiUrl: http://localhost:4242/api
-        environment: local
-        applicationName: familie-ef-soknad-api
+      enabled: false
 
 management:
   endpoint.health.show-details: always
