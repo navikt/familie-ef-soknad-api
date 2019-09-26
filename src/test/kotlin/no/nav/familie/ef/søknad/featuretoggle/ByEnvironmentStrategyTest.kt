@@ -5,7 +5,7 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 internal class ByEnvironmentStrategyTest {
-    val map = ByEnvironmentStrategy.miljø("p","q")
+    val map = ByEnvironmentStrategy.lagPropertyMapMedMiljø("p","q")
 
     @Test
     fun `skal svare true for riktig miljø`() {
@@ -22,11 +22,4 @@ internal class ByEnvironmentStrategyTest {
                 ByEnvironmentStrategy().isEnabled(map, UnleashContext.builder().environment("l").build())
         ).isFalse();
     }
-
-    @Test()
-    fun feiler() {
-        // Må fjernes. Skal fanges opp av maven
-        Assertions.assertThat(true).isFalse()
-    }
-
 }

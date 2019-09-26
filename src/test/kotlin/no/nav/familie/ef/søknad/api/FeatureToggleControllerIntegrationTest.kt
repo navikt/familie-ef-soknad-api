@@ -7,9 +7,13 @@ import no.finn.unleash.util.UnleashConfig
 import no.nav.familie.ef.søknad.featuretoggle.ByEnvironmentStrategy
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import org.assertj.core.api.Assertions
+import org.junit.Ignore
 import org.junit.jupiter.api.Test
 
-internal class FeatureToggleControllerIntegratiobTest {
+@Ignore("Krever at unleash kjører lokalt")
+internal class FeatureToggleControllerIntegrationTest {
+
+    val unleashUrl = "http://localhost:4242/api"
 
     private val unleashContextProvider = object : UnleashContextProvider {
         override fun getContext(): UnleashContext {
@@ -24,7 +28,7 @@ internal class FeatureToggleControllerIntegratiobTest {
 
         val unleash = DefaultUnleash(UnleashConfig.builder()
                 .appName("app")
-                .unleashAPI("http://localhost:4242/api")
+                .unleashAPI(unleashUrl)
                 .unleashContextProvider(unleashContextProvider)
                 .build(), ByEnvironmentStrategy())
 

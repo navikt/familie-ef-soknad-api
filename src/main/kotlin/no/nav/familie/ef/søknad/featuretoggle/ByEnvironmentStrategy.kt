@@ -9,7 +9,7 @@ class ByEnvironmentStrategy : Strategy {
     companion object {
         private val miljøKey = "miljø";
 
-        fun miljø(vararg strings : String) : Map<String, String> {
+        fun lagPropertyMapMedMiljø(vararg strings : String) : Map<String, String> {
             return mapOf(miljøKey to strings.joinToString(","));
         }
     }
