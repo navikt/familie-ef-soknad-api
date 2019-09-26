@@ -10,7 +10,6 @@ familie:
         detailed: true
     mottak:
       url: https://api-gw-q0.oera.no/familie-ef-mottak/api/
-      key: key
 
 management:
   endpoint.health.show-details: always
