@@ -38,6 +38,9 @@ management:
 
 cors:
   allowed_origins:
-    - "*"
+    - "https://familie-ef-soknad.nais.oera-q.local"
+    - "http://:8000"
+    - "https://:8000"
+    - "https://"
 
 
