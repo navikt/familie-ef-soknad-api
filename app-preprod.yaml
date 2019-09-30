@@ -33,10 +33,10 @@ spec:
     requests:
       memory: 512Mi
       cpu: 500m
-  ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-    - https://familie-ef-soknad-api.nais.oera-q.local
   secureLogs:
     enabled: true
+  ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
+    - https://familie-ef-soknad-api.nais.oera-q.local
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: preprod
