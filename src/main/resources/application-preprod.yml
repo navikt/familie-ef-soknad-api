@@ -9,22 +9,7 @@ familie:
       indicator:
         detailed: true
     mottak:
-      url: https://api-gw.oera.no/familie-ef-mottak/api/
-      key: key
-    oppslag:
-      url: https://api-gw.oera.no/familie-ef-oppslag/api/
-      key: key
-    soknad:
-      s3:
-        endpoint: http://s3.nais-rook
-        region: us-east-1
-        username: nousername #${FAMILIE_EF_SOKNAD_S3_USERNAME}#<Ligger i vault>
-        password: nopwd #${FAMILIE_EF_SOKNAD_S3_PASSWORD}#<Ligger i vault>
-        passphrase: nopwd #${FAMILIE_EF_SOKNAD_S3_PASSPHRASE}#<Ligger i vault>
-        attachmentMazSize: 20
-    virus:
-      enabled: true
-      url: http://clamav.nais.svc.nais.local/scan
+      url: https://api-gw-q0.oera.no/familie-ef-mottak/api/
 
 management:
   endpoint.health.show-details: always
@@ -40,5 +25,3 @@ cors:
   allowed_origins:
     - "https://familie-ef-soknad.nais.oera-q.local"
     - "https://familie-ef-soknad-api.nais.oera-q.local"
-
-

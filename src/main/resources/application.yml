@@ -10,9 +10,10 @@ familie:
         detailed: true
     mottak:
       url: https://api-gw.oera.no/familie-ef-mottak/api/
-      key: key
+      username: ${FAMILIE_EF_MOTTAK_USERNAME}
+      password: ${FAMILIE_EF_MOTTAK_PASSWORD}
     oppslag:
-      url: https://api-gw.oera.no/familie-ef-oppslag/api/
+      url: url
       key: key
     soknad:
       s3:
@@ -40,5 +41,3 @@ cors:
   allowed_origins:
     - "https://familie-ef-soknad.nais.oera.no"
     - "https://familie-ef-soknad-api.nais.oera.no"
-
-
