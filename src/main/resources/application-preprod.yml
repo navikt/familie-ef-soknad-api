@@ -28,10 +28,9 @@ familie:
     funksjonsbrytere:
       enabled: false
       unleash:
-        apiUrl: https://unleashproxy.nais.oera.no/api/
+        apiUrl: https://unleashproxy.nais.oera.no/api/ #NB prod
         environment: ${NAIS_CLUSTER_NAME:}
         applicationName: ${NAIS_APP_NAME:}
-
 
 management:
   endpoint.health.show-details: always

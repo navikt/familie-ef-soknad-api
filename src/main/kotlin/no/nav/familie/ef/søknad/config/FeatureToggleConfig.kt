@@ -6,6 +6,8 @@ import no.finn.unleash.UnleashContextProvider
 import no.finn.unleash.util.UnleashConfig
 import no.nav.familie.ef.søknad.featuretoggle.ByEnvironmentStrategy
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -15,12 +17,17 @@ class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val 
                           @Value("\${familie.ef.funksjonsbrytere.unleash.apiUrl:}") val unleashApiUrl: String,
                           @Value("\${familie.ef.funksjonsbrytere.unleash.environment:}") val unleashEnv: String,
                           @Value("\${familie.ef.funksjonsbrytere.unleash.applicationName:}") val unleashAppName: String) {
+
+    protected val log: Logger = LoggerFactory.getLogger(this::class.java)
+
     @Bean
     fun featureToggle(): FeatureToggleService =
             if (enabled)
                 lagUnleashFeatureToggleService()
-            else
+            else {
+                log.warn("Funksjonsbryter-funksjonalitet er skrudd AV. Gir standardoppførsel for alle funksjonsbrytere, dvs 'false'")
                 lagDummyFeatureToggleService()
+            }
 
     private fun lagUnleashFeatureToggleService(): FeatureToggleService {
         val unleash = DefaultUnleash(UnleashConfig.builder()

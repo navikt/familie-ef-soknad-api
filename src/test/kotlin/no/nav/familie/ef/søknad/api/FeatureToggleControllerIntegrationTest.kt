@@ -10,7 +10,7 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.test.Ignore
 
-@Ignore("Krever at unleash kjører lokalt")
+@Ignore("Krever at unleash kjører lokalt på port 4242, og at en funksjonsbryter 'test' er satt opp med byEnvironmentStrategy og miljø=local")
 internal class FeatureToggleControllerIntegrationTest {
 
     val unleashUrl = "http://localhost:4242/api"
@@ -39,6 +39,7 @@ internal class FeatureToggleControllerIntegrationTest {
 
     private val featureToggleController = FeatureToggleController(unleashService)
 
+    @Test
     fun `skal funksjonsbryte på miljø`() {
 
         Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("test")).isTrue()
