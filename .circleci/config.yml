@@ -175,7 +175,7 @@ workflows:
         - deploy_docker
         - github_app
         filters:
-          branches:
-          only: DeployTilProduksjon
           tags:
             only: /^.*/
+          branches:
+            only: DeployTilProduksjon
