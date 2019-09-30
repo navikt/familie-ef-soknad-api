@@ -21,7 +21,7 @@ spec:
     enabled: true
     path: /internal/prometheus
   vault:
-    enabled: false
+    enabled: true
   replicas:
     min: 2
     max: 4

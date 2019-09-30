@@ -1,0 +1,27 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /
+
+familie:
+  ef:
+    heath:
+      indicator:
+        detailed: true
+    mottak:
+      url: https://api-gw-q0.oera.no/familie-ef-mottak/api/
+
+management:
+  endpoint.health.show-details: always
+  endpoints.web:
+    exposure.include: info, health, metrics, prometheus
+    base-path: "/internal"
+    path-mapping:
+      info: "status/isAlive"
+  metrics.export.prometheus.enabled: true
+  metrics.web.server.auto-time-requests: true
+
+cors:
+  allowed_origins:
+    - "https://familie-ef-soknad.nais.oera-q.local"
+    - "https://familie-ef-soknad-api.nais.oera-q.local"
