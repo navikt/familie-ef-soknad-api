@@ -9,8 +9,8 @@ import java.net.URI
 //@ConfigurationProperties(prefix = "søknad", ignoreUnknownFields = false)
 @Component
 internal data class MottakConfig(@Value("\${familie.ef.mottak.url}") val url: String,
-                                 @Value("\${familie.ef.mottak.username}") val username: String,
-                                 @Value("\${familie.ef.mottak.password}") val password: String) {
+                                 @Value("\${FAMILIE_EF_MOTTAK_USERNAME}") val username: String,
+                                 @Value("\${FAMILIE_EF_MOTTAK_PASSWORD}") val password: String) {
 
     val sendInnUri: URI get() = DefaultUriBuilderFactory().uriString(url).path(PATH_SEND_INN).build()
 

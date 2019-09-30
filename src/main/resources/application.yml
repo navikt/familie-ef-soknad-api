@@ -10,8 +10,6 @@ familie:
         detailed: true
     mottak:
       url: https://api-gw.oera.no/familie-ef-mottak/api/
-      username: username
-      password: password
     oppslag:
       url: https://api-gw.oera.no/familie-ef-oppslag/api/
       key: key
