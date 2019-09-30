@@ -11,7 +11,7 @@ familie:
     mottak:
       url: https://api-gw.oera.no/familie-ef-mottak/api/
     oppslag:
-      url: https://api-gw.oera.no/familie-ef-oppslag/api/
+      url: url
       key: key
     soknad:
       s3:
