@@ -116,7 +116,7 @@ jobs:
               --team=${TEAM} \
               --version=${VERSION} \
               --key=/home/circleci/project/github.key.pem \
-              --resource=./app-preprod.yaml
+              --resource=./nais-dev.yaml
 
   deploy_prod:
     executor: nais-deployer
@@ -137,7 +137,7 @@ jobs:
               --team=${TEAM} \
               --version=${VERSION} \
               --key=/home/circleci/project/github.key.pem \
-              --resource=./app-prod.yaml
+              --resource=./nais-prod.yaml
 
 workflows:
   version: 2
