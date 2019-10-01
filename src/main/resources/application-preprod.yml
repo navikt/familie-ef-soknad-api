@@ -10,9 +10,8 @@ familie:
         detailed: true
     mottak:
       url: https://api-gw-q0.oera.no/familie-ef-mottak/api/
-      key: key
     funksjonsbrytere:
-      enabled: true
+      enabled: false
       unleash:
         apiUrl: https://unleashproxy.nais.oera.no/api/ #NB prod
         environment: ${NAIS_CLUSTER_NAME:}
