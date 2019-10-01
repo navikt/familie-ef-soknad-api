@@ -26,6 +26,13 @@ familie:
     virus:
       enabled: true
       url: http://clamav.nais.svc.nais.local/scan
+    funksjonsbrytere:
+      enabled: true
+      unleash:
+        apiUrl: https://unleashproxy.nais.oera.no/api/
+        environment: ${NAIS_CLUSTER_NAME:}
+        applicationName: ${NAIS_APP_NAME:}
+
 
 management:
   endpoint.health.show-details: always

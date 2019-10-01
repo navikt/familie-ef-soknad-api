@@ -10,6 +10,12 @@ familie:
         detailed: true
     mottak:
       url: https://api-gw-q0.oera.no/familie-ef-mottak/api/
+    funksjonsbrytere:
+      enabled: true
+      unleash:
+        apiUrl: https://unleashproxy.nais.oera.no/api/ #NB prod
+        environment: ${NAIS_CLUSTER_NAME:}
+        applicationName: ${NAIS_APP_NAME:}
 
 management:
   endpoint.health.show-details: always

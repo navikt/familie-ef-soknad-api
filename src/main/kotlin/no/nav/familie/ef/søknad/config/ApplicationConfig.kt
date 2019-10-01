@@ -16,5 +16,4 @@ class ApplicationConfig {
 
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule()
-
 }
