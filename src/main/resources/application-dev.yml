@@ -10,6 +10,8 @@ familie:
         detailed: true
     mottak:
       url: http://localhost:8092/api/
+      username: ${FAMILIE_EF_MOTTAK_USERNAME:}
+      password: ${FAMILIE_EF_MOTTAK_PASSWORD:}
     soknad:
       s3:
         endpoint: http://s3.nais-rook.svc.nais.local/

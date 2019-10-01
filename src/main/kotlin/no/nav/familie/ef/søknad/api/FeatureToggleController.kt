@@ -5,7 +5,7 @@ import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping(path = ["/featuretoggle"], produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/api/featuretoggle"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class FeatureToggleController (private val featureToggleService: FeatureToggleService) {
 
     @GetMapping("/{toggleId}")
