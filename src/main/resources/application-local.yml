@@ -1,0 +1,29 @@
+server:
+  port: 8091
+  servlet:
+    context-path: /
+
+familie:
+  ef:
+    mottak:
+      url: http://localhost:8092/api/
+      username:
+      password:
+    soknad:
+      s3:
+        endpoint: http://s3.nais-rook.svc.nais.local/
+        region: us-east-1
+        username: user
+        password: pwd
+        passphrase: pass
+        attachmentMazSize: 20
+    funksjonsbrytere:
+      enabled: false
+      unleash:
+        apiUrl: http://localhost:4242/api
+        environment: local
+        applicationName: familie-ef-soknad-api
+
+cors:
+  allowed_origins:
+    - "http://localhost:3000"

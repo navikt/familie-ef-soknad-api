@@ -1,0 +1,9 @@
+familie:
+  ef:
+    mottak:
+      url: https://api-gw.oera.no/familie-ef-mottak/api/
+
+cors:
+  allowed_origins:
+    - "https://familie-ef-soknad.nais.oera.no"
+    - "https://familie-ef-soknad-api.nais.oera.no"
