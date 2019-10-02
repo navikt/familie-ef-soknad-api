@@ -15,7 +15,7 @@ class ByEnvironmentStrategy : Strategy {
     }
 
     override fun getName(): String {
-        return "byEnvironmentStrategy"
+        return "byEnvironment"
     }
 
     override fun isEnabled(map: Map<String, String>?): Boolean {
