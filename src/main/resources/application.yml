@@ -29,10 +29,9 @@ familie:
     funksjonsbrytere:
       enabled: true
       unleash:
-        apiUrl: https://unleashproxy.nais.oera.no/api/
+        apiUrl: https://unleashproxy.nais.oera.no/api/ #NB prod
         environment: ${NAIS_CLUSTER_NAME:}
         applicationName: ${NAIS_APP_NAME:}
-
 
 management:
   endpoint.health.show-details: always
@@ -46,5 +45,3 @@ management:
 
 cors:
   allowed_origins:
-    - "https://familie-ef-soknad.nais.oera.no"
-    - "https://familie-ef-soknad-api.nais.oera.no"

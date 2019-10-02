@@ -39,4 +39,4 @@ spec:
     - https://familie-ef-soknad-api.nais.oera-q.local
   env:
     - name: SPRING_PROFILES_ACTIVE
-      value: preprod
+      value: dev
