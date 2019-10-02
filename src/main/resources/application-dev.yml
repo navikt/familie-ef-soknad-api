@@ -1,45 +1,9 @@
-server:
-  port: 8091
-  servlet:
-    context-path: /
-
 familie:
   ef:
-    heath:
-      indicator:
-        detailed: true
     mottak:
-      url: http://localhost:8092/api/
-      username: ${FAMILIE_EF_MOTTAK_USERNAME:}
-      password: ${FAMILIE_EF_MOTTAK_PASSWORD:}
-    soknad:
-      s3:
-        endpoint: http://s3.nais-rook.svc.nais.local/
-        region: us-east-1
-        username: user
-        password: pwd
-        passphrase: pass
-        attachmentMazSize: 20
-    virus:
-      enabled: true
-      url: http://clamav.nais.svc.nais.local/scan
-    funksjonsbrytere:
-      enabled: false
-      unleash:
-        apiUrl: http://localhost:4242/api
-        environment: dev
-        applicationName: familie-ef-soknad-api
-
-management:
-  endpoint.health.show-details: always
-  endpoints.web:
-    exposure.include: info, health, metrics, prometheus
-    base-path: "/internal"
-    path-mapping:
-      info: "status/isAlive"
-  metrics.export.prometheus.enabled: true
-  metrics.web.server.auto-time-requests: true
+      url: https://api-gw-q0.oera.no/familie-ef-mottak/api/
 
 cors:
   allowed_origins:
-    - "http://localhost:3000"
+    - "https://familie-ef-soknad.nais.oera-q.local"
+    - "https://familie-ef-soknad-api.nais.oera-q.local"
