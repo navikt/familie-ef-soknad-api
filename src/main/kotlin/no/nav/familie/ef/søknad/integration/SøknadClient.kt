@@ -18,8 +18,8 @@ internal class SøknadClient(operations: RestOperations,
                    private val config: MottakConfig) : PingableRestClient(operations, config.pingUri) {
 
     fun sendInn(søknadDto: SøknadDto): KvitteringDto {
+        log.info("Sender inn søknad")
         val callId = generateId()
-
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
         headers.set(config.username, config.password)
