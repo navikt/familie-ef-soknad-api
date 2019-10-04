@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import java.lang.RuntimeException
 
 
-fun <T> FeatureToggleService.enabledEllersHttp404(toggleId: String, eksekver: () -> T): T {
+fun <T> FeatureToggleService.enabledEllersHttp403(toggleId: String, eksekver: () -> T): T {
     if (this.isEnabled(toggleId))
         return eksekver()
     else
@@ -19,5 +19,5 @@ fun <T> FeatureToggleService.disabledEllersHttp404(toggleId: String, eksekver: (
         throw FeatureToggleFeilTilstandException(toggleId)
 }
 
-@ResponseStatus(code = HttpStatus.NOT_FOUND)
-private class FeatureToggleFeilTilstandException(toggle: String) : RuntimeException(toggle)
+@ResponseStatus(code = HttpStatus.FORBIDDEN)
+private class FeatureToggleFeilTilstandException(toggle: String) : RuntimeException("(Mangel på) funksjonsbryter stopper forespørselen: "+ toggle)
