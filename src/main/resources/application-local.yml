@@ -19,6 +19,7 @@ familie:
         attachmentMazSize: 20
     funksjonsbrytere:
       enabled: false
+      defaultDummyValue: true
       unleash:
         apiUrl: http://localhost:4242/api
         environment: local

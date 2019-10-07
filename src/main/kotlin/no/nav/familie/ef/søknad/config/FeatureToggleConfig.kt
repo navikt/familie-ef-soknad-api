@@ -16,7 +16,9 @@ import org.springframework.context.annotation.Configuration
 class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val enabled: Boolean,
                           @Value("\${familie.ef.funksjonsbrytere.unleash.apiUrl:}") val unleashApiUrl: String,
                           @Value("\${familie.ef.funksjonsbrytere.unleash.environment:}") val unleashEnv: String,
-                          @Value("\${familie.ef.funksjonsbrytere.unleash.applicationName:}") val unleashAppName: String) {
+                          @Value("\${familie.ef.funksjonsbrytere.unleash.applicationName:}") val unleashAppName: String,
+                          @Value("\${familie.ef.funksjonsbrytere.defaultDummyValue}") val defaultDummyValue: Boolean
+                          ) {
 
     protected val log: Logger = LoggerFactory.getLogger(this::class.java)
 
@@ -58,7 +60,7 @@ class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val 
     private fun lagDummyFeatureToggleService(): FeatureToggleService {
         return object : FeatureToggleService {
             override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-                return defaultValue;
+                return defaultDummyValue;
             }
         }
     }
