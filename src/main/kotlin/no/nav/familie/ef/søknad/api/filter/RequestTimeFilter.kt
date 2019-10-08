@@ -1,18 +1,14 @@
 package no.nav.familie.ef.søknad.api.filter
 
 import org.slf4j.LoggerFactory
-import org.springframework.core.annotation.Order
 import org.springframework.http.HttpRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.client.ClientHttpResponse
-import org.springframework.stereotype.Component
 import org.springframework.util.StopWatch
 
 import javax.servlet.*
 import java.io.IOException
 
-@Component
-@Order(2)
 class RequestTimeFilter : Filter {
 
     @Throws(IOException::class, ServletException::class)
