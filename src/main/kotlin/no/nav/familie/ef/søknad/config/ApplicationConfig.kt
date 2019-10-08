@@ -8,7 +8,6 @@ import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
-import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.web.client.RestOperations
 
 @SpringBootConfiguration
@@ -17,8 +16,8 @@ class ApplicationConfig {
     private val LOG = LoggerFactory.getLogger(ApplicationConfig::class.java)
 
     @Bean
-    fun restTemplate(vararg interceptors: ClientHttpRequestInterceptor): RestOperations =
-            RestTemplateBuilder().interceptors(*interceptors).build()
+    fun restTemplate(): RestOperations =
+            RestTemplateBuilder().build()
 
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule()
