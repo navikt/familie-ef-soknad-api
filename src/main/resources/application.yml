@@ -28,7 +28,6 @@ familie:
       url: http://clamav.nais.svc.nais.local/scan
     funksjonsbrytere:
       enabled: true
-      defaultDummyValue: false
       unleash:
         apiUrl: https://unleashproxy.nais.oera.no/api/ #NB prod
         environment: ${NAIS_CLUSTER_NAME:}
