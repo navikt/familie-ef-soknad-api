@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import no.nav.familie.ef.søknad.api.filter.RequestTimeFilter
 import no.nav.familie.log.filter.LogFilter
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
@@ -29,6 +30,15 @@ class ApplicationConfig {
         val filterRegistration = FilterRegistrationBean<LogFilter>()
         filterRegistration.setFilter(LogFilter())
         filterRegistration.order = 1
+        return filterRegistration
+    }
+
+    @Bean
+    fun requestTimeFilter(): FilterRegistrationBean<RequestTimeFilter> {
+        LOG.info("Registering RequestTimeFilter filter")
+        val filterRegistration = FilterRegistrationBean<RequestTimeFilter>()
+        filterRegistration.setFilter(RequestTimeFilter())
+        filterRegistration.order = 2
         return filterRegistration
     }
 }
