@@ -31,13 +31,19 @@ class RequestTimeFilter : Filter {
             if (hasError(code)) {
                 LOG.warn("{} - {} - ({}). Dette tok {}ms", request.method, request.requestURI, code, timer.totalTimeMillis)
             } else {
-                LOG.info("{} - {} - ({}). Dette tok {}ms", request.method, request.requestURI, code, timer.totalTimeMillis)
+                if (!isHealthCheck(request.requestURI)) {
+                    LOG.info("{} - {} - ({}). Dette tok {}ms", request.method, request.requestURI, code, timer.totalTimeMillis)
+                }
             }
         }
 
         private fun hasError(code: Int): Boolean {
             val series = HttpStatus.Series.resolve(code)
             return series == HttpStatus.Series.CLIENT_ERROR || series == HttpStatus.Series.SERVER_ERROR
+        }
+
+        private fun isHealthCheck(uri: String): Boolean {
+            return uri.contains("/internal")
         }
     }
 }
