@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.api.filter
 
+import no.nav.familie.log.filter.LogFilter
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.util.StopWatch
@@ -15,9 +16,16 @@ class RequestTimeFilter : Filter {
     @Throws(IOException::class, ServletException::class)
     override fun doFilter(servletRequest: ServletRequest, servletResponse: ServletResponse, filterChain: FilterChain) {
 
+
         val response = servletResponse as HttpServletResponse
         val request = servletRequest as HttpServletRequest
         val timer = StopWatch()
+
+        val LOG = LoggerFactory.getLogger(RequestTimeFilter::class.java)
+        val f = LogFilter()
+        val userId = f.resolveUserId(request)
+        LOG.info("rsolved userId: " + userId)
+
         try {
             timer.start()
             filterChain.doFilter(servletRequest, servletResponse)

@@ -22,7 +22,6 @@ internal class SøknadClient(operations: RestOperations,
     val NAV_CONSUMERID_HEADER = NavHttpHeaders.NAV_CONSUMER_ID.asString()
     val NAV_USERID_HEADER = NavHttpHeaders.NAV_PERSONIDENT.asString()
     fun sendInn(søknadDto: SøknadDto): KvitteringDto {
-        log.info("Sender inn søknad")
         log.info(MDC_REQUEST_ID + " "+ MDC.get(MDC_REQUEST_ID) + ", " + MDC_CONSUMER_ID + " "+ MDC.get(MDC_CONSUMER_ID) + ", " + MDC_CALL_ID + " "+ MDC.get(MDC_CALL_ID) + ", " + MDC_USER_ID + " " + MDC.get(MDC_USER_ID) )
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
