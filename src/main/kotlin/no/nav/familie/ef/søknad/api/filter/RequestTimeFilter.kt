@@ -20,12 +20,12 @@ class RequestTimeFilter : Filter {
         val timer = StopWatch()
         try {
             timer.start()
+            filterChain.doFilter(servletRequest, servletResponse)
         }
         finally {
             timer.stop()
             log(request, response.status, timer)
         }
-        filterChain.doFilter(servletRequest, servletResponse)
     }
 
 
