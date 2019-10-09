@@ -24,7 +24,7 @@ internal class SøknadClient(operations: RestOperations,
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
         headers.set(config.username, config.password)
-        //headers.set(NAV_CALLID_HEADER, MDC.get(MDC_CALL_ID))
+        headers.set(NAV_CALLID_HEADER, MDC.get(MDC_CALL_ID))
         val body = ObjectMapper().writeValueAsString(søknadDto)
         val entity = HttpEntity(body, headers)
 
