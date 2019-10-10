@@ -7,8 +7,8 @@ familie:
   ef:
     mottak:
       url: http://localhost:8092/api/
-      username:
-      password:
+      username: ${FAMILIE_EF_MOTTAK_USERNAME:}
+      password: ${FAMILIE_EF_MOTTAK_PASSWORD:}
     soknad:
       s3:
         endpoint: http://s3.nais-rook.svc.nais.local/
@@ -27,3 +27,6 @@ familie:
 cors:
   allowed_origins:
     - "http://localhost:3000"
+
+logging:
+  config: classpath:logback-spring-test.xml
