@@ -2,6 +2,8 @@ package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.service.mellomlagring.StorageService
 import no.nav.familie.ef.søknad.service.mellomlagring.Vedlegg
+import no.nav.familie.ef.søknad.util.TokenUtil
+import no.nav.security.oidc.api.ProtectedWithClaims
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE
 import org.springframework.http.ResponseEntity
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 
 @RestController
-//@ProtectedWithClaims(issuer = TokenUtil.ISSUER, claimMap = ["acr=Level4"])
+@ProtectedWithClaims(issuer = TokenUtil.ISSUER, claimMap = ["acr=Level4"])
 @RequestMapping(StorageController.REST_STORAGE)
 class StorageController(private val storageService: StorageService) {
 

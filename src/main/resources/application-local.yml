@@ -30,3 +30,10 @@ cors:
 
 logging:
   config: classpath:logback-spring-test.xml
+
+no.nav.security.oidc:
+  issuers: selvbetjening
+  issuer.selvbetjening:
+    discoveryurl: http://metadata
+    accepted_audience: aud-localhost
+    cookie_name: localhost-idtoken

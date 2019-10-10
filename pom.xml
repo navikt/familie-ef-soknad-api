@@ -135,6 +135,12 @@
             <artifactId>oidc-spring-support</artifactId>
             <version>${oidc-support.version}</version>
         </dependency>
+        <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>oidc-test-support</artifactId>
+            <version>${oidc-support.version}</version>
+            <scope>test</scope>
+        </dependency>
 
 
         <!-- Test -->

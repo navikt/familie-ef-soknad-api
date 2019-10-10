@@ -15,10 +15,6 @@ class SwaggerDocumentationConfig {
 
     private val basePackage = "no.nav.familie.ef.søknad"
 
-    private fun apiInfo(): ApiInfo {
-        return ApiInfoBuilder().build()
-    }
-
     /**
      * Builder and primary interface of swagger-spring framework.
      */
@@ -31,6 +27,10 @@ class SwaggerDocumentationConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo())
+    }
+
+    private fun apiInfo(): ApiInfo {
+        return ApiInfoBuilder().build()
     }
 }
 

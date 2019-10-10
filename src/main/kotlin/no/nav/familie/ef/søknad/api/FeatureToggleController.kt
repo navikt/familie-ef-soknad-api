@@ -1,11 +1,13 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
+import no.nav.security.oidc.api.ProtectedWithClaims
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(path = ["/api/featuretoggle"], produces = [MediaType.APPLICATION_JSON_VALUE])
+@ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
 class FeatureToggleController (private val featureToggleService: FeatureToggleService) {
 
     @GetMapping("/{toggleId}")
