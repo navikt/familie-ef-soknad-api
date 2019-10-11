@@ -16,8 +16,8 @@ class S3Storage(private val s3: AmazonS3) : Storage {
 
     init {
         try {
-            ensureBucketExists(BUCKET_FORELDREPENGER, 365)
-            ensureBucketExists(BUCKET_FORELDREPENGER_MELLOMLAGRING, 1)
+            ensureBucketExists(BUCKET_ENSLIG_FORSØRGER, 365)
+            ensureBucketExists(BUCKET_ENSLIG_FORSØRGER_MELLOMLAGRING, 1)
         } catch (ex: Exception) {
             LOG.error("Could not create S3 bucket", ex)
         }
@@ -25,27 +25,27 @@ class S3Storage(private val s3: AmazonS3) : Storage {
     }
 
     override fun put(directory: String, key: String, value: String) {
-        writeString(BUCKET_FORELDREPENGER, directory, key, value)
+        writeString(BUCKET_ENSLIG_FORSØRGER, directory, key, value)
     }
 
     override fun putTmp(directory: String, key: String, value: String) {
-        writeString(BUCKET_FORELDREPENGER_MELLOMLAGRING, directory, key, value)
+        writeString(BUCKET_ENSLIG_FORSØRGER_MELLOMLAGRING, directory, key, value)
     }
 
     override fun get(directory: String, key: String): String? {
-        return readString(BUCKET_FORELDREPENGER, directory, key)
+        return readString(BUCKET_ENSLIG_FORSØRGER, directory, key)
     }
 
     override fun getTmp(directory: String, key: String): String? {
-        return readString(BUCKET_FORELDREPENGER_MELLOMLAGRING, directory, key)
+        return readString(BUCKET_ENSLIG_FORSØRGER_MELLOMLAGRING, directory, key)
     }
 
     override fun delete(directory: String, key: String) {
-        deleteString(BUCKET_FORELDREPENGER, directory, key)
+        deleteString(BUCKET_ENSLIG_FORSØRGER, directory, key)
     }
 
     override fun deleteTmp(directory: String, key: String) {
-        deleteString(BUCKET_FORELDREPENGER_MELLOMLAGRING, directory, key)
+        deleteString(BUCKET_ENSLIG_FORSØRGER_MELLOMLAGRING, directory, key)
     }
 
     private fun ensureBucketExists(bucketName: String) {
@@ -96,8 +96,8 @@ class S3Storage(private val s3: AmazonS3) : Storage {
 
         private val LOG = LoggerFactory.getLogger(S3Storage::class.java)
 
-        private const val BUCKET_FORELDREPENGER = "foreldrepengesoknad"
-        private const val BUCKET_FORELDREPENGER_MELLOMLAGRING = "mellomlagring"
+        private const val BUCKET_ENSLIG_FORSØRGER = "ensligForsørgerSøknad"
+        private const val BUCKET_ENSLIG_FORSØRGER_MELLOMLAGRING = "mellomlagring"
 
         private fun objectExpiresInDays(days: Int?): BucketLifecycleConfiguration {
             return BucketLifecycleConfiguration().withRules(

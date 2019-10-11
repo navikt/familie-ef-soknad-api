@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad.config
 
-import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -15,8 +14,5 @@ class WebConfigDev(private val corsProperties: CorsProperties) : WebMvcConfigure
                 .allowCredentials(true).maxAge(3600)
     }
 
-    companion object {
-        private val log = LoggerFactory.getLogger(WebConfigDev::class.java)
-    }
 }
 

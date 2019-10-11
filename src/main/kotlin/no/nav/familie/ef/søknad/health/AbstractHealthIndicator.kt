@@ -21,7 +21,7 @@ internal abstract class AbstractHealthIndicator(private val pingable: PingableRe
     private fun up(): Health {
         return if (healthIndicatorConfig.detailed) {
             Health.up()
-                    .withDetail(pingable::class.simpleName, pingable.pingURI())
+                    .withDetail(pingable::class.simpleName, pingable.pingUri)
                     .build()
         } else {
             Health.up().build()
@@ -31,7 +31,7 @@ internal abstract class AbstractHealthIndicator(private val pingable: PingableRe
     private fun down(e: Exception): Health {
         return if (healthIndicatorConfig.detailed) {
             Health.down()
-                    .withDetail(pingable::class.simpleName, pingable.pingURI())
+                    .withDetail(pingable::class.simpleName, pingable.pingUri)
                     .withException(e)
                     .build()
         } else {

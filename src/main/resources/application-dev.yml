@@ -2,6 +2,10 @@ familie:
   ef:
     mottak:
       url: https://api-gw-q0.oera.no/familie-ef-mottak/api/
+    soknad:
+      tps:
+        innsyn:
+          url:  https://api-gw-q0.oera.no/tps-proxy/api/v1/innsyn/
 
 cors:
   allowed_origins:
