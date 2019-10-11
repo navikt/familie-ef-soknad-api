@@ -10,7 +10,7 @@ internal class FeatureToggleControllerTest {
 
     private val fakeUnleashService = object : FeatureToggleService {
         override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-            return fakeUnleash.isEnabled(toggleId,defaultValue);
+            return fakeUnleash.isEnabled(toggleId,defaultValue)
         }
     }
 

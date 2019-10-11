@@ -25,7 +25,8 @@ class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val 
             if (enabled)
                 lagUnleashFeatureToggleService()
             else {
-                log.warn("Funksjonsbryter-funksjonalitet er skrudd AV. Gir standardoppførsel for alle funksjonsbrytere, dvs 'false'")
+                log.warn("Funksjonsbryter-funksjonalitet er skrudd AV. " +
+                         "Gir standardoppførsel for alle funksjonsbrytere, dvs 'false'")
                 lagDummyFeatureToggleService()
             }
 
@@ -44,21 +45,19 @@ class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val 
     }
 
     private fun lagUnleashContextProvider(): UnleashContextProvider {
-        return object : UnleashContextProvider {
-            override fun getContext(): UnleashContext {
-                return UnleashContext.builder()
-                        //.userId("a user") // Må legges til en gang i fremtiden
-                        .environment(unleashEnv)
-                        .appName(unleashAppName)
-                        .build();
-            }
+        return UnleashContextProvider {
+            UnleashContext.builder()
+                    //.userId("a user") // Må legges til en gang i fremtiden
+                    .environment(unleashEnv)
+                    .appName(unleashAppName)
+                    .build()
         }
     }
 
     private fun lagDummyFeatureToggleService(): FeatureToggleService {
         return object : FeatureToggleService {
             override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-                return defaultValue;
+                return defaultValue
             }
         }
     }

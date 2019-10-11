@@ -5,14 +5,14 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 internal class ByEnvironmentStrategyTest {
-    val map = ByEnvironmentStrategy.lagPropertyMapMedMiljø("p","q")
+    private val map = ByEnvironmentStrategy.lagPropertyMapMedMiljø("p", "q")
 
     @Test
     fun `skal svare true for riktig miljø`() {
 
         Assertions.assertThat(
                 ByEnvironmentStrategy().isEnabled(map, UnleashContext.builder().environment("p").build())
-        ).isTrue();
+        ).isTrue()
     }
 
     @Test
@@ -20,6 +20,6 @@ internal class ByEnvironmentStrategyTest {
 
         Assertions.assertThat(
                 ByEnvironmentStrategy().isEnabled(map, UnleashContext.builder().environment("l").build())
-        ).isFalse();
+        ).isFalse()
     }
 }
