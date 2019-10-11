@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.api
 import no.nav.familie.ef.søknad.api.dto.Søknad
 import no.nav.familie.ef.søknad.util.TokenUtil
 import no.nav.security.oidc.api.ProtectedWithClaims
-import no.nav.security.oidc.api.Unprotected
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
@@ -28,10 +27,5 @@ class PingController {
         return TokenUtil().fødselsnummer
     }
 
-    @Unprotected
-    @GetMapping("/getString")
-    fun getUnprotectedString(): String {
-        return "Unprotected endepunkt"
-    }
 
 }
