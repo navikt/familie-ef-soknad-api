@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.integrationTest
 
-import no.nav.familie.ef.søknad.TestApplication
+import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.security.oidc.OIDCConstants
 import no.nav.security.oidc.test.support.JwtTokenGenerator
 
@@ -20,7 +20,7 @@ import kotlin.test.assertEquals
 
 @ActiveProfiles("local")
 @RunWith(SpringRunner::class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,  classes = [TestApplication::class])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,  classes = [ApplicationLocalLauncher::class])
 class PingControllerApiIntegrationTest  {
 
     @Value("\${local.server.port}")

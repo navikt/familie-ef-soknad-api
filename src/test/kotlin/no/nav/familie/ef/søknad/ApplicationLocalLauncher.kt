@@ -8,16 +8,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 import org.springframework.context.annotation.Import
 import springfox.documentation.swagger2.annotations.EnableSwagger2
-import javax.annotation.PostConstruct
 
 @SpringBootApplication(scanBasePackages = ["no.nav.familie.ef.søknad"], exclude = [ErrorMvcAutoConfiguration::class])
 @EnableSwagger2
 @Import(ApplicationConfig::class, TokenGeneratorConfiguration::class)
 @EnableOIDCTokenValidation(ignore = ["springfox.documentation.swagger.web.ApiResourceController"])
-class TestApplication
+class ApplicationLocalLauncher
 
 fun main(args: Array<String>) {
-    SpringApplication.run(TestApplication::class.java, *args)
+    SpringApplication.run(ApplicationLocalLauncher::class.java, *args)
 }
 
 
