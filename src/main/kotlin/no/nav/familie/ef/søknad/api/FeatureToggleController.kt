@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping(path = ["/api/featuretoggle"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class FeatureToggleController(private val featureToggleService: FeatureToggleService) {
 
-    val funksjonsbrytere = listOf("familie.ef.soknad.send-soknad")
+    val funksjonsbrytere = listOf("familie.ef.soknad.send-soknad", "familie.ef.soknad.vis-innsending")
 
     @GetMapping
     fun sjekkAlle() : Map<String, Boolean> {
