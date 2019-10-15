@@ -1,13 +1,14 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
-import no.nav.security.oidc.api.ProtectedWithClaims
+import no.nav.security.oidc.api.Unprotected
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(path = ["/api/featuretoggle"], produces = [MediaType.APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+//@ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+@Unprotected
 class FeatureToggleController(private val featureToggleService: FeatureToggleService) {
 
     val funksjonsbrytere = listOf("familie.ef.soknad.send-soknad")
