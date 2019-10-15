@@ -20,8 +20,8 @@ import kotlin.test.assertEquals
 
 @ActiveProfiles("local")
 @RunWith(SpringRunner::class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,  classes = [ApplicationLocalLauncher::class])
-class PingControllerApiIntegrationTest  {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
+class PingControllerApiIntegrationTest {
 
     @Value("\${local.server.port}")
     val port: Int = 0
@@ -49,9 +49,9 @@ class PingControllerApiIntegrationTest  {
     fun `skal Kunne hente ut token subject - fnr`() {
         val response = webTarget().path("/getToken")
                 .request()
-                .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()} " )
+                .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()} ")
                 .get()
-        val entity:String = response.readEntity(String::class.java)
+        val entity: String = response.readEntity(String::class.java)
         assertEquals(tokenSubject, entity)
     }
 
