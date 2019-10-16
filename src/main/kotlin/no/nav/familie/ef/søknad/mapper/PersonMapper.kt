@@ -22,7 +22,7 @@ object PersonMapper {
         return Person(personinfoDto.ident,
                       personinfoDto.navn.forkortetNavn,
                       mapTilAdresse(personinfoDto.adresseinfo),
-                      personinfoDto.egenansatt.isErEgenansatt,
+                      personinfoDto.egenansatt?.isErEgenansatt ?: false,
                       personinfoDto.innvandringUtvandring?.innvandretDato,
                       personinfoDto.innvandringUtvandring?.utvandretDato,
                       personinfoDto.oppholdstillatelse?.kode?.verdi ?: "",

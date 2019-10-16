@@ -8,5 +8,4 @@ data class RelasjonDto(val ident: String,
                        val alder: Int,
                        @JsonProperty("doedsdato") val dødsdato: DødsdatoDto?,
                        @JsonProperty("foedselsdato") val fødselsdato: LocalDate,
-                       val harSammeAdresse: Boolean,
-                       @JsonProperty("relasjonsType") val relasjonstype: KodeDto)
+                       val harSammeAdresse: Boolean)

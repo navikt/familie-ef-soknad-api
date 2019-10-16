@@ -7,7 +7,7 @@ data class PersoninfoDto(val ident: String,
                          val navn: NavnDto,
                          val adresseinfo: AdresseinfoDto?,
                          @JsonProperty("doedsdato") val dødsdato: DødsdatoDto?,
-                         val egenansatt: EgenansattDto,
+                         val egenansatt: EgenansattDto?,
                          val foreldreansvar: KodeMedDatoOgKildeDto?,
                          val innvandringUtvandring: InnvandringUtvandringDto?,
                          val kontonummer: KontonummerDto?,
@@ -29,7 +29,7 @@ data class BostedsadresseDto(val adresse: String?,
 
 data class DødsdatoDto(val dato: LocalDate?)
 
-data class EgenansattDto(val datoFraOgMed: String?,
+data class EgenansattDto(val datoFraOgMed: LocalDate?,
                          val isErEgenansatt: Boolean)
 
 class InnvandringUtvandringDto(val innvandretDato: LocalDate?,
