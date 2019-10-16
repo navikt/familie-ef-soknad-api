@@ -8,8 +8,6 @@ cors:
     - "https://familie-ef-soknad.nais.oera.no"
     - "https://familie-ef-soknad-api.nais.oera.no"
 
-
-
 no.nav.security.oidc:
   issuers: selvbetjening
   issuer.selvbetjening:
