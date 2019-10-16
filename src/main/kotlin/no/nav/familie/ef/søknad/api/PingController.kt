@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(path = ["/api/"], produces = [MediaType.APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+@ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level3"])
 class PingController {
 
     @GetMapping("/ping")
