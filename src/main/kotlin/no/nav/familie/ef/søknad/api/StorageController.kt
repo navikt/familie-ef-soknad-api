@@ -3,7 +3,7 @@ package no.nav.familie.ef.søknad.api
 import no.nav.familie.ef.søknad.service.mellomlagring.StorageService
 import no.nav.familie.ef.søknad.service.mellomlagring.Vedlegg
 import no.nav.familie.ef.søknad.util.TokenUtil
-import no.nav.security.oidc.api.ProtectedWithClaims
+import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE
 import org.springframework.http.ResponseEntity

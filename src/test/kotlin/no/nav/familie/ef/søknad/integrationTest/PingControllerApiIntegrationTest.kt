@@ -1,8 +1,8 @@
 package no.nav.familie.ef.søknad.integrationTest
 
 import no.nav.familie.ef.søknad.ApplicationLocalLauncher
-import no.nav.security.oidc.OIDCConstants
-import no.nav.security.oidc.test.support.JwtTokenGenerator
+import no.nav.security.token.support.core.JwtTokenConstants
+import no.nav.security.token.support.test.JwtTokenGenerator
 
 
 import org.glassfish.jersey.logging.LoggingFeature
@@ -32,7 +32,7 @@ class PingControllerApiIntegrationTest {
     fun `skal få 200 når autentisert og vi bruker get`() {
         val response = webTarget().path("/ping")
                 .request()
-                .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
                 .get()
         assertEquals(200, response.status)
     }
@@ -49,7 +49,7 @@ class PingControllerApiIntegrationTest {
     fun `skal Kunne hente ut token subject - fnr`() {
         val response = webTarget().path("/getToken")
                 .request()
-                .header(OIDCConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()} ")
+                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()} ")
                 .get()
         val entity: String = response.readEntity(String::class.java)
         assertEquals(tokenSubject, entity)

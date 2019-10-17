@@ -2,13 +2,13 @@ package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Søknad
 import no.nav.familie.ef.søknad.util.TokenUtil
-import no.nav.security.oidc.api.Protected
+import no.nav.security.token.support.core.api.Protected
+
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping(path = ["/api/"], produces = [MediaType.APPLICATION_JSON_VALUE])
-//@ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"] )
 @Protected
 class PingController {
 
@@ -27,6 +27,5 @@ class PingController {
     fun getToken(): String {
         return TokenUtil().fødselsnummer
     }
-
 
 }

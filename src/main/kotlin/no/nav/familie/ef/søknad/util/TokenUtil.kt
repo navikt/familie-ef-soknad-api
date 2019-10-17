@@ -1,43 +1,34 @@
 package no.nav.familie.ef.søknad.util
 
-import com.nimbusds.jwt.JWTClaimsSet
-import no.nav.security.oidc.OIDCConstants
-import no.nav.security.oidc.context.OIDCClaims
-import no.nav.security.oidc.context.OIDCValidationContext
-import no.nav.security.oidc.exceptions.OIDCTokenValidatorException
+import no.nav.security.token.support.core.context.TokenValidationContext
+import no.nav.security.token.support.core.exceptions.JwtTokenValidatorException
+import no.nav.security.token.support.core.jwt.JwtTokenClaims
+import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
 import org.springframework.stereotype.Component
-import org.springframework.web.context.request.RequestAttributes
 import org.springframework.web.context.request.RequestContextHolder
-import java.util.*
 
 @Component
-class TokenUtil(
-//  TODO   private val ctxHolder: OIDCRequestContextHolder
-) {
-
-    val expiryDate: Date?
-        get() = claimSet()?.expirationTime
+class TokenUtil() {
 
     val subject: String?
-        get() = claimSet()?.subject
+        get() = claims()?.subject
 
     val fødselsnummer: String
-        get() = subject ?: throw OIDCTokenValidatorException("Fant ikke subject", expiryDate)
+        get() = subject ?: throw JwtTokenValidatorException("Fant ikke subject")
 
-
-    private fun claimSet(): JWTClaimsSet? {
-        return claims()?.claimSet
+    private fun claims(): JwtTokenClaims? {
+        val attribute = RequestContextHolder.currentRequestAttributes().getAttribute(getContextHolderName(), 0) as TokenValidationContext
+        return attribute.getClaims(ISSUER)
     }
 
-    private fun claims(): OIDCClaims? {
-        return context().getClaims(ISSUER)
+    private fun getContextHolderName(): String {
+        val holder = "no.nav.security.token.support.spring.SpringTokenValidationContextHolder"
+        return SpringTokenValidationContextHolder::class.qualifiedName ?: holder
     }
-
-    private fun context() =
-            RequestContextHolder.currentRequestAttributes().getAttribute(OIDCConstants.OIDC_VALIDATION_CONTEXT,
-                                                                         RequestAttributes.SCOPE_REQUEST) as OIDCValidationContext
 
     companion object {
         const val ISSUER = "selvbetjening"
     }
 }
+
+

@@ -31,7 +31,7 @@ cors:
 logging:
   config: classpath:logback-spring-test.xml
 
-no.nav.security.oidc:
+no.nav.security.jwt:
   issuers: selvbetjening
   issuer.selvbetjening:
     discoveryurl: http://metadata
