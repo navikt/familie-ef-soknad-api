@@ -1,23 +1,23 @@
 package no.nav.familie.ef.søknad.config
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.web.util.DefaultUriBuilderFactory
 import java.net.URI
 
-@Component
-data class OppslagConfig(@Value("\${familie.ef.oppslag.url}") val url: String,
-                         @Value("\${familie.ef.oppslag.key}") val key: String) {
+@ConfigurationProperties(prefix = "familie.ef.oppslag")
+@ConstructorBinding
+data class OppslagConfig(val url: String,
+                         val key: String) {
 
-    internal val pingUri get() = DefaultUriBuilderFactory().uriString(url).path(PING).build()
+    internal val pingUri = DefaultUriBuilderFactory().uriString(url).path(PING).build()
 
     internal val personURI get() = DefaultUriBuilderFactory().uriString(url).path(PERSON).build()
 
     internal val søkerinfoURI get() = DefaultUriBuilderFactory().uriString(url).path(SØKERINFO).build()
 
-    internal fun buildAktørIdURI(fnr: String) : URI {
-        return DefaultUriBuilderFactory().uriString(url).path(AKTØRFNR).queryParam(
-                FNR, fnr).build()
+    internal fun buildAktørIdURI(fnr: String): URI {
+        return DefaultUriBuilderFactory().uriString(url).path(AKTØRFNR).queryParam(FNR, fnr).build()
     }
 
     companion object {

@@ -5,9 +5,6 @@ server:
 
 familie:
   ef:
-    heath:
-      indicator:
-        detailed: true
     mottak:
       url: https://api-gw.oera.no/familie-ef-mottak/api/
       username: ${FAMILIE_EF_MOTTAK_USERNAME}
@@ -15,23 +12,26 @@ familie:
     oppslag:
       url: url
       key: key
-    soknad:
-      s3:
-        endpoint: http://s3.nais-rook
-        region: us-east-1
-        username: nousername #${FAMILIE_EF_SOKNAD_S3_USERNAME}#<Ligger i vault>
-        password: nopwd #${FAMILIE_EF_SOKNAD_S3_PASSWORD}#<Ligger i vault>
-        passphrase: nopwd #${FAMILIE_EF_SOKNAD_S3_PASSPHRASE}#<Ligger i vault>
-        attachmentMazSize: 20
-    virus:
-      enabled: true
-      url: http://clamav.nais.svc.nais.local/scan
-    funksjonsbrytere:
-      enabled: true
-      unleash:
-        apiUrl: https://unleashproxy.nais.oera.no/api/ #NB prod
-        environment: ${NAIS_CLUSTER_NAME:}
-        applicationName: ${NAIS_APP_NAME:}
+
+health:
+  indicator:
+    detailed: true
+s3:
+  endpoint: http://s3.nais-rook
+  region: us-east-1
+  username: nousername #${FAMILIE_EF_SOKNAD_S3_USERNAME}#<Ligger i vault>
+  password: nopwd #${FAMILIE_EF_SOKNAD_S3_PASSWORD}#<Ligger i vault>
+  passphrase: nopwd #${FAMILIE_EF_SOKNAD_S3_PASSPHRASE}#<Ligger i vault>
+  attachmentMazSize: 20
+virus:
+  enabled: true
+  uri: http://clamav.nais.svc.nais.local/scan
+funksjonsbrytere:
+  enabled: true
+  unleash:
+    apiUrl: https://unleashproxy.nais.oera.no/api/
+    env: ${NAIS_CLUSTER_NAME:}
+    appName: ${NAIS_APP_NAME:}
 
 management:
   endpoint.health.show-details: always
@@ -45,3 +45,5 @@ management:
 
 cors:
   allowed_origins:
+    - "https://familie-ef-soknad.nais.oera.no"
+    - "https://familie-ef-soknad-api.nais.oera.no"
