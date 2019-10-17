@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.context.annotation.Bean
 
-@ConfigurationProperties(prefix = "s3")
+@ConfigurationProperties("s3")
 @ConstructorBinding
 data class S3StorageConfiguration(val endpoint: String,
                                   val region: String,

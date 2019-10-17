@@ -8,11 +8,9 @@ import no.nav.familie.ef.søknad.featuretoggle.ByEnvironmentStrategy
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 
 @ConfigurationProperties("funksjonsbrytere")
 @ConstructorBinding

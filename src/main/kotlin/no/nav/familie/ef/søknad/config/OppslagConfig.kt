@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.web.util.DefaultUriBuilderFactory
 import java.net.URI
 
-@ConfigurationProperties(prefix = "familie.ef.oppslag")
+@ConfigurationProperties("familie.ef.oppslag")
 @ConstructorBinding
 data class OppslagConfig(val url: String,
                          val key: String) {

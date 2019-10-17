@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 
-@ConfigurationProperties(prefix = "cors")
+@ConfigurationProperties("cors")
 @ConstructorBinding
 class WebConfigDev(val allowedOrigins: Array<String>) : WebMvcConfigurer {
 

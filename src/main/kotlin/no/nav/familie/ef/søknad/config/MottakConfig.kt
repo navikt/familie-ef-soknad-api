@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.web.util.DefaultUriBuilderFactory
 import java.net.URI
 
-@ConfigurationProperties(prefix = "familie.ef.mottak")
+@ConfigurationProperties("familie.ef.mottak")
 @ConstructorBinding
 internal data class MottakConfig(val url: String,
                                  val username: String,
