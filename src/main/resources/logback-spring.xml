@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="ROOT_LOG_LEVEL" value="INFO"/>
+    <property name="ROOT_LOG_LEVEL" value="ERROR"/>
 
     <!-- Spesiell håndtering av loggeren no.nav.log.LogFilter for å forhindre logging av isAlive-sjekker o.l. -->
     <appender name="stdout_json" class="ch.qos.logback.core.ConsoleAppender">
