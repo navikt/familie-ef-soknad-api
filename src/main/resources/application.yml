@@ -40,8 +40,15 @@ management:
     base-path: "/internal"
     path-mapping:
       info: "status/isAlive"
-  metrics.export.prometheus.enabled: true
-  metrics.web.server.auto-time-requests: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
 
 cors:
   allowed_origins:
