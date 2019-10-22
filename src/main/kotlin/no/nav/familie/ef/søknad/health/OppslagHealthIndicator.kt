@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 internal class OppslagHealthIndicator(oppslagClient: OppslagClient, healthIndicatorConfig: HealthIndicatorConfig)
     : AbstractHealthIndicator(oppslagClient, healthIndicatorConfig) {
 
-    override val successCounter: Counter = Metrics.counter("familie.ef.soknad.tps.innsyn.health", "response", "success")
-    override val failureCounter: Counter = Metrics.counter("familie.ef.soknad.tps.innsyn.health", "response", "failure")
+    override val successCounter: Counter = Metrics.counter("tps.innsyn.health", "response", "success")
+    override val failureCounter: Counter = Metrics.counter("tps.innsyn.health", "response", "failure")
 }
