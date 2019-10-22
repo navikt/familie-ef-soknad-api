@@ -10,6 +10,8 @@ import org.springframework.web.context.request.RequestContextHolder
 @Component
 class TokenUtil() {
 
+    private val TOKEN_VALIDATION_CONTEXT_ATTRIBUTE = SpringTokenValidationContextHolder::class.java.name
+
     val subject: String?
         get() = claims()?.subject
 
@@ -23,7 +25,7 @@ class TokenUtil() {
 
     private fun getContextHolderName(): String {
         val holder = "no.nav.security.token.support.spring.SpringTokenValidationContextHolder"
-        return SpringTokenValidationContextHolder::class.qualifiedName ?: holder
+        return TOKEN_VALIDATION_CONTEXT_ATTRIBUTE ?: holder
     }
 
     companion object {
