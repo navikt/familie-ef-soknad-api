@@ -24,6 +24,8 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
             operations: RestOperations)
     : PingableRestClient(operations, tpsInnsynConfig.pingUri) {
 
+
+
     fun hentPersoninfo(): PersoninfoDto {
         return getForEntity(tpsInnsynConfig.personUri, httpHeaders())
     }
@@ -43,6 +45,12 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
     }
 
     private fun httpHeaders(): HttpHeaders {
+
+        log.info(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
+        log.info(tpsInnsynConfig.bruker)
+        log.info(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
+        log.info(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)
+
         return HttpHeaders().apply {
             add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
             add(tpsInnsynConfig.bruker, tpsInnsynConfig.passord)
