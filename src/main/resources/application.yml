@@ -1,3 +1,5 @@
+application:
+  name: familie-ef-soknad-api
 server:
   port: 8000
   servlet:
@@ -5,9 +7,6 @@ server:
 
 familie:
   ef:
-    heath:
-      indicator:
-        detailed: true
     mottak:
       url: https://api-gw.oera.no/familie-ef-mottak/api/
       username: ${FAMILIE_EF_MOTTAK_USERNAME}
@@ -16,6 +15,18 @@ familie:
       url: url
       key: key
     soknad:
+      regelverk:
+        maks:
+          alder:
+            barn: 18
+      health:
+        indicator:
+          detailed: true
+      tps:
+        innsyn:
+          url: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
+          bruker: ${FAMILIE_EF_SOKNAD_TPS_INNSYN_PROXY_USER} #<Ligger i vault>
+          passord: ${FAMILIE_EF_SOKNAD_TPS_INNSYN_PROXY_PASSWORD} #<Ligger i vault>
       s3:
         endpoint: http://s3.nais-rook
         region: us-east-1

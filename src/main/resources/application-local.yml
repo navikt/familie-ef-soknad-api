@@ -17,6 +17,11 @@ familie:
         password: pwd
         passphrase: pass
         attachmentMazSize: 20
+      tps:
+        innsyn:
+          url: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
+          bruker: user
+          passord: pwd
     funksjonsbrytere:
       enabled: false
       unleash:
