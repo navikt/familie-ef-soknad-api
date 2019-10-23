@@ -14,7 +14,7 @@ spec:
     initialDelay: 30
     failureThreshold: 10
   readiness:
-    path: /internal/health
+    path: /internal/status/isAlive
     initialDelay: 30
     failureThreshold: 10
   prometheus:
