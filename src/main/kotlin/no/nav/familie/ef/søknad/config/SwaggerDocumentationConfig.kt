@@ -18,7 +18,7 @@ import springfox.documentation.spring.web.plugins.Docket
 class SwaggerDocumentationConfig {
 
     private val basePackage = "no.nav.familie.ef.søknad"
-
+    private val BEARER = "Bearer"
     /**
      * Builder and primary interface of swagger-spring framework.
      */
@@ -35,8 +35,10 @@ class SwaggerDocumentationConfig {
                 .apiInfo(apiInfo())
     }
 
+
+
     private fun securitySchemes(): List<ApiKey> {
-        return listOf(ApiKey("Bearer", "Authorization", "header"))
+        return listOf(ApiKey(BEARER, "Authorization", "header"))
     }
 
     private fun securityContext(): List<SecurityContext> {
@@ -50,7 +52,7 @@ class SwaggerDocumentationConfig {
         val authorizationScope = AuthorizationScope("global", "accessEverything")
         val authorizationScopes = arrayOfNulls<AuthorizationScope>(1)
         authorizationScopes[0] = authorizationScope
-        return listOf(SecurityReference("Bearer", authorizationScopes))
+        return listOf(SecurityReference(BEARER, authorizationScopes))
     }
 
     private fun apiInfo(): ApiInfo {

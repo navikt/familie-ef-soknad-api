@@ -8,7 +8,7 @@ import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping(path = ["/api/"], produces = [MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/api/"], produces = [MediaType.TEXT_PLAIN_VALUE])
 @Protected
 class PingController {
 
