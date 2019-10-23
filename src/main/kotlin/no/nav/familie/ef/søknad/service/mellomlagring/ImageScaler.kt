@@ -96,9 +96,9 @@ object ImageScaler {
 
     @Throws(IOException::class)
     private fun toBytes(img: BufferedImage, format: String): ByteArray {
-        ByteArrayOutputStream().use { baos ->
-            ImageIO.write(img, format, baos)
-            return baos.toByteArray()
+        ByteArrayOutputStream().use {
+            ImageIO.write(img, format, it)
+            return it.toByteArray()
         }
     }
 

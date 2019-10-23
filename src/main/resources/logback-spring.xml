@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="ROOT_LOG_LEVEL" value="INFO"/>
+    <property name="ROOT_LOG_LEVEL" value="ERROR"/>
 
     <!-- Spesiell håndtering av loggeren no.nav.log.LogFilter for å forhindre logging av isAlive-sjekker o.l. -->
     <appender name="stdout_json" class="ch.qos.logback.core.ConsoleAppender">
@@ -11,9 +11,9 @@
         <appender-ref ref="stdout_json"/>
     </root>
 
-    <logger name="no.nav" level="WARN"/>
     <logger name="no.nav.security" level="DEBUG"/>
-    <logger name="no.nav.familie" level="INFO"/>
+    <logger name="no.nav" level="ERROR"/>
+    <logger name="no.nav.familie" level="ERROR"/>
     <logger name="org.apache" level="INFO"/>
     <logger name="org.apache.cxf" level="ERROR"/>
     <logger name="org.apache.http.client.protocol.ResponseProcessCookies" level="ERROR"/>

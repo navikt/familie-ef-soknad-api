@@ -20,7 +20,7 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
 
     @GetMapping("/{toggleId}")
     fun sjekkFunksjonsbryter(@PathVariable toggleId: String,
-                             @RequestParam("defaultverdi") defaultVerdi: Boolean? = false): Boolean {
+                             @RequestParam("defaultverdi") defaultVerdi:Boolean?=false) : Boolean {
         return featureToggleService.isEnabled(toggleId, defaultVerdi ?: false)
     }
 }

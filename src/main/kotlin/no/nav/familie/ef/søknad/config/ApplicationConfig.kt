@@ -5,6 +5,7 @@ import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import no.nav.familie.ef.søknad.api.filter.RequestTimeFilter
 import no.nav.familie.log.filter.LogFilter
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
@@ -12,9 +13,11 @@ import org.springframework.context.annotation.Bean
 import org.springframework.web.client.RestOperations
 
 @SpringBootConfiguration
-class ApplicationConfig {
+class ApplicationConfig(@Value("\${application.name}") val applicationName: String) {
 
-    private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
+
+
+    private val LOG = LoggerFactory.getLogger(ApplicationConfig::class.java)
 
     @Bean
     fun restTemplate(): RestOperations =
@@ -34,7 +37,7 @@ class ApplicationConfig {
 
     @Bean
     fun logFilter(): FilterRegistrationBean<LogFilter> {
-        logger.info("Registering LogFilter filter")
+        LOG.info("Registering LogFilter filter")
         val filterRegistration = FilterRegistrationBean<LogFilter>()
         filterRegistration.filter = LogFilter()
         filterRegistration.order = 1
@@ -43,7 +46,7 @@ class ApplicationConfig {
 
     @Bean
     fun requestTimeFilter(): FilterRegistrationBean<RequestTimeFilter> {
-        logger.info("Registering RequestTimeFilter filter")
+        LOG.info("Registering RequestTimeFilter filter")
         val filterRegistration = FilterRegistrationBean<RequestTimeFilter>()
         filterRegistration.filter = RequestTimeFilter()
         filterRegistration.order = 2

@@ -57,7 +57,11 @@ class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val 
     private fun lagDummyFeatureToggleService(): FeatureToggleService {
         return object : FeatureToggleService {
             override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-                return true;
+                return defaultValue
+                if(unleashEnv == "local"){
+                    return true;
+                }
+                return defaultValue;
             }
         }
     }
