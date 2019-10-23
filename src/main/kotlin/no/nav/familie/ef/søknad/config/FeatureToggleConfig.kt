@@ -58,6 +58,10 @@ class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val 
         return object : FeatureToggleService {
             override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
                 return defaultValue
+                if(unleashEnv == "local"){
+                    return true;
+                }
+                return defaultValue;
             }
         }
     }
