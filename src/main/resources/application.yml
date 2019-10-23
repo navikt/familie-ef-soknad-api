@@ -34,7 +34,10 @@ familie:
         applicationName: ${NAIS_APP_NAME:}
 
 management:
-  endpoint.health.show-details: always
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
   endpoints.web:
     exposure.include: info, health, metrics, prometheus
     base-path: "/internal"
@@ -46,9 +49,7 @@ management:
         enabled: true
     web:
       server:
-        request:
-          autotime:
-            enabled: true
+        auto-time-requests: true
 
 cors:
   allowed_origins:
