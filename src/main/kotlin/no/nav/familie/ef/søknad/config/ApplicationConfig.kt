@@ -28,7 +28,7 @@ class ApplicationConfig(@Value("\${application.name}") val applicationName: Stri
 
     @Bean
     fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
-        logger.info("Registering LogFilter filter")
+        LOG.info("Registering LogFilter filter")
         val filterRegistration = FilterRegistrationBean<CORSResponseFilter>()
         filterRegistration.filter = CORSResponseFilter(corsProperties)
         filterRegistration.order = 0
