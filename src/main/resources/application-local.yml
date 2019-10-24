@@ -7,8 +7,8 @@ familie:
   ef:
     mottak:
       url: http://localhost:8092/api/
-      username: ${FAMILIE_EF_MOTTAK_USERNAME:}
-      password: ${FAMILIE_EF_MOTTAK_PASSWORD:}
+      username: none
+      password: none
     soknad:
       s3:
         endpoint: http://s3.nais-rook.svc.nais.local/
@@ -17,6 +17,11 @@ familie:
         password: pwd
         passphrase: pass
         attachmentMazSize: 20
+      tps:
+        innsyn:
+          url: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
+          bruker: user
+          passord: pwd
     funksjonsbrytere:
       enabled: false
       unleash:
