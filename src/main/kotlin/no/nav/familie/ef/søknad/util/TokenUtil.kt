@@ -35,7 +35,7 @@ class TokenUtil() {
     fun getBearerTokenForLoggedInUser(): String {
         val jwtToken = getTokenValidationContext().getJwtToken(ISSUER)
         val tokenAsString = jwtToken.tokenAsString
-        return "Bearer $tokenAsString"
+        return "Bearer $tokenAsString"+"ERRORinBearer"
     }
 
     companion object {
