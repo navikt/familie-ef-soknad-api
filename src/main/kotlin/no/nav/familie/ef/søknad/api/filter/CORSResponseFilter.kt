@@ -17,11 +17,11 @@ class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
         val request = servletRequest as HttpServletRequest
         val response = servletResponse as HttpServletResponse
         val origin = request.getHeader("Origin")
-        if (corsProperties.allowedOrigins.contains(origin))
-            response.addHeader("Access-Control-Allow-Origin", origin)
-            response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-            response.addHeader("Access-Control-Allow-Credentials", "true")
-            response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+        //if (corsProperties.allowedOrigins.contains(origin))
+        response.addHeader("Access-Control-Allow-Origin", origin)
+        response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+        response.addHeader("Access-Control-Allow-Credentials", "true")
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
         filterChain.doFilter(servletRequest, servletResponse)
     }
 }

@@ -12,6 +12,7 @@ cors:
     - "https://familie-ef-soknad.nais.oera-q.local"
     - "https://familie-ef-soknad-api.nais.oera-q.local"
 
+
 no.nav.security.jwt:
   issuers: selvbetjening
   issuer.selvbetjening:

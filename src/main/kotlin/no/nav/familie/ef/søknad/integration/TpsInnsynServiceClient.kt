@@ -6,7 +6,6 @@ import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
 import no.nav.familie.ef.søknad.util.InnloggingUtils
 import no.nav.familie.http.client.NavHttpHeaders
-import org.eclipse.jetty.http.HttpHeader
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -53,7 +52,7 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
         log.info("consumer id: " + NavHttpHeaders.NAV_CONSUMER_ID.asString())
 
         return HttpHeaders().apply {
-            add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
+           // add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
             add(tpsInnsynConfig.bruker, tpsInnsynConfig.passord)
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
             add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)
