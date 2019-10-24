@@ -45,7 +45,6 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
             add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
-            add(tpsInnsynConfig.brukernavn, tpsInnsynConfig.passord)
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
             add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)
 

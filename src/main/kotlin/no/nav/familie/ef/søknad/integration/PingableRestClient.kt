@@ -8,6 +8,9 @@ import java.net.URI
 
 abstract class PingableRestClient(operations: RestOperations, val pingUri: URI) : AbstractRestClient(operations) {
 
+    fun pingURI(): URI {
+        return pingUri
+    }
 
     open fun ping() {
         val respons: ResponseEntity<Any> = operations.getForEntity(pingUri)

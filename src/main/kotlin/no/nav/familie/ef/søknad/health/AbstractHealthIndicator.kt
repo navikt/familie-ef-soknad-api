@@ -17,7 +17,7 @@ internal abstract class AbstractHealthIndicator(private val pingable: PingableRe
 
 
     override fun health(): Health {
-        logger.info("Pinging ${pingable.pingURI()}")
+        logger.info("Kjører ${pingable.pingURI()}")
         return try {
             pingable.ping()
             successCounter.increment()
