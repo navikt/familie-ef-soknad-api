@@ -8,17 +8,22 @@ import no.nav.familie.ef.søknad.featuretoggle.ByEnvironmentStrategy
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+import java.net.URI
 
-@Configuration
-class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val enabled: Boolean,
-                          @Value("\${familie.ef.funksjonsbrytere.unleash.apiUrl:}") val unleashApiUrl: String,
-                          @Value("\${familie.ef.funksjonsbrytere.unleash.environment:}") val unleashEnv: String,
-                          @Value("\${familie.ef.funksjonsbrytere.unleash.applicationName:}") val unleashAppName: String) {
+@ConfigurationProperties("funksjonsbrytere")
+@ConstructorBinding
+class FeatureToggleConfig(private val enabled: Boolean,
+                          val unleash: Unleash) {
 
-    protected val log: Logger = LoggerFactory.getLogger(this::class.java)
+    @ConstructorBinding
+    data class Unleash(val uri: URI,
+                       val environment: String,
+                       val applicationName: String)
+
+    private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
     @Bean
     fun featureToggle(): FeatureToggleService =
@@ -32,10 +37,10 @@ class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val 
 
     private fun lagUnleashFeatureToggleService(): FeatureToggleService {
         val unleash = DefaultUnleash(UnleashConfig.builder()
-                .appName(unleashAppName)
-                .unleashAPI(unleashApiUrl)
-                .unleashContextProvider(lagUnleashContextProvider())
-                .build(), ByEnvironmentStrategy())
+                                             .appName(unleash.applicationName)
+                                             .unleashAPI(unleash.uri)
+                                             .unleashContextProvider(lagUnleashContextProvider())
+                                             .build(), ByEnvironmentStrategy())
 
         return object : FeatureToggleService {
             override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
@@ -48,8 +53,8 @@ class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val 
         return UnleashContextProvider {
             UnleashContext.builder()
                     //.userId("a user") // Må legges til en gang i fremtiden
-                    .environment(unleashEnv)
-                    .appName(unleashAppName)
+                    .environment(unleash.environment)
+                    .appName(unleash.applicationName)
                     .build()
         }
     }
@@ -57,11 +62,10 @@ class FeatureToggleConfig(@Value("\${familie.ef.funksjonsbrytere.enabled}") val 
     private fun lagDummyFeatureToggleService(): FeatureToggleService {
         return object : FeatureToggleService {
             override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-                return defaultValue
-                if(unleashEnv == "local"){
-                    return true;
+                if(unleash.environment == "local"){
+                    return true
                 }
-                return defaultValue;
+                return defaultValue
             }
         }
     }
