@@ -34,7 +34,7 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
     override fun ping() {
         val httpHeaders = HttpHeaders().apply {
-            add(tpsInnsynConfig.brukernavn, tpsInnsynConfig.passord)
+            add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)
         }
         val respons: ResponseEntity<Any> = operations.exchange(pingUri, HttpMethod.GET, HttpEntity(null, httpHeaders))
         if (!respons.statusCode.is2xxSuccessful) {
