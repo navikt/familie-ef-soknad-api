@@ -24,11 +24,8 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
             operations: RestOperations)
     : PingableRestClient(operations, tpsInnsynConfig.pingUri) {
 
-
-
     fun hentPersoninfo(): PersoninfoDto {
-        val httpHeaders = httpHeaders()
-        return getForEntity(tpsInnsynConfig.personUri, httpHeaders)
+        return getForEntity(tpsInnsynConfig.personUri, httpHeaders())
     }
 
     fun hentBarn(): List<RelasjonDto> {

@@ -35,7 +35,6 @@ abstract class AbstractRestClient(protected val operations: RestOperations) {
 
     protected fun <T> validerOgPakkUt(respons: ResponseEntity<T>, uri: URI): T {
         log.trace(confidential, "Respons: {}", respons)
-        log.info( "I Valider og plukk - Respons.statusCode: ", respons.statusCode)
         if (!respons.statusCode.is2xxSuccessful) {
             log.info("Kall mot $uri feilet: ${respons.body}")
             throw HttpServerErrorException(respons.statusCode)
