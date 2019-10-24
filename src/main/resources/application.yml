@@ -10,7 +10,7 @@ familie:
     mottak:
       uri: https://api-gw.oera.no/familie-ef-mottak/api/
       brukernavn: ${FAMILIE_EF_MOTTAK_BRUKERNAVN}
-      password: ${FAMILIE_EF_MOTTAK_PASSWORD}
+      passord: ${FAMILIE_EF_MOTTAK_PASSWORD}
 regelverk:
   alder:
     maks: 18
