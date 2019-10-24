@@ -46,10 +46,13 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
     private fun httpHeaders(): HttpHeaders {
 
-        log.info(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
+        log.info(HttpHeader.AUTHORIZATION.asString())
+        log.info(InnloggingUtils.generateBearerTokenForLoggedInUser())
         log.info(tpsInnsynConfig.bruker)
-        log.info(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
-        log.info(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)
+        log.info(NavHttpHeaders.NAV_PERSONIDENT.asString())
+        log.info( InnloggingUtils.hentFnrFraToken())
+        log.info( applicationConfig.applicationName)
+        log.info(NavHttpHeaders.NAV_CONSUMER_ID.asString())
 
         return HttpHeaders().apply {
             add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
