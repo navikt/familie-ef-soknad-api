@@ -27,7 +27,8 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
 
     fun hentPersoninfo(): PersoninfoDto {
-        return getForEntity(tpsInnsynConfig.personUri, httpHeaders())
+        val httpHeaders = httpHeaders()
+        return getForEntity(tpsInnsynConfig.personUri, httpHeaders)
     }
 
     fun hentBarn(): List<RelasjonDto> {
@@ -46,13 +47,10 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
     private fun httpHeaders(): HttpHeaders {
 
-        log.info(HttpHeader.AUTHORIZATION.asString())
-        log.info(InnloggingUtils.generateBearerTokenForLoggedInUser())
-        log.info(tpsInnsynConfig.bruker)
-        log.info(NavHttpHeaders.NAV_PERSONIDENT.asString())
-        log.info( InnloggingUtils.hentFnrFraToken())
-        log.info( applicationConfig.applicationName)
-        log.info(NavHttpHeaders.NAV_CONSUMER_ID.asString())
+        log.info("tpsInnsyn bruker: " + tpsInnsynConfig.bruker)
+        log.info("PersonIdent: " +NavHttpHeaders.NAV_PERSONIDENT.asString())
+        log.info("Application name: " + applicationConfig.applicationName)
+        log.info("consumer id: " + NavHttpHeaders.NAV_CONSUMER_ID.asString())
 
         return HttpHeaders().apply {
             add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
