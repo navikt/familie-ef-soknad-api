@@ -14,9 +14,7 @@ import org.springframework.web.client.RestOperations
 @SpringBootConfiguration
 class ApplicationConfig(@Value("\${application.name}") val applicationName: String) {
 
-
-
-    private val LOG = LoggerFactory.getLogger(ApplicationConfig::class.java)
+    private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
 
     @Bean
     fun restTemplate(): RestOperations =
@@ -28,7 +26,7 @@ class ApplicationConfig(@Value("\${application.name}") val applicationName: Stri
 
     @Bean
     fun logFilter(): FilterRegistrationBean<LogFilter> {
-        LOG.info("Registering LogFilter filter")
+        logger.info("Registering LogFilter filter")
         val filterRegistration = FilterRegistrationBean<LogFilter>()
         filterRegistration.filter = LogFilter()
         filterRegistration.order = 1
@@ -37,7 +35,7 @@ class ApplicationConfig(@Value("\${application.name}") val applicationName: Stri
 
     @Bean
     fun requestTimeFilter(): FilterRegistrationBean<RequestTimeFilter> {
-        LOG.info("Registering RequestTimeFilter filter")
+        logger.info("Registering RequestTimeFilter filter")
         val filterRegistration = FilterRegistrationBean<RequestTimeFilter>()
         filterRegistration.filter = RequestTimeFilter()
         filterRegistration.order = 2

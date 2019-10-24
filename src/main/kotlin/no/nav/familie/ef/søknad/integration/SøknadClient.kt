@@ -19,7 +19,7 @@ internal class SøknadClient(operations: RestOperations,
 
         val headers = HttpHeaders()
         headers.contentType = MediaType.APPLICATION_JSON
-        headers.set(config.username, config.password)
+        headers.set(config.brukernavn, config.passord)
         val body = ObjectMapper().writeValueAsString(søknadDto)
         val entity = HttpEntity(body, headers)
 

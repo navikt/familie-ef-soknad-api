@@ -30,7 +30,7 @@ internal class OppslagService(private val client: TpsInnsynServiceClient,
         }
         val alder = Period.between(fødselsdato, LocalDate.now())
         val alderIÅr = alder.years
-        return alderIÅr <= regelverkConfig.maksAlderIÅrBarn
+        return alderIÅr <= regelverkConfig.alder.maks
     }
 
 }

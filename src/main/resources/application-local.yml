@@ -1,37 +1,34 @@
 server:
   port: 8091
-  servlet:
-    context-path: /
 
 familie:
   ef:
     mottak:
-      url: http://localhost:8092/api/
-      username: none
-      password: none
-    soknad:
-      s3:
-        endpoint: http://s3.nais-rook.svc.nais.local/
-        region: us-east-1
-        username: user
-        password: pwd
-        passphrase: pass
-        attachmentMazSize: 20
-      tps:
-        innsyn:
-          url: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
-          bruker: user
-          passord: pwd
-    funksjonsbrytere:
-      enabled: false
-      unleash:
-        apiUrl: http://localhost:4242/api
-        environment: local
-        applicationName: familie-ef-soknad-api
+      uri: http://localhost:8092/api/
+      brukernavn: none
+      passord: none
+tps:
+  innsyn:
+    uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
+    brukernavn: user
+    passord: pwd
+s3:
+  uri: http://s3.nais-rook.svc.nais.local/
+  region: us-east-1
+  brukernavn: user
+  passord: pwd
+  passordfrase: pass
+  maxMbVedlegg: 20
+funksjonsbrytere:
+  enabled: false
+  unleash:
+    uri: http://localhost:4242/api
+    environment: local
+    applicationName: familie-ef-soknad-api
 
 cors:
   allowed_origins:
     - "http://localhost:3000"
 
-logging:
-  config: classpath:logback-spring-test.xml
+#logging:
+#  config: classpath:logback-spring-test.xml

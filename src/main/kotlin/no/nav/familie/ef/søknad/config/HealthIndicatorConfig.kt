@@ -1,7 +1,8 @@
 package no.nav.familie.ef.søknad.config
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Configuration
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.ConstructorBinding
 
-@Configuration
-internal data class HealthIndicatorConfig(@Value("\${familie.ef.soknad.health.indicator.detailed}") val detailed: Boolean)
+@ConfigurationProperties(prefix = "health.indicator")
+@ConstructorBinding
+internal data class HealthIndicatorConfig(val detailed: Boolean)
