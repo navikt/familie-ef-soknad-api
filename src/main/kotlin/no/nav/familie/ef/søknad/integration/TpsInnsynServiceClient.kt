@@ -28,6 +28,9 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
     fun hentPersoninfo(): PersoninfoDto {
         val httpHeaders = httpHeaders()
+
+        log.info("URI: "+ tpsInnsynConfig.personUri)
+
         return getForEntity(tpsInnsynConfig.personUri, httpHeaders)
     }
 
@@ -55,6 +58,7 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
         return HttpHeaders().apply {
             add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
             add(tpsInnsynConfig.bruker, tpsInnsynConfig.passord)
+            add(NavHttpHeaders.NAV_CALLID.asString(), "srgdrg")
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
             add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)
 
