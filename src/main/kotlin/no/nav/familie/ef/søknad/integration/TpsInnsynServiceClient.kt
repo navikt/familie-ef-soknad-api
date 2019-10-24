@@ -28,9 +28,6 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
     fun hentPersoninfo(): PersoninfoDto {
         val httpHeaders = httpHeaders()
-
-        log.info("URI: "+ tpsInnsynConfig.personUri)
-
         return getForEntity(tpsInnsynConfig.personUri, httpHeaders)
     }
 
@@ -49,19 +46,13 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
     }
 
     private fun httpHeaders(): HttpHeaders {
-
-        log.info("tpsInnsyn bruker: " + tpsInnsynConfig.bruker)
-        log.info("PersonIdent: " +NavHttpHeaders.NAV_PERSONIDENT.asString())
-        log.info("Application name: " + applicationConfig.applicationName)
-        log.info("consumer id: " + NavHttpHeaders.NAV_CONSUMER_ID.asString())
-
         return HttpHeaders().apply {
             add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
             add(tpsInnsynConfig.bruker, tpsInnsynConfig.passord)
-            add(NavHttpHeaders.NAV_CALLID.asString(), "srgdrg")
+            log.warn("Vi bruker hardkodet (påkrevd) callId! Dette kan med fordel endres når call-id er klart")
+            add(NavHttpHeaders.NAV_CALLID.asString(), "changeMe")
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
             add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)
-
         }
     }
 

@@ -23,19 +23,13 @@ class TokenUtil() {
         return validationContext.getClaims(ISSUER)
     }
 
-    private fun getTokenValidationContext(): TokenValidationContext {
+    fun getTokenValidationContext(): TokenValidationContext {
         return RequestContextHolder.currentRequestAttributes().getAttribute(getContextHolderName(), 0) as TokenValidationContext
     }
 
     private fun getContextHolderName(): String {
         val holder = "no.nav.security.token.support.spring.SpringTokenValidationContextHolder"
         return TOKEN_VALIDATION_CONTEXT_ATTRIBUTE ?: holder
-    }
-
-    fun getBearerTokenForLoggedInUser(): String {
-        val jwtToken = getTokenValidationContext().getJwtToken(ISSUER)
-        val tokenAsString = jwtToken.tokenAsString
-        return "Bearer $tokenAsString"
     }
 
     companion object {

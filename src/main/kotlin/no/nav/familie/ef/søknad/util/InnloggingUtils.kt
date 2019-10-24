@@ -3,7 +3,7 @@ package no.nav.familie.ef.søknad.util
 
 object InnloggingUtils {
 
-    private const val selvbetjening = "selvbetjening"
+    private const val ISSUER = "selvbetjening"
 
 
 
@@ -12,8 +12,9 @@ object InnloggingUtils {
     }
 
     fun generateBearerTokenForLoggedInUser(): String {
-        return TokenUtil().getBearerTokenForLoggedInUser()
-
+        val jwtToken = TokenUtil().getTokenValidationContext().getJwtToken(ISSUER)
+        val tokenAsString = jwtToken.tokenAsString
+        return "Bearer $tokenAsString"
     }
 
 }
