@@ -1,35 +1,36 @@
 package no.nav.familie.ef.søknad.service
 
-import no.nav.familie.ef.søknad.api.dto.AktørId
-import no.nav.familie.ef.søknad.api.dto.Person
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
-import no.nav.familie.ef.søknad.integration.OppslagClient
-import no.nav.familie.ef.søknad.mapper.PersonMapper
+import no.nav.familie.ef.søknad.config.RegelverkConfig
+import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import java.time.LocalDate
+import java.time.Period
 
 @Service
 @ConditionalOnProperty(name = ["stub.oppslag"], havingValue = "false", matchIfMissing = true)
-class OppslagService (private val client: OppslagClient) : Oppslag {
-
-    override fun hentPerson(): Person {
-        return PersonMapper.mapTilEkstern(client.hentPerson())
-    }
+internal class OppslagService(private val client: TpsInnsynServiceClient,
+                              private val regelverkConfig: RegelverkConfig) : Oppslag {
 
     override fun hentSøkerinfo(): Søkerinfo {
-        return SøkerinfoMapper.mapTilEkstern(client.hentSøkerInfo())
+        val personinfoDto = client.hentPersoninfo()
+        val barn = client.hentBarn()
+
+        val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) && it.harSammeAdresse }
+
+        return SøkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn)
     }
 
-    @Cacheable(cacheNames = ["aktor"])
-    override fun hentAktørId(fnr: String): AktørId {
-        return client.hentAktørId(fnr)
-    }
 
-    override fun toString(): String {
-        return "OppslagTjeneste(connection=$client)"
+    fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {
+        if (fødselsdato == null) {
+            return false
+        }
+        val alder = Period.between(fødselsdato, LocalDate.now())
+        val alderIÅr = alder.years
+        return alderIÅr <= regelverkConfig.maksAlderIÅrBarn
     }
-
 
 }

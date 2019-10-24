@@ -1,3 +1,5 @@
+application:
+  name: familie-ef-soknad-api
 server:
   port: 8000
   servlet:
@@ -45,5 +47,3 @@ management:
 
 cors:
   allowed_origins:
-    - "https://familie-ef-soknad.nais.oera.no"
-    - "https://familie-ef-soknad-api.nais.oera.no"

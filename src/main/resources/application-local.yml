@@ -16,6 +16,11 @@ s3:
   password: pwd
   passphrase: pass
   attachmentMazSize: 20
+tps:
+  innsyn:
+    url: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
+    bruker: user
+    passord: pwd
 funksjonsbrytere:
   enabled: false
   unleashApiUrl: http://localhost:4242/api
@@ -26,5 +31,5 @@ cors:
   allowed_origins:
     - "http://localhost:3000"
 
-#logging:
-#  config: classpath:logback-spring-test.xml
+logging:
+  config: classpath:logback-spring-test.xml

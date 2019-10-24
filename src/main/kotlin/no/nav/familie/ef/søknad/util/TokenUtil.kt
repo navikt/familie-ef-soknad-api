@@ -1,9 +1,11 @@
 package no.nav.familie.ef.søknad.util
 
 import com.nimbusds.jwt.JWTClaimsSet
+import no.nav.familie.ef.søknad.service.ClamAvVirusScanner
 import no.nav.security.oidc.context.OIDCClaims
 import no.nav.security.oidc.context.OIDCValidationContext
 import no.nav.security.oidc.exceptions.OIDCTokenValidatorException
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -27,6 +29,7 @@ class TokenUtil(
     }
 
     private fun claims(): OIDCClaims? {
+        logger.info("context", context())
         return context()?.getClaims(ISSUER)
     }
 
@@ -34,6 +37,7 @@ class TokenUtil(
         return OIDCValidationContext()
 //  TODO      return ctxHolder.oidcValidationContext
     }
+    private val logger = LoggerFactory.getLogger(ClamAvVirusScanner::class.java)
 
     companion object {
 
