@@ -10,15 +10,16 @@ import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.context.annotation.Bean
+import java.net.URI
 
 @ConfigurationProperties("s3")
 @ConstructorBinding
-data class S3StorageConfiguration(val endpoint: String,
+data class S3StorageConfiguration(val uri: URI,
                                   val region: String,
-                                  val username: String,
-                                  val password: String,
-                                  val passphrase: String,
-                                  val attachmentMazSize: Int) {
+                                  val brukernavn: String,
+                                  val passord: String,
+                                  val passordfrase: String,
+                                  val maxMbVedlegg: Int) {
 
     @Bean
     fun s3(endpointConfiguration: AwsClientBuilder.EndpointConfiguration,
@@ -33,13 +34,13 @@ data class S3StorageConfiguration(val endpoint: String,
 
     @Bean
     fun endpointConfiguration(): AwsClientBuilder.EndpointConfiguration {
-        log.info("Initializing s3 endpoint configuration with endpoint {} and region {}", endpoint, region)
-        return AwsClientBuilder.EndpointConfiguration(endpoint, region)
+        log.info("Initializing s3 endpoint configuration with endpoint {} and region {}", uri, region)
+        return AwsClientBuilder.EndpointConfiguration(uri.toString(), region)
     }
 
     @Bean
     fun credentialsProvider(): AWSCredentialsProvider {
-        val awsCredentials = BasicAWSCredentials(username, password)
+        val awsCredentials = BasicAWSCredentials(brukernavn, passord)
         return AWSStaticCredentialsProvider(awsCredentials)
     }
 

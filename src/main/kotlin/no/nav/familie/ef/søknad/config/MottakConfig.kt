@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.config
 
+import no.nav.familie.ef.søknad.util.URIUtil
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.web.util.DefaultUriBuilderFactory
@@ -7,13 +8,13 @@ import java.net.URI
 
 @ConfigurationProperties("familie.ef.mottak")
 @ConstructorBinding
-internal data class MottakConfig(val url: String,
-                                 val username: String,
-                                 val password: String) {
+internal data class MottakConfig(val uri: URI,
+                                 val brukernavn: String,
+                                 val passord: String) {
 
-    val sendInnUri: URI get() = DefaultUriBuilderFactory().uriString(url).path(PATH_SEND_INN).build()
+    val sendInnUri: URI get() = URIUtil.uri(uri, PATH_SEND_INN)
 
-    val pingUri: URI get() = DefaultUriBuilderFactory().uriString(url).path(PATH_PING).build()
+    val pingUri: URI get() = URIUtil.uri(uri, PATH_PING)
 
     companion object {
         private const val PATH_SEND_INN = "soknad/sendInn"

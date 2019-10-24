@@ -8,32 +8,36 @@ server:
 familie:
   ef:
     mottak:
-      url: https://api-gw.oera.no/familie-ef-mottak/api/
-      username: ${FAMILIE_EF_MOTTAK_USERNAME}
+      uri: https://api-gw.oera.no/familie-ef-mottak/api/
+      brukernavn: ${FAMILIE_EF_MOTTAK_BRUKERNAVN}
       password: ${FAMILIE_EF_MOTTAK_PASSWORD}
-    oppslag:
-      url: url
-      key: key
-
+regelverk:
+  alder:
+    maks: 18
 health:
   indicator:
     detailed: true
+tps:
+  innsyn:
+    uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
+    brukernavn: ${FAMILIE_EF_SOKNAD_TPS_INNSYN_PROXY_USER} #<Ligger i vault>
+    passord: ${FAMILIE_EF_SOKNAD_TPS_INNSYN_PROXY_PASSWORD} #<Ligger i vault>
 s3:
-  endpoint: http://s3.nais-rook
+  uri: http://s3.nais-rook
   region: us-east-1
-  username: nousername #${FAMILIE_EF_SOKNAD_S3_USERNAME}#<Ligger i vault>
-  password: nopwd #${FAMILIE_EF_SOKNAD_S3_PASSWORD}#<Ligger i vault>
-  passphrase: nopwd #${FAMILIE_EF_SOKNAD_S3_PASSPHRASE}#<Ligger i vault>
-  attachmentMazSize: 20
+  brukernavn: ${FAMILIE_EF_SOKNAD_S3_BRUKERNAVN}#<Ligger i vault>
+  passord: ${FAMILIE_EF_SOKNAD_S3_PASSORD}#<Ligger i vault>
+  passordfrase: ${FAMILIE_EF_SOKNAD_S3_PASSORDFRASE}#<Ligger i vault>
+  maxMbVedlegg: 20
 virus:
   enabled: true
   uri: http://clamav.nais.svc.nais.local/scan
 funksjonsbrytere:
   enabled: true
   unleash:
-    apiUrl: https://unleashproxy.nais.oera.no/api/
-    env: ${NAIS_CLUSTER_NAME:}
-    appName: ${NAIS_APP_NAME:}
+    uri: https://unleashproxy.nais.oera.no/api/
+    environment: ${NAIS_CLUSTER_NAME:}
+    applicationName: ${NAIS_APP_NAME:}
 
 management:
   endpoint.health.show-details: always

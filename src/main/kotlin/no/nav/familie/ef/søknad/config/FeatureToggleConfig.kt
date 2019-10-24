@@ -11,16 +11,17 @@ import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.context.annotation.Bean
+import java.net.URI
 
 @ConfigurationProperties("funksjonsbrytere")
 @ConstructorBinding
-class FeatureToggleConfig(val enabled: Boolean,
+class FeatureToggleConfig(private val enabled: Boolean,
                           val unleash: Unleash) {
 
     @ConstructorBinding
-    data class Unleash(val apiUrl: String,
-                       val env: String,
-                       val appName: String)
+    data class Unleash(val uri: URI,
+                       val environment: String,
+                       val applicationName: String)
 
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
@@ -36,8 +37,8 @@ class FeatureToggleConfig(val enabled: Boolean,
 
     private fun lagUnleashFeatureToggleService(): FeatureToggleService {
         val unleash = DefaultUnleash(UnleashConfig.builder()
-                                             .appName(unleash.appName)
-                                             .unleashAPI(unleash.apiUrl)
+                                             .appName(unleash.applicationName)
+                                             .unleashAPI(unleash.uri)
                                              .unleashContextProvider(lagUnleashContextProvider())
                                              .build(), ByEnvironmentStrategy())
 
@@ -52,8 +53,8 @@ class FeatureToggleConfig(val enabled: Boolean,
         return UnleashContextProvider {
             UnleashContext.builder()
                     //.userId("a user") // Må legges til en gang i fremtiden
-                    .environment(unleash.env)
-                    .appName(unleash.appName)
+                    .environment(unleash.environment)
+                    .appName(unleash.applicationName)
                     .build()
         }
     }
@@ -61,10 +62,10 @@ class FeatureToggleConfig(val enabled: Boolean,
     private fun lagDummyFeatureToggleService(): FeatureToggleService {
         return object : FeatureToggleService {
             override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-                if(unleash.env == "local"){
-                    return true;
+                if(unleash.environment == "local"){
+                    return true
                 }
-                return defaultValue;
+                return defaultValue
             }
         }
     }

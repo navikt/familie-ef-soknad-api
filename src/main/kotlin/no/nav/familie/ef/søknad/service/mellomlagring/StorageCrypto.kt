@@ -6,19 +6,17 @@ import org.springframework.stereotype.Component
 import javax.xml.bind.DatatypeConverter.printHexBinary
 
 @Component
-class StorageCrypto(configuration: S3StorageConfiguration) {
-
-    private val encryptionPassphrase = configuration.passphrase
+class StorageCrypto(private val configuration: S3StorageConfiguration) {
 
     fun encryptDirectoryName(plaintext: String): String {
         return printHexBinary(encrypt(plaintext, plaintext).toByteArray())
     }
 
     fun encrypt(plaintext: String, fnr: String): String {
-        return Crypto(encryptionPassphrase, fnr).encrypt(plaintext)
+        return Crypto(configuration.passordfrase, fnr).encrypt(plaintext)
     }
 
     fun decrypt(encrypted: String, fnr: String): String {
-        return Crypto(encryptionPassphrase, fnr).decrypt(encrypted)
+        return Crypto(configuration.passordfrase, fnr).decrypt(encrypted)
     }
 }

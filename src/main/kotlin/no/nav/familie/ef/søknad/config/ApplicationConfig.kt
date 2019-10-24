@@ -6,14 +6,12 @@ import no.nav.familie.log.filter.LogFilter
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringBootConfiguration
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.web.client.RestOperations
 
 @SpringBootConfiguration
-@EnableConfigurationProperties
 class ApplicationConfig(@Value("\${application.name}") val applicationName: String) {
 
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
