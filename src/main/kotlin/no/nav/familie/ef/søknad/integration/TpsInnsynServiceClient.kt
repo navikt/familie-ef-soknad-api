@@ -44,7 +44,8 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
-            add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
+            val bearerTokenForLoggedInUser = "Bearer " +InnloggingUtils.getBearerTokenForLoggedInUser()
+            add(HttpHeader.AUTHORIZATION.asString(), bearerTokenForLoggedInUser)
             add(tpsInnsynConfig.bruker, tpsInnsynConfig.passord)
             log.warn("Vi bruker hardkodet (påkrevd) callId! Dette kan med fordel endres når call-id er klart")
             add(NavHttpHeaders.NAV_CALLID.asString(), "changeMe")

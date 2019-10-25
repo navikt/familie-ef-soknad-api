@@ -133,6 +133,8 @@
             <artifactId>token-validation-spring</artifactId>
             <version>${token-validation-spring.version}</version>
         </dependency>
+
+        <!-- Test -->
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>token-validation-test-support</artifactId>
@@ -140,7 +142,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Test -->
         <dependency>
             <groupId>io.mockk</groupId>
             <artifactId>mockk</artifactId>
