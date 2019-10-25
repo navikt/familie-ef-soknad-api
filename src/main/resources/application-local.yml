@@ -30,8 +30,8 @@ cors:
   allowed_origins:
     - "http://localhost:3000"
 
-#logging:
-#  config: classpath:logback-spring-test.xml
+logging:
+  config: classpath:logback-spring-test.xml
 
 no.nav.security.jwt:
   issuers: selvbetjening
@@ -39,3 +39,4 @@ no.nav.security.jwt:
     discoveryurl: http://metadata
     accepted_audience: aud-localhost
     cookie_name: localhost-idtoken
+    proxyurl:
