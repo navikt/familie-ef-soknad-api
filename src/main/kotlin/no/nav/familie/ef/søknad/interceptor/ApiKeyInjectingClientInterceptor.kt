@@ -18,10 +18,10 @@ class ApiKeyInjectingClientInterceptor(private val apiKeys: Map<URI, Pair<String
     override fun intercept(request: HttpRequest, body: ByteArray, execution: ClientHttpRequestExecution): ClientHttpResponse {
         val apiKey = apiKeyFor(request.uri)
         if (apiKey != null) {
-            logger.trace("Injisert API-key som header {} for {}", apiKey.first, request.uri)
+            logger.info("Injisert API-key som header {} for {}", apiKey.first, request.uri)
             request.headers.add(apiKey.first, apiKey.second)
         } else {
-            logger.trace("Ingen API-key ble funnet for {} (sjekket {} konfigurasjoner)", request.uri,
+            logger.info("Ingen API-key ble funnet for {} (sjekket {} konfigurasjoner)", request.uri,
                          apiKeys.values.size)
         }
         return execution.execute(request, body)
