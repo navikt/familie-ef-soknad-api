@@ -1,10 +1,10 @@
 familie:
   ef:
     mottak:
-      uri: https://api-gw-q0.oera.no/familie-ef-mottak/
+      uri: https://api-gw-q0.oera.no/familie-ef-mottak/api/
 tps:
   innsyn:
-    uri:  https://api-gw-q0.oera.no/tps-proxy/
+    uri:  https://api-gw-q0.oera.no/tps-proxy/api/v1/innsyn/
 
 cors:
   allowed_origins:

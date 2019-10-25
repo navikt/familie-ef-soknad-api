@@ -22,7 +22,7 @@ internal class TpsInnsynServiceClient @Autowired
 constructor(val tpsInnsynConfig: TpsInnsynConfig,
             val applicationConfig: ApplicationConfig,
             operations: RestOperations)
-    : PingableRestClient(operations, tpsInnsynConfig.pingUri) {
+    : AbstractRestClient(operations) {
 
     fun hentPersoninfo(): PersoninfoDto {
         return getForEntity(tpsInnsynConfig.personUri, httpHeaders())
@@ -32,22 +32,11 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
         return getForEntity(tpsInnsynConfig.barnUri, httpHeaders())
     }
 
-    override fun ping() {
-        val httpHeaders = HttpHeaders().apply {
-            add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)
-        }
-        val respons: ResponseEntity<String> = operations.exchange(pingUri, HttpMethod.GET, HttpEntity(null, httpHeaders))
-        if (!respons.statusCode.is2xxSuccessful) {
-            throw HttpServerErrorException(respons.statusCode)
-        }
-    }
-
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
             add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
             add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)
-
         }
     }
 
