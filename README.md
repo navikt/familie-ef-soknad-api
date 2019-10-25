@@ -8,3 +8,6 @@ http://localhost:[app-port]/[app-contextroot]/local/cookie?redirect=/[app-contex
 Eksempel: 
 http://localhost:8091/local/cookie?redirect=/api/ping
 
+
+## Kjør ApplicationLocalLauncher med innsyn-mock 
+Inkluder profil 'mock-tps' når applikasjon startes
