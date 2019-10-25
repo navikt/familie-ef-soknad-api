@@ -1,20 +1,20 @@
 package no.nav.familie.ef.søknad.config
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
+import no.nav.familie.ef.søknad.util.URIUtil
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.web.util.DefaultUriBuilderFactory
 import java.net.URI
 
-// TODO Endres til ConfigurationProperties ved release av SpringBoot 2.2.0
-//@ConfigurationProperties(prefix = "familie.ef.mottak")
-@Component
-internal data class MottakConfig(@Value("\${familie.ef.mottak.url}") val url: String,
-                                 @Value("\${familie.ef.mottak.username}") val username: String,
-                                 @Value("\${familie.ef.mottak.password}") val password: String) {
+@ConfigurationProperties("familie.ef.mottak")
+@ConstructorBinding
+internal data class MottakConfig(val uri: URI,
+                                 val brukernavn: String,
+                                 val passord: String) {
 
-    val sendInnUri: URI get() = DefaultUriBuilderFactory().uriString(url).path(PATH_SEND_INN).build()
+    val sendInnUri: URI get() = URIUtil.uri(uri, PATH_SEND_INN)
 
-    val pingUri: URI get() = DefaultUriBuilderFactory().uriString(url).path(PATH_PING).build()
+    val pingUri: URI get() = URIUtil.uri(uri, PATH_PING)
 
     companion object {
         private const val PATH_SEND_INN = "soknad/sendInn"

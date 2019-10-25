@@ -7,18 +7,19 @@ import com.amazonaws.client.builder.AwsClientBuilder
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
+import java.net.URI
 
-@Configuration
-//@Profile("!dev")
-class S3StorageConfiguration(@Value("\${familie.ef.soknad.s3.endpoint}") val endpoint: String,
-                             @Value("\${familie.ef.soknad.s3.region}") val region: String,
-                             @Value("\${familie.ef.soknad.s3.username}") val username: String,
-                             @Value("\${familie.ef.soknad.s3.password}") val password: String,
-                             @Value("\${familie.ef.soknad.s3.passphrase}") val passphrase: String,
-                             @Value("\${familie.ef.soknad.s3.attachmentMazSize}") val attachmentMazSize: Int) {
+@ConfigurationProperties("s3")
+@ConstructorBinding
+data class S3StorageConfiguration(val uri: URI,
+                                  val region: String,
+                                  val brukernavn: String,
+                                  val passord: String,
+                                  val passordfrase: String,
+                                  val maxMbVedlegg: Int) {
 
     @Bean
     fun s3(endpointConfiguration: AwsClientBuilder.EndpointConfiguration,
@@ -33,13 +34,13 @@ class S3StorageConfiguration(@Value("\${familie.ef.soknad.s3.endpoint}") val end
 
     @Bean
     fun endpointConfiguration(): AwsClientBuilder.EndpointConfiguration {
-        log.info("Initializing s3 endpoint configuration with endpoint {} and region {}", endpoint, region)
-        return AwsClientBuilder.EndpointConfiguration(endpoint, region)
+        log.info("Initializing s3 endpoint configuration with endpoint {} and region {}", uri, region)
+        return AwsClientBuilder.EndpointConfiguration(uri.toString(), region)
     }
 
     @Bean
     fun credentialsProvider(): AWSCredentialsProvider {
-        val awsCredentials = BasicAWSCredentials(username, password)
+        val awsCredentials = BasicAWSCredentials(brukernavn, passord)
         return AWSStaticCredentialsProvider(awsCredentials)
     }
 

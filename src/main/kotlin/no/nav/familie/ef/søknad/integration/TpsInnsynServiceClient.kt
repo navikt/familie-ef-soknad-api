@@ -34,7 +34,7 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
     override fun ping() {
         val httpHeaders = HttpHeaders().apply {
-            add(tpsInnsynConfig.bruker, tpsInnsynConfig.passord)
+            add(tpsInnsynConfig.brukernavn, tpsInnsynConfig.passord)
         }
         val respons: ResponseEntity<Any> = operations.exchange(pingUri, HttpMethod.GET, HttpEntity(null, httpHeaders))
         if (!respons.statusCode.is2xxSuccessful) {
@@ -46,7 +46,7 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
         return HttpHeaders().apply {
             val bearerTokenForLoggedInUser = "Bearer " +InnloggingUtils.getBearerTokenForLoggedInUser()
             add(HttpHeader.AUTHORIZATION.asString(), bearerTokenForLoggedInUser)
-            add(tpsInnsynConfig.bruker, tpsInnsynConfig.passord)
+            add(tpsInnsynConfig.brukernavn, tpsInnsynConfig.passord)
             log.warn("Vi bruker hardkodet (påkrevd) callId! Dette kan med fordel endres når call-id er klart")
             add(NavHttpHeaders.NAV_CALLID.asString(), "changeMe")
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
