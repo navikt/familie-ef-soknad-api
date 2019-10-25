@@ -36,7 +36,7 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
         val httpHeaders = HttpHeaders().apply {
             add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)
         }
-        val respons: ResponseEntity<Any> = operations.exchange(pingUri, HttpMethod.GET, HttpEntity(null, httpHeaders))
+        val respons: ResponseEntity<String> = operations.exchange(pingUri, HttpMethod.GET, HttpEntity(null, httpHeaders))
         if (!respons.statusCode.is2xxSuccessful) {
             throw HttpServerErrorException(respons.statusCode)
         }

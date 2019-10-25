@@ -32,7 +32,7 @@ internal class ApplicationConfig(@Value("\${application.name}") val applicationN
 
     @Bean
     fun restTemplate(vararg interceptors: ClientHttpRequestInterceptor): RestOperations {
-        logger.info("Registrerer interceptorer {}", Arrays.toString(interceptors))
+        logger.info("Registrerer interceptors {}", interceptors.contentToString())
         return RestTemplateBuilder()
                 .interceptors(*interceptors)
                 .build()
