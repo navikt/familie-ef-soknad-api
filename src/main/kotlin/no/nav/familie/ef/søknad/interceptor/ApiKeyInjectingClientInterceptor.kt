@@ -13,7 +13,6 @@ class ApiKeyInjectingClientInterceptor(private val apiKeys: Map<URI, Pair<String
 
     private val logger = LoggerFactory.getLogger(ApiKeyInjectingClientInterceptor::class.java)
 
-
     @Throws(IOException::class)
     override fun intercept(request: HttpRequest, body: ByteArray, execution: ClientHttpRequestExecution): ClientHttpResponse {
         val apiKey = apiKeyFor(request.uri)
@@ -32,9 +31,5 @@ class ApiKeyInjectingClientInterceptor(private val apiKeys: Map<URI, Pair<String
                 .filter { s -> uri.toString().startsWith(s.key.toString()) }
                 .map { it.value }
                 .firstOrNull()
-    }
-
-    override fun toString(): String {
-        return javaClass.simpleName + " [apiKeys=" + apiKeys.keys + "]"
     }
 }

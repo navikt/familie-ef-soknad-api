@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.web.client.RestOperations
 import java.net.URI
-import java.util.*
 
 @SpringBootConfiguration
 internal class ApplicationConfig(@Value("\${application.name}") val applicationName: String) {
