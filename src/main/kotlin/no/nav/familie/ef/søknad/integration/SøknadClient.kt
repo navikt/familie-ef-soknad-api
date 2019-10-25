@@ -16,7 +16,14 @@ internal class SøknadClient(operations: RestOperations,
                             private val config: MottakConfig) : PingableRestClient(operations, config.pingUri) {
 
     fun sendInn(søknadDto: SøknadDto): KvitteringDto {
-        return postForEntity(config.sendInnUri, ObjectMapper().writeValueAsString(søknadDto))
+
+        val headers = HttpHeaders()
+        headers.contentType = MediaType.APPLICATION_JSON
+//        headers.set(config.brukernavn, config.passord)
+        val body = ObjectMapper().writeValueAsString(søknadDto)
+        val entity = HttpEntity(body, headers)
+
+        return postForEntity(config.sendInnUri, entity)
     }
 
 }
