@@ -19,7 +19,7 @@ health:
     detailed: true
 tps:
   innsyn:
-    uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
+    uri: https://api-gw.oera.no/tps-proxy/
     brukernavn: ${TPS_INNSYN_PROXY_BRUKERNAVN} #<Ligger i vault>
     passord: ${TPS_INNSYN_PROXY_PASSORD} #<Ligger i vault>
 s3:

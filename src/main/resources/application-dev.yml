@@ -4,7 +4,7 @@ familie:
       uri: https://api-gw-q0.oera.no/familie-ef-mottak/api/
 tps:
   innsyn:
-    uri:  https://api-gw-q0.oera.no/tps-proxy/api/v1/innsyn/
+    uri:  https://api-gw-q0.oera.no/tps-proxy/
 
 cors:
   allowed_origins:

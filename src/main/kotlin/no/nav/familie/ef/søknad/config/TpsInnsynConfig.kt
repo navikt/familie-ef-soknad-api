@@ -15,12 +15,13 @@ internal data class TpsInnsynConfig(val uri: URI,
 
     internal val pingUri get() = URIUtil.uri(uri, PING)
 
-    internal val personUri get() = URIUtil.uri(uri, PERSON)
+    internal val personUri get() = URIUtil.uri(uri, INNSYN_V1 + PERSON)
 
-    internal val barnUri get() = URIUtil.uri(uri, BARN)
+    internal val barnUri get() = URIUtil.uri(uri, INNSYN_V1 + BARN)
 
     companion object {
         private const val PING = "internal/alive"
+        private const val INNSYN_V1 = "api/v1/innsyn/"
         private const val PERSON = "person"
         private const val BARN = "barn"
     }
