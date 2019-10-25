@@ -10,7 +10,7 @@ familie:
     mottak:
       uri: https://api-gw.oera.no/familie-ef-mottak/api/
       brukernavn: ${FAMILIE_EF_MOTTAK_BRUKERNAVN}
-      passord: ${FAMILIE_EF_MOTTAK_PASSWORD}
+      passord: ${FAMILIE_EF_MOTTAK_PASSORD}
 regelverk:
   alder:
     maks: 18
@@ -20,14 +20,14 @@ health:
 tps:
   innsyn:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
-    brukernavn: ${FAMILIE_EF_SOKNAD_TPS_INNSYN_PROXY_USER} #<Ligger i vault>
-    passord: ${FAMILIE_EF_SOKNAD_TPS_INNSYN_PROXY_PASSWORD} #<Ligger i vault>
+    brukernavn: ${TPS_INNSYN_PROXY_BRUKERNAVN} #<Ligger i vault>
+    passord: ${TPS_INNSYN_PROXY_PASSORD} #<Ligger i vault>
 s3:
   uri: http://s3.nais-rook
   region: us-east-1
-  brukernavn: ${FAMILIE_EF_SOKNAD_S3_BRUKERNAVN}#<Ligger i vault>
-  passord: ${FAMILIE_EF_SOKNAD_S3_PASSORD}#<Ligger i vault>
-  passordfrase: ${FAMILIE_EF_SOKNAD_S3_PASSORDFRASE}#<Ligger i vault>
+  brukernavn: ${S3_BRUKERNAVN} #<Ligger i vault>
+  passord: ${S3_PASSORD} #<Ligger i vault>
+  passordfrase: ${S3_PASSORDFRASE} #<Ligger i vault>
   maxMbVedlegg: 20
 virus:
   enabled: true
