@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse
 
 @Component
 @Order(0)
-class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
+internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
 
     @Throws(IOException::class, ServletException::class)
     override fun doFilter(servletRequest: ServletRequest, servletResponse: ServletResponse, filterChain: FilterChain) {

@@ -1,13 +1,9 @@
 package no.nav.familie.ef.søknad.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.stereotype.Component
+import org.springframework.boot.context.properties.ConstructorBinding
 
-
-@Component
+@Suppress("ArrayInDataClass")
 @ConfigurationProperties(prefix = "cors")
-class CorsProperties {
-
-    lateinit var allowedOrigins: Array<String>
-
-}
+@ConstructorBinding
+internal data class CorsProperties(val allowedOrigins: Array<String>)

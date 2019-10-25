@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.web.client.RestOperations
 
 @SpringBootConfiguration
-class ApplicationConfig(@Value("\${application.name}") val applicationName: String) {
+internal class ApplicationConfig(@Value("\${application.name}") val applicationName: String) {
 
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
 
