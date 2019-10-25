@@ -1,7 +1,7 @@
 familie:
   ef:
     mottak:
-      uri: https://api-gw-q0.oera.no/familie-ef-mottak/api/
+      uri: https://api-gw-q0.oera.no/familie-ef-mottak/
 tps:
   innsyn:
     uri:  https://api-gw-q0.oera.no/tps-proxy/

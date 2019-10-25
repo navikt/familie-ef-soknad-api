@@ -17,8 +17,8 @@ internal data class MottakConfig(val uri: URI,
     val pingUri: URI get() = URIUtil.uri(uri, PATH_PING)
 
     companion object {
-        private const val PATH_SEND_INN = "soknad/sendInn"
-        private const val PATH_PING = "ping"
+        private const val PATH_SEND_INN = "api/soknad/sendInn"
+        private const val PATH_PING = "internal/status/isAlive"
     }
 
 }
