@@ -1,23 +1,31 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Søknad
-import no.nav.security.oidc.api.Unprotected
+import no.nav.familie.ef.søknad.util.InnloggingUtils
+import no.nav.security.token.support.core.api.Protected
+
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping(path = ["/api/"], produces = [MediaType.APPLICATION_JSON_VALUE])
-@Unprotected
+@RequestMapping(path = ["/api/"], produces = [MediaType.TEXT_PLAIN_VALUE])
+@Protected
 class PingController {
 
     @GetMapping("/ping")
     fun ping(): String {
-        return " Ack - vi har kontakt"
+        return "Ack - vi har kontakt"
     }
 
     @PostMapping("/ping", consumes = [MediaType.APPLICATION_JSON_VALUE])
     fun pingPost(@RequestBody request: Søknad): String {
-        return " Ack - vi har mottatt: ${request.text}"
+        return " Ack - vi har mottatt: ${request.text} ${InnloggingUtils.fødselsnummer}"
+    }
+
+
+    @GetMapping("/getToken")
+    fun getToken(): String {
+        return InnloggingUtils.fødselsnummer
     }
 
 }

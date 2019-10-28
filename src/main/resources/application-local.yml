@@ -9,7 +9,7 @@ familie:
       passord: none
 tps:
   innsyn:
-    uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
+    uri: http://localhost:8091/mockapi/
     brukernavn: user
     passord: pwd
 s3:
@@ -30,5 +30,13 @@ cors:
   allowed_origins:
     - "http://localhost:3000"
 
-#logging:
-#  config: classpath:logback-spring-test.xml
+logging:
+  config: classpath:logback-spring-test.xml
+
+no.nav.security.jwt:
+  issuers: selvbetjening
+  issuer.selvbetjening:
+    discoveryurl: http://metadata
+    accepted_audience: aud-localhost
+    cookie_name: localhost-idtoken
+    proxyurl:

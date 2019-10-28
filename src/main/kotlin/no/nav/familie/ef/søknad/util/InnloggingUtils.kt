@@ -1,29 +1,43 @@
 package no.nav.familie.ef.søknad.util
 
-import no.nav.security.oidc.OIDCConstants
-import no.nav.security.oidc.context.OIDCValidationContext
-import org.springframework.web.context.request.RequestAttributes
+import no.nav.security.token.support.core.context.TokenValidationContext
+import no.nav.security.token.support.core.exceptions.JwtTokenValidatorException
+import no.nav.security.token.support.core.jwt.JwtTokenClaims
+import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
 import org.springframework.web.context.request.RequestContextHolder
+
 
 object InnloggingUtils {
 
-    private const val selvbetjening = "selvbetjening"
-
-    private val context
-        get() =
-            RequestContextHolder
-                    .currentRequestAttributes()
-                    .getAttribute(OIDCConstants.OIDC_VALIDATION_CONTEXT,
-                                  RequestAttributes.SCOPE_REQUEST) as OIDCValidationContext? ?: OIDCValidationContext()
+    const val ISSUER = "selvbetjening"
 
     fun hentFnrFraToken(): String {
-        return context.getClaims(selvbetjening).claimSet.subject
+        return fødselsnummer
     }
 
-    fun generateBearerTokenForLoggedInUser(): String {
-        return if (context.hasValidToken())
-            context.issuers.joinToString("Bearer ") { context.getToken(it).idToken }
-        else ""
+    fun getBearerTokenForLoggedInUser(): String {
+        return getTokenValidationContext().getJwtToken(ISSUER).tokenAsString
     }
 
+    private val TOKEN_VALIDATION_CONTEXT_ATTRIBUTE = SpringTokenValidationContextHolder::class.java.name
+
+    val subject: String?
+        get() = claims()?.subject
+
+    val fødselsnummer: String
+        get() = subject ?: throw JwtTokenValidatorException("Fant ikke subject")
+
+    private fun claims(): JwtTokenClaims? {
+        val validationContext = getTokenValidationContext()
+        return validationContext.getClaims(ISSUER)
+    }
+
+    private fun getTokenValidationContext(): TokenValidationContext {
+        return RequestContextHolder.currentRequestAttributes().getAttribute(getContextHolderName(), 0) as TokenValidationContext
+    }
+
+    private fun getContextHolderName(): String {
+        val holder = "no.nav.security.token.support.spring.SpringTokenValidationContextHolder"
+        return TOKEN_VALIDATION_CONTEXT_ATTRIBUTE ?: holder
+    }
 }

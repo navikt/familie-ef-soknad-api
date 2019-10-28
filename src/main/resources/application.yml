@@ -51,3 +51,14 @@ management:
 
 cors:
   allowed_origins:
+    - "https://familie-ef-soknad.nais.oera.no"
+    - "https://familie-ef-soknad-api.nais.oera.no"
+
+no.nav.security.jwt:
+  issuers: selvbetjening
+  issuer.selvbetjening:
+    discoveryurl: https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten
+    acceptedaudience: ${ACCEPTEDAUDIENCE}
+    proxyurl: http://webproxy-nais.nav.no:8088
+    cookie_name: selvbetjening-idtoken
+
