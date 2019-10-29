@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import com.google.common.collect.ImmutableMap
 import no.nav.familie.ef.søknad.api.filter.RequestTimeFilter
 import no.nav.familie.ef.søknad.interceptor.ApiKeyInjectingClientInterceptor
@@ -40,6 +41,14 @@ internal class ApplicationConfig(@Value("\${application.name}") val applicationN
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule()
 
+    @Bean
+    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
+        logger.info("Registrerer CORSResponseFilter")
+        val filterRegistration = FilterRegistrationBean<CORSResponseFilter>()
+        filterRegistration.filter = CORSResponseFilter(corsProperties)
+        filterRegistration.order = 0
+        return filterRegistration
+    }
 
     @Bean
     fun logFilter(): FilterRegistrationBean<LogFilter> {
