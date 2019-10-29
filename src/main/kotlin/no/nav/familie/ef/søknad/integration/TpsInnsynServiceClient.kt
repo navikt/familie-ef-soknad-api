@@ -10,14 +10,9 @@ import no.nav.familie.log.mdc.MDCConstants.MDC_CALL_ID
 import org.eclipse.jetty.http.HttpHeader
 import org.slf4j.MDC
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
-import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestOperations
-import org.springframework.web.client.exchange
 
 @Component
 internal class TpsInnsynServiceClient @Autowired
@@ -36,7 +31,7 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
-            add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.generateBearerTokenForLoggedInUser())
+            add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.getBearerTokenForLoggedInUser())
             val bearerTokenForLoggedInUser = "Bearer " +InnloggingUtils.getBearerTokenForLoggedInUser()
             add(HttpHeader.AUTHORIZATION.asString(), bearerTokenForLoggedInUser)
             add(NavHttpHeaders.NAV_CALLID.asString(), MDC.get(MDC_CALL_ID))
