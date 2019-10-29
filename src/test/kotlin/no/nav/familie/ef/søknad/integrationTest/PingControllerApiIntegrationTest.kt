@@ -1,10 +1,9 @@
 package no.nav.familie.ef.søknad.integrationTest
 
+
 import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.security.token.support.core.JwtTokenConstants
 import no.nav.security.token.support.test.JwtTokenGenerator
-
-
 import org.glassfish.jersey.logging.LoggingFeature
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -12,8 +11,6 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
-
-
 import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.core.Response
 import kotlin.test.assertEquals
@@ -51,8 +48,10 @@ class PingControllerApiIntegrationTest {
                 .request()
                 .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()} ")
                 .get()
-        val entity: String = response.readEntity(String::class.java)
-        assertEquals(tokenSubject, entity)
+
+        val readEntity = response.readEntity(Map::class.java)
+        assertEquals(tokenSubject, readEntity.get("message")
+        )
     }
 
     private fun webTarget() = client().target("http://localhost:$port$contextPath")

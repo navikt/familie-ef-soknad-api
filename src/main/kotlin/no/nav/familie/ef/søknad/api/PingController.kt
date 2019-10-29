@@ -8,23 +8,25 @@ import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping(path = ["/api/"], produces = [MediaType.TEXT_PLAIN_VALUE])
+@RequestMapping(path = ["/api/"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
 class PingController {
 
     @GetMapping("/ping")
-    fun ping(): String {
-        return "Ack - vi har kontakt"
+    fun ping(): PingDto {
+        return PingDto("Ack - vi har kontakt")
     }
 
     @PostMapping("/ping", consumes = [MediaType.APPLICATION_JSON_VALUE])
-    fun pingPost(@RequestBody request: Søknad): String {
-        return " Ack - vi har mottatt: ${request.text} ${InnloggingUtils.fødselsnummer}"
+    fun pingPost(@RequestBody request: Søknad): PingDto {
+        return PingDto(" Ack - vi har mottatt: ${request.text} ${InnloggingUtils.fødselsnummer}")
     }
 
     @GetMapping("/getToken")
-    fun getToken(): String {
-        return InnloggingUtils.fødselsnummer
+    fun getToken(): PingDto {
+        return PingDto(InnloggingUtils.fødselsnummer)
     }
 
 }
+
+data class PingDto(val message: String)
