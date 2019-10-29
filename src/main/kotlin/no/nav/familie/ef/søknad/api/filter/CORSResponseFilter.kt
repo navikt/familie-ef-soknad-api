@@ -23,6 +23,12 @@ internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
             response.addHeader("Access-Control-Allow-Credentials", "true")
             response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
         }
-        filterChain.doFilter(servletRequest, servletResponse)
+
+        if ("OPTIONS" == request.method.toUpperCase()) {
+            response.status = HttpServletResponse.SC_OK;
+        } else {
+            filterChain.doFilter(servletRequest, servletResponse)
+        }
+
     }
 }
