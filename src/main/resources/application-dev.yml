@@ -10,6 +10,8 @@ cors:
   allowed_origins:
     - "https://familie-ef-soknad.nais.oera-q.local"
     - "https://familie-ef-soknad-api.nais.oera-q.local"
+    - "https://www-q0.nav.no/familie/alene-med-barn/soknad"
+    - "https://www-q0.nav.no/familie/alene-med-barn/soknad-api"
 
 
 no.nav.security.jwt:

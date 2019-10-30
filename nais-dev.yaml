@@ -35,8 +35,8 @@ spec:
       cpu: 500m
   secureLogs:
     enabled: true
-  ingresses: # Optional. List of ingress URLs that will route HTTP traffic to the application.
-    - https://familie-ef-soknad-api.nais.oera-q.local
+  ingresses:
+    - https://www-q0.nav.no/familie/alene-med-barn/soknad-api
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
