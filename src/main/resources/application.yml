@@ -40,14 +40,22 @@ funksjonsbrytere:
     applicationName: ${NAIS_APP_NAME:}
 
 management:
-  endpoint.health.show-details: always
+  endpoint:
+    health:
+      show-details: always
+      enabled: true
   endpoints.web:
     exposure.include: info, health, metrics, prometheus
     base-path: "/internal"
     path-mapping:
       info: "status/isAlive"
-  metrics.export.prometheus.enabled: true
-  metrics.web.server.auto-time-requests: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    web:
+      server:
+        auto-time-requests: true
 
 cors:
   allowed_origins:
