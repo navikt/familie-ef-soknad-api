@@ -27,7 +27,7 @@
         <fasterxml.version>2.10.0</fasterxml.version>
         <com.amazonaws.version>1.11.657</com.amazonaws.version>
         <token-validation-spring.version>1.1.2</token-validation-spring.version>
-        <felles.version>1.0_20191025210220_fdb266d</felles.version>
+        <felles.version>1.0_20191029223639_40f00f9</felles.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
     </properties>
 
