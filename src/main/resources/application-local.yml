@@ -29,6 +29,7 @@ funksjonsbrytere:
 cors:
   allowed_origins:
     - "http://localhost:3000"
+    - "http://localhost:8080"
 
 logging:
   config: classpath:logback-spring-test.xml
