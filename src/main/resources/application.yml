@@ -3,7 +3,7 @@ application:
 server:
   port: 8000
   servlet:
-    context-path: /
+    context-path: /familie/alene-med-barn/soknad-api
 
 familie:
   ef:
