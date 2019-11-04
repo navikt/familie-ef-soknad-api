@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: "/familie/alene-med-barn/soknad-api"
+    context-path: /familie/alene-med-barn/soknad-api/
 
 familie:
   ef:
