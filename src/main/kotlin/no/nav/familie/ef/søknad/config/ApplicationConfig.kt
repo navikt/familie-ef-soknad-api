@@ -1,8 +1,8 @@
 package no.nav.familie.ef.søknad.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import com.google.common.collect.ImmutableMap
+import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import no.nav.familie.ef.søknad.api.filter.RequestTimeFilter
 import no.nav.familie.ef.søknad.interceptor.ApiKeyInjectingClientInterceptor
 import no.nav.familie.log.filter.LogFilter
@@ -24,8 +24,8 @@ internal class ApplicationConfig(@Value("\${application.name}") val applicationN
     @Bean
     fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig, mottak: MottakConfig): ClientHttpRequestInterceptor {
         val builder = ImmutableMap.builder<URI, Pair<String, String>>()
-        builder.put(oppslag.uri, Pair(oppslag.brukernavn, oppslag.passord))
         builder.put(mottak.uri, Pair(mottak.brukernavn, mottak.passord))
+        builder.put(oppslag.uri, Pair(oppslag.brukernavn, oppslag.passord))
         return ApiKeyInjectingClientInterceptor(builder.build())
 
     }
