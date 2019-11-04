@@ -10,21 +10,16 @@ import no.nav.familie.log.mdc.MDCConstants.MDC_CALL_ID
 import org.eclipse.jetty.http.HttpHeader
 import org.slf4j.MDC
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
-import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestOperations
-import org.springframework.web.client.exchange
 
 @Component
 internal class TpsInnsynServiceClient @Autowired
 constructor(val tpsInnsynConfig: TpsInnsynConfig,
             val applicationConfig: ApplicationConfig,
             operations: RestOperations)
-    : PingableRestClient(operations, tpsInnsynConfig.pingUri) {
+    : AbstractRestClient(operations) {
 
     fun hentPersoninfo(): PersoninfoDto {
         return getForEntity(tpsInnsynConfig.personUri, httpHeaders())
@@ -34,21 +29,11 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
         return getForEntity(tpsInnsynConfig.barnUri, httpHeaders())
     }
 
-    override fun ping() {
-        val httpHeaders = HttpHeaders().apply {
-            add(tpsInnsynConfig.brukernavn, tpsInnsynConfig.passord)
-        }
-        val respons: ResponseEntity<Any> = operations.exchange(pingUri, HttpMethod.GET, HttpEntity(null, httpHeaders))
-        if (!respons.statusCode.is2xxSuccessful) {
-            throw HttpServerErrorException(respons.statusCode)
-        }
-    }
-
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
+            add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.getBearerTokenForLoggedInUser())
             val bearerTokenForLoggedInUser = "Bearer " +InnloggingUtils.getBearerTokenForLoggedInUser()
             add(HttpHeader.AUTHORIZATION.asString(), bearerTokenForLoggedInUser)
-            add(tpsInnsynConfig.brukernavn, tpsInnsynConfig.passord)
             add(NavHttpHeaders.NAV_CALLID.asString(), MDC.get(MDC_CALL_ID))
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
             add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)

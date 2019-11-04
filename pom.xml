@@ -12,7 +12,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.0.RELEASE</version>
-        <!-- TODO Oppgraderes til 2.2.0 ved release -->
     </parent>
 
 
@@ -26,9 +25,10 @@
         <mockk.version>1.9.3</mockk.version>
         <fasterxml.version>2.10.0</fasterxml.version>
         <com.amazonaws.version>1.11.657</com.amazonaws.version>
-        <token-validation-spring.version>1.1.1</token-validation-spring.version>
-        <felles.version>1.0_20191025210220_fdb266d</felles.version>
+        <token-validation-spring.version>1.1.2</token-validation-spring.version>
+        <felles.version>1.0_20191029223639_40f00f9</felles.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
+        <micrometer.version>1.3.0</micrometer.version>
     </properties>
 
     <dependencies>
@@ -92,20 +92,23 @@
             <version>2.0.17</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
+            <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>1.3.2</version>
         </dependency>
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-core</artifactId>
-            <version>1.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>no.finn.unleash</groupId>
             <artifactId>unleash-client-java</artifactId>
             <version>3.2.9</version>

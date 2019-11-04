@@ -2,7 +2,9 @@ package no.nav.familie.ef.søknad.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
+import com.google.common.collect.ImmutableMap
 import no.nav.familie.ef.søknad.api.filter.RequestTimeFilter
+import no.nav.familie.ef.søknad.interceptor.ApiKeyInjectingClientInterceptor
 import no.nav.familie.log.filter.LogFilter
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -10,7 +12,9 @@ import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
+import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.web.client.RestOperations
+import java.net.URI
 
 @SpringBootConfiguration
 internal class ApplicationConfig(@Value("\${application.name}") val applicationName: String) {
@@ -18,8 +22,21 @@ internal class ApplicationConfig(@Value("\${application.name}") val applicationN
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
 
     @Bean
-    fun restTemplate(): RestOperations =
-            RestTemplateBuilder().build()
+    fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig, mottak: MottakConfig): ClientHttpRequestInterceptor {
+        val builder = ImmutableMap.builder<URI, Pair<String, String>>()
+        builder.put(oppslag.uri, Pair(oppslag.brukernavn, oppslag.passord))
+        builder.put(mottak.uri, Pair(mottak.brukernavn, mottak.passord))
+        return ApiKeyInjectingClientInterceptor(builder.build())
+
+    }
+
+    @Bean
+    fun restTemplate(vararg interceptors: ClientHttpRequestInterceptor): RestOperations {
+        logger.info("Registrerer interceptors {}", interceptors.contentToString())
+        return RestTemplateBuilder()
+                .interceptors(*interceptors)
+                .build()
+    }
 
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule()
