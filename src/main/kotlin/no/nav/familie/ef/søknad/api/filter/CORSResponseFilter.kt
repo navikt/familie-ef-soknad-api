@@ -20,7 +20,7 @@ internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
         val request = servletRequest as HttpServletRequest
         val response = servletResponse as HttpServletResponse
         val origin = request.getHeader("Origin")
-
+// Referer
        // logger.warn("call from origin ${origin} allowed: ${corsProperties}")
 
         if (corsProperties.allowedOrigins.contains(origin) || true) {
