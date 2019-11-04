@@ -9,7 +9,7 @@ familie:
       passord: none
 tps:
   innsyn:
-    uri: http://localhost:8091/mockapi/
+    uri: http://localhost:8091/familie/alene-med-barn/soknad-api/mockapi/
     brukernavn: user
     passord: pwd
 s3:
