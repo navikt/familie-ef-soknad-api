@@ -30,9 +30,6 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
-         //   val bearerTokenForLoggedInUser = "Bearer " +InnloggingUtils.getBearerTokenForLoggedInUser()
-       //    add(HttpHeader.AUTHORIZATION.asString(), bearerTokenForLoggedInUser)
-//            add(tpsInnsynConfig.brukernavn, tpsInnsynConfig.passord)
             add(NavHttpHeaders.NAV_CALLID.asString(), MDC.get(MDC_CALL_ID))
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
             add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)

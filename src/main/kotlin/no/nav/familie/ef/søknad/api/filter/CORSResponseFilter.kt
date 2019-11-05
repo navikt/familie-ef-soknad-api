@@ -19,18 +19,23 @@ internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
     override fun doFilter(servletRequest: ServletRequest, servletResponse: ServletResponse, filterChain: FilterChain) {
         val request = servletRequest as HttpServletRequest
         val response = servletResponse as HttpServletResponse
-        val origin = request.getHeader("Origin")
-// Referer
-       // logger.warn("call from origin ${origin} allowed: ${corsProperties}")
+        val origin = request.getHeader("Origin") // Referer
+        val referer = request.getHeader("Referer") // Referer
+        val method = request.method.toUpperCase()
 
-        if (corsProperties.allowedOrigins.contains(origin) || true) {
+        val (allowedOrigins) = corsProperties
+        val corsErOK = allowedOrigins.any { it == referer || it == origin }
+
+        if (corsErOK) {
+            logger.warn("($method) Akseptert kall fra origin $origin, referer: $referer")
             response.addHeader("Access-Control-Allow-Origin", "*")
             response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
             response.addHeader("Access-Control-Allow-Credentials", "true")
             response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
         }
 
-        if ("OPTIONS" == request.method.toUpperCase()) {
+        if ("OPTIONS" == method && corsErOK) {
+            logger.warn("Aksepterer OPTIONS $origin, Referer: $referer")
             response.status = HttpServletResponse.SC_OK
         } else {
             filterChain.doFilter(servletRequest, servletResponse)
