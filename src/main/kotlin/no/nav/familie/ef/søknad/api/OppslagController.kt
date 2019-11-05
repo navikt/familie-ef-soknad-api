@@ -21,7 +21,6 @@ class OppslagController(private val oppslag: Oppslag) {
 
     @GetMapping("/sokerinfo")
     fun søkerinfo(): Søkerinfo {
-        log.info("I OppslagController!")
         return oppslag.hentSøkerinfo()
     }
 
