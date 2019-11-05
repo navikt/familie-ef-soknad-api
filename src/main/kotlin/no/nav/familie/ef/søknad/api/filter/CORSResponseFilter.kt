@@ -16,24 +16,21 @@ internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
     override fun doFilter(servletRequest: ServletRequest, servletResponse: ServletResponse, filterChain: FilterChain) {
         val request = servletRequest as HttpServletRequest
         val response = servletResponse as HttpServletResponse
-        val corsErOK = erCorsOk(request)
-        if (corsErOK) {
-            response.addHeader("Access-Control-Allow-Origin", "*")
-            response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-            response.addHeader("Access-Control-Allow-Credentials", "true")
-            response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+        if (erCorsOk(request)) {
+            setCorsHeaders(response)
         }
-        if (erOptionRequest(request) && corsErOK) {
-            response.status = HttpServletResponse.SC_OK
-        } else {
-            filterChain.doFilter(servletRequest, servletResponse)
-        }
+        filterChain.doFilter(servletRequest, servletResponse)
+    }
+
+    private fun setCorsHeaders(response: HttpServletResponse) {
+        response.addHeader("Access-Control-Allow-Origin", "*")
+        response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+        response.addHeader("Access-Control-Allow-Credentials", "true")
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
     }
 
     private fun erCorsOk(request: HttpServletRequest): Boolean {
         val (allowedOrigins) = corsProperties
         return allowedOrigins.contains(request.getHeader("Origin"))
     }
-
-    private fun erOptionRequest(request: HttpServletRequest) = "OPTIONS" == request.method.toUpperCase()
 }
