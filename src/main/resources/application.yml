@@ -3,7 +3,7 @@ application:
 server:
   port: 8000
   servlet:
-    context-path: /
+    context-path: /familie/alene-med-barn/soknad-api
 
 familie:
   ef:
@@ -61,6 +61,9 @@ cors:
   allowed_origins:
     - "https://familie-ef-soknad.nais.oera.no"
     - "https://familie-ef-soknad-api.nais.oera.no"
+    - "https://www.nav.no/familie/alene-med-barn/soknad"
+    - "https://www.nav.no/familie/alene-med-barn/soknad-api"
+    - "https://www.nav.no"
 
 no.nav.security.jwt:
   issuers: selvbetjening

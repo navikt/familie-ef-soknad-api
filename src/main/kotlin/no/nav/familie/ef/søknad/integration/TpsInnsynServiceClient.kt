@@ -7,7 +7,6 @@ import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
 import no.nav.familie.ef.søknad.util.InnloggingUtils
 import no.nav.familie.http.client.NavHttpHeaders
 import no.nav.familie.log.mdc.MDCConstants.MDC_CALL_ID
-import org.eclipse.jetty.http.HttpHeader
 import org.slf4j.MDC
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
@@ -31,9 +30,6 @@ constructor(val tpsInnsynConfig: TpsInnsynConfig,
 
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
-            add(HttpHeader.AUTHORIZATION.asString(), InnloggingUtils.getBearerTokenForLoggedInUser())
-            val bearerTokenForLoggedInUser = "Bearer " +InnloggingUtils.getBearerTokenForLoggedInUser()
-            add(HttpHeader.AUTHORIZATION.asString(), bearerTokenForLoggedInUser)
             add(NavHttpHeaders.NAV_CALLID.asString(), MDC.get(MDC_CALL_ID))
             add(NavHttpHeaders.NAV_PERSONIDENT.asString(), InnloggingUtils.hentFnrFraToken())
             add(NavHttpHeaders.NAV_CONSUMER_ID.asString(), applicationConfig.applicationName)

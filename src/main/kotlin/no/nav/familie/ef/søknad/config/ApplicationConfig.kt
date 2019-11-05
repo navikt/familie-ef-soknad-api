@@ -1,8 +1,8 @@
 package no.nav.familie.ef.søknad.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import com.google.common.collect.ImmutableMap
+import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import no.nav.familie.ef.søknad.api.filter.RequestTimeFilter
 import no.nav.familie.ef.søknad.interceptor.ApiKeyInjectingClientInterceptor
 import no.nav.familie.log.filter.LogFilter

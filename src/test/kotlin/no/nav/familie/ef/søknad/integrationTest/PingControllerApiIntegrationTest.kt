@@ -22,7 +22,7 @@ class PingControllerApiIntegrationTest {
 
     @Value("\${local.server.port}")
     val port: Int = 0
-    val contextPath = "/api"
+    val contextPath = "/familie/alene-med-barn/soknad-api/api"
     val tokenSubject = "12345678911"
 
     @Test
