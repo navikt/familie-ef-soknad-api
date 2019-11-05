@@ -17,13 +17,18 @@ internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
         val request = servletRequest as HttpServletRequest
         val response = servletResponse as HttpServletResponse
         if (erCorsOk(request)) {
-            setCorsHeaders(response)
+            setCorsHeaders(response,request )
         }
-        filterChain.doFilter(servletRequest, servletResponse)
+
+        if (erOptionRequest(request) ) {
+            response.status = HttpServletResponse.SC_OK
+        } else {
+            filterChain.doFilter(servletRequest, servletResponse)
+        }
     }
 
-    private fun setCorsHeaders(response: HttpServletResponse) {
-        response.addHeader("Access-Control-Allow-Origin", "*")
+    private fun setCorsHeaders(response: HttpServletResponse, request: HttpServletRequest) {
+        response.addHeader("Access-Control-Allow-Origin", request.getHeader("Origin"))
         response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
         response.addHeader("Access-Control-Allow-Credentials", "true")
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
@@ -33,4 +38,6 @@ internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
         val (allowedOrigins) = corsProperties
         return allowedOrigins.contains(request.getHeader("Origin"))
     }
+
+    private fun erOptionRequest(request: HttpServletRequest) = "OPTIONS" == request.method.toUpperCase() && erCorsOk(request)
 }
