@@ -4,9 +4,9 @@ import no.nav.familie.ef.søknad.config.ApplicationConfig
 import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.context.annotation.Import
 import springfox.documentation.swagger2.annotations.EnableSwagger2
 
@@ -17,7 +17,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 class ApplicationLocalLauncher
 
 fun main(args: Array<String>) {
-    SpringApplication.run(ApplicationLocalLauncher::class.java, *args)
+    SpringApplicationBuilder(ApplicationLocalLauncher::class.java)
+            .profiles("local")
+            .run(*args)
 }
 
 
