@@ -17,10 +17,10 @@ internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
         val request = servletRequest as HttpServletRequest
         val response = servletResponse as HttpServletResponse
         if (erCorsOk(request)) {
-            setCorsHeaders(response,request )
+            setCorsHeaders(response, request)
         }
 
-        if (erOptionRequest(request) ) {
+        if (erOptionRequest(request)) {
             response.status = HttpServletResponse.SC_OK
         } else {
             filterChain.doFilter(servletRequest, servletResponse)
