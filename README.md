@@ -2,13 +2,14 @@
 
 ## Kjør på localhost: 
 bruk Launcher : ApplicationLocalLauncher 
-Vil kjøre med tps-innsyn mock TpsInnsynMockController
+Vil kjøre med tps-innsyn mock TpsInnsynMockController (som bla.a muliggjør innlogging - se under)
 
 ## Hvordan logge inn på localhost:
 Eksempel: 
-http://localhost:8091/local/cookie?redirect=/api/ping
-(redirect kan fjernes hvis man ønsker å se token i browser)
+http://localhost:8091/familie/alene-med-barn/soknad-api/local/cookie
+With redirect:
+http://localhost:8091/familie/alene-med-barn/soknad-api/local/cookie?redirect=/api/ping
+
 
 ### Swagger api kall med autentisering: 
-http://localhost:8091/swagger-ui.html
-På localhost skal det være nok å logge inn som beskrevet ovenfor. I dev må man lime inn "Bearer + token" i Authorize oppe til høre i swagger-ui.html. Dersom Bearer limes inn på denne måten må Cookie med Authorization slettes (localhost).   
+http://localhost:8091/familie/alene-med-barn/soknad-api/swagger-ui.html
