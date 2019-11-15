@@ -1,10 +1,12 @@
 server:
   port: 8091
+  servlet:
+    context-path: 
 
 familie:
   ef:
     mottak:
-      uri: http://localhost:8092/api/
+      uri: http://localhost:8092/api
       brukernavn: brukerMottak
       passord: pwdMottak
 tps:

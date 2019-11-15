@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
 class SøknadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
-    @PostMapping("sendInn")
+    @PostMapping
     fun sendInn(@RequestBody søknad: Søknad): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
             søknadService.sendInn(søknad)
