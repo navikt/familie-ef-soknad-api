@@ -8,7 +8,7 @@ server:
 familie:
   ef:
     mottak:
-      uri: https://api-gw.oera.no/familie-ef-mottak/api/
+      uri: https://api-gw.oera.no/familie-ef-mottak/api
       brukernavn: ${FAMILIE_EF_MOTTAK_BRUKERNAVN}
       passord: ${FAMILIE_EF_MOTTAK_PASSORD}
 regelverk:
