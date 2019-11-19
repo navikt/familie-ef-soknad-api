@@ -18,7 +18,7 @@ import kotlin.test.assertEquals
 @ActiveProfiles("local")
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
-class PingControllerApiIntegrationTest {
+class AutentiseringControllerApiIntegrationTest {
 
     @Value("\${local.server.port}")
     val port: Int = 0
@@ -27,7 +27,7 @@ class PingControllerApiIntegrationTest {
 
     @Test
     fun `skal få 200 når autentisert og vi bruker get`() {
-        val response = webTarget().path("/ping")
+        val response = webTarget().path("/innlogget")
                 .request()
                 .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
                 .get()
@@ -36,22 +36,10 @@ class PingControllerApiIntegrationTest {
 
     @Test
     fun `skal få 401 når ikke autentisert `() {
-        val response = webTarget().path("/ping")
+        val response = webTarget().path("/innlogget")
                 .request()
                 .get()
         assertEquals(Response.Status.UNAUTHORIZED.statusCode, response.status)
-    }
-
-    @Test
-    fun `skal Kunne hente ut token subject - fnr`() {
-        val response = webTarget().path("/getToken")
-                .request()
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()} ")
-                .get()
-
-        val readEntity = response.readEntity(Map::class.java)
-        assertEquals(tokenSubject, readEntity.get("message")
-        )
     }
 
     private fun webTarget() = client().target("http://localhost:$port$contextPath")
