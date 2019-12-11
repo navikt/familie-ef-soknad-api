@@ -1,13 +1,4 @@
 version: 2.1
-orbs:
-  nais: 'navikt/nais-deployment@1.1.0'
-
-executors:
-  nais-deployer:
-    environment:
-      TEAM: teamfamilie
-    docker:
-      - image: navikt/deployment-cli:latest
 
 jobs:
   build:
@@ -98,7 +89,8 @@ jobs:
             - ./github.key.pem
 
   deploy_dev:
-    executor: nais-deployer
+    docker:
+      - image: navikt/deployment:v1
     steps:
       - attach_workspace:
           at: /home/circleci/project
@@ -109,35 +101,35 @@ jobs:
       - run:
           name: Create github deployment for stable test
           command: |
-            deployment-cli deploy create \
-              --cluster=dev-sbs \
-              --repository=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME \
-              --appid=${GITHUB_APP_ID} \
-              --team=${TEAM} \
-              --version=${VERSION} \
-              --key=/home/circleci/project/github.key.pem \
-              --resource=./nais-dev.yaml
-
-  deploy_prod:
-    executor: nais-deployer
-    steps:
-      - attach_workspace:
-          at: /home/circleci/project
-      - checkout
-      - run:
-          name: Set up environment variables
-          command: cat /home/circleci/project/properties.env >> $BASH_ENV
-      - run:
-          name: Create github deployment for production
-          command: |
-            deployment-cli deploy create \
-              --cluster=prod-sbs \
-              --repository=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME \
-              --appid=${GITHUB_APP_ID} \
-              --team=${TEAM} \
-              --version=${VERSION} \
-              --key=/home/circleci/project/github.key.pem \
-              --resource=./nais-prod.yaml
+            source $BASH_ENV
+            /app/deploy \
+            --apikey="$NAIS_DEPLOY_APIKEY" \
+            --cluster=dev-gcp \
+            --owner=$CIRCLE_PROJECT_USERNAME \
+            --repository=$CIRCLE_PROJECT_REPONAME \
+            --var=version="${VERSION}" \
+            --resource=./gcp-nais-dev.yaml
+    deploy_prod:
+      docker:
+        - image: navikt/deployment:v1
+      steps:
+        - attach_workspace:
+            at: /home/circleci/project
+        - checkout
+        - run:
+            name: Set up environment variables
+            command: cat /home/circleci/project/properties.env >> $BASH_ENV
+        - run:
+            name: Create github deployment for stable test
+            command: |
+              source $BASH_ENV
+              /app/deploy \
+              --apikey="$NAIS_DEPLOY_APIKEY" \
+              --cluster=prod-gcp \
+              --owner=$CIRCLE_PROJECT_USERNAME \
+              --repository=$CIRCLE_PROJECT_REPONAME \
+              --var=version="$VERSION" \
+              --resource=./gcp-nais-prod.yaml
 
 workflows:
   version: 2
