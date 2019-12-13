@@ -41,6 +41,11 @@ spec:
     inbound:
       rules:
         application: familie-ef-soknad
+    outbound:
+      rules:
+        application: familie-ef-mottak
+      external:
+        - host: api-gw-q0.oera.no
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev

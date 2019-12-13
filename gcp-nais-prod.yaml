@@ -37,6 +37,15 @@ spec:
     enabled: true
   ingresses:
     - https://familie-gcp.nav.no/familie/alene-med-barn/soknad-api
+  accessPolicy:
+    inbound:
+      rules:
+        application: familie-ef-soknad
+    outbound:
+      rules:
+        application: familie-ef-mottak
+      external:
+        - host: api-gw.oera.no
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
