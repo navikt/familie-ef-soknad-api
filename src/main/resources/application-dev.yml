@@ -2,6 +2,9 @@ familie:
   ef:
     mottak:
       uri: https://api-gw-q0.oera.no/familie-ef-mottak/api/
+  integrasjoner:
+    uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
+
 tps:
   innsyn:
     uri:  https://api-gw-q0.oera.no/tps-proxy/api/v1/innsyn/

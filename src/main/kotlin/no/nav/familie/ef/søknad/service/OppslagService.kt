@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.config.RegelverkConfig
+import no.nav.familie.ef.søknad.integration.FamilieIntegrasjonerClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
@@ -12,6 +13,7 @@ import java.time.Period
 @Service
 @ConditionalOnProperty(name = ["stub.oppslag"], havingValue = "false", matchIfMissing = true)
 internal class OppslagService(private val client: TpsInnsynServiceClient,
+                              private val integrasjonerClient: FamilieIntegrasjonerClient,
                               private val regelverkConfig: RegelverkConfig) : Oppslag {
 
     override fun hentSøkerinfo(): Søkerinfo {
@@ -23,7 +25,6 @@ internal class OppslagService(private val client: TpsInnsynServiceClient,
         return SøkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn)
     }
 
-
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {
         if (fødselsdato == null) {
             return false
@@ -31,6 +32,10 @@ internal class OppslagService(private val client: TpsInnsynServiceClient,
         val alder = Period.between(fødselsdato, LocalDate.now())
         val alderIÅr = alder.years
         return alderIÅr <= regelverkConfig.alder.maks
+    }
+
+    override fun hentPoststedFor(postnummer: String): String {
+        return integrasjonerClient.hentPoststedFor(postnummer)
     }
 
 }

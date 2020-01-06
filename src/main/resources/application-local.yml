@@ -4,6 +4,8 @@ server:
     context-path: 
 
 familie:
+  integrasjoner:
+    uri: http://localhost:8085/api
   ef:
     mottak:
       uri: http://localhost:8092/api
