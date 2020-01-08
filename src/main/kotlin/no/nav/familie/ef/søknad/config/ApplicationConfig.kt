@@ -22,10 +22,11 @@ internal class ApplicationConfig(@Value("\${application.name}") val applicationN
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
 
     @Bean
-    fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig, mottak: MottakConfig): ClientHttpRequestInterceptor {
+    fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig, mottak: MottakConfig, integrasjoner: FamilieIntegrasjonerConfig): ClientHttpRequestInterceptor {
         val builder = ImmutableMap.builder<URI, Pair<String, String>>()
         builder.put(oppslag.uri, Pair(oppslag.brukernavn, oppslag.passord))
         builder.put(mottak.uri, Pair(mottak.brukernavn, mottak.passord))
+        builder.put(integrasjoner.uri, Pair(integrasjoner.brukernavn, integrasjoner.passord))
         return ApiKeyInjectingClientInterceptor(builder.build())
 
     }

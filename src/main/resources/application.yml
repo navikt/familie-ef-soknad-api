@@ -11,6 +11,9 @@ familie:
       uri: https://api-gw.oera.no/familie-ef-mottak/api
       brukernavn: ${FAMILIE_EF_MOTTAK_BRUKERNAVN}
       passord: ${FAMILIE_EF_MOTTAK_PASSORD}
+  integrasjoner:
+    brukernavn: x-nav-apiKey #<Ligger i vault>
+    passord: ${apigw/dev/familie-integrasjoner/familie-ef-soknad-api_q2} #<Ligger i vault>
 regelverk:
   alder:
     maks: 18

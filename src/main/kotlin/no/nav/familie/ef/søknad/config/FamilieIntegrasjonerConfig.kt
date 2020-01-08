@@ -7,7 +7,9 @@ import java.net.URI
 
 @ConfigurationProperties("familie.integrasjoner")
 @ConstructorBinding
-internal data class FamilieIntegrasjonerConfig(val uri: URI) {
+internal data class FamilieIntegrasjonerConfig(val uri: URI,
+                                               val brukernavn: String,
+                                               val passord: String) {
 
     internal val poststedUri = URIUtil.uri(uri, POSTSTED)
 
