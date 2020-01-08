@@ -8,6 +8,7 @@ import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.security.token.support.core.api.Unprotected
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -28,8 +29,8 @@ class OppslagController(private val oppslag: Oppslag) {
 
     @Unprotected
     @GetMapping("/poststed/{postnummer}")
-    fun postnummer(@PathVariable("postnummer") postnummer: String): String {
-        return oppslag.hentPoststedFor(postnummer)
+    fun postnummer(@PathVariable("postnummer") postnummer: String): ResponseEntity<String> {
+        return ResponseEntity.ok().body(oppslag.hentPoststedFor(postnummer))
     }
 
     companion object {
