@@ -28,7 +28,7 @@ class OppslagController(private val oppslag: Oppslag) {
 
     @Unprotected
     @GetMapping("/poststed/{postnummer}")
-    fun postnummer(@PathVariable postnummer: String): String {
+    fun postnummer(@PathVariable("postnummer") postnummer: String): String {
         return oppslag.hentPoststedFor(postnummer)
     }
 
