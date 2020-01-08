@@ -10,10 +10,10 @@ familie:
     mottak:
       uri: https://api-gw.oera.no/familie-ef-mottak/api
       brukernavn: ${FAMILIE_EF_MOTTAK_BRUKERNAVN}
-      passord: ${FAMILIE_EF_MOTTAK_PASSORD}
+      passord: ${apigw/dev/familie-ef-mottak/familie-ef-soknad-api_p}
   integrasjoner:
-    brukernavn: x-nav-apiKey #<Ligger i vault>
-    passord: ${apigw/dev/familie-integrasjoner/familie-ef-soknad-api_q2} #<Ligger i vault>
+    brukernavn: ${FAMILIE_INTEGRASJONER_BRUKERNAVN}
+    passord: ${apigw/dev/familie-integrasjoner/familie-ef-soknad-api_p} #<Ligger i vault>
 regelverk:
   alder:
     maks: 18

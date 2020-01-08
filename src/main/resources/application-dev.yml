@@ -1,13 +1,15 @@
 familie:
   ef:
     mottak:
-      uri: https://api-gw-q0.oera.no/familie-ef-mottak/api/
+      uri: https://api-gw-q2.oera.no/familie-ef-mottak/api/
+      passord: ${apigw/dev/familie-ef-mottak/familie-ef-soknad-api_q2}
   integrasjoner:
     uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
+    passord: ${apigw/dev/familie-integrasjoner/familie-ef-soknad-api_q2}
 
 tps:
   innsyn:
-    uri:  https://api-gw-q0.oera.no/tps-proxy/api/v1/innsyn/
+    uri:  https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
 
 cors:
   allowed_origins:
