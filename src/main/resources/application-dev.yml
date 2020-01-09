@@ -10,6 +10,7 @@ familie:
 tps:
   innsyn:
     uri:  https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
+    passord: ${apigw/dev/tps-proxy.api.v1.innsyn/familie-ef-soknad-api_q2}
 
 cors:
   allowed_origins:
