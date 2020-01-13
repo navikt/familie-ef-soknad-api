@@ -15,8 +15,10 @@ class Application
 fun main(args: Array<String>) {
 
     val props = Properties()
+    /*
     props.put("familie.ef.mottak.passord", getFileAsString("/secrets/apikey/familie-integrasjoner"))
     props.put("familie.integrasjoner.passord", getFileAsString("/secrets/apikey/familie-ef-mottak"))
     props.put("tps.innsyn.passord", getFileAsString("/secrets/apikey/tps-innsyn"))
+     */
     SpringApplicationBuilder(Application::class.java).properties(props).run(*args)
 }
