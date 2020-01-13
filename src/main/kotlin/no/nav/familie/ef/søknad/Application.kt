@@ -1,9 +1,11 @@
 package no.nav.familie.ef.søknad
 
+import no.nav.familie.ef.søknad.util.getFileAsString
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.builder.SpringApplicationBuilder
 import springfox.documentation.swagger2.annotations.EnableSwagger2
+import java.util.Properties
 
 @SpringBootApplication(scanBasePackages = ["no.nav.familie.ef.søknad"])
 @EnableSwagger2
@@ -11,5 +13,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 class Application
 
 fun main(args: Array<String>) {
-    SpringApplication.run(Application::class.java, *args)
+
+    val props = Properties()
+    props.put("familie.ef.mottak.passord", getFileAsString("/secrets/apikey/familie-integrasjoner"))
+    props.put("familie.integrasjoner.passord", getFileAsString("/secrets/apikey/familie-ef-mottak"))
+    props.put("tps.innsyn.passord", getFileAsString("/secrets/apikey/tps-innsyn"))
+    SpringApplicationBuilder(Application::class.java).properties(props).run(*args)
 }
