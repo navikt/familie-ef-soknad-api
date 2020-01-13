@@ -30,10 +30,12 @@
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <micrometer.version>1.3.0</micrometer.version>
 
-        <sonar.projectKey>navikt_familie-ef-soknad-api</sonar.projectKey>
+        <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
+        <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
         <sonar.organization>navit</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.login>5d257bff02fa19152833c211ee69637581218839</sonar.login>
+        <!--suppress UnresolvedMavenProperty Ligger som secret i github-->
+        <sonar.login>${SONAR_LOGIN}</sonar.login>
     </properties>
 
     <dependencies>
