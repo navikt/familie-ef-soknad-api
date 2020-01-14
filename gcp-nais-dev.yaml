@@ -46,7 +46,6 @@ spec:
         - application: familie-ef-mottak
       external:
         - host: login.microsoftonline.com
-        - host: webproxy-nais.nav.no
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
