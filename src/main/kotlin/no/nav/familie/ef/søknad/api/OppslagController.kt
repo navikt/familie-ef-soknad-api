@@ -29,7 +29,7 @@ class OppslagController(private val oppslag: Oppslag) {
 
     @Unprotected
     @GetMapping("/poststed/{postnummer}")
-    fun postnummer(@PathVariable("postnummer") postnummer: String): ResponseEntity<String> {
+    fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
         val poststed = oppslag.hentPoststedFor(postnummer)
         return if (poststed != "") ResponseEntity.ok().body(poststed)
         else ResponseEntity.noContent().build()
@@ -39,4 +39,3 @@ class OppslagController(private val oppslag: Oppslag) {
         const val OPPSLAG = "/api/oppslag"
     }
 }
-
