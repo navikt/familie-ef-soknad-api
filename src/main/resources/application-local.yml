@@ -6,6 +6,7 @@ server:
 familie:
   integrasjoner:
     uri: http://localhost:8085/api
+    passord: pwdIntegrasjoner
   ef:
     mottak:
       uri: http://localhost:8092/api
