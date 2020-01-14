@@ -20,14 +20,13 @@ health:
 tps:
   innsyn:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
-    brukernavn: ${TPS_INNSYN_PROXY_BRUKERNAVN} #<Ligger i vault>
-    passord: ${TPS_INNSYN_PROXY_PASSORD} #<Ligger i vault>
+    brukernavn: ${TPS_INNSYN_PROXY_BRUKERNAVN} #<Ligger i gcp>
+    passord: ${TPS_INNSYN_PROXY_PASSORD} #<Ligger i gcp>
 s3:
-  uri: http://s3.nais-rook
-  region: us-east-1
-  brukernavn: ${S3_BRUKERNAVN} #<Ligger i vault>
-  passord: ${S3_PASSORD} #<Ligger i vault>
-  passordfrase: ${S3_PASSORDFRASE} #<Ligger i vault>
+  uri: https://storage.googleapis.com/nav-familie-ef-s3
+  brukernavn: ${S3_BRUKERNAVN} #<Ligger i gcp>
+  passord: ${S3_PASSORD} #<Ligger i gcp>
+  passordfrase: ${S3_PASSORDFRASE} #<Ligger i gcp>
   maxMbVedlegg: 20
 virus:
   enabled: true

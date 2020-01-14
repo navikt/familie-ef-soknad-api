@@ -46,6 +46,11 @@ spec:
         - application: familie-ef-mottak
       external:
         - host: login.microsoftonline.com
+        - host: unleashproxy.nais.oera.no
+        - host: api-gw.oera.no
+  gcp:
+    buckets:
+      - name: nav-familie-ef-s3
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
