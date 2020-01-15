@@ -30,7 +30,7 @@ spec:
       - kvPath: /apikey/apigw/dev/tps-proxy.api.v1.innsyn/familie-ef-soknad-api_q2
         mountPath: /secrets/apikey/tps-innsyn
       - kvPath: /kv/preprod/sbs/familie-ef-soknad-api/default
-        mountPath: /secrets/default
+        mountPath: /var/run/secrets/nais.io/vault
 
   replicas:
     min: 2
