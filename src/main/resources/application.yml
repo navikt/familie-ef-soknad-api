@@ -73,3 +73,4 @@ no.nav.security.jwt:
     proxyurl: http://webproxy-nais.nav.no:8088
     cookie_name: selvbetjening-idtoken
 
+logging.level.no.nav.security: DEBUG
