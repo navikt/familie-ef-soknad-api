@@ -9,9 +9,6 @@ familie:
   ef:
     mottak:
       uri: https://api-gw.oera.no/familie-ef-mottak/api
-      brukernavn: ${FAMILIE_EF_MOTTAK_BRUKERNAVN}
-  integrasjoner:
-    brukernavn: ${FAMILIE_INTEGRASJONER_BRUKERNAVN}
 regelverk:
   alder:
     maks: 18
@@ -21,7 +18,6 @@ health:
 tps:
   innsyn:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
-    brukernavn: ${TPS_INNSYN_PROXY_BRUKERNAVN} #<Ligger i vault>
 s3:
   uri: http://s3.nais-rook
   region: us-east-1

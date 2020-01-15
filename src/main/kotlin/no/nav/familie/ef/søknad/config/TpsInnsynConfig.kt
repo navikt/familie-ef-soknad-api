@@ -10,7 +10,6 @@ import java.net.URI
 @ConfigurationProperties("tps.innsyn")
 @ConstructorBinding
 internal data class TpsInnsynConfig(val uri: URI,
-                                    val brukernavn: String,
                                     val passord: String) {
 
     internal val personUri get() = URIUtil.uri(uri, PERSON)
