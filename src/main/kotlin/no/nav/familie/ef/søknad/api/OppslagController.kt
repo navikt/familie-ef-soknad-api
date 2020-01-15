@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.RestController
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
 class OppslagController(private val oppslag: Oppslag) {
 
-    private val log = LoggerFactory.getLogger(OppslagController::class.java)
-
-
     @GetMapping("/sokerinfo")
     fun søkerinfo(): Søkerinfo {
         return oppslag.hentSøkerinfo()
@@ -31,7 +28,6 @@ class OppslagController(private val oppslag: Oppslag) {
     @GetMapping("/poststed/{postnummer}")
     fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
         val poststed = oppslag.hentPoststedFor(postnummer)
-        log.info("Hentet poststed " + poststed)
         return if (poststed != "") ResponseEntity.ok().body(poststed)
         else ResponseEntity.noContent().build()
     }

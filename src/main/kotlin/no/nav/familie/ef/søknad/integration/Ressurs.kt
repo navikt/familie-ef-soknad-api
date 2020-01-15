@@ -1,51 +1,55 @@
 package no.nav.familie.ef.søknad.integration
 
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import java.io.PrintWriter
+import java.io.StringWriter
 
-data class Ressurs(
-        val data: JsonNode?,
+data class Ressurs<T>(
+        val data: T?,
         val status: Status,
         val melding: String,
-        val errorMelding: String?
+        val stacktrace: String?
 ) {
     enum class Status { SUKSESS, FEILET, IKKE_HENTET, IKKE_TILGANG }
 
     companion object {
-        val objectMapper: ObjectMapper = ObjectMapper()
-                .registerModule(JavaTimeModule())
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-
-        inline fun <reified T> success(data: T): Ressurs {
-            return Ressurs(
-                    data = objectMapper.valueToTree(data),
-                    status = Status.SUKSESS,
-                    melding = "Innhenting av data var vellykket",
-                    errorMelding = null
-            )
-        }
-
-        fun success(melding: String): Ressurs = Ressurs(
-                data = null,
+        fun <T> success(data: T): Ressurs<T> = Ressurs(
+                data = data,
                 status = Status.SUKSESS,
-                melding = melding,
-                errorMelding = null
+                melding = "Innhenting av data var vellykket",
+                stacktrace = null
         )
 
-        fun failure(errorMessage: String? = null, error: Throwable? = null): Ressurs = Ressurs(
+        fun <T> success(data: T, melding: String?): Ressurs<T> = Ressurs(
+                data = data,
+                status = Status.SUKSESS,
+                melding = melding ?: "Innhenting av data var vellykket",
+                stacktrace = null
+        )
+
+        fun <T> failure(errorMessage: String? = null, error: Throwable? = null): Ressurs<T> = Ressurs(
                 data = null,
                 status = Status.FEILET,
                 melding = errorMessage ?: "Kunne ikke hente data: ${error?.message}",
-                errorMelding = error?.message
+                stacktrace = error?.textValue()
         )
 
-        fun ikkeTilgang(melding: String): Ressurs = Ressurs(
+        fun <T> ikkeTilgang(melding: String): Ressurs<T> = Ressurs(
                 data = null,
                 status = Status.IKKE_TILGANG,
                 melding = melding,
-                errorMelding = ""
+                stacktrace = null
         )
+
+        private fun Throwable.textValue(): String {
+            val sw = StringWriter()
+            this.printStackTrace(PrintWriter(sw!!))
+            return sw.toString()
+        }
+    }
+
+    fun toJson(): String = objectMapper.writeValueAsString(this)
+
+    override fun toString(): String {
+        return "Ressurs(status=$status, melding='$melding')"
     }
 }
