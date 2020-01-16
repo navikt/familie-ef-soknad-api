@@ -1,10 +1,11 @@
 package no.nav.familie.ef.søknad.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.google.common.collect.ImmutableMap
 import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import no.nav.familie.ef.søknad.api.filter.RequestTimeFilter
-import no.nav.familie.ef.søknad.interceptor.ApiKeyInjectingClientInterceptor
+import no.nav.familie.http.interceptor.ApiKeyInjectingClientInterceptor
+import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
+import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
 import no.nav.familie.log.filter.LogFilter
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -14,21 +15,28 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.web.client.RestOperations
-import java.net.URI
 
 @SpringBootConfiguration
 internal class ApplicationConfig(@Value("\${application.name}") val applicationName: String) {
 
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
+    private val apiKey = "x-nav-apiKey"
 
     @Bean
-    fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig, mottak: MottakConfig): ClientHttpRequestInterceptor {
-        val builder = ImmutableMap.builder<URI, Pair<String, String>>()
-        builder.put(oppslag.uri, Pair(oppslag.brukernavn, oppslag.passord))
-        builder.put(mottak.uri, Pair(mottak.brukernavn, mottak.passord))
-        return ApiKeyInjectingClientInterceptor(builder.build())
+    fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig, mottak: MottakConfig, integrasjoner: FamilieIntegrasjonerConfig): ClientHttpRequestInterceptor {
+        val map = mapOf(
+                oppslag.uri to Pair(apiKey, oppslag.passord),
+                mottak.uri to Pair(apiKey, mottak.passord),
+                integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
+        return ApiKeyInjectingClientInterceptor(map)
 
     }
+
+    @Bean
+    fun mdcValuesPropagatingClientInterceptor() = MdcValuesPropagatingClientInterceptor()
+
+    @Bean
+    fun consumerIdClientInterceptor() = ConsumerIdClientInterceptor(consumerId = applicationName)
 
     @Bean
     fun restTemplate(vararg interceptors: ClientHttpRequestInterceptor): RestOperations {

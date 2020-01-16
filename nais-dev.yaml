@@ -22,6 +22,16 @@ spec:
     path: /familie/alene-med-barn/soknad-api/internal/prometheus
   vault:
     enabled: true
+    paths:
+      - kvPath: /apikey/apigw/dev/familie-integrasjoner/familie-ef-soknad-api_q2
+        mountPath: /secrets/apikey/familie-integrasjoner
+      - kvPath: /apikey/apigw/dev/familie-ef-mottak/familie-ef-soknad-api_q2
+        mountPath: /secrets/apikey/familie-ef-mottak
+      - kvPath: /apikey/apigw/dev/tps-proxy.api.v1.innsyn/familie-ef-soknad-api_q2
+        mountPath: /secrets/apikey/tps-innsyn
+      - kvPath: /kv/preprod/sbs/familie-ef-soknad-api/default
+        mountPath: /var/run/secrets/nais.io/vault
+
   replicas:
     min: 2
     max: 4
@@ -36,6 +46,7 @@ spec:
   secureLogs:
     enabled: true
   ingresses:
+    - https://www-q2.nav.no/familie/alene-med-barn/soknad-api
     - https://www-q0.nav.no/familie/alene-med-barn/soknad-api
   env:
     - name: SPRING_PROFILES_ACTIVE
