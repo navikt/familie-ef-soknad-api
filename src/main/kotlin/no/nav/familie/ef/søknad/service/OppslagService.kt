@@ -5,13 +5,11 @@ import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.FamilieIntegrasjonerClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
 
 @Service
-@ConditionalOnProperty(name = ["stub.oppslag"], havingValue = "false", matchIfMissing = true)
 internal class OppslagService(private val client: TpsInnsynServiceClient,
                               private val integrasjonerClient: FamilieIntegrasjonerClient,
                               private val regelverkConfig: RegelverkConfig) : Oppslag {

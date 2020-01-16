@@ -12,8 +12,11 @@ internal data class FamilieIntegrasjonerConfig(val uri: URI,
 
     internal val poststedUri = URIUtil.uri(uri, POSTSTED)
 
+    val pingUri: URI get() = URIUtil.uri(uri, PING)
+
     companion object {
         private const val POSTSTED = "kodeverk/poststed"
+        private const val PING = "internal/health"
     }
 
 }
