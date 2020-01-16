@@ -27,7 +27,7 @@ class OppslagController(private val oppslag: Oppslag) {
     @GetMapping("/poststed/{postnummer}")
     fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
         val poststed = oppslag.hentPoststedFor(postnummer)
-        return if (poststed != "") ResponseEntity.ok().body(poststed)
+        return if (!poststed.isNullOrBlank()) ResponseEntity.ok().body(poststed)
         else ResponseEntity.noContent().build()
     }
 

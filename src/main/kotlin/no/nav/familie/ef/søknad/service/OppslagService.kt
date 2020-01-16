@@ -34,7 +34,7 @@ internal class OppslagService(private val client: TpsInnsynServiceClient,
         return alderIÅr <= regelverkConfig.alder.maks
     }
 
-    override fun hentPoststedFor(postnummer: String): String {
+    override fun hentPoststedFor(postnummer: String): String? {
         return integrasjonerClient.hentPoststedFor(postnummer)
     }
 
