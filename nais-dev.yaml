@@ -46,7 +46,7 @@ spec:
   secureLogs:
     enabled: true
   ingresses:
-    - https://www-q0.nav.no/familie/alene-med-barn/soknad-api
+    - https://www-q2.nav.no/familie/alene-med-barn/soknad-api
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
