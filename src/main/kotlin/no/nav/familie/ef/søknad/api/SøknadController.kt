@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.Søknad
+import no.nav.familie.ef.søknad.api.dto.SøknadInput
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.service.SøknadService
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 class SøknadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
     @PostMapping
-    fun sendInn(@RequestBody søknad: Søknad): Kvittering {
+    fun sendInn(@RequestBody søknad: SøknadInput): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
             søknadService.sendInn(søknad)
         }
