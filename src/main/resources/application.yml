@@ -19,12 +19,6 @@ tps:
   innsyn:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
     passord: ${TPS_INNSYN_PROXY_PASSORD} #<Ligger i gcp>
-
-s3:
-  maxMbVedlegg: 20
-virus:
-  enabled: true
-  uri: http://clamav.nais.svc.nais.local/scan
 funksjonsbrytere:
   enabled: true
   unleash:
