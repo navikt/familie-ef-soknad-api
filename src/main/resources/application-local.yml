@@ -4,15 +4,16 @@ server:
     context-path: 
 
 familie:
+  integrasjoner:
+    uri: http://localhost:8085/api
+    passord: pwdIntegrasjoner
   ef:
     mottak:
       uri: http://localhost:8092/api
-      brukernavn: brukerMottak
       passord: pwdMottak
 tps:
   innsyn:
     uri: http://localhost:8091/familie/alene-med-barn/soknad-api/mockapi/
-    brukernavn: userInnsyn
     passord: pwdInnsyn
 s3:
   uri: http://s3.nais-rook.svc.nais.local/

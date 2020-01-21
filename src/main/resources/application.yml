@@ -9,8 +9,6 @@ familie:
   ef:
     mottak:
       uri: https://api-gw.oera.no/familie-ef-mottak/api
-      brukernavn: ${FAMILIE_EF_MOTTAK_BRUKERNAVN}
-      passord: ${FAMILIE_EF_MOTTAK_PASSORD}
 regelverk:
   alder:
     maks: 18
@@ -20,13 +18,9 @@ health:
 tps:
   innsyn:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
-    brukernavn: ${TPS_INNSYN_PROXY_BRUKERNAVN} #<Ligger i gcp>
     passord: ${TPS_INNSYN_PROXY_PASSORD} #<Ligger i gcp>
+
 s3:
-  uri: https://storage.googleapis.com/nav-familie-ef-s3
-  brukernavn: ${S3_BRUKERNAVN} #<Ligger i gcp>
-  passord: ${S3_PASSORD} #<Ligger i gcp>
-  passordfrase: ${S3_PASSORDFRASE} #<Ligger i gcp>
   maxMbVedlegg: 20
 virus:
   enabled: true
@@ -70,4 +64,3 @@ no.nav.security.jwt:
     discoveryurl: https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten
     acceptedaudience: ${ACCEPTEDAUDIENCE}
     cookie_name: selvbetjening-idtoken
-
