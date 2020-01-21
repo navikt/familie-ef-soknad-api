@@ -22,6 +22,15 @@ spec:
     path: /familie/alene-med-barn/soknad-api/internal/prometheus
   vault:
     enabled: true
+    paths:
+      - kvPath: /apikey/apigw/prod/familie-integrasjoner/familie-ef-soknad-api
+        mountPath: /secrets/apikey/familie-integrasjoner
+      - kvPath: /apikey/apigw/prod/familie-ef-mottak/familie-ef-soknad-api
+        mountPath: /secrets/apikey/familie-ef-mottak
+      - kvPath: /apikey/apigw/prod/tps-proxy.api.v1.innsyn/familie-ef-soknad-api
+        mountPath: /secrets/apikey/tps-innsyn
+      - kvPath: /kv/preprod/sbs/familie-ef-soknad-api/default
+        mountPath: /var/run/secrets/nais.io/vault
   replicas:
     min: 2
     max: 4
