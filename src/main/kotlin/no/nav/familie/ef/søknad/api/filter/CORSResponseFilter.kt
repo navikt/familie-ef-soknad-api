@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-@Order(1)
+@Order(0)
 internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
 
     @Throws(IOException::class, ServletException::class)
