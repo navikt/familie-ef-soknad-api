@@ -40,12 +40,12 @@ spec:
       rules:
         - application: familie-ef-soknad
     outbound:
-      rules:
-        - application: familie-ef-mottak
       external:
         - host: login.microsoftonline.com
         - host: unleashproxy.nais.oera.no
         - host: api-gw.oera.no
+        - host: familie-intregrasjooner.dev-fss-pub.nais.io
+        - host: familie-ef-mottak.dev-fss-pub.nais.io
   gcp:
     buckets:
       - name: nav-familie-ef-s3
