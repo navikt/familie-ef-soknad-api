@@ -15,13 +15,7 @@ tps:
   innsyn:
     uri: http://localhost:8091/familie/alene-med-barn/soknad-api/mockapi/
     passord: pwdInnsyn
-s3:
-  uri: http://s3.nais-rook.svc.nais.local/
-  region: us-east-1
-  brukernavn: user
-  passord: pwd
-  passordfrase: pass
-  maxMbVedlegg: 20
+
 funksjonsbrytere:
   enabled: false
   unleash:

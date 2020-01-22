@@ -18,16 +18,7 @@ health:
 tps:
   innsyn:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
-s3:
-  uri: http://s3.nais-rook
-  region: us-east-1
-  brukernavn: ${S3_BRUKERNAVN} #<Ligger i vault>
-  passord: ${S3_PASSORD} #<Ligger i vault>
-  passordfrase: ${S3_PASSORDFRASE} #<Ligger i vault>
-  maxMbVedlegg: 20
-virus:
-  enabled: true
-  uri: http://clamav.nais.svc.nais.local/scan
+
 funksjonsbrytere:
   enabled: true
   unleash:

@@ -5,7 +5,6 @@ import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.service.Oppslag
 import no.nav.familie.ef.søknad.util.InnloggingUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.security.token.support.core.api.Unprotected
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -23,7 +22,6 @@ class OppslagController(private val oppslag: Oppslag) {
         return oppslag.hentSøkerinfo()
     }
 
-    @Unprotected
     @GetMapping("/poststed/{postnummer}")
     fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
         val poststed = oppslag.hentPoststedFor(postnummer)
