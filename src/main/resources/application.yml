@@ -18,7 +18,7 @@ health:
 tps:
   innsyn:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
-    passord: ${TPS_INNSYN_PROXY_PASSORD} #<Ligger i gcp>
+
 funksjonsbrytere:
   enabled: true
   unleash:
@@ -57,4 +57,5 @@ no.nav.security.jwt:
   issuer.selvbetjening:
     discoveryurl: https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten
     acceptedaudience: ${ACCEPTEDAUDIENCE}
+    proxyurl: http://webproxy-nais.nav.no:8088
     cookie_name: selvbetjening-idtoken

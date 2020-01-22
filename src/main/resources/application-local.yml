@@ -15,6 +15,7 @@ tps:
   innsyn:
     uri: http://localhost:8091/familie/alene-med-barn/soknad-api/mockapi/
     passord: pwdInnsyn
+
 funksjonsbrytere:
   enabled: false
   unleash:

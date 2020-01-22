@@ -2,15 +2,12 @@ familie:
   ef:
     mottak:
       uri: https://api-gw-q2.oera.no/familie-ef-mottak/api/
-      passord: ${FAMILIE_EF_MOTTAK_PASSORD}
   integrasjoner:
     uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
-    passord: ${FAMILIE_INTEGRASJONER_PASSORD}
 
 tps:
   innsyn:
     uri:  https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
-    passord: ${TPS_INNSYN_PROXY_PASSORD}
 
 cors:
   allowed_origins:
@@ -19,9 +16,11 @@ cors:
     - "https://www-q0.nav.no/familie/alene-med-barn/soknad"
     - "https://www-q0.nav.no/familie/alene-med-barn/soknad-api"
 
+
 no.nav.security.jwt:
   issuers: selvbetjening
   issuer.selvbetjening:
     discoveryurl: https://login.microsoftonline.com/NAVtestB2C.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten_ver1
     acceptedaudience: ${ACCEPTEDAUDIENCE}
+    proxyurl: http://webproxy-nais.nav.no:8088
     cookie_name: selvbetjening-idtoken
