@@ -9,6 +9,8 @@ familie:
   ef:
     mottak:
       uri: https://api-gw.oera.no/familie-ef-mottak/api
+  integrasjoner:
+    uri:  https://api-gw.oera.no/familie-integrasjoner/api
 regelverk:
   alder:
     maks: 18
