@@ -108,7 +108,7 @@ jobs:
             --owner=$CIRCLE_PROJECT_USERNAME \
             --repository=$CIRCLE_PROJECT_REPONAME \
             --var=version="${VERSION}" \
-            --resource=./gcp-nais-dev.yaml
+            --resource=./nais-dev.yaml
   deploy_prod:
     docker:
       - image: navikt/deployment:v1
@@ -129,7 +129,7 @@ jobs:
             --owner=$CIRCLE_PROJECT_USERNAME \
             --repository=$CIRCLE_PROJECT_REPONAME \
             --var=version="$VERSION" \
-            --resource=./gcp-nais-prod.yaml
+            --resource=./nais-prod.yaml
 
 workflows:
   version: 2
