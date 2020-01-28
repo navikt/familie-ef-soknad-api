@@ -9,6 +9,8 @@ familie:
   ef:
     mottak:
       uri: https://api-gw.oera.no/familie-ef-mottak/api
+  dokument:
+    uri: https://www.nav.no/familie/alene-med-barn/mellomlagring/api/mapper/soknad-om-overgangsstonad-vedlegg
 regelverk:
   alder:
     maks: 18
