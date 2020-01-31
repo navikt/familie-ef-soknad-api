@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.SøknadInput
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.kontrakter.ef.søknad.*
 import java.time.LocalDate
 import java.time.Month
@@ -14,13 +15,14 @@ object SøknadMapper {
     }
 
 
-    val søknad = Søknad(Søknadsfelt("Søker", personalia()),
+
+    val søknad = Søknad(Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker", personalia()),
                         Søknadsfelt("Detaljer om sivilstand", sivilstandsdetaljer()),
                         Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
                         Søknadsfelt("Bosituasjonen din", bosituasjon()),
                         Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
-                        Søknadsfelt("Barn fra folkeregisteret", listOf(folkeregisterbarn())),
-                        Søknadsfelt("Barn lagt til", listOf(kommendeBarn())),
+                        Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn fra folkeregisteret", listOf(folkeregisterbarn())),
+                        Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn lagt til", listOf(kommendeBarn())),
                         Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
                         Søknadsfelt("Mer om situasjonen din", situasjon()),
                         Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
@@ -241,22 +243,27 @@ object SøknadMapper {
     }
 
     private fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
-        return Søknadsfelt("Adresse",
-                           Adresse("Jerpefaret",
-                                   5,
-                                   "C",
-                                   "H0508",
+        return Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Adresse",
+                           Adresse("Jerpefaret 5C",
                                    "1440",
                                    "Drøbak",
                                    "Norge"))
     }
 
-    private fun dokumentfelt(tittel: String) = Søknadsfelt("Dokument", Dokument(Fil(byteArrayOf(12)), tittel))
+    private fun dokumentfelt(tittel: String) = Søknadsfelt("Dokument", Dokument(byteArrayOf(12), tittel))
 
     private fun personMinimum(): PersonMinimum {
         return PersonMinimum(Søknadsfelt("Navn", "Bob Burger"),
                              null,
                              Søknadsfelt("Fødselsdato", LocalDate.of(1992, 2, 18)))
+    }
+
+    fun mapTilIntern(frontendDto: SøknadDto): Søknad {
+        val frontendPersonalia = frontendDto.person.søker.fnr
+        val fødselsnummerTmp = Søknadsfelt("fødselsnummer", Fødselsnummer(frontendPersonalia))
+        val personaliaTmp = Søknadsfelt("personalia", personalia().copy(fødselsnummer = fødselsnummerTmp))
+        val mappa = søknad.copy(personalia = personaliaTmp)
+        return mappa
     }
 
 }
