@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.SøknadInput
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadInput
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 
 interface SøknadService {

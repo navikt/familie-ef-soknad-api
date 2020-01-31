@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.SøknadInput
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadInput
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.ef.søknad.mapper.SøknadMapper

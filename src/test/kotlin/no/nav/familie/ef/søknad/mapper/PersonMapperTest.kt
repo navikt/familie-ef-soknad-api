@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.Adresse
+import no.nav.familie.ef.søknad.api.dto.tps.Adresse
 import no.nav.familie.ef.søknad.integration.dto.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

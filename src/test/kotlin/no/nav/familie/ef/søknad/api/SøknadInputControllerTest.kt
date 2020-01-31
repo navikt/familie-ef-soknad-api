@@ -3,7 +3,7 @@ package no.nav.familie.ef.søknad.api
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.SøknadInput
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadInput
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.service.SøknadService
 import org.assertj.core.api.Assertions.assertThat

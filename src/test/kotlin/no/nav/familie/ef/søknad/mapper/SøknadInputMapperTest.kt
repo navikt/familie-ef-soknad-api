@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.SøknadInput
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadInput
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
