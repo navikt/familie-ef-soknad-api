@@ -31,7 +31,7 @@ class SøknadController(val søknadService: SøknadService, val featureToggleSer
     @PostMapping("/test")
     fun test(@RequestBody søknad: SøknadDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
-            søknadService.sendInnTest(søknad)
+            søknadService.sendInn(søknad)
         }
     }
 }

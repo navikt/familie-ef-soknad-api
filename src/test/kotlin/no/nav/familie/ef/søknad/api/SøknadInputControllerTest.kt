@@ -3,7 +3,9 @@ package no.nav.familie.ef.søknad.api
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadInput
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.service.SøknadService
 import org.assertj.core.api.Assertions.assertThat
@@ -18,12 +20,12 @@ internal class SøknadInputControllerTest {
 
     @Test
     fun `sendInn returnerer samme kvittering som returneres fra søknadService`() {
-        val søknad = SøknadInput("tekst")
-        every { søknadService.sendInn(søknad) } returns Kvittering("Mottatt søknad: ${søknad.text}")
+        val søknad = SøknadDto(person = Person(søker = Søker(fnr = "25058521089"))) //Syntetisk mockfnr
+        every { søknadService.sendInn(søknad) } returns Kvittering("Mottatt søknad: ${søknad}")
         every { featureToggleService.isEnabled(any()) } returns true
 
-        val kvitteringDto = søknadController.sendInn(søknad)
+        val kvitteringDto = søknadController.test(søknad)
 
-        assertThat(kvitteringDto.text).isEqualTo("Mottatt søknad: ${søknad.text}")
+        assertThat(kvitteringDto.text).isEqualTo("Mottatt søknad: ${søknad}")
     }
 }

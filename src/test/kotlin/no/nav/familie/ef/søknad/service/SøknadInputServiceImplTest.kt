@@ -2,9 +2,10 @@ package no.nav.familie.ef.søknad.service
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadInput
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.ef.søknad.mapper.SøknadMapper
@@ -18,21 +19,14 @@ internal class SøknadInputServiceImplTest {
 
     private val søknadService = SøknadServiceImpl(søknadClient)
 
-    private val søknadDto = SøknadInput("Dette er en søknad")
+    private val søknadDto = SøknadDto(person = Person(søker = Søker(fnr = "25058521089"))) //Syntetisk mockfnr
+
     private val søknad = SøknadMapper.mapTilIntern(søknadDto)
     private val kvittering = KvitteringDto("Dette er en kvittering")
 
     @BeforeEach
     private fun init() {
         every { søknadClient.sendInn(søknad) } returns kvittering
-    }
-
-
-    @Test
-    fun `sendInn skal kalle søknadClient for å sende inn søknad`() {
-        søknadService.sendInn(søknadDto)
-
-        verify { søknadClient.sendInn(søknad) }
     }
 
     @Test

@@ -10,11 +10,6 @@ object SøknadMapper {
 
     // TODO Få inn data og map det korrekt.
 
-    fun mapTilIntern(søknadInput: SøknadInput): Søknad {
-        return søknad
-    }
-
-
     val søknad = Søknad(Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker", personalia()),
                         Søknadsfelt("Detaljer om sivilstand", sivilstandsdetaljer()),
                         Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
