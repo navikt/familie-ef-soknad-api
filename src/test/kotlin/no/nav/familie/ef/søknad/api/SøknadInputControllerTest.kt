@@ -14,13 +14,13 @@ internal class SøknadInputControllerTest {
     private val søknadService: SøknadService = mockk()
     private val featureToggleService: FeatureToggleService = mockk()
 
-    private val søknadController = SøknadController(søknadService, featureToggleService )
+    private val søknadController = SøknadController(søknadService, featureToggleService)
 
     @Test
     fun `sendInn returnerer samme kvittering som returneres fra søknadService`() {
         val søknad = SøknadInput("tekst")
         every { søknadService.sendInn(søknad) } returns Kvittering("Mottatt søknad: ${søknad.text}")
-        every { featureToggleService.isEnabled(any())} returns true
+        every { featureToggleService.isEnabled(any()) } returns true
 
         val kvitteringDto = søknadController.sendInn(søknad)
 

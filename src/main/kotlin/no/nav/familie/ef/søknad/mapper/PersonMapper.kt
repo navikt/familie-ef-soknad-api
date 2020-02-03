@@ -11,25 +11,25 @@ object PersonMapper {
 
     fun mapTilBarn(relasjonDto: RelasjonDto): Barn {
         return Barn(relasjonDto.ident,
-                relasjonDto.forkortetNavn,
-                relasjonDto.alder,
-                relasjonDto.fødselsdato,
-                relasjonDto.harSammeAdresse)
+                    relasjonDto.forkortetNavn,
+                    relasjonDto.alder,
+                    relasjonDto.fødselsdato,
+                    relasjonDto.harSammeAdresse)
     }
 
 
     fun mapTilPerson(personinfoDto: PersoninfoDto): Person {
         return Person(personinfoDto.ident,
-                personinfoDto.navn.forkortetNavn,
-                mapTilAdresse(personinfoDto.adresseinfo),
-                personinfoDto.egenansatt?.isErEgenansatt ?: false,
-                personinfoDto.sivilstand?.kode?.verdi ?: "",
-                personinfoDto.statsborgerskap?.kode?.verdi ?: "")
+                      personinfoDto.navn.forkortetNavn,
+                      mapTilAdresse(personinfoDto.adresseinfo),
+                      personinfoDto.egenansatt?.isErEgenansatt ?: false,
+                      personinfoDto.sivilstand?.kode?.verdi ?: "",
+                      personinfoDto.statsborgerskap?.kode?.verdi ?: "")
     }
 
     private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {
         return Adresse(adresseinfoDto?.bostedsadresse?.adresse
-                ?: "",
-                adresseinfoDto?.bostedsadresse?.postnummer ?: "")
+                       ?: "",
+                       adresseinfoDto?.bostedsadresse?.postnummer ?: "")
     }
 }

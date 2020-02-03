@@ -15,13 +15,13 @@ object SøknadMapper {
     }
 
 
-
     val søknad = Søknad(Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker", personalia()),
                         Søknadsfelt("Detaljer om sivilstand", sivilstandsdetaljer()),
                         Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
                         Søknadsfelt("Bosituasjonen din", bosituasjon()),
                         Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
-                        Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn fra folkeregisteret", listOf(folkeregisterbarn())),
+                        Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn fra folkeregisteret",
+                                    listOf(folkeregisterbarn())),
                         Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn lagt til", listOf(kommendeBarn())),
                         Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
                         Søknadsfelt("Mer om situasjonen din", situasjon()),
