@@ -46,7 +46,7 @@ internal class PersonMapperTest {
 
         assertThat(person.fnr).isEqualTo("fødselsnummer")
         assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
-        assertThat(person.adresse).isEqualTo(Adresse("Veien 24", "v/noen", "Oslo", "0265"))
+        assertThat(person.adresse).isEqualTo(Adresse("Veien 24", "0265"))
         assertThat(person.egenansatt).isEqualTo(true)
         assertThat(person.sivilstand).isEqualTo("GIFT")
         assertThat(person.statsborgerskap).isEqualTo("NO")
@@ -73,7 +73,7 @@ internal class PersonMapperTest {
 
         assertThat(person.fnr).isEqualTo("fødselsnummer")
         assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
-        assertThat(person.adresse).isEqualTo(Adresse("", "", "", ""))
+        assertThat(person.adresse).isEqualTo(Adresse("", ""))
         assertThat(person.egenansatt).isEqualTo(false)
         assertThat(person.sivilstand).isEqualTo("")
         assertThat(person.statsborgerskap).isEqualTo("")

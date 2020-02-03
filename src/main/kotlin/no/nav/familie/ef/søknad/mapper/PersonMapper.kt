@@ -30,8 +30,6 @@ object PersonMapper {
     private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {
         return Adresse(adresseinfoDto?.bostedsadresse?.adresse
                 ?: "",
-                adresseinfoDto?.bostedsadresse?.adressetillegg ?: "",
-                adresseinfoDto?.bostedsadresse?.kommune ?: "",
                 adresseinfoDto?.bostedsadresse?.postnummer ?: "")
     }
 }
