@@ -23,16 +23,8 @@ object PersonMapper {
                 personinfoDto.navn.forkortetNavn,
                 mapTilAdresse(personinfoDto.adresseinfo),
                 personinfoDto.egenansatt?.isErEgenansatt ?: false,
-                personinfoDto.innvandringUtvandring?.innvandretDato,
-                personinfoDto.innvandringUtvandring?.utvandretDato,
-                personinfoDto.oppholdstillatelse?.kode?.verdi ?: "",
                 personinfoDto.sivilstand?.kode?.verdi ?: "",
-                personinfoDto.språk?.kode?.verdi ?: "bm",
-                personinfoDto.statsborgerskap?.kode?.verdi ?: "",
-                personinfoDto.telefon?.privat ?: "",
-                personinfoDto.telefon?.mobil ?: "",
-                personinfoDto.telefon?.jobb ?: "",
-                personinfoDto.kontonummer?.nummer ?: "")
+                personinfoDto.statsborgerskap?.kode?.verdi ?: "")
     }
 
     private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {

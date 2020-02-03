@@ -48,16 +48,8 @@ internal class PersonMapperTest {
         assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
         assertThat(person.adresse).isEqualTo(Adresse("Veien 24", "v/noen", "Oslo", "0265"))
         assertThat(person.egenansatt).isEqualTo(true)
-        assertThat(person.innvandretDato).isEqualTo(LocalDate.of(1999, 5, 4))
-        assertThat(person.utvandretDato).isEqualTo(LocalDate.of(2016, 8, 3))
-        assertThat(person.oppholdstillatelse).isEqualTo("opphold")
         assertThat(person.sivilstand).isEqualTo("GIFT")
-        assertThat(person.språk).isEqualTo("bm")
         assertThat(person.statsborgerskap).isEqualTo("NO")
-        assertThat(person.privattelefon).isEqualTo("privat")
-        assertThat(person.mobiltelefon).isEqualTo("mobil")
-        assertThat(person.jobbtelefon).isEqualTo("jobb")
-        assertThat(person.bankkontonummer).isEqualTo("8675309")
 
     }
 
@@ -83,16 +75,8 @@ internal class PersonMapperTest {
         assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
         assertThat(person.adresse).isEqualTo(Adresse("", "", "", ""))
         assertThat(person.egenansatt).isEqualTo(false)
-        assertThat(person.innvandretDato).isNull()
-        assertThat(person.utvandretDato).isNull()
-        assertThat(person.oppholdstillatelse).isEqualTo("")
         assertThat(person.sivilstand).isEqualTo("")
-        assertThat(person.språk).isEqualTo("bm")
         assertThat(person.statsborgerskap).isEqualTo("")
-        assertThat(person.privattelefon).isEqualTo("")
-        assertThat(person.mobiltelefon).isEqualTo("")
-        assertThat(person.jobbtelefon).isEqualTo("")
-        assertThat(person.bankkontonummer).isEqualTo("")
     }
 
 
