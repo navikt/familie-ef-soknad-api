@@ -24,7 +24,7 @@ class SøknadController(val søknadService: SøknadService, val featureToggleSer
     @PostMapping
     fun sendInn(@RequestBody søknad: SøknadInput): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
-            søknadService.sendInn(søknad)
+            Kvittering("Kontakt med api, søknad ikke sendt inn.")
         }
     }
 
