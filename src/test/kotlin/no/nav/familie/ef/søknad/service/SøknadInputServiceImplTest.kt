@@ -8,7 +8,6 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
-import no.nav.familie.ef.søknad.mapper.SøknadMapper
 import no.nav.familie.kontrakter.ef.søknad.Søknad
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -22,7 +21,6 @@ internal class SøknadInputServiceImplTest {
 
     private val syntetiskFnr = "25058521089"
     private val søknadDto = SøknadDto(person = Person(søker = Søker(fnr = syntetiskFnr)))
-    private val søknad : Søknad = SøknadMapper.mapTilIntern(søknadDto)
     private val kvittering = KvitteringDto("")
 
     @BeforeEach

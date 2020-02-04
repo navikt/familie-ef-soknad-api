@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadInput
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.kontrakter.ef.søknad.*
 import java.time.LocalDate
@@ -10,14 +9,14 @@ object SøknadMapper {
 
     // TODO Få inn data og map det korrekt.
 
-    val søknad = Søknad(Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker", personalia()),
+    val søknad = Søknad(Søknadsfelt("Søker", personalia()),
                         Søknadsfelt("Detaljer om sivilstand", sivilstandsdetaljer()),
                         Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
                         Søknadsfelt("Bosituasjonen din", bosituasjon()),
                         Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
-                        Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn fra folkeregisteret",
+                        Søknadsfelt("Barn fra folkeregisteret",
                                     listOf(folkeregisterbarn())),
-                        Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn lagt til", listOf(kommendeBarn())),
+                        Søknadsfelt("Barn lagt til", listOf(kommendeBarn())),
                         Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
                         Søknadsfelt("Mer om situasjonen din", situasjon()),
                         Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
@@ -111,16 +110,16 @@ object SøknadMapper {
     }
 
     @Suppress("LongLine")
-    private fun kommendeBarn(): KommendeBarn {
-        return KommendeBarn(navn = Søknadsfelt("Barnets fulle navn, hvis dette er bestemt", "Sorgløs"),
+    private fun kommendeBarn(): NyttBarn {
+        return NyttBarn(navn = Søknadsfelt("Barnets fulle navn, hvis dette er bestemt", "Sorgløs"),
                             erBarnetFødt = Søknadsfelt("Er barnet født?", false),
                             fødselTermindato = Søknadsfelt("Termindato", LocalDate.of(2020, 5, 16)),
                             skalBarnetBoHosSøker = Søknadsfelt("Skal barnet bo hos deg?", true),
                             terminbekreftelse = dokumentfelt("Bekreftelse på ventet fødselsdato"),
                             annenForelder = Søknadsfelt("Barnets andre forelder",
-                                                        Forelder(Søknadsfelt("Jeg kan ikke oppgi den andre forelderen",
-                                                                             true),
-                                                                 Søknadsfelt("Hvorfor kan du ikke oppgi den andre forelderen?",
+                                                        AnnenForelder(Søknadsfelt("Jeg kan ikke oppgi den andre forelderen",
+                                                                                       true),
+                                                                           Søknadsfelt("Hvorfor kan du ikke oppgi den andre forelderen?",
                                                                              "Fordi jeg ikke liker hen."))),
                             samvær = Søknadsfelt("Samvær",
                                                  Samvær(Søknadsfelt("Har du og den andre forelderen skriftlig avtale om delt bosted for barnet?",
@@ -147,13 +146,13 @@ object SøknadMapper {
     }
 
     @Suppress("LongLine")
-    private fun folkeregisterbarn(): Folkeregisterbarn {
-        return Folkeregisterbarn(Søknadsfelt("Navn", "Lykkeliten"),
+    private fun folkeregisterbarn(): RegistrertBarn {
+        return RegistrertBarn(Søknadsfelt("Navn", "Lykkeliten"),
                                  Søknadsfelt("Fødselsnummer", Fødselsnummer("31081953069")),
                                  Søknadsfelt("Har samme adresse som søker", true),
                                  Søknadsfelt("Barnets andre forelder",
-                                             Forelder(person = Søknadsfelt("personalia", personMinimum()),
-                                                      adresse = adresseSøknadsfelt())),
+                                             AnnenForelder(person = Søknadsfelt("personalia", personMinimum()),
+                                                                adresse = adresseSøknadsfelt())),
                                  Søknadsfelt("samvær",
                                              Samvær(Søknadsfelt("Har du og den andre forelderen skriftlig avtale om delt bosted for barnet?",
                                                                 true),
@@ -238,7 +237,7 @@ object SøknadMapper {
     }
 
     private fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
-        return Søknadsfelt("no.nav.familie.ef.søknad.api.dto.søknadsdialog.Adresse",
+        return Søknadsfelt("Adresse",
                            Adresse("Jerpefaret 5C",
                                    "1440",
                                    "Drøbak",
