@@ -2,37 +2,32 @@ package no.nav.familie.ef.søknad.service
 
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.Søknad
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.ef.søknad.mapper.SøknadMapper
+import no.nav.familie.kontrakter.ef.søknad.Søknad
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-internal class SøknadDtoServiceImplTest {
+internal class SøknadInputServiceImplTest {
 
     private val søknadClient: SøknadClient = mockk()
 
     private val søknadService = SøknadServiceImpl(søknadClient)
 
-    private val søknadDto = Søknad("Dette er en søknad")
-    private val søknad = SøknadMapper.mapTilIntern(søknadDto)
-    private val kvittering = KvitteringDto("Dette er en kvittering")
+    private val syntetiskFnr = "25058521089"
+    private val søknadDto = SøknadDto(person = Person(søker = Søker(fnr = syntetiskFnr)))
+    private val søknad : Søknad = SøknadMapper.mapTilIntern(søknadDto)
+    private val kvittering = KvitteringDto("")
 
     @BeforeEach
     private fun init() {
-        every { søknadClient.sendInn(søknad) } returns kvittering
-    }
-
-
-    @Test
-    fun `sendInn skal kalle søknadClient for å sende inn søknad`() {
-        søknadService.sendInn(søknadDto)
-
-        verify { søknadClient.sendInn(søknad) }
+        every { søknadClient.sendInn(any<Søknad>()) } returns kvittering
     }
 
     @Test
