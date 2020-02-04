@@ -17,8 +17,7 @@ class RequestTimeFilter : Filter {
         try {
             timer.start()
             filterChain.doFilter(servletRequest, servletResponse)
-        }
-        finally {
+        } finally {
             timer.stop()
             log(request, response.status, timer)
         }

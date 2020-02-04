@@ -62,7 +62,7 @@ class FeatureToggleConfig(private val enabled: Boolean,
     private fun lagDummyFeatureToggleService(): FeatureToggleService {
         return object : FeatureToggleService {
             override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-                if(unleash.environment == "local"){
+                if (unleash.environment == "local") {
                     return true
                 }
                 return defaultValue

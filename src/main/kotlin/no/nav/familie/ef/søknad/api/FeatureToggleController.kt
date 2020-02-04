@@ -13,14 +13,14 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
     val funksjonsbrytere = listOf("familie.ef.soknad.send-soknad", "familie.ef.soknad.vis-innsending")
 
     @GetMapping
-    fun sjekkAlle() : Map<String, Boolean> {
-        val toggleVerdier = funksjonsbrytere.map { toggle -> toggle to featureToggleService.isEnabled(toggle)}.toMap()
+    fun sjekkAlle(): Map<String, Boolean> {
+        val toggleVerdier = funksjonsbrytere.map { toggle -> toggle to featureToggleService.isEnabled(toggle) }.toMap()
         return toggleVerdier
     }
 
     @GetMapping("/{toggleId}")
     fun sjekkFunksjonsbryter(@PathVariable toggleId: String,
-                             @RequestParam("defaultverdi") defaultVerdi:Boolean?=false) : Boolean {
+                             @RequestParam("defaultverdi") defaultVerdi: Boolean? = false): Boolean {
         return featureToggleService.isEnabled(toggleId, defaultVerdi ?: false)
     }
 }
