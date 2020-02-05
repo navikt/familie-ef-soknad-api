@@ -1,8 +1,8 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadInput
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadInput
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.service.SøknadService
@@ -24,7 +24,7 @@ class SøknadController(val søknadService: SøknadService, val featureToggleSer
     @PostMapping
     fun sendInn(@RequestBody søknad: SøknadInput): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
-            Kvittering("Kontakt med api, søknad ikke sendt inn.")
+            Kvittering("Kontakt med api, søknad ikke sendt inn. Du forsøkte å sende inn:  $søknad")
         }
     }
 
