@@ -35,8 +35,6 @@ internal class SøknadInputMapperTest {
         assertThat(søknad.getSøkerNavn()).isEqualTo(forventetNavn)
     }
 
-
-
     @Test
     fun `mapTilIntern returnerer dto med riktig adresse fra frontend`() {
         // Given
@@ -94,7 +92,6 @@ internal class SøknadInputMapperTest {
         val sivilstatus = søknad.personalia.verdi.sivilstatus.verdi
         assertThat(sivilstatus).isEqualTo(forventetSivilstatus)
     }
-
 }
 
 fun søkerMedDefaultVerdier(forventetFnr: String = "19128449828",
