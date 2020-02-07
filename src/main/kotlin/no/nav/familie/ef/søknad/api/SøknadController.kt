@@ -37,7 +37,7 @@ class SøknadController(val søknadService: SøknadService, val featureToggleSer
             try {
                 søknadService.sendInn(søknad)
             } catch (e: Exception) {
-                logger.error("Feil ", e)
+                logger.error("Feil - får ikke sendt til mottak ", e)
                 Kvittering("Feil! Søknad ikke sendt inn. Du forsøkte å sende inn:  $søknad")
             }
         }
