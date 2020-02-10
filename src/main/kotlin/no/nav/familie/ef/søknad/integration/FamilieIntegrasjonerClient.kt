@@ -9,6 +9,7 @@ import org.springframework.web.client.RestOperations
 @Component
 internal class FamilieIntegrasjonerClient(val config: FamilieIntegrasjonerConfig,
                                           operations: RestOperations) : PingableRestClient(operations, config.pingUri) {
+
     fun hentPoststedFor(postnummer: String): String? {
         val ressurs = getForEntity(URIUtil.uri(config.poststedUri, postnummer)) as Ressurs<String>
         return ressurs.data

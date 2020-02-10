@@ -1,7 +1,7 @@
 server:
   port: 8091
   servlet:
-    context-path: 
+    context-path:
 
 familie:
   integrasjoner:
@@ -13,7 +13,7 @@ familie:
       passord: pwdMottak
 tps:
   innsyn:
-    uri: http://localhost:8091/familie/alene-med-barn/soknad-api/mockapi/
+    uri: http://localhost:8091/mockapi/
     passord: pwdInnsyn
 
 funksjonsbrytere:

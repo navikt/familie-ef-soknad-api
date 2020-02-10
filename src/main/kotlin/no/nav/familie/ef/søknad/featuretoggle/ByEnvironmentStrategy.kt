@@ -9,7 +9,7 @@ class ByEnvironmentStrategy : Strategy {
     companion object {
         private const val miljøKey = "miljø"
 
-        fun lagPropertyMapMedMiljø(vararg strings : String) : Map<String, String> {
+        fun lagPropertyMapMedMiljø(vararg strings: String): Map<String, String> {
             return mapOf(miljøKey to strings.joinToString(","))
         }
     }
@@ -19,13 +19,13 @@ class ByEnvironmentStrategy : Strategy {
     }
 
     override fun isEnabled(map: Map<String, String>?): Boolean {
-        return isEnabled(map,UnleashContext.builder().build())
+        return isEnabled(map, UnleashContext.builder().build())
     }
 
-    override fun isEnabled(map: Map<String, String>?, unleashContext : UnleashContext): Boolean {
+    override fun isEnabled(map: Map<String, String>?, unleashContext: UnleashContext): Boolean {
 
         return unleashContext.environment
-                .map { env->map?.get(miljøKey)?.split(',')?.contains(env) ?: false  }
+                .map { env -> map?.get(miljøKey)?.split(',')?.contains(env) ?: false }
                 .orElse(false)
     }
 

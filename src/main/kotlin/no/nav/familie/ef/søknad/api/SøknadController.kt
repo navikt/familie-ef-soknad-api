@@ -1,7 +1,8 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.Søknad
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadInput
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.service.SøknadService
@@ -17,10 +18,18 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/soknad"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
+
 class SøknadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
     @PostMapping
-    fun sendInn(@RequestBody søknad: Søknad): Kvittering {
+    fun sendInn(@RequestBody søknad: SøknadInput): Kvittering {
+        return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
+            Kvittering("Kontakt med api, søknad ikke sendt inn.")
+        }
+    }
+
+    @PostMapping("/test")
+    fun test(@RequestBody søknad: SøknadDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
             søknadService.sendInn(søknad)
         }

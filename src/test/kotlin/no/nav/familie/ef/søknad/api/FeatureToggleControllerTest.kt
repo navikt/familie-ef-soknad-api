@@ -10,7 +10,7 @@ internal class FeatureToggleControllerTest {
 
     private val fakeUnleashService = object : FeatureToggleService {
         override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-            return fakeUnleash.isEnabled(toggleId,defaultValue)
+            return fakeUnleash.isEnabled(toggleId, defaultValue)
         }
     }
 
@@ -21,8 +21,8 @@ internal class FeatureToggleControllerTest {
 
         fakeUnleash.enable("bryter1")
 
-        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter1",null)).isTrue()
-        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter2",null)).isFalse()
+        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter1", null)).isTrue()
+        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter2", null)).isFalse()
     }
 
     @Test
@@ -30,8 +30,8 @@ internal class FeatureToggleControllerTest {
 
         fakeUnleash.enable("bryter1")
 
-        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter1",false)).isTrue()
-        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter2",true)).isTrue()
+        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter1", false)).isTrue()
+        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter2", true)).isTrue()
     }
 
     @Test
@@ -39,7 +39,7 @@ internal class FeatureToggleControllerTest {
 
         fakeUnleash.enable("bryter1")
 
-        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter1",false)).isTrue()
-        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter2",true)).isTrue()
+        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter1", false)).isTrue()
+        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter2", true)).isTrue()
     }
 }
