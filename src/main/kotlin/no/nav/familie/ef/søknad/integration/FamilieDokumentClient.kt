@@ -13,4 +13,9 @@ internal class FamilieDokumentClient(val config: FamilieDokumentConfig,
         val ressurs = getForEntity(URIUtil.uri(config.hentVedleggUri, vedleggsId)) as Ressurs<String>
         return ressurs.data
     }
+
+    fun test(): String? {
+        val ressurs = getForEntity(config.pingUri) as Ressurs<String>
+        return ressurs.data
+    }
 }

@@ -9,4 +9,9 @@ internal class DokumentService(private val client: FamilieDokumentClient) : Doku
     override fun hentVedlegg(vedleggsId: String): String? {
         return client.hentVedlegg(vedleggsId)
     }
+
+
+    override fun test(): String? {
+        return client.test()
+    }
 }

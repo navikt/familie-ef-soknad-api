@@ -15,7 +15,7 @@ internal data class FamilieDokumentConfig(val uri: URI) {
 
     companion object {
         private const val HENT = "familievedlegg"
-        private const val PING = "ERSTATT"
+        private const val PING = "ping"
     }
 
 }
