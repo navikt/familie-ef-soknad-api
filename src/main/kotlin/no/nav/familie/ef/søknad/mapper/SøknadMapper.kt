@@ -251,8 +251,7 @@ object SøknadMapper {
     }
 
     fun mapTilIntern(frontendDto: SøknadDto): Søknad {
-        val mappa = søknad.copy(personalia = mapPersonalia(frontendDto))
-        return mappa
+        return søknad.copy(personalia = mapPersonalia(frontendDto))
     }
 
     private fun mapPersonalia(frontendDto: SøknadDto): Søknadsfelt<Personalia> {

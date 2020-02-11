@@ -35,6 +35,6 @@ no.nav.security.jwt:
   issuers: selvbetjening
   issuer.selvbetjening:
     discoveryurl: http://metadata
-    acceptedaudience: aud-localhost
+    accepted_audience: aud-localhost
     cookie_name: localhost-idtoken
     proxyurl:
