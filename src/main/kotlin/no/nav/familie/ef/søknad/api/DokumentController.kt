@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(path = [DokumentController.DOKUMENT], produces = [APPLICATION_JSON_VALUE])
-//@ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
-@Unprotected
+@ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
+//@Unprotected
 class DokumentController(private val dokument: Dokument) {
 
     @GetMapping("/hent/{testid}")
