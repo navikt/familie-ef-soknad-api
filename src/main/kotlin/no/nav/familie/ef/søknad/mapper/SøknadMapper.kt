@@ -12,9 +12,9 @@ object SøknadMapper {
                         Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
                         Søknadsfelt("Bosituasjonen din", bosituasjon()),
                         Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
-                        Søknadsfelt("Barn fra folkeregisteret",
-                                    listOf(folkeregisterbarn())),
-                        Søknadsfelt("Barn lagt til", listOf(kommendeBarn())),
+                        Søknadsfelt("Barn funnet i tps/folkeregisteret",
+                                    listOf(registrertBarn())),
+                        Søknadsfelt("Barn lagt til", listOf(nyttBarn())),
                         Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
                         Søknadsfelt("Mer om situasjonen din", situasjon()),
                         Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
@@ -108,7 +108,7 @@ object SøknadMapper {
     }
 
     @Suppress("LongLine")
-    private fun kommendeBarn(): NyttBarn {
+    private fun nyttBarn(): NyttBarn {
         return NyttBarn(navn = Søknadsfelt("Barnets fulle navn, hvis dette er bestemt", "Sorgløs"),
                         erBarnetFødt = Søknadsfelt("Er barnet født?", false),
                         fødselTermindato = Søknadsfelt("Termindato", LocalDate.of(2020, 5, 16)),
@@ -144,7 +144,7 @@ object SøknadMapper {
     }
 
     @Suppress("LongLine")
-    private fun folkeregisterbarn(): RegistrertBarn {
+    private fun registrertBarn(): RegistrertBarn {
         return RegistrertBarn(Søknadsfelt("Navn", "Lykkeliten"),
                               Søknadsfelt("Fødselsnummer", Fødselsnummer("31081953069")),
                               Søknadsfelt("Har samme adresse som søker", true),
@@ -258,7 +258,8 @@ object SøknadMapper {
         val personalia = personalia().copy(fødselsnummer = lagFødselsnummerSøknadsFelt(frontendDto),
                                            navn = lagNavnSøknadsFelt(frontendDto),
                                            adresse = lagAdresseSøknadsFelt(frontendDto),
-                                           statsborgerskap = Søknadsfelt("Statsborgerskap", frontendDto.person.søker.statsborgerskap),
+                                           statsborgerskap = Søknadsfelt("Statsborgerskap",
+                                                                         frontendDto.person.søker.statsborgerskap),
                                            telefonnummer = lagTelefonnummerSøknadsfelt(frontendDto.person.søker.telefonnummer),
                                            sivilstatus = Søknadsfelt("Sivilstatus", frontendDto.person.søker.sivilstand)
 
@@ -266,19 +267,19 @@ object SøknadMapper {
         return Søknadsfelt("personalia", personalia)
     }
 
-    private fun lagTelefonnummerSøknadsfelt(telefonnummer: String?) : Søknadsfelt<String>? {
+    private fun lagTelefonnummerSøknadsfelt(telefonnummer: String?): Søknadsfelt<String>? {
         return telefonnummer?.let {
-            Søknadsfelt("Telefonnummer", telefonnummer )
+            Søknadsfelt("Telefonnummer", telefonnummer)
         }
     }
 
     private fun lagAdresseSøknadsFelt(frontendDto: SøknadDto): Søknadsfelt<Adresse> {
         val frontendAdresse = frontendDto.person.søker.adresse
-        return Søknadsfelt("Adresse", Adresse(adresse = frontendAdresse.adresse, postnummer = frontendAdresse.postnummer ))
+        return Søknadsfelt("Adresse", Adresse(adresse = frontendAdresse.adresse, postnummer = frontendAdresse.postnummer))
     }
 
     private fun lagNavnSøknadsFelt(frontendDto: SøknadDto): Søknadsfelt<String> =
-         Søknadsfelt("Navn", frontendDto.person.søker.forkortetNavn)
+            Søknadsfelt("Navn", frontendDto.person.søker.forkortetNavn)
 
 
     private fun lagFødselsnummerSøknadsFelt(frontendDto: SøknadDto): Søknadsfelt<Fødselsnummer> {
