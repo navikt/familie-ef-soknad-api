@@ -24,7 +24,7 @@ internal class SøknadInputControllerTest {
         every { søknadService.sendInn(søknad) } returns Kvittering("Mottatt søknad: ${søknad}")
         every { featureToggleService.isEnabled(any()) } returns true
 
-        val kvitteringDto = søknadController.sendInnv2(søknad)
+        val kvitteringDto = søknadController.sendInn(søknad)
 
         assertThat(kvitteringDto.text).isEqualTo("Mottatt søknad: ${søknad}")
     }

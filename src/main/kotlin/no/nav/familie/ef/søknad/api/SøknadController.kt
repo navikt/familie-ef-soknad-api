@@ -24,15 +24,7 @@ class SøknadController(val søknadService: SøknadService, val featureToggleSer
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @PostMapping
-    fun sendInn(@RequestBody søknad: Map<Any, Any>): Kvittering {
-        return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
-            Kvittering("Kontakt med api, søknad ikke sendt inn. Du forsøkte å sende inn:  $søknad")
-        }
-    }
-
-    @PostMapping("/v2")
-    fun sendInnv2(@RequestBody søknad: SøknadDto): Kvittering {
-        logger.info("Send inn v2")
+    fun sendInn(@RequestBody søknad: SøknadDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
             try {
                 søknadService.sendInn(søknad)
