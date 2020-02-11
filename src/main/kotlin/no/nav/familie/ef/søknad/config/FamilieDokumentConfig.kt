@@ -14,8 +14,8 @@ internal data class FamilieDokumentConfig(val uri: URI) {
     val pingUri: URI get() = URIUtil.uri(uri, PING)
 
     companion object {
-        private const val HENT = "familievedlegg"
-        private const val PING = "ping"
+        private const val HENT = "mapper/familievedlegg"
+        private const val PING = "mapper/ping"
     }
 
 }

@@ -10,7 +10,7 @@ familie:
     mottak:
       uri: https://api-gw.oera.no/familie-ef-mottak/api
   dokument:
-    uri: http://familie-dokument/api/mapper/soknad-om-overgangsstonad-vedlegg
+    uri: http://familie-dokument/api
   integrasjoner:
     uri:  https://api-gw.oera.no/familie-integrasjoner/api
 
