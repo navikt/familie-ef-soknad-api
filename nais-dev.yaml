@@ -12,17 +12,21 @@ spec:
   liveness:
     path: /familie/alene-med-barn/soknad-api/internal/status/isAlive
     initialDelay: 30
-    failureThreshold: 10
+    timeout: 5
+    periodSeconds: 10
+    failureThreshold: 27
   readiness:
     path: /familie/alene-med-barn/soknad-api/internal/status/isAlive
     initialDelay: 30
-    failureThreshold: 10
+    timeout: 5
+    periodSeconds: 10
+    failureThreshold: 27
   prometheus:
     enabled: true
     path: /familie/alene-med-barn/soknad-api/internal/prometheus
   replicas:
-    min: 2
-    max: 4
+    min: 1
+    max: 2
     cpuThresholdPercentage: 50
   resources:
     limits:
@@ -46,6 +50,9 @@ spec:
   gcp:
     buckets:
       - name: nav-familie-ef-s3
+  webproxy: false
+  vault:
+    enabled: false
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
