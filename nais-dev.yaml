@@ -10,20 +10,20 @@ spec:
   image: navikt/familie-ef-soknad-api:{{version}}
   port: 8000
   liveness:
-    path: /familie/alene-med-barn/soknad-api/internal/status/isAlive
+    path: /internal/status/isAlive
     initialDelay: 30
     timeout: 5
     periodSeconds: 10
     failureThreshold: 27
   readiness:
-    path: /familie/alene-med-barn/soknad-api/internal/status/isAlive
+    path: /internal/status/isAlive
     initialDelay: 30
     timeout: 5
     periodSeconds: 10
     failureThreshold: 27
   prometheus:
     enabled: true
-    path: /familie/alene-med-barn/soknad-api/internal/prometheus
+    path: /internal/prometheus
   ingresses:
       - https://familie-ef-soknad-api.dev-adeo.no/
   replicas:
