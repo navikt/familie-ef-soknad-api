@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.mapper
 
+
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.kontrakter.ef.søknad.*
 import java.time.LocalDate

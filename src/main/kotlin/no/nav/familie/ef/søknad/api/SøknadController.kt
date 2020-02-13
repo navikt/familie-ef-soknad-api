@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/soknad"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
-
 class SøknadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)

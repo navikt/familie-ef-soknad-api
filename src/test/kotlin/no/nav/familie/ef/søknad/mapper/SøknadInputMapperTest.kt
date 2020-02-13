@@ -105,6 +105,7 @@ fun søkerMedDefaultVerdier(forventetFnr: String = "19128449828",
                 adresse = adresse,
                 statsborgerskap = statsborgerskap,
                 telefonnummer = telefonnummer,
-                sivilstand = sivilstatus
+                sivilstand = sivilstatus,
+                egenansatt = false
 
 )
