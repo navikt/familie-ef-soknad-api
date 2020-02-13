@@ -25,7 +25,7 @@ spec:
     enabled: true
     path: /familie/alene-med-barn/soknad-api/internal/prometheus
   ingresses:
-      - https://familie-gcp.dev-nav.no/familie/alene-med-barn/soknad-api
+      - https://familie-ef-soknad-api.dev-adeo.no/
   replicas:
     min: 1
     max: 2
