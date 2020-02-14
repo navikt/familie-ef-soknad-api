@@ -6,12 +6,7 @@ import org.springframework.stereotype.Service
 @Service
 internal class DokumentService(private val client: FamilieDokumentClient) : Dokument {
 
-    override fun hentVedlegg(vedleggsId: String): String? {
+    override fun hentVedlegg(vedleggsId: String): ByteArray? {
         return client.hentVedlegg(vedleggsId)
-    }
-
-
-    override fun test(): String? {
-        return client.test()
     }
 }

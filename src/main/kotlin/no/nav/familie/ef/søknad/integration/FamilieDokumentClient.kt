@@ -9,12 +9,8 @@ import org.springframework.web.client.RestOperations
 @Component
 internal class FamilieDokumentClient(val config: FamilieDokumentConfig,
                                      operations: RestOperations) : PingableRestClient(operations, config.pingUri) {
-    fun hentVedlegg(vedleggsId: String): String? {
-        val ressurs = getForEntity(URIUtil.uri(config.hentVedleggUri, vedleggsId)) as Ressurs<String>
+    fun hentVedlegg(vedleggsId: String): ByteArray? {
+        val ressurs = getForEntity(URIUtil.uri(config.hentVedleggUri, vedleggsId)) as Ressurs<ByteArray>
         return ressurs.data
-    }
-
-    fun test(): String? {
-        return getForEntity(config.pingUri)
     }
 }
