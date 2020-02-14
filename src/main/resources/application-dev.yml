@@ -1,4 +1,6 @@
 familie:
+  dokument:
+    uri: https://www-q0.nav.no/familie/alene-med-barn/mellomlagring/api
   ef:
     mottak:
       uri: https://api-gw-q2.oera.no/familie-ef-mottak/api/
