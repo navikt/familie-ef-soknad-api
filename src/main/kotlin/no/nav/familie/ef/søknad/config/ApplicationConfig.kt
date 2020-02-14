@@ -23,7 +23,9 @@ internal class ApplicationConfig(@Value("\${application.name}") val applicationN
     private val apiKey = "x-nav-apiKey"
 
     @Bean
-    fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig, mottak: MottakConfig, integrasjoner: FamilieIntegrasjonerConfig): ClientHttpRequestInterceptor {
+    fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig,
+                                         mottak: MottakConfig,
+                                         integrasjoner: FamilieIntegrasjonerConfig): ClientHttpRequestInterceptor {
         val map = mapOf(
                 oppslag.uri to Pair(apiKey, oppslag.passord),
                 mottak.uri to Pair(apiKey, mottak.passord),

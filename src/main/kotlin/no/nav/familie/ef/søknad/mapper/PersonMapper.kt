@@ -1,8 +1,8 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.Adresse
-import no.nav.familie.ef.søknad.api.dto.Barn
-import no.nav.familie.ef.søknad.api.dto.Person
+import no.nav.familie.ef.søknad.api.dto.tps.Adresse
+import no.nav.familie.ef.søknad.api.dto.tps.Barn
+import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
@@ -23,22 +23,13 @@ object PersonMapper {
                       personinfoDto.navn.forkortetNavn,
                       mapTilAdresse(personinfoDto.adresseinfo),
                       personinfoDto.egenansatt?.isErEgenansatt ?: false,
-                      personinfoDto.innvandringUtvandring?.innvandretDato,
-                      personinfoDto.innvandringUtvandring?.utvandretDato,
-                      personinfoDto.oppholdstillatelse?.kode?.verdi ?: "",
                       personinfoDto.sivilstand?.kode?.verdi ?: "",
-                      personinfoDto.språk?.kode?.verdi ?: "bm",
-                      personinfoDto.statsborgerskap?.kode?.verdi ?: "",
-                      personinfoDto.telefon?.privat ?: "",
-                      personinfoDto.telefon?.mobil ?: "",
-                      personinfoDto.telefon?.jobb ?: "",
-                      personinfoDto.kontonummer?.nummer ?: "")
+                      personinfoDto.statsborgerskap?.kode?.verdi ?: "")
     }
 
     private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {
-        return Adresse(adresseinfoDto?.bostedsadresse?.adresse ?: "",
-                       adresseinfoDto?.bostedsadresse?.adressetillegg ?: "",
-                       adresseinfoDto?.bostedsadresse?.kommune ?: "",
+        return Adresse(adresseinfoDto?.bostedsadresse?.adresse
+                       ?: "",
                        adresseinfoDto?.bostedsadresse?.postnummer ?: "")
     }
 }

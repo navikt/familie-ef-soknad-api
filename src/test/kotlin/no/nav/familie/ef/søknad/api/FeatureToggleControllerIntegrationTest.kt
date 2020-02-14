@@ -26,13 +26,13 @@ internal class FeatureToggleControllerIntegrationTest {
     private val unleashService = object : FeatureToggleService {
 
         val unleash = DefaultUnleash(UnleashConfig.builder()
-                .appName("app")
-                .unleashAPI(unleashUrl)
-                .unleashContextProvider(unleashContextProvider)
-                .build(), ByEnvironmentStrategy())
+                                             .appName("app")
+                                             .unleashAPI(unleashUrl)
+                                             .unleashContextProvider(unleashContextProvider)
+                                             .build(), ByEnvironmentStrategy())
 
         override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-            return unleash.isEnabled(toggleId,defaultValue)
+            return unleash.isEnabled(toggleId, defaultValue)
         }
     }
 
@@ -47,7 +47,7 @@ internal class FeatureToggleControllerIntegrationTest {
     @Test
     fun `skal funksjonsbryte på miljø for ikke-definert bryter`() {
 
-        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("Ukjent",true)).isTrue()
+        Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("Ukjent", true)).isTrue()
     }
 
 }

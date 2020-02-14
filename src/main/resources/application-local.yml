@@ -13,6 +13,7 @@ tps:
   innsyn:
     uri: http://localhost:8091/mockapi/
     passord: pwdInnsyn
+
 funksjonsbrytere:
   enabled: false
   unleash:

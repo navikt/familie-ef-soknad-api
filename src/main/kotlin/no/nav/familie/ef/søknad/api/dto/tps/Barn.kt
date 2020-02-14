@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.api.dto
+package no.nav.familie.ef.søknad.api.dto.tps
 
 import java.time.LocalDate
 

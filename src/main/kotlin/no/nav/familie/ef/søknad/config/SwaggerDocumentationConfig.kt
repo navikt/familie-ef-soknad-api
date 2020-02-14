@@ -36,16 +36,15 @@ class SwaggerDocumentationConfig {
     }
 
 
-
     private fun securitySchemes(): List<ApiKey> {
         return listOf(ApiKey(BEARER, "Authorization", "header"))
     }
 
     private fun securityContext(): List<SecurityContext> {
         return listOf(SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .forPaths(PathSelectors.regex("/api.*"))
-                .build())
+                              .securityReferences(defaultAuth())
+                              .forPaths(PathSelectors.regex("/api.*"))
+                              .build())
     }
 
     private fun defaultAuth(): List<SecurityReference> {

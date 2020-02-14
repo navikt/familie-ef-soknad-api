@@ -7,7 +7,8 @@ import no.nav.familie.ef.søknad.integration.FamilieIntegrasjonerClient
 import org.springframework.stereotype.Component
 
 @Component
-internal class FamilieIntegrasjonHealthIndicator(familieIntegrasjonerClient: FamilieIntegrasjonerClient, healthIndicatorConfig: HealthIndicatorConfig)
+internal class FamilieIntegrasjonHealthIndicator(familieIntegrasjonerClient: FamilieIntegrasjonerClient,
+                                                 healthIndicatorConfig: HealthIndicatorConfig)
     : AbstractHealthIndicator(familieIntegrasjonerClient, healthIndicatorConfig) {
 
     override val successCounter: Counter = Metrics.counter("familie.integrasjoner.health", "response", "success")

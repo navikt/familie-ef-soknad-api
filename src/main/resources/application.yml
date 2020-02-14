@@ -7,6 +7,8 @@ familie:
   ef:
     mottak:
       uri: https://api-gw.oera.no/familie-ef-mottak/api
+  integrasjoner:
+    uri:  https://api-gw.oera.no/familie-integrasjoner/api
 regelverk:
   alder:
     maks: 18
@@ -17,8 +19,9 @@ tps:
   innsyn:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
     passord: ${TPS_INNSYN_PROXY_PASSORD} #<Ligger i gcp>
+
 funksjonsbrytere:
-  enabled: true
+  enabled: false
   unleash:
     uri: https://unleashproxy.nais.oera.no/api/
     environment: ${NAIS_CLUSTER_NAME:}

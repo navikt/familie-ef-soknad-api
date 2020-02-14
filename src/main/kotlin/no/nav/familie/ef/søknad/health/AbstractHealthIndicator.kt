@@ -10,10 +10,9 @@ import org.springframework.boot.actuate.health.HealthIndicator
 internal abstract class AbstractHealthIndicator(private val pingable: PingableRestClient,
                                                 private val healthIndicatorConfig: HealthIndicatorConfig) : HealthIndicator {
 
-    private val logger= LoggerFactory.getLogger(this::class.java)
+    private val logger = LoggerFactory.getLogger(this::class.java)
     protected abstract val successCounter: Counter
     protected abstract val failureCounter: Counter
-
 
 
     override fun health(): Health {

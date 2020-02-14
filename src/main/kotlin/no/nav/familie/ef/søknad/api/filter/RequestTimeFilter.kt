@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.util.StopWatch
 import java.io.IOException
 import javax.servlet.*
-import javax.servlet.http.*
+import javax.servlet.http.HttpServletRequest
+import javax.servlet.http.HttpServletResponse
 
 class RequestTimeFilter : Filter {
 
@@ -17,8 +18,7 @@ class RequestTimeFilter : Filter {
         try {
             timer.start()
             filterChain.doFilter(servletRequest, servletResponse)
-        }
-        finally {
+        } finally {
             timer.stop()
             log(request, response.status, timer)
         }
