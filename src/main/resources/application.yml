@@ -21,7 +21,7 @@ tps:
     passord: ${TPS_INNSYN_PROXY_PASSORD} #<Ligger i gcp>
 
 funksjonsbrytere:
-  enabled: false
+  enabled: true
   unleash:
     uri: https://unleashproxy.nais.oera.no/api/
     environment: ${NAIS_CLUSTER_NAME:}

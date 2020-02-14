@@ -7,6 +7,13 @@ familie:
     uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
     passord: ${FAMILIE_INTEGRASJONER_PASSORD}
 
+funksjonsbrytere:
+  enabled: false
+  unleash:
+    uri: https://unleashproxy.nais.oera.no/api/
+    environment: ${NAIS_CLUSTER_NAME:}
+    applicationName: ${NAIS_APP_NAME:}
+
 tps:
   innsyn:
     uri:  https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
