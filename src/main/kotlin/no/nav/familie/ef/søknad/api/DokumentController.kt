@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping(path = [DokumentController.DOKUMENT], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
+//@Unprotected
 class DokumentController(private val dokument: Dokument) {
 
     @GetMapping("/hent/{testid}")
@@ -25,10 +26,14 @@ class DokumentController(private val dokument: Dokument) {
     @Unprotected
     @GetMapping
     fun test(): ResponseEntity<String> {
+        System.out.println("HEIIII")
+        println("HIUU")
         val vedlegg = dokument.test()
+        println("VEDLEGG: ")
+        println(vedlegg)
+        println("VEDLEGG SLUTT")
         return if (!vedlegg.isNullOrBlank()) ResponseEntity.ok().body(vedlegg)
-        //else ResponseEntity.noContent().build()
-        else ResponseEntity.ok().body("Hei")
+        else ResponseEntity.noContent().build()
     }
 
     companion object {
