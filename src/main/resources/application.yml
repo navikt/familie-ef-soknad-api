@@ -60,6 +60,6 @@ no.nav.security.jwt:
   issuers: selvbetjening
   issuer.selvbetjening:
     discoveryurl: https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten
-    acceptedaudience: ${ACCEPTEDAUDIENCE}
+    accepted_audience: ${ACCEPTEDAUDIENCE}
     proxyurl: http://webproxy-nais.nav.no:8088
     cookie_name: selvbetjening-idtoken
