@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
 class DokumentController(private val dokument: Dokument) {
 
-    @GetMapping("/hent/{testid}")
-    fun hentVedlegg(@PathVariable testid: String): ResponseEntity<ByteArray> {
-        val vedlegg = dokument.hentVedlegg(testid)
-        return if (vedlegg != null) ResponseEntity.ok().body(vedlegg)
+    @GetMapping("/hent/{vedleggsId}")
+    fun hentVedlegg(@PathVariable vedleggsId: String): ResponseEntity<ByteArray> {
+        val vedlegg = dokument.hentVedlegg(vedleggsId)
+        return if (vedlegg != null) ResponseEntity.ok(vedlegg)
         else ResponseEntity.noContent().build()
     }
 
