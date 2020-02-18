@@ -7,5 +7,5 @@ data class SøknadDto(
     val person: Person,
     val sivilstatus: Sivilstatus? = null,
     val søkerBorPåRegistrertAdresse: BooleanFelt? = null,
-    val vedleggsliste: List<Any>? = null
+    val vedleggsliste: List<VedleggFelt>? = null
 )

@@ -16,3 +16,9 @@ data class DatoFelt(
         val label: String,
         val verdi: LocalDate
 )
+
+data class VedleggFelt(
+        val dokumentId: String,
+        val navn: String,
+        val label: String
+)
