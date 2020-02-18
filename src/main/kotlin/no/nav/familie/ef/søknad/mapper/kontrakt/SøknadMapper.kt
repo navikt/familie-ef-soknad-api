@@ -244,7 +244,7 @@ object SøknadMapper {
                                                LocalDate.of(2013, 4, 17)))
     }
 
-    private fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
+    fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
         return Søknadsfelt("Adresse",
                            Adresse("Jerpefaret 5C",
                                    "1440",
@@ -252,7 +252,7 @@ object SøknadMapper {
                                    "Norge"))
     }
 
-    private fun dokumentfelt(tittel: String) = Søknadsfelt("Dokument", Dokument(byteArrayOf(12), tittel))
+    fun dokumentfelt(tittel: String) = Søknadsfelt("Dokument", Dokument(byteArrayOf(12), tittel))
 
     private fun personMinimum(): PersonMinimum {
         return PersonMinimum(Søknadsfelt("Navn", "Bob Burger"),

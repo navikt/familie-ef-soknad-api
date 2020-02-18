@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadMapper.adresseSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
 
 object PersonaliaMapper {
@@ -15,14 +16,6 @@ object PersonaliaMapper {
                           Søknadsfelt("Sivilstand", "Ugift"))
     }
 
-    private fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
-        return Søknadsfelt("Adresse",
-                           Adresse("Jerpefaret 5C",
-                                   "1440",
-                                   "Drøbak",
-                                   "Norge"))
-    }
-
     fun mapPersonalia(frontendDto: SøknadDto): Søknadsfelt<Personalia> {
         val personalia = personalia()
                 .copy(fødselsnummer = lagFødselsnummerSøknadsFelt(
@@ -32,12 +25,12 @@ object PersonaliaMapper {
                       adresse = lagAdresseSøknadsFelt(
                               frontendDto),
                       statsborgerskap = Søknadsfelt("Statsborgerskap",
-                                                                         frontendDto.person.søker.statsborgerskap),
+                                                    frontendDto.person.søker.statsborgerskap),
                       telefonnummer = lagTelefonnummerSøknadsfelt(
                               frontendDto.person.søker.telefonnummer),
                       sivilstatus = Søknadsfelt("Sivilstatus", frontendDto.person.søker.sivilstand)
 
-        )
+                )
         return Søknadsfelt("personalia", personalia)
     }
 
