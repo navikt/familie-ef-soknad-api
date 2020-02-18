@@ -4,7 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.mapper.KvitteringMapper
-import no.nav.familie.ef.søknad.mapper.SøknadMapper
+import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadMapper
 import org.springframework.stereotype.Service
 
 @Service

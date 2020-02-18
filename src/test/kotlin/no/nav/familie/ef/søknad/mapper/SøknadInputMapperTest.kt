@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Adresse
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadMapper
 import no.nav.familie.kontrakter.ef.søknad.Søknad
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

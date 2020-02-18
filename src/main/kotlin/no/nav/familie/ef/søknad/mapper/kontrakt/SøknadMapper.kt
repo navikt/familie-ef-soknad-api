@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.mapper
+package no.nav.familie.ef.søknad.mapper.kontrakt
 
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
@@ -8,17 +8,25 @@ import java.time.Month
 
 object SøknadMapper {
 
-    val søknad = Søknad(Søknadsfelt("Søker", personalia()),
-                        Søknadsfelt("Detaljer om sivilstand", sivilstandsdetaljer()),
-                        Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
-                        Søknadsfelt("Bosituasjonen din", bosituasjon()),
-                        Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
+    val søknad = Søknad(Søknadsfelt("Søker",
+                                    PersonaliaMapper.personalia()),
+                        Søknadsfelt("Detaljer om sivilstand",
+                                    sivilstandsdetaljer()),
+                        Søknadsfelt("Opphold i Norge",
+                                    medlemskapsdetaljer()),
+                        Søknadsfelt("Bosituasjonen din",
+                                    bosituasjon()),
+                        Søknadsfelt("Sivilstandsplaner",
+                                    sivilstandsplaner()),
                         Søknadsfelt("Barn funnet i tps/folkeregisteret",
                                     listOf(registrertBarn())),
                         Søknadsfelt("Barn lagt til", listOf(nyttBarn())),
-                        Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
-                        Søknadsfelt("Mer om situasjonen din", situasjon()),
-                        Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
+                        Søknadsfelt("Arbeid, utdanning og andre aktiviteter",
+                                    aktivitet()),
+                        Søknadsfelt("Mer om situasjonen din",
+                                    situasjon()),
+                        Søknadsfelt("Når søker du stønad fra?",
+                                    stønadsstart()))
 
     private fun stønadsstart() = Stønadsstart(Søknadsfelt("Fra måned", Month.AUGUST), Søknadsfelt("Fra år", 2018))
 
@@ -114,7 +122,8 @@ object SøknadMapper {
                         erBarnetFødt = Søknadsfelt("Er barnet født?", false),
                         fødselTermindato = Søknadsfelt("Termindato", LocalDate.of(2020, 5, 16)),
                         skalBarnetBoHosSøker = Søknadsfelt("Skal barnet bo hos deg?", true),
-                        terminbekreftelse = dokumentfelt("Bekreftelse på ventet fødselsdato"),
+                        terminbekreftelse = dokumentfelt(
+                                "Bekreftelse på ventet fødselsdato"),
                         annenForelder = Søknadsfelt("Barnets andre forelder",
                                                     AnnenForelder(Søknadsfelt("Jeg kan ikke oppgi den andre forelderen",
                                                                               true),
@@ -123,12 +132,14 @@ object SøknadMapper {
                         samvær = Søknadsfelt("Samvær",
                                              Samvær(Søknadsfelt("Har du og den andre forelderen skriftlig avtale om delt bosted for barnet?",
                                                                 true),
-                                                    dokumentfelt("Avtale om samvær"),
+                                                    dokumentfelt(
+                                                            "Avtale om samvær"),
                                                     Søknadsfelt("Har den andre forelderen samvær med barnet",
                                                                 "Ja, men ikke mer enn vanlig samværsrett"),
                                                     Søknadsfelt("Har dere skriftlig samværsavtale for barnet?",
                                                                 "Ja, men den beskriver ikke når barnet er sammen med hver av foreldrene"),
-                                                    dokumentfelt("Avtale om samvær"),
+                                                    dokumentfelt(
+                                                            "Avtale om samvær"),
                                                     Søknadsfelt("Hvordan praktiserer dere samværet?",
                                                                 "Litt hver for oss"),
                                                     Søknadsfelt("Bor du og den andre forelderen til [barnets navn] i samme hus/blokk, gårdstun, kvartal eller vei?",
@@ -137,7 +148,8 @@ object SøknadMapper {
                                                                 true),
                                                     Søknadsfelt("Når flyttet dere fra hverandre?",
                                                                 LocalDate.of(2018, 7, 21)),
-                                                    dokumentfelt("Erklæring om samlivsbrudd"),
+                                                    dokumentfelt(
+                                                            "Erklæring om samlivsbrudd"),
                                                     Søknadsfelt("Hvor mye er du sammen med den andre forelderen til barnet?",
                                                                 "Vi møtes også uten at barnet er til stede"),
                                                     Søknadsfelt("Beskriv  hvor mye er du sammen med den andre forelderen til barnet?",
@@ -150,17 +162,20 @@ object SøknadMapper {
                               Søknadsfelt("Fødselsnummer", Fødselsnummer("31081953069")),
                               Søknadsfelt("Har samme adresse som søker", true),
                               Søknadsfelt("Barnets andre forelder",
-                                          AnnenForelder(person = Søknadsfelt("personalia", personMinimum()),
+                                          AnnenForelder(person = Søknadsfelt("personalia",
+                                                                             personMinimum()),
                                                         adresse = adresseSøknadsfelt())),
                               Søknadsfelt("samvær",
                                           Samvær(Søknadsfelt("Har du og den andre forelderen skriftlig avtale om delt bosted for barnet?",
                                                              true),
-                                                 dokumentfelt("Avtale om delt bosted for barna"),
+                                                 dokumentfelt(
+                                                         "Avtale om delt bosted for barna"),
                                                  Søknadsfelt("Har den andre forelderen samvær med barnet",
                                                              "Ja, men ikke mer enn vanlig samværsrett"),
                                                  Søknadsfelt("Har dere skriftlig samværsavtale for barnet?",
                                                              "Ja, men den beskriver ikke når barnet er sammen med hver av foreldrene"),
-                                                 dokumentfelt("Avtale om samvær"),
+                                                 dokumentfelt(
+                                                         "Avtale om samvær"),
                                                  Søknadsfelt("Hvordan praktiserer dere samværet?",
                                                              "Litt hver for oss"),
                                                  Søknadsfelt("Bor du og den andre forelderen til [barnets navn] i samme hus/blokk, gårdstun, kvartal eller vei?",
@@ -169,7 +184,8 @@ object SøknadMapper {
                                                              true),
                                                  Søknadsfelt("Når flyttet dere fra hverandre?",
                                                              LocalDate.of(2018, 7, 21)),
-                                                 dokumentfelt("Erklæring om samlivsbrudd"),
+                                                 dokumentfelt(
+                                                         "Erklæring om samlivsbrudd"),
                                                  Søknadsfelt("Hvor mye er du sammen med den andre forelderen til barnet?",
                                                              "Vi møtes også uten at barnet er til stede"),
                                                  Søknadsfelt("Beskriv  hvor mye er du sammen med den andre forelderen til barnet?",
@@ -179,13 +195,15 @@ object SøknadMapper {
     private fun sivilstandsplaner(): Sivilstandsplaner {
         return Sivilstandsplaner(Søknadsfelt("Har du konkrete planer om å gifte deg eller bli samboer", true),
                                  Søknadsfelt("Når skal dette skje?", LocalDate.of(2021, 4, 15)),
-                                 Søknadsfelt("Hvem skal du gifte deg eller bli samboer med?", personMinimum()))
+                                 Søknadsfelt("Hvem skal du gifte deg eller bli samboer med?",
+                                             personMinimum()))
     }
 
     private fun bosituasjon(): Bosituasjon {
         return Bosituasjon(Søknadsfelt("Deler du bolig med andre voksne?",
                                        "Ja, jeg har samboer og lever i et ekteskapslignende forhold"),
-                           Søknadsfelt("Om samboeren din", personMinimum()),
+                           Søknadsfelt("Om samboeren din",
+                                       personMinimum()),
                            Søknadsfelt("Når flyttet dere sammen?", LocalDate.of(2018, 8, 12)))
     }
 
@@ -226,15 +244,6 @@ object SøknadMapper {
                                                LocalDate.of(2013, 4, 17)))
     }
 
-    private fun personalia(): Personalia {
-        return Personalia(Søknadsfelt("Fødselsnummer", Fødselsnummer("24117938529")),
-                          Søknadsfelt("Navn", "Kari Nordmann"),
-                          Søknadsfelt("Statsborgerskap", "Norsk"),
-                          adresseSøknadsfelt(),
-                          Søknadsfelt("Telefonnummer", "12345678"),
-                          Søknadsfelt("Sivilstand", "Ugift"))
-    }
-
     private fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
         return Søknadsfelt("Adresse",
                            Adresse("Jerpefaret 5C",
@@ -252,39 +261,7 @@ object SøknadMapper {
     }
 
     fun mapTilIntern(frontendDto: SøknadDto): Søknad {
-        return søknad.copy(personalia = mapPersonalia(frontendDto))
-    }
-
-    private fun mapPersonalia(frontendDto: SøknadDto): Søknadsfelt<Personalia> {
-        val personalia = personalia().copy(fødselsnummer = lagFødselsnummerSøknadsFelt(frontendDto),
-                                           navn = lagNavnSøknadsFelt(frontendDto),
-                                           adresse = lagAdresseSøknadsFelt(frontendDto),
-                                           statsborgerskap = Søknadsfelt("Statsborgerskap",
-                                                                         frontendDto.person.søker.statsborgerskap),
-                                           telefonnummer = lagTelefonnummerSøknadsfelt(frontendDto.person.søker.telefonnummer),
-                                           sivilstatus = Søknadsfelt("Sivilstatus", frontendDto.person.søker.sivilstand)
-
-        )
-        return Søknadsfelt("personalia", personalia)
-    }
-
-    private fun lagTelefonnummerSøknadsfelt(telefonnummer: String?): Søknadsfelt<String>? {
-        return telefonnummer?.let {
-            Søknadsfelt("Telefonnummer", telefonnummer)
-        }
-    }
-
-    private fun lagAdresseSøknadsFelt(frontendDto: SøknadDto): Søknadsfelt<Adresse> {
-        val frontendAdresse = frontendDto.person.søker.adresse
-        return Søknadsfelt("Adresse", Adresse(adresse = frontendAdresse.adresse, postnummer = frontendAdresse.postnummer))
-    }
-
-    private fun lagNavnSøknadsFelt(frontendDto: SøknadDto): Søknadsfelt<String> =
-            Søknadsfelt("Navn", frontendDto.person.søker.forkortetNavn)
-
-
-    private fun lagFødselsnummerSøknadsFelt(frontendDto: SøknadDto): Søknadsfelt<Fødselsnummer> {
-        return Søknadsfelt("Fødselsnummer", Fødselsnummer(frontendDto.person.søker.fnr))
+        return søknad.copy(personalia = PersonaliaMapper.mapPersonalia(frontendDto))
     }
 
 }
