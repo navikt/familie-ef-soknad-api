@@ -40,7 +40,7 @@ fun sivilstandsdetaljer(): Sivilstandsdetaljer {
                                null,
                                null,
                                null,
-                               Søknadsfelt("Erklæring om samlivsbrudd", Dokument(byteArrayOf(12), "samlivsbrudd")),
+                               Søknadsfelt("Erklæring om samlivsbrudd", Dokument(byteArrayOf(12), "Erklæring om samlivsbrudd")),
                                Søknadsfelt("Dato for samlivsbrudd", LocalDate.of(2014, 10, 3)),
                                null,
                                null,
@@ -64,3 +64,5 @@ fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
                                null,
                                null))
 }
+
+fun dokumentMap(): Map<String,Dokument> = mapOf( "samlivsbrudd" to Dokument("DOKUMENTID123".toByteArray(), "Erklæring om samlivsbrudd"))

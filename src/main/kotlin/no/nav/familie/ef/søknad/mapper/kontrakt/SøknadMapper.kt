@@ -1,12 +1,35 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
-
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.VedleggFelt
 import no.nav.familie.kontrakter.ef.søknad.*
+import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.Month
 
-object SøknadMapper {
+@Component
+class SøknadMapper(private val dokumentService: no.nav.familie.ef.søknad.service.Dokument) {
+
+    fun mapTilIntern(frontendDto: SøknadDto): Søknad {
+        val dokumentMap = hentDokumenter(frontendDto.vedleggsliste!!)
+
+        return Søknad(
+                personalia = Søknadsfelt("Søker", PersonaliaMapper.mapPersonalia(frontendDto)),
+                sivilstandsdetaljer = Søknadsfelt("Detaljer om sivilstand",
+                                                  SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto, dokumentMap)),
+                medlemskapsdetaljer = Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
+                bosituasjon = Søknadsfelt("Bosituasjonen din", bosituasjon()),
+                sivilstandsplaner = Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
+                folkeregisterbarn = Søknadsfelt("Barn funnet i tps/folkeregisteret", listOf(registrertBarn())),
+                kommendeBarn = Søknadsfelt("Barn lagt til", listOf(nyttBarn())),
+                aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
+                situasjon = Søknadsfelt("Mer om situasjonen din", situasjon()),
+                stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
+    }
+
+    private fun hentDokumenter(vedleggListe: List<VedleggFelt>) : Map<String, Dokument> {
+        return vedleggListe.associate { it.navn to Dokument(dokumentService.hentVedlegg(it.dokumentId)!!, it.label) }
+    }
 
     private fun stønadsstart() = Stønadsstart(Søknadsfelt("Fra måned", Month.AUGUST), Søknadsfelt("Fra år", 2018))
 
@@ -216,20 +239,4 @@ object SøknadMapper {
                              null,
                              Søknadsfelt("Fødselsdato", LocalDate.of(1992, 2, 18)))
     }
-
-    fun mapTilIntern(frontendDto: SøknadDto): Søknad {
-        return Søknad(
-                personalia = Søknadsfelt("Søker", PersonaliaMapper.mapPersonalia(frontendDto)),
-                sivilstandsdetaljer = Søknadsfelt("Detaljer om sivilstand",
-                                                  SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto)),
-                medlemskapsdetaljer = Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
-                bosituasjon = Søknadsfelt("Bosituasjonen din", bosituasjon()),
-                sivilstandsplaner = Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
-                folkeregisterbarn = Søknadsfelt("Barn funnet i tps/folkeregisteret", listOf(registrertBarn())),
-                kommendeBarn = Søknadsfelt("Barn lagt til", listOf(nyttBarn())),
-                aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
-                situasjon = Søknadsfelt("Mer om situasjonen din", situasjon()),
-                stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
-    }
-
 }

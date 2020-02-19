@@ -1,5 +1,7 @@
 package no.nav.familie.ef.søknad.mapper
 
+import io.mockk.every
+import io.mockk.mockk
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
 import no.nav.familie.ef.søknad.mapper.kontrakt.PersonaliaMapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.SivilstandsdetaljerMapper
@@ -8,21 +10,31 @@ import no.nav.familie.ef.søknad.mock.sivilstatusMedDefaultVerdier
 import no.nav.familie.ef.søknad.mock.søkerMedDefaultVerdier
 import no.nav.familie.ef.søknad.mock.søknadDto
 import no.nav.familie.ef.søknad.mock.vedleggListeMock
+import no.nav.familie.ef.søknad.service.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Søknad
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 fun Søknad.getFødselsnummer(): String = personalia.verdi.fødselsnummer.verdi.verdi
 fun Søknad.getSøkerNavn() = personalia.verdi.navn.verdi
 
-internal class SøknadInputMapperTest {
+internal class SøknadInputMapperTest() {
+
+    val dokumentServiceMock: Dokument = mockk()
+    val mapper = SøknadMapper(dokumentServiceMock)
+
+    @BeforeEach
+    fun setUp() {
+        every { dokumentServiceMock.hentVedlegg(any()) } returns "DOKUMENTID123".toByteArray()
+    }
 
     @Test
     fun `mapSivilstandsdetaljer mapper dto fra frontend til forventet Sivilstandsdetaljer`() {
         // Given
         val søknadDto = søknadDto()
         // When
-        val sivilstandsdetaljerFraSøknadDto = SivilstandsdetaljerMapper.mapSivilstandsdetaljer(søknadDto)
+        val sivilstandsdetaljerFraSøknadDto = SivilstandsdetaljerMapper.mapSivilstandsdetaljer(søknadDto, dokumentMap())
         // Then
         assertThat(sivilstandsdetaljerFraSøknadDto.toString()).isEqualTo(sivilstandsdetaljer().toString())
     }
@@ -46,7 +58,7 @@ internal class SøknadInputMapperTest {
                 sivilstatus = sivilstatusMedDefaultVerdier(),
                 vedleggsliste = vedleggListeMock())
         // When
-        val søknad = SøknadMapper.mapTilIntern(søknadDto)
+        val søknad = mapper.mapTilIntern(søknadDto)
         // Then
         assertThat(søknad.getFødselsnummer()).isEqualTo(forventetFnr)
     }
@@ -60,7 +72,7 @@ internal class SøknadInputMapperTest {
                 sivilstatus = sivilstatusMedDefaultVerdier(),
                 vedleggsliste = vedleggListeMock())
         // When
-        val søknad = SøknadMapper.mapTilIntern(søknadDto)
+        val søknad = mapper.mapTilIntern(søknadDto)
         // Then
         assertThat(søknad.getSøkerNavn()).isEqualTo(forventetNavn)
     }
@@ -73,7 +85,7 @@ internal class SøknadInputMapperTest {
                 sivilstatus = sivilstatusMedDefaultVerdier(),
                 vedleggsliste = vedleggListeMock())
         // When
-        val søknad = SøknadMapper.mapTilIntern(søknadDto)
+        val søknad = mapper.mapTilIntern(søknadDto)
         // Then
         val telefonnummer = søknad.personalia.verdi.telefonnummer
         assertThat(telefonnummer).isEqualTo(null)
@@ -88,7 +100,7 @@ internal class SøknadInputMapperTest {
                 sivilstatus = sivilstatusMedDefaultVerdier(),
                 vedleggsliste = vedleggListeMock())
         // When
-        val søknad = SøknadMapper.mapTilIntern(søknadDto)
+        val søknad = mapper.mapTilIntern(søknadDto)
         // Then
         val sivilstatus = søknad.personalia.verdi.sivilstatus.verdi
         assertThat(sivilstatus).isEqualTo(forventetSivilstatus)

@@ -8,10 +8,10 @@ import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadMapper
 import org.springframework.stereotype.Service
 
 @Service
-internal class SøknadServiceImpl(private val søknadClient: SøknadClient) : SøknadService {
+internal class SøknadServiceImpl(private val søknadClient: SøknadClient, private val mapper: SøknadMapper) : SøknadService {
 
     override fun sendInn(søknad: SøknadDto): Kvittering {
-        val søknadDto = SøknadMapper.mapTilIntern(søknad)
+        val søknadDto = mapper.mapTilIntern(søknad)
         val kvittering = søknadClient.sendInn(søknadDto)
         return KvitteringMapper.mapTilEkstern(kvittering)
 

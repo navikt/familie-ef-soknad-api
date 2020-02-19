@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
 class SøknadsControllerMock(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
-    @PostMapping()
+    @PostMapping
     fun sendInnTest(@RequestBody søknad: Map<Any, Any>): Kvittering {
         val valueAsString = objectMapper.writeValueAsString(søknad)
         // val readValue : SøknadDto= objectMapper.readValue(valueAsString)

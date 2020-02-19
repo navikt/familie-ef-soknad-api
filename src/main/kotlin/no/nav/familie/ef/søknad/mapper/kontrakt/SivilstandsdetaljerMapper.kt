@@ -8,11 +8,10 @@ import java.time.LocalDate
 
 object SivilstandsdetaljerMapper {
 
-    fun mapSivilstandsdetaljer(frontendDto: SøknadDto): Sivilstandsdetaljer {
+    fun mapSivilstandsdetaljer(frontendDto: SøknadDto, dokumentMap: Map<String, Dokument>): Sivilstandsdetaljer {
         val sivilstatus = frontendDto.sivilstatus!!
-        val vedlegg = frontendDto.vedleggsliste!!
         val silvilstandsdetaljer = Sivilstandsdetaljer(
-                samlivsbruddsdokumentasjon = lagSamlivsbruddsdokumentasjonSøknadsfelt(vedlegg),
+                samlivsbruddsdokumentasjon = lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumentMap),
                 samlivsbruddsdato = lagSamlivsbruddsdatoSøknadsfelt(sivilstatus))
         return silvilstandsdetaljer
     }
@@ -33,9 +32,9 @@ object SivilstandsdetaljerMapper {
 
     private fun lagÅrsakEnsligSøknadsfelt(dto: Sivilstatus): Søknadsfelt<String>? = null
 
-    private fun lagSamlivsbruddsdokumentasjonSøknadsfelt(dto: List<VedleggFelt>): Søknadsfelt<Dokument>? {
-        val felt = dto.filter { vedlegg -> vedlegg.navn.equals("samlivsbrudd") }.first()
-        return Søknadsfelt(felt.label, Dokument(felt.dokumentId.toByteArray(), felt.navn)) //TODO: Ikke henta dokument, midlertidig test
+    private fun lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumentMap: Map<String, Dokument>): Søknadsfelt<Dokument>? {
+        val dokument = dokumentMap["samlivsbrudd"]!!
+        return Søknadsfelt(dokument.tittel, dokument)
     }
 
     private fun lagSamlivsbruddsdatoSøknadsfelt(dto: Sivilstatus): Søknadsfelt<LocalDate>? =
