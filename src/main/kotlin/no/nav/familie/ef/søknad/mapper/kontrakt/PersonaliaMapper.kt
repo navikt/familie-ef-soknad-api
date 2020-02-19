@@ -1,38 +1,19 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
-
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
-import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadMapper.adresseSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
 
 object PersonaliaMapper {
 
-    fun personalia(): Personalia {
-        return Personalia(Søknadsfelt("Fødselsnummer", Fødselsnummer("24117938529")),
-                          Søknadsfelt("Navn", "Kari Nordmann"),
-                          Søknadsfelt("Statsborgerskap", "Norsk"),
-                          adresseSøknadsfelt(),
-                          Søknadsfelt("Telefonnummer", "12345678"),
-                          Søknadsfelt("Sivilstand", "Ugift"))
-    }
-
-    fun mapPersonalia(frontendDto: SøknadDto): Søknadsfelt<Personalia> {
-        val personalia = personalia()
-                .copy(fødselsnummer = lagFødselsnummerSøknadsFelt(
-                        frontendDto),
-                      navn = lagNavnSøknadsFelt(
-                              frontendDto),
-                      adresse = lagAdresseSøknadsFelt(
-                              frontendDto),
-                      statsborgerskap = Søknadsfelt("Statsborgerskap",
-                                                    frontendDto.person.søker.statsborgerskap),
-                      telefonnummer = lagTelefonnummerSøknadsfelt(
-                              frontendDto.person.søker.telefonnummer),
-                      sivilstatus = Søknadsfelt("Sivilstatus", frontendDto.person.søker.sivilstand)
-
-                )
-        return Søknadsfelt("personalia", personalia)
-    }
+    fun mapPersonalia(frontendDto: SøknadDto): Personalia =
+            Personalia(
+                    fødselsnummer = lagFødselsnummerSøknadsFelt(frontendDto),
+                    navn = lagNavnSøknadsFelt(frontendDto),
+                    adresse = lagAdresseSøknadsFelt(frontendDto),
+                    statsborgerskap = Søknadsfelt("Statsborgerskap", frontendDto.person.søker.statsborgerskap),
+                    telefonnummer = lagTelefonnummerSøknadsfelt(frontendDto.person.søker.telefonnummer),
+                    sivilstatus = Søknadsfelt("Sivilstatus", frontendDto.person.søker.sivilstand)
+            )
 
     private fun lagTelefonnummerSøknadsfelt(telefonnummer: String?): Søknadsfelt<String>? {
         return telefonnummer?.let {
@@ -52,5 +33,4 @@ object PersonaliaMapper {
     private fun lagFødselsnummerSøknadsFelt(frontendDto: SøknadDto): Søknadsfelt<Fødselsnummer> {
         return Søknadsfelt("Fødselsnummer", Fødselsnummer(frontendDto.person.søker.fnr))
     }
-
 }

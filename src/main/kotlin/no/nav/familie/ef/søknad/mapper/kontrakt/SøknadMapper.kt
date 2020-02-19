@@ -8,26 +8,6 @@ import java.time.Month
 
 object SøknadMapper {
 
-    val søknad = Søknad(Søknadsfelt("Søker",
-                                    PersonaliaMapper.personalia()),
-                        Søknadsfelt("Detaljer om sivilstand",
-                                    SivilstandsdetaljerMapper.sivilstandsdetaljer()),
-                        Søknadsfelt("Opphold i Norge",
-                                    medlemskapsdetaljer()),
-                        Søknadsfelt("Bosituasjonen din",
-                                    bosituasjon()),
-                        Søknadsfelt("Sivilstandsplaner",
-                                    sivilstandsplaner()),
-                        Søknadsfelt("Barn funnet i tps/folkeregisteret",
-                                    listOf(registrertBarn())),
-                        Søknadsfelt("Barn lagt til", listOf(nyttBarn())),
-                        Søknadsfelt("Arbeid, utdanning og andre aktiviteter",
-                                    aktivitet()),
-                        Søknadsfelt("Mer om situasjonen din",
-                                    situasjon()),
-                        Søknadsfelt("Når søker du stønad fra?",
-                                    stønadsstart()))
-
     private fun stønadsstart() = Stønadsstart(Søknadsfelt("Fra måned", Month.AUGUST), Søknadsfelt("Fra år", 2018))
 
     @Suppress("LongLine")
@@ -238,9 +218,18 @@ object SøknadMapper {
     }
 
     fun mapTilIntern(frontendDto: SøknadDto): Søknad {
-        return søknad.copy(
-                personalia = PersonaliaMapper.mapPersonalia(frontendDto),
-                sivilstandsdetaljer = SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto))
+        return Søknad(
+                personalia = Søknadsfelt("Søker", PersonaliaMapper.mapPersonalia(frontendDto)),
+                sivilstandsdetaljer = Søknadsfelt("Detaljer om sivilstand",
+                                                  SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto)),
+                medlemskapsdetaljer = Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
+                bosituasjon = Søknadsfelt("Bosituasjonen din", bosituasjon()),
+                sivilstandsplaner = Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
+                folkeregisterbarn = Søknadsfelt("Barn funnet i tps/folkeregisteret", listOf(registrertBarn())),
+                kommendeBarn = Søknadsfelt("Barn lagt til", listOf(nyttBarn())),
+                aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
+                situasjon = Søknadsfelt("Mer om situasjonen din", situasjon()),
+                stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
     }
 
 }

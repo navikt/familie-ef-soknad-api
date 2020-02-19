@@ -6,7 +6,7 @@ import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
-import no.nav.familie.ef.søknad.mapper.søkerMedDefaultVerdier
+import no.nav.familie.ef.søknad.mock.søkerMedDefaultVerdier
 import no.nav.familie.ef.søknad.service.SøknadService
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
