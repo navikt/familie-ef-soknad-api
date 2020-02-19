@@ -6,10 +6,10 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
-internal class PersonMapperTest {
+internal class SøkerinfoMapperTest {
 
     @Test
-    fun `mapTilBarn konverterer alle felter i RelasjonDto til rett felt i Barn`() {
+    fun `mapTilBarn konverterer alle felter i RelasjonDto fra TPS til rett felt i Barn`() {
         val relasjonDto = RelasjonDto("fødselsnummer",
                                       "Bob Kåre",
                                       15,
@@ -17,7 +17,7 @@ internal class PersonMapperTest {
                                       LocalDate.of(2004, 4, 15),
                                       true)
 
-        val barn = PersonMapper.mapTilBarn(relasjonDto)
+        val barn = SøkerinfoMapper.mapTilBarn(relasjonDto)
 
         assertThat(barn.fnr).isEqualTo("fødselsnummer")
         assertThat(barn.navn).isEqualTo("Bob Kåre")
@@ -27,7 +27,7 @@ internal class PersonMapperTest {
     }
 
     @Test
-    fun `mapTilPerson konverterer alle felter i personinfoDto til rett felt i Person`() {
+    fun `mapTilPerson konverterer alle felter i personinfoDto fra TPS til rett felt i Person`() {
         val personinfoDto = PersoninfoDto("fødselsnummer",
                                           NavnDto("Roy Tony"),
                                           AdresseinfoDto(BostedsadresseDto("Veien 24", "v/noen", "Oslo", "NOR", "0265")),
@@ -42,7 +42,7 @@ internal class PersonMapperTest {
                                           KodeMedDatoOgKildeDto(KodeDto("NO")),
                                           TelefoninfoDto("jobb", "mobil", "privat"))
 
-        val person = PersonMapper.mapTilPerson(personinfoDto)
+        val person = SøkerinfoMapper.mapTilPerson(personinfoDto)
 
         assertThat(person.fnr).isEqualTo("fødselsnummer")
         assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
@@ -54,7 +54,7 @@ internal class PersonMapperTest {
     }
 
     @Test
-    fun `mapTilPerson konverterer alle null-felter i personinfoDto til deafault-verdier i Person`() {
+    fun `mapTilPerson konverterer alle null-felter i personinfoDto fra TPS til deafault-verdier i Person`() {
         val personinfoDto = PersoninfoDto("fødselsnummer",
                                           NavnDto("Roy Tony"),
                                           null,
@@ -69,7 +69,7 @@ internal class PersonMapperTest {
                                           null,
                                           null)
 
-        val person = PersonMapper.mapTilPerson(personinfoDto)
+        val person = SøkerinfoMapper.mapTilPerson(personinfoDto)
 
         assertThat(person.fnr).isEqualTo("fødselsnummer")
         assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
