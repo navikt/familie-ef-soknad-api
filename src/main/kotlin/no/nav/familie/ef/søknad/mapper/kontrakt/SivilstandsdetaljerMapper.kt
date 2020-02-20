@@ -9,7 +9,7 @@ import java.time.LocalDate
 object SivilstandsdetaljerMapper {
 
     fun mapSivilstandsdetaljer(frontendDto: SøknadDto, dokumentMap: Map<String, Dokument>): Sivilstandsdetaljer {
-        val sivilstatus = frontendDto.sivilstatus!!
+        val sivilstatus = frontendDto.sivilstatus
         val silvilstandsdetaljer = Sivilstandsdetaljer(
                 samlivsbruddsdokumentasjon = lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumentMap),
                 samlivsbruddsdato = lagSamlivsbruddsdatoSøknadsfelt(sivilstatus))
@@ -32,19 +32,19 @@ object SivilstandsdetaljerMapper {
 
     private fun lagÅrsakEnsligSøknadsfelt(dto: Sivilstatus): Søknadsfelt<String>? = null
 
-    private fun lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumentMap: Map<String, Dokument>): Søknadsfelt<Dokument>? {
-        val dokument = dokumentMap["samlivsbrudd"]!!
-        return Søknadsfelt(dokument.tittel, dokument)
+    private fun lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumenter: Map<String, Dokument>): Søknadsfelt<Dokument>? {
+        val dokument = dokumenter["samlivsbrudd"]
+        return dokument?.let {
+            Søknadsfelt(dokument.tittel, dokument)
+        }
     }
 
-    private fun lagSamlivsbruddsdatoSøknadsfelt(dto: Sivilstatus): Søknadsfelt<LocalDate>? =
-        try {
-            val felt = dto.datoForSamlivsbrudd!!
+    private fun lagSamlivsbruddsdatoSøknadsfelt(dto: Sivilstatus): Søknadsfelt<LocalDate>? {
+        val felt = dto.datoForSamlivsbrudd
+        return felt?.let {
             Søknadsfelt(felt.label, felt.verdi)
-            Søknadsfelt(felt.label, felt.verdi)
-        } catch (e: NullPointerException) {
-            null
         }
+    }
 
     private fun lagFraflytningsdatoSøknadsfelt(dto: Sivilstatus): Søknadsfelt<LocalDate>? = null
 

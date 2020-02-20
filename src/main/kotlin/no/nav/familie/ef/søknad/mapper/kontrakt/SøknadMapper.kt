@@ -2,21 +2,22 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.VedleggFelt
+import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.*
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.Month
 
 @Component
-class SøknadMapper(private val dokumentService: no.nav.familie.ef.søknad.service.Dokument) {
+class SøknadMapper(private val dokumentServiceService: DokumentService) {
 
     fun mapTilIntern(frontendDto: SøknadDto): Søknad {
-        val dokumentMap = hentDokumenter(frontendDto.vedleggsliste!!)
+        val dokumenter: Map<String,Dokument> = hentDokumenter(frontendDto.vedleggsliste)
 
         return Søknad(
                 personalia = Søknadsfelt("Søker", PersonaliaMapper.mapPersonalia(frontendDto)),
                 sivilstandsdetaljer = Søknadsfelt("Detaljer om sivilstand",
-                                                  SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto, dokumentMap)),
+                                                  SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto, dokumenter)),
                 medlemskapsdetaljer = Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
                 bosituasjon = Søknadsfelt("Bosituasjonen din", bosituasjon()),
                 sivilstandsplaner = Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
@@ -28,7 +29,7 @@ class SøknadMapper(private val dokumentService: no.nav.familie.ef.søknad.servi
     }
 
     private fun hentDokumenter(vedleggListe: List<VedleggFelt>) : Map<String, Dokument> {
-        return vedleggListe.associate { it.navn to Dokument(dokumentService.hentVedlegg(it.dokumentId)!!, it.label) }
+        return vedleggListe.associate { it.navn to Dokument(dokumentServiceService.hentVedlegg(it.dokumentId), it.label) }
     }
 
     private fun stønadsstart() = Stønadsstart(Søknadsfelt("Fra måned", Month.AUGUST), Søknadsfelt("Fra år", 2018))

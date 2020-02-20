@@ -7,6 +7,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.mock.søkerMedDefaultVerdier
+import no.nav.familie.ef.søknad.mock.søknadDto
 import no.nav.familie.ef.søknad.service.SøknadService
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
@@ -21,7 +22,7 @@ internal class SøknadInputControllerTest {
 
     @Test
     fun `sendInn returnerer samme kvittering som returneres fra søknadService`() {
-        val søknad = SøknadDto(person = Person(søker = søkerMedDefaultVerdier(), barn = listOf()))
+        val søknad = søknadDto().copy(person = Person(søker = søkerMedDefaultVerdier(), barn = listOf()))
         every { søknadService.sendInn(søknad) } returns Kvittering("Mottatt søknad: ${søknad}")
         every { featureToggleService.isEnabled(any()) } returns true
 
