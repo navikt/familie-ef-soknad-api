@@ -1,0 +1,54 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "19128449828",
+      "forkortetNavn": "Kari Nordmann",
+      "adresse": {
+        "adresse": "Jerpefaret 5C",
+        "adressetillegg": "",
+        "kommune": "0104",
+        "postnummer": "1440"
+      },
+      "egenansatt": false,
+      "innvandretDato": null,
+      "utvandretDato": null,
+      "oppholdstillatelse": null,
+      "sivilstand": "UGIF",
+      "språk": "",
+      "statsborgerskap": "NOR",
+      "privattelefon": null,
+      "mobiltelefon": null,
+      "jobbtelefon": null,
+      "bankkontonummer": null
+    },
+    "barn": []
+  },
+  "sivilstatus": {
+    "søkerHarSøktSeparasjon": null,
+    "datoSøktSeparasjon": null,
+    "søkerGiftIUtlandet": null,
+    "søkerSeparertEllerSkiltIUtlandet": null,
+    "begrunnelseForSøknad": null,
+    "datoForSamlivsbrudd": {
+      "label": "Dato for samlivsbrudd",
+      "verdi": "2014-10-03"
+    },
+    "datoFlyttetFraHverandre": null,
+    "datoEndretSamvær": null,
+    "begrunnelseAnnet": null
+  },
+  "medlemskap": {},
+  "bosituasjon": {
+    "søkerDelerBoligMedAndreVoksne": {
+      "label": "",
+      "verdi": ""
+    }
+  },
+  "vedleggsliste": [
+    {
+      "dokumentId": "DOKUMENTID123",
+      "navn": "samlivsbrudd",
+      "label": "Erklæring om samlivsbrudd"
+    }
+  ]
+}
