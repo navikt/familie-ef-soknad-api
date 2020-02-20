@@ -40,7 +40,7 @@ spec:
     outbound:
       external:
         - host: login.microsoftonline.com
-        - host: unleashproxy.nais.oera.no
+        - host: unleash.prod-gcp.nais.io
         - host: api-gw.oera.no
         - host: familie-intregrasjoner.prod-fss-pub.nais.io
   gcp:

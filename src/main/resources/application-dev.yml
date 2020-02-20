@@ -8,9 +8,9 @@ familie:
     passord: ${FAMILIE_INTEGRASJONER_PASSORD}
 
 funksjonsbrytere:
-  enabled: false
+  enabled: true
   unleash:
-    uri: https://unleashproxy.nais.oera.no/api/
+    uri: https://unleash.prod-gcp.nais.io/api/
     environment: ${NAIS_CLUSTER_NAME:}
     applicationName: ${NAIS_APP_NAME:}
 
