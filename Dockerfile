@@ -1,4 +1,4 @@
-FROM navikt/java:11-appdynamics
+FROM navikt/java:11
 ENV APPLICATION_NAME=familie-ef-soknad-api
 ENV APPD_ENABLED=TRUE
 EXPOSE 8000
