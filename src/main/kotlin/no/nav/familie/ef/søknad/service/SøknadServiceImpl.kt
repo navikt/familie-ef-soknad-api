@@ -13,8 +13,7 @@ internal class SøknadServiceImpl(private val søknadClient: SøknadClient, priv
     override fun sendInn(søknad: SøknadDto): Kvittering {
         val søknadDto = mapper.mapTilIntern(søknad)
         val kvittering = søknadClient.sendInn(søknadDto)
-        return Kvittering(søknadDto.toString())
-        //return KvitteringMapper.mapTilEkstern(kvittering)
+        return KvitteringMapper.mapTilEkstern(kvittering)
 
     }
 }
