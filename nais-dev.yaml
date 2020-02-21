@@ -44,9 +44,6 @@ spec:
       rules:
         - application: familie-ef-soknad
     outbound:
-      rules:
-        application: unleash
-        namespace: dataplattform
       external:
         - host: login.microsoftonline.com
         - host: unleash.prod-gcp.nais.io
