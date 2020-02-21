@@ -4,17 +4,15 @@ import no.nav.familie.ef.søknad.config.TpsInnsynConfig
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
 import no.nav.familie.ef.søknad.util.InnloggingUtils
+import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.log.NavHttpHeaders
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
 
 @Component
-internal class TpsInnsynServiceClient @Autowired
-constructor(val tpsInnsynConfig: TpsInnsynConfig,
-            operations: RestOperations)
-    : AbstractRestClient(operations) {
+internal class TpsInnsynServiceClient(val tpsInnsynConfig: TpsInnsynConfig,
+                                      operations: RestOperations) : AbstractRestClient(operations, "tps.innsyn") {
 
     fun hentPersoninfo(): PersoninfoDto {
         return getForEntity(tpsInnsynConfig.personUri, httpHeaders())

@@ -1,17 +1,17 @@
 package no.nav.familie.ef.søknad.config
 
-import no.nav.familie.ef.søknad.util.URIUtil
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
+import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @ConfigurationProperties("familie.dokument")
 @ConstructorBinding
 internal data class FamilieDokumentConfig(val uri: URI) {
 
-    internal val hentVedleggUri = URIUtil.uri(uri, HENT)
+    internal val hentVedleggUri = UriComponentsBuilder.fromUri(uri).path(HENT).build().toUri()
 
-    val pingUri: URI get() = URIUtil.uri(uri, PING)
+    internal val pingUri = UriComponentsBuilder.fromUri(uri).path(PING).build().toUri()
 
     companion object {
         private const val HENT = "mapper/familievedlegg"
