@@ -8,7 +8,7 @@ familie:
     passord: ${FAMILIE_INTEGRASJONER_PASSORD}
 
 funksjonsbrytere:
-  enabled: false
+  enabled: true
   unleash:
     uri: https://unleash.prod-gcp.nais.io/api/
     environment: ${NAIS_CLUSTER_NAME:}
