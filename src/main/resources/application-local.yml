@@ -35,4 +35,4 @@ no.nav.security.jwt:
     discoveryurl: http://metadata
     accepted_audience: aud-localhost
     cookie_name: localhost-idtoken
-    proxyurl:
+    https.plaintext: true
