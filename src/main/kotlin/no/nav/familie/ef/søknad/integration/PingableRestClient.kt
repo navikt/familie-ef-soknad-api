@@ -1,12 +1,13 @@
 package no.nav.familie.ef.søknad.integration
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.RestOperations
 import org.springframework.web.client.getForEntity
 import java.net.URI
 
-abstract class PingableRestClient(operations: RestOperations, val pingUri: URI) : AbstractRestClient(operations) {
+abstract class PingableRestClient(@Qualifier("restOperations") operations: RestOperations, val pingUri: URI) : AbstractRestClient(operations) {
 
     fun pingURI(): URI {
         return pingUri

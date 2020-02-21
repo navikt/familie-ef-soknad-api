@@ -4,11 +4,12 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.Marker
 import org.slf4j.MarkerFactory
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.*
 import org.springframework.web.client.*
 import java.net.URI
 
-abstract class AbstractRestClient(protected val operations: RestOperations) {
+abstract class AbstractRestClient(@Qualifier("restOperations")protected val operations: RestOperations) {
 
     private val confidential: Marker = MarkerFactory.getMarker("CONFIDENTIAL")
     protected val log: Logger = LoggerFactory.getLogger(this::class.java)

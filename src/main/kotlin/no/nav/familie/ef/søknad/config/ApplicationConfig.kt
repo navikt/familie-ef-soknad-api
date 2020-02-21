@@ -40,12 +40,20 @@ internal class ApplicationConfig(@Value("\${application.name}") val applicationN
     @Bean
     fun consumerIdClientInterceptor() = ConsumerIdClientInterceptor(consumerId = applicationName)
 
-    @Bean
+    @Bean("restOperations")
     fun restTemplate(vararg interceptors: ClientHttpRequestInterceptor): RestOperations {
         logger.info("Registrerer interceptors {}", interceptors.contentToString())
         return RestTemplateBuilder()
+                .interceptors(*interceptors)
                 .build()
     }
+
+
+    @Bean("restTemplateBuilder")
+    fun restTemplateBuilder(): RestTemplateBuilder {
+        return RestTemplateBuilder()
+    }
+
 
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule()
