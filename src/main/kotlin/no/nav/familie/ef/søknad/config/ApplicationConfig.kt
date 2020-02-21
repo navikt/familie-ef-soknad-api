@@ -44,7 +44,6 @@ internal class ApplicationConfig(@Value("\${application.name}") val applicationN
     fun restTemplate(vararg interceptors: ClientHttpRequestInterceptor): RestOperations {
         logger.info("Registrerer interceptors {}", interceptors.contentToString())
         return RestTemplateBuilder()
-                .interceptors(*interceptors)
                 .build()
     }
 
