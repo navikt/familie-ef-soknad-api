@@ -48,7 +48,6 @@ spec:
         application: unleash
         namespace: dataplattform
       external:
-        - host: login.microsoftonline.com
         - host: unleash.prod-gcp.nais.io
         - host: api-gw-q2.oera.no
         - host: familie-intregrasjoner.dev-fss-pub.nais.io
