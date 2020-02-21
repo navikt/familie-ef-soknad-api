@@ -65,4 +65,5 @@ fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
                                null))
 }
 
-fun dokumentMap(): Map<String,Dokument> = mapOf( "samlivsbrudd" to Dokument("DOKUMENTID123".toByteArray(), "Erklæring om samlivsbrudd"))
+fun dokumentMap(): Map<String, Dokument> = mapOf("samlivsbrudd" to Dokument("DOKUMENTID123".toByteArray(),
+                                                                            "Erklæring om samlivsbrudd"))

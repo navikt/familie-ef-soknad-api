@@ -3,7 +3,9 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Sivilstatus
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.VedleggFelt
-import no.nav.familie.kontrakter.ef.søknad.*
+import no.nav.familie.kontrakter.ef.søknad.Dokument
+import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
+import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import java.time.LocalDate
 
 object SivilstandsdetaljerMapper {
