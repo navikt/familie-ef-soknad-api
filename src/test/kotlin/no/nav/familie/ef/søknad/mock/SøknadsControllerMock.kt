@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.mock
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
-import no.nav.familie.ef.søknad.service.SøknadService
 import no.nav.familie.ef.søknad.util.InnloggingUtils
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.security.token.support.core.api.ProtectedWithClaims
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/soknad/test"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
-class SøknadsControllerMock(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
+class SøknadsControllerMock(val featureToggleService: FeatureToggleService) {
 
     @PostMapping
     fun sendInnTest(@RequestBody søknad: Map<Any, Any>): Kvittering {

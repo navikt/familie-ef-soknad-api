@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.api;
+package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.util.InnloggingUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims

@@ -33,7 +33,7 @@ object SøkerinfoMapper {
                       personinfoDto.statsborgerskap?.kode?.verdi ?: "")
     }
 
-    fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {
+    private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {
         return Adresse(adresseinfoDto?.bostedsadresse?.adresse
                        ?: "",
                        adresseinfoDto?.bostedsadresse?.postnummer ?: "")

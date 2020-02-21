@@ -19,8 +19,8 @@ fun Søknad.getSøkerNavn() = personalia.verdi.navn.verdi
 
 internal class SøknadInputMapperTest {
 
-    val dokumentServiceServiceMock: DokumentService = mockk()
-    val mapper = SøknadMapper(dokumentServiceServiceMock)
+    private val dokumentServiceServiceMock: DokumentService = mockk()
+    private val mapper = SøknadMapper(dokumentServiceServiceMock)
 
     @BeforeEach
     fun setUp() {

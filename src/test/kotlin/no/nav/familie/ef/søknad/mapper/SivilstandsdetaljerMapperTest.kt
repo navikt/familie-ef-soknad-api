@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test
 
 internal class SivilstandsdetaljerMapperTest {
 
-    val dokumentServiceServiceMock: DokumentService = mockk()
+    private val dokumentServiceServiceMock: DokumentService = mockk()
 
     @BeforeEach
     fun setUp() {

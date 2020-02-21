@@ -12,10 +12,8 @@ object SivilstandsdetaljerMapper {
 
     fun mapSivilstandsdetaljer(frontendDto: SøknadDto, dokumentMap: Map<String, Dokument>): Sivilstandsdetaljer {
         val sivilstatus = frontendDto.sivilstatus
-        val silvilstandsdetaljer = Sivilstandsdetaljer(
-                samlivsbruddsdokumentasjon = lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumentMap),
-                samlivsbruddsdato = lagSamlivsbruddsdatoSøknadsfelt(sivilstatus))
-        return silvilstandsdetaljer
+        return Sivilstandsdetaljer(samlivsbruddsdokumentasjon = lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumentMap),
+                                   samlivsbruddsdato = lagSamlivsbruddsdatoSøknadsfelt(sivilstatus))
     }
 
     private fun lagGiftIUtlandetSøknadsfelt(dto: Sivilstatus): Søknadsfelt<Boolean>? = null

@@ -14,8 +14,7 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
 
     @GetMapping
     fun sjekkAlle(): Map<String, Boolean> {
-        val toggleVerdier = funksjonsbrytere.map { toggle -> toggle to featureToggleService.isEnabled(toggle) }.toMap()
-        return toggleVerdier
+        return funksjonsbrytere.associateWith { featureToggleService.isEnabled(it) }
     }
 
     @GetMapping("/{toggleId}")

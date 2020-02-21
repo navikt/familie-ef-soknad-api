@@ -23,12 +23,12 @@ internal class SøknadInputControllerTest {
     @Test
     fun `sendInn returnerer samme kvittering som returneres fra søknadService`() {
         val søknad = søknadDto().copy(person = Person(søker = søkerMedDefaultVerdier(), barn = listOf()))
-        every { søknadService.sendInn(søknad) } returns Kvittering("Mottatt søknad: ${søknad}")
+        every { søknadService.sendInn(søknad) } returns Kvittering("Mottatt søknad: $søknad")
         every { featureToggleService.isEnabled(any()) } returns true
 
         val kvitteringDto = søknadController.sendInn(søknad)
 
-        assertThat(kvitteringDto.text).isEqualTo("Mottatt søknad: ${søknad}")
+        assertThat(kvitteringDto.text).isEqualTo("Mottatt søknad: $søknad")
     }
 
 
@@ -37,7 +37,7 @@ internal class SøknadInputControllerTest {
         objectMapper.readValue(testData, SøknadDto::class.java)
     }
 
-    val testData: String =
+    private val testData: String =
             """{"person":{"søker":{"fnr":"28129124085","forkortetNavn":"KOPP LUNKEN","adresse":{"adresse":"JAABÆKVEGEN 16","postnummer":"1533"},"egenansatt":false,"sivilstand":"UGIF","statsborgerskap":"NOR"},"barn":[{"fnr":"28021078036","navn":"KARAFFEL STERK","alder":9,"fødselsdato":"2010-02-28","harSammeAdresse":true}]},"sivilstatus":{},"medlemskap":{},"bosituasjon":{"søkerDelerBoligMedAndreVoksne":{"label":"","verdi":""}},"vedleggsliste":[]}"""
 
 

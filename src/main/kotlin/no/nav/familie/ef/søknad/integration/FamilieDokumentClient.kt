@@ -14,7 +14,8 @@ internal class FamilieDokumentClient(private val config: FamilieDokumentConfig,
 
     override val pingUri: URI = config.pingUri
 
-    internal fun vedleggUri(vedleggsId: String) = UriComponentsBuilder.fromUri(config.hentVedleggUri).path(vedleggsId).build().toUri()
+    internal fun vedleggUri(vedleggsId: String) =
+            UriComponentsBuilder.fromUri(config.hentVedleggUri).path(vedleggsId).build().toUri()
 
     fun hentVedlegg(vedleggsId: String): ByteArray {
         val ressurs: Ressurs<ByteArray> = getForEntity(vedleggUri(vedleggsId))
