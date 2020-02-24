@@ -1,7 +1,10 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
-import no.nav.familie.kontrakter.ef.søknad.*
+import no.nav.familie.kontrakter.ef.søknad.Adresse
+import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
+import no.nav.familie.kontrakter.ef.søknad.Personalia
+import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 
 object PersonaliaMapper {
 

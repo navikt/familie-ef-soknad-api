@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.mapper
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
 import no.nav.familie.ef.søknad.mapper.kontrakt.PersonaliaMapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.SivilstandsdetaljerMapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadMapper
@@ -19,8 +19,8 @@ fun Søknad.getSøkerNavn() = personalia.verdi.navn.verdi
 
 internal class SøknadInputMapperTest {
 
-    val dokumentServiceServiceMock: DokumentService = mockk()
-    val mapper = SøknadMapper(dokumentServiceServiceMock)
+    private val dokumentServiceServiceMock: DokumentService = mockk()
+    private val mapper = SøknadMapper(dokumentServiceServiceMock)
 
     @BeforeEach
     fun setUp() {

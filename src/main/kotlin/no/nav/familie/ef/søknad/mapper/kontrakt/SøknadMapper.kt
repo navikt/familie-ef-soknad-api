@@ -12,7 +12,7 @@ import java.time.Month
 class SøknadMapper(private val dokumentServiceService: DokumentService) {
 
     fun mapTilIntern(frontendDto: SøknadDto): Søknad {
-        val dokumenter: Map<String,Dokument> = hentDokumenter(frontendDto.vedleggsliste)
+        val dokumenter: Map<String, Dokument> = hentDokumenter(frontendDto.vedleggsliste)
 
         return Søknad(
                 personalia = Søknadsfelt("Søker", PersonaliaMapper.mapPersonalia(frontendDto)),
@@ -28,7 +28,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                 stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
     }
 
-    private fun hentDokumenter(vedleggListe: List<VedleggFelt>) : Map<String, Dokument> {
+    private fun hentDokumenter(vedleggListe: List<VedleggFelt>): Map<String, Dokument> {
         return vedleggListe.associate { it.navn to Dokument(dokumentServiceService.hentVedlegg(it.dokumentId), it.label) }
     }
 

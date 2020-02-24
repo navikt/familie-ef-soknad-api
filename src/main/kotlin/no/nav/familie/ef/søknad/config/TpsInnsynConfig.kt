@@ -1,10 +1,8 @@
 package no.nav.familie.ef.søknad.config
 
-import no.nav.familie.ef.søknad.util.URIUtil
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
-import org.springframework.web.util.DefaultUriBuilderFactory
+import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @ConfigurationProperties("tps.innsyn")
@@ -12,9 +10,9 @@ import java.net.URI
 internal data class TpsInnsynConfig(val uri: URI,
                                     val passord: String) {
 
-    internal val personUri get() = URIUtil.uri(uri, PERSON)
+    internal val personUri = UriComponentsBuilder.fromUri(uri).path(PERSON).build().toUri()
 
-    internal val barnUri get() = URIUtil.uri(uri, BARN)
+    internal val barnUri = UriComponentsBuilder.fromUri(uri).path(BARN).build().toUri()
 
     companion object {
         private const val PERSON = "person"

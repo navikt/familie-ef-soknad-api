@@ -21,10 +21,10 @@ object InnloggingUtils {
 
     private val TOKEN_VALIDATION_CONTEXT_ATTRIBUTE = SpringTokenValidationContextHolder::class.java.name
 
-    val subject: String?
+    private val subject: String?
         get() = claims()?.subject
 
-    val fødselsnummer: String
+    private val fødselsnummer: String
         get() = subject ?: throw JwtTokenValidatorException("Fant ikke subject")
 
     private fun claims(): JwtTokenClaims? {
