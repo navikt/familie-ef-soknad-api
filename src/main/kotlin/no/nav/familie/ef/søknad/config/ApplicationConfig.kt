@@ -40,6 +40,11 @@ internal class ApplicationConfig(@Value("\${application.name}") val applicationN
     @Bean
     fun consumerIdClientInterceptor() = ConsumerIdClientInterceptor(consumerId = applicationName)
 
+    @Bean("restTemplateBuilder")
+    fun restTemplateBuilder(): RestTemplateBuilder {
+        return RestTemplateBuilder()
+    }
+
     @Bean("restOperations")
     fun restTemplate(vararg interceptors: ClientHttpRequestInterceptor): RestOperations {
         logger.info("Registrerer interceptors {}", interceptors.contentToString())
@@ -48,10 +53,11 @@ internal class ApplicationConfig(@Value("\${application.name}") val applicationN
                 .build()
     }
 
-
-    @Bean("restTemplateBuilder")
-    fun restTemplateBuilder(): RestTemplateBuilder {
+    @Bean("restOperationsNoInterceptors")
+    fun restTemplateNoInterceptors(): RestOperations {
+        logger.info("Add rest opertations with no interceptors")
         return RestTemplateBuilder()
+                .build()
     }
 
 
