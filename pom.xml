@@ -258,6 +258,7 @@
                     <compilerPlugins>
                         <plugin>spring</plugin>
                     </compilerPlugins>
+                    <jvmTarget>11</jvmTarget>
                 </configuration>
                 <executions>
                     <execution>
