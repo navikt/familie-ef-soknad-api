@@ -18,7 +18,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                 personalia = Søknadsfelt("Søker", PersonaliaMapper.mapPersonalia(frontendDto)),
                 sivilstandsdetaljer = Søknadsfelt("Detaljer om sivilstand",
                                                   SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto, dokumenter)),
-                medlemskapsdetaljer = Søknadsfelt("Opphold i Norge", medlemskapsdetaljer()),
+                medlemskapsdetaljer = Søknadsfelt("Opphold i Norge", MedlemsskapsMapper.mapMedlemskap(frontendDto, dokumenter)),
                 bosituasjon = Søknadsfelt("Bosituasjonen din", bosituasjon()),
                 sivilstandsplaner = Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
                 folkeregisterbarn = Søknadsfelt("Barn funnet i tps/folkeregisteret", listOf(registrertBarn())),
@@ -209,20 +209,6 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                            Søknadsfelt("Om samboeren din",
                                        personMinimum()),
                            Søknadsfelt("Når flyttet dere sammen?", LocalDate.of(2018, 8, 12)))
-    }
-
-    private fun medlemskapsdetaljer(): Medlemskapsdetaljer {
-        return Medlemskapsdetaljer(Søknadsfelt("Oppholder du deg i Norge?", true),
-                                   Søknadsfelt("Har du bodd i Norge de siste tre årene?", true),
-                                   Søknadsfelt("Utenlandsopphold",
-                                               listOf(Utenlandsopphold(Søknadsfelt("Fra",
-                                                                                   LocalDate.of(2012, 12, 4)),
-                                                                       Søknadsfelt("Til",
-                                                                                   LocalDate.of(2012, 12, 18)),
-                                                                       Søknadsfelt("Hvorfor bodde du i utlandet?",
-                                                                                   "Granca, Granca, Granca")))),
-                                   Søknadsfelt("Har du flyktningsatus hos Utlendingsdirektoratet?", true),
-                                   dokumentfelt("flyktningdokumentasjon"))
     }
 
     fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
