@@ -37,7 +37,56 @@
     "datoEndretSamvær": null,
     "begrunnelseAnnet": null
   },
-  "medlemskap": {},
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du vært bosatt i Norge de siste tre årene?",
+      "verdi": false
+    },
+    "perioderBoddIUtlandet": [
+      {
+        "react_key": "83637c0a-faca-40c3-85db-f7898662e7f0",
+        "periode": {
+          "fra": {
+            "label": "Fra",
+            "verdi": "2019-05-01T08:02:03.000Z"
+          },
+          "til": {
+            "label": "Til",
+            "verdi": "2019-10-01T08:02:03.000Z"
+          }
+        },
+        "begrunnelse": {
+          "label": "Hvorfor bodde du i utlandet?",
+          "verdi": "Jobbet litt"
+        }
+      },
+      {
+        "react_key": "32fad487-3b05-448e-a2c1-2adac7f5c8e5",
+        "periode": {
+          "fra": {
+            "label": "Fra",
+            "verdi": "2019-11-27T09:02:03.000Z"
+          },
+          "til": {
+            "label": "Til",
+            "verdi": "2020-02-01T09:02:03.000Z"
+          }
+        },
+        "begrunnelse": {
+          "label": "Hvorfor bodde du i utlandet?",
+          "verdi": "Jobbet mer"
+        }
+      }
+    ]
+  },
+  "søkerBosattINorgeSisteTreÅr": {
+    "label": "Har du vært bosatt i Norge de siste tre årene?",
+    "verdi": true
+  },
   "bosituasjon": {
     "søkerDelerBoligMedAndreVoksne": {
       "label": "",
