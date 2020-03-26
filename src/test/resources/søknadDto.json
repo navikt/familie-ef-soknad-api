@@ -89,8 +89,12 @@
   },
   "bosituasjon": {
     "søkerDelerBoligMedAndreVoksne": {
-      "label": "",
-      "verdi": ""
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "søkerSkalGifteSegEllerBliSamboer": {
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
     }
   },
   "vedleggsliste": [

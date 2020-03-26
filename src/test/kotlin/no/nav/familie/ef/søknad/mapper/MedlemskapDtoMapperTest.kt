@@ -1,24 +1,15 @@
 package no.nav.familie.ef.søknad.mapper
 
-import io.mockk.every
-import io.mockk.mockk
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
 import no.nav.familie.ef.søknad.mapper.kontrakt.MedlemsskapsMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
-import no.nav.familie.ef.søknad.service.DokumentService
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class MedlemskapDtoMapperTest {
 
-    private val dokumentServiceServiceMock: DokumentService = mockk()
     private val søknadDto = søknadDto()
 
-    @BeforeEach
-    fun setUp() {
-        every { dokumentServiceServiceMock.hentVedlegg(any()) } returns "DOKUMENTID123".toByteArray()
-    }
 
     @Test
     fun `mapPersonalia mapper dto mapper bosatt til false`() {
