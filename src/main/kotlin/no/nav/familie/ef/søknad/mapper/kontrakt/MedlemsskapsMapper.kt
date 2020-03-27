@@ -16,10 +16,7 @@ object MedlemsskapsMapper {
                                    Søknadsfelt(medlemskap.søkerBosattINorgeSisteTreÅr?.label
                                                ?: error("mangler label <Har du bodd i Norge de siste tre årene?>"),
                                                medlemskap.søkerBosattINorgeSisteTreÅr?.verdi),
-                                   Søknadsfelt("Utenlandsopphold", mapUtenlansopphold(medlemskap.perioderBoddIUtlandet)),
-                                    // flyktningsatus skal fjernes fra kontrakter - ingen mapping
-                                   Søknadsfelt("Har du flyktningsatus hos Utlendingsdirektoratet?", true),
-                                   dokumentfelt("flyktningdokumentasjon", dokumenter))
+                                   Søknadsfelt("Utenlandsopphold", mapUtenlansopphold(medlemskap.perioderBoddIUtlandet)))
     }
 
     private fun mapUtenlansopphold(perioderBoddIUtlandet: List<PerioderBoddIUtlandet>?): List<KontraksUtenlandsopphold> {
