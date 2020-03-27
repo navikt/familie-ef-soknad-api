@@ -1,0 +1,20 @@
+{
+  "søkerDelerBoligMedAndreVoksne": {
+    "label": "Deler du bolig med andre voksne?",
+    "verdi": "Ja, jeg har samboer og lever i et ekteskapslignende forhold"
+  },
+  "datoFlyttetSammenMedSamboer": {
+    "label": "Når flyttet dere sammen?",
+    "verdi": "2020-03-26T08:16:05.038Z"
+  },
+  "samboerDetaljer": {
+    "navn": "Bob Dyland",
+    "fødselsdato": "1976-07-26T08:16:05.000Z",
+    "fødselsnummer": "26077624804"
+  },
+  "_comment": "denne burde kanskje fjernes -> splitte bosutuasjon og sivilstandsplaner også i frontend",
+  "søkerSkalGifteSegEllerBliSamboer": {
+    "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+    "verdi": false
+  }
+}

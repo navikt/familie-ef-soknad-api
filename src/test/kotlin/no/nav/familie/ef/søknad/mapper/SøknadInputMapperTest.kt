@@ -21,6 +21,7 @@ internal class SøknadInputMapperTest {
 
     private val dokumentServiceServiceMock: DokumentService = mockk()
     private val mapper = SøknadMapper(dokumentServiceServiceMock)
+    private val søknadDto = søknadDto()
 
     @BeforeEach
     fun setUp() {
@@ -29,8 +30,6 @@ internal class SøknadInputMapperTest {
 
     @Test
     fun `mapSivilstandsdetaljer mapper dto fra frontend til forventet Sivilstandsdetaljer`() {
-        // Given
-        val søknadDto = søknadDto()
         // When
         val sivilstandsdetaljerFraSøknadDto = SivilstandsdetaljerMapper.mapSivilstandsdetaljer(søknadDto, dokumentMap())
         // Then
@@ -39,8 +38,6 @@ internal class SøknadInputMapperTest {
 
     @Test
     fun `mapPersonalia mapper dto fra frontend til forventet Personalia`() {
-        // Given
-        val søknadDto = søknadDto()
         // When
         val personaliaFraSøknadDto = PersonaliaMapper.mapPersonalia(søknadDto)
         // Then
@@ -51,7 +48,7 @@ internal class SøknadInputMapperTest {
     fun `mapTilIntern returnerer dto med personnummer fra frontend`() {
         // Given
         val forventetFnr = "25058521089" //Syntetisk mocknummer
-        val søknadDto = søknadDto().copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = forventetFnr)))
+        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = forventetFnr)))
         // When
         val søknad = mapper.mapTilIntern(søknadDto)
         // Then
@@ -62,7 +59,7 @@ internal class SøknadInputMapperTest {
     fun `map fra frontend`() {
         // Given
         val forventetNavn = "Hei Hopp"
-        val søknadDto = søknadDto().copy(person = Person(søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn)))
+        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn)))
         // When
         val søknad = mapper.mapTilIntern(søknadDto)
         // Then
@@ -72,7 +69,7 @@ internal class SøknadInputMapperTest {
     @Test
     fun `mapTilIntern skal fungere med telefonnummer som er null`() {
         // Given
-        val søknadDto = søknadDto().copy(person = Person(søker = søkerMedDefaultVerdier(telefonnummer = null)))
+        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(telefonnummer = null)))
         // When
         val søknad = mapper.mapTilIntern(søknadDto)
         // Then
@@ -84,7 +81,7 @@ internal class SøknadInputMapperTest {
     fun `mapTilIntern returnerer dto med riktig sivilstatus fra frontend`() {
         // Given
         val forventetSivilstatus = "Gift"
-        val søknadDto = søknadDto().copy(person = Person(søker = søkerMedDefaultVerdier(sivilstatus = forventetSivilstatus)))
+        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(sivilstatus = forventetSivilstatus)))
         // When
         val søknad = mapper.mapTilIntern(søknadDto)
         // Then

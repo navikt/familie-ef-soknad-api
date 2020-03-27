@@ -19,8 +19,9 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                 sivilstandsdetaljer = Søknadsfelt("Detaljer om sivilstand",
                                                   SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto, dokumenter)),
                 medlemskapsdetaljer = Søknadsfelt("Opphold i Norge", MedlemsskapsMapper.mapMedlemskap(frontendDto, dokumenter)),
-                bosituasjon = Søknadsfelt("Bosituasjonen din", bosituasjon()),
-                sivilstandsplaner = Søknadsfelt("Sivilstandsplaner", sivilstandsplaner()),
+                bosituasjon = Søknadsfelt("Bosituasjonen din", BosituasjonMapper.mapBosituasjon(frontendDto.bosituasjon)),
+                sivilstandsplaner = Søknadsfelt("Sivilstandsplaner",
+                                                SivilstandsplanerMapper.mapSivilstandsplaner(frontendDto.bosituasjon)),
                 folkeregisterbarn = Søknadsfelt("Barn funnet i tps/folkeregisteret", listOf(registrertBarn())),
                 kommendeBarn = Søknadsfelt("Barn lagt til", listOf(nyttBarn())),
                 aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
@@ -194,21 +195,6 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                                                              "Vi møtes også uten at barnet er til stede"),
                                                  Søknadsfelt("Beskriv  hvor mye er du sammen med den andre forelderen til barnet?",
                                                              "Vi sees stadig vekk"))))
-    }
-
-    private fun sivilstandsplaner(): Sivilstandsplaner {
-        return Sivilstandsplaner(Søknadsfelt("Har du konkrete planer om å gifte deg eller bli samboer", true),
-                                 Søknadsfelt("Når skal dette skje?", LocalDate.of(2021, 4, 15)),
-                                 Søknadsfelt("Hvem skal du gifte deg eller bli samboer med?",
-                                             personMinimum()))
-    }
-
-    private fun bosituasjon(): Bosituasjon {
-        return Bosituasjon(Søknadsfelt("Deler du bolig med andre voksne?",
-                                       "Ja, jeg har samboer og lever i et ekteskapslignende forhold"),
-                           Søknadsfelt("Om samboeren din",
-                                       personMinimum()),
-                           Søknadsfelt("Når flyttet dere sammen?", LocalDate.of(2018, 8, 12)))
     }
 
     fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
