@@ -24,7 +24,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                 folkeregisterbarn = Søknadsfelt("Barn funnet i tps/folkeregisteret", listOf(registrertBarn())),
                 kommendeBarn = Søknadsfelt("Barn lagt til", listOf(nyttBarn())),
                 aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
-                situasjon = Søknadsfelt("Mer om situasjonen din", situasjon()),
+                situasjon = Søknadsfelt("Mer om situasjonen din", SituasjonsMapper.mapSituasjon(frontendDto, dokumenter)),
                 stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
     }
 
