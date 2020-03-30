@@ -36,27 +36,6 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
     private fun stønadsstart() = Stønadsstart(Søknadsfelt("Fra måned", Month.AUGUST), Søknadsfelt("Fra år", 2018))
 
     @Suppress("LongLine")
-    private fun situasjon(): Situasjon {
-        return Situasjon(Søknadsfelt("Gjelder noe av dette deg?",
-                                     listOf("Barnet mitt er sykt",
-                                            "Jeg har søkt om barnepass, men ikke fått plass enda",
-                                            "Jeg har barn som har behov for særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer")),
-                         dokumentfelt("Legeerklæring"),
-                         dokumentfelt("Legeattest for egen sykdom eller sykt barn"),
-                         dokumentfelt("Avslag på søknad om barnehageplass, skolefritidsordning e.l."),
-                         dokumentfelt("Dokumentasjon av særlig tilsynsbehov"),
-                         dokumentfelt("Dokumentasjon av studieopptak"),
-                         Søknadsfelt("Når skal du starte i ny jobb?", LocalDate.of(2045, 12, 16)),
-                         dokumentfelt("Dokumentasjon av jobbtilbud"),
-                         Søknadsfelt("Når skal du starte utdanningen?", LocalDate.of(2025, 7, 28)),
-                         Søknadsfelt("Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",
-                                     "Ja, jeg har sagt opp jobben eller tatt frivillig permisjon (ikke foreldrepermisjon)"),
-                         Søknadsfelt("Hvorfor sa du opp?", "Sjefen var dum"),
-                         Søknadsfelt("Når sa du opp?", LocalDate.of(2014, 1, 12)),
-                         dokumentfelt("Dokumentasjon av arbeidsforhold"))
-    }
-
-    @Suppress("LongLine")
     private fun aktivitet(): Aktivitet {
         return Aktivitet(Søknadsfelt("Hvordan er arbeidssituasjonen din?",
                                      listOf("Jeg er hjemme med barn under 1 år",
