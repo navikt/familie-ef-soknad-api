@@ -4,11 +4,8 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Situasjon
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
-import java.time.LocalDate
 
 object SituasjonsMapper {
-
-
 
 
     private fun dokumentfelt(dokumentNavn: String, dokumenter: Map<String, Dokument>): Søknadsfelt<Dokument>? {
@@ -19,24 +16,35 @@ object SituasjonsMapper {
     }
 
     fun mapSituasjon(frontendDto: SøknadDto, dokumenter: Map<String, Dokument>): Situasjon {
-        return Situasjon(Søknadsfelt("Gjelder noe av dette deg?",
-                                     listOf("Barnet mitt er sykt",
-                                            "Jeg har søkt om barnepass, men ikke fått plass enda",
-                                            "Jeg har barn som har behov for særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer")),
-                         dokumentfelt("Legeerklæring", dokumenter),
-                         dokumentfelt("Legeattest for egen sykdom eller sykt barn", dokumenter),
-                         dokumentfelt("Avslag på søknad om barnehageplass, skolefritidsordning e.l.", dokumenter),
-                         dokumentfelt("Dokumentasjon av særlig tilsynsbehov", dokumenter),
-                         dokumentfelt("Dokumentasjon av studieopptak", dokumenter),
-                         Søknadsfelt("Når skal du starte i ny jobb?", LocalDate.of(2045, 12, 16)),
-                         dokumentfelt("Dokumentasjon av jobbtilbud", dokumenter),
-                         Søknadsfelt("Når skal du starte utdanningen?", LocalDate.of(2025, 7, 28)),
-                         Søknadsfelt("Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",
-                                     "Ja, jeg har sagt opp jobben eller tatt frivillig permisjon (ikke foreldrepermisjon)"),
-                         Søknadsfelt("Hvorfor sa du opp?", "Sjefen var dum"),
-                         Søknadsfelt("Når sa du opp?", LocalDate.of(2014, 1, 12)),
-                         dokumentfelt("Dokumentasjon av arbeidsforhold", dokumenter))
+        val merOmDinSituasjon = frontendDto.merOmDinSituasjon
+        return Situasjon(gjelderDetteDeg = mapGjelderDetteDeg(merOmDinSituasjon),
+                         sykdom = dokumentfelt("Legeerklæring", dokumenter),
+                         barnsSykdom = dokumentfelt("Legeattest for egen sykdom eller sykt barn", dokumenter),
+                         manglendeBarnepass = dokumentfelt("Avslag på søknad om barnehageplass, skolefritidsordning e.l.",
+                                                           dokumenter),
+                         barnMedSærligeBehov = dokumentfelt("Dokumentasjon av særlig tilsynsbehov", dokumenter),
+                         utdanningstilbud = dokumentfelt("Dokumentasjon av studieopptak", dokumenter),
+                         oppstartNyJobb = merOmDinSituasjon.datoOppstartJobb?.let { Søknadsfelt(it.label, it.verdi) },
+                         arbeidskontrakt = dokumentfelt("Dokumentasjon av jobbtilbud", dokumenter),
+                         oppstartUtdanning = merOmDinSituasjon.datoOppstartUtdanning?.let { Søknadsfelt(it.label, it.verdi) },
+                         sagtOppEllerRedusertStilling = merOmDinSituasjon.sagtOppEllerRedusertStilling?.let {
+                             Søknadsfelt(it.label,
+                                         it.verdi)
+                         },
+                         oppsigelseReduksjonÅrsak = merOmDinSituasjon.begrunnelseSagtOppEllerRedusertStilling?.let {
+                             Søknadsfelt(it.label,
+                                         it.verdi)
+                         },
+                         oppsigelseReduksjonTidspunkt = merOmDinSituasjon.datoSagtOppEllerRedusertStilling?.let {
+                             Søknadsfelt(it.label,
+                                         it.verdi)
+                         },
+                         oppsigelseReduksjonDokumentasjon = dokumentfelt("Dokumentasjon av arbeidsforhold", dokumenter))
     }
+
+    private fun mapGjelderDetteDeg(merOmDinSituasjon: no.nav.familie.ef.søknad.api.dto.søknadsdialog.Situasjon) =
+            Søknadsfelt(merOmDinSituasjon.gjelderDetteDeg.label,
+                        merOmDinSituasjon.gjelderDetteDeg.verdi)
 
 
 }

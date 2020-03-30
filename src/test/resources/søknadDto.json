@@ -103,5 +103,200 @@
       "navn": "samlivsbrudd",
       "label": "Erklæring om samlivsbrudd"
     }
-  ]
+  ],
+  "aktivitet": {
+    "hvaErDinArbeidssituasjon": {
+      "label": "Hva er din arbeidsituasjon?",
+      "verdi": [
+        "Jeg er hjemme med barn under 1 år",
+        "Jeg er arbeidstaker",
+        "Jeg er selvstendig næringsdrivende eller frilanser",
+        "Jeg er ansatt i eget AS",
+        "Jeg etablerer egen virksomhet",
+        "Jeg er arbeidssøker",
+        "Jeg tar utdanning",
+        "Jeg er hverken i arbeid, utdanning eller er arbeidssøker",
+        "Jeg er syk",
+        "Barnet mitt er sykt",
+        "Jeg har søkt om barnepass, men ikke fått plass enda",
+        "Jeg har barn som har behov for særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
+        "Jeg har fått tilbud om jobb",
+        "Jeg skal begynne å ta utdanning"
+      ]
+    },
+    "arbeidsforhold": [
+      {
+        "react_key": "0811cfef-7353-435d-a071-97867b2a9613",
+        "navn": {
+          "label": "Navn på arbeidsgiver",
+          "verdi": "dfghdgfh"
+        },
+        "arbeidsmengde": {
+          "label": "Hvor mye jobber du?",
+          "verdi": "23"
+        },
+        "fastStilling": {
+          "label": "arbeidsforhold.label.fastEllerMidlertidig",
+          "verdi": "Midlertidig"
+        },
+        "harSluttDato": {
+          "label": "Har du en sluttdato?",
+          "verdi": false
+        }
+      }
+    ],
+    "firma": {
+      "etableringsdato": {
+        "label": "datovelger tekstid",
+        "verdi": "2020-03-27T13:52:42.742Z"
+      },
+      "navn": {
+        "label": "",
+        "verdi": "sdfgsdf"
+      },
+      "organisasjonsnummer": {
+        "label": "",
+        "verdi": "sdfgsdfg"
+      },
+      "arbeidsmengde": {
+        "label": "",
+        "verdi": "34"
+      },
+      "arbeidsuke": {
+        "label": "tekstid",
+        "verdi": "sdfgsdfgsdfg"
+      }
+    },
+    "arbeidssøker": {
+      "registrertSomArbeidssøkerNav": {
+        "label": "Er du registrert som arbeidssøker hos NAV?",
+        "verdi": true
+      },
+      "villigTilÅTaImotTilbudOmArbeid": {
+        "label": "Er du villig til å ta imot tilbud om arbeid eller arbeidsmarkedstiltak?",
+        "verdi": true
+      },
+      "kanBegynneInnenEnUke": {
+        "label": "Kan du begynne i arbeid senest én uke etter at du har fått tilbud om jobb?",
+        "verdi": true
+      },
+      "kanSkaffeBarnepassInnenEnUke": {
+        "label": "Har du eller kan du skaffe barnepass senest innen en uke etter at du har fått tilbud om jobb eller arbeidsmarkedtiltak?",
+        "verdi": true
+      },
+      "hvorØnskerSøkerArbeid": {
+        "label": "Hvor ønsker du å søke arbeid?",
+        "verdi": "Hvor som helst i landet"
+      },
+      "ønskerSøker50ProsentStilling": {
+        "label": "Ønsker du å stå som arbeidssøker til minst 50% stilling?",
+        "verdi": true
+      }
+    },
+    "underUtdanning": {
+      "react_key": "cd87ae81-9885-40e3-92b7-bb2764553544",
+      "skoleUtdanningssted": {
+        "label": "Skole / utdanningssted",
+        "verdi": "Utdanniskskollen "
+      },
+      "linjeKursGrad": {
+        "label": "Linje / kurs / grad",
+        "verdi": "Stor kurs grad"
+      },
+      "offentligEllerPrivat": {
+        "label": "Er utdanningen privat eller offentlig?",
+        "verdi": "Offentlig"
+      },
+      "periode": {
+        "fra": {
+          "label": "",
+          "verdi": "2020-03-26T13:52:42.742Z"
+        },
+        "til": {
+          "label": "",
+          "verdi": "2020-03-27T13:52:42.742Z"
+        }
+      },
+      "heltidEllerDeltid": {
+        "label": "Er utdanningen på heltid eller deltid?",
+        "verdi": "Deltid"
+      },
+      "arbeidsmengde": {
+        "label": "Hvor mye skal du studere?",
+        "verdi": "134"
+      },
+      "målMedUtdanning": {
+        "label": "Hva er målet med utdanningen?",
+        "verdi": "Bli snill"
+      },
+      "harTattUtdanningEtterGrunnskolen": {
+        "label": "Har du tatt utdanning etter grunnskolen",
+        "verdi": true
+      },
+      "tidligereUtdanning": [
+        {
+          "react_key": "ab8d1628-18c0-40ec-9806-4adfba38be4e",
+          "linjeKursGrad": {
+            "label": "Linje / kurs / grad",
+            "verdi": "Skole ting"
+          },
+          "periode": {
+            "fra": {
+              "label": "",
+              "verdi": "2020-03-26T13:52:42.742Z"
+            },
+            "til": {
+              "label": "utdanning.datovelger.studieperiode",
+              "verdi": "2020-03-27T13:52:42.742Z"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "merOmDinSituasjon": {
+    "gjelderDetteDeg": {
+      "label": "Gjelder noe av dette deg?",
+      "verdi": [
+        "Jeg er hjemme med barn under 1 år",
+        "Jeg er arbeidstaker",
+        "Jeg er selvstendig næringsdrivende eller frilanser",
+        "Jeg er ansatt i eget AS",
+        "Jeg etablerer egen virksomhet",
+        "Jeg er arbeidssøker",
+        "Jeg tar utdanning",
+        "Jeg er hverken i arbeid, utdanning eller er arbeidssøker",
+        "Jeg er syk",
+        "Barnet mitt er sykt",
+        "Jeg har søkt om barnepass, men ikke fått plass enda",
+        "Jeg har barn som har behov for særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
+        "Jeg har fått tilbud om jobb",
+        "Jeg skal begynne å ta utdanning"
+      ]
+    },
+    "søknadsdato": {
+      "label": "Jeg søker overgangsstønad fra og med",
+      "verdi": "2020-03-27T13:52:42.742Z"
+    },
+    "datoOppstartJobb": {
+      "label": "Når skal du starte i ny jobb?",
+      "verdi": "2020-03-27T13:52:42.742Z"
+    },
+    "datoOppstartUtdanning": {
+      "label": "Når skal du begynne å ta utdanning?",
+      "verdi": "2020-03-27T13:52:42.742Z"
+    },
+    "sagtOppEllerRedusertStilling": {
+      "label": "Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",
+      "verdi": "Ja, jeg har sagt opp jobben eller tatt frivillig permisjon, men ikke foreldrepermisjon"
+    },
+    "datoSagtOppEllerRedusertStilling": {
+      "label": "sagtOppEllerRedusertStilling.datovelger.sagtOpp",
+      "verdi": "2020-03-30T06:33:41.160Z"
+    },
+    "begrunnelseSagtOppEllerRedusertStilling": {
+      "label": "Hvorfor sa du opp?",
+      "verdi": "Ville finne en spennende jobb"
+    }
+  }
 }
