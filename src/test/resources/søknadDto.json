@@ -129,7 +129,7 @@
         "react_key": "0811cfef-7353-435d-a071-97867b2a9613",
         "navn": {
           "label": "Navn på arbeidsgiver",
-          "verdi": "dfghdgfh"
+          "verdi": "Nav"
         },
         "arbeidsmengde": {
           "label": "Hvor mye jobber du?",
@@ -142,30 +142,38 @@
         "harSluttDato": {
           "label": "Har du en sluttdato?",
           "verdi": false
+        },
+        "sluttdato": {
+          "label": "Når skal du slutte?",
+          "verdi": "2020-03-31T06:33:41.000Z"
         }
       }
     ],
     "firma": {
       "etableringsdato": {
-        "label": "datovelger tekstid",
+        "label": "Etableringsdato",
         "verdi": "2020-03-27T13:52:42.742Z"
       },
       "navn": {
-        "label": "",
-        "verdi": "sdfgsdf"
+        "label": "Navn på arbeidsgiver",
+        "verdi": "Boller og brus"
       },
       "organisasjonsnummer": {
-        "label": "",
-        "verdi": "sdfgsdfg"
+        "label": "Organisasjonsnummer",
+        "verdi": "123"
       },
       "arbeidsmengde": {
-        "label": "",
+        "label": "Arbeidsmengde",
         "verdi": "34"
       },
       "arbeidsuke": {
-        "label": "tekstid",
-        "verdi": "sdfgsdfgsdfg"
+        "label": "Arbeidsukebeskrivelse",
+        "verdi": "Jobber mandager"
       }
+    },
+    "etablererEgenVirksomhet": {
+      "label": "Hva er din arbeidsituasjon?",
+      "verdi": "Dette er en spennende gründerbedrift"
     },
     "arbeidssøker": {
       "registrertSomArbeidssøkerNav": {

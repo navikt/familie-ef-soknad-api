@@ -24,7 +24,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                                                 SivilstandsplanerMapper.mapSivilstandsplaner(frontendDto.bosituasjon)),
                 folkeregisterbarn = Søknadsfelt("Barn funnet i tps/folkeregisteret", listOf(registrertBarn())),
                 kommendeBarn = Søknadsfelt("Barn lagt til", listOf(nyttBarn())),
-                aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", aktivitet()),
+                aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", AktivitetsMapper.map(frontendDto)),
                 situasjon = Søknadsfelt("Mer om situasjonen din", SituasjonsMapper.mapSituasjon(frontendDto, dokumenter)),
                 stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
     }
@@ -35,70 +35,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
 
     private fun stønadsstart() = Stønadsstart(Søknadsfelt("Fra måned", Month.AUGUST), Søknadsfelt("Fra år", 2018))
 
-    @Suppress("LongLine")
-    private fun aktivitet(): Aktivitet {
-        return Aktivitet(Søknadsfelt("Hvordan er arbeidssituasjonen din?",
-                                     listOf("Jeg er hjemme med barn under 1 år",
-                                            "Jeg er i arbeid",
-                                            "Jeg er selvstendig næringsdrivende eller frilanser")),
-                         Søknadsfelt("Om arbeidsforholdet ditt",
-                                     listOf(Arbeidsgiver(Søknadsfelt("Navn på arbeidsgiveren", "Palpatine"),
-                                                         Søknadsfelt("Hvor mye jobber du?", 15),
-                                                         Søknadsfelt("Er stillingen fast eller midlertidig?",
-                                                                     "Fast"),
-                                                         Søknadsfelt("Har du en sluttdato?", true),
-                                                         Søknadsfelt("Når skal du slutte?",
-                                                                     LocalDate.of(2020, 11, 18))))),
-                         Søknadsfelt("Om firmaet du driver",
-                                     Selvstendig(Søknadsfelt("Navn på firma", "Bobs burgers"),
-                                                 Søknadsfelt("Organisasjonsnummer", "987654321"),
-                                                 Søknadsfelt("Når etablerte du firmaet?",
-                                                             LocalDate.of(2018, 4, 5)),
-                                                 Søknadsfelt("Hvor mye jobber du?", 150),
-                                                 Søknadsfelt("Hvordan ser arbeidsuken din ut?",
-                                                             "Veldig tung"))),
-                         Søknadsfelt("Om virksomheten du etablerer",
-                                     Virksomhet(Søknadsfelt("Beskriv virksomheten",
-                                                            "Den kommer til å revolusjonere verden"))),
-                         Søknadsfelt("Når du er arbeidssøker",
-                                     Arbeidssøker(Søknadsfelt("Er du registrert som arbeidssøker hos NAV?", true),
-                                                  Søknadsfelt("Er du villig til å ta imot tilbud om arbeid eller arbeidsmarkedstiltak?",
-                                                              true),
-                                                  Søknadsfelt("Kan du begynne i arbeid senest én uke etter at du har fått tilbud om jobb?",
-                                                              true),
-                                                  Søknadsfelt("Har du eller kan du skaffe barnepass senest innen en uke etter at du har fått tilbud om jobb eller arbeidsmarkedstiltak?",
-                                                              false),
-                                                  Søknadsfelt("Hvor ønsker du å søke arbeid?",
-                                                              "Kun i bodistriktet mitt, ikke mer enn 1 times reisevei"),
-                                                  Søknadsfelt("Ønsker du å stå som arbeidssøker til minst 50% stilling?",
-                                                              true))),
-                         Søknadsfelt("Utdanningen du skal ta",
-                                     UnderUtdanning(Søknadsfelt("Skole/utdanningssted", "UiO"),
-                                                    Søknadsfelt("Utdanning",
-                                                                Utdanning(Søknadsfelt("Linje/kurs/grad",
-                                                                                      "Profesjonsstudium Informatikk"),
-                                                                          Søknadsfelt("Når skal du være elev/student?",
-                                                                                      Periode(Month.JANUARY,
-                                                                                              1999,
-                                                                                              Month.OCTOBER,
-                                                                                              2004))
-                                                                )),
-                                                    Søknadsfelt("Er utdanningen offentlig eller privat?",
-                                                                "Offentlig"),
-                                                    Søknadsfelt("Hvor mye skal du studere?", 300),
-                                                    Søknadsfelt("Hva er målet med utdanningen?",
-                                                                "Økonomisk selvstendighet"),
-                                                    Søknadsfelt("Har du tatt utdanning etter grunnskolen?", true),
-                                                    Søknadsfelt("Tidligere Utdanning",
-                                                                listOf(Utdanning(Søknadsfelt("Linje/kurs/grad",
-                                                                                             "Master Fysikk"),
-                                                                                 Søknadsfelt("Når var du elev/student?",
-                                                                                             Periode(Month.JANUARY,
-                                                                                                     1999,
-                                                                                                     Month.OCTOBER,
-                                                                                                     2004))
-                                                                ))))))
-    }
+
 
     @Suppress("LongLine")
     private fun nyttBarn(): NyttBarn {
