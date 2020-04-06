@@ -54,7 +54,7 @@ data class UnderUtdanning(
         val periode: Periode,
         val react_key: String,
         val skoleUtdanningssted: TekstFelt,
-        val tidligereUtdanning: List<TidligereUtdanning>
+        val tidligereUtdanning: List<TidligereUtdanning>? = null
 )
 
 data class TidligereUtdanning(
