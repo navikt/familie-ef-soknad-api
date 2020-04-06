@@ -1,11 +1,14 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
-data class Barn(val alder: Int? = null,
-                val fnr: String? = null,
-                val fødselsdato: String? = null,
-                val harSammeAdresse: Boolean? = null,
+data class Barn(val alder: TekstFelt? = null,
+                val fnr: TekstFelt? = null,
+                val fødselsdato: TekstFelt? = null,
+                val harSammeAdresse: BooleanFelt? = null,
                 val id: String? = null,
-                val lagtTil: Boolean? = null,
-                val navn: String? = null,
-                val personnummer: String? = null,
-                val ufødt: Boolean? = null)
+                val lagtTil: BooleanFelt? = null,
+                val navn: TekstFelt? = null,
+                val personnummer: TekstFelt? = null,
+                val ufødt: BooleanFelt? = null)
+
+
+

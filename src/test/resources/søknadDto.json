@@ -21,8 +21,91 @@
       "jobbtelefon": null,
       "bankkontonummer": null
     },
-    "barn": []
-  },
+    "barn": [
+      {
+        "id": "12345",
+        "fnr": {
+          "label": "Fødselsnummer",
+          "verdi": "28021078036"
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "SHIBA INU"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 9
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2010-02-28"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "født": {
+          "label": "Er barnet født?",
+          "verdi": true
+        }
+      },
+      {
+        "id": "12346",
+        "fnr": {
+          "label": "Fødselsnummer",
+          "verdi": "28021078038"
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "HACHI KO"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 9
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2010-02-28"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "født": {
+          "label": "Er barnet født?",
+          "verdi": true
+        }
+      },
+      {
+        "id": "12347",
+        "fnr": {
+          "label": "Fødselsnummer",
+          "verdi": "01021878040"
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "DONALD DUCK"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 2
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2018-02-01"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": false
+        },
+        "født": {
+          "label": "Er barnet født?",
+          "verdi": true
+        }
+      }
+    ]
+
+},
   "sivilstatus": {
     "søkerHarSøktSeparasjon": null,
     "datoSøktSeparasjon": null,
