@@ -205,7 +205,7 @@
       "react_key": "cd87ae81-9885-40e3-92b7-bb2764553544",
       "skoleUtdanningssted": {
         "label": "Skole / utdanningssted",
-        "verdi": "Utdanniskskollen "
+        "verdi": "Skoleskolen"
       },
       "linjeKursGrad": {
         "label": "Linje / kurs / grad",
@@ -231,11 +231,11 @@
       },
       "arbeidsmengde": {
         "label": "Hvor mye skal du studere?",
-        "verdi": "134"
+        "verdi": "50"
       },
       "målMedUtdanning": {
         "label": "Hva er målet med utdanningen?",
-        "verdi": "Bli snill"
+        "verdi": "Bli flink"
       },
       "harTattUtdanningEtterGrunnskolen": {
         "label": "Har du tatt utdanning etter grunnskolen",
