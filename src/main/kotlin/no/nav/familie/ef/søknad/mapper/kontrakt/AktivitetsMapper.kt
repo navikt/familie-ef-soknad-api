@@ -33,7 +33,6 @@ object AktivitetsMapper {
                               utdanning = Søknadsfelt("Utdanning",
                                                       Utdanning(Søknadsfelt(underUtdanning.linjeKursGrad.label,
                                                                             underUtdanning.linjeKursGrad.verdi),
-                                                              // TODO Denne! Skal vi ha den fra UII
                                                                 Søknadsfelt("Når skal du være elev/student?",
                                                                             Periode(underUtdanning.periode.fra.verdi.month,
                                                                                     underUtdanning.periode.fra.verdi.year,
@@ -44,6 +43,8 @@ object AktivitetsMapper {
                                                                  underUtdanning.offentligEllerPrivat.verdi),
                               hvorMyeSkalDuStudere = Søknadsfelt(underUtdanning.arbeidsmengde.label,
                                                                  underUtdanning.arbeidsmengde.verdi.toInt()),
+                              heltidEllerDeltid = Søknadsfelt(underUtdanning.heltidEllerDeltid.label,
+                                                              underUtdanning.heltidEllerDeltid.verdi),
                               hvaErMåletMedUtdanningen = Søknadsfelt(underUtdanning.målMedUtdanning.label,
                                                                      underUtdanning.målMedUtdanning.verdi),
                               utdanningEtterGrunnskolen = Søknadsfelt(underUtdanning.harTattUtdanningEtterGrunnskolen.label,
