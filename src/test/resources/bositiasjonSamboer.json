@@ -1,5 +1,5 @@
 {
-  "søkerDelerBoligMedAndreVoksne": {
+  "delerBoligMedAndreVoksne": {
     "label": "Deler du bolig med andre voksne?",
     "verdi": "Ja, jeg har samboer og lever i et ekteskapslignende forhold"
   },
@@ -13,7 +13,7 @@
     "fødselsnummer": "26077624804"
   },
   "_comment": "denne burde kanskje fjernes -> splitte bosutuasjon og sivilstandsplaner også i frontend",
-  "søkerSkalGifteSegEllerBliSamboer": {
+  "skalGifteSegEllerBliSamboer": {
     "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
     "verdi": false
   }

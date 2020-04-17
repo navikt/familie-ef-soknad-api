@@ -185,7 +185,7 @@
     }
   },
   "bosituasjon": {
-    "søkerDelerBoligMedAndreVoksne": {
+    "delerBoligMedAndreVoksne": {
       "label": "Deler du bolig med andre voksne?",
       "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
     },
