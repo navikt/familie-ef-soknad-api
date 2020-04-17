@@ -1,4 +1,6 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
+import javax.validation.Valid
+
 data class Person(val barn: List<Barn>? = null,
-                  val søker: Søker)
+                  @field:Valid val søker: Søker)

@@ -1,10 +1,10 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
-import no.nav.familie.ef.søknad.validering.SjekkGyldigFødselsnummer
+import no.nav.familie.ef.søknad.validering.FnrConstraint
 
 data class Søker(val adresse: Adresse,
                  val egenansatt: Boolean,
-                 @field:SjekkGyldigFødselsnummer
+                 @field:FnrConstraint
                  val fnr: String,
                  val forkortetNavn: String,
                  val sivilstand: String,
