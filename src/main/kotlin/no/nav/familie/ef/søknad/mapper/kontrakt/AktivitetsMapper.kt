@@ -18,8 +18,8 @@ object AktivitetsMapper {
                          },
                          selvstendig = aktivitet.firma?.let { Søknadsfelt("Om firmaet du driver", mapOmFirma(it)) },
                          virksomhet = aktivitet.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it) },
-                         arbeidssøker = aktivitet.arbeidssøker.let { mapArbeidssøker(it) },
-                         underUtdanning = aktivitet.underUtdanning.let { mapUtdanning(it) })
+                         arbeidssøker = aktivitet.arbeidssøker?.let { mapArbeidssøker(it) },
+                         underUtdanning = aktivitet.underUtdanning?.let { mapUtdanning(it) })
     }
 
     private fun mapUtdanning(underUtdanning: UnderUtdanningDto): Søknadsfelt<UnderUtdanning> {

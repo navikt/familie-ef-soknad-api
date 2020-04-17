@@ -3,11 +3,11 @@ package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 import java.time.LocalDate
 
 data class Bosituasjon(
-        val søkerDelerBoligMedAndreVoksne: TekstFelt,
+        val delerBoligMedAndreVoksne: TekstFelt,
         val datoFlyttetSammenMedSamboer: DatoFelt?,
         val samboerDetaljer: SamboerDetaljer?,
-        val datoSkalGifteSegEllerBliSamboer: DatoFelt?,
-        val søkerSkalGifteSegEllerBliSamboer: BooleanFelt
+        val datoSkalGifteSegEllerBliSamboer: DatoFelt? = null,
+        val skalGifteSegEllerBliSamboer: BooleanFelt
 )
 
 data class SamboerDetaljer(
@@ -15,3 +15,6 @@ data class SamboerDetaljer(
         val fødselsdato: LocalDate?,
         val navn: String
 )
+
+
+

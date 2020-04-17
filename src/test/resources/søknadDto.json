@@ -171,11 +171,25 @@
     "verdi": true
   },
   "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "borAleneMedBarnEllerGravid",
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegMedSamboer",
+      "svarid": "NEI",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    }
+  },
+  "bosituasjon": {
     "søkerDelerBoligMedAndreVoksne": {
       "label": "Deler du bolig med andre voksne?",
       "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
     },
-    "søkerSkalGifteSegEllerBliSamboer": {
+    "skalGifteSegEllerBliSamboer": {
       "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
       "verdi": false
     }

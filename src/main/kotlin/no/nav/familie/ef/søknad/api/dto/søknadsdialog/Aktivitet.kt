@@ -2,10 +2,10 @@ package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
 data class Aktivitet(
         val arbeidsforhold: List<Arbeidsforhold>?,
-        val arbeidssøker: Arbeidssøker,
+        val arbeidssøker: Arbeidssøker?=null,
         val firma: Firma? = null,
         val hvaErDinArbeidssituasjon: HvaErDinArbeidssituasjon,
-        val underUtdanning: UnderUtdanning,
+        val underUtdanning: UnderUtdanning? = null,
         val etablererEgenVirksomhet: TekstFelt? = null
 
 )
