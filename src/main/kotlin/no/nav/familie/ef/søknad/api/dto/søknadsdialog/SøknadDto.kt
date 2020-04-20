@@ -6,4 +6,8 @@ data class SøknadDto(val bekreftet: Boolean? = null,
                      val person: Person,
                      val sivilstatus: Sivilstatus,
                      val søkerBorPåRegistrertAdresse: BooleanFelt? = null,
-                     val vedleggsliste: List<VedleggFelt>)
+                     val vedleggsliste: List<VedleggFelt>,
+                     val aktivitet: Aktivitet,
+                     val merOmDinSituasjon: Situasjon)
+
+

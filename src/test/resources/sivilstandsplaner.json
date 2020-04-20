@@ -1,9 +1,9 @@
 {
-  "søkerDelerBoligMedAndreVoksne": {
+  "delerBoligMedAndreVoksne": {
     "label": "Deler du bolig med andre voksne?",
     "verdi": "Ja, jeg deler bolig med andre voksne, for eksempel utleier, venn, søsken eller egne foreldre"
   },
-  "søkerSkalGifteSegEllerBliSamboer": {
+  "skalGifteSegEllerBliSamboer": {
     "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
     "verdi": true
   },

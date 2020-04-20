@@ -8,14 +8,13 @@ import no.nav.familie.kontrakter.ef.søknad.Bosituasjon as KontraktBosituasjon
 
 object BosituasjonMapper {
     fun mapBosituasjon(bosituasjon: Bosituasjon): KontraktBosituasjon {
-        return KontraktBosituasjon(mapSøkerDelerBoligMedAndre(bosituasjon),
-                                   mapSamboer(bosituasjon),
-                                   mapDatoFlyttetSammenMedSamboer(bosituasjon))
+        return KontraktBosituasjon(delerDuBolig = mapSøkerDelerBoligMedAndre(bosituasjon),
+                                   samboerdetaljer = mapSamboer(bosituasjon),
+                                   sammenflyttingsdato = mapDatoFlyttetSammenMedSamboer(bosituasjon))
     }
 
     private fun mapSøkerDelerBoligMedAndre(bosituasjon: Bosituasjon) =
-            Søknadsfelt(bosituasjon.søkerDelerBoligMedAndreVoksne.label,
-                        bosituasjon.søkerDelerBoligMedAndreVoksne.verdi)
+                Søknadsfelt(bosituasjon.delerBoligMedAndreVoksne.label, bosituasjon.delerBoligMedAndreVoksne.verdi)
 
     private fun mapDatoFlyttetSammenMedSamboer(bosituasjon: Bosituasjon): Søknadsfelt<LocalDate>? {
         return bosituasjon.datoFlyttetSammenMedSamboer?.let {

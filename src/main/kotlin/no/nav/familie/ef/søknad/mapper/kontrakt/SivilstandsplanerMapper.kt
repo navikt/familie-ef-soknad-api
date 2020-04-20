@@ -10,21 +10,22 @@ import java.time.LocalDate
 object SivilstandsplanerMapper {
 
     fun mapSivilstandsplaner(bosituasjon: Bosituasjon): Sivilstandsplaner {
-        return Sivilstandsplaner(mapSøkerSkalGifteSeg(bosituasjon.søkerSkalGifteSegEllerBliSamboer),
-                                 mapSivistandsplanerDato(bosituasjon),
-                                 mapPersonMinimum(bosituasjon))
+        return Sivilstandsplaner(harPlaner = mapSøkerSkalGifteSeg(bosituasjon.skalGifteSegEllerBliSamboer),
+                                 fraDato = mapSivistandsplanerDato(bosituasjon),
+                                 vordendeSamboerEktefelle = mapPersonMinimum(bosituasjon))
     }
 
     private fun mapPersonMinimum(bosituasjon: Bosituasjon): Søknadsfelt<PersonMinimum>? {
-        return bosituasjon.samboerDetaljer?.let {  PersonMinimumMapper.map(it)  }
+        return bosituasjon.samboerDetaljer?.let { PersonMinimumMapper.map(it) }
     }
 
-    private fun mapSivistandsplanerDato(bosituasjon: Bosituasjon) : Søknadsfelt<LocalDate>?{
+    private fun mapSivistandsplanerDato(bosituasjon: Bosituasjon): Søknadsfelt<LocalDate>? {
         return bosituasjon.datoSkalGifteSegEllerBliSamboer?.let {
             Søknadsfelt(it.label, it.verdi)
         }
     }
 
-    private fun mapSøkerSkalGifteSeg(søkerSkalGifteSegEllerBliSamboer: BooleanFelt) =
-            Søknadsfelt(søkerSkalGifteSegEllerBliSamboer.label, søkerSkalGifteSegEllerBliSamboer.verdi)
+    private fun mapSøkerSkalGifteSeg(skalGifteSegEllerBliSamboer: BooleanFelt) =
+                Søknadsfelt(skalGifteSegEllerBliSamboer.label, skalGifteSegEllerBliSamboer.verdi)
+
 }
