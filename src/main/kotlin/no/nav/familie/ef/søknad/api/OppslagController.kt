@@ -4,7 +4,6 @@ package no.nav.familie.ef.søknad.api
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.service.OppslagService
 import no.nav.familie.ef.søknad.util.InnloggingUtils
-import no.nav.familie.ef.søknad.validering.SjekkGyldigPostnummer
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity
@@ -26,11 +25,14 @@ class OppslagController(private val oppslagService: OppslagService) {
     }
 
     @GetMapping("/poststed/{postnummer}")
-    fun postnummer(@SjekkGyldigPostnummer @PathVariable postnummer: String): ResponseEntity<String> {
+    fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
+        require(gyldigPostnummer(postnummer))
         val poststed = oppslagService.hentPoststedFor(postnummer)
         return if (!poststed.isNullOrBlank()) ResponseEntity.ok().body(poststed)
         else ResponseEntity.noContent().build()
     }
+
+    private fun gyldigPostnummer(postnummer: String) = Regex("""^[0-9]{4}$""").matches(postnummer)
 
     companion object {
         const val OPPSLAG = "/api/oppslag"
