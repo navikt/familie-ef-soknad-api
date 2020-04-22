@@ -4,6 +4,10 @@ on:
     branches:
       - '*'
       - '*/*'
+
+env:
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ef-soknad-api:${{ github.sha }}
+
 jobs:
   build:
     name: Build, push and deploy to dev-sbs
