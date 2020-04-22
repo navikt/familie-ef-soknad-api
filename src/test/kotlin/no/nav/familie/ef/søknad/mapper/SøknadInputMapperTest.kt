@@ -48,9 +48,9 @@ internal class SøknadInputMapperTest {
     fun `mapTilIntern returnerer dto med personnummer fra frontend`() {
         // Given
         val forventetFnr = "25058521089" //Syntetisk mocknummer
-        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = forventetFnr)))
+        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = forventetFnr), barn = søknadDto.person.barn))
         // When
-        val søknad = mapper.mapTilIntern(søknadDto)
+        val søknad = mapper.mapTilKontrakt(søknadDto)
         // Then
         assertThat(søknad.getFødselsnummer()).isEqualTo(forventetFnr)
     }
@@ -59,9 +59,9 @@ internal class SøknadInputMapperTest {
     fun `map fra frontend`() {
         // Given
         val forventetNavn = "Hei Hopp"
-        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn)))
+        val søknadDto = søknadDto.copy(person = Person(barn = søknadDto.person.barn, søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn) ) )
         // When
-        val søknad = mapper.mapTilIntern(søknadDto)
+        val søknad = mapper.mapTilKontrakt(søknadDto)
         // Then
         assertThat(søknad.getSøkerNavn()).isEqualTo(forventetNavn)
     }
@@ -69,9 +69,9 @@ internal class SøknadInputMapperTest {
     @Test
     fun `mapTilIntern skal fungere med telefonnummer som er null`() {
         // Given
-        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(telefonnummer = null)))
+        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(telefonnummer = null), barn = søknadDto.person.barn))
         // When
-        val søknad = mapper.mapTilIntern(søknadDto)
+        val søknad = mapper.mapTilKontrakt(søknadDto)
         // Then
         val telefonnummer = søknad.personalia.verdi.telefonnummer
         assertThat(telefonnummer).isEqualTo(null)
@@ -81,9 +81,9 @@ internal class SøknadInputMapperTest {
     fun `mapTilIntern returnerer dto med riktig sivilstatus fra frontend`() {
         // Given
         val forventetSivilstatus = "Gift"
-        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(sivilstatus = forventetSivilstatus)))
+        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(sivilstatus = forventetSivilstatus), barn = søknadDto.person.barn ))
         // When
-        val søknad = mapper.mapTilIntern(søknadDto)
+        val søknad = mapper.mapTilKontrakt(søknadDto)
         // Then
         val sivilstatus = søknad.personalia.verdi.sivilstatus.verdi
         assertThat(sivilstatus).isEqualTo(forventetSivilstatus)

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 internal class SøknadServiceImpl(private val søknadClient: SøknadClient, private val mapper: SøknadMapper) : SøknadService {
 
     override fun sendInn(søknad: SøknadDto): Kvittering {
-        val søknadDto = mapper.mapTilIntern(søknad)
+        val søknadDto = mapper.mapTilKontrakt(søknad)
         val kvittering = søknadClient.sendInn(søknadDto)
         return KvitteringMapper.mapTilEkstern(kvittering)
 

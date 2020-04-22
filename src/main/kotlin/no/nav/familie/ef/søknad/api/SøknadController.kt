@@ -24,11 +24,6 @@ class SøknadController(val søknadService: SøknadService, val featureToggleSer
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-//    @ExceptionHandler(ConstraintViolationException::class)
-//    fun handleRestClientResponseException(e: ConstraintViolationException): Ressurs<ConstraintViolationException> {
-//        return Ressurs.failure(e.message, e)
-//    }
-
     @PostMapping
     fun sendInn(@RequestBody @Validated søknad: SøknadDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
