@@ -7,7 +7,7 @@ metadata:
     team: teamfamilie
 
 spec:
-  image: docker.pkg.github.com/navikt/familie-ef-soknad-api/familie-ef-soknad-api:{{tag}}
+  image: {{ image }}
   port: 8000
   liveness:
     path: /familie/alene-med-barn/soknad-api/internal/status/isAlive
