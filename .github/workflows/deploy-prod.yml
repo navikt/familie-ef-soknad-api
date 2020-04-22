@@ -7,7 +7,6 @@ on:
 
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ef-soknad-api:${{ github.sha }}
-  IMAGE_LATEST: docker.pkg.github.com/${{ github.repository }}/familie-ef-soknad-api:latest
 
 jobs:
   build:
