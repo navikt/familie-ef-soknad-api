@@ -39,13 +39,13 @@ jobs:
       - name: Login to Github Package Registry
         env:
           DOCKER_USERNAME: x-access-token
-          DOCKER_PASSWORD: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          DOCKER_PASSWORD: ${{ secrets.NAIS_DEPLOY_APIKEY }}
         run: |
           echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin docker.pkg.github.com
       - name: Push Docker image
         run: "docker push $(cat .docker_image):$(cat .docker_tag)"
       - name: Deploy til dev-sbs
-        uses: navikt/deployment-cli/action@b60ef91
+        uses: nais/deploy/actions/deploy@v1
         env:
           GITHUB_TOKEN: ${{ secrets.NAIS_DEPLOY_APIKEY }}
         with:
