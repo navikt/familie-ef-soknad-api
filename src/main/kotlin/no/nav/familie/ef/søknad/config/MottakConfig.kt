@@ -7,7 +7,7 @@ import java.net.URI
 
 @ConfigurationProperties("familie.ef.mottak")
 @ConstructorBinding
-internal data class MottakConfig(val uri: URI,
+data class MottakConfig(val uri: URI,
                                  val passord: String) {
 
     internal val sendInnUri = UriComponentsBuilder.fromUri(uri).path(PATH_SEND_INN).build().toUri()
