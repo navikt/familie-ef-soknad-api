@@ -4,9 +4,9 @@ import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
+import no.nav.familie.ef.søknad.service.OppslagService
 import no.nav.familie.ef.søknad.service.SkjemaService
 import no.nav.familie.ef.søknad.util.InnloggingUtils
-import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
@@ -19,16 +19,16 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/registrerarbeid"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
-class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService, val featureToggleService: FeatureToggleService) {
+class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService, val featureToggleService: FeatureToggleService,  private val oppslagService: OppslagService) {
 
     @PostMapping
     @Protected
     fun sendRegistrerArbeidsAktivitet(@RequestBody arbeidssøker: Arbeidssøker): Kvittering {
-        val valueAsString = objectMapper.writeValueAsString(arbeidssøker)
-        val arbeidssøker: Arbeidssøker = objectMapper.readValue(valueAsString, Arbeidssøker::class.java);
-        val fnrFraToken = InnloggingUtils.hentFnrFraToken()
+
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.registrerarbeidssoker") {
-            skjemaService.sendInn(arbeidssøker, fnrFraToken)
+            val fnrFraToken = InnloggingUtils.hentFnrFraToken()
+            val forkortetNavn = oppslagService.hentSøkerinfo().søker.forkortetNavn
+            skjemaService.sendInn(arbeidssøker, fnrFraToken, forkortetNavn)
         }
     }
 }

@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class SkjemaService(val søknadClient: SøknadClient, private val skjemaMapper: SkjemaMapper)  {
+class SkjemaService(val søknadClient: SøknadClient)  {
 
-    fun sendInn(arbeidssøker: Arbeidssøker, fnr: String): Kvittering {
-        val søknadDto = skjemaMapper.mapTilKontrakt(arbeidssøker, fnr)
+    fun sendInn(arbeidssøker: Arbeidssøker,
+                fnr: String,
+                navn: String): Kvittering {
+        val søknadDto = SkjemaMapper.mapTilKontrakt(arbeidssøker, fnr, navn)
         val kvittering = søknadClient.sendInnArbeidsRegistreringsskjema(søknadDto)
         return KvitteringMapper.mapTilEkstern(kvittering);
 
