@@ -10,6 +10,8 @@ http://localhost:8091/familie/alene-med-barn/soknad-api/local/cookie
 With redirect:
 http://localhost:8091/familie/alene-med-barn/soknad-api/local/cookie?redirect=/api/ping
 
+PS. Mapping av fødselsnummer til kontrakt krever gyldig fødselsnummer: Logg inn med 
+http://localhost:8091/local/cookie?subject=[gyldigFødselsnummer] dersom du skal teste noe som krever at mapping skal fungere.   
 
 ### Swagger api kall med autentisering: 
 http://localhost:8091/familie/alene-med-barn/soknad-api/swagger-ui.html
