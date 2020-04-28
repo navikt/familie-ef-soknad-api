@@ -10,8 +10,9 @@ import org.springframework.web.client.RestOperations
 import java.net.URI
 
 
-@Service class SøknadClient(private val config: MottakConfig,
-                            operations: RestOperations) : AbstractPingableRestClient(operations, "søknad.innsending") {
+@Service
+class SøknadClient(private val config: MottakConfig,
+                   operations: RestOperations) : AbstractPingableRestClient(operations, "søknad.innsending") {
 
     override val pingUri: URI = config.pingUri
 
