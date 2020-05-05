@@ -27,14 +27,14 @@ internal class SkjemaMapperTest {
     fun `Map til kontrakt fungerer når alle verdier er ok `() {
         val forventetFnr = "14108921464" // gyldig, syntetisk fnr
         val kontrakt = SkjemaMapper.mapTilKontrakt(arbeidssøker, forventetFnr, "Innsenders navn")
-        Assertions.assertThat(kontrakt.fødselsnummer.verdi.verdi).isEqualTo(forventetFnr)
+        Assertions.assertThat(kontrakt.personaliaArbeidssøker.verdi.fødselsnummer.verdi.verdi).isEqualTo(forventetFnr)
     }
 
     @Test
     fun `Navn blir mappet`() {
         val forventetNavn = "Innsenders navn"
         val kontrakt = SkjemaMapper.mapTilKontrakt(arbeidssøker, "14108921464", forventetNavn)
-        Assertions.assertThat(kontrakt.navn.verdi).isEqualTo(forventetNavn)
+        Assertions.assertThat(kontrakt.personaliaArbeidssøker.verdi.navn.verdi).isEqualTo(forventetNavn)
     }
 
     @Test

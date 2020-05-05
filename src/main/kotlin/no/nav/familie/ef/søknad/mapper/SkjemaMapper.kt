@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
+import no.nav.familie.kontrakter.ef.søknad.PersonaliaArbeidssøker
 import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Arbeidssøker as ArbeidssøkerKontrakt
@@ -12,10 +13,13 @@ object SkjemaMapper {
                        fnr: String,
                        navn: String): SkjemaForArbeidssøker {
         val arbeidssøkerKontrakt = arbeidssøker.toArbeidssøkerKontrakt()
-        return SkjemaForArbeidssøker(fødselsnummer = Søknadsfelt("Fødselsnummer",
-                                                                 Fødselsnummer(fnr)),
-                                     arbeidssøker = arbeidssøkerKontrakt,
-                                     navn = Søknadsfelt("Navn", navn)
+        return SkjemaForArbeidssøker(
+                arbeidssøker = arbeidssøkerKontrakt,
+                personaliaArbeidssøker = Søknadsfelt("Om søker",
+                                                     PersonaliaArbeidssøker(navn = Søknadsfelt("Navn", navn),
+                                                                            fødselsnummer = Søknadsfelt("Fødselsnummer",
+                                                                                                        Fødselsnummer(fnr)))
+                )
         )
     }
 }
