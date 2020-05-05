@@ -1,19 +1,20 @@
 package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker
-import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
-import no.nav.familie.kontrakter.ef.søknad.PersonaliaArbeidssøker
-import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
-import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import no.nav.familie.kontrakter.ef.søknad.*
+import java.time.LocalDateTime
 import no.nav.familie.kontrakter.ef.søknad.Arbeidssøker as ArbeidssøkerKontrakt
 
 object SkjemaMapper {
 
     fun mapTilKontrakt(arbeidssøker: Arbeidssøker,
                        fnr: String,
-                       navn: String): SkjemaForArbeidssøker {
+                       navn: String,
+                       innsendingMottatt: LocalDateTime): SkjemaForArbeidssøker {
         val arbeidssøkerKontrakt = arbeidssøker.toArbeidssøkerKontrakt()
         return SkjemaForArbeidssøker(
+                innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
+                                                  Innsendingsdetaljer(Søknadsfelt("Dato mottatt", innsendingMottatt))),
                 arbeidssøker = arbeidssøkerKontrakt,
                 personaliaArbeidssøker = Søknadsfelt("Om søker",
                                                      PersonaliaArbeidssøker(navn = Søknadsfelt("Navn", navn),
@@ -22,6 +23,8 @@ object SkjemaMapper {
                 )
         )
     }
+
+
 }
 
 private fun Arbeidssøker.toArbeidssøkerKontrakt(): Søknadsfelt<ArbeidssøkerKontrakt> {

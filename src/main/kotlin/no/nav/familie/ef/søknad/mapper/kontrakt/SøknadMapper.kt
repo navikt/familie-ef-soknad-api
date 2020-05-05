@@ -6,15 +6,19 @@ import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.*
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.Month
 
 @Component
 class SøknadMapper(private val dokumentServiceService: DokumentService) {
 
-    fun mapTilIntern(frontendDto: SøknadDto): Søknad {
+    fun mapTilIntern(frontendDto: SøknadDto,
+                     innsendingMottatt: LocalDateTime): Søknad {
         val dokumenter: Map<String, Dokument> = hentDokumenter(frontendDto.vedleggsliste)
 
         return Søknad(
+                innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
+                                                  Innsendingsdetaljer(Søknadsfelt("Dato mottatt", innsendingMottatt))),
                 personalia = Søknadsfelt("Søker", PersonaliaMapper.mapPersonalia(frontendDto)),
                 sivilstandsdetaljer = Søknadsfelt("Detaljer om sivilstand",
                                                   SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto, dokumenter)),
@@ -34,7 +38,6 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
     }
 
     private fun stønadsstart() = Stønadsstart(Søknadsfelt("Fra måned", Month.AUGUST), Søknadsfelt("Fra år", 2018))
-
 
 
     @Suppress("LongLine")

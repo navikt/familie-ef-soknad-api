@@ -1,3 +1,5 @@
 package no.nav.familie.ef.søknad.api.dto
 
-data class Kvittering(val text: String)
+import java.time.LocalDateTime
+
+data class Kvittering(val text: String, val motattDato: LocalDateTime?)

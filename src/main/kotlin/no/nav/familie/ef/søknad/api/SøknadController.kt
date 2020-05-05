@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDateTime
 
 
 @RestController
@@ -24,19 +25,16 @@ class SøknadController(val søknadService: SøknadService, val featureToggleSer
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-//    @ExceptionHandler(ConstraintViolationException::class)
-//    fun handleRestClientResponseException(e: ConstraintViolationException): Ressurs<ConstraintViolationException> {
-//        return Ressurs.failure(e.message, e)
-//    }
-
     @PostMapping
     fun sendInn(@RequestBody @Validated søknad: SøknadDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
             try {
-                søknadService.sendInn(søknad)
+                val innsendingMottatt = LocalDateTime.now()
+                søknadService.sendInn(søknad, innsendingMottatt)
+                Kvittering("ok", motattDato = innsendingMottatt)
             } catch (e: Exception) {
                 logger.error("Feil - får ikke sendt til mottak ", e)
-                Kvittering("Feil! Søknad ikke sendt inn. ")
+                Kvittering("Feil! Søknad ikke sendt inn. ", null)
             }
         }
     }
