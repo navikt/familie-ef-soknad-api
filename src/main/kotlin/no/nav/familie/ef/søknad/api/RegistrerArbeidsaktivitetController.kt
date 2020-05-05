@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDateTime
 
 
 @RestController
@@ -28,7 +29,9 @@ class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService, val 
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.registrerarbeidssoker") {
             val fnrFraToken = InnloggingUtils.hentFnrFraToken()
             val forkortetNavn = oppslagService.hentSøkerinfo().søker.forkortetNavn
-            skjemaService.sendInn(arbeidssøker, fnrFraToken, forkortetNavn)
+            val innsendingMottatt = LocalDateTime.now()
+            skjemaService.sendInn(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
+            Kvittering("Innsending mottatt: $innsendingMottatt")
         }
     }
 }

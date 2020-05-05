@@ -6,12 +6,14 @@ import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadMapper
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 internal class SøknadServiceImpl(private val søknadClient: SøknadClient, private val mapper: SøknadMapper) : SøknadService {
 
-    override fun sendInn(søknad: SøknadDto): Kvittering {
-        val søknadDto = mapper.mapTilIntern(søknad)
+    override fun sendInn(søknad: SøknadDto,
+                         innsendingMottatt: LocalDateTime): Kvittering {
+        val søknadDto = mapper.mapTilIntern(søknad, innsendingMottatt)
         val kvittering = søknadClient.sendInn(søknadDto)
         return KvitteringMapper.mapTilEkstern(kvittering)
 

@@ -6,6 +6,7 @@ import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.mapper.SkjemaMapper
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 
 @Service
@@ -13,8 +14,9 @@ class SkjemaService(val søknadClient: SøknadClient)  {
 
     fun sendInn(arbeidssøker: Arbeidssøker,
                 fnr: String,
-                navn: String): Kvittering {
-        val søknadDto = SkjemaMapper.mapTilKontrakt(arbeidssøker, fnr, navn)
+                navn: String,
+                innsendingMottatt: LocalDateTime): Kvittering {
+        val søknadDto = SkjemaMapper.mapTilKontrakt(arbeidssøker, fnr, navn, innsendingMottatt)
         val kvittering = søknadClient.sendInnArbeidsRegistreringsskjema(søknadDto)
         return KvitteringMapper.mapTilEkstern(kvittering);
 
