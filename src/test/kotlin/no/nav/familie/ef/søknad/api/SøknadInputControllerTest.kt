@@ -28,7 +28,7 @@ internal class SøknadInputControllerTest {
 
         val kvitteringDto = søknadController.sendInn(søknad)
 
-        assertThat(kvitteringDto.motattDato).isNotNull()
+        assertThat(kvitteringDto.mottattDato).isNotNull()
     }
 
 }
