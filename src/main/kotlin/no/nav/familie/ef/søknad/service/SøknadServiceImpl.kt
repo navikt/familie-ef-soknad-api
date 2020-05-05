@@ -15,7 +15,7 @@ internal class SøknadServiceImpl(private val søknadClient: SøknadClient, priv
                          innsendingMottatt: LocalDateTime): Kvittering {
         val søknadDto = mapper.mapTilIntern(søknad, innsendingMottatt)
         val kvittering = søknadClient.sendInn(søknadDto)
-        return KvitteringMapper.mapTilEkstern(kvittering)
+        return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
 
     }
 }

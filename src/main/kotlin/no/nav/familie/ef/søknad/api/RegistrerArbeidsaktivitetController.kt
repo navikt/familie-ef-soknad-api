@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
+import no.nav.familie.ef.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.service.OppslagService
 import no.nav.familie.ef.søknad.service.SkjemaService
 import no.nav.familie.ef.søknad.util.InnloggingUtils
@@ -30,8 +31,8 @@ class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService, val 
             val fnrFraToken = InnloggingUtils.hentFnrFraToken()
             val forkortetNavn = oppslagService.hentSøkerinfo().søker.forkortetNavn
             val innsendingMottatt = LocalDateTime.now()
-            skjemaService.sendInn(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
-            Kvittering("Innsending mottatt: $innsendingMottatt")
+            val kvittering = skjemaService.sendInn(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
+            KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
         }
     }
 }

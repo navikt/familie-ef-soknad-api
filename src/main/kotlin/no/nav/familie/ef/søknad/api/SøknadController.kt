@@ -31,10 +31,10 @@ class SøknadController(val søknadService: SøknadService, val featureToggleSer
             try {
                 val innsendingMottatt = LocalDateTime.now()
                 søknadService.sendInn(søknad, innsendingMottatt)
-                Kvittering("Innsending mottatt: $innsendingMottatt")
+                Kvittering("ok", motattDato = innsendingMottatt)
             } catch (e: Exception) {
                 logger.error("Feil - får ikke sendt til mottak ", e)
-                Kvittering("Feil! Søknad ikke sendt inn. ")
+                Kvittering("Feil! Søknad ikke sendt inn. ", null)
             }
         }
     }
