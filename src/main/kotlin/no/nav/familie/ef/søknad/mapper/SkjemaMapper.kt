@@ -16,7 +16,7 @@ object SkjemaMapper {
                 innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
                                                   Innsendingsdetaljer(Søknadsfelt("Dato mottatt", innsendingMottatt))),
                 arbeidssøker = arbeidssøkerKontrakt,
-                personaliaArbeidssøker = Søknadsfelt("Om søker",
+                personaliaArbeidssøker = Søknadsfelt("Skjema 15-08.01",
                                                      PersonaliaArbeidssøker(navn = Søknadsfelt("Navn", navn),
                                                                             fødselsnummer = Søknadsfelt("Fødselsnummer",
                                                                                                         Fødselsnummer(fnr)))
