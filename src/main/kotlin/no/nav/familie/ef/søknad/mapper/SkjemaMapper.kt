@@ -16,7 +16,7 @@ object SkjemaMapper {
                 innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
                                                   Innsendingsdetaljer(Søknadsfelt("Dato mottatt", innsendingMottatt))),
                 arbeidssøker = arbeidssøkerKontrakt,
-                personaliaArbeidssøker = Søknadsfelt("Skjema 15-08.01",
+                personaliaArbeidssøker = Søknadsfelt("NAV 15-08.01",
                                                      PersonaliaArbeidssøker(navn = Søknadsfelt("Navn", navn),
                                                                             fødselsnummer = Søknadsfelt("Fødselsnummer",
                                                                                                         Fødselsnummer(fnr)))
@@ -28,7 +28,7 @@ object SkjemaMapper {
 }
 
 private fun Arbeidssøker.toArbeidssøkerKontrakt(): Søknadsfelt<ArbeidssøkerKontrakt> {
-    return Søknadsfelt("Arbeidssøker",
+    return Søknadsfelt("Enslig mor og far som er arbeidssøker",
                        ArbeidssøkerKontrakt(ønskerDuMinst50ProsentStilling = Søknadsfelt(ønskerSøker50ProsentStilling.label,
                                                                                          ønskerSøker50ProsentStilling.verdi),
                                             hvorØnskerDuArbeid = Søknadsfelt(hvorØnskerSøkerArbeid.label,
