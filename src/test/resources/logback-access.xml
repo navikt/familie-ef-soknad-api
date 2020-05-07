@@ -1,0 +1,8 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{ISO8601} Access-log %h %l %u "%r" %s %b "%i{Referer}" "%i{User-Agent}"</pattern>
+        </encoder>
+    </appender>
+    <appender-ref ref="CONSOLE" />
+</configuration>
