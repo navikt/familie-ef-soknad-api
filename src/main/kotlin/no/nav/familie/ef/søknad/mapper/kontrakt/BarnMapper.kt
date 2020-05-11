@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn
+import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
 import java.time.LocalDate
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
@@ -19,9 +20,9 @@ object BarnMapper {
     fun mapFolkeregistrerteBarn(barn: List<Barn>): List<RegistrertBarn> {
         return barn.filterNot { falseOrNull(it.lagtTil) }
                 .map {
-                    RegistrertBarn(navn = Søknadsfelt(it.navn.label, it.navn.verdi),
-                                   fødselsnummer = Søknadsfelt(it.fnr.label, Fødselsnummer(it.fnr.verdi)),
-                                   harSammeAdresse = Søknadsfelt(it.harSammeAdresse.label, it.harSammeAdresse.verdi),
+                    RegistrertBarn(navn = it.navn.tilSøknadsfelt(),
+                                   fødselsnummer = it.fnr.tilSøknadsfelt(::Fødselsnummer),
+                                   harSammeAdresse = it.harSammeAdresse.tilSøknadsfelt(),
                                    annenForelder = mapAnnenForelder(it.forelder),
                                    samvær = mapSamvær(it.forelder)
                     )
@@ -31,12 +32,12 @@ object BarnMapper {
     fun mapNyttBarn(barn: List<Barn>): List<NyttBarn> {
         return barn.filter { falseOrNull(it.lagtTil) }
                 .map {
-                    NyttBarn(navn = Søknadsfelt(it.navn.label, it.navn.verdi),
-                             fødselsnummer = Søknadsfelt(it.fnr.label, it.fnr.verdi),
-                             erBarnetFødt = Søknadsfelt(it.født.label, it.født.verdi),
+                    NyttBarn(navn = it.navn.tilSøknadsfelt(),
+                             fødselsnummer = it.fnr.tilSøknadsfelt(),
+                             erBarnetFødt = it.født.tilSøknadsfelt(),
                              fødselTermindato = Søknadsfelt(it.fødselsdato.label, LocalDate.parse(it.fødselsdato.verdi)), //TODO
                             //terminbekreftelse =
-                             skalBarnetBoHosSøker = Søknadsfelt(it.skalBarnBoHosDeg.label, it.skalBarnBoHosDeg.verdi),
+                             skalBarnetBoHosSøker = it.skalBarnBoHosDeg.tilSøknadsfelt(),
                              annenForelder = mapAnnenForelder(it.forelder),
                              samvær = mapSamvær(it.forelder)
                     )
@@ -47,18 +48,11 @@ object BarnMapper {
             Søknadsfelt("Barnets andre forelder", AnnenForelder(
                     //kanIkkeOppgiAnnenForelderFar = forelder. //far?
                     //ikkeOppgittAnnenForelderBegrunnelse = forelder.begru
-                    bosattNorge = forelder.borINorge?.let {
-                        Søknadsfelt(it.label, it.verdi)
-                    },
+                    bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                     person = Søknadsfelt("Persondata", PersonMinimum(
-                            fødselsnummer = forelder.personnr
-                                    ?.let {
-                                        Søknadsfelt(it.label, Fødselsnummer(it.verdi))
-                                    },
-                            fødselsdato = forelder.fødselsdato?.let {
-                                Søknadsfelt(it.label, it.verdi)
-                            },
-                            navn = forelder.navn.let { Søknadsfelt(it.label, it.verdi) }
+                            fødselsnummer = forelder.personnr?.tilSøknadsfelt(::Fødselsnummer),
+                            fødselsdato = forelder.fødselsdato?.tilSøknadsfelt(),
+                            navn = forelder.navn.tilSøknadsfelt()
                     ))
             ))
 
@@ -66,28 +60,18 @@ object BarnMapper {
             spørsmålAvtaleOmDeltBosted = Søknadsfelt(forelder.avtaleOmDeltBosted.label,
                                                      forelder.avtaleOmDeltBosted.verdi),
             avtaleOmDeltBosted = dokumentfelt("Avtale om delt bosted for barna"), //TODO vedlegg
-            skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.let {
-                Søknadsfelt(it.label, it.verdi)
-            },
-            harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.let {
-                Søknadsfelt(it.label, it.verdi)
-            },
-            samværsavtale = dokumentfelt("Avtale om samvær"),//TODO vedlegg
-            hvordanPraktiseresSamværet = forelder.hvordanPraktiseresSamværet?.let {
-                Søknadsfelt(it.label, it.verdi)
-            },
+            skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
+            harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
+            samværsavtale = dokumentfelt("Avtale om samvær"), //TODO vedlegg
+            hvordanPraktiseresSamværet = forelder.hvordanPraktiseresSamværet?.tilSøknadsfelt(),
             borAnnenForelderISammeHus = forelder.borISammeHus?.let {
-                Søknadsfelt(it.label, it.verdi == "ja") // TODO gjøres om til String i kontrakter
+                Søknadsfelt(it.label, it.verdi == "ja")  // TODO gjøres om til String i kontrakter
             },
-            harDereTidligereBoddSammen = forelder.boddSammenFør?.let { Søknadsfelt(it.label, it.verdi) },
-            nårFlyttetDereFraHverandre = forelder.flyttetFra?.let {
-                Søknadsfelt(it.label, it.verdi)
-            },
+            harDereTidligereBoddSammen = forelder.boddSammenFør?.tilSøknadsfelt(),
+            nårFlyttetDereFraHverandre = forelder.flyttetFra?.tilSøknadsfelt(),
             erklæringOmSamlivsbrudd = dokumentfelt(
                     "Erklæring om samlivsbrudd"), //TODO vedlegg
-            hvorMyeErDuSammenMedAnnenForelder = forelder.hvorMyeSammen?.let {
-                Søknadsfelt(it.label, it.verdi)
-            },
+            hvorMyeErDuSammenMedAnnenForelder = forelder.hvorMyeSammen?.tilSøknadsfelt(),
             beskrivSamværUtenBarn = null // Dekkes denne av hvordanPraktiseresSamværet ? Fjerne fra kontrakt?
     ))
 
