@@ -9,9 +9,9 @@ data class Barn(val alder: TekstFelt ,
                 val lagtTil: Boolean? = false,
                 val navn: TekstFelt ,
                 val personnummer: TekstFelt? = null,
-                val født: BooleanFelt? = null,
-                val skalBarnBoHosDeg: BooleanFelt? = null,
-                val forelder: AnnenForelder?)
+                val født: BooleanFelt,
+                val skalBarnBoHosDeg: BooleanFelt,
+                val forelder: AnnenForelder)
 
 //IBARN
 //id?: string;
@@ -27,12 +27,12 @@ data class Barn(val alder: TekstFelt ,
 //forelder?: IForelder;
 
 data class AnnenForelder (
-    val    navn: TekstFelt?,
+    val    navn: TekstFelt,
     val    skalBarnBoHosDeg: TekstFelt?,
     val    fødselsdato: DatoFelt?,
     val    personnr: TekstFelt?,
     val    borINorge: BooleanFelt?,
-    val    avtaleOmDeltBosted: BooleanFelt?,
+    val    avtaleOmDeltBosted: BooleanFelt,
     val    harAnnenForelderSamværMedBarn: TekstFelt?,
     val    harDereSkriftligSamværsavtale: TekstFelt?,
     val    hvordanPraktiseresSamværet: TekstFelt?,
