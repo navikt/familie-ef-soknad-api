@@ -49,6 +49,10 @@
           "verdi": true
         },
         "forelder": {
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Kan ikke oppgi annen forelder",
+            "verdi": false
+          },
           "navn": {
             "label": "halla",
             "verdi": "Ola N"
@@ -88,6 +92,10 @@
             "svarid": "nei",
             "label": "Har den andre forelderen samvær med [0]?",
             "verdi": "Nei"
+          },
+          "beskrivSamværUtenBarn": {
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Vi møtes nå og da, gjerne for en tur i skogen eller et glass vin, hyggelig det."
           }
         }
       },
@@ -129,6 +137,17 @@
         },
         "id": "16405e7a-3104-4cf7-bc53-3612ce99c5ee",
         "forelder": {
+
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Kan ikke oppgi annen forelder",
+            "verdi": true
+          },
+
+          "ikkeOppgittAnnenForelderBegrunnelse": {
+            "label": "Kan ikke oppgi annen forelder",
+            "verdi": "Ingen kommentar"
+          },
+
           "navn": {
             "label": "halla",
             "verdi": "Ola N"
