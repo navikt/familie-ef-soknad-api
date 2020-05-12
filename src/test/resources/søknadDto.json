@@ -47,6 +47,48 @@
         "født": {
           "label": "Er barnet født?",
           "verdi": true
+        },
+        "forelder": {
+          "navn": {
+            "label": "halla",
+            "verdi": "Ola N"
+          },
+          "personnr": {
+            "label": "Personnr",
+            "verdi": "01056638934"
+          },
+          "borINorge": {
+            "spørsmålid": "borINorge",
+            "svarid": "JA",
+            "label": "Bor [0]s andre forelder i Norge?",
+            "verdi": true
+          },
+          "borISammeHus": {
+            "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
+            "verdi": "Nei"
+          },
+          "boddSammenFør": {
+            "spørsmålid": "boddSammenFør",
+            "svarid": "NEI",
+            "label": "Har du bodd sammen med den andre forelderen til [0] før?",
+            "verdi": false
+          },
+          "hvorMyeSammen": {
+            "label": "Hvor mye er du sammen med den andre forelderen til Solveig?",
+            "verdi": "Vi møtes ikke"
+          },
+          "avtaleOmDeltBosted": {
+            "spørsmålid": "avtaleOmDeltBosted",
+            "svarid": "NEI",
+            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
+            "verdi": false
+          },
+          "harAnnenForelderSamværMedBarn": {
+            "spørsmålid": "harAnnenForelderSamværMedBarn",
+            "svarid": "nei",
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Nei"
+          }
         }
       },
       {
@@ -68,7 +110,7 @@
         },
         "fødselsdato": {
           "label": "Fødselsdato",
-          "verdi": "22.04.2020"
+          "verdi": "2020-04-22"
         },
         "harSammeAdresse": {
           "label": "Er barnet født?",
@@ -81,6 +123,10 @@
           "verdi": true
         },
         "lagtTil": true,
+        "skalBarnBoHosDeg": {
+          "label": "skalBarnetBoHosSøker?",
+          "verdi": true
+        },
         "id": "16405e7a-3104-4cf7-bc53-3612ce99c5ee",
         "forelder": {
           "navn": {
@@ -89,7 +135,7 @@
           },
           "personnr": {
             "label": "Personnr",
-            "verdi": "123456123456"
+            "verdi": "01056638934"
           },
           "borINorge": {
             "spørsmålid": "borINorge",

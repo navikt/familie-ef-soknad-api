@@ -10,7 +10,7 @@ data class Barn(val alder: TekstFelt ,
                 val navn: TekstFelt ,
                 val personnummer: TekstFelt? = null,
                 val født: BooleanFelt,
-                val skalBarnBoHosDeg: BooleanFelt,
+                val skalBarnBoHosDeg: BooleanFelt?=  null,
                 val forelder: AnnenForelder)
 
 //IBARN

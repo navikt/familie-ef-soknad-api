@@ -19,27 +19,27 @@ object BarnMapper {
 
     fun mapFolkeregistrerteBarn(barn: List<Barn>): List<RegistrertBarn> {
         return barn.filterNot { falseOrNull(it.lagtTil) }
-                .map {
-                    RegistrertBarn(navn = it.navn.tilSøknadsfelt(),
-                                   fødselsnummer = it.fnr.tilSøknadsfelt(::Fødselsnummer),
-                                   harSammeAdresse = it.harSammeAdresse.tilSøknadsfelt(),
-                                   annenForelder = mapAnnenForelder(it.forelder),
-                                   samvær = mapSamvær(it.forelder)
+                .map {barn ->
+                    RegistrertBarn(navn = barn.navn.tilSøknadsfelt(),
+                                   fødselsnummer = barn.fnr.tilSøknadsfelt(::Fødselsnummer),
+                                   harSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
+                                   annenForelder = mapAnnenForelder(barn.forelder),
+                                   samvær = mapSamvær(barn.forelder)
                     )
                 }
     }
 
     fun mapNyttBarn(barn: List<Barn>): List<NyttBarn> {
         return barn.filter { falseOrNull(it.lagtTil) }
-                .map {
-                    NyttBarn(navn = it.navn.tilSøknadsfelt(),
-                             fødselsnummer = it.fnr.tilSøknadsfelt(),
-                             erBarnetFødt = it.født.tilSøknadsfelt(),
-                             fødselTermindato = Søknadsfelt(it.fødselsdato.label, LocalDate.parse(it.fødselsdato.verdi)), //TODO
+                .map {barn ->
+                    NyttBarn(navn = barn.navn.tilSøknadsfelt(),
+                             fødselsnummer = barn.fnr.tilSøknadsfelt(),
+                             erBarnetFødt = barn.født.tilSøknadsfelt(),
+                             fødselTermindato = Søknadsfelt(barn.fødselsdato.label, LocalDate.parse(barn.fødselsdato.verdi)), //TODO
                             //terminbekreftelse =
-                             skalBarnetBoHosSøker = it.skalBarnBoHosDeg.tilSøknadsfelt(),
-                             annenForelder = mapAnnenForelder(it.forelder),
-                             samvær = mapSamvær(it.forelder)
+                             skalBarnetBoHosSøker = barn.skalBarnBoHosDeg?.tilSøknadsfelt() ?: error("Manglende påkrevd felt for nytt barn: skalBarnetBoHosSøker "),
+                             annenForelder = mapAnnenForelder(barn.forelder),
+                             samvær = mapSamvær(barn.forelder)
                     )
                 }
     }
