@@ -25,8 +25,9 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                 bosituasjon = Søknadsfelt("Bosituasjonen din", BosituasjonMapper.mapBosituasjon(frontendDto.bosituasjon)),
                 sivilstandsplaner = Søknadsfelt("Sivilstandsplaner",
                                                 SivilstandsplanerMapper.mapSivilstandsplaner(frontendDto.bosituasjon)),
-                folkeregisterbarn = Søknadsfelt("Barn funnet i tps/folkeregisteret", BarnMapper.mapFolkeregistrerteBarn(frontendDto.person.barn)),
-                kommendeBarn = Søknadsfelt("Barn lagt til", BarnMapper.mapNyttBarn(frontendDto.person.barn)),
+                folkeregisterbarn = Søknadsfelt("Barn funnet i tps/folkeregisteret",
+                                                BarnMapper.mapFolkeregistrerteBarn(frontendDto.person.barn, dokumenter)),
+                kommendeBarn = Søknadsfelt("Barn lagt til", BarnMapper.mapNyttBarn(frontendDto.person.barn, dokumenter)),
                 aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", AktivitetsMapper.map(frontendDto)),
                 situasjon = Søknadsfelt("Mer om situasjonen din", SituasjonsMapper.mapSituasjon(frontendDto, dokumenter)),
                 stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
@@ -37,10 +38,6 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
     }
 
     private fun stønadsstart() = Stønadsstart(Søknadsfelt("Fra måned", Month.AUGUST), Søknadsfelt("Fra år", 2018))
-
-
-
-
 
 
 }

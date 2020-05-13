@@ -1,10 +1,13 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
+import no.nav.familie.ef.søknad.mapper.dokumentMap
 import no.nav.familie.ef.søknad.mapper.falseOrNull
 import no.nav.familie.ef.søknad.mock.søknadDto
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+
+val dokumenter = dokumentMap()
 
 internal class BarnMapperTest {
 
@@ -12,8 +15,8 @@ internal class BarnMapperTest {
     private val søknadDto = søknadDto()
 
     // Når
-    private val folkeregistrerteBarn = BarnMapper.mapFolkeregistrerteBarn(søknadDto.person.barn)
-    private val nyregistrertBarn = BarnMapper.mapNyttBarn(søknadDto.person.barn)
+    private val folkeregistrerteBarn = BarnMapper.mapFolkeregistrerteBarn(søknadDto.person.barn, dokumenter)
+    private val nyregistrertBarn = BarnMapper.mapNyttBarn(søknadDto.person.barn, dokumenter)
 
     @Test
     fun `Mapping skal finne ett nytt barn`() {
@@ -38,12 +41,6 @@ internal class BarnMapperTest {
     @Test
     fun `Folkeregistrert barn har annenForelder`() {
         Assertions.assertThat(folkeregistrerteBarn.first().annenForelder).isNotNull
-    }
-
-    @Test
-    fun `Folkeregistrert barn har annenForelder med riktig addresse`() {
-        val annenForelder = folkeregistrerteBarn.first().annenForelder?.verdi
-        Assertions.assertThat(annenForelder?.adresse).isEqualTo(null)
     }
 
     @Test
@@ -85,7 +82,7 @@ internal class BarnMapperTest {
     fun `Nyregistrert barn uten skalBarnBoHosDeg - skalBarnetBoHosSøker skal kaste exception `() {
         val barn = søknadDto.person.barn.filter { falseOrNull(it.lagtTil) }.first()
         val barnUtenBoHosDegVariabel = barn.copy(skalBarnBoHosDeg = null)
-        assertThrows<IllegalStateException> { BarnMapper.mapNyttBarn(listOf(barnUtenBoHosDegVariabel)) }
+        assertThrows<IllegalStateException> { BarnMapper.mapNyttBarn(listOf(barnUtenBoHosDegVariabel), dokumenter) }
     }
 
 }
