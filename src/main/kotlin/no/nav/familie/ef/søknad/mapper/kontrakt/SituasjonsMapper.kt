@@ -1,19 +1,12 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Situasjon
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 
 object SituasjonsMapper {
-
-
-    private fun dokumentfelt(dokumentNavn: String, dokumenter: Map<String, Dokument>): Søknadsfelt<Dokument>? {
-        val dokument = dokumenter[dokumentNavn]
-        return dokument?.let {
-            Søknadsfelt(dokument.tittel, dokument)
-        }
-    }
 
     fun mapSituasjon(frontendDto: SøknadDto, dokumenter: Map<String, Dokument>): Situasjon {
         val merOmDinSituasjon = frontendDto.merOmDinSituasjon

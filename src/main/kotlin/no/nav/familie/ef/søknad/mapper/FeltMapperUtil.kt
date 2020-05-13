@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import java.time.LocalDate
 
@@ -14,3 +15,10 @@ fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsf
 fun DatoFelt.tilSøknadsfelt(): Søknadsfelt<LocalDate> = Søknadsfelt(this.label, this.verdi)
 
 fun falseOrNull(it: Boolean?) = it ?: false
+
+fun dokumentfelt(dokumentNavn: String, dokumenter: Map<String, Dokument>): Søknadsfelt<Dokument>? {
+    val dokument = dokumenter[dokumentNavn]
+    return dokument?.let {
+        Søknadsfelt(dokument.tittel, dokument)
+    }
+}

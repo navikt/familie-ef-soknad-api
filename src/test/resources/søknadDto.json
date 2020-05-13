@@ -77,6 +77,10 @@
             "label": "Har du bodd sammen med den andre forelderen til [0] før?",
             "verdi": false
           },
+          "flyttetFra": {
+            "label": "Flyttet fra",
+            "verdi": "2000-04-22"
+          },
           "hvorMyeSammen": {
             "label": "Hvor mye er du sammen med den andre forelderen til Solveig?",
             "verdi": "Vi møtes ikke"
@@ -92,6 +96,18 @@
             "svarid": "nei",
             "label": "Har den andre forelderen samvær med [0]?",
             "verdi": "Nei"
+          },
+          "harDereSkriftligSamværsavtale": {
+            "spørsmålid": "harDereSkriftligSamværsavtale",
+            "svarid": "nei",
+            "label": "Har dere sktiflig samværsavtale?",
+            "verdi": "Nei"
+          },
+          "hvordanPraktiseresSamværet": {
+            "spørsmålid": "hvordanPraktiseresSamværet",
+            "svarid": "nei",
+            "label": "Hvordan praktiseres samværet?",
+            "verdi": "Praktiseres ikke"
           },
           "beskrivSamværUtenBarn": {
             "label": "Har den andre forelderen samvær med [0]?",

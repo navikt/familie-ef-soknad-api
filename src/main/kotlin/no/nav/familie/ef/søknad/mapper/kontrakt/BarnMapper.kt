@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn
+import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.falseOrNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
@@ -29,7 +30,8 @@ object BarnMapper {
                             fødselsnummer = barn.fnr.tilSøknadsfelt(),
                             erBarnetFødt = barn.født.tilSøknadsfelt(),
                             fødselTermindato = barn.fødselsdato.tilSøknadsfelt(),
-                            terminbekreftelse = dokumentfelt("Terminbekreftelse"), //TODO vedlegg har ikke snakket om denne
+                            terminbekreftelse = dokumentfelt("Terminbekreftelse",
+                                                             dokumentMap), //TODO vedlegg har ikke snakket om denne
                             skalBarnetBoHosSøker = barn.skalBarnBoHosDeg?.tilSøknadsfelt()
                                                    ?: error("Manglende påkrevd felt for nytt barnliste: skalBarnetBoHosSøker "),
                             annenForelder = mapAnnenForelder(barn.forelder),
@@ -55,26 +57,17 @@ object BarnMapper {
                           dokumentMap: Map<String, Dokument>): Søknadsfelt<Samvær> = Søknadsfelt("samvær", Samvær(
             spørsmålAvtaleOmDeltBosted = Søknadsfelt(forelder.avtaleOmDeltBosted.label,
                                                      forelder.avtaleOmDeltBosted.verdi),
-            avtaleOmDeltBosted = dokumentfelt("Avtale om delt bosted for barna"), //TODO vedlegg
+            avtaleOmDeltBosted = dokumentfelt("Avtale om delt bosted for barna", dokumentMap), //TODO vedlegg
             skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
             harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
-            samværsavtale = dokumentfelt("Avtale om samvær"), //TODO vedlegg
+            samværsavtale = dokumentfelt("Avtale om samvær", dokumentMap), //TODO vedlegg
             borAnnenForelderISammeHus = forelder.borISammeHus?.tilSøknadsfelt(),
             harDereTidligereBoddSammen = forelder.boddSammenFør?.tilSøknadsfelt(),
             nårFlyttetDereFraHverandre = forelder.flyttetFra?.tilSøknadsfelt(),
-            erklæringOmSamlivsbrudd = dokumentfelt("Erklæring om samlivsbrudd"), //TODO vedlegg
+            erklæringOmSamlivsbrudd = dokumentfelt("Erklæring om samlivsbrudd", dokumentMap), //TODO vedlegg
             hvorMyeErDuSammenMedAnnenForelder = forelder.hvorMyeSammen?.tilSøknadsfelt(),
             hvordanPraktiseresSamværet = forelder.hvordanPraktiseresSamværet?.tilSøknadsfelt(),
             beskrivSamværUtenBarn = forelder.beskrivSamværUtenBarn?.tilSøknadsfelt()
     ))
-
-    private fun hentDokument(dokumenter: Map<String, Dokument>, dokumentnavn: String): Søknadsfelt<Dokument>? {
-        val dokument = dokumenter[dokumentnavn]
-        return dokument?.let {
-            Søknadsfelt(dokument.tittel, dokument)
-        }
-    }
-
-    fun dokumentfelt(tittel: String) = Søknadsfelt("Dokument", Dokument(byteArrayOf(12), tittel))
 
 }

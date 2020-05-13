@@ -3,8 +3,10 @@ package no.nav.familie.ef.søknad.mapper
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -37,4 +39,14 @@ internal class FeltMapperUtilKtTest {
         assertEquals(Søknadsfelt("label", LocalDate.MAX), felt)
     }
 
+    @Test
+    internal fun `hent dokumentfelt`() {
+        val bytes = byteArrayOf(12)
+        val dokumenter = mapOf("finnes" to Dokument(bytes, "Tittel på dok"))
+        val dokumentSomFinnes = dokumentfelt("finnes", dokumenter)!!
+        assertThat(dokumentSomFinnes.verdi.tittel).isEqualTo("Tittel på dok")
+        assertThat(dokumentSomFinnes.verdi.bytes).isEqualTo(bytes)
+
+        assertThat(dokumentfelt("finnesIkke", dokumenter)).isNull()
+    }
 }
