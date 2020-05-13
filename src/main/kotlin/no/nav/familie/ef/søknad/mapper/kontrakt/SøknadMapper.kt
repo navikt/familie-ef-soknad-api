@@ -3,20 +3,21 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.VedleggFelt
 import no.nav.familie.ef.søknad.service.DokumentService
-import no.nav.familie.kontrakter.ef.søknad.Dokument
-import no.nav.familie.kontrakter.ef.søknad.Stønadsstart
-import no.nav.familie.kontrakter.ef.søknad.Søknad
-import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import no.nav.familie.kontrakter.ef.søknad.*
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 import java.time.Month
 
 @Component
 class SøknadMapper(private val dokumentServiceService: DokumentService) {
 
-    fun mapTilKontrakt(frontendDto: SøknadDto): Søknad {
+    fun mapTilIntern(frontendDto: SøknadDto,
+                     innsendingMottatt: LocalDateTime): Søknad {
         val dokumenter: Map<String, Dokument> = hentDokumenter(frontendDto.vedleggsliste)
 
         return Søknad(
+                innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
+                                                  Innsendingsdetaljer(Søknadsfelt("Dato mottatt", innsendingMottatt))),
                 personalia = Søknadsfelt("Søker", PersonaliaMapper.mapPersonalia(frontendDto)),
                 sivilstandsdetaljer = Søknadsfelt("Detaljer om sivilstand",
                                                   SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto, dokumenter)),

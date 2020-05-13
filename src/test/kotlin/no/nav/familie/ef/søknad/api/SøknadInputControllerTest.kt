@@ -10,6 +10,7 @@ import no.nav.familie.ef.søknad.mock.søknadDto
 import no.nav.familie.ef.søknad.service.SøknadService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import java.time.LocalDateTime
 
 internal class SøknadInputControllerTest {
 
@@ -19,13 +20,15 @@ internal class SøknadInputControllerTest {
     private val søknadController = SøknadController(søknadService, featureToggleService)
 
     @Test
-    fun `sendInn returnerer samme kvittering som returneres fra søknadService`() {
+    fun `sendInn returnerer kvittering riktig kvittering`() {
+
         val søknad = søknadDto().copy(person = Person(søker = søkerMedDefaultVerdier(), barn = listOf()))
-        every { søknadService.sendInn(søknad) } returns Kvittering("Mottatt søknad: $søknad")
+        every { søknadService.sendInn(søknad, any()) } returns Kvittering("Mottatt søknad: $søknad", LocalDateTime.now())
         every { featureToggleService.isEnabled(any()) } returns true
 
         val kvitteringDto = søknadController.sendInn(søknad)
 
-        assertThat(kvitteringDto.text).isEqualTo("Mottatt søknad: $søknad")
+        assertThat(kvitteringDto.mottattDato).isNotNull()
     }
+
 }

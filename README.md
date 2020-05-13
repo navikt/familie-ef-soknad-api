@@ -6,10 +6,12 @@ Vil kjøre med tps-innsyn mock TpsInnsynMockController (som bla.a muliggjør inn
 
 ## Hvordan logge inn på localhost:
 Eksempel: 
-http://localhost:8091/familie/alene-med-barn/soknad-api/local/cookie
+http://localhost:8091/local/cookie
 With redirect:
-http://localhost:8091/familie/alene-med-barn/soknad-api/local/cookie?redirect=/api/ping
+http://localhost:8091/local/cookie?redirect=/api/ping
 
+PS. Mapping av fødselsnummer til kontrakt krever gyldig fødselsnummer: Logg inn med 
+http://localhost:8091/local/cookie?subject=[gyldigFødselsnummer] dersom du skal teste noe som krever at mapping skal fungere.   
 
 ### Swagger api kall med autentisering: 
-http://localhost:8091/familie/alene-med-barn/soknad-api/swagger-ui.html
+http://localhost:8091/swagger-ui.html

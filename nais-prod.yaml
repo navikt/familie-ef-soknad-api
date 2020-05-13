@@ -7,7 +7,7 @@ metadata:
     team: teamfamilie
 
 spec:
-  image: navikt/familie-ef-soknad-api:{{version}}
+  image: {{ image }}
   port: 8000
   liveness:
     path: /familie/alene-med-barn/soknad-api/internal/status/isAlive
@@ -46,6 +46,7 @@ spec:
     enabled: true
   ingresses:
     - https://www.nav.no/familie/alene-med-barn/soknad-api
+    - https://familie-ef-soknad-api.prod-sbs.nais.io
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
