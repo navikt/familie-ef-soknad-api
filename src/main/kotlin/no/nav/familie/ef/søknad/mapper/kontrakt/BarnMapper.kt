@@ -47,7 +47,7 @@ object BarnMapper {
     private fun mapAnnenForelder(forelder: AnnenForelderDto): Søknadsfelt<AnnenForelder> =
             Søknadsfelt("Barnets andre forelder", AnnenForelder(
                     kanIkkeOppgiAnnenForelderFar = forelder.kanIkkeOppgiAnnenForelderFar.tilSøknadsfelt(), //far? // @TODO Mangler i ui - Asbjørn legger til
-                    ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.let {  it.tilSøknadsfelt() }, // @TODO Mangler i ui - Asbjørn legger til
+                    ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.tilSøknadsfelt(), // @TODO Mangler i ui - Asbjørn legger til
                     bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                     // val land = forelder.land?.tilSøknadsfelt(), - venter på kontrakt oppdatering
                     person = Søknadsfelt("Persondata", PersonMinimum(
@@ -66,16 +66,13 @@ object BarnMapper {
             skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
             harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
             samværsavtale = dokumentfelt("Avtale om samvær"), //TODO vedlegg
-            borAnnenForelderISammeHus = forelder.borISammeHus?.let {
-                Søknadsfelt(it.label, it.verdi == "ja")  // TODO gjøres om til String i kontrakter
-            },
+            borAnnenForelderISammeHus = forelder.borISammeHus?.tilSøknadsfelt(),
             harDereTidligereBoddSammen = forelder.boddSammenFør?.tilSøknadsfelt(),
             nårFlyttetDereFraHverandre = forelder.flyttetFra?.tilSøknadsfelt(),
-            erklæringOmSamlivsbrudd = dokumentfelt(
-                    "Erklæring om samlivsbrudd"), //TODO vedlegg
+            erklæringOmSamlivsbrudd = dokumentfelt("Erklæring om samlivsbrudd"), //TODO vedlegg
             hvorMyeErDuSammenMedAnnenForelder = forelder.hvorMyeSammen?.tilSøknadsfelt(),
             hvordanPraktiseresSamværet = forelder.hvordanPraktiseresSamværet?.tilSøknadsfelt(),
-            beskrivSamværUtenBarn = forelder.beskrivSamværUtenBarn?.let { it.tilSøknadsfelt() }  // @TODO Mangler i ui - Asbjørn legger til
+            beskrivSamværUtenBarn = forelder.beskrivSamværUtenBarn?.tilSøknadsfelt()  // @TODO Mangler i ui - Asbjørn legger til
     ))
 
 
