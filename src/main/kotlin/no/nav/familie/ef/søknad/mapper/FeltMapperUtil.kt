@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ListFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
@@ -13,6 +14,8 @@ fun TekstFelt.tilSøknadsfelt(): Søknadsfelt<String> = Søknadsfelt(this.label,
 fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsfelt(this.label, t.invoke(this.verdi))
 
 fun DatoFelt.tilSøknadsfelt(): Søknadsfelt<LocalDate> = Søknadsfelt(this.label, this.verdi)
+
+fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi)
 
 fun falseOrNull(it: Boolean?) = it ?: false
 

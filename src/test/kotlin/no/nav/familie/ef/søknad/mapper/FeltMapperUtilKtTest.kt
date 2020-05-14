@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ListFelt
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
@@ -37,6 +38,12 @@ internal class FeltMapperUtilKtTest {
     internal fun `DatoFelt`() {
         val felt = DatoFelt("label", LocalDate.MAX).tilSøknadsfelt()
         assertEquals(Søknadsfelt("label", LocalDate.MAX), felt)
+    }
+
+    @Test
+    internal fun `ListFelt`() {
+        val felt = ListFelt("label", listOf("a")).tilSøknadsfelt()
+        assertEquals(Søknadsfelt("label", listOf("a")), felt)
     }
 
     @Test

@@ -56,8 +56,7 @@ object BarnMapper {
 
     private fun mapSamvær(forelder: AnnenForelderDto,
                           dokumentMap: Map<String, Dokument>): Søknadsfelt<Samvær> = Søknadsfelt("samvær", Samvær(
-            spørsmålAvtaleOmDeltBosted = Søknadsfelt(forelder.avtaleOmDeltBosted.label,
-                                                     forelder.avtaleOmDeltBosted.verdi),
+            spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted.tilSøknadsfelt(),
             avtaleOmDeltBosted = dokumentfelt("Avtale om delt bosted for barna", dokumentMap), //TODO vedlegg
             skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
             harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),

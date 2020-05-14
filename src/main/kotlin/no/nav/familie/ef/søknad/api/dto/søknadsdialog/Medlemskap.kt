@@ -7,13 +7,8 @@ data class Medlemskap(
 )
 
 data class PerioderBoddIUtlandet(
-        val begrunnelse: Begrunnelse,
+        val begrunnelse: TekstFelt,
         val periode: Periode
-)
-
-data class Begrunnelse(
-        val label: String,
-        val verdi: String
 )
 
 data class Periode(

@@ -14,3 +14,6 @@ data class DatoFelt(val label: String,
 data class VedleggFelt(val dokumentId: String,
                        val navn: String,
                        val label: String)
+
+data class ListFelt<T>(val label: String,
+                    val verdi: List<T>)

@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
+import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
 import no.nav.familie.kontrakter.ef.søknad.Aktivitet
 import no.nav.familie.kontrakter.ef.søknad.Periode
@@ -10,11 +11,9 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning as UnderU
 object AktivitetsMapper {
     fun map(frontendDto: SøknadDto): Aktivitet {
         val aktivitet = frontendDto.aktivitet
-        return Aktivitet(hvordanErArbeidssituasjonen = Søknadsfelt(aktivitet.hvaErDinArbeidssituasjon.label,
-                                                                   aktivitet.hvaErDinArbeidssituasjon.verdi),
+        return Aktivitet(hvordanErArbeidssituasjonen = aktivitet.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
                          arbeidsforhold = aktivitet.arbeidsforhold?.let {
-                             Søknadsfelt("Om arbeidsforholdet ditt",
-                                         mapArbeidsforhold(aktivitet.arbeidsforhold))
+                             Søknadsfelt("Om arbeidsforholdet ditt", mapArbeidsforhold(it))
                          },
                          selvstendig = aktivitet.firma?.let { Søknadsfelt("Om firmaet du driver", mapOmFirma(it)) },
                          virksomhet = aktivitet.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it) },
@@ -28,35 +27,27 @@ object AktivitetsMapper {
     }
 
     private fun mapUnderUtdanning(underUtdanning: no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning): UnderUtdanning {
-        return UnderUtdanning(skoleUtdanningssted = Søknadsfelt(underUtdanning.skoleUtdanningssted.label,
-                                                                underUtdanning.skoleUtdanningssted.verdi),
+        return UnderUtdanning(skoleUtdanningssted = underUtdanning.skoleUtdanningssted.tilSøknadsfelt(),
                               utdanning = Søknadsfelt("Utdanning",
-                                                      Utdanning(Søknadsfelt(underUtdanning.linjeKursGrad.label,
-                                                                            underUtdanning.linjeKursGrad.verdi),
+                                                      Utdanning(underUtdanning.linjeKursGrad.tilSøknadsfelt(),
                                                                 Søknadsfelt("Når skal du være elev/student?",
                                                                             Periode(underUtdanning.periode.fra.verdi.month,
                                                                                     underUtdanning.periode.fra.verdi.year,
                                                                                     underUtdanning.periode.til.verdi.month,
                                                                                     underUtdanning.periode.til.verdi.year))
                                                       )),
-                              offentligEllerPrivat = Søknadsfelt(underUtdanning.offentligEllerPrivat.label,
-                                                                 underUtdanning.offentligEllerPrivat.verdi),
-                              hvorMyeSkalDuStudere = Søknadsfelt(underUtdanning.arbeidsmengde.label,
-                                                                 underUtdanning.arbeidsmengde.verdi.toInt()),
-                              heltidEllerDeltid = Søknadsfelt(underUtdanning.heltidEllerDeltid.label,
-                                                              underUtdanning.heltidEllerDeltid.verdi),
-                              hvaErMåletMedUtdanningen = Søknadsfelt(underUtdanning.målMedUtdanning.label,
-                                                                     underUtdanning.målMedUtdanning.verdi),
-                              utdanningEtterGrunnskolen = Søknadsfelt(underUtdanning.harTattUtdanningEtterGrunnskolen.label,
-                                                                      underUtdanning.harTattUtdanningEtterGrunnskolen.verdi),
+                              offentligEllerPrivat = underUtdanning.offentligEllerPrivat.tilSøknadsfelt(),
+                              hvorMyeSkalDuStudere = underUtdanning.arbeidsmengde.tilSøknadsfelt(String::toInt),
+                              heltidEllerDeltid = underUtdanning.heltidEllerDeltid.tilSøknadsfelt(),
+                              hvaErMåletMedUtdanningen = underUtdanning.målMedUtdanning.tilSøknadsfelt(),
+                              utdanningEtterGrunnskolen = underUtdanning.harTattUtdanningEtterGrunnskolen.tilSøknadsfelt(),
                               tidligereUtdanninger = underUtdanning.tidligereUtdanning?.let { mapTidligereUtdanning(it) }
         )
     }
 
     private fun mapTidligereUtdanning(tidligereUtdanning: List<TidligereUtdanning>): Søknadsfelt<List<Utdanning>> {
         val tidligereUtdanningList = tidligereUtdanning.map {
-            Utdanning(Søknadsfelt(it.linjeKursGrad.label,
-                                  it.linjeKursGrad.verdi),
+            Utdanning(it.linjeKursGrad.tilSøknadsfelt(),
                       Søknadsfelt("Når var du elev/student?",
                                   Periode(it.periode.fra.verdi.month,
                                           it.periode.fra.verdi.year,
@@ -68,46 +59,36 @@ object AktivitetsMapper {
 
     private fun mapArbeidssøker(arbeidssøker: ArbeidssøkerDto): Søknadsfelt<Arbeidssøker> {
         return Søknadsfelt("Når du er arbeidssøker",
-                           Arbeidssøker(registrertSomArbeidssøkerNav = Søknadsfelt(arbeidssøker.registrertSomArbeidssøkerNav.label,
-                                                                                   arbeidssøker.registrertSomArbeidssøkerNav.verdi),
-                                        villigTilÅTaImotTilbudOmArbeid = Søknadsfelt(arbeidssøker.villigTilÅTaImotTilbudOmArbeid.label,
-                                                                                     arbeidssøker.villigTilÅTaImotTilbudOmArbeid.verdi),
-                                        kanDuBegynneInnenEnUke = Søknadsfelt(arbeidssøker.kanBegynneInnenEnUke.label,
-                                                                             arbeidssøker.kanBegynneInnenEnUke.verdi),
-                                        kanDuSkaffeBarnepassInnenEnUke = Søknadsfelt(arbeidssøker.kanSkaffeBarnepassInnenEnUke.label,
-                                                                                     arbeidssøker.kanSkaffeBarnepassInnenEnUke.verdi),
-                                        hvorØnskerDuArbeid = Søknadsfelt(arbeidssøker.hvorØnskerSøkerArbeid.label,
-                                                                         arbeidssøker.hvorØnskerSøkerArbeid.verdi),
-                                        ønskerDuMinst50ProsentStilling = Søknadsfelt(arbeidssøker.ønskerSøker50ProsentStilling.label,
-                                                                                     arbeidssøker.ønskerSøker50ProsentStilling.verdi)))
+                           Arbeidssøker(
+                                   registrertSomArbeidssøkerNav = arbeidssøker.registrertSomArbeidssøkerNav.tilSøknadsfelt(),
+                                   villigTilÅTaImotTilbudOmArbeid = arbeidssøker.villigTilÅTaImotTilbudOmArbeid.tilSøknadsfelt(),
+                                   kanDuBegynneInnenEnUke = arbeidssøker.kanBegynneInnenEnUke.tilSøknadsfelt(),
+                                   kanDuSkaffeBarnepassInnenEnUke = arbeidssøker.kanSkaffeBarnepassInnenEnUke.tilSøknadsfelt(),
+                                   hvorØnskerDuArbeid = arbeidssøker.hvorØnskerSøkerArbeid.tilSøknadsfelt(),
+                                   ønskerDuMinst50ProsentStilling = arbeidssøker.ønskerSøker50ProsentStilling.tilSøknadsfelt())
+        )
     }
 
     private fun mapEtablererVirksomhet(it: TekstFelt): Søknadsfelt<Virksomhet> {
-        return Søknadsfelt("Om virksomheten du etablerer",
-                           Virksomhet(Søknadsfelt(it.label,
-                                                  it.verdi)))
+        return Søknadsfelt("Om virksomheten du etablerer", Virksomhet(it.tilSøknadsfelt()))
     }
 
     private fun mapOmFirma(firma: Firma): Selvstendig {
-        return Selvstendig(firmanavn = Søknadsfelt(firma.navn.label, firma.navn.verdi),
-                           organisasjonsnummer = Søknadsfelt(firma.organisasjonsnummer.label, firma.organisasjonsnummer.verdi),
-                           etableringsdato = Søknadsfelt(firma.etableringsdato.label, firma.etableringsdato.verdi),
-                           arbeidsmengde = Søknadsfelt(firma.arbeidsmengde.label, firma.arbeidsmengde.verdi.toInt()),
-                           hvordanSerArbeidsukenUt = Søknadsfelt(firma.arbeidsuke.label, firma.arbeidsuke.verdi))
+        return Selvstendig(firmanavn = firma.navn.tilSøknadsfelt(),
+                           organisasjonsnummer = firma.organisasjonsnummer.tilSøknadsfelt(),
+                           etableringsdato = firma.etableringsdato.tilSøknadsfelt(),
+                           arbeidsmengde = firma.arbeidsmengde.tilSøknadsfelt(String::toInt),
+                           hvordanSerArbeidsukenUt = firma.arbeidsuke.tilSøknadsfelt())
     }
 
     private fun mapArbeidsforhold(arbeidsforhold: List<Arbeidsforhold>): List<Arbeidsgiver> {
-
         return arbeidsforhold.map { arbeid ->
-            Arbeidsgiver(arbeidsgivernavn = Søknadsfelt(arbeid.navn.label, arbeid.navn.verdi),
-                         stillingsprosent = Søknadsfelt(arbeid.arbeidsmengde.label, arbeid.arbeidsmengde.verdi.toInt()),
-                         fastEllerMidlertidig = Søknadsfelt(arbeid.fastStilling.label, arbeid.fastStilling.verdi),
-                         harDuEnSluttdato = Søknadsfelt(arbeid.harSluttDato.label, arbeid.harSluttDato.verdi),
-                         sluttdato = Søknadsfelt(arbeid.sluttdato.label, arbeid.sluttdato.verdi))
+            Arbeidsgiver(arbeidsgivernavn = arbeid.navn.tilSøknadsfelt(),
+                         stillingsprosent = arbeid.arbeidsmengde.tilSøknadsfelt(String::toInt),
+                         fastEllerMidlertidig = arbeid.fastStilling.tilSøknadsfelt(),
+                         harDuEnSluttdato = arbeid.harSluttDato.tilSøknadsfelt(),
+                         sluttdato = arbeid.sluttdato.tilSøknadsfelt())
         }
-
-
     }
-
 
 }

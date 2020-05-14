@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Sivilstatus
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.VedleggFelt
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
+import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
@@ -14,7 +15,7 @@ object SivilstandsdetaljerMapper {
     fun mapSivilstandsdetaljer(frontendDto: SøknadDto, dokumentMap: Map<String, Dokument>): Sivilstandsdetaljer {
         val sivilstatus = frontendDto.sivilstatus
         return Sivilstandsdetaljer(samlivsbruddsdokumentasjon = lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumentMap),
-                                   samlivsbruddsdato = lagSamlivsbruddsdatoSøknadsfelt(sivilstatus))
+                                   samlivsbruddsdato = sivilstatus.datoForSamlivsbrudd?.tilSøknadsfelt())
     }
 
     private fun lagGiftIUtlandetSøknadsfelt(dto: Sivilstatus): Søknadsfelt<Boolean>? = null
@@ -35,13 +36,6 @@ object SivilstandsdetaljerMapper {
 
     private fun lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumenter: Map<String, Dokument>): Søknadsfelt<Dokument>? {
         return dokumentfelt("samlivsbrudd", dokumenter)
-    }
-
-    private fun lagSamlivsbruddsdatoSøknadsfelt(dto: Sivilstatus): Søknadsfelt<LocalDate>? {
-        val felt = dto.datoForSamlivsbrudd
-        return felt?.let {
-            Søknadsfelt(felt.label, felt.verdi)
-        }
     }
 
     private fun lagFraflytningsdatoSøknadsfelt(dto: Sivilstatus): Søknadsfelt<LocalDate>? = null

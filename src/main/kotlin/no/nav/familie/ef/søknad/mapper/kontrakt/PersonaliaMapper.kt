@@ -20,7 +20,7 @@ object PersonaliaMapper {
 
     private fun lagTelefonnummerSøknadsfelt(telefonnummer: String?): Søknadsfelt<String>? {
         return telefonnummer?.let {
-            Søknadsfelt("Telefonnummer", telefonnummer)
+            Søknadsfelt("Telefonnummer", it)
         }
     }
 
