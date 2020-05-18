@@ -66,6 +66,8 @@ object BarnMapper {
             nårFlyttetDereFraHverandre = forelder.flyttetFra?.tilSøknadsfelt(),
             erklæringOmSamlivsbrudd = dokumentfelt("Erklæring om samlivsbrudd", dokumentMap), //TODO vedlegg
             hvorMyeErDuSammenMedAnnenForelder = forelder.hvorMyeSammen?.tilSøknadsfelt(),
+            // Ytterligere informasjon som innhentes dersom hvorMyeErDuSammenMedAnnenForelder =
+            // "Vi møtes også utenom henting og levering" => (hvordanPraktiseresSamværet)
             hvordanPraktiseresSamværet = forelder.hvordanPraktiseresSamværet?.tilSøknadsfelt(),
             beskrivSamværUtenBarn = forelder.beskrivSamværUtenBarn?.tilSøknadsfelt()
     ))
