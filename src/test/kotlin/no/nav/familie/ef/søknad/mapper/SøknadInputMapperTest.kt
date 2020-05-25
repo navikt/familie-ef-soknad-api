@@ -26,7 +26,6 @@ internal class SøknadInputMapperTest {
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
-
     @BeforeEach
     fun setUp() {
         every { dokumentServiceServiceMock.hentVedlegg(any()) } returns "DOKUMENTID123".toByteArray()
@@ -52,7 +51,7 @@ internal class SøknadInputMapperTest {
     fun `mapTilIntern returnerer dto med personnummer fra frontend`() {
         // Given
         val forventetFnr = "25058521089" //Syntetisk mocknummer
-        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = forventetFnr)))
+        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = forventetFnr), barn = søknadDto.person.barn))
         // When
         val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt)
         // Then
@@ -63,7 +62,7 @@ internal class SøknadInputMapperTest {
     fun `map fra frontend`() {
         // Given
         val forventetNavn = "Hei Hopp"
-        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn)))
+        val søknadDto = søknadDto.copy(person = Person(barn = søknadDto.person.barn, søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn) ) )
         // When
         val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt)
         // Then
@@ -73,7 +72,7 @@ internal class SøknadInputMapperTest {
     @Test
     fun `mapTilIntern skal fungere med telefonnummer som er null`() {
         // Given
-        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(telefonnummer = null)))
+        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(telefonnummer = null), barn = søknadDto.person.barn))
         // When
         val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt)
         // Then
@@ -85,7 +84,7 @@ internal class SøknadInputMapperTest {
     fun `mapTilIntern returnerer dto med riktig sivilstatus fra frontend`() {
         // Given
         val forventetSivilstatus = "Gift"
-        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(sivilstatus = forventetSivilstatus)))
+        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(sivilstatus = forventetSivilstatus), barn = søknadDto.person.barn ))
         // When
         val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt)
         // Then

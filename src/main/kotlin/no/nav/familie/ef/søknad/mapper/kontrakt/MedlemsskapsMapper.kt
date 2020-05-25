@@ -27,12 +27,6 @@ object MedlemsskapsMapper {
         } ?: listOf()
     }
 
-    private fun dokumentfelt(dokumentNavn: String, dokumenter: Map<String, Dokument>): Søknadsfelt<Dokument>? {
-        val dokument = dokumenter[dokumentNavn]
-        return dokument?.let {
-            Søknadsfelt(dokument.tittel, dokument)
-        }
-    }
 }
 
 
