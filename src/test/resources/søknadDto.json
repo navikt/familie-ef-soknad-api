@@ -67,7 +67,7 @@
             "label": "Bor [0]s andre forelder i Norge?",
             "verdi": true
           },
-          "borISammeHus": {
+          "borAnnenForelderISammeHus": {
             "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
             "verdi": "Nei"
           },

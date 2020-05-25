@@ -17,8 +17,9 @@ object BarnMapper {
                             fødselsnummer = barn.fnr.tilSøknadsfelt(::Fødselsnummer),
                             harSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
                             annenForelder = mapAnnenForelder(barn.forelder),
-                            samvær = mapSamvær(barn.forelder, dokumentMap)
-                    )
+                            samvær = mapSamvær(barn.forelder, dokumentMap),
+                            ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse?.tilSøknadsfelt()
+                            )
                 }
     }
 
@@ -61,7 +62,8 @@ object BarnMapper {
             skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
             harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
             samværsavtale = dokumentfelt("Avtale om samvær", dokumentMap), //TODO vedlegg
-            borAnnenForelderISammeHus = forelder.borISammeHus?.tilSøknadsfelt(),
+            borAnnenForelderISammeHus = forelder.borAnnenForelderISammeHus?.tilSøknadsfelt(),
+            borAnnenForelderISammeHusBeskrivelse = forelder.borAnnenForelderISammeHusBeskrivelse?.tilSøknadsfelt(),
             harDereTidligereBoddSammen = forelder.boddSammenFør?.tilSøknadsfelt(),
             nårFlyttetDereFraHverandre = forelder.flyttetFra?.tilSøknadsfelt(),
             erklæringOmSamlivsbrudd = dokumentfelt("Erklæring om samlivsbrudd", dokumentMap), //TODO vedlegg
