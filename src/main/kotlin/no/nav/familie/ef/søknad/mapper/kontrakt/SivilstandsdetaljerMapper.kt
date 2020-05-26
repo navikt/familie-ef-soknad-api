@@ -23,7 +23,7 @@ object SivilstandsdetaljerMapper {
                                                                                            dokumentMap),//TODO vedlegg
                                    datoSøktSeparasjon = sivilstatus.datoSøktSeparasjon?.tilSøknadsfelt(),
                                    søktOmSkilsmisseSeparasjon = sivilstatus.harSøktSeparasjon.tilSøknadsfelt(),
-                                   årsakEnslig = sivilstatus.årsakEnslig?.tilSøknadsfelt() // TODO stemmer dette?
+                                   årsakEnslig = sivilstatus.årsakEnslig?.tilSøknadsfelt()
         )
     }
 
