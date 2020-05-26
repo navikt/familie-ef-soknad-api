@@ -4,7 +4,7 @@ data class Aktivitet(
         val arbeidsforhold: List<Arbeidsforhold>?,
         val arbeidssøker: Arbeidssøker?=null,
         val firma: Firma? = null,
-        val hvaErDinArbeidssituasjon: HvaErDinArbeidssituasjon,
+        val hvaErDinArbeidssituasjon: ListFelt<String>,
         val underUtdanning: UnderUtdanning? = null,
         val etablererEgenVirksomhet: TekstFelt? = null
 
@@ -37,11 +37,6 @@ data class Firma(
         val etableringsdato: DatoFelt,
         val navn: TekstFelt,
         val organisasjonsnummer: TekstFelt
-)
-
-data class HvaErDinArbeidssituasjon(
-        val label: String,
-        val verdi: List<String>
 )
 
 data class UnderUtdanning(

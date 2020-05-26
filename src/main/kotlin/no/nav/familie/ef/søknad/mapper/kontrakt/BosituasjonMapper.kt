@@ -1,6 +1,8 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
+import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import java.time.LocalDate
@@ -13,13 +15,10 @@ object BosituasjonMapper {
                                    sammenflyttingsdato = mapDatoFlyttetSammenMedSamboer(bosituasjon))
     }
 
-    private fun mapSøkerDelerBoligMedAndre(bosituasjon: Bosituasjon) =
-                Søknadsfelt(bosituasjon.delerBoligMedAndreVoksne.label, bosituasjon.delerBoligMedAndreVoksne.verdi)
+    private fun mapSøkerDelerBoligMedAndre(bosituasjon: Bosituasjon) = bosituasjon.delerBoligMedAndreVoksne.tilSøknadsfelt()
 
     private fun mapDatoFlyttetSammenMedSamboer(bosituasjon: Bosituasjon): Søknadsfelt<LocalDate>? {
-        return bosituasjon.datoFlyttetSammenMedSamboer?.let {
-            Søknadsfelt(it.label, it.verdi)
-        }
+        return bosituasjon.datoFlyttetSammenMedSamboer?.let(DatoFelt::tilSøknadsfelt)
     }
 
     private fun mapSamboer(bosituasjon: Bosituasjon): Søknadsfelt<PersonMinimum>? {
