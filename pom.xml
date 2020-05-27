@@ -27,7 +27,7 @@
         <com.amazonaws.version>1.11.657</com.amazonaws.version>
         <token-validation-spring.version>1.1.5</token-validation-spring.version>
         <felles.version>1.20200408151439_00385c3</felles.version>
-        <kontrakter.version>2.0_20200525085003_5db78e4</kontrakter.version>
+        <kontrakter.version>2.0_20200526143954_169f375</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <micrometer.version>1.3.0</micrometer.version>
 

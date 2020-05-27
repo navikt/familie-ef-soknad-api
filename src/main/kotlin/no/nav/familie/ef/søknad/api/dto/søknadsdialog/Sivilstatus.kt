@@ -1,11 +1,12 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
-data class Sivilstatus(val søkerHarSøktSeparasjon: BooleanFelt? = null,
+data class Sivilstatus(val harSøktSeparasjon: BooleanFelt,
                        val datoSøktSeparasjon: DatoFelt? = null,
-                       val søkerGiftIUtlandet: BooleanFelt? = null,
-                       val søkerSeparertEllerSkiltIUtlandet: BooleanFelt? = null,
-                       val begrunnelseForSøknad: TekstFelt? = null,
+                       val erUformeltGift: BooleanFelt,
+                       val erUformeltSeparertEllerSkilt: BooleanFelt,
+                       val årsakEnslig: TekstFelt? = null,
                        val datoForSamlivsbrudd: DatoFelt? = null,
                        val datoFlyttetFraHverandre: DatoFelt? = null,
-                       val datoEndretSamvær: DatoFelt? = null,
-                       val begrunnelseAnnet: TekstFelt? = null)
+                       val datoEndretSamvær: DatoFelt? = null)
+
+
