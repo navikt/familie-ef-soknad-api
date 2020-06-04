@@ -28,8 +28,8 @@ internal class SivilstandsdetaljerMapperTest {
         // Then
         val sivilstatus = søknadDto.sivilstatus
 
-        assertThat(kontrakt.søktOmSkilsmisseSeparasjon?.label).isEqualTo(sivilstatus.harSøktSeparasjon.label)
-        assertThat(kontrakt.søktOmSkilsmisseSeparasjon?.verdi).isEqualTo(sivilstatus.harSøktSeparasjon.verdi)
+        assertThat(kontrakt.søktOmSkilsmisseSeparasjon?.label).isEqualTo(sivilstatus.harSøktSeparasjon?.label)
+        assertThat(kontrakt.søktOmSkilsmisseSeparasjon?.verdi).isEqualTo(sivilstatus.harSøktSeparasjon?.verdi)
 
         assertThat(kontrakt.datoSøktSeparasjon?.label).isEqualTo(sivilstatus.datoSøktSeparasjon?.label)
         assertThat(kontrakt.datoSøktSeparasjon?.verdi).isEqualTo(sivilstatus.datoSøktSeparasjon?.verdi)

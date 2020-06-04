@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
-data class Sivilstatus(val harSøktSeparasjon: BooleanFelt,
+data class Sivilstatus(val harSøktSeparasjon: BooleanFelt?, // TODO Burde ikke være optional - default false?
                        val datoSøktSeparasjon: DatoFelt? = null,
                        val erUformeltGift: BooleanFelt,
                        val erUformeltSeparertEllerSkilt: BooleanFelt,

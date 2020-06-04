@@ -22,7 +22,7 @@ object SivilstandsdetaljerMapper {
                                    erUformeltSeparertEllerSkiltDokumentasjon = dokumentfelt("separertEllerSkiltIUtlandetDokumentasjon",
                                                                                            dokumentMap),//TODO vedlegg
                                    datoSøktSeparasjon = sivilstatus.datoSøktSeparasjon?.tilSøknadsfelt(),
-                                   søktOmSkilsmisseSeparasjon = sivilstatus.harSøktSeparasjon.tilSøknadsfelt(),
+                                   søktOmSkilsmisseSeparasjon = sivilstatus.harSøktSeparasjon?.tilSøknadsfelt(),
                                    årsakEnslig = sivilstatus.årsakEnslig?.tilSøknadsfelt()
         )
     }

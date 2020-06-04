@@ -33,8 +33,8 @@ object BarnMapper {
                             fødselTermindato = barn.fødselsdato.tilSøknadsfelt(),
                             terminbekreftelse = dokumentfelt("Terminbekreftelse",
                                                              dokumentMap), //TODO vedlegg har ikke snakket om denne
-                            skalBarnetBoHosSøker = barn.skalBarnBoHosDeg?.tilSøknadsfelt()
-                                                   ?: error("Manglende påkrevd felt for nytt barnliste: skalBarnetBoHosSøker "),
+                            // TODO ikke endre felt som opprinnelig var fra tps i UI? Her brukes harSammeAdresse på nytt barn.
+                            skalBarnetBoHosSøker = barn.harSammeAdresse.tilSøknadsfelt(),
                             annenForelder = mapAnnenForelder(barn.forelder),
                             samvær = mapSamvær(barn.forelder, dokumentMap)
                     )
@@ -47,10 +47,12 @@ object BarnMapper {
                     ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.tilSøknadsfelt(),
                     bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                     land = forelder.land?.tilSøknadsfelt(),
+
+// TODO kan vurdere å legge på en let rundt person dersom kanIkkeOppgiAnnenForelderFar = true
                     person = Søknadsfelt("Persondata", PersonMinimum(
                             fødselsnummer = forelder.personnr?.tilSøknadsfelt(::Fødselsnummer),
                             fødselsdato = forelder.fødselsdato?.tilSøknadsfelt(),
-                            navn = forelder.navn.tilSøknadsfelt()
+                            navn = forelder.navn?.tilSøknadsfelt() ?: Søknadsfelt("Annen forelder navn", "ikke oppgitt") // TODO dette må vi finne ut av, bør navn være optional i kontrakt
                     ))
             ))
 

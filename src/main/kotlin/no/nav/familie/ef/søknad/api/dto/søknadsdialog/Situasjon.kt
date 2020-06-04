@@ -7,5 +7,16 @@ data class Situasjon(
         val sagtOppEllerRedusertStilling: TekstFelt? = null,
         val datoSagtOppEllerRedusertStilling: DatoFelt? = null,
         val begrunnelseSagtOppEllerRedusertStilling: TekstFelt? = null,
-        val søknadsdato: DatoFelt
+        val søknadsdato: DatoFelt? // TODO ikke brukt
 )
+
+//export interface IDinSituasjon {
+//    gjelderDetteDeg: ISpørsmålListeFelt;
+//    datoOppstartJobb?: IDatoFelt;
+//    datoOppstartUtdanning?: IDatoFelt;
+//    søknadsdato?: IDatoFelt;
+//    sagtOppEllerRedusertStilling?: ISpørsmålFelt;
+//    begrunnelseSagtOppEllerRedusertStilling?: ITekstFelt;
+//    datoSagtOppEllerRedusertStilling?: IDatoFelt;
+//    søkerFraBestemtMåned?: ISpørsmålFelt;
+//}
