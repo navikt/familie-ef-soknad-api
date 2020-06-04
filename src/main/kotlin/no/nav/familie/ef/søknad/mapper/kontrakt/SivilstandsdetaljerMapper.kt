@@ -15,10 +15,10 @@ object SivilstandsdetaljerMapper {
                                    samlivsbruddsdato = sivilstatus.datoForSamlivsbrudd?.tilSøknadsfelt(),
                                    endringSamværsordningDato = sivilstatus.datoEndretSamvær?.tilSøknadsfelt(),
                                    fraflytningsdato = sivilstatus.datoFlyttetFraHverandre?.tilSøknadsfelt(),
-                                   erUformeltGift = sivilstatus.erUformeltGift.tilSøknadsfelt(),
+                                   erUformeltGift = sivilstatus.erUformeltGift?.tilSøknadsfelt(),
                                    erUformeltGiftDokumentasjon = dokumentfelt("Gift i utlandet", dokumentMap), //TODO vedlegg
                                    separasjonsbekreftelse = dokumentfelt("separasjonsbekreftelse", dokumentMap),
-                                   erUformeltSeparertEllerSkilt = sivilstatus.erUformeltSeparertEllerSkilt.tilSøknadsfelt(),
+                                   erUformeltSeparertEllerSkilt = sivilstatus.erUformeltSeparertEllerSkilt?.tilSøknadsfelt(),
                                    erUformeltSeparertEllerSkiltDokumentasjon = dokumentfelt("separertEllerSkiltIUtlandetDokumentasjon",
                                                                                            dokumentMap),//TODO vedlegg
                                    datoSøktSeparasjon = sivilstatus.datoSøktSeparasjon?.tilSøknadsfelt(),
