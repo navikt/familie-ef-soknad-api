@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SamboerDetaljer
+import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
@@ -18,9 +18,7 @@ object PersonMinimumMapper {
             Søknadsfelt("Fødselsnummer", Fødselsnummer(it))
         }
 
-        val søknadsfeltFødselsdato = samboerDetaljer.fødselsdato?.let {
-            Søknadsfelt("Fødselsdato", it)
-        }
+        val søknadsfeltFødselsdato = samboerDetaljer.fødselsdato?.tilSøknadsfelt()
 
         return PersonMinimum(Søknadsfelt("Navn", samboerDetaljer.navn),
                              søknadsfeltFødselsnummer,
