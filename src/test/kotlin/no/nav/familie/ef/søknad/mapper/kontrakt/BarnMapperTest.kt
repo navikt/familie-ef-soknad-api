@@ -1,12 +1,9 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.mapper.dokumentMap
-import no.nav.familie.ef.søknad.mapper.falseOrNull
 import no.nav.familie.ef.søknad.mock.søknadDto
-import org.assertj.core.api.Assertions
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 val dokumenter = dokumentMap()
 
@@ -77,13 +74,6 @@ internal class BarnMapperTest {
     @Test
     fun `Nyregistrert barn må ha skalBarnetBoHosSøker `() {
         assertThat(nyregistrertBarn.first().skalBarnetBoHosSøker.verdi).isTrue()
-    }
-
-    @Test
-    fun `Nyregistrert barn uten skalBarnBoHosDeg - skalBarnetBoHosSøker skal kaste exception `() {
-        val barn = søknadDto.person.barn.filter { falseOrNull(it.lagtTil) }.first()
-        val barnUtenBoHosDegVariabel = barn.copy(skalBarnBoHosDeg = null)
-        assertThrows<IllegalStateException> { BarnMapper.mapNyttBarn(listOf(barnUtenBoHosDegVariabel), dokumenter) }
     }
 
     @Test

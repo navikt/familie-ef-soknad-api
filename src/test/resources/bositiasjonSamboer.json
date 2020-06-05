@@ -9,7 +9,7 @@
   },
   "samboerDetaljer": {
     "navn": "Bob Dyland",
-    "fødselsdato": "1976-07-26T08:16:05.000Z",
+    "fødselsdato":  {"label": "fødselsdato", "verdi": "1976-07-26T08:16:05.000Z"},
     "fødselsnummer": "26077624804"
   },
   "_comment": "denne burde kanskje fjernes -> splitte bosutuasjon og sivilstandsplaner også i frontend",

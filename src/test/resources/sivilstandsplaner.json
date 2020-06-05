@@ -13,7 +13,7 @@
   },
   "samboerDetaljer": {
     "navn": "Giflteklar Navnesen",
-    "fødselsdato": "1976-07-26T08:16:05.000Z",
+    "fødselsdato": {"label": "Fødselsdato", "verdi": "1976-07-26T08:16:05.000Z"},
     "fødselsnummer": "26077624804"
   }
 }

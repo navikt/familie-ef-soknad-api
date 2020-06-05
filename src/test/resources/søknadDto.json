@@ -299,7 +299,8 @@
     "skalGifteSegEllerBliSamboer": {
       "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
       "verdi": false
-    }
+    },
+    "samboerDetaljer": {"navn": "sdfgsdfg", "fødselsdato": {"label": "Fødselsdato", "verdi": "2020-05-31T22:00:00.000Z"}}
   },
   "vedleggsliste": [
     {
