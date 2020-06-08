@@ -20,7 +20,7 @@ data class Arbeidsgiver(
     val arbeidsmengde: TekstFelt,
     val id: String,
     val navn: TekstFelt,
-    val harSluttDato: BooleanFelt, // TODO Booleanfelt skal kunne være null - fix når kontrakt oppdateres!
+    val harSluttDato: BooleanFelt?,
     val sluttdato: DatoFelt?
 )
 
