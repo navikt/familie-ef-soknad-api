@@ -88,7 +88,7 @@ object AktivitetsMapper {
             Arbeidsgiver(arbeidsgivernavn = arbeid.navn.tilSøknadsfelt(),
                          stillingsprosent = arbeid.arbeidsmengde.tilSøknadsfelt(String::toInt),
                          fastEllerMidlertidig = arbeid.ansettelsesforhold.tilSøknadsfelt(),
-                         harDuEnSluttdato = arbeid.harSluttDato.tilSøknadsfelt(),
+                         harDuEnSluttdato = arbeid.harSluttDato?.tilSøknadsfelt(),
                          sluttdato = arbeid.sluttdato?.tilSøknadsfelt()
             )
         }
