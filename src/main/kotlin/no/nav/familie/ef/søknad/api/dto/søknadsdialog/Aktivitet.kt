@@ -1,26 +1,29 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
 data class Aktivitet(
-        val arbeidsforhold: List<Arbeidsforhold>?,
+        val arbeidsforhold: List<Arbeidsgiver>?,
         val arbeidssøker: Arbeidssøker?=null,
         val firma: Firma? = null,
         val hvaErDinArbeidssituasjon: ListFelt<String>,
         val underUtdanning: UnderUtdanning? = null,
-        val etablererEgenVirksomhet: TekstFelt? = null
-
+        val etablererEgenVirksomhet: TekstFelt? = null,
+        val egetAS: List<Aksjeselskap>?
 )
 
-
-
-data class Arbeidsforhold(
-        val arbeidsmengde: TekstFelt,
-        val fastStilling: TekstFelt,
-        val harSluttDato: BooleanFelt,
-        val sluttdato: DatoFelt,
-        val navn: TekstFelt,
-        val firma: Firma? = null,
-        val react_key: String?
+data class Aksjeselskap ( // TODO - ikke mappet
+        val navn: TekstFelt?= null,
+        val arbeidsmengde: TekstFelt?= null
 )
+
+data class Arbeidsgiver(
+    val ansettelsesforhold: TekstFelt,
+    val arbeidsmengde: TekstFelt,
+    val id: String,
+    val navn: TekstFelt,
+    val harSluttDato: BooleanFelt, // TODO Booleanfelt skal kunne være null - fix når kontrakt oppdateres!
+    val sluttdato: DatoFelt?
+)
+
 
 data class Arbeidssøker(
         val hvorØnskerSøkerArbeid: TekstFelt,

@@ -27,12 +27,12 @@ internal class ArbeidsforholdMapperTest {
 
     @Test
     fun `Map arbeidsforhold fastEllerMidlertidig label `() {
-        Assertions.assertThat(arbeidsforhold?.fastEllerMidlertidig?.label).isEqualTo("arbeidsforhold.label.fastEllerMidlertidig")
+        Assertions.assertThat(arbeidsforhold?.fastEllerMidlertidig?.label).isEqualTo("Hva slags ansettelsesforhold har du?")
     }
 
     @Test
     fun `Map arbeidsforhold fastEllerMidlertidig verdi `() {
-        Assertions.assertThat(arbeidsforhold?.fastEllerMidlertidig?.verdi).isEqualTo("Midlertidig")
+        Assertions.assertThat(arbeidsforhold?.fastEllerMidlertidig?.verdi).isEqualTo("Fast")
     }
 
     @Test
@@ -52,7 +52,7 @@ internal class ArbeidsforholdMapperTest {
 
     @Test
     fun `Map arbeidsforhold harDuEnSluttdato verdi `() {
-        Assertions.assertThat(arbeidsforhold?.harDuEnSluttdato?.verdi).isEqualTo(false)
+        Assertions.assertThat(arbeidsforhold?.harDuEnSluttdato?.verdi).isEqualTo(true)
     }
 
     @Test

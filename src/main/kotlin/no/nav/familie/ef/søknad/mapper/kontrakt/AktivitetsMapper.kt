@@ -1,10 +1,12 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TidligereUtdanning
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
-import no.nav.familie.kontrakter.ef.søknad.Aktivitet
-import no.nav.familie.kontrakter.ef.søknad.Periode
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidsgiver as ArbeidsgiverDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker as ArbeidssøkerDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning as UnderUtdanningDto
 
@@ -81,13 +83,14 @@ object AktivitetsMapper {
                            hvordanSerArbeidsukenUt = firma.arbeidsuke.tilSøknadsfelt())
     }
 
-    private fun mapArbeidsforhold(arbeidsforhold: List<Arbeidsforhold>): List<Arbeidsgiver> {
+    private fun mapArbeidsforhold(arbeidsforhold: List<ArbeidsgiverDto>): List<Arbeidsgiver> {
         return arbeidsforhold.map { arbeid ->
             Arbeidsgiver(arbeidsgivernavn = arbeid.navn.tilSøknadsfelt(),
                          stillingsprosent = arbeid.arbeidsmengde.tilSøknadsfelt(String::toInt),
-                         fastEllerMidlertidig = arbeid.fastStilling.tilSøknadsfelt(),
+                         fastEllerMidlertidig = arbeid.ansettelsesforhold.tilSøknadsfelt(),
                          harDuEnSluttdato = arbeid.harSluttDato.tilSøknadsfelt(),
-                         sluttdato = arbeid.sluttdato.tilSøknadsfelt())
+                         sluttdato = arbeid.sluttdato?.tilSøknadsfelt()
+            )
         }
     }
 
