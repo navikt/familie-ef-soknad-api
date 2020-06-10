@@ -7,8 +7,3 @@ import java.security.MessageDigest
 
 fun getFileAsString(filePath: String) = String(Files.readAllBytes(Paths.get(filePath)), StandardCharsets.UTF_8)
 
-fun lagDigest(value: Any) = MessageDigest
-        .getInstance("SHA-1")
-        .digest(value.toString().toByteArray())
-        .fold("", { str, it -> str + "%02x".format(it) })
-
