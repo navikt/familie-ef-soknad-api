@@ -17,3 +17,6 @@ data class VedleggFelt(val dokumentId: String,
 
 data class ListFelt<T>(val label: String,
                     val verdi: List<T>)
+
+data class HeltallFelt(val label: String,
+                       val verdi: Int)

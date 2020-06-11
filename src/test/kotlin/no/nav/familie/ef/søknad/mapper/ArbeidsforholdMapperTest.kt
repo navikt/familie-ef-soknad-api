@@ -36,23 +36,23 @@ internal class ArbeidsforholdMapperTest {
     }
 
     @Test
-    fun `Map arbeidsforhold stillingsprosent label `() {
-        Assertions.assertThat(arbeidsforhold?.stillingsprosent?.label).isEqualTo("Hvor mye jobber du?")
+    fun `Map arbeidsforhold arbeidsmengde label `() {
+        Assertions.assertThat(arbeidsforhold?.arbeidsmengde?.label).isEqualTo("Hvor mye jobber du?")
     }
 
     @Test
-    fun `Map arbeidsforhold stillingsprosent verdi `() {
-        Assertions.assertThat(arbeidsforhold?.stillingsprosent?.verdi).isEqualTo(23)
+    fun `Map arbeidsforhold arbeidsmengde verdi `() {
+        Assertions.assertThat(arbeidsforhold?.arbeidsmengde?.verdi).isEqualTo(23)
     }
 
     @Test
-    fun `Map arbeidsforhold harDuEnSluttdato label `() {
-        Assertions.assertThat(arbeidsforhold?.harDuEnSluttdato?.label).isEqualTo("Har du en sluttdato?")
+    fun `Map arbeidsforhold harSluttdato label `() {
+        Assertions.assertThat(arbeidsforhold?.harSluttdato?.label).isEqualTo("Har du en sluttdato?")
     }
 
     @Test
-    fun `Map arbeidsforhold harDuEnSluttdato verdi `() {
-        Assertions.assertThat(arbeidsforhold?.harDuEnSluttdato?.verdi).isEqualTo(true)
+    fun `Map arbeidsforhold harSluttdato verdi `() {
+        Assertions.assertThat(arbeidsforhold?.harSluttdato?.verdi).isEqualTo(true)
     }
 
     @Test

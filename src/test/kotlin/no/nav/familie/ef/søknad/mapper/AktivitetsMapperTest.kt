@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.mapper.kontrakt.AktivitetsMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.kontrakter.ef.søknad.Aksjeselskap
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -93,10 +94,12 @@ internal class AktivitetsMapperTest {
                 .isEqualTo("Dette er en spennende gründerbedrift")
     }
 
-
-
-
-
-
-
+    @Test
+    fun `Map ansatt i eget AS `() {
+        val aksjeselskap: Aksjeselskap = aktivitet.aksjeselskap?.verdi?.get(0)!!
+        Assertions.assertThat(aksjeselskap.navn.label).isEqualTo("Navn på aksjeselskapet ditt")
+        Assertions.assertThat(aksjeselskap.navn.verdi).isEqualTo("Mitt eget AS")
+        Assertions.assertThat(aksjeselskap.arbeidsmengde.label).isEqualTo("Hvor mye jobber du?")
+        Assertions.assertThat(aksjeselskap.arbeidsmengde.verdi).isEqualTo(55)
+    }
 }
