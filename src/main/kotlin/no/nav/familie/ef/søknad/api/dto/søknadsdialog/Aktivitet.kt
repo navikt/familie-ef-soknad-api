@@ -10,9 +10,9 @@ data class Aktivitet(
         val egetAS: List<Aksjeselskap>?
 )
 
-data class Aksjeselskap ( // TODO - ikke mappet
-        val navn: TekstFelt?= null,
-        val arbeidsmengde: TekstFelt?= null
+data class Aksjeselskap (
+        val navn: TekstFelt,
+        val arbeidsmengde: HeltallFelt
 )
 
 data class Arbeidsgiver(

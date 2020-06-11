@@ -13,6 +13,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning as UnderU
 object AktivitetsMapper {
     fun map(frontendDto: SøknadDto): Aktivitet {
         val aktivitet = frontendDto.aktivitet
+
         return Aktivitet(hvordanErArbeidssituasjonen = aktivitet.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
                          arbeidsforhold = aktivitet.arbeidsforhold?.let {
                              Søknadsfelt("Om arbeidsforholdet ditt", mapArbeidsforhold(it))
@@ -20,7 +21,17 @@ object AktivitetsMapper {
                          selvstendig = aktivitet.firma?.let { Søknadsfelt("Om firmaet du driver", mapOmFirma(it)) },
                          virksomhet = aktivitet.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it) },
                          arbeidssøker = aktivitet.arbeidssøker?.let { mapArbeidssøker(it) },
-                         underUtdanning = aktivitet.underUtdanning?.let { mapUtdanning(it) })
+                         underUtdanning = aktivitet.underUtdanning?.let { mapUtdanning(it) },
+                         aksjeselskap = aktivitet.egetAS?.let {
+                             Søknadsfelt("Ansatt i eget AS", it.map { aksjeselskap ->
+                                 Aksjeselskap(
+                                         navn = aksjeselskap.navn.tilSøknadsfelt(),
+                                         arbeidsmengde = aksjeselskap.arbeidsmengde.tilSøknadsfelt()
+                                 )
+                             }
+                             )
+                         }
+        )
     }
 
     private fun mapUtdanning(underUtdanning: UnderUtdanningDto): Søknadsfelt<UnderUtdanning> {
@@ -86,12 +97,13 @@ object AktivitetsMapper {
     private fun mapArbeidsforhold(arbeidsforhold: List<ArbeidsgiverDto>): List<Arbeidsgiver> {
         return arbeidsforhold.map { arbeid ->
             Arbeidsgiver(arbeidsgivernavn = arbeid.navn.tilSøknadsfelt(),
-                         stillingsprosent = arbeid.arbeidsmengde.tilSøknadsfelt(String::toInt),
+                         arbeidsmengde = arbeid.arbeidsmengde.tilSøknadsfelt(String::toInt),
                          fastEllerMidlertidig = arbeid.ansettelsesforhold.tilSøknadsfelt(),
-                         harDuEnSluttdato = arbeid.harSluttDato?.tilSøknadsfelt(),
+                         harSluttdato = arbeid.harSluttDato?.tilSøknadsfelt(),
                          sluttdato = arbeid.sluttdato?.tilSøknadsfelt()
             )
         }
     }
 
 }
+

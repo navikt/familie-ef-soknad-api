@@ -471,7 +471,20 @@
           }
         }
       ]
-    }
+    },
+    "egetAS": [
+      {
+        "id": "fe2c0070-7f95-4b0d-939a-5f1298d1826b",
+        "navn": {
+          "label": "Navn på aksjeselskapet ditt",
+          "verdi": "Mitt eget AS"
+        },
+        "arbeidsmengde": {
+          "label": "Hvor mye jobber du?",
+          "verdi": "55"
+        }
+      }
+    ]
   },
   "merOmDinSituasjon": {
     "gjelderDetteDeg": {
