@@ -5,11 +5,10 @@ import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Situasjon
-import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 
 object SituasjonsMapper {
 
-    fun mapSituasjon(frontendDto: SøknadDto, dokumenter: Map<String, Dokument>): Situasjon {
+    fun mapSituasjon(frontendDto: SøknadDto, dokumenter: Map<String, List<Dokument>>): Situasjon {
         val merOmDinSituasjon = frontendDto.merOmDinSituasjon
         return Situasjon(gjelderDetteDeg = merOmDinSituasjon.gjelderDetteDeg.tilSøknadsfelt(),
                          sykdom = dokumentfelt("Legeerklæring", dokumenter),
