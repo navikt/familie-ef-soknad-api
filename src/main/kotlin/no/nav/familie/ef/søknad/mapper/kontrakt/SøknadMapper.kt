@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.VedleggFelt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.*
 import org.springframework.stereotype.Component
@@ -13,7 +13,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
 
     fun mapTilIntern(frontendDto: SøknadDto,
                      innsendingMottatt: LocalDateTime): Søknad {
-        val dokumenter: Map<String, Dokument> = hentDokumenter(frontendDto.vedleggsliste)
+        val dokumenter: Map<String, List<Dokument>> = hentDokumenter(frontendDto.dokumentasjonsbehov)
 
         return Søknad(
                 innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
@@ -33,8 +33,13 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                 stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
     }
 
-    private fun hentDokumenter(vedleggListe: List<VedleggFelt>): Map<String, Dokument> {
-        return vedleggListe.associate { it.navn to Dokument(dokumentServiceService.hentVedlegg(it.dokumentId), it.label) }
+    private fun hentDokumenter(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, List<Dokument>> {
+        return dokumentasjonsbehov.associate {
+            it.id to it.opplastedeVedlegg.map { dokumentFelt ->
+                Dokument(dokumentServiceService.hentVedlegg(dokumentFelt.dokumentId), dokumentFelt.label)
+            }
+        }
+
     }
 
     private fun stønadsstart() = Stønadsstart(Søknadsfelt("Fra måned", Month.AUGUST), Søknadsfelt("Fra år", 2018))

@@ -27,7 +27,7 @@
         <com.amazonaws.version>1.11.781</com.amazonaws.version>
         <token-validation-spring.version>1.1.5</token-validation-spring.version>
         <felles.version>1.20200605143848_e2726a9</felles.version>
-        <kontrakter.version>2.0_20200611130117_dd15d9d</kontrakter.version>
+        <kontrakter.version>2.0_20200612142944_231bc7c</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>

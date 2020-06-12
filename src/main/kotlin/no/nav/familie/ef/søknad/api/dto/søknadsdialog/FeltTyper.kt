@@ -11,9 +11,9 @@ data class TekstFelt(val label: String,
 data class DatoFelt(val label: String,
                     val verdi: LocalDate)
 
-data class VedleggFelt(val dokumentId: String,
-                       val navn: String,
-                       val label: String)
+data class DokumentFelt(val dokumentId: String,
+                        val navn: String,
+                        val label: String)
 
 data class ListFelt<T>(val label: String,
                     val verdi: List<T>)
