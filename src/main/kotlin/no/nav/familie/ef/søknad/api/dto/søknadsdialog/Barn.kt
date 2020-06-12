@@ -21,7 +21,7 @@ data class AnnenForelder(
         val personnr: TekstFelt?,
         val borINorge: BooleanFelt?,
         val land: TekstFelt?,
-        val avtaleOmDeltBosted: BooleanFelt,
+        val avtaleOmDeltBosted: BooleanFelt?,
         val harAnnenForelderSamværMedBarn: TekstFelt?,
         val harDereSkriftligSamværsavtale: TekstFelt?,
         val hvordanPraktiseresSamværet: TekstFelt?,
