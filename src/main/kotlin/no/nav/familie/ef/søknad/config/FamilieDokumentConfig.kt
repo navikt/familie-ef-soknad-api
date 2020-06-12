@@ -14,7 +14,7 @@ internal data class FamilieDokumentConfig(val uri: URI) {
     internal val pingUri = UriComponentsBuilder.fromUri(uri).path(PING).build().toUri()
 
     companion object {
-        private const val HENT = "/mapper/familievedlegg"
+        private const val HENT = "/mapper/familievedlegg/"
         private const val PING = "/mapper/ping"
     }
 
