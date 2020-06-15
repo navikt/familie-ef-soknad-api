@@ -17,6 +17,8 @@ internal class JsonSisteInnspurtMapperTest {
     private val mapper = SøknadMapper(dokumentServiceServiceMock)
     fun søknad(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/underUtanningFeil.json"),
                                                      SøknadDto::class.java)
+    fun søknadNyttBarn(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/nyttBarnFeil.json"),
+                                                     SøknadDto::class.java)
 
     private val søknadDto = søknad()
 
@@ -31,9 +33,12 @@ internal class JsonSisteInnspurtMapperTest {
     @Test
     fun `mapTilIntern returnerer dto med riktig sivilstatus fra frontend`() {
 
-        // When
-        val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt)
-        // Then
+        mapper.mapTilIntern(søknadDto, innsendingMottatt)
 
+    }
+
+    @Test
+    internal fun `skal mappe nytt barn uten fødselsnummer`() {
+        mapper.mapTilIntern(søknadNyttBarn(), innsendingMottatt)
     }
 }

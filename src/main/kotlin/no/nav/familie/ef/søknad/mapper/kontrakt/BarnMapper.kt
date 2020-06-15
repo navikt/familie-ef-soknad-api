@@ -12,7 +12,7 @@ object BarnMapper {
     fun mapBarn(barnliste: List<Barn>, dokumentMap: Map<String, List<Dokument>>): List<Kontraktbarn> {
         return barnliste.map { barn ->
             Kontraktbarn(navn = barn.navn.tilSøknadsfelt(),
-                         fødselsnummer = barn.fnr?.tilSøknadsfelt(::Fødselsnummer),
+                         fødselsnummer = mapFødselsnummer(barn),
                          harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
                          ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse
                                  ?.tilSøknadsfelt(),
@@ -24,6 +24,17 @@ object BarnMapper {
                          samvær = mapSamvær(barn.forelder, dokumentMap)
             )
         }
+    }
+
+    private fun mapFødselsnummer(barn: Barn): Søknadsfelt<Fødselsnummer>? {
+        return barn.fnr?.let {
+            return if (it.verdi.isNotBlank()) {
+                barn.fnr.tilSøknadsfelt(::Fødselsnummer)
+            } else {
+                null
+            }
+        }
+
     }
 
     private fun mapAnnenForelder(forelder: AnnenForelderDto): Søknadsfelt<AnnenForelder> =
