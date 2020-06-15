@@ -31,7 +31,7 @@ object BarnMapper {
                             fødselsnummer = barn.fnr.tilSøknadsfelt(),
                             erBarnetFødt = barn.født.tilSøknadsfelt(),
                             fødselTermindato = barn.fødselsdato.tilSøknadsfelt(),
-                            terminbekreftelse = dokumentfelt("Terminbekreftelse",
+                            terminbekreftelse = dokumentfelt("TERMINBEKREFTELSE",
                                                              dokumentMap), //TODO vedlegg har ikke snakket om denne
                             // TODO ikke endre felt som opprinnelig var fra tps i UI? Her brukes harSammeAdresse på nytt barn.
                             skalBarnetBoHosSøker = barn.harSammeAdresse.tilSøknadsfelt(),
@@ -59,20 +59,21 @@ object BarnMapper {
     private fun mapSamvær(forelder: AnnenForelderDto,
                           dokumentMap: Map<String, List<Dokument>>): Søknadsfelt<Samvær> = Søknadsfelt("samvær", Samvær(
             spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted?.tilSøknadsfelt(),
-            avtaleOmDeltBosted = dokumentfelt("Avtale om delt bosted for barna", dokumentMap), //TODO vedlegg
+            avtaleOmDeltBosted = dokumentfelt("DELT_BOSTED", dokumentMap),
             skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
             harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
-            samværsavtale = dokumentfelt("Avtale om samvær", dokumentMap), //TODO vedlegg
+            samværsavtale = dokumentfelt("SAMVÆRSAVTALE", dokumentMap),
             borAnnenForelderISammeHus = forelder.borAnnenForelderISammeHus?.tilSøknadsfelt(),
             borAnnenForelderISammeHusBeskrivelse = forelder.borAnnenForelderISammeHusBeskrivelse?.tilSøknadsfelt(),
             harDereTidligereBoddSammen = forelder.boddSammenFør?.tilSøknadsfelt(),
             nårFlyttetDereFraHverandre = forelder.flyttetFra?.tilSøknadsfelt(),
-            erklæringOmSamlivsbrudd = dokumentfelt("Erklæring om samlivsbrudd", dokumentMap), //TODO vedlegg
+            erklæringOmSamlivsbrudd = dokumentfelt("SAMLIVSBRUDD", dokumentMap),
             hvorMyeErDuSammenMedAnnenForelder = forelder.hvorMyeSammen?.tilSøknadsfelt(),
             // Ytterligere informasjon som innhentes dersom hvorMyeErDuSammenMedAnnenForelder =
             // "Vi møtes også utenom henting og levering" => (hvordanPraktiseresSamværet)
             hvordanPraktiseresSamværet = forelder.hvordanPraktiseresSamværet?.tilSøknadsfelt(),
-            beskrivSamværUtenBarn = forelder.beskrivSamværUtenBarn?.tilSøknadsfelt()
+            beskrivSamværUtenBarn = forelder.beskrivSamværUtenBarn?.tilSøknadsfelt(),
+            skalBarnetBoHosSøkerMenAnnenForelderSamarbeiderIkke = dokumentfelt("BARN_BOR_HOS_SØKER", dokumentMap)
     ))
 
 }

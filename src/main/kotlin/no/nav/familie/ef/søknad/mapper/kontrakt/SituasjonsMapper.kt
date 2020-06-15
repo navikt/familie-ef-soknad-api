@@ -11,19 +11,21 @@ object SituasjonsMapper {
     fun mapSituasjon(frontendDto: SøknadDto, dokumenter: Map<String, List<Dokument>>): Situasjon {
         val merOmDinSituasjon = frontendDto.merOmDinSituasjon
         return Situasjon(gjelderDetteDeg = merOmDinSituasjon.gjelderDetteDeg.tilSøknadsfelt(),
-                         sykdom = dokumentfelt("Legeerklæring", dokumenter),
-                         barnsSykdom = dokumentfelt("Legeattest for egen sykdom eller sykt barn", dokumenter),
-                         manglendeBarnepass = dokumentfelt("Avslag på søknad om barnehageplass, skolefritidsordning e.l.",
+                         sykdom = dokumentfelt("SYKDOM", dokumenter),
+                         barnsSykdom = dokumentfelt("SYKT_BARN", dokumenter),
+                         manglendeBarnepass = dokumentfelt("BARNEPASS",
                                                            dokumenter),
-                         barnMedSærligeBehov = dokumentfelt("Dokumentasjon av særlig tilsynsbehov", dokumenter),
-                         utdanningstilbud = dokumentfelt("Dokumentasjon av studieopptak", dokumenter),
+                         barnMedSærligeBehov = dokumentfelt("BARNETILSYN_BEHOV", dokumenter),
+                         utdanningstilbud = dokumentfelt("UTDANNING", dokumenter),
                          oppstartNyJobb = merOmDinSituasjon.datoOppstartJobb?.tilSøknadsfelt(),
-                         arbeidskontrakt = dokumentfelt("Dokumentasjon av jobbtilbud", dokumenter),
+                         arbeidskontrakt = dokumentfelt("ARBEIDSKONTRAKT", dokumenter),
                          oppstartUtdanning = merOmDinSituasjon.datoOppstartUtdanning?.tilSøknadsfelt(),
                          sagtOppEllerRedusertStilling = merOmDinSituasjon.sagtOppEllerRedusertStilling?.tilSøknadsfelt(),
                          oppsigelseReduksjonÅrsak = merOmDinSituasjon.begrunnelseSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
                          oppsigelseReduksjonTidspunkt = merOmDinSituasjon.datoSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
-                         oppsigelseReduksjonDokumentasjon = dokumentfelt("Dokumentasjon av arbeidsforhold", dokumenter))
+                         reduksjonAvArbeidsforholdDokumentasjon = dokumentfelt("ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID", dokumenter),
+                         oppsigelseDokumentasjon = dokumentfelt("ARBEIDSFORHOLD_OPPSIGELSE", dokumenter),
+                         lærlingkontrakt = dokumentfelt("LÆRLING", dokumenter))
     }
 
 }
