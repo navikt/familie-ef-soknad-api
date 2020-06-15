@@ -47,7 +47,9 @@ management:
         enabled: true
     web:
       server:
-        auto-time-requests: true
+        request:
+          autotime:
+            enabled: true
 
 cors:
   allowed_origins:

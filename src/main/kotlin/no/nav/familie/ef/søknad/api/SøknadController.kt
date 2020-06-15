@@ -34,7 +34,7 @@ class SøknadController(val søknadService: SøknadService, val featureToggleSer
                 Kvittering("ok", mottattDato = innsendingMottatt)
             } catch (e: Exception) {
                 logger.error("Feil - får ikke sendt til mottak ", e)
-                Kvittering("Feil! Søknad ikke sendt inn. ", null)
+                error("Noe gikk galt ved innsending")
             }
         }
     }

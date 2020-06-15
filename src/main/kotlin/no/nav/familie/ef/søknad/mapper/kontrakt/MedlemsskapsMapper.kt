@@ -9,7 +9,7 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Utenlandsopphold as KontraksUtenlandsopphold
 
 object MedlemsskapsMapper {
-    fun mapMedlemskap(frontendDto: SøknadDto, dokumenter: Map<String, Dokument>): Medlemskapsdetaljer {
+    fun mapMedlemskap(frontendDto: SøknadDto, dokumenter: Map<String, List<Dokument>>): Medlemskapsdetaljer {
         val medlemskap = frontendDto.medlemskap
         return Medlemskapsdetaljer(medlemskap.søkerOppholderSegINorge.tilSøknadsfelt(),
                                    medlemskap.søkerBosattINorgeSisteTreÅr.tilSøknadsfelt(),

@@ -7,7 +7,7 @@ data class SøknadDto(val bosituasjon: Bosituasjon,
                      @field:Valid val person: Person,
                      val sivilstatus: Sivilstatus,
                      val søkerBorPåRegistrertAdresse: BooleanFelt? = null,
-                     val vedleggsliste: List<VedleggFelt>,
+                     val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
                      val aktivitet: Aktivitet,
                      val merOmDinSituasjon: Situasjon)
 

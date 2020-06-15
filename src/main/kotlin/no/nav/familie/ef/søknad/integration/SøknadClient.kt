@@ -17,11 +17,11 @@ class SøknadClient(private val config: MottakConfig,
     override val pingUri: URI = config.pingUri
 
     fun sendInn(søknad: Søknad): KvitteringDto {
-        return postForEntity(config.sendInnUri, søknad)!!
+        return postForEntity(config.sendInnUri, søknad)
     }
 
     fun sendInnArbeidsRegistreringsskjema(skjema: SkjemaForArbeidssøker): KvitteringDto {
-        return postForEntity(config.sendInnSkjemaArbeidUri, skjema)!!
+        return postForEntity(config.sendInnSkjemaArbeidUri, skjema)
     }
 
 }

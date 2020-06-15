@@ -9,7 +9,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenFo
 
 object BarnMapper {
 
-    fun mapFolkeregistrerteBarn(barnliste: List<Barn>, dokumentMap: Map<String, Dokument>): List<RegistrertBarn> {
+    fun mapFolkeregistrerteBarn(barnliste: List<Barn>, dokumentMap: Map<String, List<Dokument>>): List<RegistrertBarn> {
         return barnliste.filterNot { falseOrNull(it.lagtTil) }
                 .map { barn ->
                     RegistrertBarn(
@@ -23,7 +23,7 @@ object BarnMapper {
                 }
     }
 
-    fun mapNyttBarn(barnliste: List<Barn>, dokumentMap: Map<String, Dokument>): List<NyttBarn> {
+    fun mapNyttBarn(barnliste: List<Barn>, dokumentMap: Map<String, List<Dokument>>): List<NyttBarn> {
         return barnliste.filter { falseOrNull(it.lagtTil) }
                 .map { barn ->
                     NyttBarn(
@@ -57,8 +57,8 @@ object BarnMapper {
             ))
 
     private fun mapSamvær(forelder: AnnenForelderDto,
-                          dokumentMap: Map<String, Dokument>): Søknadsfelt<Samvær> = Søknadsfelt("samvær", Samvær(
-            spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted.tilSøknadsfelt(),
+                          dokumentMap: Map<String, List<Dokument>>): Søknadsfelt<Samvær> = Søknadsfelt("samvær", Samvær(
+            spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted?.tilSøknadsfelt(),
             avtaleOmDeltBosted = dokumentfelt("Avtale om delt bosted for barna", dokumentMap), //TODO vedlegg
             skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
             harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),

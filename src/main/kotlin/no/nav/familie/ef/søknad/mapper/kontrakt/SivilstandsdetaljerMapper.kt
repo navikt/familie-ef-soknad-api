@@ -9,7 +9,7 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 
 object SivilstandsdetaljerMapper {
 
-    fun mapSivilstandsdetaljer(frontendDto: SøknadDto, dokumentMap: Map<String, Dokument>): Sivilstandsdetaljer {
+    fun mapSivilstandsdetaljer(frontendDto: SøknadDto, dokumentMap: Map<String, List<Dokument>>): Sivilstandsdetaljer {
         val sivilstatus = frontendDto.sivilstatus
         return Sivilstandsdetaljer(samlivsbruddsdokumentasjon = lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumentMap),
                                    samlivsbruddsdato = sivilstatus.datoForSamlivsbrudd?.tilSøknadsfelt(),
@@ -27,7 +27,7 @@ object SivilstandsdetaljerMapper {
         )
     }
 
-    private fun lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumenter: Map<String, Dokument>): Søknadsfelt<Dokument>? {
+    private fun lagSamlivsbruddsdokumentasjonSøknadsfelt(dokumenter: Map<String, List<Dokument>>): Søknadsfelt<List<Dokument>>? {
         return dokumentfelt("samlivsbrudd", dokumenter)
     }
 
