@@ -2,43 +2,28 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
-import no.nav.familie.ef.søknad.mapper.falseOrNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
+import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
 
 object BarnMapper {
 
-    fun mapFolkeregistrerteBarn(barnliste: List<Barn>, dokumentMap: Map<String, List<Dokument>>): List<RegistrertBarn> {
-        return barnliste.filterNot { falseOrNull(it.lagtTil) }
-                .map { barn ->
-                    RegistrertBarn(
-                            navn = barn.navn.tilSøknadsfelt(),
-                            fødselsnummer = barn.fnr.tilSøknadsfelt(::Fødselsnummer),
-                            harSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
-                            annenForelder = mapAnnenForelder(barn.forelder),
-                            samvær = mapSamvær(barn.forelder, dokumentMap),
-                            ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse?.tilSøknadsfelt()
-                            )
-                }
-    }
-
-    fun mapNyttBarn(barnliste: List<Barn>, dokumentMap: Map<String, List<Dokument>>): List<NyttBarn> {
-        return barnliste.filter { falseOrNull(it.lagtTil) }
-                .map { barn ->
-                    NyttBarn(
-                            navn = barn.navn.tilSøknadsfelt(),
-                            fødselsnummer = barn.fnr.tilSøknadsfelt(),
-                            erBarnetFødt = barn.født.tilSøknadsfelt(),
-                            fødselTermindato = barn.fødselsdato.tilSøknadsfelt(),
-                            terminbekreftelse = dokumentfelt("Terminbekreftelse",
-                                                             dokumentMap), //TODO vedlegg har ikke snakket om denne
-                            // TODO ikke endre felt som opprinnelig var fra tps i UI? Her brukes harSammeAdresse på nytt barn.
-                            skalBarnetBoHosSøker = barn.harSammeAdresse.tilSøknadsfelt(),
-                            annenForelder = mapAnnenForelder(barn.forelder),
-                            samvær = mapSamvær(barn.forelder, dokumentMap)
-                    )
-                }
+    fun mapBarn(barnliste: List<Barn>, dokumentMap: Map<String, List<Dokument>>): List<Kontraktbarn> {
+        return barnliste.map { barn ->
+            Kontraktbarn(navn = barn.navn.tilSøknadsfelt(),
+                         fødselsnummer = barn.fnr?.tilSøknadsfelt(::Fødselsnummer),
+                         harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
+                         ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse
+                                 ?.tilSøknadsfelt(),
+                         erBarnetFødt = barn.født.tilSøknadsfelt(),
+                         fødselTermindato = barn.fødselsdato.tilSøknadsfelt(),
+                         terminbekreftelse = dokumentfelt("Terminbekreftelse",
+                                                          dokumentMap), //TODO vedlegg har ikke snakket om denne
+                         annenForelder = mapAnnenForelder(barn.forelder),
+                         samvær = mapSamvær(barn.forelder, dokumentMap)
+            )
+        }
     }
 
     private fun mapAnnenForelder(forelder: AnnenForelderDto): Søknadsfelt<AnnenForelder> =
@@ -52,7 +37,8 @@ object BarnMapper {
                     person = Søknadsfelt("Persondata", PersonMinimum(
                             fødselsnummer = forelder.personnr?.tilSøknadsfelt(::Fødselsnummer),
                             fødselsdato = forelder.fødselsdato?.tilSøknadsfelt(),
-                            navn = forelder.navn?.tilSøknadsfelt() ?: Søknadsfelt("Annen forelder navn", "ikke oppgitt") // TODO dette må vi finne ut av, bør navn være optional i kontrakt
+                            navn = forelder.navn?.tilSøknadsfelt() ?: Søknadsfelt("Annen forelder navn",
+                                                                                  "ikke oppgitt") // TODO dette må vi finne ut av, bør navn være optional i kontrakt
                     ))
             ))
 
