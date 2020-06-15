@@ -116,10 +116,6 @@
         }
       },
       {
-        "fnr": {
-          "label": "Fødselsnummer eller d-nummer",
-          "verdi": "22042012345678913"
-        },
         "personnummer": {
           "label": "Personnummer",
           "verdi": "12345678913"

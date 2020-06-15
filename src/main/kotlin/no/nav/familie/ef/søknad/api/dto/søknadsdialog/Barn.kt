@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
 
 data class Barn(val alder: TekstFelt,
-                val fnr: TekstFelt,
+                val fnr: TekstFelt? = null,
                 val fødselsdato: DatoFelt,
                 val harSammeAdresse: BooleanFelt,
                 val ikkeRegistrertPåSøkersAdresseBeskrivelse: TekstFelt?,
