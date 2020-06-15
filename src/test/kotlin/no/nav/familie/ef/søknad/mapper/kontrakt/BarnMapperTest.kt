@@ -13,72 +13,62 @@ internal class BarnMapperTest {
     private val søknadDto = søknadDto()
 
     // Når
-    private val folkeregistrerteBarn = BarnMapper.mapFolkeregistrerteBarn(søknadDto.person.barn, dokumenter)
-    private val nyregistrertBarn = BarnMapper.mapNyttBarn(søknadDto.person.barn, dokumenter)
-
-    @Test
-    fun `Mapping skal finne ett nytt barn`() {
-        assertThat(nyregistrertBarn).hasSize(1)
-    }
-
-    @Test
-    fun `Mapping skal finne ett folkeregistrert barn`() {
-        assertThat(folkeregistrerteBarn).hasSize(1)
-    }
+    private val folkeregistrerteBarn = BarnMapper.mapBarn(søknadDto.person.barn, dokumenter).first()
+    private val nyregistrertBarn = BarnMapper.mapBarn(søknadDto.person.barn, dokumenter)[1]
 
     @Test
     fun `Folkeregistrert barn har riktig fødselsnummer`() {
-        assertThat(folkeregistrerteBarn.first().fødselsnummer.verdi.verdi).isEqualTo("28021078036")
+        assertThat(folkeregistrerteBarn.fødselsnummer?.verdi?.verdi).isEqualTo("28021078036")
     }
 
     @Test
     fun `Folkeregistrert barn har riktig navn`() {
-        assertThat(folkeregistrerteBarn.first().navn.verdi).isEqualTo("SHIBA INU")
+        assertThat(folkeregistrerteBarn.navn?.verdi).isEqualTo("SHIBA INU")
     }
 
     @Test
     fun `Folkeregistrert barn har annenForelder`() {
-        assertThat(folkeregistrerteBarn.first().annenForelder).isNotNull
+        assertThat(folkeregistrerteBarn.annenForelder).isNotNull
     }
 
     @Test
     fun `Folkeregistrert barn har annenForelder bosatt i norge`() {
-        val annenForelder = folkeregistrerteBarn.first().annenForelder?.verdi
+        val annenForelder = folkeregistrerteBarn.annenForelder?.verdi
         assertThat(annenForelder?.bosattNorge?.verdi).isEqualTo(true)
     }
 
     @Test
     fun `Folkeregistrert barn har annenForelder ikke oppgitt begrunnelse `() {
-        val annenForelder = folkeregistrerteBarn.first().annenForelder?.verdi
+        val annenForelder = folkeregistrerteBarn.annenForelder?.verdi
         assertThat(annenForelder?.ikkeOppgittAnnenForelderBegrunnelse).isNull()
     }
 
     @Test
     fun `Folkeregistrert barn har annenForelder ikke oppgitt er false `() {
-        val annenForelder = folkeregistrerteBarn.first().annenForelder?.verdi
+        val annenForelder = folkeregistrerteBarn.annenForelder?.verdi
         assertThat(annenForelder?.kanIkkeOppgiAnnenForelderFar?.verdi).isFalse()
     }
 
     @Test
     fun `Nyregistrert barn har annenForelder ikke oppgitt begrunnelse `() {
-        val annenForelder = nyregistrertBarn.first().annenForelder?.verdi
+        val annenForelder = nyregistrertBarn.annenForelder?.verdi
         assertThat(annenForelder?.ikkeOppgittAnnenForelderBegrunnelse).isNotNull()
     }
 
     @Test
     fun `Nyregistrert barn har ikke oppgitt annen forelder`() {
-        val annenForelder = nyregistrertBarn.first().annenForelder?.verdi
+        val annenForelder = nyregistrertBarn.annenForelder?.verdi
         assertThat(annenForelder?.kanIkkeOppgiAnnenForelderFar?.verdi).isTrue()
     }
 
     @Test
     fun `Nyregistrert barn må ha skalBarnetBoHosSøker `() {
-        assertThat(nyregistrertBarn.first().skalBarnetBoHosSøker.verdi).isTrue()
+        assertThat(nyregistrertBarn.harSkalHaSammeAdresse.verdi).isTrue()
     }
 
     @Test
     fun `Forelder til folkeregistrert barn må ha samvær`() {
-        val samvær = folkeregistrerteBarn.first().samvær!!.verdi
+        val samvær = folkeregistrerteBarn.samvær!!.verdi
         assertThat(samvær.spørsmålAvtaleOmDeltBosted?.verdi).isFalse()
         //assertThat(samvær.avtaleOmDeltBosted?.verdi).isFalse() //TODO vedlegg
         assertThat(samvær.skalAnnenForelderHaSamvær?.verdi).isEqualTo("Nei")
