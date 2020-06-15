@@ -43,20 +43,18 @@ data class Firma(
 )
 
 data class UnderUtdanning(
-        val arbeidsmengde: TekstFelt,
+        val arbeidsmengde: TekstFelt?, //TODO valider - nullable hvis heltid
         val harTattUtdanningEtterGrunnskolen: BooleanFelt,
         val heltidEllerDeltid: TekstFelt,
         val linjeKursGrad: TekstFelt,
-        val målMedUtdanning: TekstFelt,
+        val målMedUtdanning: TekstFelt?, //TODO valider - nullable hvis heltid
         val offentligEllerPrivat: TekstFelt,
         val periode: Periode,
-        val react_key: String,
         val skoleUtdanningssted: TekstFelt,
         val tidligereUtdanning: List<TidligereUtdanning>? = null
 )
 
 data class TidligereUtdanning(
         val linjeKursGrad: TekstFelt,
-        val periode: Periode,
-        val react_key: String
+        val periode: Periode
 )
