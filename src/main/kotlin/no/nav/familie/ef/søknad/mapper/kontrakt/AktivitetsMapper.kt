@@ -50,9 +50,9 @@ object AktivitetsMapper {
                                                                                     underUtdanning.periode.til.verdi.year))
                                                       )),
                               offentligEllerPrivat = underUtdanning.offentligEllerPrivat.tilSøknadsfelt(),
-                              hvorMyeSkalDuStudere = underUtdanning.arbeidsmengde.tilSøknadsfelt(String::toInt),
+                              hvorMyeSkalDuStudere = underUtdanning.arbeidsmengde?.tilSøknadsfelt(String::toInt) ,
                               heltidEllerDeltid = underUtdanning.heltidEllerDeltid.tilSøknadsfelt(),
-                              hvaErMåletMedUtdanningen = underUtdanning.målMedUtdanning.tilSøknadsfelt(),
+                              hvaErMåletMedUtdanningen = underUtdanning.målMedUtdanning?.tilSøknadsfelt() ,
                               utdanningEtterGrunnskolen = underUtdanning.harTattUtdanningEtterGrunnskolen.tilSøknadsfelt(),
                               tidligereUtdanninger = underUtdanning.tidligereUtdanning?.let { mapTidligereUtdanning(it) }
         )
