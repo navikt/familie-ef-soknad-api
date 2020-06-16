@@ -9,7 +9,7 @@ import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
 
 object BarnMapper {
 
-    fun mapBarn(barnliste: List<Barn>, dokumentMap: Map<String, List<Dokument>>): List<Kontraktbarn> {
+    fun mapBarn(barnliste: List<Barn>, vedlegg: Map<String, List<Vedlegg>>): List<Kontraktbarn> {
         return barnliste.map { barn ->
             Kontraktbarn(navn = barn.navn.tilSøknadsfelt(),
                          fødselsnummer = mapFødselsnummer(barn),
@@ -18,9 +18,9 @@ object BarnMapper {
                                  ?.tilSøknadsfelt(),
                          erBarnetFødt = barn.født.tilSøknadsfelt(),
                          fødselTermindato = barn.fødselsdato.tilSøknadsfelt(),
-                         terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, dokumentMap),
+                         terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, vedlegg),
                          annenForelder = mapAnnenForelder(barn.forelder),
-                         samvær = mapSamvær(barn.forelder, dokumentMap)
+                         samvær = mapSamvær(barn.forelder, vedlegg)
             )
         }
     }
@@ -53,7 +53,7 @@ object BarnMapper {
             ))
 
     private fun mapSamvær(forelder: AnnenForelderDto,
-                          dokumentMap: Map<String, List<Dokument>>): Søknadsfelt<Samvær> = Søknadsfelt("samvær", Samvær(
+                          dokumentMap: Map<String, List<Vedlegg>>): Søknadsfelt<Samvær> = Søknadsfelt("samvær", Samvær(
             spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted?.tilSøknadsfelt(),
             avtaleOmDeltBosted = dokumentfelt(DELT_BOSTED, dokumentMap),
             skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
