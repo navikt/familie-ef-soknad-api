@@ -15,7 +15,7 @@ object BosituasjonMapper {
         return KontraktBosituasjon(delerDuBolig = mapSøkerDelerBoligMedAndre(bosituasjon),
                                    samboerdetaljer = mapSamboer(bosituasjon),
                                    sammenflyttingsdato = mapDatoFlyttetSammenMedSamboer(bosituasjon),
-                                   tidligereSamboerFortsattRegistrertPåAdresse = dokumentfelt("BOR_PÅ_ULIKE_ADRESSER", dokumenter))
+                                   tidligereSamboerFortsattRegistrertPåAdresse = dokumentfelt(BOR_PÅ_ULIKE_ADRESSER, dokumenter))
     }
 
     private fun mapSøkerDelerBoligMedAndre(bosituasjon: Bosituasjon) = bosituasjon.delerBoligMedAndreVoksne.tilSøknadsfelt()

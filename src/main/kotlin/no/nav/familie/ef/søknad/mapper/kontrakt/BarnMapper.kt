@@ -18,8 +18,7 @@ object BarnMapper {
                                  ?.tilSøknadsfelt(),
                          erBarnetFødt = barn.født.tilSøknadsfelt(),
                          fødselTermindato = barn.fødselsdato.tilSøknadsfelt(),
-                         terminbekreftelse = dokumentfelt("TERMINBEKREFTELSE",
-                                                          dokumentMap), //TODO vedlegg har ikke snakket om denne
+                         terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, dokumentMap),
                          annenForelder = mapAnnenForelder(barn.forelder),
                          samvær = mapSamvær(barn.forelder, dokumentMap)
             )
@@ -56,21 +55,21 @@ object BarnMapper {
     private fun mapSamvær(forelder: AnnenForelderDto,
                           dokumentMap: Map<String, List<Dokument>>): Søknadsfelt<Samvær> = Søknadsfelt("samvær", Samvær(
             spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted?.tilSøknadsfelt(),
-            avtaleOmDeltBosted = dokumentfelt("DELT_BOSTED", dokumentMap),
+            avtaleOmDeltBosted = dokumentfelt(DELT_BOSTED, dokumentMap),
             skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
             harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
-            samværsavtale = dokumentfelt("SAMVÆRSAVTALE", dokumentMap),
+            samværsavtale = dokumentfelt(SAMVÆRSAVTALE, dokumentMap),
             borAnnenForelderISammeHus = forelder.borAnnenForelderISammeHus?.tilSøknadsfelt(),
             borAnnenForelderISammeHusBeskrivelse = forelder.borAnnenForelderISammeHusBeskrivelse?.tilSøknadsfelt(),
             harDereTidligereBoddSammen = forelder.boddSammenFør?.tilSøknadsfelt(),
             nårFlyttetDereFraHverandre = forelder.flyttetFra?.tilSøknadsfelt(),
-            erklæringOmSamlivsbrudd = dokumentfelt("SAMLIVSBRUDD", dokumentMap),
+            erklæringOmSamlivsbrudd = dokumentfelt(SAMLIVSBRUDD, dokumentMap),
             hvorMyeErDuSammenMedAnnenForelder = forelder.hvorMyeSammen?.tilSøknadsfelt(),
             // Ytterligere informasjon som innhentes dersom hvorMyeErDuSammenMedAnnenForelder =
             // "Vi møtes også utenom henting og levering" => (hvordanPraktiseresSamværet)
             hvordanPraktiseresSamværet = forelder.hvordanPraktiseresSamværet?.tilSøknadsfelt(),
             beskrivSamværUtenBarn = forelder.beskrivSamværUtenBarn?.tilSøknadsfelt(),
-            skalBarnetBoHosSøkerMenAnnenForelderSamarbeiderIkke = dokumentfelt("BARN_BOR_HOS_SØKER", dokumentMap)
+            skalBarnetBoHosSøkerMenAnnenForelderSamarbeiderIkke = dokumentfelt(BARN_BOR_HOS_SØKER, dokumentMap)
     ))
 
 }
