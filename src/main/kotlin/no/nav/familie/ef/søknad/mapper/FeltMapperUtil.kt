@@ -15,8 +15,6 @@ fun DatoFelt.tilSøknadsfelt(): Søknadsfelt<LocalDate> = Søknadsfelt(this.labe
 
 fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi)
 
-fun falseOrNull(it: Boolean?) = it ?: false
-
 fun dokumentfelt(dokumentNavn: String, alleDokumenter: Map<String, List<Dokument>>): Søknadsfelt<List<Dokument>>? {
     val dokumenter = alleDokumenter[dokumentNavn]
     return dokumenter?.let {
@@ -27,3 +25,5 @@ fun dokumentfelt(dokumentNavn: String, alleDokumenter: Map<String, List<Dokument
         }
     }
 }
+
+fun String.tilHeltall(): Int = this.toDouble().toInt()

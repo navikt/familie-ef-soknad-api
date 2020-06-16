@@ -8,6 +8,7 @@ import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.io.File
 import java.time.LocalDateTime
 
@@ -20,8 +21,11 @@ internal class JsonSisteInnspurtMapperTest {
     fun søknadNyttBarn(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/nyttBarnFeil.json"),
                                                      SøknadDto::class.java)
 
-    private val søknadDto = søknad()
+    fun søknadFraEivind(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/feilFraEivind.json"),
+                                                             SøknadDto::class.java)
 
+    fun søknadMedugyldigFødselsnummer(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/søknadMedUgyldigFødselsnummer.json"),
+                                                                            SøknadDto::class.java)
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
@@ -32,13 +36,22 @@ internal class JsonSisteInnspurtMapperTest {
 
     @Test
     fun `mapTilIntern returnerer dto med riktig sivilstatus fra frontend`() {
+        mapper.mapTilIntern(søknad(), innsendingMottatt)
+    }
 
-        mapper.mapTilIntern(søknadDto, innsendingMottatt)
-
+    @Test
+    fun `mapTilIntern - mapper String med desimaler til heltall`() {
+        mapper.mapTilIntern(søknadFraEivind(), innsendingMottatt)
     }
 
     @Test
     internal fun `skal mappe nytt barn uten fødselsnummer`() {
         mapper.mapTilIntern(søknadNyttBarn(), innsendingMottatt)
+    }
+
+    @Test
+    internal fun `skal kaste exception når fødselsnummer ikke er gyldig`() {
+        val frontendDto = søknadMedugyldigFødselsnummer()
+        assertThrows<IllegalStateException> { mapper.mapTilIntern(frontendDto, innsendingMottatt)}
     }
 }

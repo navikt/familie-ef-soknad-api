@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TidligereUtdanning
+import no.nav.familie.ef.søknad.mapper.tilHeltall
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidsgiver as ArbeidsgiverDto
@@ -26,7 +27,7 @@ object AktivitetsMapper {
                              Søknadsfelt("Ansatt i eget AS", it.map { aksjeselskap ->
                                  Aksjeselskap(
                                          navn = aksjeselskap.navn.tilSøknadsfelt(),
-                                         arbeidsmengde = aksjeselskap.arbeidsmengde.tilSøknadsfelt()
+                                         arbeidsmengde = aksjeselskap.arbeidsmengde.tilSøknadsfelt(String::tilHeltall)
                                  )
                              }
                              )
@@ -50,9 +51,9 @@ object AktivitetsMapper {
                                                                                     underUtdanning.periode.til.verdi.year))
                                                       )),
                               offentligEllerPrivat = underUtdanning.offentligEllerPrivat.tilSøknadsfelt(),
-                              hvorMyeSkalDuStudere = underUtdanning.arbeidsmengde?.tilSøknadsfelt(String::toInt) ,
+                              hvorMyeSkalDuStudere = underUtdanning.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
                               heltidEllerDeltid = underUtdanning.heltidEllerDeltid.tilSøknadsfelt(),
-                              hvaErMåletMedUtdanningen = underUtdanning.målMedUtdanning?.tilSøknadsfelt() ,
+                              hvaErMåletMedUtdanningen = underUtdanning.målMedUtdanning?.tilSøknadsfelt(),
                               utdanningEtterGrunnskolen = underUtdanning.harTattUtdanningEtterGrunnskolen.tilSøknadsfelt(),
                               tidligereUtdanninger = underUtdanning.tidligereUtdanning?.let { mapTidligereUtdanning(it) }
         )
@@ -90,20 +91,26 @@ object AktivitetsMapper {
         return Selvstendig(firmanavn = firma.navn.tilSøknadsfelt(),
                            organisasjonsnummer = firma.organisasjonsnummer.tilSøknadsfelt(),
                            etableringsdato = firma.etableringsdato.tilSøknadsfelt(),
-                           arbeidsmengde = firma.arbeidsmengde.tilSøknadsfelt(String::toInt),
+                           arbeidsmengde = firma.arbeidsmengde.tilSøknadsfelt(String::tilHeltall),
                            hvordanSerArbeidsukenUt = firma.arbeidsuke.tilSøknadsfelt())
     }
 
     private fun mapArbeidsforhold(arbeidsforhold: List<ArbeidsgiverDto>): List<Arbeidsgiver> {
+
         return arbeidsforhold.map { arbeid ->
             Arbeidsgiver(arbeidsgivernavn = arbeid.navn.tilSøknadsfelt(),
-                         arbeidsmengde = arbeid.arbeidsmengde.tilSøknadsfelt(String::toInt),
+                         arbeidsmengde = arbeid.arbeidsmengde.tilSøknadsfelt(String::tilHeltall  ),
                          fastEllerMidlertidig = arbeid.ansettelsesforhold.tilSøknadsfelt(),
                          harSluttdato = arbeid.harSluttDato?.tilSøknadsfelt(),
                          sluttdato = arbeid.sluttdato?.tilSøknadsfelt()
             )
         }
     }
+
+
+
+
+
 
 }
 
