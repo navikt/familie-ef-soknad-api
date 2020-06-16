@@ -1,0 +1,220 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "23126521537",
+      "forkortetNavn": "TRANE ÅPENHJERTIG",
+      "adresse": {
+        "adresse": "FOSSVANGBAKKIN 2",
+        "postnummer": "7994"
+      },
+      "egenansatt": false,
+      "sivilstand": "UGIF",
+      "statsborgerskap": "NOR",
+      "mobiltelefon": "12345678"
+    },
+    "barn": [
+      {
+        "fnr": {
+          "label": "Fødselsnummer eller d-nummer",
+          "verdi": ""
+        },
+        "personnummer": {
+          "label": "Personnummer",
+          "verdi": ""
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 0
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": ""
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2020-06-16"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "født": {
+          "spørsmålid": "født",
+          "svarid": "NEI",
+          "label": "Er barnet født?",
+          "verdi": false
+        },
+        "lagtTil": true,
+        "id": "138d5990-48c5-4a05-995f-89c9b9a8d5fb",
+        "forelder": {
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": true
+          },
+          "ikkeOppgittAnnenForelderBegrunnelse": {
+            "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
+            "verdi": "Donorbarn"
+          },
+          "hvorforIkkeOppgi": {
+            "spørsmålid": "hvorforIkkeOppgi",
+            "svarid": "donorbarn",
+            "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
+            "verdi": "Donorbarn"
+          }
+        }
+      }
+    ],
+    "hash": "-318574455"
+  },
+  "sivilstatus": {
+    "erUformeltGift": {
+      "spørsmålid": "erUformeltGift",
+      "svarid": "NEI",
+      "label": "Er du gift uten at dette er formelt registrert eller godkjent i Norge?",
+      "verdi": false
+    },
+    "erUformeltSeparertEllerSkilt": {
+      "spørsmålid": "erUformeltSeparertEllerSkilt",
+      "svarid": "NEI",
+      "label": "Er du separert eller skilt uten at dette er formelt registrert eller godkjent i Norge?",
+      "verdi": false
+    },
+    "årsakEnslig": {
+      "spørsmålid": "årsakEnslig",
+      "svarid": "endringISamværsordning",
+      "label": "Hvorfor er du alene med barn?",
+      "verdi": "Endring i omsorgen for barn"
+    },
+    "datoEndretSamvær": {
+      "label": "Når skjedde endringen / når skal endringen skje?",
+      "verdi": "2020-06-10T22:00:00.000Z"
+    }
+  },
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du bodd i Norge de siste tre årene?",
+      "verdi": true
+    }
+  },
+  "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "borAleneMedBarnEllerGravid",
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegEllerBliSamboer",
+      "svarid": "NEI",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    }
+  },
+  "aktivitet": {
+    "hvaErDinArbeidssituasjon": {
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": [
+        "tarUtdanning"
+      ],
+      "label": "Hvordan er arbeidsituasjonen din?",
+      "verdi": [
+        "Jeg tar utdanning"
+      ]
+    },
+    "underUtdanning": {
+      "id": "2c5f2d94-4c76-4f9c-814c-0e95eee04c9f",
+      "skoleUtdanningssted": {
+        "label": "Skole / utdanningssted",
+        "verdi": "Livets hårde skole"
+      },
+      "linjeKursGrad": {
+        "label": "Linje / kurs / grad",
+        "verdi": "Jernlinja"
+      },
+      "offentligEllerPrivat": {
+        "label": "Er utdanningen offentlig eller privat?",
+        "verdi": "Privat"
+      },
+      "periode": {
+        "fra": {
+          "label": "utdanning.datovelger.studieperiode",
+          "verdi": "2020-02-24T13:08:21.000Z"
+        },
+        "til": {
+          "label": "",
+          "verdi": "2020-06-15T12:08:21.412Z"
+        }
+      },
+      "heltidEllerDeltid": {
+        "spørsmålid": "heltidEllerDeltid",
+        "svarid": "heltid",
+        "label": "Er utdanningen på heltid eller deltid?",
+        "verdi": "Heltid"
+      },
+      "harTattUtdanningEtterGrunnskolen": {
+        "label": "Har du tatt utdanning etter grunnskolen?",
+        "verdi": false
+      }
+    }
+  },
+  "merOmDinSituasjon": {
+    "gjelderDetteDeg": {
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": [
+        "harSøktBarnepassOgVenterEnnå"
+      ],
+      "label": "Gjelder noe av dette deg?",
+      "verdi": [
+        "Jeg har søkt om barnepass, men ikke fått plass enda"
+      ]
+    },
+    "sagtOppEllerRedusertStilling": {
+      "spørsmålid": "sagtOppEllerRedusertStilling",
+      "svarid": "nei",
+      "label": "Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",
+      "verdi": "Nei"
+    },
+    "søkerFraBestemtMåned": {
+      "spørsmålid": "søkerFraBestemtMåned",
+      "svarid": "neiNavKanVurdere",
+      "label": "Søker du om overgangsstønad fra en bestemt måned?",
+      "verdi": "Nei, Nav kan vurdere fra hvilken måned jeg har rett til stønad"
+    }
+  },
+  "dokumentasjonsbehov": [
+    {
+      "id": "UTDANNING",
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": "tarUtdanning",
+      "tittel": "dokumentasjon.utdanning.tittel",
+      "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
+      "harSendtInn": false,
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "73cc72b9-2d58-4272-88cb-085de830bd19",
+          "navn": "Dokumentasjon på utdanningen du skal ta",
+          "label": "Dokumentasjon på utdanningen du skal ta"
+        }
+      ]
+    },
+    {
+      "id": "BARNEPASS",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "harSøktBarnepassOgVenterEnnå",
+      "tittel": "dokumentasjon.barnepass.tittel",
+      "beskrivelse": "dokumentasjon.barnepass.beskrivelse",
+      "harSendtInn": false
+    }
+  ],
+  "vedleggsliste": [],
+  "søkerBorPåRegistrertAdresse": {
+    "spørsmålid": "søkerBorPåRegistrertAdresse",
+    "svarid": "JA",
+    "label": "søkerBorPåRegistrertAdresse",
+    "verdi": true
+  }
+}

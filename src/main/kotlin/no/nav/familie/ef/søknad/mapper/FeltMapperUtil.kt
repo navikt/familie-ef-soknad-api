@@ -20,6 +20,10 @@ fun falseOrNull(it: Boolean?) = it ?: false
 fun dokumentfelt(dokumentNavn: String, alleDokumenter: Map<String, List<Dokument>>): Søknadsfelt<List<Dokument>>? {
     val dokumenter = alleDokumenter[dokumentNavn]
     return dokumenter?.let {
-        Søknadsfelt(dokumenter.first().tittel, dokumenter)
+        return if(dokumenter.isEmpty()) {
+            Søknadsfelt(dokumentNavn, emptyList())
+        } else {
+            Søknadsfelt(dokumenter.first().tittel, dokumenter)
+        }
     }
 }

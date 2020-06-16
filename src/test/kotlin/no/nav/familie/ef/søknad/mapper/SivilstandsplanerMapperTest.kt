@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
 import no.nav.familie.ef.søknad.mapper.kontrakt.BosituasjonMapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.SivilstandsplanerMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
@@ -14,6 +15,7 @@ import java.time.LocalDate
 internal class SivilstandsplanerMapperTest {
 
     private val bosituasjonGifteplaner = getBosituasjon("sivilstandsplaner.json")
+    private val dokumenter = emptyMap<String, List<Dokument>>()
 
     @Test
     fun `Vi mapper sivilstandsplaner verdi false`() {
@@ -61,14 +63,15 @@ internal class SivilstandsplanerMapperTest {
     @Test
     fun `Vi mapper vordende samboers navn`() {
         // When
-        val samboerdetaljer = BosituasjonMapper.mapBosituasjon(bosituasjonGifteplaner).samboerdetaljer        // Then
+        val samboerdetaljer = BosituasjonMapper.mapBosituasjon(bosituasjonGifteplaner, dokumenter).samboerdetaljer
+        // Then
         assertThat(samboerdetaljer?.verdi?.navn?.verdi).isEqualTo("Giflteklar Navnesen")
     }
 
     @Test
     fun `Vi mapper vordende samboers  personnummer`() {
         // When
-        val samboerdetaljer = BosituasjonMapper.mapBosituasjon(bosituasjonGifteplaner).samboerdetaljer
+        val samboerdetaljer = BosituasjonMapper.mapBosituasjon(bosituasjonGifteplaner, dokumenter).samboerdetaljer
         // Then
         assertThat(samboerdetaljer?.verdi?.fødselsnummer?.verdi).isEqualTo(Fødselsnummer("26077624804"))
     }
@@ -76,7 +79,7 @@ internal class SivilstandsplanerMapperTest {
     @Test
     fun `Vi mapper vordende samboers fødselsdato`() {
         // When
-        val samboerdetaljer = BosituasjonMapper.mapBosituasjon(bosituasjonGifteplaner).samboerdetaljer
+        val samboerdetaljer = BosituasjonMapper.mapBosituasjon(bosituasjonGifteplaner, dokumenter).samboerdetaljer
         // Then
         assertThat(samboerdetaljer?.verdi?.fødselsdato?.verdi).isEqualTo(LocalDate.of(1976, 7, 26))
     }
