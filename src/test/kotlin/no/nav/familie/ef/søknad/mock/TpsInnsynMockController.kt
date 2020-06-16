@@ -59,7 +59,7 @@ class TpsInnsynMockController {
     // language=jSon
     val person: String = """
         {
-  "ident": "12345678910",
+  "ident": "21057822284",
   "identtype": {
     "verdi": "FNR",
     "kodeverk": "Personidenter"
