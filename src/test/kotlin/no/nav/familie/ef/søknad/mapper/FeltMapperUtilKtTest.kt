@@ -2,11 +2,11 @@ package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ListFelt
-import no.nav.familie.kontrakter.ef.søknad.Dokument
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -49,13 +49,14 @@ internal class FeltMapperUtilKtTest {
     @Test
     internal fun `hent dokumentfelt`() {
         val bytes = byteArrayOf(12)
-        val dokumenter = mapOf("finnes" to listOf(Dokument(bytes, "Tittel på dok"), Dokument(bytes, "Annen tittel på dok")))
+        val dokumenter = mapOf("finnes" to listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok", bytes),
+                                                  Vedlegg("id2", "dok2.pdf", "Annen tittel på dok", bytes)))
         val dokumentSomFinnes = dokumentfelt("finnes", dokumenter)!!
-        assertThat(dokumentSomFinnes.verdi.first().tittel).isEqualTo("Tittel på dok")
-        assertThat(dokumentSomFinnes.verdi.first().bytes).isEqualTo(bytes)
+        assertThat(dokumentSomFinnes.verdi.first().id).isEqualTo("id1")
+        assertThat(dokumentSomFinnes.verdi.first().navn).isEqualTo("dok1.pdf")
 
-        assertThat(dokumentSomFinnes.verdi.last().tittel).isEqualTo("Annen tittel på dok")
-        assertThat(dokumentSomFinnes.verdi.last().bytes).isEqualTo(bytes)
+        assertThat(dokumentSomFinnes.verdi.last().id).isEqualTo("id2")
+        assertThat(dokumentSomFinnes.verdi.last().navn).isEqualTo("dok2.pdf")
 
         assertThat(dokumentfelt("finnesIkke", dokumenter)).isNull()
     }
