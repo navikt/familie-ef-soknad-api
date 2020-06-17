@@ -7,7 +7,8 @@ data class Situasjon(
         val sagtOppEllerRedusertStilling: TekstFelt? = null,
         val datoSagtOppEllerRedusertStilling: DatoFelt? = null,
         val begrunnelseSagtOppEllerRedusertStilling: TekstFelt? = null,
-        val søknadsdato: DatoFelt? // TODO ikke brukt
+        val søknadsdato: DatoFelt?,
+        val søkerFraBestemtMåned: TekstFelt
 )
 
 //export interface IDinSituasjon {

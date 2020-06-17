@@ -1,12 +1,13 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Situasjon
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.*
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
-import java.time.Month
 
 @Component
 class SøknadMapper(private val dokumentServiceService: DokumentService) {
@@ -30,7 +31,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                                    BarnMapper.mapBarn(frontendDto.person.barn, vedlegg)),
                 aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", AktivitetsMapper.map(frontendDto)),
                 situasjon = Søknadsfelt("Mer om situasjonen din", SituasjonsMapper.mapSituasjon(frontendDto, vedlegg)),
-                stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart()))
+                stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart(frontendDto.merOmDinSituasjon)))
         return SøknadMedVedlegg(søknad, vedlegg.values.flatten())
     }
 
@@ -46,7 +47,13 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
         }
     }
 
-    private fun stønadsstart() = Stønadsstart(Søknadsfelt("Fra måned", Month.AUGUST), Søknadsfelt("Fra år", 2018))
+    private fun stønadsstart(merOmDinSituasjon: Situasjon): Stønadsstart {
+        val month = merOmDinSituasjon.søknadsdato?.verdi?.month
+        val year = merOmDinSituasjon.søknadsdato?.verdi?.year
+        return Stønadsstart(month?.let { Søknadsfelt("Fra måned", month) },
+                            year?.let { Søknadsfelt("Fra år", year) },
+                            merOmDinSituasjon.søkerFraBestemtMåned.tilSøknadsfelt())
+    }
 
 
 }
