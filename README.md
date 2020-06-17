@@ -10,7 +10,7 @@ http://localhost:8091/local/cookie
 With redirect:
 http://localhost:8091/local/cookie?redirect=/api/ping
 
-PS. Mapping av fødselsnummer til kontrakt krever gyldig fødselsnummer: Logg inn med eks 21057822284 (brukes i koden)
+PS. Mapping av fødselsnummer til kontrakt krever gyldig fødselsnummer: Logg inn med eks 21057822284 (brukes i koden og er syntentisk fra dolly)
 http://localhost:8091/local/cookie?subject=[gyldigFødselsnummer] dersom du skal teste noe som krever at mapping skal fungere.   
 
 ### Swagger api kall med autentisering: 

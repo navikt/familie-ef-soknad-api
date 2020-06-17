@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import javax.ws.rs.client.ClientBuilder
+import javax.ws.rs.client.Entity
 import javax.ws.rs.core.Response
 import kotlin.test.assertEquals
 
@@ -31,7 +32,7 @@ class AutentiseringControllerApiIntegrationTest {
                 .request()
                 .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
                 .get()
-        assertEquals(200, response.status)
+        assertEquals(Response.Status.OK.statusCode, response.status)
     }
 
     @Test
@@ -40,6 +41,24 @@ class AutentiseringControllerApiIntegrationTest {
                 .request()
                 .get()
         assertEquals(Response.Status.UNAUTHORIZED.statusCode, response.status)
+    }
+
+    @Test
+    fun `skal få 404 når endepunkt ikke eksisterer`() {
+        val response = webTarget().path("/eksistererIkke")
+                .request()
+                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+                .get()
+        assertEquals(Response.Status.NOT_FOUND.statusCode, response.status)
+    }
+
+    @Test
+    fun `skal få 500 når man sender inn feil type objekt, liste i stedet for objekt`() {
+        val response = webTarget().path("/soknad")
+                .request()
+                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+                .post(Entity.json("[]"))
+        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.statusCode, response.status)
     }
 
     private fun webTarget() = client().target("http://localhost:$port$contextPath")

@@ -56,7 +56,7 @@ class TpsInnsynMockController {
   }
 ]
 """
-    // language=jSon
+    // language=jSon, 21057822284 er synetetisk fnr fra dolly
     val person: String = """
         {
   "ident": "21057822284",
