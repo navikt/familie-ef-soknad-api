@@ -45,7 +45,7 @@ internal class SøknadInputMapperTest {
         val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = forventetFnr),
                                                        barn = søknadDto.person.barn))
         // When
-        val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt)
+        val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad
         // Then
         assertThat(søknad.getFødselsnummer()).isEqualTo(forventetFnr)
     }
@@ -57,7 +57,7 @@ internal class SøknadInputMapperTest {
         val søknadDto = søknadDto.copy(person = Person(barn = søknadDto.person.barn,
                                                        søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn)))
         // When
-        val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt)
+        val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad
         // Then
         assertThat(søknad.getSøkerNavn()).isEqualTo(forventetNavn)
     }
@@ -68,7 +68,7 @@ internal class SøknadInputMapperTest {
         val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(telefonnummer = null),
                                                        barn = søknadDto.person.barn))
         // When
-        val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt)
+        val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad
         // Then
         val telefonnummer = søknad.personalia.verdi.telefonnummer
         assertThat(telefonnummer).isEqualTo(null)
@@ -81,7 +81,7 @@ internal class SøknadInputMapperTest {
         val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(sivilstatus = forventetSivilstatus),
                                                        barn = søknadDto.person.barn))
         // When
-        val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt)
+        val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad
         // Then
         val sivilstatus = søknad.personalia.verdi.sivilstatus.verdi
         assertThat(sivilstatus).isEqualTo(forventetSivilstatus)

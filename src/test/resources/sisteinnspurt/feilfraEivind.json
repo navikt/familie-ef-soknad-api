@@ -1,0 +1,534 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "17098922822",
+      "forkortetNavn": "SNERK GØYAL",
+      "adresse": {
+        "adresse": "TRYGVE LIES PLASS 5",
+        "postnummer": "1051"
+      },
+      "egenansatt": false,
+      "sivilstand": "SKIL",
+      "statsborgerskap": "NOR",
+      "mobiltelefon": "1234423423132324"
+    },
+    "barn": [
+      {
+        "id": "f6f6a6a5-c990-4392-981f-6d0fa6ad5f5e",
+        "født": {
+          "label": "Født",
+          "verdi": true
+        },
+        "fnr": {
+          "label": "Fødselsnummer",
+          "verdi": "18100478079"
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "MYGG KREATIV"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 15
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2004-10-18"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "forelder": {
+          "id": "0210d03e-96c4-4d7d-b5b0-f5fdb49459df",
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": false
+          },
+          "navn": {
+            "label": "halla",
+            "verdi": "Donald Duck"
+          },
+          "fødselsdato": {
+            "label": "Fødselsdato",
+            "verdi": "2020-06-08T22:00:00.000Z"
+          },
+          "borINorge": {
+            "spørsmålid": "borINorge",
+            "svarid": "JA",
+            "label": "Bor [0]s andre forelder i Norge?",
+            "verdi": true
+          },
+          "avtaleOmDeltBosted": {
+            "spørsmålid": "avtaleOmDeltBosted",
+            "svarid": "NEI",
+            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
+            "verdi": false
+          },
+          "harAnnenForelderSamværMedBarn": {
+            "spørsmålid": "harAnnenForelderSamværMedBarn",
+            "svarid": "nei",
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Nei"
+          },
+          "harDereSkriftligSamværsavtale": {
+            "spørsmålid": "harDereSkriftligSamværsavtale",
+            "svarid": "nei",
+            "label": "Har dere skriftlig samværsavtale for [0]?",
+            "verdi": "Nei"
+          },
+          "borAnnenForelderISammeHus": {
+            "spørsmålid": "borAnnenForelderISammeHus",
+            "svarid": "nei",
+            "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
+            "verdi": "Nei"
+          },
+          "boddSammenFør": {
+            "spørsmålid": "boddSammenFør",
+            "svarid": "NEI",
+            "label": "Har du bodd sammen med den andre forelderen til [0] før?",
+            "verdi": false
+          },
+          "hvorMyeSammen": {
+            "spørsmålid": "hvorMyeSammen",
+            "svarid": "møtesIkke",
+            "label": "Hvor mye er du sammen med den andre forelderen til [0]?",
+            "verdi": "Vi møtes ikke"
+          }
+        }
+      },
+      {
+        "fnr": {
+          "label": "Fødselsnummer eller d-nummer",
+          "verdi": ""
+        },
+        "personnummer": {
+          "label": "Personnummer",
+          "verdi": ""
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 0
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": ""
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2020-06-17"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": false
+        },
+        "født": {
+          "spørsmålid": "født",
+          "svarid": "NEI",
+          "label": "Er barnet født?",
+          "verdi": false
+        },
+        "lagtTil": true,
+        "id": "6cfe862f-45fa-434a-ae92-9dc0ac0f9f0a",
+        "forelder": {
+          "id": "6d47e757-a3e3-46f1-825d-a98f8f759c7b",
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": false
+          },
+          "skalBarnetBoHosSøker": {
+            "spørsmålid": "skalBarnetBoHosSøker",
+            "svarid": "ja",
+            "label": "Skal [0] ha adresse hos deg?",
+            "verdi": "Ja, og vi har eller skal registrere adressen i Folkeregisteret"
+          },
+          "navn": {
+            "label": "halla",
+            "verdi": "fmrep"
+          },
+          "fødselsdato": {
+            "label": "Fødselsdato",
+            "verdi": "2020-06-02T22:00:00.000Z"
+          },
+          "borINorge": {
+            "spørsmålid": "borINorge",
+            "svarid": "NEI",
+            "label": "Bor [0]s andre forelder i Norge?",
+            "verdi": false
+          },
+          "avtaleOmDeltBosted": {
+            "spørsmålid": "avtaleOmDeltBosted",
+            "svarid": "NEI",
+            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
+            "verdi": false
+          },
+          "land": {
+            "label": "Land",
+            "verdi": "dw"
+          },
+          "harAnnenForelderSamværMedBarn": {
+            "spørsmålid": "harAnnenForelderSamværMedBarn",
+            "svarid": "nei",
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Nei"
+          },
+          "borAnnenForelderISammeHus": {
+            "spørsmålid": "borAnnenForelderISammeHus",
+            "svarid": "nei",
+            "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
+            "verdi": "Nei"
+          },
+          "boddSammenFør": {
+            "spørsmålid": "boddSammenFør",
+            "svarid": "NEI",
+            "label": "Har du bodd sammen med den andre forelderen til [0] før?",
+            "verdi": false
+          },
+          "hvorMyeSammen": {
+            "spørsmålid": "hvorMyeSammen",
+            "svarid": "møtesIkke",
+            "label": "Hvor mye er du sammen med den andre forelderen til [0]?",
+            "verdi": "Vi møtes ikke"
+          }
+        }
+      }
+    ],
+    "hash": "630568871"
+  },
+  "sivilstatus": {
+    "årsakEnslig": {
+      "spørsmålid": "årsakEnslig",
+      "svarid": "aleneFraFødsel",
+      "label": "Hvorfor er du alene med barn?",
+      "verdi": "Jeg er alene med barn fra fødsel"
+    }
+  },
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du bodd i Norge de siste tre årene?",
+      "verdi": true
+    }
+  },
+  "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "borAleneMedBarnEllerGravid",
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegEllerBliSamboer",
+      "svarid": "NEI",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    }
+  },
+  "aktivitet": {
+    "hvaErDinArbeidssituasjon": {
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": [
+        "erHjemmeMedBarnUnderEttÅr",
+        "erArbeidstaker",
+        "erSelvstendigNæringsdriveneEllerFrilanser",
+        "erAnsattIEgetAS",
+        "etablererEgenVirksomhet",
+        "tarUtdanning",
+        "erArbeidssøker",
+        "harFåttJobbTilbud",
+        "erHverkenIArbeidUtdanningEllerArbeidssøker"
+      ],
+      "label": "Hvordan er arbeidsituasjonen din?",
+      "verdi": [
+        "Jeg er hjemme med barn under 1 år",
+        "Jeg er arbeidstaker",
+        "Jeg er selvstendig næringsdrivende eller frilanser",
+        "Jeg er ansatt i eget aksjeselskap (AS)",
+        "Jeg etablerer egen virksomhet",
+        "Jeg tar utdanning",
+        "Jeg er arbeidssøker",
+        "Jeg har fått tilbud om jobb",
+        "Jeg er ikke i arbeid, utdanning eller arbeidssøker"
+      ]
+    },
+    "arbeidsforhold": [
+      {
+        "id": "7773da16-415f-43eb-9578-92d8fb39f347",
+        "navn": {
+          "label": "Navn på arbeidsgiveren",
+          "verdi": "sdfsdfdsf"
+        },
+        "arbeidsmengde": {
+          "label": "Hvor mye jobber du?",
+          "verdi": "-5"
+        },
+        "ansettelsesforhold": {
+          "spørsmålid": "ansettelsesforhold",
+          "svarid": "lærling",
+          "label": "Hva slags ansettelsesforhold har du?",
+          "verdi": "Lærling"
+        }
+      },
+      {
+        "id": "7773da16-415f-43eb-9578-92d8fb39f347",
+        "navn": {
+          "label": "Navn på arbeidsgiveren",
+          "verdi": "asdasd"
+        },
+        "arbeidsmengde": {
+          "label": "Hvor mye jobber du?",
+          "verdi": "1000.112"
+        },
+        "ansettelsesforhold": {
+          "spørsmålid": "ansettelsesforhold",
+          "svarid": "fast",
+          "label": "Hva slags ansettelsesforhold har du?",
+          "verdi": "Fast"
+        }
+      }
+    ],
+    "firma": {
+      "navn": {
+        "label": "",
+        "verdi": "asdasd"
+      },
+      "organisasjonsnummer": {
+        "label": "",
+        "verdi": "997158768"
+      },
+      "etableringsdato": {
+        "label": "datovelger tekstid",
+        "verdi": "2000-06-02T22:00:00.000Z"
+      },
+      "arbeidsmengde": {
+        "label": "",
+        "verdi": "564"
+      },
+      "arbeidsuke": {
+        "label": "tekstid",
+        "verdi": "adsdas"
+      }
+    },
+    "egetAS": [
+      {
+        "id": "24880ff9-ffac-4e90-b792-701baee1a81d",
+        "navn": {
+          "label": "Navn på aksjeselskapet ditt",
+          "verdi": "adsdas"
+        },
+        "arbeidsmengde": {
+          "label": "Hvor mye jobber du?",
+          "verdi": "0.00"
+        }
+      },
+      {
+        "id": "24880ff9-ffac-4e90-b792-701baee1a81d",
+        "navn": {
+          "label": "Navn på aksjeselskapet ditt",
+          "verdi": "asd"
+        },
+        "arbeidsmengde": {
+          "label": "Hvor mye jobber du?",
+          "verdi": "365"
+        }
+      }
+    ],
+    "etablererEgenVirksomhet": {
+      "spørsmålid": "etablererEgenVirksomhet",
+      "svarid": "etablererEgenVirksomhet",
+      "label": "Hvordan er arbeidsituasjonen din?",
+      "verdi": "asddas"
+    },
+    "underUtdanning": {
+      "id": "06132564-d03b-4a26-89c4-f3ef740737f1",
+      "skoleUtdanningssted": {
+        "label": "Skole / utdanningssted",
+        "verdi": "adsdsa"
+      },
+      "linjeKursGrad": {
+        "label": "Linje / kurs / grad",
+        "verdi": "adsdas"
+      },
+      "offentligEllerPrivat": {
+        "label": "Er utdanningen offentlig eller privat?",
+        "verdi": "Privat"
+      },
+      "periode": {
+        "fra": {
+          "label": "utdanning.datovelger.studieperiode",
+          "verdi": "2018-06-14T22:00:00.000Z"
+        },
+        "til": {
+          "label": "",
+          "verdi": "2020-06-16T12:40:12.310Z"
+        }
+      },
+      "heltidEllerDeltid": {
+        "spørsmålid": "heltidEllerDeltid",
+        "svarid": "deltid",
+        "label": "Er utdanningen på heltid eller deltid?",
+        "verdi": "Deltid"
+      },
+      "arbeidsmengde": {
+        "label": "Hvor mye skal du studere?",
+        "verdi": "105"
+      },
+      "målMedUtdanning": {
+        "label": "Hva er målet med utdanningen?",
+        "verdi": "adsdas"
+      },
+      "harTattUtdanningEtterGrunnskolen": {
+        "label": "Har du tatt utdanning etter grunnskolen?",
+        "verdi": true
+      },
+      "tidligereUtdanning": [
+        {
+          "id": "15d4dead-6795-4fb8-ab4b-972af4f8690b",
+          "linjeKursGrad": {
+            "label": "Linje / kurs / grad",
+            "verdi": "asdsdadsa"
+          },
+          "periode": {
+            "fra": {
+              "label": "utdanning.datovelger.studieperiode",
+              "verdi": "2007-06-14T22:00:00.000Z"
+            },
+            "til": {
+              "label": "utdanning.datovelger.studieperiode",
+              "verdi": "2008-06-15T22:00:00.000Z"
+            }
+          }
+        }
+      ]
+    },
+    "arbeidssøker": {
+      "registrertSomArbeidssøkerNav": {
+        "spørsmålid": "registrertSomArbeidssøkerNav",
+        "svarid": "JA",
+        "label": "Er du registrert som arbeidssøker hos NAV?",
+        "verdi": true
+      },
+      "villigTilÅTaImotTilbudOmArbeid": {
+        "spørsmålid": "villigTilÅTaImotTilbudOmArbeid",
+        "svarid": "JA",
+        "label": "Er du villig til å ta imot tilbud om arbeid eller arbeidsmarkedstiltak?",
+        "verdi": true
+      },
+      "kanBegynneInnenEnUke": {
+        "spørsmålid": "kanBegynneInnenEnUke",
+        "svarid": "JA",
+        "label": "Kan du begynne i arbeid senest én uke etter at du har fått tilbud om jobb?",
+        "verdi": true
+      },
+      "kanSkaffeBarnepassInnenEnUke": {
+        "spørsmålid": "kanSkaffeBarnepassInnenEnUke",
+        "svarid": "JA",
+        "label": "Har du eller kan du skaffe barnepass senest innen en uke etter at du har fått tilbud om jobb eller arbeidsmarkedtiltak?",
+        "verdi": true
+      },
+      "hvorØnskerSøkerArbeid": {
+        "label": "Hvor ønsker du å søke arbeid?",
+        "verdi": "Kun i bodistriktet mitt, ikke mer enn 1 times reisevei"
+      },
+      "ønskerSøker50ProsentStilling": {
+        "spørsmålid": "ønskerSøker50ProsentStilling",
+        "svarid": "JA",
+        "label": "Ønsker du å stå som arbeidssøker til minst 50 prosent stilling?",
+        "verdi": true
+      }
+    },
+    "datoOppstartJobb": {
+      "label": "Når skal du starte i ny jobb?",
+      "verdi": "2020-06-25T22:00:00.000Z"
+    }
+  },
+  "merOmDinSituasjon": {
+    "gjelderDetteDeg": {
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": [
+        "harSyktBarn",
+        "erSyk",
+        "harSøktBarnepassOgVenterEnnå",
+        "harBarnMedSærligeBehov",
+        "nei"
+      ],
+      "label": "Gjelder noe av dette deg?",
+      "verdi": [
+        "Barnet mitt er sykt",
+        "Jeg er syk",
+        "Jeg har søkt om barnepass, men ikke fått plass enda",
+        "Jeg har barn som trenger særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
+        "Nei"
+      ]
+    },
+    "søkerFraBestemtMåned": {
+      "spørsmålid": "søkerFraBestemtMåned",
+      "svarid": "ja",
+      "label": "Søker du om overgangsstønad fra en bestemt måned?",
+      "verdi": "Ja"
+    },
+    "søknadsdato": {
+      "label": "Jeg søker overgangsstønad fra og med",
+      "verdi": "2020-06-30T22:00:00.000Z"
+    }
+  },
+  "dokumentasjonsbehov": [
+    {
+      "id": "UTDANNING",
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": "tarUtdanning",
+      "tittel": "dokumentasjon.utdanning.tittel",
+      "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
+      "harSendtInn": true
+    },
+    {
+      "id": "ARBEIDSKONTRAKT",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "harFåttJobbTilbud",
+      "tittel": "dokumentasjon.arbeidskontrakt.tittel",
+      "beskrivelse": "dokumentasjon.arbeidskontrakt.beskrivelse",
+      "harSendtInn": true
+    },
+    {
+      "id": "SYKT_BARN",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "harSyktBarn",
+      "tittel": "dokumentasjon.syktBarn.tittel",
+      "beskrivelse": "dokumentasjon.syktBarn.beskrivelse",
+      "harSendtInn": true
+    },
+    {
+      "id": "SYKDOM",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "erSyk",
+      "tittel": "dokumentasjon.sykdom.tittel",
+      "beskrivelse": "dokumentasjon.sykdom.beskrivelse",
+      "harSendtInn": true
+    },
+    {
+      "id": "BARNEPASS",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "harSøktBarnepassOgVenterEnnå",
+      "tittel": "dokumentasjon.barnepass.tittel",
+      "beskrivelse": "dokumentasjon.barnepass.beskrivelse",
+      "harSendtInn": true
+    },
+    {
+      "id": "BARNETILSYN_BEHOV",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "harBarnMedSærligeBehov",
+      "tittel": "dokumentasjon.barnetilsynsbehov.tittel",
+      "beskrivelse": "dokumentasjon.barnetilsynsbehov.beskrivelse",
+      "harSendtInn": true
+    }
+  ],
+  "søkerBorPåRegistrertAdresse": {
+    "spørsmålid": "søkerBorPåRegistrertAdresse",
+    "svarid": "JA",
+    "label": "søkerBorPåRegistrertAdresse",
+    "verdi": true
+  }
+}

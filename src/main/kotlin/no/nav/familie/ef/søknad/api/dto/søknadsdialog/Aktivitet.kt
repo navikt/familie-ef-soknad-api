@@ -12,7 +12,7 @@ data class Aktivitet(
 
 data class Aksjeselskap (
         val navn: TekstFelt,
-        val arbeidsmengde: HeltallFelt
+        val arbeidsmengde: TekstFelt
 )
 
 data class Arbeidsgiver(

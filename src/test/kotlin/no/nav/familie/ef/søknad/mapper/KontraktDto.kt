@@ -20,5 +20,7 @@ fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
                                null))
 }
 
-fun dokumentMap(): Map<String, List<Dokument>> = mapOf("samlivsbrudd" to listOf(Dokument("DOKUMENTID123".toByteArray(),
-                                                                            "Erklæring om samlivsbrudd")))
+fun dokumentMap(): Map<String, List<Vedlegg>> {
+    val vedlegg = Vedlegg("id", "navn", "tittel", "data".toByteArray())
+    return mapOf("samlivsbrudd" to listOf(vedlegg))
+}
