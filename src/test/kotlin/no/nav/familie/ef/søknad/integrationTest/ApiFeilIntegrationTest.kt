@@ -3,20 +3,35 @@ package no.nav.familie.ef.søknad.integrationTest
 
 import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.security.token.support.core.JwtTokenConstants
+import no.nav.security.token.support.core.api.Unprotected
 import no.nav.security.token.support.test.JwtTokenGenerator
 import org.glassfish.jersey.logging.LoggingFeature
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.context.annotation.Profile
+import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.client.Entity
 import javax.ws.rs.core.Response
 import kotlin.test.assertEquals
 
-@ActiveProfiles("local")
+@Profile("feil-controller")
+@RestController
+@Unprotected
+@RequestMapping(path = ["/api/feil"], produces = [MediaType.APPLICATION_JSON_VALUE])
+class FeilController{
+    @GetMapping
+    fun feil(): Unit = throw RuntimeException("Feil")
+}
+
+@ActiveProfiles("local", "feil-controller")
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 class ApiFeilIntegrationTest {
@@ -59,6 +74,14 @@ class ApiFeilIntegrationTest {
                 .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
                 .get()
         assertEquals(Response.Status.NOT_FOUND.statusCode, response.status)
+    }
+
+    @Test
+    fun `skal få 500 når endepunkt kaster feil`() {
+        val response = webTarget().path("/feil")
+                .request()
+                .get()
+        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.statusCode, response.status)
     }
 
     private fun webTarget() = client().target("http://localhost:$port$contextPath")
