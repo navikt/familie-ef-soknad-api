@@ -26,3 +26,6 @@ fun dokumentfelt(dokumentnavn: String, vedleggMap: Map<String, List<Vedlegg>>): 
         }
     }
 }
+
+
+fun String.tilHeltall(): Int = this.toDouble().toInt()
