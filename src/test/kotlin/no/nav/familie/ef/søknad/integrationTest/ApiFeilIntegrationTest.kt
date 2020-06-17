@@ -19,7 +19,7 @@ import kotlin.test.assertEquals
 @ActiveProfiles("local")
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
-class AutentiseringControllerApiIntegrationTest {
+class ApiFeilIntegrationTest {
 
     @Value("\${local.server.port}")
     val port: Int = 0
@@ -33,6 +33,15 @@ class AutentiseringControllerApiIntegrationTest {
                 .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
                 .get()
         assertEquals(Response.Status.OK.statusCode, response.status)
+    }
+
+    @Test
+    fun `skal få 400 når man sender inn feil type objekt, liste i stedet for objekt`() {
+        val response = webTarget().path("/soknad")
+                .request()
+                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+                .post(Entity.json("[]"))
+        assertEquals(Response.Status.BAD_REQUEST.statusCode, response.status)
     }
 
     @Test
@@ -50,15 +59,6 @@ class AutentiseringControllerApiIntegrationTest {
                 .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
                 .get()
         assertEquals(Response.Status.NOT_FOUND.statusCode, response.status)
-    }
-
-    @Test
-    fun `skal få 500 når man sender inn feil type objekt, liste i stedet for objekt`() {
-        val response = webTarget().path("/soknad")
-                .request()
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .post(Entity.json("[]"))
-        assertEquals(Response.Status.INTERNAL_SERVER_ERROR.statusCode, response.status)
     }
 
     private fun webTarget() = client().target("http://localhost:$port$contextPath")
