@@ -575,6 +575,12 @@
       "label": "Jeg søker overgangsstønad fra og med",
       "verdi": "2020-03-27T13:52:42.742Z"
     },
+    "søkerFraBestemtMåned": {
+      "spørsmålid": "søkerFraBestemtMåned",
+      "svarid": "neiNavKanVurdere",
+      "label": "Søker du om overgangsstønad fra en bestemt måned?",
+      "verdi": "Nei, Nav kan vurdere fra hvilken måned jeg har rett til stønad"
+    },
     "datoOppstartJobb": {
       "label": "Når skal du starte i ny jobb?",
       "verdi": "2020-03-27T13:52:42.742Z"
