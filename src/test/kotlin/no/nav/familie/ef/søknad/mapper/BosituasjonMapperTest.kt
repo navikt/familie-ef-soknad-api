@@ -3,8 +3,8 @@ package no.nav.familie.ef.søknad.mapper
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
 import no.nav.familie.ef.søknad.mapper.kontrakt.BosituasjonMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
-import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
+import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -15,7 +15,7 @@ internal class BosituasjonMapperTest {
 
     private val bosituasjon = søknadDto().bosituasjon
     private val bositiasjonSamboer = getBosituasjon("bositiasjonSamboer.json")
-    private val dokumenter = emptyMap<String, List<Dokument>>()
+    private val dokumenter = emptyMap<String, List<Vedlegg>>()
 
 
     @Test
@@ -47,7 +47,7 @@ internal class BosituasjonMapperTest {
         // When
         val bosituasjonMapped = BosituasjonMapper.mapBosituasjon(bositiasjonSamboer, dokumenter)
         // Then
-        assertThat(bosituasjonMapped.sammenflyttingsdato?.verdi).isEqualTo(LocalDate.of(2020 ,3 ,26))
+        assertThat(bosituasjonMapped.sammenflyttingsdato?.verdi).isEqualTo(LocalDate.of(2020, 3, 26))
     }
 
     @Test
@@ -71,10 +71,10 @@ internal class BosituasjonMapperTest {
         // When
         val bosituasjonMapped = BosituasjonMapper.mapBosituasjon(bositiasjonSamboer, dokumenter)
         // Then
-        assertThat(bosituasjonMapped.samboerdetaljer?.verdi?.fødselsdato?.verdi).isEqualTo(LocalDate.of(1976,7 , 26))
+        assertThat(bosituasjonMapped.samboerdetaljer?.verdi?.fødselsdato?.verdi).isEqualTo(LocalDate.of(1976, 7, 26))
     }
 
 
-    private fun getBosituasjon(fileName : String) = objectMapper.readValue(File("src/test/resources/$fileName"),
-                                                                           Bosituasjon::class.java)
+    private fun getBosituasjon(fileName: String) = objectMapper.readValue(File("src/test/resources/$fileName"),
+                                                                          Bosituasjon::class.java)
 }

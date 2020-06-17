@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import java.time.LocalDate
 
 fun BooleanFelt.tilSøknadsfelt(): Søknadsfelt<Boolean> = Søknadsfelt(this.label, this.verdi)
@@ -15,15 +16,16 @@ fun DatoFelt.tilSøknadsfelt(): Søknadsfelt<LocalDate> = Søknadsfelt(this.labe
 
 fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi)
 
-fun dokumentfelt(dokumentNavn: String, alleDokumenter: Map<String, List<Dokument>>): Søknadsfelt<List<Dokument>>? {
-    val dokumenter = alleDokumenter[dokumentNavn]
+fun dokumentfelt(dokumentnavn: String, vedleggMap: Map<String, List<Vedlegg>>): Søknadsfelt<List<Dokument>>? {
+    val dokumenter = vedleggMap[dokumentnavn]
     return dokumenter?.let {
         return if(dokumenter.isEmpty()) {
-            Søknadsfelt(dokumentNavn, emptyList())
+            null
         } else {
-            Søknadsfelt(dokumenter.first().tittel, dokumenter)
+            Søknadsfelt(dokumenter.first().tittel, it.map { vedlegg -> Dokument(vedlegg.id, vedlegg.navn) })
         }
     }
 }
+
 
 fun String.tilHeltall(): Int = this.toDouble().toInt()
