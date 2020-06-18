@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.api
 
+import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -47,11 +48,20 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     private fun håndtertResponseStatusFeil(throwable: Throwable,
                                            responseStatus: ResponseStatus): ResponseEntity<String> {
         val status = if (responseStatus.value != HttpStatus.INTERNAL_SERVER_ERROR) responseStatus.value else responseStatus.code
-        logger.error("En håndtert feil har oppstått" +
-                     " throwable=${throwable.javaClass.simpleName}" +
-                     " reason=${responseStatus.reason}" +
-                     " status=$status")
+        val loggMelding = "En håndtert feil har oppstått" +
+                          " throwable=${throwable.javaClass.simpleName}" +
+                          " reason=${responseStatus.reason}" +
+                          " status=$status"
+
+        loggFeil(throwable, loggMelding)
         return ResponseEntity.status(status).body("Håndtert feil")
+    }
+
+    private fun loggFeil(throwable: Throwable, loggMelding: String) {
+        when (throwable) {
+            is JwtTokenUnauthorizedException -> logger.debug(loggMelding)
+            else -> logger.error(loggMelding)
+        }
     }
 
 }
