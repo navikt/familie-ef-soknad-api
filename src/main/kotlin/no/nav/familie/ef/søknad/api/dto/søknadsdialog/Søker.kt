@@ -9,7 +9,7 @@ data class Søker(val adresse: Adresse,
                  val forkortetNavn: String,
                  val sivilstand: String,
                  val statsborgerskap: String,
-                 val telefonnummer: String?)
+                 val kontakttelefon: String? = null)
 
 // TODO Ikke fra UI
 // telefonnummer?

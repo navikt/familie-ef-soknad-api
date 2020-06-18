@@ -14,7 +14,7 @@ object PersonaliaMapper {
                     navn = lagNavnSøknadsFelt(frontendDto),
                     adresse = lagAdresseSøknadsFelt(frontendDto),
                     statsborgerskap = Søknadsfelt("Statsborgerskap", frontendDto.person.søker.statsborgerskap),
-                    telefonnummer = lagTelefonnummerSøknadsfelt(frontendDto.person.søker.telefonnummer),
+                    telefonnummer = lagTelefonnummerSøknadsfelt(frontendDto.person.søker.kontakttelefon),
                     sivilstatus = Søknadsfelt("Sivilstatus", frontendDto.person.søker.sivilstand)
             )
 
