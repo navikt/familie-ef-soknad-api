@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Situasjon
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
-import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.*
@@ -15,7 +14,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
 
     fun mapTilIntern(frontendDto: SøknadDto,
                      innsendingMottatt: LocalDateTime): SøknadMedVedlegg {
-        val vedlegg: Map<String, DokumentasjonWrapper> = hentDokumenter(frontendDto.dokumentasjonsbehov)
+        val vedlegg: Map<String, List<Vedlegg>> = hentDokumenter(frontendDto.dokumentasjonsbehov)
 
         val søknad = Søknad(
                 innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
@@ -33,19 +32,18 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                 aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", AktivitetsMapper.map(frontendDto)),
                 situasjon = Søknadsfelt("Mer om situasjonen din", SituasjonsMapper.mapSituasjon(frontendDto, vedlegg)),
                 stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart(frontendDto.merOmDinSituasjon)))
-        return SøknadMedVedlegg(søknad, vedlegg.values.map { it.vedlegg }.flatten())
+        return SøknadMedVedlegg(søknad, vedlegg.values.flatten())
     }
 
-    private fun hentDokumenter(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, DokumentasjonWrapper> {
+    private fun hentDokumenter(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, List<Vedlegg>> {
         return dokumentasjonsbehov.associate {
             // it.id er dokumenttype/tittel, eks "Gift i utlandet"
-            val vedlegg = it.opplastedeVedlegg.map { dokumentFelt ->
+            it.id to it.opplastedeVedlegg.map { dokumentFelt ->
                 Vedlegg(id = dokumentFelt.dokumentId,
                         navn = dokumentFelt.navn,
-                        tittel = it.label,
+                        tittel = dokumentFelt.label,
                         bytes = dokumentServiceService.hentVedlegg(dokumentFelt.dokumentId))
             }
-            it.id to DokumentasjonWrapper(it.label, it.harSendtInn, vedlegg)
         }
     }
 

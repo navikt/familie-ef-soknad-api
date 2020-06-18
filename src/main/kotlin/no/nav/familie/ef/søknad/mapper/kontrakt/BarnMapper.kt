@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn
-import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
@@ -10,7 +9,7 @@ import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
 
 object BarnMapper {
 
-    fun mapBarn(barnliste: List<Barn>, vedlegg: Map<String, DokumentasjonWrapper>): List<Kontraktbarn> {
+    fun mapBarn(barnliste: List<Barn>, vedlegg: Map<String, List<Vedlegg>>): List<Kontraktbarn> {
         return barnliste.map { barn ->
             Kontraktbarn(navn = barn.navn.tilSøknadsfelt(),
                          fødselsnummer = mapFødselsnummer(barn),
@@ -47,7 +46,7 @@ object BarnMapper {
             ))
 
     private fun mapSamvær(forelder: AnnenForelderDto,
-                          dokumentMap: Map<String, DokumentasjonWrapper>): Søknadsfelt<Samvær> = Søknadsfelt("samvær", Samvær(
+                          dokumentMap: Map<String, List<Vedlegg>>): Søknadsfelt<Samvær> = Søknadsfelt("samvær", Samvær(
             spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted?.tilSøknadsfelt(),
             avtaleOmDeltBosted = dokumentfelt(DELT_BOSTED, dokumentMap),
             skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),

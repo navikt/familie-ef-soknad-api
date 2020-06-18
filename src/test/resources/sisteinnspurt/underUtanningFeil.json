@@ -271,7 +271,6 @@
       "svarid": "samlivsbruddForeldre",
       "tittel": "dokumentasjon.begrunnelse.tittel",
       "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
-      "label": "SAMLIVSBRUDD",
       "harSendtInn": false
     },
     {
@@ -281,11 +280,11 @@
       "tittel": "dokumentasjon.utdanning.tittel",
       "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
       "harSendtInn": false,
-      "label": "Dokumentasjon på utdanningen du skal ta",
       "opplastedeVedlegg": [
         {
           "dokumentId": "fcaf3fae-a8db-4df6-9226-a4cdff2ccf7f",
           "navn": "IKT_basisløsning[1].pdf",
+          "label": "Dokumentasjon på utdanningen du skal ta",
           "størrelse": 902228
         }
       ]
@@ -297,11 +296,11 @@
       "tittel": "dokumentasjon.utdanning.tittel",
       "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
       "harSendtInn": false,
-      "label": "Dokumentasjon på utdanningen du skal ta",
       "opplastedeVedlegg": [
         {
           "dokumentId": "fcaf3fae-a8db-4df6-9226-a4cdff2ccf7f",
           "navn": "IKT_basisløsning[1].pdf",
+          "label": "Dokumentasjon på utdanningen du skal ta",
           "størrelse": 902228
         }
       ]

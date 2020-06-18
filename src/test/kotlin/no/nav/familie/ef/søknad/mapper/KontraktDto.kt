@@ -20,7 +20,7 @@ fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
                                null))
 }
 
-fun dokumentMap(): Map<String, DokumentasjonWrapper> {
+fun dokumentMap(): Map<String, List<Vedlegg>> {
     val vedlegg = Vedlegg("id", "navn", "tittel", "data".toByteArray())
-    return mapOf("samlivsbrudd" to DokumentasjonWrapper("label", false, listOf(vedlegg)))
+    return mapOf("samlivsbrudd" to listOf(vedlegg))
 }

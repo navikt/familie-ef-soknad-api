@@ -1,14 +1,14 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
-import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
+import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 
 object SivilstandsdetaljerMapper {
 
-    fun mapSivilstandsdetaljer(frontendDto: SøknadDto, vedlegg: Map<String, DokumentasjonWrapper>): Sivilstandsdetaljer {
+    fun mapSivilstandsdetaljer(frontendDto: SøknadDto, vedlegg: Map<String, List<Vedlegg>>): Sivilstandsdetaljer {
         val sivilstatus = frontendDto.sivilstatus
         return Sivilstandsdetaljer(samlivsbruddsdokumentasjon = dokumentfelt(SAMLIVSBRUDD, vedlegg),
                                    samlivsbruddsdato = sivilstatus.datoForSamlivsbrudd?.tilSøknadsfelt(),

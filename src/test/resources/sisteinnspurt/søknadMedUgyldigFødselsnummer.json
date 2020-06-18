@@ -271,7 +271,6 @@
       "svarid": "JA",
       "tittel": "dokumentasjon.inngåttEkteskap.tittel",
       "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
-      "label": "INNGÅTT_EKTESKAP",
       "harSendtInn": true
     },
     {
@@ -280,7 +279,6 @@
       "svarid": "JA",
       "tittel": "dokumentasjon.separasjonEllerSkilsmisse.tittel",
       "beskrivelse": "dokumentasjon.separasjonEllerSkilsmisse.beskrivelse",
-      "label":  "UFORMELL_SEPARASJON_ELLER_SKILSMISSE",
       "harSendtInn": true
     },
     {
@@ -289,7 +287,6 @@
       "svarid": "samlivsbruddForeldre",
       "tittel": "dokumentasjon.begrunnelse.tittel",
       "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
-      "label":  "SAMLIVSBRUDD",
       "harSendtInn": true
     }
   ],
