@@ -25,7 +25,6 @@ internal class JsonSisteInnspurtMapperTest {
         every { dokumentServiceServiceMock.hentVedlegg(any()) } returns "DOKUMENTID123".toByteArray()
     }
 
-
     @Test
     fun `Annen forelder skal ha fødselsnummer etter mapping`() {
         fun identTest3(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/identTest3.json"),
@@ -35,14 +34,12 @@ internal class JsonSisteInnspurtMapperTest {
 
     }
 
-
     @Test
     fun `skal ikke ha feil i testFntIdent`() {
         fun testfeil(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/testFntIdent.json"),
                                                            SøknadDto::class.java)
         mapper.mapTilIntern(testfeil(), innsendingMottatt)
     }
-
 
     @Test
     fun `skal ikke ha testfeil`() {

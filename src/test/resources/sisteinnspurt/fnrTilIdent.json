@@ -182,6 +182,7 @@
       "svarid": "JA",
       "tittel": "dokumentasjon.inngåttEkteskap.tittel",
       "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
+      "label": "Inngått ekteskap",
       "harSendtInn": true
     }
   ],
