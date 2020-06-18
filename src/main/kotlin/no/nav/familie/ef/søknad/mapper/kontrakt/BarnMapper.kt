@@ -17,7 +17,7 @@ object BarnMapper {
                          ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse
                                  ?.tilSøknadsfelt(),
                          erBarnetFødt = barn.født.tilSøknadsfelt(),
-                         fødselTermindato = barn.fødselsdato.tilSøknadsfelt(),
+                         fødselTermindato = barn.fødselsdato?.tilSøknadsfelt(),
                          terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, vedlegg),
                          annenForelder = mapAnnenForelder(barn.forelder),
                          samvær = mapSamvær(barn.forelder, vedlegg)
@@ -26,9 +26,9 @@ object BarnMapper {
     }
 
     private fun mapFødselsnummer(barn: Barn): Søknadsfelt<Fødselsnummer>? {
-        return barn.fnr?.let {
+        return barn.ident?.let {
             return if (it.verdi.isNotBlank()) {
-                barn.fnr.tilSøknadsfelt(::Fødselsnummer)
+                barn.ident.tilSøknadsfelt(::Fødselsnummer)
             } else {
                 null
             }
@@ -42,14 +42,7 @@ object BarnMapper {
                     ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.tilSøknadsfelt(),
                     bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                     land = forelder.land?.tilSøknadsfelt(),
-
-// TODO kan vurdere å legge på en let rundt person dersom kanIkkeOppgiAnnenForelderFar = true
-                    person = Søknadsfelt("Persondata", PersonMinimum(
-                            fødselsnummer = forelder.personnr?.tilSøknadsfelt(::Fødselsnummer),
-                            fødselsdato = forelder.fødselsdato?.tilSøknadsfelt(),
-                            navn = forelder.navn?.tilSøknadsfelt() ?: Søknadsfelt("Annen forelder navn",
-                                                                                  "ikke oppgitt") // TODO dette må vi finne ut av, bør navn være optional i kontrakt
-                    ))
+                    person = PersonMinimumMapper.map(forelder)
             ))
 
     private fun mapSamvær(forelder: AnnenForelderDto,

@@ -14,8 +14,9 @@
     },
     "barn": [
       {
-        "fnr": {
-          "label": "Fødselsnummer eller d-nummer",
+        "fnr": "",
+        "ident": {
+          "label": "Fødselsnummer (11 siffer) / d-nummer",
           "verdi": ""
         },
         "personnummer": {

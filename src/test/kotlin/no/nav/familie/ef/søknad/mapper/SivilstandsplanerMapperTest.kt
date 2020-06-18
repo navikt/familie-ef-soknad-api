@@ -24,7 +24,7 @@ internal class SivilstandsplanerMapperTest {
         // When
         val sivilstandsplaner = SivilstandsplanerMapper.mapSivilstandsplaner(bosituasjonUtenGifteplaner)
         // Then
-        assertThat(sivilstandsplaner.harPlaner.verdi).isEqualTo(false)
+        assertThat(sivilstandsplaner.harPlaner?.verdi).isEqualTo(false)
     }
 
     @Test
@@ -32,7 +32,7 @@ internal class SivilstandsplanerMapperTest {
         // When
         val sivilstandsplaner = SivilstandsplanerMapper.mapSivilstandsplaner(bosituasjonGifteplaner)
         // Then
-        assertThat(sivilstandsplaner.harPlaner.verdi).isEqualTo(true)
+        assertThat(sivilstandsplaner.harPlaner?.verdi).isEqualTo(true)
     }
 
     @Test
@@ -40,7 +40,7 @@ internal class SivilstandsplanerMapperTest {
         // When
         val sivilstandsplaner = SivilstandsplanerMapper.mapSivilstandsplaner(bosituasjonGifteplaner)
         // Then
-        assertThat(sivilstandsplaner.harPlaner.label).isEqualTo("Har du konkrete planer om å gifte deg eller bli samboer?")
+        assertThat(sivilstandsplaner.harPlaner?.label).isEqualTo("Har du konkrete planer om å gifte deg eller bli samboer?")
     }
 
 

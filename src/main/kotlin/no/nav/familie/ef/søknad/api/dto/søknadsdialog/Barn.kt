@@ -2,8 +2,8 @@ package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
 
 data class Barn(val alder: TekstFelt,
-                val fnr: TekstFelt? = null,
-                val fødselsdato: DatoFelt,
+                val ident: TekstFelt? = null, // TODO validation enten eller
+                val fødselsdato: DatoFelt?, // eller termindato
                 val harSammeAdresse: BooleanFelt,
                 val ikkeRegistrertPåSøkersAdresseBeskrivelse: TekstFelt?,
                 val id: String? = null,
@@ -18,7 +18,7 @@ data class AnnenForelder(
         val ikkeOppgittAnnenForelderBegrunnelse: TekstFelt?,
         val navn: TekstFelt?,
         val fødselsdato: DatoFelt?,
-        val personnr: TekstFelt?,
+        val ident: TekstFelt? = null,
         val borINorge: BooleanFelt?,
         val land: TekstFelt?,
         val avtaleOmDeltBosted: BooleanFelt?,
@@ -33,20 +33,6 @@ data class AnnenForelder(
         val beskrivSamværUtenBarn: TekstFelt?,
         val skalBarnetBoHosSøker: TekstFelt?
 )
-
-//
-//export interface IBarn {
-//    id: string;
-//    alder: ITekstFelt;
-//    fnr: ITekstFelt;
-//    fødselsdato: ITekstFelt;
-//    personnummer?: ITekstFelt;
-//    harSammeAdresse: IBooleanFelt;
-//    navn: ITekstFelt;
-//    født?: ISpørsmålBooleanFelt;
-//    lagtTil?: boolean;
-//    forelder?: IForelder;
-//}
 
 //
 //export interface IForelder {

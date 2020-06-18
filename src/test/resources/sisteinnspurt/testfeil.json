@@ -1,0 +1,156 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "11038423667",
+      "forkortetNavn": "KAFFI RASK",
+      "adresse": {
+        "adresse": "ØSTROLLVEIEN 50",
+        "postnummer": "3512"
+      },
+      "egenansatt": false,
+      "sivilstand": "SKIL",
+      "statsborgerskap": "NOR",
+      "mobiltelefon": "12341234"
+    },
+    "barn": [
+      {
+        "id": "52a44354-2d35-4e47-b2de-dd40dc1badfa",
+        "født": {
+          "label": "Født",
+          "verdi": true
+        },
+        "fnr": "01051950190",
+        "ident": {
+          "label": "Fødselsnummer (11 siffer) / d-nummer",
+          "verdi": ""
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "TAREMEL KRIMINELL"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 1
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2019-05-01"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "forelder": {
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": true
+          },
+          "ikkeOppgittAnnenForelderBegrunnelse": {
+            "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
+            "verdi": "&amp; \" &$jkdfsøj\" ; <> >>< <>>>"
+          },
+          "hvorforIkkeOppgi": {
+            "spørsmålid": "hvorforIkkeOppgi",
+            "svarid": "annet",
+            "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
+            "verdi": "Annet"
+          }
+        }
+      }
+    ],
+    "hash": "-1825099656"
+  },
+  "sivilstatus": {
+    "årsakEnslig": {
+      "spørsmålid": "årsakEnslig",
+      "svarid": "samlivsbruddForeldre",
+      "label": "Hvorfor er du alene med barn?",
+      "verdi": "Samlivsbrudd med den andre forelderen"
+    },
+    "datoForSamlivsbrudd": {
+      "label": "Du må legge ved erklæring om samlivsbrudd",
+      "verdi": "2020-06-08T22:00:00.000Z"
+    }
+  },
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du bodd i Norge de siste tre årene?",
+      "verdi": true
+    }
+  },
+  "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "borAleneMedBarnEllerGravid",
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegEllerBliSamboer",
+      "svarid": "NEI",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    }
+  },
+  "aktivitet": {
+    "hvaErDinArbeidssituasjon": {
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": [
+        "erHverkenIArbeidUtdanningEllerArbeidssøker"
+      ],
+      "label": "Hvordan er arbeidsituasjonen din?",
+      "verdi": [
+        "Jeg er ikke i arbeid, utdanning eller arbeidssøker"
+      ]
+    }
+  },
+  "merOmDinSituasjon": {
+    "gjelderDetteDeg": {
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": [
+        "nei"
+      ],
+      "label": "Gjelder noe av dette deg?",
+      "verdi": [
+        "Nei"
+      ]
+    },
+    "sagtOppEllerRedusertStilling": {
+      "spørsmålid": "sagtOppEllerRedusertStilling",
+      "svarid": "nei",
+      "label": "Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",
+      "verdi": "Nei"
+    },
+    "søkerFraBestemtMåned": {
+      "spørsmålid": "søkerFraBestemtMåned",
+      "svarid": "ja",
+      "label": "Søker du om overgangsstønad fra en bestemt måned?",
+      "verdi": "Ja"
+    },
+    "søknadsdato": {
+      "label": "Jeg søker overgangsstønad fra og med",
+      "verdi": "2020-06-30T22:00:00.000Z"
+    }
+  },
+  "dokumentasjonsbehov": [
+    {
+      "id": "SAMLIVSBRUDD",
+      "spørsmålid": "årsakEnslig",
+      "svarid": "samlivsbruddForeldre",
+      "tittel": "dokumentasjon.begrunnelse.tittel",
+      "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
+      "harSendtInn": true
+    }
+  ],
+  "harBekreftet": true,
+  "søkerBorPåRegistrertAdresse": {
+    "spørsmålid": "søkerBorPåRegistrertAdresse",
+    "svarid": "JA",
+    "label": "søkerBorPåRegistrertAdresse",
+    "verdi": true
+  }
+}
