@@ -4,7 +4,6 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
 import no.nav.familie.ef.søknad.mapper.kontrakt.BosituasjonMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
-import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -15,7 +14,7 @@ internal class BosituasjonMapperTest {
 
     private val bosituasjon = søknadDto().bosituasjon
     private val bositiasjonSamboer = getBosituasjon("bositiasjonSamboer.json")
-    private val dokumenter = emptyMap<String, List<Vedlegg>>()
+    private val dokumenter = emptyMap<String, DokumentasjonWrapper>()
 
 
     @Test

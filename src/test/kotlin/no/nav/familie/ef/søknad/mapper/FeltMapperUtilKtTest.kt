@@ -49,14 +49,14 @@ internal class FeltMapperUtilKtTest {
     @Test
     internal fun `hent dokumentfelt`() {
         val bytes = byteArrayOf(12)
-        val dokumenter = mapOf("finnes" to listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok", bytes),
-                                                  Vedlegg("id2", "dok2.pdf", "Annen tittel på dok", bytes)))
+        val dokumenter = mapOf("finnes" to DokumentasjonWrapper("label", false, listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok", bytes),
+                                                  Vedlegg("id2", "dok2.pdf", "Annen tittel på dok", bytes))))
         val dokumentSomFinnes = dokumentfelt("finnes", dokumenter)!!
-        assertThat(dokumentSomFinnes.verdi.first().id).isEqualTo("id1")
-        assertThat(dokumentSomFinnes.verdi.first().navn).isEqualTo("dok1.pdf")
+        assertThat(dokumentSomFinnes.verdi.dokumenter.first().id).isEqualTo("id1")
+        assertThat(dokumentSomFinnes.verdi.dokumenter.first().navn).isEqualTo("dok1.pdf")
 
-        assertThat(dokumentSomFinnes.verdi.last().id).isEqualTo("id2")
-        assertThat(dokumentSomFinnes.verdi.last().navn).isEqualTo("dok2.pdf")
+        assertThat(dokumentSomFinnes.verdi.dokumenter.last().id).isEqualTo("id2")
+        assertThat(dokumentSomFinnes.verdi.dokumenter.last().navn).isEqualTo("dok2.pdf")
 
         assertThat(dokumentfelt("finnesIkke", dokumenter)).isNull()
     }
