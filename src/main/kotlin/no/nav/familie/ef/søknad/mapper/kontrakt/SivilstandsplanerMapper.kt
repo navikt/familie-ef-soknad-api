@@ -7,7 +7,7 @@ import no.nav.familie.kontrakter.ef.søknad.Sivilstandsplaner
 object SivilstandsplanerMapper {
 
     fun mapSivilstandsplaner(bosituasjon: Bosituasjon): Sivilstandsplaner {
-        return Sivilstandsplaner(harPlaner = bosituasjon.skalGifteSegEllerBliSamboer.tilSøknadsfelt(),
+        return Sivilstandsplaner(harPlaner = bosituasjon.skalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
                                  fraDato = bosituasjon.datoSkalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
                                  vordendeSamboerEktefelle = bosituasjon.samboerDetaljer?.let(PersonMinimumMapper::map))
     }

@@ -8,9 +8,15 @@
     "verdi": "2020-03-26T08:16:05.038Z"
   },
   "samboerDetaljer": {
-    "navn": "Bob Dyland",
+    "navn": {
+      "label": "Navn",
+      "verdi": "Bob Dyland"
+    },
     "fødselsdato":  {"label": "fødselsdato", "verdi": "1976-07-26T08:16:05.000Z"},
-    "fødselsnummer": "26077624804"
+    "ident": {
+      "label": "Fødselsnummer (11 siffer) / d-nummer",
+      "verdi": "26077624804"
+    }
   },
   "_comment": "denne burde kanskje fjernes -> splitte bosutuasjon og sivilstandsplaner også i frontend",
   "skalGifteSegEllerBliSamboer": {

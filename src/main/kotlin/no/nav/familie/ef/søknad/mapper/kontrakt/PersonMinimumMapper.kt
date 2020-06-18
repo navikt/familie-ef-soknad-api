@@ -1,6 +1,8 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SamboerDetaljer
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
@@ -11,19 +13,48 @@ object PersonMinimumMapper {
         return Søknadsfelt("Om samboeren din", personMinimum(it))
     }
 
+    fun map(annenForelder: AnnenForelder): Søknadsfelt<PersonMinimum> {
+        return Søknadsfelt("Persondata", personMinimum(annenForelder))
+    }
 
-    private fun personMinimum(samboerDetaljer: SamboerDetaljer): PersonMinimum {
+    private fun personMinimum(annenForelder: AnnenForelder): PersonMinimum {
 
-        val søknadsfeltFødselsnummer = samboerDetaljer.fødselsnummer?.let {
-            Søknadsfelt("Fødselsnummer", Fødselsnummer(it))
-        }
+        val søknadsfeltFødselsnummer =  mapFødselsnummer(annenForelder.ident)
 
-        val søknadsfeltFødselsdato = samboerDetaljer.fødselsdato?.tilSøknadsfelt()
+        val søknadsfeltFødselsdato = annenForelder.fødselsdato?.tilSøknadsfelt()
 
-        return PersonMinimum(Søknadsfelt("Navn", samboerDetaljer.navn),
+        return PersonMinimum(annenForelder.navn?.tilSøknadsfelt()  ?: Søknadsfelt("Annen forelder navn",
+                                                                                  "ikke oppgitt") ,
                              søknadsfeltFødselsnummer,
                              søknadsfeltFødselsdato,
                              null)
 
     }
+
+
+    private fun personMinimum(samboerDetaljer: SamboerDetaljer): PersonMinimum {
+
+        val søknadsfeltFødselsnummer =  mapFødselsnummer(samboerDetaljer.ident)
+
+        val søknadsfeltFødselsdato = samboerDetaljer.fødselsdato?.tilSøknadsfelt()
+
+        return PersonMinimum(samboerDetaljer.navn.tilSøknadsfelt(),
+                             søknadsfeltFødselsnummer,
+                             søknadsfeltFødselsdato,
+                             null)
+
+    }
+
+    private fun mapFødselsnummer(ident: TekstFelt?): Søknadsfelt<Fødselsnummer>? {
+        return ident?.let {
+            return if (it.verdi.isNotBlank()) {
+                ident.tilSøknadsfelt(::Fødselsnummer)
+            } else {
+                null
+            }
+        }
+
+    }
+
+
 }

@@ -19,9 +19,10 @@
           "label": "Født",
           "verdi": true
         },
-        "fnr": {
-          "label": "Fødselsnummer",
-          "verdi": "13111577824"
+        "fnr": "13111577824",
+        "ident": {
+          "label": "Fødselsnummer (11 siffer) / d-nummer",
+          "verdi": ""
         },
         "navn": {
           "label": "Navn",
