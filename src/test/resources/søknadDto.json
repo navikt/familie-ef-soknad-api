@@ -313,10 +313,7 @@
       "svarid": "JA",
       "tittel": "dokumentasjon.inngåttEkteskap.tittel",
       "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": false
-      },
+      "harSendtInn": false,
       "label": "Dokumentasjon på inngått ekteskap",
       "opplastedeVedlegg": [
         {
@@ -343,10 +340,7 @@
       "tittel": "dokumentasjon.ulikeAdresser.tittel",
       "beskrivelse": "dokumentasjon.ulikeAdresser.beskrivelse",
       "label": "Bor på ulike adresser",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": false
-      }
+      "harSendtInn": false
     },
     {
       "id": "DELT_BOSTED",
@@ -355,10 +349,7 @@
       "tittel": "dokumentasjon.deltBosted.tittel",
       "beskrivelse": "dokumentasjon.deltBosted.beskrivelse",
       "label": "Delt bosted",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": false
-      }
+      "harSendtInn": false
     },
     {
       "id": "SYKDOM",
@@ -367,10 +358,7 @@
       "tittel": "dokumentasjon.sykdom.tittel",
       "beskrivelse": "dokumentasjon.sykdom.beskrivelse",
       "label": "Sykdom",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": false
-      }
+      "harSendtInn": false
     },
     {
       "id": "UTDANNING",
@@ -378,10 +366,7 @@
       "svarid": "skalTaUtdanning",
       "tittel": "dokumentasjon.utdanning.tittel",
       "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": false
-      },
+      "harSendtInn": false,
       "label": "Dokumentasjon på utdanningen du skal ta",
       "opplastedeVedlegg": [
         {

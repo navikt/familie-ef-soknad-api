@@ -475,10 +475,7 @@
       "tittel": "dokumentasjon.utdanning.tittel",
       "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
       "label": "UTDANNING",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     },
     {
       "id": "ARBEIDSKONTRAKT",
@@ -487,10 +484,7 @@
       "tittel": "dokumentasjon.arbeidskontrakt.tittel",
       "beskrivelse": "dokumentasjon.arbeidskontrakt.beskrivelse",
       "label": "Arbeidskontrakt",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     },
     {
       "id": "SYKT_BARN",
@@ -499,10 +493,7 @@
       "tittel": "dokumentasjon.syktBarn.tittel",
       "beskrivelse": "dokumentasjon.syktBarn.beskrivelse",
       "label": "Sykt barn",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     },
     {
       "id": "SYKDOM",
@@ -511,10 +502,7 @@
       "tittel": "dokumentasjon.sykdom.tittel",
       "beskrivelse": "dokumentasjon.sykdom.beskrivelse",
       "label": "Sykdom",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     },
     {
       "id": "BARNEPASS",
@@ -523,10 +511,7 @@
       "tittel": "dokumentasjon.barnepass.tittel",
       "beskrivelse": "dokumentasjon.barnepass.beskrivelse",
       "label": "BARNEPASS",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     },
     {
       "id": "BARNETILSYN_BEHOV",
@@ -535,10 +520,7 @@
       "tittel": "dokumentasjon.barnetilsynsbehov.tittel",
       "beskrivelse": "dokumentasjon.barnetilsynsbehov.beskrivelse",
       "label": "Barnetilsyn behov",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     }
   ],
   "søkerBorPåRegistrertAdresse": {

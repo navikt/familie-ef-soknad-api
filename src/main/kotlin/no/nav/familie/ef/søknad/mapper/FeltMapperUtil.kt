@@ -21,10 +21,10 @@ fun dokumentfelt(dokumentnavn: String, vedleggMap: Map<String, DokumentasjonWrap
     val dokumentasjon = vedleggMap[dokumentnavn]
     return dokumentasjon?.let {
         val dokumenter = it.vedlegg.map { vedlegg -> Dokument(vedlegg.id, vedlegg.navn) }
-        Søknadsfelt(it.label, Dokumentasjon(it.harSendtInnTidligere.tilSøknadsfelt(), dokumenter))
+        Søknadsfelt(it.label, Dokumentasjon(it.harSendtInnTidligere, dokumenter))
     }
 }
 
-data class DokumentasjonWrapper(val label: String, val harSendtInnTidligere: BooleanFelt, val vedlegg: List<Vedlegg>)
+data class DokumentasjonWrapper(val label: String, val harSendtInnTidligere: Søknadsfelt<Boolean>, val vedlegg: List<Vedlegg>)
 
 fun String.tilHeltall(): Int = this.toDouble().toInt()

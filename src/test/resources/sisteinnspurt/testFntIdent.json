@@ -195,10 +195,7 @@
       "tittel": "dokumentasjon.separasjonEllerSkilsmisse.tittel",
       "beskrivelse": "dokumentasjon.separasjonEllerSkilsmisse.beskrivelse",
       "label": "UFORMELL_SEPARASJON_ELLER_SKILSMISSE",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     },
     {
       "id": "BOR_PÅ_ULIKE_ADRESSER",
@@ -207,10 +204,7 @@
       "tittel": "dokumentasjon.ulikeAdresser.tittel",
       "beskrivelse": "dokumentasjon.ulikeAdresser.beskrivelse",
       "label": "BOR_PÅ_ULIKE_ADRESSER",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     }
   ],
   "harBekreftet": true,

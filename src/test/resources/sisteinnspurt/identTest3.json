@@ -272,10 +272,7 @@
       "tittel": "dokumentasjon.inngåttEkteskap.tittel",
       "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
       "label": "INNGÅTT_EKTESKAP",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     },
     {
       "id": "UFORMELL_SEPARASJON_ELLER_SKILSMISSE",
@@ -284,10 +281,7 @@
       "tittel": "dokumentasjon.separasjonEllerSkilsmisse.tittel",
       "beskrivelse": "dokumentasjon.separasjonEllerSkilsmisse.beskrivelse",
       "label": "UFORMELL_SEPARASJON_ELLER_SKILSMISSE",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     },
     {
       "id": "SAMLIVSBRUDD",
@@ -296,10 +290,7 @@
       "tittel": "dokumentasjon.begrunnelse.tittel",
       "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
       "label": "SAMLIVSBRUDD",
-      "harSendtInn": {
-        "label": "Har allerede sendt inn",
-        "verdi": true
-      }
+      "harSendtInn": true
     }
   ],
   "harBekreftet": true,
