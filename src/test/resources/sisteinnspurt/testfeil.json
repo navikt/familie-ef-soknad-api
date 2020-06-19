@@ -129,7 +129,7 @@
       "spørsmålid": "søkerFraBestemtMåned",
       "svarid": "ja",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
-      "verdi": "Ja"
+      "verdi": "true"
     },
     "søknadsdato": {
       "label": "Jeg søker overgangsstønad fra og med",
