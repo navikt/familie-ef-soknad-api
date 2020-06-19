@@ -261,7 +261,7 @@
       "spørsmålid": "søkerFraBestemtMåned",
       "svarid": "neiNavKanVurdere",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
-      "verdi": "Nei, Nav kan vurdere fra hvilken måned jeg har rett til stønad"
+      "verdi": "false"
     }
   },
   "dokumentasjonsbehov": [
