@@ -144,7 +144,10 @@
       "tittel": "dokumentasjon.begrunnelse.tittel",
       "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
       "label": "SAMLIVSBRUDD",
-      "harSendtInn": true
+      "harSendtInn": {
+        "label": "Har allerede sendt inn",
+        "verdi": true
+      }
     }
   ],
   "harBekreftet": true,

@@ -272,7 +272,10 @@
       "tittel": "dokumentasjon.begrunnelse.tittel",
       "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
       "label": "SAMLIVSBRUDD",
-      "harSendtInn": false
+      "harSendtInn": {
+        "label": "Har allerede sendt inn",
+        "verdi": false
+      }
     },
     {
       "id": "UTDANNING",
@@ -280,7 +283,10 @@
       "svarid": "skalTaUtdanning",
       "tittel": "dokumentasjon.utdanning.tittel",
       "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
-      "harSendtInn": false,
+      "harSendtInn": {
+        "label": "Har allerede sendt inn",
+        "verdi": false
+      },
       "label": "Dokumentasjon på utdanningen du skal ta",
       "opplastedeVedlegg": [
         {
@@ -296,7 +302,10 @@
       "svarid": "skalTaUtdanning",
       "tittel": "dokumentasjon.utdanning.tittel",
       "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
-      "harSendtInn": false,
+      "harSendtInn": {
+        "label": "Har allerede sendt inn",
+        "verdi": false
+      },
       "label": "Dokumentasjon på utdanningen du skal ta",
       "opplastedeVedlegg": [
         {

@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.mapper
 
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
 import no.nav.familie.kontrakter.ef.søknad.*
 
 
@@ -22,5 +23,5 @@ fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
 
 fun dokumentMap(): Map<String, DokumentasjonWrapper> {
     val vedlegg = Vedlegg("id", "navn", "tittel", "data".toByteArray())
-    return mapOf("samlivsbrudd" to DokumentasjonWrapper("label", false, listOf(vedlegg)))
+    return mapOf("samlivsbrudd" to DokumentasjonWrapper("label", BooleanFelt("Har sendt inn tidligere", false), listOf(vedlegg)))
 }

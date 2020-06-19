@@ -193,7 +193,10 @@
       "svarid": "tarUtdanning",
       "tittel": "dokumentasjon.utdanning.tittel",
       "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
-      "harSendtInn": false,
+      "harSendtInn": {
+        "label": "Har allerede sendt inn",
+        "verdi": false
+      },
       "label": "Dokumentasjon på utdanningen du skal ta",
       "opplastedeVedlegg": [
         {
@@ -209,7 +212,10 @@
       "tittel": "dokumentasjon.barnepass.tittel",
       "beskrivelse": "dokumentasjon.barnepass.beskrivelse",
       "label": "BARNEPASS",
-      "harSendtInn": false
+      "harSendtInn": {
+        "label": "Har allerede sendt inn",
+        "verdi": false
+      }
     }
   ],
   "vedleggsliste": [],

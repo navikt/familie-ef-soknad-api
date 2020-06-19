@@ -183,7 +183,10 @@
       "tittel": "dokumentasjon.inngåttEkteskap.tittel",
       "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
       "label": "Inngått ekteskap",
-      "harSendtInn": true
+      "harSendtInn": {
+        "label": "Har allerede sendt inn",
+        "verdi": true
+      }
     }
   ],
   "harBekreftet": true,

@@ -49,8 +49,11 @@ internal class FeltMapperUtilKtTest {
     @Test
     internal fun `hent dokumentfelt`() {
         val bytes = byteArrayOf(12)
-        val dokumenter = mapOf("finnes" to DokumentasjonWrapper("label", false, listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok", bytes),
-                                                  Vedlegg("id2", "dok2.pdf", "Annen tittel på dok", bytes))))
+        val dokumentasjonWrapper = DokumentasjonWrapper("label",
+                                                        BooleanFelt("Har sendt inn tidligere", false),
+                                                        listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok", bytes),
+                                                               Vedlegg("id2", "dok2.pdf", "Annen tittel på dok", bytes)))
+        val dokumenter = mapOf("finnes" to dokumentasjonWrapper)
         val dokumentSomFinnes = dokumentfelt("finnes", dokumenter)!!
         assertThat(dokumentSomFinnes.verdi.dokumenter.first().id).isEqualTo("id1")
         assertThat(dokumentSomFinnes.verdi.dokumenter.first().navn).isEqualTo("dok1.pdf")
