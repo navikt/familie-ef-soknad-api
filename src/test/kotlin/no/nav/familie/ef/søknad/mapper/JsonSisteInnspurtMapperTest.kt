@@ -25,6 +25,16 @@ internal class JsonSisteInnspurtMapperTest {
         every { dokumentServiceServiceMock.hentVedlegg(any()) } returns "DOKUMENTID123".toByteArray()
     }
 
+
+    @Test
+    fun `Preprodtest skal ikke feile med mirjafeil`() {
+        val mapped: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/mirjaFeil.json"),
+                                                       SøknadDto::class.java)
+        mapper.mapTilIntern(mapped, innsendingMottatt)
+
+    }
+
+
     @Test
     fun `Preprodtest skal ikke feile med donorbarn`() {
         val donorbarn: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/donorbarn.json"),
@@ -32,6 +42,15 @@ internal class JsonSisteInnspurtMapperTest {
         mapper.mapTilIntern(donorbarn, innsendingMottatt)
 
     }
+
+//   Json mangler forelder på barn -> i UI, kan man få til dette hvis man går tilbake til sine barn, legger til et nytt og returnerer til oppsummering uten å oppdatere info om forelder
+//    @Test
+//    fun `Mapping skal ikke feile med dato på barn`() {
+//        val datoBarn: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/barnDato.json"),
+//                                                          SøknadDto::class.java)
+//        mapper.mapTilIntern(datoBarn, innsendingMottatt)
+//
+//    }
 
     @Test
     fun `Preprodtest skal ikke feile`() {
@@ -44,7 +63,8 @@ internal class JsonSisteInnspurtMapperTest {
     @Test
     fun `Annen forelder skal ha fødselsnummer etter mapping`() {
         fun identTest3(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/identTest3.json"),
-                                                           SøknadDto::class.java)
+                                                             SøknadDto::class.java)
+
         val mapped = mapper.mapTilIntern(identTest3(), innsendingMottatt)
         assertNotNull(mapped.søknad.barn.verdi.last().annenForelder?.verdi?.person?.verdi?.fødselsnummer)
 
@@ -72,7 +92,6 @@ internal class JsonSisteInnspurtMapperTest {
     }
 
 
-
     @Test
     fun `underUtanningFeil -mapTilIntern returnerer dto med riktig sivilstatus fra frontend`() {
         fun søknad(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/underUtanningFeil.json"),
@@ -89,7 +108,8 @@ internal class JsonSisteInnspurtMapperTest {
 
     @Test
     internal fun `nyttBarnFeil - skal mappe nytt barn uten fødselsnummer`() {
-        fun søknadNyttBarn(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/nyttBarnFeil.json"), SøknadDto::class.java)
+        fun søknadNyttBarn(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/nyttBarnFeil.json"),
+                                                                 SøknadDto::class.java)
         mapper.mapTilIntern(søknadNyttBarn(), innsendingMottatt)
     }
 
@@ -97,7 +117,8 @@ internal class JsonSisteInnspurtMapperTest {
     internal fun `søknadMedUgyldigFødselsnummer skal kaste exception når fødselsnummer ikke er gyldig`() {
         fun søknadMedugyldigFødselsnummer(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/søknadMedUgyldigFødselsnummer.json"),
                                                                                 SøknadDto::class.java)
+
         val frontendDto = søknadMedugyldigFødselsnummer()
-        assertThrows<IllegalStateException> { mapper.mapTilIntern(frontendDto, innsendingMottatt)}
+        assertThrows<IllegalStateException> { mapper.mapTilIntern(frontendDto, innsendingMottatt) }
     }
 }

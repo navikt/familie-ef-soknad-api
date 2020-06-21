@@ -12,7 +12,7 @@ object BarnMapper {
 
     fun mapBarn(barnliste: List<Barn>, vedlegg: Map<String, DokumentasjonWrapper>): List<Kontraktbarn> {
         return barnliste.map { barn ->
-            Kontraktbarn(navn = barn.navn.tilSøknadsfelt(),
+            Kontraktbarn(navn = barn.navn?.tilSøknadsfelt(),
                          fødselsnummer = mapFødselsnummer(barn),
                          harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
                          ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse

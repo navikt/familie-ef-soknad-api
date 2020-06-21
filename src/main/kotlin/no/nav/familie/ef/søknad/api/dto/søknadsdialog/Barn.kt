@@ -1,14 +1,14 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
 
-data class Barn(val alder: TekstFelt,
-                val ident: TekstFelt? = null, // TODO validation enten eller
-                val fødselsdato: DatoFelt?, // eller termindato
+data class Barn(val alder: TekstFelt?, // TODO Bare for visning (kan fjernes?)
+                val ident: TekstFelt? = null, // TODO validation enten eller ident-eller termindato/fødselsdato?
+                val fødselsdato: DatoFelt?,
                 val harSammeAdresse: BooleanFelt,
                 val ikkeRegistrertPåSøkersAdresseBeskrivelse: TekstFelt?,
                 val id: String? = null,
                 val lagtTil: Boolean? = false,
-                val navn: TekstFelt,
+                val navn: TekstFelt?, // optional på nye barn - TODO - validere at denne er satt dersom lagtTil = false?
                 val født: BooleanFelt,
                 val forelder: AnnenForelder)
 
