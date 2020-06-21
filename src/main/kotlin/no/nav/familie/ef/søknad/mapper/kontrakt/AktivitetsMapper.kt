@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TidligereUtdanning
+import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.tilHeltall
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
@@ -13,7 +14,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning as UnderU
 
 object AktivitetsMapper {
     fun map(frontendDto: SøknadDto,
-            vedlegg: Map<String, List<Vedlegg>>): Aktivitet {
+            vedlegg: Map<String, DokumentasjonWrapper>): Aktivitet {
         val aktivitet = frontendDto.aktivitet
 
         return Aktivitet(hvordanErArbeidssituasjonen = aktivitet.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
@@ -73,7 +74,7 @@ object AktivitetsMapper {
     }
 
     private fun mapArbeidssøker(arbeidssøker: no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker,
-                                vedlegg: Map<String, List<Vedlegg>>): Søknadsfelt<Arbeidssøker> {
+                                vedlegg: Map<String, DokumentasjonWrapper>): Søknadsfelt<Arbeidssøker> {
         return Søknadsfelt("Når du er arbeidssøker",
                            Arbeidssøker(
                                    registrertSomArbeidssøkerNav = arbeidssøker.registrertSomArbeidssøkerNav.tilSøknadsfelt(),
