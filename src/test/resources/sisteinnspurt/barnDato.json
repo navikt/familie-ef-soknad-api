@@ -1,0 +1,175 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "21057822284",
+      "forkortetNavn": "KOPP LUNKEN",
+      "adresse": {
+        "adresse": "JAABÆKVEGEN 16",
+        "postnummer": "1533"
+      },
+      "egenansatt": false,
+      "sivilstand": "UGIF",
+      "statsborgerskap": "NOR",
+      "kontakttelefon": "12341234"
+    },
+    "barn": [
+      {
+        "id": "d93b9725-f5e9-4620-b4aa-5065dd205b61",
+        "født": {
+          "label": "Født",
+          "verdi": true
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "KARAFFEL STERK"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 9
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2010-02-28"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "ident": {
+          "label": "Fødselsnummer eller d-nummer",
+          "verdi": "28021078036"
+        },
+        "forelder": {
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": true
+          },
+          "ikkeOppgittAnnenForelderBegrunnelse": {
+            "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
+            "verdi": "Donorbarn"
+          }
+        }
+      },
+      {
+        "ident": {
+          "label": "Fødselsnummer (11 siffer) / d-nummer",
+          "verdi": "26021974438"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 0
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "sdfg sdfg sdfg"
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato (kun hvis du vet)",
+          "verdi": "2020-06-19"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "født": {
+          "spørsmålid": "født",
+          "svarid": "JA",
+          "label": "Er barnet født?",
+          "verdi": true
+        },
+        "lagtTil": true,
+        "id": "58a032e2-e28d-4c6b-acd6-bc60050d65b4"
+      }
+    ],
+    "hash": "524338350"
+  },
+  "sivilstatus": {
+    "erUformeltGift": {
+      "spørsmålid": "erUformeltGift",
+      "svarid": "NEI",
+      "label": "Er du registrert som ugift i Folkeregisteret. Er du gift uten at dette er formelt registrert eller godkjent i Norge?",
+      "verdi": false
+    },
+    "erUformeltSeparertEllerSkilt": {
+      "spørsmålid": "erUformeltSeparertEllerSkilt",
+      "svarid": "NEI",
+      "label": "Er du separert eller skilt uten at dette er formelt registrert eller godkjent i Norge?",
+      "verdi": false
+    },
+    "årsakEnslig": {
+      "spørsmålid": "årsakEnslig",
+      "svarid": "aleneFraFødsel",
+      "label": "Hvorfor er du alene med barn?",
+      "verdi": "Jeg er alene med barn fra fødsel"
+    }
+  },
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du bodd i Norge de siste tre årene?",
+      "verdi": true
+    }
+  },
+  "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "borAleneMedBarnEllerGravid",
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegEllerBliSamboer",
+      "svarid": "NEI",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    }
+  },
+  "aktivitet": {
+    "hvaErDinArbeidssituasjon": {
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": [
+        "erHverkenIArbeidUtdanningEllerArbeidssøker"
+      ],
+      "label": "Hvordan er arbeidsituasjonen din?",
+      "verdi": [
+        "Jeg er ikke i arbeid, utdanning eller arbeidssøker"
+      ]
+    }
+  },
+  "merOmDinSituasjon": {
+    "gjelderDetteDeg": {
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": [
+        "nei"
+      ],
+      "label": "Gjelder noe av dette deg?",
+      "verdi": [
+        "Nei"
+      ]
+    },
+    "sagtOppEllerRedusertStilling": {
+      "spørsmålid": "sagtOppEllerRedusertStilling",
+      "svarid": "nei",
+      "label": "Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",
+      "verdi": "Nei"
+    },
+    "søkerFraBestemtMåned": {
+      "spørsmålid": "søkerFraBestemtMåned",
+      "svarid": "neiNavKanVurdere",
+      "label": "Søker du om overgangsstønad fra en bestemt måned?",
+      "verdi": false
+    }
+  },
+  "dokumentasjonsbehov": [],
+  "harBekreftet": true,
+  "søkerBorPåRegistrertAdresse": {
+    "spørsmålid": "søkerBorPåRegistrertAdresse",
+    "svarid": "JA",
+    "label": "søkerBorPåRegistrertAdresse",
+    "verdi": true
+  },
+  "innsendingsdato": "2020-06-21T10:23:05.882Z"
+}
