@@ -12,6 +12,7 @@ import org.junit.jupiter.api.assertThrows
 import java.io.File
 import java.time.LocalDateTime
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 internal class JsonSisteInnspurtMapperTest {
 
@@ -23,6 +24,32 @@ internal class JsonSisteInnspurtMapperTest {
     @BeforeEach
     fun setUp() {
         every { dokumentServiceServiceMock.hentVedlegg(any()) } returns "DOKUMENTID123".toByteArray()
+    }
+
+    @Test
+    fun `Barn har tom streng i verdi - datofelt `() {
+        val mapped: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/barnTomStrengFødselsdato.json"),
+                                                       SøknadDto::class.java)
+        val mappetTilBarnUtenFødselsTermindato = mapper.mapTilIntern(mapped, innsendingMottatt)
+        assertNull(mappetTilBarnUtenFødselsTermindato.søknad.barn.verdi.first().fødselTermindato)
+    }
+
+
+    @Test
+    fun `Preprodtest skal ikke feile med hildefeil`() {
+        val mapped: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/hildeFeil400.json"),
+                                                       SøknadDto::class.java)
+        mapper.mapTilIntern(mapped, innsendingMottatt)
+
+    }
+
+    @Test
+    fun `Preprodtest skal ikke feile med karifeil`() {
+        // fungerer når søkerFraBestemtMåned er fikset
+        val mapped: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/kariFeil400.json"),
+                                                       SøknadDto::class.java)
+        mapper.mapTilIntern(mapped, innsendingMottatt)
+
     }
 
 
