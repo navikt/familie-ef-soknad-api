@@ -11,7 +11,7 @@ internal class UnderUtdanningMapperTest {
     private val søknadDto = søknadDto()
 
     // Når
-    private val aktivitet = AktivitetsMapper.map(søknadDto)
+    private val aktivitet = AktivitetsMapper.map(søknadDto, mapOf())
     val uderUtdanning = aktivitet.underUtdanning?.verdi
 
     @Test

@@ -26,6 +26,22 @@ internal class JsonSisteInnspurtMapperTest {
     }
 
     @Test
+    fun `Preprodtest skal ikke feile med donorbarn`() {
+        val donorbarn: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/donorbarn.json"),
+                                                          SøknadDto::class.java)
+        mapper.mapTilIntern(donorbarn, innsendingMottatt)
+
+    }
+
+    @Test
+    fun `Preprodtest skal ikke feile`() {
+        fun identTest3(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/feilFraPreprod.json"),
+                                                             SøknadDto::class.java)
+        mapper.mapTilIntern(identTest3(), innsendingMottatt)
+
+    }
+
+    @Test
     fun `Annen forelder skal ha fødselsnummer etter mapping`() {
         fun identTest3(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/identTest3.json"),
                                                            SøknadDto::class.java)

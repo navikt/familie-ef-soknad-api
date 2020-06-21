@@ -13,7 +13,7 @@ internal class AktivitetsMapperTest {
     private val søknadDto = søknadDto()
 
     // Når
-    private val aktivitet = AktivitetsMapper.map(søknadDto)
+    private val aktivitet = AktivitetsMapper.map(søknadDto, mapOf())
 
     @Test
     fun `Map hvordanErArbeidssituasjonen label `() {
