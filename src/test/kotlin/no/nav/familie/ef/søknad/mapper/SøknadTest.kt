@@ -27,9 +27,9 @@ internal class JsonSisteInnspurtMapperTest {
 
     @Test
     fun `Preprodtest skal ikke feile med donorbarn`() {
-        fun identTest3(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/donorbarn.json"),
-                                                             SøknadDto::class.java)
-        mapper.mapTilIntern(identTest3(), innsendingMottatt)
+        val donorbarn: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/donorbarn.json"),
+                                                          SøknadDto::class.java)
+        mapper.mapTilIntern(donorbarn, innsendingMottatt)
 
     }
 
