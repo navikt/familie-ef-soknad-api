@@ -9,7 +9,6 @@ data class Barn(val alder: TekstFelt,
                 val id: String? = null,
                 val lagtTil: Boolean? = false,
                 val navn: TekstFelt,
-                val personnummer: TekstFelt? = null,
                 val født: BooleanFelt,
                 val forelder: AnnenForelder)
 

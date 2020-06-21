@@ -11,6 +11,9 @@ familie:
     mottak:
       uri: http://localhost:8092/api
       passord: pwdMottak
+  dokument:
+    uri: http://localhost:8082/api
+
 tps:
   innsyn:
     uri: http://localhost:8091/mockapi/

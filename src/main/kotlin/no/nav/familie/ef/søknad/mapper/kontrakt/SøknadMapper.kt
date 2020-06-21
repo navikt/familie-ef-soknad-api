@@ -29,7 +29,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                                                 SivilstandsplanerMapper.mapSivilstandsplaner(frontendDto.bosituasjon)),
                 barn = Søknadsfelt("Barn funnet i tps/folkeregisteret",
                                    BarnMapper.mapBarn(frontendDto.person.barn, vedlegg)),
-                aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", AktivitetsMapper.map(frontendDto)),
+                aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", AktivitetsMapper.map(frontendDto, vedlegg)),
                 situasjon = Søknadsfelt("Mer om situasjonen din", SituasjonsMapper.mapSituasjon(frontendDto, vedlegg)),
                 stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart(frontendDto.merOmDinSituasjon)))
         return SøknadMedVedlegg(søknad, vedlegg.values.flatten())

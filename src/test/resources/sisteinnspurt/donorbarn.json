@@ -1,0 +1,138 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "13028621838",
+      "forkortetNavn": "KONSOLL ARTIG",
+      "adresse": {
+        "adresse": "ØSTROLLVEIEN 50",
+        "postnummer": "3512"
+      },
+      "egenansatt": false,
+      "sivilstand": "SKIL",
+      "statsborgerskap": "NOR",
+      "kontakttelefon": "34563456"
+    },
+    "barn": [
+      {
+        "id": "0ccae2d9-1eca-47bc-af2f-39b2e1d4b69e",
+        "født": {
+          "label": "Født",
+          "verdi": true
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "GASELLE LEALAUS"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 1
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2019-03-25"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "ident": {
+          "label": "Fødselsnummer eller d-nummer",
+          "verdi": "25031981061"
+        },
+        "forelder": {
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": true
+          },
+          "ikkeOppgittAnnenForelderBegrunnelse": {
+            "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
+            "verdi": "Donorbarn"
+          },
+          "hvorforIkkeOppgi": {
+            "spørsmålid": "hvorforIkkeOppgi",
+            "svarid": "donorbarn",
+            "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
+            "verdi": "Donorbarn"
+          }
+        }
+      }
+    ],
+    "hash": "-527586548"
+  },
+  "sivilstatus": {
+    "årsakEnslig": {
+      "spørsmålid": "årsakEnslig",
+      "svarid": "aleneFraFødsel",
+      "label": "Hvorfor er du alene med barn?",
+      "verdi": "Jeg er alene med barn fra fødsel"
+    }
+  },
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du bodd i Norge de siste tre årene?",
+      "verdi": true
+    }
+  },
+  "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "borAleneMedBarnEllerGravid",
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegEllerBliSamboer",
+      "svarid": "NEI",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    }
+  },
+  "aktivitet": {
+    "hvaErDinArbeidssituasjon": {
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": [
+        "erHverkenIArbeidUtdanningEllerArbeidssøker"
+      ],
+      "label": "Hvordan er arbeidsituasjonen din?",
+      "verdi": [
+        "Jeg er ikke i arbeid, utdanning eller arbeidssøker"
+      ]
+    }
+  },
+  "merOmDinSituasjon": {
+    "gjelderDetteDeg": {
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": [
+        "nei"
+      ],
+      "label": "Gjelder noe av dette deg?",
+      "verdi": [
+        "Nei"
+      ]
+    },
+    "sagtOppEllerRedusertStilling": {
+      "spørsmålid": "sagtOppEllerRedusertStilling",
+      "svarid": "nei",
+      "label": "Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",
+      "verdi": "Nei"
+    },
+    "søkerFraBestemtMåned": {
+      "spørsmålid": "søkerFraBestemtMåned",
+      "svarid": "neiNavKanVurdere",
+      "label": "Søker du om overgangsstønad fra en bestemt måned?",
+      "verdi": "true"
+    }
+  },
+  "dokumentasjonsbehov": [],
+  "harBekreftet": true,
+  "søkerBorPåRegistrertAdresse": {
+    "spørsmålid": "søkerBorPåRegistrertAdresse",
+    "svarid": "JA",
+    "label": "søkerBorPåRegistrertAdresse",
+    "verdi": true
+  }
+}
