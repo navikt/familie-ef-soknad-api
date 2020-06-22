@@ -5,6 +5,7 @@ import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
+import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 
 object SivilstandsdetaljerMapper {
 
@@ -22,7 +23,11 @@ object SivilstandsdetaljerMapper {
                                                                                             vedlegg),
                                    datoSøktSeparasjon = sivilstatus.datoSøktSeparasjon?.tilSøknadsfelt(),
                                    søktOmSkilsmisseSeparasjon = sivilstatus.harSøktSeparasjon?.tilSøknadsfelt(),
-                                   årsakEnslig = sivilstatus.årsakEnslig?.tilSøknadsfelt()
+                                   årsakEnslig = sivilstatus.årsakEnslig?.tilSøknadsfelt(),
+                                   tidligereSamboerdetaljer = sivilstatus.tidligereSamboerDetaljer?.let {
+                                       Søknadsfelt("Om den tidligere samboeren din",
+                                                   PersonMinimumMapper.personMinimum(it))
+                                   }
         )
     }
 

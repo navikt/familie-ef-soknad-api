@@ -52,5 +52,7 @@ internal class SivilstandsdetaljerMapperTest {
 
         assertThat(kontrakt.samlivsbruddsdato?.label).isEqualTo(sivilstatus.datoForSamlivsbrudd?.label)
         assertThat(kontrakt.samlivsbruddsdato?.verdi).isEqualTo(sivilstatus.datoForSamlivsbrudd?.verdi)
+
+        assertThat(kontrakt.tidligereSamboerdetaljer?.verdi).isNotNull
     }
 }

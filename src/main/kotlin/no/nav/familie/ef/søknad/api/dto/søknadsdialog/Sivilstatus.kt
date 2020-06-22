@@ -7,6 +7,5 @@ data class Sivilstatus(val harSøktSeparasjon: BooleanFelt?, // TODO Burde ikke 
                        val årsakEnslig: TekstFelt? = null,
                        val datoForSamlivsbrudd: DatoFelt? = null,
                        val datoFlyttetFraHverandre: DatoFelt? = null,
-                       val datoEndretSamvær: DatoFelt? = null)
-
-
+                       val datoEndretSamvær: DatoFelt? = null,
+                       val tidligereSamboerDetaljer: SamboerDetaljer? = null)
