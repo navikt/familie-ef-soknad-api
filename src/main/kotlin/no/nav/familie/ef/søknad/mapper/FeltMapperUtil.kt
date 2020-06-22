@@ -34,7 +34,7 @@ fun String.tilHeltall(): Int = this.toDouble().toInt()
 fun TekstFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? {
     return if (this.verdi.isNotBlank()) {
         val string = this.verdi
-        val date = if (string.length > 10 && string[10] === 'T') {
+        val date = if (string.length > 10 && string[10] == 'T') {
             LocalDate.parse(string.substring(0, 10), DateTimeFormatter.ISO_LOCAL_DATE)
         } else {
             LocalDate.parse(string, DateTimeFormatter.ISO_LOCAL_DATE)

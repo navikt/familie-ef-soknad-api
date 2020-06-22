@@ -18,7 +18,7 @@ data class Bosituasjon(
 
 data class SamboerDetaljer(
        // val fødselsnummer: String?,
-        val fødselsdato: DatoFelt?,
+        val fødselsdato: TekstFelt?,
         val navn: TekstFelt,
         val ident: TekstFelt? = null
 )

@@ -16,7 +16,7 @@ data class AnnenForelder(
         val kanIkkeOppgiAnnenForelderFar: BooleanFelt,
         val ikkeOppgittAnnenForelderBegrunnelse: TekstFelt?,
         val navn: TekstFelt?,
-        val fødselsdato: DatoFelt?,
+        val fødselsdato: TekstFelt?,
         val ident: TekstFelt? = null,
         val borINorge: BooleanFelt?,
         val land: TekstFelt?,
@@ -33,28 +33,7 @@ data class AnnenForelder(
         val skalBarnetBoHosSøker: TekstFelt?
 )
 
-//
-//export interface IForelder {
-//    navn?: ITekstFelt;
-//    skalBarnetBoHosSøker?: ISpørsmålFelt;
-//    fødselsdato?: IDatoFelt | null;
-//    personnr?: ITekstFelt;
-//    kanIkkeOppgiAnnenForelderFar?: IBooleanFelt;
-//    hvorforIkkeOppgi?: ISpørsmålFelt; // TODO brukes ikke
-//    ikkeOppgittAnnenForelderBegrunnelse?: ITekstFelt;
-//    borINorge?: ISpørsmålBooleanFelt;
-//    land?: ITekstFelt;
-//    avtaleOmDeltBosted?: ISpørsmålBooleanFelt;
-//    harAnnenForelderSamværMedBarn?: ISpørsmålFelt;
-//    harDereSkriftligSamværsavtale?: ISpørsmålFelt;
-//    hvordanPraktiseresSamværet?: ITekstFelt;
-//    borISammeHus?: ISpørsmålFelt;
-//    hvordanBorDere?: ISpørsmålFelt;
-//    boddSammenFør?: ISpørsmålBooleanFelt;
-//    flyttetFra?: IDatoFelt;
-//    hvorMyeSammen?: ISpørsmålFelt;
-//    beskrivSamværUtenBarn?: ITekstFelt;
-//}
 
+//    hvorforIkkeOppgi?: ISpørsmålFelt; // TODO brukes ikke
 //TODO skal barn bo hos deg
 
