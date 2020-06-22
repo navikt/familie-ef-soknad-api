@@ -5,7 +5,9 @@ import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Dokumentasjon
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
-import java.time.LocalDate
+import java.time.*
+import java.time.format.DateTimeFormatter
+
 
 fun BooleanFelt.tilSøknadsfelt(): Søknadsfelt<Boolean> = Søknadsfelt(this.label, this.verdi)
 
@@ -28,3 +30,24 @@ fun dokumentfelt(dokumentnavn: String, vedleggMap: Map<String, DokumentasjonWrap
 data class DokumentasjonWrapper(val label: String, val harSendtInnTidligere: Søknadsfelt<Boolean>, val vedlegg: List<Vedlegg>)
 
 fun String.tilHeltall(): Int = this.toDouble().toInt()
+
+fun TekstFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? {
+    return if (this.verdi.isNotBlank()) {
+        val string = this.verdi
+        val date = if (string.length > 10 && string[10] == 'T') {
+            if (string.endsWith("Z")) {
+                val offsetDateTime = OffsetDateTime.ofInstant(Instant.parse(string), ZoneId.of("Europe/Oslo"))
+                offsetDateTime.toLocalDate()
+            } else {
+                LocalDateTime.parse(string, DateTimeFormatter.ISO_LOCAL_DATE_TIME).toLocalDate()
+            }
+        } else {
+            LocalDate.parse(string, DateTimeFormatter.ISO_LOCAL_DATE)
+        }
+        return Søknadsfelt(this.label, date)
+    } else {
+        null
+    }
+}
+
+

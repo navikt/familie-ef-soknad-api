@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SamboerDetaljer
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
@@ -19,7 +20,7 @@ object PersonMinimumMapper {
 
     private fun personMinimum(annenForelder: AnnenForelder): PersonMinimum {
         val søknadsfeltFødselsnummer = mapFødselsnummer(annenForelder.ident)
-        val søknadsfeltFødselsdato = annenForelder.fødselsdato?.tilSøknadsfelt()
+        val søknadsfeltFødselsdato = annenForelder.fødselsdato?.tilSøknadsDatoFeltEllerNull()
         return PersonMinimum(annenForelder.navn?.tilSøknadsfelt() ?: Søknadsfelt("Annen forelder navn",
                                                                                  "ikke oppgitt"),
                              søknadsfeltFødselsnummer,
@@ -29,7 +30,7 @@ object PersonMinimumMapper {
 
     fun personMinimum(samboerDetaljer: SamboerDetaljer): PersonMinimum {
         val søknadsfeltFødselsnummer = mapFødselsnummer(samboerDetaljer.ident)
-        val søknadsfeltFødselsdato = samboerDetaljer.fødselsdato?.tilSøknadsfelt()
+        val søknadsfeltFødselsdato = samboerDetaljer.fødselsdato?.tilSøknadsDatoFeltEllerNull()
         return PersonMinimum(samboerDetaljer.navn.tilSøknadsfelt(),
                              søknadsfeltFødselsnummer,
                              søknadsfeltFødselsdato,

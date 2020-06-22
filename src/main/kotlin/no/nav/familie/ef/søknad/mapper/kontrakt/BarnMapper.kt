@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
+import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
@@ -18,7 +19,7 @@ object BarnMapper {
                          ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse
                                  ?.tilSøknadsfelt(),
                          erBarnetFødt = barn.født.tilSøknadsfelt(),
-                         fødselTermindato = barn.fødselsdato?.tilSøknadsfelt(),
+                         fødselTermindato = barn.fødselsdato?.tilSøknadsDatoFeltEllerNull(),
                          terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, vedlegg),
                          annenForelder = mapAnnenForelder(barn.forelder),
                          samvær = mapSamvær(barn.forelder, vedlegg)
