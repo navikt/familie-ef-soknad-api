@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNull
 
 internal class FeltMapperUtilKtTest {
 
@@ -62,5 +63,29 @@ internal class FeltMapperUtilKtTest {
         assertThat(dokumentSomFinnes.verdi.dokumenter.last().navn).isEqualTo("dok2.pdf")
 
         assertThat(dokumentfelt("finnesIkke", dokumenter)).isNull()
+    }
+
+    @Test
+    internal fun `Tekst til dato -skal tåle tom streng og returnere null`() {
+        val felt = TekstFelt("label", "").tilSøknadsDatoFeltEllerNull()
+        assertNull(felt)
+    }
+
+    @Test
+    internal fun `Tekst til dato -skal gjøre om til dato til streng`() {
+        val felt = TekstFelt("label", "2009-11-29").tilSøknadsDatoFeltEllerNull()
+        assertEquals(felt?.verdi?.dayOfMonth, 29)
+    }
+
+    @Test
+    internal fun `Tekst til dato - skal gjøre om til dato med Zulu tid til streng`() {
+        val felt = TekstFelt("label", "2020-06-21T19:25:21.752Z").tilSøknadsDatoFeltEllerNull()
+        assertEquals(felt?.verdi?.dayOfMonth, 21)
+    }
+
+    @Test
+    internal fun `Tekst til dato - skal gjøre om til dato med offset og tid til streng`() {
+        val felt = TekstFelt("label", "2007-04-05T12:30-02:00").tilSøknadsDatoFeltEllerNull()
+        assertEquals(felt?.verdi?.dayOfMonth, 5)
     }
 }
