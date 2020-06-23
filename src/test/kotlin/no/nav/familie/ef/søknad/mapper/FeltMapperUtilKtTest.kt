@@ -40,7 +40,7 @@ internal class FeltMapperUtilKtTest {
 
     @Test
     internal fun `DatoFelt`() {
-        val felt = DatoFelt("label", LocalDate.MAX).tilSøknadsfelt()
+        val felt = DatoFelt("label", LocalDate.MAX.toString()).tilSøknadsfelt()
         assertEquals(Søknadsfelt("label", LocalDate.MAX), felt)
     }
 
@@ -73,19 +73,19 @@ internal class FeltMapperUtilKtTest {
 
     @Test
     internal fun `Tekst til dato -skal tåle tom streng og returnere null`() {
-        val felt = TekstFelt("label", "").tilSøknadsDatoFeltEllerNull()
+        val felt = DatoFelt("label", "").tilSøknadsDatoFeltEllerNull()
         assertNull(felt)
     }
 
     @Test
     internal fun `Klokken 22 Zulu, UTC, 31 mai skal bli 1 juni når det er sommertid`() {
-        val felt = TekstFelt("label", "2020-05-31T22:00:00.000Z").tilSøknadsDatoFeltEllerNull()
+        val felt = DatoFelt("label", "2020-05-31T22:00:00.000Z").tilSøknadsDatoFeltEllerNull()
         assertEquals(felt?.verdi, LocalDate.of(2020, 6, 1))
     }
 
     @Test
     internal fun `Klokken 23, UTC, 3 mars skal bli 4 mars når det er vintertid`() {
-        val felt = TekstFelt("label", "2020-03-03T23:00:00.000Z").tilSøknadsDatoFeltEllerNull()
+        val felt = DatoFelt("label", "2020-03-03T23:00:00.000Z").tilSøknadsDatoFeltEllerNull()
         assertEquals(felt?.verdi, LocalDate.of(2020, 3, 4))
     }
 
@@ -95,7 +95,7 @@ internal class FeltMapperUtilKtTest {
     // Her er jeg usikker på hva som kan ha skjedd - UI feil?
     @Test
     internal fun `Klokken 22, UTC, 3 mars skal bli 3 mars når det er vintertid`() {
-        val felt = TekstFelt("label", "2020-03-03T22:00:00.000Z").tilSøknadsDatoFeltEllerNull()
+        val felt = DatoFelt("label", "2020-03-03T22:00:00.000Z").tilSøknadsDatoFeltEllerNull()
         assertEquals(felt?.verdi, LocalDate.of(2020, 3, 3))
     }
 
@@ -103,13 +103,13 @@ internal class FeltMapperUtilKtTest {
     // Skal egentlig ikke skje - skulle vi kastet exception?
     @Test
     internal fun `Tekst til dato - tid uten zulu`() {
-        val felt = TekstFelt("label", "2020-06-21T23:00:00.000").tilSøknadsDatoFeltEllerNull()
+        val felt = DatoFelt("label", "2020-06-21T23:00:00.000").tilSøknadsDatoFeltEllerNull()
         assertEquals(felt?.verdi?.dayOfMonth, 21)
     }
 
     // Vi kan ikke parse iso datoer med offset
     @Test
     internal fun `Tekst til dato - skal gjøre om tekst med zone data`() {
-        assertThrows<DateTimeParseException> { TekstFelt("label", "2007-04-05T23:59+02:00").tilSøknadsDatoFeltEllerNull() }
+        assertThrows<DateTimeParseException> { DatoFelt("label", "2007-04-05T23:59+02:00").tilSøknadsDatoFeltEllerNull() }
     }
 }

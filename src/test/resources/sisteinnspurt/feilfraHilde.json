@@ -1,0 +1,363 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "25127622186",
+      "forkortetNavn": "KNOTT KRAFTIG",
+      "adresse": {
+        "adresse": "MARUMSVEGEN 14",
+        "postnummer": "5570"
+      },
+      "egenansatt": false,
+      "sivilstand": "UGIF",
+      "statsborgerskap": "NOR",
+      "kontakttelefon": "12345678"
+    },
+    "barn": [
+      {
+        "id": "7ebdc5fc-7bcf-4ef8-9a25-7a0e1c82b120",
+        "født": {
+          "label": "Født",
+          "verdi": true
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "RHODODENRON TRIVIELL"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 7
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2012-11-26"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "ident": {
+          "label": "Fødselsnummer eller d-nummer",
+          "verdi": "26111274893"
+        },
+        "forelder": {
+          "id": "f94e8cac-35d9-48c2-a544-182e8feda831",
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": false
+          },
+          "navn": {
+            "label": "Navn",
+            "verdi": "Peter Pan"
+          },
+          "fødselsdato": {
+            "label": "Fødselsdato",
+            "verdi": "1970-03-19T23:00:00.000Z"
+          },
+          "borINorge": {
+            "spørsmålid": "borINorge",
+            "svarid": "JA",
+            "label": "Bor [0]s andre forelder i Norge?",
+            "verdi": true
+          },
+          "avtaleOmDeltBosted": {
+            "spørsmålid": "avtaleOmDeltBosted",
+            "svarid": "NEI",
+            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
+            "verdi": false
+          },
+          "harAnnenForelderSamværMedBarn": {
+            "spørsmålid": "harAnnenForelderSamværMedBarn",
+            "svarid": "jaIkkeMerEnnVanlig",
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Ja, men ikke mer enn vanlig samværsrett"
+          },
+          "harDereSkriftligSamværsavtale": {
+            "spørsmålid": "harDereSkriftligSamværsavtale",
+            "svarid": "nei",
+            "label": "Har dere skriftlig samværsavtale for [0]?",
+            "verdi": "Nei"
+          },
+          "hvordanPraktiseresSamværet": {
+            "label": "Hvordan praktiserer dere samværet?",
+            "verdi": "dette er spørsmål o hvordan vi praktiserer samværet"
+          },
+          "borAnnenForelderISammeHus": {
+            "spørsmålid": "borAnnenForelderISammeHus",
+            "svarid": "nei",
+            "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
+            "verdi": "Nei"
+          },
+          "boddSammenFør": {
+            "spørsmålid": "boddSammenFør",
+            "svarid": "JA",
+            "label": "Har du bodd sammen med den andre forelderen til [0] før?",
+            "verdi": true
+          },
+          "flyttetFra": {
+            "label": "Når flyttet dere fra hverandre?",
+            "verdi": "2020-06-01T22:00:00.000Z"
+          },
+          "hvorMyeSammen": {
+            "spørsmålid": "hvorMyeSammen",
+            "svarid": "møtesUtenom",
+            "label": "Hvor mye er du sammen med den andre forelderen til [0]?",
+            "verdi": "Vi møtes også utenom henting og levering"
+          },
+          "beskrivSamværUtenBarn": {
+            "label": "Hvor mye er du sammen med den andre forelderen til [0]?",
+            "verdi": "av og til"
+          }
+        }
+      },
+      {
+        "id": "b27d69b0-2f3a-42b0-a937-62f994d46686",
+        "født": {
+          "label": "Født",
+          "verdi": true
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "BUSK LEALAUS"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 2
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2017-12-03"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "ident": {
+          "label": "Fødselsnummer eller d-nummer",
+          "verdi": "03121779977"
+        },
+        "forelder": {
+          "id": "ad067d13-bb0f-4ee9-82f6-8607fd0467e1",
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": false
+          },
+          "navn": {
+            "label": "Navn",
+            "verdi": "Broren til Peter Pan"
+          },
+          "fødselsdato": {
+            "label": "Fødselsdato",
+            "verdi": "1970-03-19T23:00:00.000Z"
+          },
+          "borINorge": {
+            "spørsmålid": "borINorge",
+            "svarid": "JA",
+            "label": "Bor [0]s andre forelder i Norge?",
+            "verdi": true
+          },
+          "avtaleOmDeltBosted": {
+            "spørsmålid": "avtaleOmDeltBosted",
+            "svarid": "NEI",
+            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
+            "verdi": false
+          },
+          "harAnnenForelderSamværMedBarn": {
+            "spørsmålid": "harAnnenForelderSamværMedBarn",
+            "svarid": "jaIkkeMerEnnVanlig",
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Ja, men ikke mer enn vanlig samværsrett"
+          },
+          "harDereSkriftligSamværsavtale": {
+            "spørsmålid": "harDereSkriftligSamværsavtale",
+            "svarid": "jaKonkreteTidspunkter",
+            "label": "Har dere skriftlig samværsavtale for [0]?",
+            "verdi": "Ja, og den beskriver når barnet er sammen med hver av foreldrene"
+          },
+          "borAnnenForelderISammeHus": {
+            "spørsmålid": "borAnnenForelderISammeHus",
+            "svarid": "nei",
+            "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
+            "verdi": "Nei"
+          },
+          "boddSammenFør": {
+            "spørsmålid": "boddSammenFør",
+            "svarid": "NEI",
+            "label": "Har du bodd sammen med den andre forelderen til [0] før?",
+            "verdi": false
+          },
+          "hvorMyeSammen": {
+            "spørsmålid": "hvorMyeSammen",
+            "svarid": "kunNårLeveres",
+            "label": "Hvor mye er du sammen med den andre forelderen til [0]?",
+            "verdi": "Vi møtes kun når barnet skal hentes eller leveres"
+          }
+        }
+      }
+    ],
+    "hash": "1463536635"
+  },
+  "sivilstatus": {
+    "erUformeltGift": {
+      "spørsmålid": "erUformeltGift",
+      "svarid": "NEI",
+      "label": "Du er registrert som ugift i Folkeregisteret. Er du gift uten at dette er formelt registrert eller godkjent i Norge?",
+      "verdi": false
+    },
+    "erUformeltSeparertEllerSkilt": {
+      "spørsmålid": "erUformeltSeparertEllerSkilt",
+      "svarid": "NEI",
+      "label": "Er du separert eller skilt uten at dette er formelt registrert eller godkjent i Norge?",
+      "verdi": false
+    },
+    "årsakEnslig": {
+      "spørsmålid": "årsakEnslig",
+      "svarid": "samlivsbruddForeldre",
+      "label": "Hvorfor er du alene med barn?",
+      "verdi": "Samlivsbrudd med den andre forelderen"
+    },
+    "datoForSamlivsbrudd": {
+      "label": "Dato for samlivsbrudd",
+      "verdi": "1970-03-19T23:00:00.000Z"
+    }
+  },
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du bodd i Norge de siste tre årene?",
+      "verdi": true
+    }
+  },
+  "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "borAleneMedBarnEllerGravid",
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegEllerBliSamboer",
+      "svarid": "NEI",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    }
+  },
+  "aktivitet": {
+    "hvaErDinArbeidssituasjon": {
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": [
+        "harFåttJobbTilbud"
+      ],
+      "label": "Hvordan er arbeidsituasjonen din?",
+      "verdi": [
+        "Jeg har fått tilbud om jobb"
+      ]
+    },
+    "datoOppstartJobb": {
+      "label": "Når skal du starte i ny jobb?",
+      "verdi": "2020-07-04T22:00:00.000Z"
+    }
+  },
+  "merOmDinSituasjon": {
+    "gjelderDetteDeg": {
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": [
+        "harSøktBarnepassOgVenterEnnå"
+      ],
+      "label": "Gjelder noe av dette deg?",
+      "verdi": [
+        "Jeg har søkt om barnepass, men ikke fått plass enda"
+      ]
+    },
+    "sagtOppEllerRedusertStilling": {
+      "spørsmålid": "sagtOppEllerRedusertStilling",
+      "svarid": "nei",
+      "label": "Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",
+      "verdi": "Nei"
+    },
+    "søkerFraBestemtMåned": {
+      "spørsmålid": "søkerFraBestemtMåned",
+      "svarid": "neiNavKanVurdere",
+      "label": "Søker du om overgangsstønad fra en bestemt måned?",
+      "verdi": false
+    }
+  },
+  "dokumentasjonsbehov": [
+    {
+      "id": "SAMLIVSBRUDD",
+      "spørsmålid": "årsakEnslig",
+      "svarid": "samlivsbruddForeldre",
+      "tittel": "dokumentasjon.begrunnelse.tittel",
+      "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
+      "harSendtInn": false,
+      "label": "Erklæring om samlivsbrudd",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "ef389baf-4401-4ab9-aa25-0e98fa7f30b0",
+          "navn": "Berge et al 2016_Gender composition and group dynamics_Evidence from a laboratory experiment with microfinance clients.pdf",
+          "størrelse": 701446,
+          "tidspunkt": "2020-06-22T19:28:20.401Z"
+        }
+      ]
+    },
+    {
+      "id": "SAMVÆRSAVTALE",
+      "spørsmålid": "harDereSkriftligSamværsavtale",
+      "svarid": "jaKonkreteTidspunkter",
+      "tittel": "dokumentasjon.samværsavtale.tittel",
+      "harSendtInn": false,
+      "label": "Samværsavtale ",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "2b97c4f9-a8cf-458e-bd8e-a67553375340",
+          "navn": "Do individual programme effects.pdf",
+          "størrelse": 781558,
+          "tidspunkt": "2020-06-22T19:28:20.401Z"
+        }
+      ]
+    },
+    {
+      "id": "ARBEIDSKONTRAKT",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "harFåttJobbTilbud",
+      "tittel": "dokumentasjon.arbeidskontrakt.tittel",
+      "beskrivelse": "dokumentasjon.arbeidskontrakt.beskrivelse",
+      "harSendtInn": false,
+      "label": "Arbeidskontrakt som viser at du har fått tilbud om arbeid.",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "11af7ffc-69e4-4629-9032-a27e786f5ea8",
+          "navn": "Effektmaaling_Socialforskningsinst.pdf",
+          "størrelse": 930276,
+          "tidspunkt": "2020-06-22T19:28:20.401Z"
+        }
+      ]
+    },
+    {
+      "id": "BARNEPASS",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "harSøktBarnepassOgVenterEnnå",
+      "tittel": "dokumentasjon.barnepass.tittel",
+      "beskrivelse": "dokumentasjon.barnepass.beskrivelse",
+      "harSendtInn": false,
+      "label": "Dokumentasjon på at du mangler barnepass ",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "4f76e031-9f36-4a7e-8ccb-ad6ee102c947",
+          "navn": "Gaure et al 2007_Time and causality_a monte carlo assessment of the timing of events approach.pdf",
+          "størrelse": 521910,
+          "tidspunkt": "2020-06-22T19:28:20.401Z"
+        }
+      ]
+    }
+  ],
+  "harBekreftet": true,
+  "søkerBorPåRegistrertAdresse": {
+    "spørsmålid": "søkerBorPåRegistrertAdresse",
+    "svarid": "JA",
+    "label": "søkerBorPåRegistrertAdresse",
+    "verdi": true
+  }
+}

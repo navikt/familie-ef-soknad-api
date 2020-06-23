@@ -393,6 +393,10 @@
     }
   ],
   "aktivitet": {
+    "datoOppstartJobb": {
+      "label": "Når skal du starte i ny jobb?",
+      "verdi": "2020-03-27T13:52:42.742Z"
+    },
     "hvaErDinArbeidssituasjon": {
       "label": "Hva er din arbeidsituasjon?",
       "verdi": [
@@ -594,14 +598,6 @@
       "svarid": "neiNavKanVurdere",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
       "verdi": "false"
-    },
-    "datoOppstartJobb": {
-      "label": "Når skal du starte i ny jobb?",
-      "verdi": "2020-03-27T13:52:42.742Z"
-    },
-    "datoOppstartUtdanning": {
-      "label": "Når skal du begynne å ta utdanning?",
-      "verdi": "2020-03-27T13:52:42.742Z"
     },
     "sagtOppEllerRedusertStilling": {
       "label": "Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",

@@ -7,7 +7,8 @@ data class Aktivitet(
         val hvaErDinArbeidssituasjon: ListFelt<String>,
         val underUtdanning: UnderUtdanning? = null,
         val etablererEgenVirksomhet: TekstFelt? = null,
-        val egetAS: List<Aksjeselskap>?
+        val egetAS: List<Aksjeselskap>?,
+        val datoOppstartJobb: DatoFelt? = null
 )
 
 data class Aksjeselskap (

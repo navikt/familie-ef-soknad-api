@@ -4,10 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TidligereUtdanning
-import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
-import no.nav.familie.ef.søknad.mapper.dokumentfelt
-import no.nav.familie.ef.søknad.mapper.tilHeltall
-import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
+import no.nav.familie.ef.søknad.mapper.*
 import no.nav.familie.kontrakter.ef.søknad.*
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidsgiver as ArbeidsgiverDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning as UnderUtdanningDto
@@ -47,10 +44,10 @@ object AktivitetsMapper {
                               utdanning = Søknadsfelt("Utdanning",
                                                       Utdanning(underUtdanning.linjeKursGrad.tilSøknadsfelt(),
                                                                 Søknadsfelt("Når skal du være elev/student?",
-                                                                            Periode(underUtdanning.periode.fra.verdi.month,
-                                                                                    underUtdanning.periode.fra.verdi.year,
-                                                                                    underUtdanning.periode.til.verdi.month,
-                                                                                    underUtdanning.periode.til.verdi.year))
+                                                                            Periode(underUtdanning.periode.fra.tilLocalDate().month,
+                                                                                    underUtdanning.periode.fra.tilLocalDate().year,
+                                                                                    underUtdanning.periode.til.tilLocalDate().month,
+                                                                                    underUtdanning.periode.til.tilLocalDate().year))
                                                       )),
                               offentligEllerPrivat = underUtdanning.offentligEllerPrivat.tilSøknadsfelt(),
                               hvorMyeSkalDuStudere = underUtdanning.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
@@ -65,10 +62,10 @@ object AktivitetsMapper {
         val tidligereUtdanningList = tidligereUtdanning.map {
             Utdanning(it.linjeKursGrad.tilSøknadsfelt(),
                       Søknadsfelt("Når var du elev/student?",
-                                  Periode(it.periode.fra.verdi.month,
-                                          it.periode.fra.verdi.year,
-                                          it.periode.til.verdi.month,
-                                          it.periode.til.verdi.year)))
+                                  Periode(it.periode.fra.tilLocalDate().month,
+                                          it.periode.fra.tilLocalDate().year,
+                                          it.periode.til.tilLocalDate().month,
+                                          it.periode.til.tilLocalDate().year)))
         }
         return Søknadsfelt("Tidligere Utdanning", tidligereUtdanningList)
     }
