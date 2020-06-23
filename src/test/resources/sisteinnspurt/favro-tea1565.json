@@ -1,0 +1,328 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "31077726236",
+      "forkortetNavn": "HØYSTAKK NATURLIG",
+      "adresse": {
+        "adresse": "",
+        "postnummer": ""
+      },
+      "egenansatt": false,
+      "sivilstand": "UGIF",
+      "statsborgerskap": "NOR",
+      "kontakttelefon": "12345678"
+    },
+    "barn": [
+      {
+        "ident": {
+          "label": "Fødselsnummer (11 siffer) / d-nummer",
+          "verdi": ""
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 0
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": ""
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato (kun hvis du vet)",
+          "verdi": "2020-07-18"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "født": {
+          "spørsmålid": "født",
+          "svarid": "NEI",
+          "label": "Er barnet født?",
+          "verdi": false
+        },
+        "lagtTil": true,
+        "id": "dcc5c423-879f-4406-97e4-7201ea2e8481",
+        "forelder": {
+          "id": "4a01534f-a3b9-42b9-97df-81bb268c5ed9",
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": false
+          },
+          "navn": {
+            "label": "Navn",
+            "verdi": "Per Pedersen"
+          },
+          "fødselsdato": {
+            "label": "Fødselsdato",
+            "verdi": "1930-05-12T23:00:00.000Z"
+          },
+          "borINorge": {
+            "spørsmålid": "borINorge",
+            "svarid": "JA",
+            "label": "Bor [0]s andre forelder i Norge?",
+            "verdi": true
+          },
+          "avtaleOmDeltBosted": {
+            "spørsmålid": "avtaleOmDeltBosted",
+            "svarid": "NEI",
+            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
+            "verdi": false
+          },
+          "harAnnenForelderSamværMedBarn": {
+            "spørsmålid": "harAnnenForelderSamværMedBarn",
+            "svarid": "nei",
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Nei"
+          },
+          "borAnnenForelderISammeHus": {
+            "spørsmålid": "borAnnenForelderISammeHus",
+            "svarid": "nei",
+            "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
+            "verdi": "Nei"
+          },
+          "boddSammenFør": {
+            "spørsmålid": "boddSammenFør",
+            "svarid": "JA",
+            "label": "Har du bodd sammen med den andre forelderen til [0] før?",
+            "verdi": true
+          },
+          "flyttetFra": {
+            "label": "Når flyttet dere fra hverandre?",
+            "verdi": "2020-06-15T22:00:00.000Z"
+          },
+          "hvorMyeSammen": {
+            "spørsmålid": "hvorMyeSammen",
+            "svarid": "møtesUtenom",
+            "label": "Hvor mye er du sammen med den andre forelderen til [0]?",
+            "verdi": "Vi møtes også utenom henting og levering"
+          },
+          "beskrivSamværUtenBarn": {
+            "label": "Hvor mye er du sammen med den andre forelderen til [0]?",
+            "verdi": "BAre bittelitt"
+          }
+        }
+      }
+    ],
+    "hash": "1274927318"
+  },
+  "sivilstatus": {
+    "erUformeltGift": {
+      "spørsmålid": "erUformeltGift",
+      "svarid": "NEI",
+      "label": "Du er registrert som ugift i Folkeregisteret. Er du gift uten at dette er formelt registrert eller godkjent i Norge?",
+      "verdi": false
+    },
+    "erUformeltSeparertEllerSkilt": {
+      "spørsmålid": "erUformeltSeparertEllerSkilt",
+      "svarid": "NEI",
+      "label": "Er du separert eller skilt uten at dette er formelt registrert eller godkjent i Norge?",
+      "verdi": false
+    },
+    "årsakEnslig": {
+      "spørsmålid": "årsakEnslig",
+      "svarid": "samlivsbruddForeldre",
+      "label": "Hvorfor er du alene med barn?",
+      "verdi": "Samlivsbrudd med den andre forelderen"
+    },
+    "datoForSamlivsbrudd": {
+      "label": "Dato for samlivsbrudd",
+      "verdi": "2020-06-03T22:00:00.000Z"
+    }
+  },
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du bodd i Norge de siste tre årene?",
+      "verdi": false
+    },
+    "perioderBoddIUtlandet": [
+      {
+        "id": "e386061a-6068-4dc7-b63a-e54332a44327",
+        "periode": {
+          "fra": {
+            "label": "Fra",
+            "verdi": "2020-06-21T12:41:27.289Z"
+          },
+          "til": {
+            "label": "Til",
+            "verdi": "2020-06-22T12:41:27.289Z"
+          }
+        },
+        "begrunnelse": {
+          "label": "Hvorfor bodde du i utlandet?",
+          "verdi": "Hadde lyst å prøve"
+        }
+      },
+      {
+        "id": "11081b17-8fc2-4071-91c4-33df0de9d3db",
+        "periode": {
+          "fra": {
+            "label": "Fra",
+            "verdi": "2020-06-21T12:41:27.289Z"
+          },
+          "til": {
+            "label": "Til",
+            "verdi": "2020-06-22T12:41:27.289Z"
+          }
+        },
+        "begrunnelse": {
+          "label": "Hvorfor bodde du i utlandet?",
+          "verdi": "Samme som over"
+        }
+      }
+    ]
+  },
+  "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "borAleneMedBarnEllerGravid",
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegEllerBliSamboer",
+      "svarid": "NEI",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    }
+  },
+  "aktivitet": {
+    "hvaErDinArbeidssituasjon": {
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": [
+        "erArbeidssøker"
+      ],
+      "label": "Hvordan er arbeidsituasjonen din?",
+      "verdi": [
+        "Jeg er arbeidssøker"
+      ]
+    },
+    "arbeidssøker": {
+      "registrertSomArbeidssøkerNav": {
+        "spørsmålid": "registrertSomArbeidssøkerNav",
+        "svarid": "JA",
+        "label": "Er du registrert som arbeidssøker hos NAV?",
+        "verdi": true
+      },
+      "villigTilÅTaImotTilbudOmArbeid": {
+        "spørsmålid": "villigTilÅTaImotTilbudOmArbeid",
+        "svarid": "JA",
+        "label": "Er du villig til å ta imot tilbud om arbeid eller arbeidsmarkedstiltak?",
+        "verdi": true
+      },
+      "kanBegynneInnenEnUke": {
+        "spørsmålid": "kanBegynneInnenEnUke",
+        "svarid": "JA",
+        "label": "Kan du begynne i arbeid senest én uke etter at du har fått tilbud om jobb?",
+        "verdi": true
+      },
+      "kanSkaffeBarnepassInnenEnUke": {
+        "spørsmålid": "kanSkaffeBarnepassInnenEnUke",
+        "svarid": "JA",
+        "label": "Har du eller kan du skaffe barnepass senest innen en uke etter at du har fått tilbud om jobb eller arbeidsmarkedtiltak?",
+        "verdi": true
+      },
+      "hvorØnskerSøkerArbeid": {
+        "label": "Hvor ønsker du å søke arbeid?",
+        "verdi": "Kun i bodistriktet mitt, ikke mer enn 1 times reisevei"
+      },
+      "ønskerSøker50ProsentStilling": {
+        "spørsmålid": "ønskerSøker50ProsentStilling",
+        "svarid": "JA",
+        "label": "Ønsker du å stå som arbeidssøker til minst 50 prosent stilling?",
+        "verdi": true
+      }
+    }
+  },
+  "merOmDinSituasjon": {
+    "gjelderDetteDeg": {
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": [
+        "nei"
+      ],
+      "label": "Gjelder noe av dette deg?",
+      "verdi": [
+        "Nei"
+      ]
+    },
+    "sagtOppEllerRedusertStilling": {
+      "spørsmålid": "sagtOppEllerRedusertStilling",
+      "svarid": "sagtOpp",
+      "label": "Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",
+      "verdi": "Ja, jeg har sagt opp jobben eller tatt frivillig permisjon (ikke foreldrepermisjon)"
+    },
+    "begrunnelseSagtOppEllerRedusertStilling": {
+      "label": "Hvorfor sa du opp?",
+      "verdi": "Sjefen var min samboer"
+    },
+    "datoSagtOppEllerRedusertStilling": {
+      "label": "Når sa du opp?",
+      "verdi": "2020-06-02T22:00:00.000Z"
+    },
+    "søkerFraBestemtMåned": {
+      "spørsmålid": "søkerFraBestemtMåned",
+      "svarid": "neiNavKanVurdere",
+      "label": "Søker du om overgangsstønad fra en bestemt måned?",
+      "verdi": false
+    }
+  },
+  "dokumentasjonsbehov": [
+    {
+      "id": "SAMLIVSBRUDD",
+      "spørsmålid": "årsakEnslig",
+      "svarid": "samlivsbruddForeldre",
+      "tittel": "dokumentasjon.begrunnelse.tittel",
+      "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
+      "harSendtInn": false,
+      "label": "Erklæring om samlivsbrudd",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "8235ff9d-93dc-4a9e-a998-f868f2e1bf56",
+          "navn": "Kvittering postforkynning.pdf",
+          "størrelse": 303895
+        }
+      ]
+    },
+    {
+      "id": "TERMINBEKREFTELSE",
+      "spørsmålid": "født",
+      "svarid": "NEI",
+      "tittel": "dokumentasjon.terminbekreftelse.tittel",
+      "harSendtInn": false,
+      "label": "Terminbekreftelse",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "af1c1682-50cb-4ee6-ae8a-6f39b954087d",
+          "navn": "accept.png",
+          "størrelse": 9963
+        }
+      ]
+    },
+    {
+      "id": "ARBEIDSFORHOLD_OPPSIGELSE",
+      "spørsmålid": "sagtOppEllerRedusertStilling",
+      "svarid": "sagtOpp",
+      "tittel": "dokumentasjon.arbeidsforhold-oppsigelse.tittel",
+      "harSendtInn": false,
+      "label": "Dokumentasjon på arbeidsforholdet og årsaken til at du sluttet",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "adecf7a0-afef-423d-88b0-a0ce1d902bf5",
+          "navn": "Effektmaaling_Socialforskningsinst.pdf",
+          "størrelse": 930276
+        }
+      ]
+    }
+  ],
+  "harBekreftet": true,
+  "søkerBorPåRegistrertAdresse": {
+    "spørsmålid": "søkerBorPåRegistrertAdresse",
+    "svarid": "JA",
+    "label": "søkerBorPåRegistrertAdresse",
+    "verdi": true
+  }
+}
+
