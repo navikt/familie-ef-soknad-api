@@ -234,6 +234,16 @@
     "datoEndretSamvær": {
       "label": "datoEndretSamvær",
       "verdi": "2014-10-05"
+    },
+    "tidligereSamboerDetaljer": {
+      "navn": {
+        "label": "Navn",
+        "verdi": "Pelle proff"
+      },
+      "fødselsdato": {
+        "label": "Fødselsdato",
+        "verdi": "2020-05-31T22:00:00.000Z"
+      }
     }
   },
   "medlemskap": {
@@ -314,23 +324,21 @@
       "tittel": "dokumentasjon.inngåttEkteskap.tittel",
       "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
       "harSendtInn": false,
+      "label": "Dokumentasjon på inngått ekteskap",
       "opplastedeVedlegg": [
         {
           "dokumentId": "56ca1b13-9167-4ff4-98a6-f34b8fc8a95d",
           "navn": "Avtalebetingelser_23.pdf",
-          "label": "Dokumentasjon på inngått ekteskap",
           "størrelse": 138439
         },
         {
           "dokumentId": "a60c026a-ac2b-4b70-8cc3-bbe0d8e94e67",
           "navn": "Avtalebetingelser_23.pdf",
-          "label": "Dokumentasjon på inngått ekteskap",
           "størrelse": 138439
         },
         {
           "dokumentId": "9480ca05-f19e-4eb8-9219-d7b7bdc857fd",
           "navn": "Treningsopplegg09_06_2020.pdf",
-          "label": "Dokumentasjon på inngått ekteskap",
           "størrelse": 540420
         }
       ]
@@ -341,6 +349,7 @@
       "svarid": "tidligereSamboerFortsattRegistrertPåAdresse",
       "tittel": "dokumentasjon.ulikeAdresser.tittel",
       "beskrivelse": "dokumentasjon.ulikeAdresser.beskrivelse",
+      "label": "Bor på ulike adresser",
       "harSendtInn": false
     },
     {
@@ -349,6 +358,7 @@
       "svarid": "JA",
       "tittel": "dokumentasjon.deltBosted.tittel",
       "beskrivelse": "dokumentasjon.deltBosted.beskrivelse",
+      "label": "Delt bosted",
       "harSendtInn": false
     },
     {
@@ -357,6 +367,7 @@
       "svarid": "erSyk",
       "tittel": "dokumentasjon.sykdom.tittel",
       "beskrivelse": "dokumentasjon.sykdom.beskrivelse",
+      "label": "Sykdom",
       "harSendtInn": false
     },
     {
@@ -366,17 +377,16 @@
       "tittel": "dokumentasjon.utdanning.tittel",
       "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
       "harSendtInn": false,
+      "label": "Dokumentasjon på utdanningen du skal ta",
       "opplastedeVedlegg": [
         {
           "dokumentId": "a8368a39-e80d-48e5-9160-fee3d1bd2ecb",
           "navn": "Avtalebetingelser_23.pdf",
-          "label": "Dokumentasjon på utdanningen du skal ta",
           "størrelse": 138439
         },
         {
           "dokumentId": "0647c95c-c2c3-4789-8eaf-8440fbc67feb",
           "navn": "Kontrakt-1954   1-VH98825_encrypted_.pdf",
-          "label": "Dokumentasjon på utdanningen du skal ta",
           "størrelse": 62841
         }
       ]
@@ -419,7 +429,7 @@
           "label": "Hva slags ansettelsesforhold har du?",
           "verdi": "Fast"
         },
-        "harSluttDato":{
+        "harSluttDato": {
           "label": "Har du en sluttdato?",
           "verdi": true
         },
@@ -583,7 +593,7 @@
       "spørsmålid": "søkerFraBestemtMåned",
       "svarid": "neiNavKanVurdere",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
-      "verdi": "Nei, Nav kan vurdere fra hvilken måned jeg har rett til stønad"
+      "verdi": "false"
     },
     "datoOppstartJobb": {
       "label": "Når skal du starte i ny jobb?",

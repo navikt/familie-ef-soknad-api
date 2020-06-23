@@ -261,7 +261,7 @@
       "spørsmålid": "søkerFraBestemtMåned",
       "svarid": "neiNavKanVurdere",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
-      "verdi": "Nei, Nav kan vurdere fra hvilken måned jeg har rett til stønad"
+      "verdi": "false"
     }
   },
   "dokumentasjonsbehov": [
@@ -271,6 +271,7 @@
       "svarid": "JA",
       "tittel": "dokumentasjon.inngåttEkteskap.tittel",
       "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
+      "label": "INNGÅTT_EKTESKAP",
       "harSendtInn": true
     },
     {
@@ -279,6 +280,7 @@
       "svarid": "JA",
       "tittel": "dokumentasjon.separasjonEllerSkilsmisse.tittel",
       "beskrivelse": "dokumentasjon.separasjonEllerSkilsmisse.beskrivelse",
+      "label": "UFORMELL_SEPARASJON_ELLER_SKILSMISSE",
       "harSendtInn": true
     },
     {
@@ -287,6 +289,7 @@
       "svarid": "samlivsbruddForeldre",
       "tittel": "dokumentasjon.begrunnelse.tittel",
       "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
+      "label": "SAMLIVSBRUDD",
       "harSendtInn": true
     }
   ],

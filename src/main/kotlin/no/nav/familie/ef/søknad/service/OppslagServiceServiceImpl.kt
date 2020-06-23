@@ -18,7 +18,7 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
         val personinfoDto = client.hentPersoninfo()
         val barn = client.hentBarn()
 
-        val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) && it.harSammeAdresse }
+        val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
 
         return SøkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn)
     }

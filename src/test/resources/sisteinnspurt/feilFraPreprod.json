@@ -1,35 +1,35 @@
 {
   "person": {
     "søker": {
-      "fnr": "21057822284",
-      "forkortetNavn": "KOPP LUNKEN",
+      "fnr": "03118524275",
+      "forkortetNavn": "GYNGEHEST GUL",
       "adresse": {
-        "adresse": "JAABÆKVEGEN 16",
-        "postnummer": "1533"
+        "adresse": "ØSTROLLVEIEN 50",
+        "postnummer": "3512"
       },
       "egenansatt": false,
-      "sivilstand": "UGIF",
+      "sivilstand": "SKIL",
       "statsborgerskap": "NOR",
-      "mobiltelefon": "12341234"
+      "kontakttelefon": "12341234"
     },
     "barn": [
       {
-        "id": "feeaff8e-51e8-4966-95de-1f0b4ba1f334",
+        "id": "941319ee-d294-4dbc-a8aa-1d2909b27b6b",
         "født": {
           "label": "Født",
           "verdi": true
         },
         "navn": {
           "label": "Navn",
-          "verdi": "KARAFFEL STERK"
+          "verdi": "KAKKERLAKK KORRUPT"
         },
         "alder": {
           "label": "Alder",
-          "verdi": 9
+          "verdi": 1
         },
         "fødselsdato": {
           "label": "Fødselsdato",
-          "verdi": "2010-02-28"
+          "verdi": "2019-02-26"
         },
         "harSammeAdresse": {
           "label": "Har barnet samme adresse som deg?",
@@ -37,21 +37,21 @@
         },
         "ident": {
           "label": "Fødselsnummer eller d-nummer",
-          "verdi": "12345678"
+          "verdi": "26021973806"
         },
         "forelder": {
-          "id": "13d242e4-5a6a-4680-9e66-0311f1ce73ab",
+          "id": "389435d9-0774-445d-80aa-9c2bec7c60f0",
           "kanIkkeOppgiAnnenForelderFar": {
             "label": "Jeg kan ikke oppgi den andre forelderen",
             "verdi": false
           },
           "navn": {
             "label": "halla",
-            "verdi": "AnnenFyr"
+            "verdi": "far far far "
           },
           "ident": {
             "label": "Fødselsnummer (11 siffer) / d-nummer",
-            "verdi": "01051950190"
+            "verdi": ""
           },
           "borINorge": {
             "spørsmålid": "borINorge",
@@ -73,9 +73,9 @@
           },
           "borAnnenForelderISammeHus": {
             "spørsmålid": "borAnnenForelderISammeHus",
-            "svarid": "vetikke",
+            "svarid": "nei",
             "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
-            "verdi": "Jeg vet ikke hvor den andre forelderen bor"
+            "verdi": "Nei"
           },
           "boddSammenFør": {
             "spørsmålid": "boddSammenFør",
@@ -94,7 +94,7 @@
       {
         "ident": {
           "label": "Fødselsnummer (11 siffer) / d-nummer",
-          "verdi": "01051950190"
+          "verdi": "18068124693"
         },
         "alder": {
           "label": "Alder",
@@ -102,7 +102,7 @@
         },
         "navn": {
           "label": "Navn",
-          "verdi": "Barnet"
+          "verdi": "sdfg sdfgsdfg "
         },
         "harSammeAdresse": {
           "label": "Har barnet samme adresse som deg?",
@@ -115,20 +115,20 @@
           "verdi": true
         },
         "lagtTil": true,
-        "id": "9cd5236f-e20d-4db1-ab2c-fdf44ae143dd",
+        "id": "1d80fe14-5830-48b4-97ba-d5b9dd00d7ed",
         "forelder": {
-          "id": "13d242e4-5a6a-4680-9e66-0311f1ce73ab",
+          "id": "389435d9-0774-445d-80aa-9c2bec7c60f0",
           "kanIkkeOppgiAnnenForelderFar": {
             "label": "Jeg kan ikke oppgi den andre forelderen",
             "verdi": false
           },
           "navn": {
             "label": "halla",
-            "verdi": "AnnenFyr"
+            "verdi": "far far far "
           },
           "ident": {
             "label": "Fødselsnummer (11 siffer) / d-nummer",
-            "verdi": "01051950190"
+            "verdi": ""
           },
           "borINorge": {
             "spørsmålid": "borINorge",
@@ -138,9 +138,9 @@
           },
           "borAnnenForelderISammeHus": {
             "spørsmålid": "borAnnenForelderISammeHus",
-            "svarid": "vetikke",
+            "svarid": "nei",
             "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
-            "verdi": "Jeg vet ikke hvor den andre forelderen bor"
+            "verdi": "Nei"
           },
           "boddSammenFør": {
             "spørsmålid": "boddSammenFør",
@@ -169,30 +169,18 @@
         }
       }
     ],
-    "hash": "524338350"
+    "hash": "-1776818971"
   },
   "sivilstatus": {
-    "erUformeltGift": {
-      "spørsmålid": "erUformeltGift",
-      "svarid": "JA",
-      "label": "Er du registrert som ugift i Folkeregisteret. Er du gift uten at dette er formelt registrert eller godkjent i Norge?",
-      "verdi": true
-    },
-    "erUformeltSeparertEllerSkilt": {
-      "spørsmålid": "erUformeltSeparertEllerSkilt",
-      "svarid": "JA",
-      "label": "Er du separert eller skilt uten at dette er formelt registrert eller godkjent i Norge?",
-      "verdi": true
-    },
     "årsakEnslig": {
       "spørsmålid": "årsakEnslig",
-      "svarid": "samlivsbruddForeldre",
+      "svarid": "samlivsbruddAndre",
       "label": "Hvorfor er du alene med barn?",
-      "verdi": "Samlivsbrudd med den andre forelderen"
+      "verdi": "Samlivsbrudd med noen andre"
     },
-    "datoForSamlivsbrudd": {
-      "label": "Du må legge ved erklæring om samlivsbrudd",
-      "verdi": "2020-06-09T22:00:00.000Z"
+    "datoFlyttetFraHverandre": {
+      "label": "Når flyttet dere fra hverandre?",
+      "verdi": "2020-06-16T22:00:00.000Z"
     }
   },
   "medlemskap": {
@@ -208,24 +196,30 @@
   "bosituasjon": {
     "delerBoligMedAndreVoksne": {
       "spørsmålid": "delerBoligMedAndreVoksne",
-      "svarid": "harEkteskapsliknendeForhold",
+      "svarid": "borAleneMedBarnEllerGravid",
       "label": "Deler du bolig med andre voksne?",
-      "verdi": "Ja, jeg har samboer og lever i et ekteskapslignende forhold"
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegEllerBliSamboer",
+      "svarid": "JA",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": true
+    },
+    "datoSkalGifteSegEllerBliSamboer": {
+      "label": "Når skal dette skje?",
+      "verdi": "2020-07-04T22:00:00.000Z"
     },
     "samboerDetaljer": {
       "kjennerIkkeIdent": false,
       "navn": {
         "label": "Navn",
-        "verdi": "Navnesen"
+        "verdi": "wertwert wert "
       },
       "ident": {
         "label": "Fødselsnummer (11 siffer) / d-nummer",
-        "verdi": "01051950190"
+        "verdi": "13028621838"
       }
-    },
-    "datoFlyttetSammenMedSamboer": {
-      "label": "Når flyttet dere sammen?",
-      "verdi": "2020-06-16T22:00:00.000Z"
     }
   },
   "aktivitet": {
@@ -261,38 +255,10 @@
       "spørsmålid": "søkerFraBestemtMåned",
       "svarid": "neiNavKanVurdere",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
-      "verdi": "false"
+      "verdi": "true"
     }
   },
-  "dokumentasjonsbehov": [
-    {
-      "id": "INNGÅTT_EKTESKAP",
-      "spørsmålid": "erUformeltGift",
-      "svarid": "JA",
-      "tittel": "dokumentasjon.inngåttEkteskap.tittel",
-      "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
-      "label": "INNGÅTT_EKTESKAP",
-      "harSendtInn": true
-    },
-    {
-      "id": "UFORMELL_SEPARASJON_ELLER_SKILSMISSE",
-      "spørsmålid": "erUformeltSeparertEllerSkilt",
-      "svarid": "JA",
-      "tittel": "dokumentasjon.separasjonEllerSkilsmisse.tittel",
-      "beskrivelse": "dokumentasjon.separasjonEllerSkilsmisse.beskrivelse",
-      "label": "UFORMELL_SEPARASJON_ELLER_SKILSMISSE",
-      "harSendtInn": true
-    },
-    {
-      "id": "SAMLIVSBRUDD",
-      "spørsmålid": "årsakEnslig",
-      "svarid": "samlivsbruddForeldre",
-      "tittel": "dokumentasjon.begrunnelse.tittel",
-      "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
-      "label": "SAMLIVSBRUDD",
-      "harSendtInn": true
-    }
-  ],
+  "dokumentasjonsbehov": [],
   "harBekreftet": true,
   "søkerBorPåRegistrertAdresse": {
     "spørsmålid": "søkerBorPåRegistrertAdresse",

@@ -4,15 +4,17 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TidligereUtdanning
+import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
+import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.tilHeltall
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidsgiver as ArbeidsgiverDto
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker as ArbeidssøkerDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning as UnderUtdanningDto
 
 object AktivitetsMapper {
-    fun map(frontendDto: SøknadDto): Aktivitet {
+    fun map(frontendDto: SøknadDto,
+            vedlegg: Map<String, DokumentasjonWrapper>): Aktivitet {
         val aktivitet = frontendDto.aktivitet
 
         return Aktivitet(hvordanErArbeidssituasjonen = aktivitet.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
@@ -21,7 +23,7 @@ object AktivitetsMapper {
                          },
                          selvstendig = aktivitet.firma?.let { Søknadsfelt("Om firmaet du driver", mapOmFirma(it)) },
                          virksomhet = aktivitet.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it) },
-                         arbeidssøker = aktivitet.arbeidssøker?.let { mapArbeidssøker(it) },
+                         arbeidssøker = aktivitet.arbeidssøker?.let { mapArbeidssøker(it, vedlegg) },
                          underUtdanning = aktivitet.underUtdanning?.let { mapUtdanning(it) },
                          aksjeselskap = aktivitet.egetAS?.let {
                              Søknadsfelt("Ansatt i eget AS", it.map { aksjeselskap ->
@@ -71,7 +73,8 @@ object AktivitetsMapper {
         return Søknadsfelt("Tidligere Utdanning", tidligereUtdanningList)
     }
 
-    private fun mapArbeidssøker(arbeidssøker: ArbeidssøkerDto): Søknadsfelt<Arbeidssøker> {
+    private fun mapArbeidssøker(arbeidssøker: no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker,
+                                vedlegg: Map<String, DokumentasjonWrapper>): Søknadsfelt<Arbeidssøker> {
         return Søknadsfelt("Når du er arbeidssøker",
                            Arbeidssøker(
                                    registrertSomArbeidssøkerNav = arbeidssøker.registrertSomArbeidssøkerNav.tilSøknadsfelt(),
@@ -79,7 +82,9 @@ object AktivitetsMapper {
                                    kanDuBegynneInnenEnUke = arbeidssøker.kanBegynneInnenEnUke.tilSøknadsfelt(),
                                    kanDuSkaffeBarnepassInnenEnUke = arbeidssøker.kanSkaffeBarnepassInnenEnUke.tilSøknadsfelt(),
                                    hvorØnskerDuArbeid = arbeidssøker.hvorØnskerSøkerArbeid.tilSøknadsfelt(),
-                                   ønskerDuMinst50ProsentStilling = arbeidssøker.ønskerSøker50ProsentStilling.tilSøknadsfelt())
+                                   ønskerDuMinst50ProsentStilling = arbeidssøker.ønskerSøker50ProsentStilling.tilSøknadsfelt(),
+                                   ikkeVilligTilÅTaImotTilbudOmArbeidDokumentasjon = dokumentfelt(IKKE_VILLIG_TIL_ARBEID,
+                                                                                                  vedlegg))
         )
     }
 
@@ -106,11 +111,5 @@ object AktivitetsMapper {
             )
         }
     }
-
-
-
-
-
-
 }
 

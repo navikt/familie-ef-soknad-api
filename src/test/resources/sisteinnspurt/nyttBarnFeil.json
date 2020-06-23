@@ -183,7 +183,7 @@
       "spørsmålid": "søkerFraBestemtMåned",
       "svarid": "neiNavKanVurdere",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
-      "verdi": "Nei, Nav kan vurdere fra hvilken måned jeg har rett til stønad"
+      "verdi": "false"
     }
   },
   "dokumentasjonsbehov": [
@@ -194,11 +194,11 @@
       "tittel": "dokumentasjon.utdanning.tittel",
       "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
       "harSendtInn": false,
+      "label": "Dokumentasjon på utdanningen du skal ta",
       "opplastedeVedlegg": [
         {
           "dokumentId": "73cc72b9-2d58-4272-88cb-085de830bd19",
-          "navn": "Dokumentasjon på utdanningen du skal ta",
-          "label": "Dokumentasjon på utdanningen du skal ta"
+          "navn": "Dokumentasjon på utdanningen du skal ta"
         }
       ]
     },
@@ -208,6 +208,7 @@
       "svarid": "harSøktBarnepassOgVenterEnnå",
       "tittel": "dokumentasjon.barnepass.tittel",
       "beskrivelse": "dokumentasjon.barnepass.beskrivelse",
+      "label": "BARNEPASS",
       "harSendtInn": false
     }
   ],

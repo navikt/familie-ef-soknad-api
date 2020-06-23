@@ -1,54 +1,57 @@
 {
   "person": {
     "søker": {
-      "fnr": "21057822284",
-      "forkortetNavn": "KOPP LUNKEN",
+      "fnr": "19118221403",
+      "forkortetNavn": "DORULL LUR",
       "adresse": {
-        "adresse": "JAABÆKVEGEN 16",
-        "postnummer": "1533"
+        "adresse": "MUGGOPPVEGEN 51",
+        "postnummer": "1178"
       },
       "egenansatt": false,
       "sivilstand": "UGIF",
       "statsborgerskap": "NOR",
-      "mobiltelefon": "12341234"
+      "kontakttelefon": "04777777777"
     },
     "barn": [
       {
-        "id": "4833442b-dde0-49ef-abc9-e3632b564920",
+        "id": "5a3dc554-cb1c-4a02-8586-e04e48d4cbf2",
         "født": {
           "label": "Født",
           "verdi": true
         },
-        "fnr": "28021078036",
         "navn": {
           "label": "Navn",
-          "verdi": "KARAFFEL STERK"
+          "verdi": "ERT TUNGSINDIG"
         },
         "alder": {
           "label": "Alder",
-          "verdi": 9
+          "verdi": 0
         },
         "fødselsdato": {
           "label": "Fødselsdato",
-          "verdi": "2010-02-28"
+          "verdi": "2020-01-23"
         },
         "harSammeAdresse": {
           "label": "Har barnet samme adresse som deg?",
           "verdi": true
         },
+        "ident": {
+          "label": "Fødselsnummer eller d-nummer",
+          "verdi": "23012081073"
+        },
         "forelder": {
-          "id": "95c09ff6-77ba-4963-8fcd-82c398077f6d",
+          "id": "85600bab-7888-4749-8305-b05eab5290bb",
           "kanIkkeOppgiAnnenForelderFar": {
             "label": "Jeg kan ikke oppgi den andre forelderen",
             "verdi": false
           },
           "navn": {
-            "label": "halla",
-            "verdi": "sergsertsert"
+            "label": "Navn",
+            "verdi": "Per Pedersen"
           },
-          "ident": {
-            "label": "Fødselsnummer (11 siffer) / d-nummer",
-            "verdi": ""
+          "fødselsdato": {
+            "label": "Fødselsdato",
+            "verdi": "1980-07-06T22:00:00.000Z"
           },
           "borINorge": {
             "spørsmålid": "borINorge",
@@ -70,9 +73,9 @@
           },
           "borAnnenForelderISammeHus": {
             "spørsmålid": "borAnnenForelderISammeHus",
-            "svarid": "vetikke",
+            "svarid": "nei",
             "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
-            "verdi": "Jeg vet ikke hvor den andre forelderen bor"
+            "verdi": "Nei"
           },
           "boddSammenFør": {
             "spørsmålid": "boddSammenFør",
@@ -89,14 +92,14 @@
         }
       }
     ],
-    "hash": "524338350"
+    "hash": "-2001910949"
   },
   "sivilstatus": {
     "erUformeltGift": {
       "spørsmålid": "erUformeltGift",
-      "svarid": "JA",
+      "svarid": "NEI",
       "label": "Er du registrert som ugift i Folkeregisteret. Er du gift uten at dette er formelt registrert eller godkjent i Norge?",
-      "verdi": true
+      "verdi": false
     },
     "erUformeltSeparertEllerSkilt": {
       "spørsmålid": "erUformeltSeparertEllerSkilt",
@@ -106,13 +109,9 @@
     },
     "årsakEnslig": {
       "spørsmålid": "årsakEnslig",
-      "svarid": "samlivsbruddAndre",
+      "svarid": "aleneFraFødsel",
       "label": "Hvorfor er du alene med barn?",
-      "verdi": "Samlivsbrudd med noen andre"
-    },
-    "datoFlyttetFraHverandre": {
-      "label": "Når flyttet dere fra hverandre?",
-      "verdi": "2020-06-16T22:00:00.000Z"
+      "verdi": "Jeg er alene med barn fra fødsel"
     }
   },
   "medlemskap": {
@@ -143,11 +142,11 @@
     "hvaErDinArbeidssituasjon": {
       "spørsmålid": "hvaErDinArbeidssituasjon",
       "svarid": [
-        "erHverkenIArbeidUtdanningEllerArbeidssøker"
+        "erHjemmeMedBarnUnderEttÅr"
       ],
       "label": "Hvordan er arbeidsituasjonen din?",
       "verdi": [
-        "Jeg er ikke i arbeid, utdanning eller arbeidssøker"
+        "Jeg er hjemme med barn under 1 år"
       ]
     }
   },
@@ -172,20 +171,10 @@
       "spørsmålid": "søkerFraBestemtMåned",
       "svarid": "neiNavKanVurdere",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
-      "verdi": "false"
+      "verdi": false
     }
   },
-  "dokumentasjonsbehov": [
-    {
-      "id": "INNGÅTT_EKTESKAP",
-      "spørsmålid": "erUformeltGift",
-      "svarid": "JA",
-      "tittel": "dokumentasjon.inngåttEkteskap.tittel",
-      "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
-      "label": "Inngått ekteskap",
-      "harSendtInn": true
-    }
-  ],
+  "dokumentasjonsbehov": [],
   "harBekreftet": true,
   "søkerBorPåRegistrertAdresse": {
     "spørsmålid": "søkerBorPåRegistrertAdresse",

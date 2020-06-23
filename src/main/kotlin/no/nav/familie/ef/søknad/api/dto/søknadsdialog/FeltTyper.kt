@@ -12,8 +12,7 @@ data class DatoFelt(val label: String,
                     val verdi: LocalDate)
 
 data class DokumentFelt(val dokumentId: String,
-                        val navn: String,
-                        val label: String)
+                        val navn: String)
 
 data class ListFelt<T>(val label: String,
                     val verdi: List<T>)

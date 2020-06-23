@@ -10,8 +10,12 @@ import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
+import java.time.format.DateTimeParseException
 import kotlin.test.assertNotEquals
+import kotlin.test.assertNull
+
 
 internal class FeltMapperUtilKtTest {
 
@@ -49,15 +53,63 @@ internal class FeltMapperUtilKtTest {
     @Test
     internal fun `hent dokumentfelt`() {
         val bytes = byteArrayOf(12)
-        val dokumenter = mapOf("finnes" to listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok", bytes),
-                                                  Vedlegg("id2", "dok2.pdf", "Annen tittel på dok", bytes)))
+        val dokumentasjonWrapper = DokumentasjonWrapper("label",
+                                                        Søknadsfelt("Har sendt inn tidligere", false),
+                                                        listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok", bytes),
+                                                               Vedlegg("id2", "dok2.pdf", "Annen tittel på dok", bytes)))
+        val dokumenter = mapOf("finnes" to dokumentasjonWrapper)
         val dokumentSomFinnes = dokumentfelt("finnes", dokumenter)!!
-        assertThat(dokumentSomFinnes.verdi.first().id).isEqualTo("id1")
-        assertThat(dokumentSomFinnes.verdi.first().navn).isEqualTo("dok1.pdf")
+        assertThat(dokumentSomFinnes.verdi.dokumenter.first().id).isEqualTo("id1")
+        assertThat(dokumentSomFinnes.verdi.dokumenter.first().navn).isEqualTo("dok1.pdf")
 
-        assertThat(dokumentSomFinnes.verdi.last().id).isEqualTo("id2")
-        assertThat(dokumentSomFinnes.verdi.last().navn).isEqualTo("dok2.pdf")
+        assertThat(dokumentSomFinnes.verdi.dokumenter.last().id).isEqualTo("id2")
+        assertThat(dokumentSomFinnes.verdi.dokumenter.last().navn).isEqualTo("dok2.pdf")
 
         assertThat(dokumentfelt("finnesIkke", dokumenter)).isNull()
+    }
+
+
+    /* TekstFelt -> Dato */
+
+    @Test
+    internal fun `Tekst til dato -skal tåle tom streng og returnere null`() {
+        val felt = TekstFelt("label", "").tilSøknadsDatoFeltEllerNull()
+        assertNull(felt)
+    }
+
+    @Test
+    internal fun `Klokken 22 Zulu, UTC, 31 mai skal bli 1 juni når det er sommertid`() {
+        val felt = TekstFelt("label", "2020-05-31T22:00:00.000Z").tilSøknadsDatoFeltEllerNull()
+        assertEquals(felt?.verdi, LocalDate.of(2020, 6, 1))
+    }
+
+    @Test
+    internal fun `Klokken 23, UTC, 3 mars skal bli 4 mars når det er vintertid`() {
+        val felt = TekstFelt("label", "2020-03-03T23:00:00.000Z").tilSøknadsDatoFeltEllerNull()
+        assertEquals(felt?.verdi, LocalDate.of(2020, 3, 4))
+    }
+
+
+    /* Spesielle tilfeller */
+
+    // Her er jeg usikker på hva som kan ha skjedd - UI feil?
+    @Test
+    internal fun `Klokken 22, UTC, 3 mars skal bli 3 mars når det er vintertid`() {
+        val felt = TekstFelt("label", "2020-03-03T22:00:00.000Z").tilSøknadsDatoFeltEllerNull()
+        assertEquals(felt?.verdi, LocalDate.of(2020, 3, 3))
+    }
+
+
+    // Skal egentlig ikke skje - skulle vi kastet exception?
+    @Test
+    internal fun `Tekst til dato - tid uten zulu`() {
+        val felt = TekstFelt("label", "2020-06-21T23:00:00.000").tilSøknadsDatoFeltEllerNull()
+        assertEquals(felt?.verdi?.dayOfMonth, 21)
+    }
+
+    // Vi kan ikke parse iso datoer med offset
+    @Test
+    internal fun `Tekst til dato - skal gjøre om tekst med zone data`() {
+        assertThrows<DateTimeParseException> { TekstFelt("label", "2007-04-05T23:59+02:00").tilSøknadsDatoFeltEllerNull() }
     }
 }

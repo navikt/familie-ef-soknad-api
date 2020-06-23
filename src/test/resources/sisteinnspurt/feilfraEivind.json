@@ -98,7 +98,6 @@
         }
       },
       {
-
         "alder": {
           "label": "Alder",
           "verdi": 0
@@ -461,7 +460,7 @@
       "spørsmålid": "søkerFraBestemtMåned",
       "svarid": "ja",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
-      "verdi": "Ja"
+      "verdi": "true"
     },
     "søknadsdato": {
       "label": "Jeg søker overgangsstønad fra og med",
@@ -475,6 +474,7 @@
       "svarid": "tarUtdanning",
       "tittel": "dokumentasjon.utdanning.tittel",
       "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
+      "label": "UTDANNING",
       "harSendtInn": true
     },
     {
@@ -483,6 +483,7 @@
       "svarid": "harFåttJobbTilbud",
       "tittel": "dokumentasjon.arbeidskontrakt.tittel",
       "beskrivelse": "dokumentasjon.arbeidskontrakt.beskrivelse",
+      "label": "Arbeidskontrakt",
       "harSendtInn": true
     },
     {
@@ -491,6 +492,7 @@
       "svarid": "harSyktBarn",
       "tittel": "dokumentasjon.syktBarn.tittel",
       "beskrivelse": "dokumentasjon.syktBarn.beskrivelse",
+      "label": "Sykt barn",
       "harSendtInn": true
     },
     {
@@ -499,6 +501,7 @@
       "svarid": "erSyk",
       "tittel": "dokumentasjon.sykdom.tittel",
       "beskrivelse": "dokumentasjon.sykdom.beskrivelse",
+      "label": "Sykdom",
       "harSendtInn": true
     },
     {
@@ -507,6 +510,7 @@
       "svarid": "harSøktBarnepassOgVenterEnnå",
       "tittel": "dokumentasjon.barnepass.tittel",
       "beskrivelse": "dokumentasjon.barnepass.beskrivelse",
+      "label": "BARNEPASS",
       "harSendtInn": true
     },
     {
@@ -515,6 +519,7 @@
       "svarid": "harBarnMedSærligeBehov",
       "tittel": "dokumentasjon.barnetilsynsbehov.tittel",
       "beskrivelse": "dokumentasjon.barnetilsynsbehov.beskrivelse",
+      "label": "Barnetilsyn behov",
       "harSendtInn": true
     }
   ],

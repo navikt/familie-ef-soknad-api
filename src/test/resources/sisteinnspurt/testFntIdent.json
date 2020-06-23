@@ -184,7 +184,7 @@
       "spørsmålid": "søkerFraBestemtMåned",
       "svarid": "neiNavKanVurdere",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
-      "verdi": "Nei, Nav kan vurdere fra hvilken måned jeg har rett til stønad"
+      "verdi": "false"
     }
   },
   "dokumentasjonsbehov": [
@@ -194,6 +194,7 @@
       "svarid": "JA",
       "tittel": "dokumentasjon.separasjonEllerSkilsmisse.tittel",
       "beskrivelse": "dokumentasjon.separasjonEllerSkilsmisse.beskrivelse",
+      "label": "UFORMELL_SEPARASJON_ELLER_SKILSMISSE",
       "harSendtInn": true
     },
     {
@@ -202,6 +203,7 @@
       "svarid": "tidligereSamboerFortsattRegistrertPåAdresse",
       "tittel": "dokumentasjon.ulikeAdresser.tittel",
       "beskrivelse": "dokumentasjon.ulikeAdresser.beskrivelse",
+      "label": "BOR_PÅ_ULIKE_ADRESSER",
       "harSendtInn": true
     }
   ],

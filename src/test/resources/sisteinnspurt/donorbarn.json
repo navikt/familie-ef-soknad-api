@@ -1,8 +1,8 @@
 {
   "person": {
     "søker": {
-      "fnr": "11038423667",
-      "forkortetNavn": "KAFFI RASK",
+      "fnr": "13028621838",
+      "forkortetNavn": "KONSOLL ARTIG",
       "adresse": {
         "adresse": "ØSTROLLVEIEN 50",
         "postnummer": "3512"
@@ -10,23 +10,18 @@
       "egenansatt": false,
       "sivilstand": "SKIL",
       "statsborgerskap": "NOR",
-      "mobiltelefon": "12341234"
+      "kontakttelefon": "34563456"
     },
     "barn": [
       {
-        "id": "52a44354-2d35-4e47-b2de-dd40dc1badfa",
+        "id": "0ccae2d9-1eca-47bc-af2f-39b2e1d4b69e",
         "født": {
           "label": "Født",
           "verdi": true
         },
-        "fnr": "01051950190",
-        "ident": {
-          "label": "Fødselsnummer (11 siffer) / d-nummer",
-          "verdi": ""
-        },
         "navn": {
           "label": "Navn",
-          "verdi": "TAREMEL KRIMINELL"
+          "verdi": "GASELLE LEALAUS"
         },
         "alder": {
           "label": "Alder",
@@ -34,11 +29,15 @@
         },
         "fødselsdato": {
           "label": "Fødselsdato",
-          "verdi": "2019-05-01"
+          "verdi": "2019-03-25"
         },
         "harSammeAdresse": {
           "label": "Har barnet samme adresse som deg?",
           "verdi": true
+        },
+        "ident": {
+          "label": "Fødselsnummer eller d-nummer",
+          "verdi": "25031981061"
         },
         "forelder": {
           "kanIkkeOppgiAnnenForelderFar": {
@@ -47,29 +46,25 @@
           },
           "ikkeOppgittAnnenForelderBegrunnelse": {
             "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
-            "verdi": "&amp; \" &$jkdfsøj\" ; <> >>< <>>>"
+            "verdi": "Donorbarn"
           },
           "hvorforIkkeOppgi": {
             "spørsmålid": "hvorforIkkeOppgi",
-            "svarid": "annet",
+            "svarid": "donorbarn",
             "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
-            "verdi": "Annet"
+            "verdi": "Donorbarn"
           }
         }
       }
     ],
-    "hash": "-1825099656"
+    "hash": "-527586548"
   },
   "sivilstatus": {
     "årsakEnslig": {
       "spørsmålid": "årsakEnslig",
-      "svarid": "samlivsbruddForeldre",
+      "svarid": "aleneFraFødsel",
       "label": "Hvorfor er du alene med barn?",
-      "verdi": "Samlivsbrudd med den andre forelderen"
-    },
-    "datoForSamlivsbrudd": {
-      "label": "Du må legge ved erklæring om samlivsbrudd",
-      "verdi": "2020-06-08T22:00:00.000Z"
+      "verdi": "Jeg er alene med barn fra fødsel"
     }
   },
   "medlemskap": {
@@ -127,26 +122,12 @@
     },
     "søkerFraBestemtMåned": {
       "spørsmålid": "søkerFraBestemtMåned",
-      "svarid": "ja",
+      "svarid": "neiNavKanVurdere",
       "label": "Søker du om overgangsstønad fra en bestemt måned?",
       "verdi": "true"
-    },
-    "søknadsdato": {
-      "label": "Jeg søker overgangsstønad fra og med",
-      "verdi": "2020-06-30T22:00:00.000Z"
     }
   },
-  "dokumentasjonsbehov": [
-    {
-      "id": "SAMLIVSBRUDD",
-      "spørsmålid": "årsakEnslig",
-      "svarid": "samlivsbruddForeldre",
-      "tittel": "dokumentasjon.begrunnelse.tittel",
-      "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
-      "label": "SAMLIVSBRUDD",
-      "harSendtInn": true
-    }
-  ],
+  "dokumentasjonsbehov": [],
   "harBekreftet": true,
   "søkerBorPåRegistrertAdresse": {
     "spørsmålid": "søkerBorPåRegistrertAdresse",

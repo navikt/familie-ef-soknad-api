@@ -1,14 +1,14 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Situasjon
-import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 
 object SituasjonsMapper {
 
-    fun mapSituasjon(frontendDto: SøknadDto, vedlegg: Map<String, List<Vedlegg>>): Situasjon {
+    fun mapSituasjon(frontendDto: SøknadDto, vedlegg: Map<String, DokumentasjonWrapper>): Situasjon {
         val merOmDinSituasjon = frontendDto.merOmDinSituasjon
         return Situasjon(gjelderDetteDeg = merOmDinSituasjon.gjelderDetteDeg.tilSøknadsfelt(),
                          sykdom = dokumentfelt(SYKDOM, vedlegg),
