@@ -45,18 +45,6 @@ internal class SituasjonMapperTest {
     }
 
     @Test
-    fun `situasjon label for oppstartUtdanning er mappet`() {
-        // Then
-        Assertions.assertThat(situasjon.oppstartUtdanning?.label).isEqualTo("Når skal du begynne å ta utdanning?")
-    }
-
-    @Test
-    fun `situasjon verdi for oppstartUtdanning er mappet`() {
-        // Then
-        Assertions.assertThat(situasjon.oppstartUtdanning?.verdi).isEqualTo(LocalDate.of(2020, 3, 27))
-    }
-
-    @Test
     fun `situasjon label for sagtOppEllerRedusertStilling er mappet`() {
         // Then
         Assertions.assertThat(situasjon.sagtOppEllerRedusertStilling?.label)
