@@ -1,0 +1,327 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "15066123755",
+      "forkortetNavn": "KOPP FRODIG",
+      "adresse": {
+        "adresse": "JÆGERMYREN 89",
+        "postnummer": "0654"
+      },
+      "egenansatt": false,
+      "sivilstand": "SKIL",
+      "statsborgerskap": "NOR",
+      "kontakttelefon": "99999999"
+    },
+    "barn": [
+      {
+        "id": "2af85ff4-88cd-4820-a50a-c6988ea366b3",
+        "født": {
+          "label": "Født",
+          "verdi": true
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "GYNGEHEST RASK"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 7
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2012-08-22"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": false
+        },
+        "ident": {
+          "label": "Fødselsnummer eller d-nummer",
+          "verdi": "22081278346"
+        },
+        "forelder": {
+          "id": "43188c2a-9fa3-4bb9-9b75-b74d7f394713",
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": false
+          },
+          "skalBarnetBoHosSøker": {
+            "spørsmålid": "skalBarnetBoHosSøker",
+            "svarid": "ja",
+            "label": "Skal [0] ha adresse hos deg?",
+            "verdi": "Ja, og vi har eller skal registrere adressen i Folkeregisteret"
+          },
+          "navn": {
+            "label": "Navn",
+            "verdi": "Nils Nilsen"
+          },
+          "borINorge": {
+            "spørsmålid": "borINorge",
+            "svarid": "JA",
+            "label": "Bor [0]s andre forelder i Norge?",
+            "verdi": true
+          },
+          "avtaleOmDeltBosted": {
+            "spørsmålid": "avtaleOmDeltBosted",
+            "svarid": "NEI",
+            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
+            "verdi": false
+          },
+          "harAnnenForelderSamværMedBarn": {
+            "spørsmålid": "harAnnenForelderSamværMedBarn",
+            "svarid": "jaMerEnnVanlig",
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Ja, mer enn vanlig samværsrett"
+          },
+          "harDereSkriftligSamværsavtale": {
+            "spørsmålid": "harDereSkriftligSamværsavtale",
+            "svarid": "jaIkkeKonkreteTidspunkter",
+            "label": "Har dere skriftlig samværsavtale for [0]?",
+            "verdi": "Ja, men den beskriver ikke når barnet er sammen med hver av foreldrene"
+          },
+          "hvordanPraktiseresSamværet": {
+            "label": "Hvordan praktiserer dere samværet?",
+            "verdi": "ffnjfnkfn"
+          },
+          "borAnnenForelderISammeHus": {
+            "spørsmålid": "borAnnenForelderISammeHus",
+            "svarid": "nei",
+            "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
+            "verdi": "Nei"
+          },
+          "boddSammenFør": {
+            "spørsmålid": "boddSammenFør",
+            "svarid": "JA",
+            "label": "Har du bodd sammen med den andre forelderen til [0] før?",
+            "verdi": true
+          },
+          "flyttetFra": {
+            "label": "Når flyttet dere fra hverandre?",
+            "verdi": "2019-05-31T22:00:00.000Z"
+          },
+          "hvorMyeSammen": {
+            "spørsmålid": "hvorMyeSammen",
+            "svarid": "kunNårLeveres",
+            "label": "Hvor mye er du sammen med den andre forelderen til [0]?",
+            "verdi": "Vi møtes kun når barnet skal hentes eller leveres"
+          },
+          "fødselsdato": {
+            "label": "Fødselsdato",
+            "verdi": "1984-12-31T23:00:00.000Z"
+          }
+        }
+      },
+      {
+        "ident": {
+          "label": "Fødselsnummer (11 siffer) / d-nummer",
+          "verdi": ""
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 0
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": ""
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato (kun hvis du vet)",
+          "verdi": "2020-07-05"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "født": {
+          "spørsmålid": "født",
+          "svarid": "NEI",
+          "label": "Er barnet født?",
+          "verdi": false
+        },
+        "lagtTil": true,
+        "id": "920b9966-a541-4dd1-ace5-23253c2dda15",
+        "forelder": {
+          "id": "8c0af591-b921-46ad-85a8-67b995603eb0",
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": false
+          },
+          "navn": {
+            "label": "Navn",
+            "verdi": "Are Aresen"
+          },
+          "fødselsdato": {
+            "label": "Fødselsdato",
+            "verdi": "1984-12-31T23:00:00.000Z"
+          },
+          "borINorge": {
+            "spørsmålid": "borINorge",
+            "svarid": "JA",
+            "label": "Bor [0]s andre forelder i Norge?",
+            "verdi": true
+          },
+          "avtaleOmDeltBosted": {
+            "spørsmålid": "avtaleOmDeltBosted",
+            "svarid": "NEI",
+            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
+            "verdi": false
+          },
+          "harAnnenForelderSamværMedBarn": {
+            "spørsmålid": "harAnnenForelderSamværMedBarn",
+            "svarid": "jaIkkeMerEnnVanlig",
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Ja, men ikke mer enn vanlig samværsrett"
+          },
+          "harDereSkriftligSamværsavtale": {
+            "spørsmålid": "harDereSkriftligSamværsavtale",
+            "svarid": "nei",
+            "label": "Har dere skriftlig samværsavtale for [0]?",
+            "verdi": "Nei"
+          },
+          "hvordanPraktiseresSamværet": {
+            "label": "Hvordan praktiserer dere samværet?",
+            "verdi": "grfg"
+          },
+          "borAnnenForelderISammeHus": {
+            "spørsmålid": "borAnnenForelderISammeHus",
+            "svarid": "nei",
+            "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
+            "verdi": "Nei"
+          },
+          "boddSammenFør": {
+            "spørsmålid": "boddSammenFør",
+            "svarid": "JA",
+            "label": "Har du bodd sammen med den andre forelderen til [0] før?",
+            "verdi": true
+          },
+          "flyttetFra": {
+            "label": "Når flyttet dere fra hverandre?",
+            "verdi": "2020-05-31T22:00:00.000Z"
+          },
+          "hvorMyeSammen": {
+            "spørsmålid": "hvorMyeSammen",
+            "svarid": "kunNårLeveres",
+            "label": "Hvor mye er du sammen med den andre forelderen til [0]?",
+            "verdi": "Vi møtes kun når barnet skal hentes eller leveres"
+          }
+        }
+      }
+    ],
+    "hash": "-1641194617"
+  },
+  "sivilstatus": {
+    "årsakEnslig": {
+      "spørsmålid": "årsakEnslig",
+      "svarid": "samlivsbruddForeldre",
+      "label": "Hvorfor er du alene med barn?",
+      "verdi": "Samlivsbrudd med den andre forelderen"
+    },
+    "datoForSamlivsbrudd": {
+      "label": "Dato for samlivsbrudd",
+      "verdi": "2020-05-31T22:00:00.000Z"
+    }
+  },
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du bodd i Norge de siste tre årene?",
+      "verdi": true
+    }
+  },
+  "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "delerBoligMedAndreVoksne",
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Ja, jeg deler bolig med andre voksne, for eksempel utleier, venn, søsken eller egne foreldre"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegEllerBliSamboer",
+      "svarid": "NEI",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    }
+  },
+  "aktivitet": {
+    "hvaErDinArbeidssituasjon": {
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": [
+        "erArbeidstaker"
+      ],
+      "label": "Hvordan er arbeidsituasjonen din?",
+      "verdi": [
+        "Jeg er arbeidstaker"
+      ]
+    },
+    "arbeidsforhold": [
+      {
+        "id": "4db36c19-62f5-4ab6-8787-a8ff6b772936",
+        "navn": {
+          "label": "Navn på arbeidsgiveren",
+          "verdi": "Meny"
+        },
+        "arbeidsmengde": {
+          "label": "Hvor mye jobber du?",
+          "verdi": "1000"
+        },
+        "ansettelsesforhold": {
+          "spørsmålid": "ansettelsesforhold",
+          "svarid": "fast",
+          "label": "Hva slags ansettelsesforhold har du?",
+          "verdi": "Fast"
+        }
+      }
+    ]
+  },
+  "merOmDinSituasjon": {
+    "gjelderDetteDeg": {
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": [
+        "nei"
+      ],
+      "label": "Gjelder noe av dette deg?",
+      "verdi": [
+        "Nei"
+      ]
+    },
+    "søkerFraBestemtMåned": {
+      "spørsmålid": "søkerFraBestemtMåned",
+      "svarid": "ja",
+      "label": "Søker du om overgangsstønad fra en bestemt måned?",
+      "verdi": true
+    },
+    "søknadsdato": {
+      "label": "Jeg søker overgangsstønad fra og med",
+      "verdi": "2020-06-30T22:00:00.000Z"
+    }
+  },
+  "dokumentasjonsbehov": [
+    {
+      "id": "SAMLIVSBRUDD",
+      "spørsmålid": "årsakEnslig",
+      "svarid": "samlivsbruddForeldre",
+      "tittel": "dokumentasjon.begrunnelse.tittel",
+      "beskrivelse": "dokumentasjon.begrunnelse.beskrivelse",
+      "harSendtInn": false,
+      "label": "Erklæring om samlivsbrudd"
+    },
+    {
+      "id": "TERMINBEKREFTELSE",
+      "spørsmålid": "født",
+      "svarid": "NEI",
+      "tittel": "dokumentasjon.terminbekreftelse.tittel",
+      "harSendtInn": false,
+      "label": "Terminbekreftelse"
+    }
+  ],
+  "harBekreftet": true,
+  "søkerBorPåRegistrertAdresse": {
+    "spørsmålid": "søkerBorPåRegistrertAdresse",
+    "svarid": "JA",
+    "label": "søkerBorPåRegistrertAdresse",
+    "verdi": true
+  }
+}

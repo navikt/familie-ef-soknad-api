@@ -6,7 +6,6 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadMapper
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.felles.objectMapper
-import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -28,6 +27,45 @@ internal class JsonSisteInnspurtMapperTest {
     @BeforeEach
     fun setUp() {
         every { dokumentServiceServiceMock.hentVedlegg(any()) } returns "DOKUMENTID123".toByteArray()
+    }
+
+    @Test
+    fun `favro-tea1554 `() {
+        val mapped: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/tea-1554.json"),
+                                                       SøknadDto::class.java)
+        mapper.mapTilIntern(mapped, innsendingMottatt)
+    }
+
+    @Test
+    fun `favro-tea1561 `() {
+        val mapped: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/tea-1561.json"),
+                                                       SøknadDto::class.java)
+        mapper.mapTilIntern(mapped, innsendingMottatt)
+    }
+
+    @Test
+    fun `favro-tea1565 `() {
+        val mapped: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/favro-tea1565.json"),
+                                                       SøknadDto::class.java)
+        mapper.mapTilIntern(mapped, innsendingMottatt)
+    }
+
+    @Test
+    fun `utlandOpphold `() {
+        val mapped: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/utlandOpphold.json"),
+                                                       SøknadDto::class.java)
+        val medUtenlandsopphold = mapper.mapTilIntern(mapped, innsendingMottatt)
+
+        assertEquals(medUtenlandsopphold.søknad.medlemskapsdetaljer.verdi.utenlandsopphold?.verdi?.first()?.årsakUtenlandsopphold?.verdi,
+                     "Jobbgreie")
+
+        assertEquals(medUtenlandsopphold.søknad.medlemskapsdetaljer.verdi.utenlandsopphold?.verdi?.first()?.fradato?.verdi,
+                     LocalDate.of(2020, 5, 1))
+
+        assertEquals(medUtenlandsopphold.søknad.medlemskapsdetaljer.verdi.utenlandsopphold?.verdi?.first()?.tildato?.verdi,
+                     LocalDate.of(2020, 5, 31))
+
+
     }
 
     @Test
