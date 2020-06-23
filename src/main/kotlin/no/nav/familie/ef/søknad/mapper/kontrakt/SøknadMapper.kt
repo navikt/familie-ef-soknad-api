@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Situasjon
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
+import no.nav.familie.ef.søknad.mapper.tilLocalDateEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.*
@@ -51,8 +52,8 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
     }
 
     private fun stønadsstart(merOmDinSituasjon: Situasjon): Stønadsstart {
-        val month = merOmDinSituasjon.søknadsdato?.verdi?.month
-        val year = merOmDinSituasjon.søknadsdato?.verdi?.year
+        val month = merOmDinSituasjon.søknadsdato?.tilLocalDateEllerNull()?.month
+        val year = merOmDinSituasjon.søknadsdato?.tilLocalDateEllerNull()?.year
         return Stønadsstart(month?.let { Søknadsfelt("Fra måned", month) },
                             year?.let { Søknadsfelt("Fra år", year) },
                             merOmDinSituasjon.søkerFraBestemtMåned.tilSøknadsfelt())

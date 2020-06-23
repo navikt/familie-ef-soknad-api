@@ -6,11 +6,14 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadMapper
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.felles.objectMapper
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.io.File
+import java.time.LocalDate
 import java.time.LocalDateTime
+import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -133,6 +136,19 @@ internal class JsonSisteInnspurtMapperTest {
         mapper.mapTilIntern(søknadFraEivind(), innsendingMottatt)
     }
 
+    @Test
+    fun `søknadFraHilde mapTilIntern - mapper datoer til riktig verdi`() {
+        fun søknadFraHilde(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/feilfraHilde.json"),
+                                                                  SøknadDto::class.java)
+
+        val søknadMedVedlegg = mapper.mapTilIntern(søknadFraHilde(), innsendingMottatt)
+        assertEquals(LocalDate.of(1970, 3, 20), søknadMedVedlegg.søknad.barn.verdi[0].annenForelder?.verdi?.person?.verdi?.fødselsdato?.verdi);
+        assertEquals(LocalDate.of(1970, 3, 20), søknadMedVedlegg.søknad.barn.verdi[1].annenForelder?.verdi?.person?.verdi?.fødselsdato?.verdi);
+        assertEquals(LocalDate.of(2020, 6, 2), søknadMedVedlegg.søknad.barn.verdi[0].samvær?.verdi?.nårFlyttetDereFraHverandre?.verdi);
+        assertEquals(LocalDate.of(1970, 3, 20), søknadMedVedlegg.søknad.sivilstandsdetaljer.verdi.samlivsbruddsdato?.verdi);
+//        assertEquals(LocalDate.of(2020, 7, 5), søknadMedVedlegg.søknad.situasjon.verdi.oppstartNyJobb?.verdi);
+
+    }
     @Test
     internal fun `nyttBarnFeil - skal mappe nytt barn uten fødselsnummer`() {
         fun søknadNyttBarn(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/nyttBarnFeil.json"),
