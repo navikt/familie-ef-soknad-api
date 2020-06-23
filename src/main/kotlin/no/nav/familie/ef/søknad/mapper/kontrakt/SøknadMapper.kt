@@ -27,7 +27,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                 medlemskapsdetaljer = Søknadsfelt("Opphold i Norge", MedlemsskapsMapper.mapMedlemskap(frontendDto)),
                 bosituasjon = Søknadsfelt("Bosituasjonen din",
                                           BosituasjonMapper.mapBosituasjon(frontendDto.bosituasjon, vedlegg)),
-                sivilstandsplaner = Søknadsfelt("Sivilstandsplaner",
+                sivilstandsplaner = Søknadsfelt("Fremtidsplaner",
                                                 SivilstandsplanerMapper.mapSivilstandsplaner(frontendDto.bosituasjon)),
                 barn = Søknadsfelt("Barna dine",
                                    BarnMapper.mapBarn(frontendDto.person.barn, vedlegg)),
