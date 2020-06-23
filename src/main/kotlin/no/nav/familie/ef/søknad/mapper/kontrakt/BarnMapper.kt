@@ -58,7 +58,6 @@ object BarnMapper {
             borAnnenForelderISammeHusBeskrivelse = forelder.borAnnenForelderISammeHusBeskrivelse?.tilSøknadsfelt(),
             harDereTidligereBoddSammen = forelder.boddSammenFør?.tilSøknadsfelt(),
             nårFlyttetDereFraHverandre = forelder.flyttetFra?.tilSøknadsfelt(),
-            erklæringOmSamlivsbrudd = dokumentfelt(SAMLIVSBRUDD, dokumentMap),
             hvorMyeErDuSammenMedAnnenForelder = forelder.hvorMyeSammen?.tilSøknadsfelt(),
             // Ytterligere informasjon som innhentes dersom hvorMyeErDuSammenMedAnnenForelder =
             // "Vi møtes også utenom henting og levering" => (hvordanPraktiseresSamværet)
