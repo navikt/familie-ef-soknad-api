@@ -18,10 +18,9 @@ class ApplicationLocalLauncher
 
 fun main(args: Array<String>) {
     SpringApplicationBuilder(ApplicationLocalLauncher::class.java)
-            .profiles("local")
+            .profiles("local",
+                      "mock-familie-integrasjoner"
+                    //,"mock-dokument"
+            )
             .run(*args)
 }
-
-// Alternativer : "mock-dokument"
-
-
