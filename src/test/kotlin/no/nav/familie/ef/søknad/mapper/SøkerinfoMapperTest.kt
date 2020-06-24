@@ -58,7 +58,7 @@ internal class SøkerinfoMapperTest {
 
         assertThat(person.fnr).isEqualTo("fødselsnummer")
         assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
-        assertThat(person.adresse).isEqualTo(Adresse("Veien 24", "0265", "Oslo"))
+        assertThat(person.adresse).isEqualTo(Adresse("Veien 24", "0265", ""))
         assertThat(person.egenansatt).isEqualTo(true)
         assertThat(person.sivilstand).isEqualTo("GIFT")
         assertThat(person.statsborgerskap).isEqualTo("NO")

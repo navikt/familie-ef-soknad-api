@@ -48,12 +48,12 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     }
 
     private fun hentPoststed(postnummer: String?): String {
-        return try {
+        return ""/*return try {
             postnummer?.let(kodeverkService::hentPoststedFor) ?: ""
         } catch (e: Exception) {
             //Ikke la feil fra integrasjon stoppe henting av data
             logger.error("Feilet henting av poststed til $postnummer message=${e.message} cause=${e.cause?.message}")
             ""
-        }
+        }*/
     }
 }
