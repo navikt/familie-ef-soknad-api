@@ -35,7 +35,7 @@ internal class SøknadInputMapperTest {
         // When
         val personaliaFraSøknadDto = PersonaliaMapper.mapPersonalia(søknadDto)
         // Then
-        assertThat(personaliaFraSøknadDto.toString()).isEqualTo(personalia().toString())
+        assertThat(personaliaFraSøknadDto.navn.verdi).isEqualTo(personalia().navn.verdi)
     }
 
     @Test
