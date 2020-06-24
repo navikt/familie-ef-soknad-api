@@ -41,6 +41,6 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         return Adresse(adresse = adresseinfoDto?.bostedsadresse?.adresse
                                  ?: "",
                        postnummer = postnummer ?: "",
-                       poststed = postnummer?.let(kodeverkService::hentPoststedFor) ?: "")
+                       poststed = "") //postnummer?.let(kodeverkService::hentPoststedFor) ?:
     }
 }
