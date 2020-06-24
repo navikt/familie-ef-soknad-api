@@ -41,9 +41,8 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
         return dokumentasjonsbehov.associate {
             // it.id er dokumenttype/tittel, eks "Gift i utlandet"
             val vedlegg = it.opplastedeVedlegg.map { dokumentFelt ->
-                val dokumentnavn = dokumentFelt.navn
                 Vedlegg(id = dokumentFelt.dokumentId,
-                        navn = if (dokumentnavn.toLowerCase().endsWith(".pdf")) dokumentnavn else "$dokumentnavn.pdf",
+                        navn = dokumentFelt.navn,
                         tittel = it.label,
                         bytes = dokumentServiceService.hentVedlegg(dokumentFelt.dokumentId))
             }
