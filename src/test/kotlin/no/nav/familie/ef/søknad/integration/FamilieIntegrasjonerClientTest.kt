@@ -15,6 +15,6 @@ internal class FamilieIntegrasjonerClientTest {
         assertThat(familieIntegrasjonerClient.poststedUri("0000").toString())
                 .isEqualTo("http://familie/test/api/kodeverk/poststed/0000")
         assertThat(familieIntegrasjonerClient.pingUri.toString())
-                .isEqualTo("http://familie/test/internal/health/isAlive")
+                .isEqualTo("http://familie/test/internal/status/isAlive")
     }
 }
