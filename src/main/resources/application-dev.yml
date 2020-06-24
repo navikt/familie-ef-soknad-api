@@ -5,7 +5,7 @@ familie:
     mottak:
       uri: https://api-gw-q0.oera.no/familie-ef-mottak/api
   integrasjoner:
-    uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
+    uri:  https://api-gw-q2.oera.no/familie-integrasjoner
 
 tps:
   innsyn:
