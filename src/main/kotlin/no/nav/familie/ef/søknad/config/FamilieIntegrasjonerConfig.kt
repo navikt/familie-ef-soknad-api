@@ -7,15 +7,15 @@ import java.net.URI
 
 @ConfigurationProperties("familie.integrasjoner")
 @ConstructorBinding
-internal data class FamilieIntegrasjonerConfig(val uri: URI,
-                                               val passord: String) {
+data class FamilieIntegrasjonerConfig(val uri: URI,
+                                      val passord: String) {
 
     internal val poststedUri = UriComponentsBuilder.fromUri(uri).path(POSTSTED).build().toUri()
 
     internal val pingUri = UriComponentsBuilder.fromUri(uri).path(PING).build().toUri()
 
     companion object {
-        private const val POSTSTED = "kodeverk/poststed"
+        private const val POSTSTED = "/kodeverk/poststed/"
         private const val PING = "internal/health"
     }
 

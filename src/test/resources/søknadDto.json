@@ -19,6 +19,7 @@
       "privattelefon": null,
       "mobiltelefon": null,
       "jobbtelefon": null,
+      "kontakttelefon": "99988877",
       "bankkontonummer": null
     },
     "barn": [
@@ -301,9 +302,17 @@
       "label": "Deler du bolig med andre voksne?",
       "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
     },
+    "datoFlyttetSammenMedSamboer": {
+      "label": "Label",
+      "verdi": "2020-01-01"
+    },
     "skalGifteSegEllerBliSamboer": {
       "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
       "verdi": false
+    },
+    "datoSkalGifteSegEllerBliSamboer": {
+      "label": "Dato skal gifte seg eller bli samboer",
+      "verdi": "2020-01-01"
     },
     "samboerDetaljer": {
       "navn": {
@@ -314,6 +323,10 @@
         "label": "Fødselsdato",
         "verdi": "2020-05-31T22:00:00.000Z"
       }
+    },
+    "datoFlyttetFraHverandre": {
+      "label": "datoFlyttetFraHverandre",
+      "verdi": "2014-10-04"
     }
   },
   "dokumentasjonsbehov": [

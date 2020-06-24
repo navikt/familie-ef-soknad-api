@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.api
 
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
+import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.ef.søknad.service.OppslagService
 import no.nav.familie.ef.søknad.util.InnloggingUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = [OppslagController.OPPSLAG], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
-class OppslagController(private val oppslagService: OppslagService) {
+class OppslagController(private val oppslagService: OppslagService,
+                        private val kodeverkService: KodeverkService) {
 
     @GetMapping("/sokerinfo")
     fun søkerinfo(): Søkerinfo {
@@ -27,7 +29,7 @@ class OppslagController(private val oppslagService: OppslagService) {
     @GetMapping("/poststed/{postnummer}")
     fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
         require(gyldigPostnummer(postnummer))
-        val poststed = oppslagService.hentPoststedFor(postnummer)
+        val poststed = kodeverkService.hentPoststedFor(postnummer)
         return if (!poststed.isNullOrBlank()) ResponseEntity.ok().body(poststed)
         else ResponseEntity.noContent().build()
     }

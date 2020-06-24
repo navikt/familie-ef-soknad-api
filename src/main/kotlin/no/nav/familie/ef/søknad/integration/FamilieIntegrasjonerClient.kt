@@ -9,9 +9,9 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Component
-internal class FamilieIntegrasjonerClient(private val config: FamilieIntegrasjonerConfig,
-                                          operations: RestOperations) : AbstractPingableRestClient(operations,
-                                                                                                   "familie.integrasjoner") {
+class FamilieIntegrasjonerClient(private val config: FamilieIntegrasjonerConfig,
+                                 operations: RestOperations) : AbstractPingableRestClient(operations,
+                                                                                          "familie.integrasjoner") {
 
     override val pingUri: URI = config.pingUri
 

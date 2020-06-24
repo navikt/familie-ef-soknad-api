@@ -7,6 +7,7 @@ import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.integration.dto.NavnDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
+import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.junit.Before
@@ -21,7 +22,8 @@ internal class OppslagServiceServiceImplTest {
     val tpsInnsynMockController = TpsInnsynMockController()
     val regelverkConfig: RegelverkConfig = mockk()
 
-    private val oppslagServiceService: OppslagServiceServiceImpl = OppslagServiceServiceImpl(client, mockk(), regelverkConfig)
+    private val søkerinfoMapper = SøkerinfoMapper(mockk(relaxed = true))
+    private val oppslagServiceService = OppslagServiceServiceImpl(client, regelverkConfig, søkerinfoMapper)
 
     @Before
     fun setUp() {

@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.config.RegelverkConfig
-import no.nav.familie.ef.søknad.integration.FamilieIntegrasjonerClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import org.springframework.stereotype.Service
@@ -11,8 +10,8 @@ import java.time.Period
 
 @Service
 internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceClient,
-                                         private val integrasjonerClient: FamilieIntegrasjonerClient,
-                                         private val regelverkConfig: RegelverkConfig) : OppslagService {
+                                         private val regelverkConfig: RegelverkConfig,
+                                         private val søkerinfoMapper: SøkerinfoMapper) : OppslagService {
 
     override fun hentSøkerinfo(): Søkerinfo {
         val personinfoDto = client.hentPersoninfo()
@@ -20,7 +19,7 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
 
         val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
 
-        return SøkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn)
+        return søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn)
     }
 
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {
@@ -30,10 +29,6 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
         val alder = Period.between(fødselsdato, LocalDate.now())
         val alderIÅr = alder.years
         return alderIÅr <= regelverkConfig.alder.maks
-    }
-
-    override fun hentPoststedFor(postnummer: String): String? {
-        return integrasjonerClient.hentPoststedFor(postnummer)
     }
 
 }

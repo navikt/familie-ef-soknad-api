@@ -112,6 +112,6 @@ class DokumentController(@Qualifier("dokumentlager") private val dokumenter: Mut
     }
 
     companion object {
-        const val MAX_FILE_SIZE_MB = 10
+        const val MAX_FILE_SIZE_MB = 20
     }
 }

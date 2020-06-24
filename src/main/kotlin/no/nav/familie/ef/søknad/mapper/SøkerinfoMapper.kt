@@ -7,8 +7,11 @@ import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
+import no.nav.familie.ef.søknad.service.KodeverkService
+import org.springframework.stereotype.Component
 
-object SøkerinfoMapper {
+@Component
+internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
     fun mapTilSøkerinfo(personinfoDto: PersoninfoDto, aktuelleBarn: List<RelasjonDto>): Søkerinfo {
         return Søkerinfo(mapTilPerson(personinfoDto),
@@ -34,8 +37,10 @@ object SøkerinfoMapper {
     }
 
     private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {
-        return Adresse(adresseinfoDto?.bostedsadresse?.adresse
-                       ?: "",
-                       adresseinfoDto?.bostedsadresse?.postnummer ?: "")
+        val postnummer: String? = adresseinfoDto?.bostedsadresse?.postnummer
+        return Adresse(adresse = adresseinfoDto?.bostedsadresse?.adresse
+                                 ?: "",
+                       postnummer = postnummer ?: "",
+                       poststed = postnummer?.let(kodeverkService::hentPoststedFor) ?: "")
     }
 }
