@@ -26,7 +26,11 @@ object PersonaliaMapper {
 
     private fun lagAdresseSøknadsFelt(frontendDto: SøknadDto): Søknadsfelt<Adresse> {
         val frontendAdresse = frontendDto.person.søker.adresse
-        return Søknadsfelt("Adresse", Adresse(adresse = frontendAdresse.adresse, postnummer = frontendAdresse.postnummer))
+        return Søknadsfelt("Adresse",
+                           Adresse(adresse = frontendAdresse.adresse,
+                                   postnummer = frontendAdresse.postnummer,
+                                   poststedsnavn = "",
+                                   land = "")) // TODO endre når kodeverk integrasjon er ferdig
     }
 
     private fun lagNavnSøknadsFelt(frontendDto: SøknadDto): Søknadsfelt<String> =

@@ -30,6 +30,14 @@ internal class JsonSisteInnspurtMapperTest {
     }
 
     @Test
+    fun `favro-tea1591`() {
+        val mapped: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/tea1591.json"),
+                                                       SøknadDto::class.java)
+        mapper.mapTilIntern(mapped, innsendingMottatt)
+    }
+
+
+    @Test
     fun `favro-tea1554 `() {
         val mapped: SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/tea-1554.json"),
                                                        SøknadDto::class.java)
