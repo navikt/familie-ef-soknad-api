@@ -8,10 +8,13 @@ import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
 import no.nav.familie.ef.søknad.service.KodeverkService
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
 @Component
 internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
+
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun mapTilSøkerinfo(personinfoDto: PersoninfoDto, aktuelleBarn: List<RelasjonDto>): Søkerinfo {
         return Søkerinfo(mapTilPerson(personinfoDto),
@@ -41,6 +44,16 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         return Adresse(adresse = adresseinfoDto?.bostedsadresse?.adresse
                                  ?: "",
                        postnummer = postnummer ?: "",
-                       poststed = "") //postnummer?.let(kodeverkService::hentPoststedFor) ?:
+                       poststed = hentPoststed(postnummer))
+    }
+
+    private fun hentPoststed(postnummer: String?): String {
+        return try {
+            postnummer?.let(kodeverkService::hentPoststedFor) ?: ""
+        } catch (e: Exception) {
+            //Ikke la feil fra integrasjon stoppe henting av data
+            logger.error("Feilet henting av poststed til $postnummer message=${e.message} cause=${e.cause?.message}")
+            ""
+        }
     }
 }
