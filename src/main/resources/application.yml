@@ -12,7 +12,7 @@ familie:
   dokument:
     uri: https://www.nav.no/familie/alene-med-barn/mellomlagring/api
   integrasjoner:
-    uri:  https://api-gw.oera.no/familie-integrasjoner
+    uri:  https://api-gw.oera.no/familie-integrasjoner/api
 
 regelverk:
   alder:

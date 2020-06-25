@@ -15,8 +15,8 @@ data class FamilieIntegrasjonerConfig(val uri: URI,
     internal val pingUri = UriComponentsBuilder.fromUri(uri).path(PING).build().toUri()
 
     companion object {
-        private const val POSTSTED = "/api/kodeverk/poststed/"
-        private const val PING = "/internal/status/isAlive"
+        private const val POSTSTED = "/kodeverk/poststed/"
+        private const val PING = "/ping"
     }
 
 }
