@@ -16,7 +16,7 @@ data class FamilieIntegrasjonerConfig(val uri: URI,
 
     companion object {
         private const val POSTSTED = "/kodeverk/poststed/"
-        private const val PING = "internal/health"
+        private const val PING = "/ping"
     }
 
 }
