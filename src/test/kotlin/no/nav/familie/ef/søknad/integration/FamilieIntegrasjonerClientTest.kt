@@ -13,8 +13,8 @@ internal class FamilieIntegrasjonerClientTest {
         val familieIntegrasjonerClient =
                 FamilieIntegrasjonerClient(FamilieIntegrasjonerConfig(URI.create("http://familie/test"), ""), RestTemplate())
         assertThat(familieIntegrasjonerClient.poststedUri("0000").toString())
-                .isEqualTo("http://familie/test/api/kodeverk/poststed/0000")
+                .isEqualTo("http://familie/test/kodeverk/poststed/0000")
         assertThat(familieIntegrasjonerClient.pingUri.toString())
-                .isEqualTo("http://familie/test/internal/status/isAlive")
+                .isEqualTo("http://familie/test/ping")
     }
 }
