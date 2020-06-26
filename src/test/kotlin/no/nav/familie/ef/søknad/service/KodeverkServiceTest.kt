@@ -28,14 +28,16 @@ class KodeerkTestConfig {
     @Bean
     fun familieIntegrasjonerClient(): FamilieIntegrasjonerClient {
         val mockk = mockk<FamilieIntegrasjonerClient>()
-        val poststed = KodeverkDto(mapOf("0575" to listOf(BetydningDto(LocalDate.MIN,
-                                                                       LocalDate.MAX,
-                                                                       mapOf("nb" to BeskrivelseDto(
-                                                                               "Oslo",
-                                                                               "Oslo"))))))
-        every { mockk.hentKodeverkPoststed() } returns poststed
+        every { mockk.hentKodeverkPoststed() } returns kodeverk("0575", "Oslo")
+        every { mockk.hentKodeverkLandkoder() } returns kodeverk("NOR", "NORGE")
 
         return mockk
+    }
+
+    private fun kodeverk(kode: String, verdi: String): KodeverkDto {
+        return KodeverkDto(mapOf(kode to listOf(BetydningDto(LocalDate.MIN,
+                                                             LocalDate.MAX,
+                                                             mapOf("nb" to BeskrivelseDto(verdi, verdi))))))
     }
 }
 
@@ -49,8 +51,16 @@ class KodeverkServiceTest {
 
     @Test
     fun `skal cache henting av poststed mot familieIntegrasjonerClient`() {
-        kodeverkService.hentPoststed()
-        kodeverkService.hentPoststed()
+        kodeverkService.hentPoststed("0575")
+        kodeverkService.hentPoststed("0575")
+
         verify(exactly = 1) { familieIntegrasjonerClient.hentKodeverkPoststed()  }
+    }
+
+    @Test
+    fun `skal cache henting av land mot familieIntegrasjonerClient`() {
+        kodeverkService.hentLand("NOR")
+        kodeverkService.hentLand("SWE")
+        verify(exactly = 1) { familieIntegrasjonerClient.hentKodeverkLandkoder()  }
     }
 }

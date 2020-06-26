@@ -8,24 +8,28 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class KodeverkService(private val integrasjonerClient: FamilieIntegrasjonerClient) {
+class KodeverkService(private val cachedKodeverkService: CachedKodeverkService) {
+
+    @Service
+    class CachedKodeverkService(private val integrasjonerClient: FamilieIntegrasjonerClient) {
+
+        @Cacheable("kodeverk_landkoder")
+        fun hentLandkoder(): KodeverkDto {
+            return integrasjonerClient.hentKodeverkLandkoder()
+        }
+
+        @Cacheable("kodeverk_poststed")
+        fun hentPoststed(): KodeverkDto {
+            return integrasjonerClient.hentKodeverkPoststed()
+        }
+    }
 
     fun hentLand(landkode: String): String? {
-        return hentLandkoder().hentGjelende(landkode, LocalDate.now())
+        return cachedKodeverkService.hentLandkoder().hentGjelende(landkode, LocalDate.now())
     }
 
     fun hentPoststed(postnummer: String): String? {
-        return hentPoststed().hentGjelende(postnummer, LocalDate.now())
-    }
-
-    @Cacheable("kodeverk_landkoder")
-    fun hentLandkoder(): KodeverkDto {
-        return integrasjonerClient.hentKodeverkLandkoder()
-    }
-
-    @Cacheable("kodeverk_poststed")
-    fun hentPoststed(): KodeverkDto {
-        return integrasjonerClient.hentKodeverkPoststed()
+        return cachedKodeverkService.hentPoststed().hentGjelende(postnummer, LocalDate.now())
     }
 
 }

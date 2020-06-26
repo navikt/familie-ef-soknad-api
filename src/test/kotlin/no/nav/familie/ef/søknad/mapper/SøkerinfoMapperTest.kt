@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ef.søknad.api.dto.tps.Adresse
+import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.integration.dto.*
 import no.nav.familie.ef.søknad.service.KodeverkService
 import org.assertj.core.api.Assertions.assertThat
@@ -95,6 +96,24 @@ internal class SøkerinfoMapperTest {
     @Test
     internal fun `ikke feile når henting av poststed feiler`() {
         every { kodeverkService.hentPoststed(any()) } throws RuntimeException("Feil")
+        val person = person()
+
+        assertThat(person.adresse.postnummer).isEqualTo("0575")
+        assertThat(person.adresse.poststed).isEqualTo("")
+        assertThat(person.statsborgerskap).isEqualTo("NORGE")
+    }
+
+    @Test
+    internal fun `ikke feile når henting av land feiler`() {
+        every { kodeverkService.hentLand(any()) } throws RuntimeException("Feil")
+        val person = person()
+
+        assertThat(person.adresse.postnummer).isEqualTo("0575")
+        assertThat(person.adresse.poststed).isEqualTo("OSLO")
+        assertThat(person.statsborgerskap).isEqualTo("")
+    }
+
+    private fun person(): Person {
         val bostedsadresse = BostedsadresseDto(null, null, null, null, "0575")
         val personinfoDto = PersoninfoDto("fødselsnummer",
                                           NavnDto("Roy Tony"),
@@ -107,12 +126,10 @@ internal class SøkerinfoMapperTest {
                                           null,
                                           null,
                                           null,
-                                          null,
+                                          KodeMedDatoOgKildeDto(KodeDto("NOR")),
                                           null)
 
         val person = søkerinfoMapper.mapTilPerson(personinfoDto)
-
-        assertThat(person.adresse.postnummer).isEqualTo("0575")
-        assertThat(person.adresse.poststed).isEqualTo("")
+        return person
     }
 }
