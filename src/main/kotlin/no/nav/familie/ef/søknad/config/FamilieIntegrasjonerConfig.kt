@@ -16,12 +16,12 @@ data class FamilieIntegrasjonerConfig(val uri: URI,
     val kodeverkPoststedUri: URI =
             UriComponentsBuilder.fromUri(uri).pathSegment(PATH_KODEVERK_POSTSTED).build().toUri()
 
-    internal val pingUri = UriComponentsBuilder.fromUri(uri).path(PING).build().toUri()
+    internal val pingUri = UriComponentsBuilder.fromUri(uri).pathSegment(PING).build().toUri()
 
     companion object {
-        private const val PATH_KODEVERK_LANDKODER = "api/kodeverk/landkoder"
-        private const val PATH_KODEVERK_POSTSTED = "api/kodeverk/poststed"
-        private const val PING = "/ping"
+        private const val PATH_KODEVERK_LANDKODER = "kodeverk/landkoder"
+        private const val PATH_KODEVERK_POSTSTED = "kodeverk/poststed"
+        private const val PING = "ping"
     }
 
 }
