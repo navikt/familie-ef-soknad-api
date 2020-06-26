@@ -17,7 +17,8 @@ internal class SøkerinfoMapperTest {
 
     @BeforeEach
     internal fun setUp() {
-        every { kodeverkService.hentPoststedFor(any()) } returns "Oslo"
+        every { kodeverkService.hentPoststed(any()) } returns "OSLO"
+        every { kodeverkService.hentLand(any()) } returns "NORGE"
     }
 
     @Test
@@ -51,17 +52,17 @@ internal class SøkerinfoMapperTest {
                                           KodeMedDatoOgKildeDto(KodeDto("opphold")),
                                           KodeMedDatoOgKildeDto(KodeDto("GIFT")),
                                           KodeMedDatoOgKildeDto(KodeDto("bm")),
-                                          KodeMedDatoOgKildeDto(KodeDto("NO")),
+                                          KodeMedDatoOgKildeDto(KodeDto("NOR")),
                                           TelefoninfoDto("jobb", "mobil", "privat"))
 
         val person = søkerinfoMapper.mapTilPerson(personinfoDto)
 
         assertThat(person.fnr).isEqualTo("fødselsnummer")
         assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
-        assertThat(person.adresse).isEqualTo(Adresse("Veien 24", "0265", "Oslo"))
+        assertThat(person.adresse).isEqualTo(Adresse("Veien 24", "0265", "OSLO"))
         assertThat(person.egenansatt).isEqualTo(true)
         assertThat(person.sivilstand).isEqualTo("GIFT")
-        assertThat(person.statsborgerskap).isEqualTo("NO")
+        assertThat(person.statsborgerskap).isEqualTo("NORGE")
 
     }
 
@@ -93,7 +94,7 @@ internal class SøkerinfoMapperTest {
 
     @Test
     internal fun `ikke feile når henting av poststed feiler`() {
-        every { kodeverkService.hentPoststedFor(any()) } throws RuntimeException("Feil")
+        every { kodeverkService.hentPoststed(any()) } throws RuntimeException("Feil")
         val bostedsadresse = BostedsadresseDto(null, null, null, null, "0575")
         val personinfoDto = PersoninfoDto("fødselsnummer",
                                           NavnDto("Roy Tony"),

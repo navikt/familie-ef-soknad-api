@@ -10,12 +10,17 @@ import java.net.URI
 data class FamilieIntegrasjonerConfig(val uri: URI,
                                       val passord: String) {
 
-    internal val poststedUri = UriComponentsBuilder.fromUri(uri).path(POSTSTED).build().toUri()
+    val kodeverkLandkoderUri: URI =
+            UriComponentsBuilder.fromUri(uri).pathSegment(PATH_KODEVERK_LANDKODER).build().toUri()
+
+    val kodeverkPoststedUri: URI =
+            UriComponentsBuilder.fromUri(uri).pathSegment(PATH_KODEVERK_POSTSTED).build().toUri()
 
     internal val pingUri = UriComponentsBuilder.fromUri(uri).path(PING).build().toUri()
 
     companion object {
-        private const val POSTSTED = "/kodeverk/poststed/"
+        private const val PATH_KODEVERK_LANDKODER = "api/kodeverk/landkoder"
+        private const val PATH_KODEVERK_POSTSTED = "api/kodeverk/poststed"
         private const val PING = "/ping"
     }
 
