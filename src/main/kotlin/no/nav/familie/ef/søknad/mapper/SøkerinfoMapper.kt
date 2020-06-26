@@ -55,9 +55,9 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         return hentKodeverdi("land", landkode, kodeverkService::hentLand)
     }
 
-    private fun hentKodeverdi(type: String, kode: String?, kFunction1: Function1<String, String?>): String {
+    private fun hentKodeverdi(type: String, kode: String?, hentKodeverdiFunction: Function1<String, String?>): String {
         return try {
-            kode?.let(kFunction1) ?: ""
+            kode?.let(hentKodeverdiFunction) ?: ""
         } catch (e: Exception) {
             //Ikke la feil fra integrasjon stoppe henting av data
             logger.error("Feilet henting av $type til $kode message=${e.message} cause=${e.cause?.message}")
