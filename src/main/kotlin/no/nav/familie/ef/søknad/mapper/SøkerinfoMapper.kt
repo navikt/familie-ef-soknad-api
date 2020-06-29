@@ -36,7 +36,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                       mapTilAdresse(personinfoDto.adresseinfo),
                       personinfoDto.egenansatt?.isErEgenansatt ?: false,
                       personinfoDto.sivilstand?.kode?.verdi ?: "",
-                      personinfoDto.statsborgerskap?.kode?.verdi ?: "")
+                      hentLand(personinfoDto.statsborgerskap?.kode?.verdi))
     }
 
     private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {
@@ -48,11 +48,19 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     }
 
     private fun hentPoststed(postnummer: String?): String {
+        return hentKodeverdi("poststed", postnummer, kodeverkService::hentPoststed)
+    }
+
+    private fun hentLand(landkode: String?): String {
+        return hentKodeverdi("land", landkode, kodeverkService::hentLand)
+    }
+
+    private fun hentKodeverdi(type: String, kode: String?, hentKodeverdiFunction: Function1<String, String?>): String {
         return try {
-            postnummer?.let(kodeverkService::hentPoststedFor) ?: ""
+            kode?.let(hentKodeverdiFunction) ?: ""
         } catch (e: Exception) {
             //Ikke la feil fra integrasjon stoppe henting av data
-            logger.error("Feilet henting av poststed til $postnummer message=${e.message} cause=${e.cause?.message}")
+            logger.error("Feilet henting av $type til $kode message=${e.message} cause=${e.cause?.message}")
             ""
         }
     }

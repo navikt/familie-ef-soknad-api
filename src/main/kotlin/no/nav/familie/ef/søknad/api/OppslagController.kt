@@ -29,7 +29,7 @@ class OppslagController(private val oppslagService: OppslagService,
     @GetMapping("/poststed/{postnummer}")
     fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
         require(gyldigPostnummer(postnummer))
-        val poststed = kodeverkService.hentPoststedFor(postnummer)
+        val poststed = kodeverkService.hentPoststed(postnummer)
         return if (!poststed.isNullOrBlank()) ResponseEntity.ok().body(poststed)
         else ResponseEntity.noContent().build()
     }

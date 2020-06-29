@@ -43,7 +43,7 @@ internal class OppslagControllerTest {
 
     @Test
     fun `Feiler ikke med gyldig verdi`() {
-        every { kodeverkService.hentPoststedFor("9700") } returns "Lakselv"
+        every { kodeverkService.hentPoststed("9700") } returns "Lakselv"
         val poststed = oppslagsController.postnummer("9700")
         assertEquals(actual = poststed.body, expected = "Lakselv")
     }
