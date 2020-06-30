@@ -5,6 +5,8 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TidligereUtdanning
 import no.nav.familie.ef.søknad.mapper.*
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.ETABLERER_VIRKSOMHET
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.IKKE_VILLIG_TIL_ARBEID
 import no.nav.familie.kontrakter.ef.søknad.*
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidsgiver as ArbeidsgiverDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning as UnderUtdanningDto
@@ -19,7 +21,7 @@ object AktivitetsMapper {
                              Søknadsfelt("Om arbeidsforholdet ditt", mapArbeidsforhold(it))
                          },
                          selvstendig = aktivitet.firma?.let { Søknadsfelt("Om firmaet du driver", mapOmFirma(it)) },
-                         virksomhet = aktivitet.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it) },
+                         virksomhet = aktivitet.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it, vedlegg) },
                          arbeidssøker = aktivitet.arbeidssøker?.let { mapArbeidssøker(it, vedlegg) },
                          underUtdanning = aktivitet.underUtdanning?.let { mapUtdanning(it) },
                          aksjeselskap = aktivitet.egetAS?.let {
@@ -85,8 +87,10 @@ object AktivitetsMapper {
         )
     }
 
-    private fun mapEtablererVirksomhet(it: TekstFelt): Søknadsfelt<Virksomhet> {
-        return Søknadsfelt("Om virksomheten du etablerer", Virksomhet(it.tilSøknadsfelt()))
+    private fun mapEtablererVirksomhet(it: TekstFelt,
+                                       vedlegg: Map<String, DokumentasjonWrapper>): Søknadsfelt<Virksomhet> {
+        return Søknadsfelt("Om virksomheten du etablerer", Virksomhet(it.tilSøknadsfelt(),
+                                                                      dokumentfelt(ETABLERER_VIRKSOMHET, vedlegg)))
     }
 
     private fun mapOmFirma(firma: Firma): Selvstendig {
