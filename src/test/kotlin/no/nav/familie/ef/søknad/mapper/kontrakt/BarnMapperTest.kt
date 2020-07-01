@@ -44,21 +44,9 @@ internal class BarnMapperTest {
     }
 
     @Test
-    fun `Folkeregistrert barn har annenForelder ikke oppgitt er false `() {
-        val annenForelder = folkeregistrerteBarn.annenForelder?.verdi
-        assertThat(annenForelder?.kanIkkeOppgiAnnenForelderFar?.verdi).isFalse()
-    }
-
-    @Test
     fun `Nyregistrert barn har annenForelder ikke oppgitt begrunnelse `() {
         val annenForelder = nyregistrertBarn.annenForelder?.verdi
         assertThat(annenForelder?.ikkeOppgittAnnenForelderBegrunnelse).isNotNull()
-    }
-
-    @Test
-    fun `Nyregistrert barn har ikke oppgitt annen forelder`() {
-        val annenForelder = nyregistrertBarn.annenForelder?.verdi
-        assertThat(annenForelder?.kanIkkeOppgiAnnenForelderFar?.verdi).isTrue()
     }
 
     @Test

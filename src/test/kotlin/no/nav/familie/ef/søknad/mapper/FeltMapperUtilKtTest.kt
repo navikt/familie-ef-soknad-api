@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ListFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
@@ -57,15 +58,15 @@ internal class FeltMapperUtilKtTest {
                                                         Søknadsfelt("Har sendt inn tidligere", false),
                                                         listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok", bytes),
                                                                Vedlegg("id2", "dok2.pdf", "Annen tittel på dok", bytes)))
-        val dokumenter = mapOf("finnes" to dokumentasjonWrapper)
-        val dokumentSomFinnes = dokumentfelt("finnes", dokumenter)!!
+        val dokumenter = mapOf(DokumentIdentifikator.SYKDOM.name to dokumentasjonWrapper)
+        val dokumentSomFinnes = dokumentfelt(DokumentIdentifikator.SYKDOM, dokumenter)!!
         assertThat(dokumentSomFinnes.verdi.dokumenter.first().id).isEqualTo("id1")
         assertThat(dokumentSomFinnes.verdi.dokumenter.first().navn).isEqualTo("dok1.pdf")
 
         assertThat(dokumentSomFinnes.verdi.dokumenter.last().id).isEqualTo("id2")
         assertThat(dokumentSomFinnes.verdi.dokumenter.last().navn).isEqualTo("dok2.pdf")
 
-        assertThat(dokumentfelt("finnesIkke", dokumenter)).isNull()
+        assertThat(dokumentfelt(DokumentIdentifikator.SAMLIVSBRUDD, dokumenter)).isNull()
     }
 
 

@@ -1,13 +1,35 @@
 package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.integration.FamilieIntegrasjonerClient
+import no.nav.familie.kontrakter.felles.kodeverk.KodeverkDto
+import no.nav.familie.kontrakter.felles.kodeverk.hentGjelende
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 
 @Service
-class KodeverkService(private val integrasjonerClient: FamilieIntegrasjonerClient) {
+class KodeverkService(private val cachedKodeverkService: CachedKodeverkService) {
 
-    fun hentPoststedFor(postnummer: String): String? {
-        return integrasjonerClient.hentPoststedFor(postnummer)
+    @Service
+    class CachedKodeverkService(private val integrasjonerClient: FamilieIntegrasjonerClient) {
+
+        @Cacheable("kodeverk_landkoder")
+        fun hentLandkoder(): KodeverkDto {
+            return integrasjonerClient.hentKodeverkLandkoder()
+        }
+
+        @Cacheable("kodeverk_poststed")
+        fun hentPoststed(): KodeverkDto {
+            return integrasjonerClient.hentKodeverkPoststed()
+        }
+    }
+
+    fun hentLand(landkode: String): String? {
+        return cachedKodeverkService.hentLandkoder().hentGjelende(landkode, LocalDate.now())
+    }
+
+    fun hentPoststed(postnummer: String): String? {
+        return cachedKodeverkService.hentPoststed().hentGjelende(postnummer, LocalDate.now())
     }
 
 }
