@@ -41,7 +41,6 @@ object BarnMapper {
 
     private fun mapAnnenForelder(forelder: AnnenForelderDto): Søknadsfelt<AnnenForelder> =
             Søknadsfelt("Barnets andre forelder", AnnenForelder(
-                    kanIkkeOppgiAnnenForelderFar = forelder.kanIkkeOppgiAnnenForelderFar.tilSøknadsfelt(),
                     ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.tilSøknadsfelt(),
                     bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                     land = forelder.land?.tilSøknadsfelt(),
