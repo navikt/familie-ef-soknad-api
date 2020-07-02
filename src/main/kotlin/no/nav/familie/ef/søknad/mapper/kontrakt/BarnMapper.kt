@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
 import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
@@ -40,7 +41,6 @@ object BarnMapper {
 
     private fun mapAnnenForelder(forelder: AnnenForelderDto): Søknadsfelt<AnnenForelder> =
             Søknadsfelt("Barnets andre forelder", AnnenForelder(
-                    kanIkkeOppgiAnnenForelderFar = forelder.kanIkkeOppgiAnnenForelderFar.tilSøknadsfelt(),
                     ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.tilSøknadsfelt(),
                     bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                     land = forelder.land?.tilSøknadsfelt(),

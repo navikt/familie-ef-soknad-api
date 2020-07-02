@@ -1,12 +1,26 @@
 package no.nav.familie.ef.søknad.mapper
 
+import io.mockk.every
+import io.mockk.mockk
 import no.nav.familie.ef.søknad.api.dto.tps.Adresse
+import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.integration.dto.*
+import no.nav.familie.ef.søknad.service.KodeverkService
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 internal class SøkerinfoMapperTest {
+
+    private val kodeverkService = mockk<KodeverkService>(relaxed = true)
+    private val søkerinfoMapper = SøkerinfoMapper(kodeverkService)
+
+    @BeforeEach
+    internal fun setUp() {
+        every { kodeverkService.hentPoststed(any()) } returns "OSLO"
+        every { kodeverkService.hentLand(any()) } returns "NORGE"
+    }
 
     @Test
     fun `mapTilBarn konverterer alle felter i RelasjonDto fra TPS til rett felt i Barn`() {
@@ -17,7 +31,7 @@ internal class SøkerinfoMapperTest {
                                       LocalDate.of(2004, 4, 15),
                                       true)
 
-        val barn = SøkerinfoMapper.mapTilBarn(relasjonDto)
+        val barn = søkerinfoMapper.mapTilBarn(relasjonDto)
 
         assertThat(barn.fnr).isEqualTo("fødselsnummer")
         assertThat(barn.navn).isEqualTo("Bob Kåre")
@@ -39,17 +53,17 @@ internal class SøkerinfoMapperTest {
                                           KodeMedDatoOgKildeDto(KodeDto("opphold")),
                                           KodeMedDatoOgKildeDto(KodeDto("GIFT")),
                                           KodeMedDatoOgKildeDto(KodeDto("bm")),
-                                          KodeMedDatoOgKildeDto(KodeDto("NO")),
+                                          KodeMedDatoOgKildeDto(KodeDto("NOR")),
                                           TelefoninfoDto("jobb", "mobil", "privat"))
 
-        val person = SøkerinfoMapper.mapTilPerson(personinfoDto)
+        val person = søkerinfoMapper.mapTilPerson(personinfoDto)
 
         assertThat(person.fnr).isEqualTo("fødselsnummer")
         assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
-        assertThat(person.adresse).isEqualTo(Adresse("Veien 24", "0265"))
+        assertThat(person.adresse).isEqualTo(Adresse("Veien 24", "0265", "OSLO"))
         assertThat(person.egenansatt).isEqualTo(true)
         assertThat(person.sivilstand).isEqualTo("GIFT")
-        assertThat(person.statsborgerskap).isEqualTo("NO")
+        assertThat(person.statsborgerskap).isEqualTo("NORGE")
 
     }
 
@@ -69,15 +83,53 @@ internal class SøkerinfoMapperTest {
                                           null,
                                           null)
 
-        val person = SøkerinfoMapper.mapTilPerson(personinfoDto)
+        val person = søkerinfoMapper.mapTilPerson(personinfoDto)
 
         assertThat(person.fnr).isEqualTo("fødselsnummer")
         assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
-        assertThat(person.adresse).isEqualTo(Adresse("", ""))
+        assertThat(person.adresse).isEqualTo(Adresse("", "", ""))
         assertThat(person.egenansatt).isEqualTo(false)
         assertThat(person.sivilstand).isEqualTo("")
         assertThat(person.statsborgerskap).isEqualTo("")
     }
 
+    @Test
+    internal fun `ikke feile når henting av poststed feiler`() {
+        every { kodeverkService.hentPoststed(any()) } throws RuntimeException("Feil")
+        val person = person()
 
+        assertThat(person.adresse.postnummer).isEqualTo("0575")
+        assertThat(person.adresse.poststed).isEqualTo("")
+        assertThat(person.statsborgerskap).isEqualTo("NORGE")
+    }
+
+    @Test
+    internal fun `ikke feile når henting av land feiler`() {
+        every { kodeverkService.hentLand(any()) } throws RuntimeException("Feil")
+        val person = person()
+
+        assertThat(person.adresse.postnummer).isEqualTo("0575")
+        assertThat(person.adresse.poststed).isEqualTo("OSLO")
+        assertThat(person.statsborgerskap).isEqualTo("")
+    }
+
+    private fun person(): Person {
+        val bostedsadresse = BostedsadresseDto(null, null, null, null, "0575")
+        val personinfoDto = PersoninfoDto("fødselsnummer",
+                                          NavnDto("Roy Tony"),
+                                          AdresseinfoDto(bostedsadresse = bostedsadresse),
+                                          null,
+                                          null,
+                                          null,
+                                          null,
+                                          null,
+                                          null,
+                                          null,
+                                          null,
+                                          KodeMedDatoOgKildeDto(KodeDto("NOR")),
+                                          null)
+
+        val person = søkerinfoMapper.mapTilPerson(personinfoDto)
+        return person
+    }
 }

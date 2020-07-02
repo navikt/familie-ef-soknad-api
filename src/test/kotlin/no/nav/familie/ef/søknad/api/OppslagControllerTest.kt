@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.api
 
 import io.mockk.every
 import io.mockk.mockk
+import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.ef.søknad.service.OppslagService
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -9,7 +10,8 @@ import kotlin.test.assertFailsWith
 
 internal class OppslagControllerTest {
     private val oppslagService: OppslagService = mockk()
-    private val oppslagsController = OppslagController(oppslagService = oppslagService)
+    private val kodeverkService: KodeverkService = mockk()
+    private val oppslagsController = OppslagController(oppslagService = oppslagService, kodeverkService = kodeverkService)
 
     @Test
     fun `Feiler med ulovlig (tekst) input`() {
@@ -41,7 +43,7 @@ internal class OppslagControllerTest {
 
     @Test
     fun `Feiler ikke med gyldig verdi`() {
-        every { oppslagService.hentPoststedFor("9700") } returns "Lakselv"
+        every { kodeverkService.hentPoststed("9700") } returns "Lakselv"
         val poststed = oppslagsController.postnummer("9700")
         assertEquals(actual = poststed.body, expected = "Lakselv")
     }

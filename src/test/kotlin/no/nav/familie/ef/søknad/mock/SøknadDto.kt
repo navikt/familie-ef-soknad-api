@@ -10,7 +10,7 @@ fun søknadDto(): SøknadDto = objectMapper.readValue(File("src/test/resources/s
 
 fun søkerMedDefaultVerdier(forventetFnr: String = "19128449828",
                            forkortetNavn: String = "Kari Nordmann",
-                           adresse: Adresse = Adresse("Jerpefaret 5C", "1440"),
+                           adresse: Adresse = Adresse("Jerpefaret 5C", "1440", ""),
                            statsborgerskap: String = "Norsk",
                            telefonnummer: String? = "12345678",
                            sivilstatus: String = "Ugift") = Søker(fnr = forventetFnr,

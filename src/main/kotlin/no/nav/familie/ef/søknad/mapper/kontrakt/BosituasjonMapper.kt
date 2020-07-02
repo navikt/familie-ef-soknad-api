@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.BOR_PÅ_ULIKE_ADRESSER
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt

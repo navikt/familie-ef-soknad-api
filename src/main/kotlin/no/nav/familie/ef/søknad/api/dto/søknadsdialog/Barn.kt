@@ -13,7 +13,6 @@ data class Barn(val alder: TekstFelt?, // TODO Bare for visning (kan fjernes?)
                 val forelder: AnnenForelder)
 
 data class AnnenForelder(
-        val kanIkkeOppgiAnnenForelderFar: BooleanFelt,
         val ikkeOppgittAnnenForelderBegrunnelse: TekstFelt?,
         val navn: TekstFelt?,
         val fødselsdato: DatoFelt?,

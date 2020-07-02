@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
 import no.nav.familie.kontrakter.ef.søknad.*
 
 
@@ -9,7 +8,7 @@ fun personalia(): Personalia {
                       Søknadsfelt("Navn", "Kari Nordmann"),
                       Søknadsfelt("Statsborgerskap", "NOR"),
                       adresseSøknadsfelt(),
-                      null,
+                      Søknadsfelt("Telefonnummer", "99988877"),
                       Søknadsfelt("Sivilstatus", "UGIF"))
 }
 
@@ -17,8 +16,8 @@ fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
     return Søknadsfelt("Adresse",
                        Adresse("Jerpefaret 5C",
                                "1440",
-                               null,
-                               null))
+                               "",
+                               ""))
 }
 
 fun dokumentMap(): Map<String, DokumentasjonWrapper> {
