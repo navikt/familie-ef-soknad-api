@@ -64,7 +64,7 @@ fun DatoFelt.tilLocalDateEllerNull(): LocalDate? {
 }
 
 private fun fraStrengTilLocalDate(verdi: String): LocalDate {
-    return if (verdi.length > 10 && (verdi[10] == 'T' || verdi[13] == 'T')) {
+    return if (verdi.length > 10 && verdi[10] == 'T') {
         if (verdi.endsWith("Z")) {
             val offsetDateTime = OffsetDateTime.ofInstant(Instant.parse(verdi), ZoneId.of("Europe/Oslo"))
             offsetDateTime.toLocalDate()
