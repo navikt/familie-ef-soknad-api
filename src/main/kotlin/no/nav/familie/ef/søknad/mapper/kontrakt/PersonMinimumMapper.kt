@@ -8,14 +8,29 @@ import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import org.slf4j.LoggerFactory
 
 object PersonMinimumMapper {
-    fun map(it: SamboerDetaljer): Søknadsfelt<PersonMinimum> {
-        return Søknadsfelt("Om samboeren din", personMinimum(it))
+
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+
+    fun map(samboerDetaljer: SamboerDetaljer): Søknadsfelt<PersonMinimum> {
+        try {
+
+            return Søknadsfelt("Om samboeren din", personMinimum(samboerDetaljer))
+        } catch (e: Exception) {
+            secureLogger.error("Feil ved mapping av samboerdetaljer.", samboerDetaljer, e)
+            throw e
+        }
     }
 
     fun map(annenForelder: AnnenForelder): Søknadsfelt<PersonMinimum> {
-        return Søknadsfelt("Persondata", personMinimum(annenForelder))
+        try {
+            return Søknadsfelt("Persondata", personMinimum(annenForelder))
+        } catch (e: Exception) {
+            secureLogger.error("Feil ved mapping av annen forelder.", annenForelder, e)
+            throw e
+        }
     }
 
     private fun personMinimum(annenForelder: AnnenForelder): PersonMinimum {
@@ -45,7 +60,5 @@ object PersonMinimumMapper {
                 null
             }
         }
-
     }
-
 }

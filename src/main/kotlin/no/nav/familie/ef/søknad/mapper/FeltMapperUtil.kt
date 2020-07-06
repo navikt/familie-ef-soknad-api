@@ -18,7 +18,8 @@ fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsf
 
 fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi)
 
-fun dokumentfelt(dokumentIdentifikator: DokumentIdentifikator, vedleggMap: Map<String, DokumentasjonWrapper>): Søknadsfelt<Dokumentasjon>? {
+fun dokumentfelt(dokumentIdentifikator: DokumentIdentifikator,
+                 vedleggMap: Map<String, DokumentasjonWrapper>): Søknadsfelt<Dokumentasjon>? {
     val dokumentasjon = vedleggMap[dokumentIdentifikator.name]
     return dokumentasjon?.let {
         val dokumenter = it.vedlegg.map { vedlegg -> Dokument(vedlegg.id, vedlegg.navn) }
@@ -63,7 +64,7 @@ fun DatoFelt.tilLocalDateEllerNull(): LocalDate? {
 }
 
 private fun fraStrengTilLocalDate(verdi: String): LocalDate {
-    return if (verdi.length > 10 && verdi[10] == 'T') {
+    return if (verdi.length > 10 && (verdi[10] == 'T' || verdi[13] == 'T')) {
         if (verdi.endsWith("Z")) {
             val offsetDateTime = OffsetDateTime.ofInstant(Instant.parse(verdi), ZoneId.of("Europe/Oslo"))
             offsetDateTime.toLocalDate()
