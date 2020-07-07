@@ -18,7 +18,8 @@ fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsf
 
 fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi)
 
-fun dokumentfelt(dokumentIdentifikator: DokumentIdentifikator, vedleggMap: Map<String, DokumentasjonWrapper>): Søknadsfelt<Dokumentasjon>? {
+fun dokumentfelt(dokumentIdentifikator: DokumentIdentifikator,
+                 vedleggMap: Map<String, DokumentasjonWrapper>): Søknadsfelt<Dokumentasjon>? {
     val dokumentasjon = vedleggMap[dokumentIdentifikator.name]
     return dokumentasjon?.let {
         val dokumenter = it.vedlegg.map { vedlegg -> Dokument(vedlegg.id, vedlegg.navn) }

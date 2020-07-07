@@ -7,24 +7,32 @@ import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
 import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
+import org.slf4j.LoggerFactory
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
 import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
 
 object BarnMapper {
 
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+
     fun mapBarn(barnliste: List<Barn>, vedlegg: Map<String, DokumentasjonWrapper>): List<Kontraktbarn> {
+
         return barnliste.map { barn ->
-            Kontraktbarn(navn = barn.navn?.tilSøknadsfelt(),
-                         fødselsnummer = mapFødselsnummer(barn),
-                         harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
-                         ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse
-                                 ?.tilSøknadsfelt(),
-                         erBarnetFødt = barn.født.tilSøknadsfelt(),
-                         fødselTermindato = barn.fødselsdato?.tilSøknadsDatoFeltEllerNull(),
-                         terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, vedlegg),
-                         annenForelder = mapAnnenForelder(barn.forelder),
-                         samvær = mapSamvær(barn.forelder, vedlegg)
-            )
+            try {
+                Kontraktbarn(navn = barn.navn?.tilSøknadsfelt(),
+                             fødselsnummer = mapFødselsnummer(barn),
+                             harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
+                             ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse
+                                     ?.tilSøknadsfelt(),
+                             erBarnetFødt = barn.født.tilSøknadsfelt(),
+                             fødselTermindato = barn.fødselsdato?.tilSøknadsDatoFeltEllerNull(),
+                             terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, vedlegg),
+                             annenForelder = mapAnnenForelder(barn.forelder),
+                             samvær = mapSamvær(barn.forelder, vedlegg))
+            } catch (e: Exception) {
+                secureLogger.error("Feil ved mapping av barn", barnliste, e)
+                throw e
+            }
         }
     }
 
