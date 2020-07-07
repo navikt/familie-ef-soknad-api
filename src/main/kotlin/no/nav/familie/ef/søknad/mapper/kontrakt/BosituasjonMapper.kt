@@ -23,7 +23,7 @@ object BosituasjonMapper {
                                        tidligereSamboerFortsattRegistrertPåAdresse = dokumentfelt(BOR_PÅ_ULIKE_ADRESSER, vedlegg),
                                        datoFlyttetFraHverandre = bosituasjon.datoFlyttetFraHverandre?.tilSøknadsfelt())
         } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av bosituasjon.", bosituasjon, e)
+            secureLogger.error("Feil ved mapping av bosituasjon: $bosituasjon")
             throw e
         }
     }
