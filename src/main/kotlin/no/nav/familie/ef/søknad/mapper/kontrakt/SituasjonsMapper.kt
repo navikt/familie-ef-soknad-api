@@ -6,25 +6,36 @@ import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Situasjon
+import org.slf4j.LoggerFactory
 
 object SituasjonsMapper {
 
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+
     fun mapSituasjon(frontendDto: SøknadDto, vedlegg: Map<String, DokumentasjonWrapper>): Situasjon {
+
         val merOmDinSituasjon = frontendDto.merOmDinSituasjon
-        return Situasjon(gjelderDetteDeg = merOmDinSituasjon.gjelderDetteDeg.tilSøknadsfelt(),
-                         sykdom = dokumentfelt(SYKDOM, vedlegg),
-                         barnsSykdom = dokumentfelt(SYKT_BARN, vedlegg),
-                         manglendeBarnepass = dokumentfelt(BARNEPASS, vedlegg),
-                         barnMedSærligeBehov = dokumentfelt(BARNETILSYN_BEHOV, vedlegg),
-                         utdanningstilbud = dokumentfelt(UTDANNING, vedlegg),
-                         oppstartNyJobb = frontendDto.aktivitet.datoOppstartJobb?.tilSøknadsfelt(),
-                         arbeidskontrakt = dokumentfelt(ARBEIDSKONTRAKT, vedlegg),
-                         sagtOppEllerRedusertStilling = merOmDinSituasjon.sagtOppEllerRedusertStilling?.tilSøknadsfelt(),
-                         oppsigelseReduksjonÅrsak = merOmDinSituasjon.begrunnelseSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
-                         oppsigelseReduksjonTidspunkt = merOmDinSituasjon.datoSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
-                         reduksjonAvArbeidsforholdDokumentasjon = dokumentfelt(ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID, vedlegg),
-                         oppsigelseDokumentasjon = dokumentfelt(ARBEIDSFORHOLD_OPPSIGELSE, vedlegg),
-                         lærlingkontrakt = dokumentfelt(LÆRLING, vedlegg))
+
+        try {
+            return Situasjon(gjelderDetteDeg = merOmDinSituasjon.gjelderDetteDeg.tilSøknadsfelt(),
+                             sykdom = dokumentfelt(SYKDOM, vedlegg),
+                             barnsSykdom = dokumentfelt(SYKT_BARN, vedlegg),
+                             manglendeBarnepass = dokumentfelt(BARNEPASS, vedlegg),
+                             barnMedSærligeBehov = dokumentfelt(BARNETILSYN_BEHOV, vedlegg),
+                             utdanningstilbud = dokumentfelt(UTDANNING, vedlegg),
+                             oppstartNyJobb = frontendDto.aktivitet.datoOppstartJobb?.tilSøknadsfelt(),
+                             arbeidskontrakt = dokumentfelt(ARBEIDSKONTRAKT, vedlegg),
+                             sagtOppEllerRedusertStilling = merOmDinSituasjon.sagtOppEllerRedusertStilling?.tilSøknadsfelt(),
+                             oppsigelseReduksjonÅrsak =
+                             merOmDinSituasjon.begrunnelseSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
+                             oppsigelseReduksjonTidspunkt = merOmDinSituasjon.datoSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
+                             reduksjonAvArbeidsforholdDokumentasjon = dokumentfelt(ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID, vedlegg),
+                             oppsigelseDokumentasjon = dokumentfelt(ARBEIDSFORHOLD_OPPSIGELSE, vedlegg),
+                             lærlingkontrakt = dokumentfelt(LÆRLING, vedlegg))
+        } catch (e: Exception) {
+            secureLogger.error("Feil ved mapping av situasjon.", merOmDinSituasjon, e)
+            throw e
+        }
     }
 
 }

@@ -7,15 +7,25 @@ import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.BOR_PÅ_U
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import org.slf4j.LoggerFactory
 import no.nav.familie.kontrakter.ef.søknad.Bosituasjon as KontraktBosituasjon
 
 object BosituasjonMapper {
+
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+
     fun mapBosituasjon(bosituasjon: Bosituasjon, vedlegg: Map<String, DokumentasjonWrapper>): KontraktBosituasjon {
-        return KontraktBosituasjon(delerDuBolig = mapSøkerDelerBoligMedAndre(bosituasjon),
-                                   samboerdetaljer = mapSamboer(bosituasjon),
-                                   sammenflyttingsdato = bosituasjon.datoFlyttetSammenMedSamboer?.tilSøknadsfelt(),
-                                   tidligereSamboerFortsattRegistrertPåAdresse = dokumentfelt(BOR_PÅ_ULIKE_ADRESSER, vedlegg),
-                                   datoFlyttetFraHverandre = bosituasjon.datoFlyttetFraHverandre?.tilSøknadsfelt())
+        try {
+
+            return KontraktBosituasjon(delerDuBolig = mapSøkerDelerBoligMedAndre(bosituasjon),
+                                       samboerdetaljer = mapSamboer(bosituasjon),
+                                       sammenflyttingsdato = bosituasjon.datoFlyttetSammenMedSamboer?.tilSøknadsfelt(),
+                                       tidligereSamboerFortsattRegistrertPåAdresse = dokumentfelt(BOR_PÅ_ULIKE_ADRESSER, vedlegg),
+                                       datoFlyttetFraHverandre = bosituasjon.datoFlyttetFraHverandre?.tilSøknadsfelt())
+        } catch (e: Exception) {
+            secureLogger.error("Feil ved mapping av bosituasjon.", bosituasjon, e)
+            throw e
+        }
     }
 
     private fun mapSøkerDelerBoligMedAndre(bosituasjon: Bosituasjon) = bosituasjon.delerBoligMedAndreVoksne.tilSøknadsfelt()
@@ -25,6 +35,4 @@ object BosituasjonMapper {
             PersonMinimumMapper.map(it)
         }
     }
-
-
 }
