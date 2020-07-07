@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Situasjon
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.integration.SøknadRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.tilLocalDateEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
@@ -15,8 +16,9 @@ import java.time.LocalDateTime
 class SøknadMapper(private val dokumentServiceService: DokumentService) {
 
     fun mapTilIntern(frontendDto: SøknadDto,
-                     innsendingMottatt: LocalDateTime): SøknadMedVedlegg {
-        val vedlegg: Map<String, DokumentasjonWrapper> = hentDokumenter(frontendDto.dokumentasjonsbehov)
+                     innsendingMottatt: LocalDateTime): SøknadRequestData {
+        val vedleggData: Map<String, ByteArray> = hentDokumenter(frontendDto.dokumentasjonsbehov)
+        val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(frontendDto.dokumentasjonsbehov)
 
         val søknad = Søknad(
                 innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
@@ -34,17 +36,26 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                 aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", AktivitetsMapper.map(frontendDto, vedlegg)),
                 situasjon = Søknadsfelt("Mer om situasjonen din", SituasjonsMapper.mapSituasjon(frontendDto, vedlegg)),
                 stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart(frontendDto.merOmDinSituasjon)))
-        return SøknadMedVedlegg(søknad, vedlegg.values.map { it.vedlegg }.flatten())
+
+        return SøknadRequestData(SøknadMedVedlegg(søknad, vedlegg.values.map { it.vedlegg }.flatten()), vedleggData)
     }
 
-    private fun hentDokumenter(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, DokumentasjonWrapper> {
+    private fun hentDokumenter(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, ByteArray> {
+        return dokumentasjonsbehov.flatMap { dok ->
+            dok.opplastedeVedlegg.map {
+                it.dokumentId to dokumentServiceService.hentVedlegg(it.dokumentId)
+            }
+        }.toMap()
+    }
+
+    private fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, DokumentasjonWrapper> {
         return dokumentasjonsbehov.associate {
             // it.id er dokumenttype/tittel, eks "Gift i utlandet"
             val vedlegg = it.opplastedeVedlegg.map { dokumentFelt ->
                 Vedlegg(id = dokumentFelt.dokumentId,
                         navn = dokumentFelt.navn,
                         tittel = it.label,
-                        bytes = dokumentServiceService.hentVedlegg(dokumentFelt.dokumentId))
+                        bytes = null)
             }
             val harSendtInn = Søknadsfelt("Jeg har sendt inn denne dokumentasjonen til NAV tidligere", it.harSendtInn)
             it.id to DokumentasjonWrapper(it.label, harSendtInn, vedlegg)
