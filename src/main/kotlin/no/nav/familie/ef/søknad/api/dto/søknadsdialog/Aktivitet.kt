@@ -29,7 +29,7 @@ data class Arbeidsgiver(
 data class Arbeidssøker(
         val hvorØnskerSøkerArbeid: TekstFelt,
         val kanBegynneInnenEnUke: BooleanFelt,
-        val kanSkaffeBarnepassInnenEnUke: BooleanFelt,
+        val kanSkaffeBarnepassInnenEnUke: BooleanFelt?,
         val registrertSomArbeidssøkerNav: BooleanFelt,
         val villigTilÅTaImotTilbudOmArbeid: BooleanFelt,
         val ønskerSøker50ProsentStilling: BooleanFelt
