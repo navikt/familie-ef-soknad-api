@@ -35,7 +35,7 @@ object AktivitetsMapper {
                                  })
                              })
         } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av aktivitet.", aktivitet, e)
+            secureLogger.error("Feil ved mapping av aktivitet: $aktivitet")
             throw e
         }
     }

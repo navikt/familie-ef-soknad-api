@@ -30,7 +30,7 @@ object BarnMapper {
                              annenForelder = mapAnnenForelder(barn.forelder),
                              samvær = mapSamvær(barn.forelder, vedlegg))
             } catch (e: Exception) {
-                secureLogger.error("Feil ved mapping av barn", barnliste, e)
+                secureLogger.error("Feil ved mapping av barn: $barnliste")
                 throw e
             }
         }
