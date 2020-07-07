@@ -33,7 +33,7 @@ object SituasjonsMapper {
                              oppsigelseDokumentasjon = dokumentfelt(ARBEIDSFORHOLD_OPPSIGELSE, vedlegg),
                              lærlingkontrakt = dokumentfelt(LÆRLING, vedlegg))
         } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av situasjon.", merOmDinSituasjon, e)
+            secureLogger.error("Feil ved mapping av situasjon: $merOmDinSituasjon")
             throw e
         }
     }
