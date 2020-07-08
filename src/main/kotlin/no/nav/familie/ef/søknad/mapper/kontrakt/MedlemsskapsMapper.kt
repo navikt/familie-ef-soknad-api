@@ -20,7 +20,7 @@ object MedlemsskapsMapper {
                                        medlemskap.søkerBosattINorgeSisteTreÅr.tilSøknadsfelt(),
                                        Søknadsfelt("Utenlandsopphold", mapUtenlansopphold(medlemskap.perioderBoddIUtlandet)))
         } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av madlemskap.", medlemskap, e)
+            secureLogger.error("Feil ved mapping av madlemskap: $medlemskap")
             throw e
         }
     }

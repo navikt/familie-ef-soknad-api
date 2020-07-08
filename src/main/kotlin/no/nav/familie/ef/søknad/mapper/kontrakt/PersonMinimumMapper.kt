@@ -16,10 +16,9 @@ object PersonMinimumMapper {
 
     fun map(samboerDetaljer: SamboerDetaljer): Søknadsfelt<PersonMinimum> {
         try {
-
             return Søknadsfelt("Om samboeren din", personMinimum(samboerDetaljer))
         } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av samboerdetaljer.", samboerDetaljer, e)
+            secureLogger.error("Feil ved mapping av samboerdetaljer: $samboerDetaljer")
             throw e
         }
     }
@@ -28,7 +27,7 @@ object PersonMinimumMapper {
         try {
             return Søknadsfelt("Persondata", personMinimum(annenForelder))
         } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av annen forelder.", annenForelder, e)
+            secureLogger.error("Feil ved mapping av annen forelder: $annenForelder")
             throw e
         }
     }

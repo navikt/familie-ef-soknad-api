@@ -20,7 +20,7 @@ object PersonaliaMapper {
                               telefonnummer = lagTelefonnummerSøknadsfelt(frontendDto.person.søker.kontakttelefon),
                               sivilstatus = Søknadsfelt("Sivilstatus", frontendDto.person.søker.sivilstand))
         } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av person", frontendDto.person, e)
+            secureLogger.error("Feil ved mapping av person ${frontendDto.person}")
             throw e
         }
     }

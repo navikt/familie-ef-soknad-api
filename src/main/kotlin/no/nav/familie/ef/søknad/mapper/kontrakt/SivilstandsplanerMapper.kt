@@ -15,7 +15,7 @@ object SivilstandsplanerMapper {
                                      fraDato = bosituasjon.datoSkalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
                                      vordendeSamboerEktefelle = bosituasjon.samboerDetaljer?.let(PersonMinimumMapper::map))
         } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av bosituasjon", bosituasjon, e)
+            secureLogger.error("Feil ved mapping av bosituasjon $bosituasjon")
             throw e
         }
     }

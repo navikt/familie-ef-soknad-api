@@ -35,7 +35,7 @@ object SivilstandsdetaljerMapper {
                                                        PersonMinimumMapper.personMinimum(it))
                                        })
         } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av sivilstatus.", sivilstatus, e)
+            secureLogger.error("Feil ved mapping av sivilstatus: $sivilstatus")
             throw e
         }
     }
