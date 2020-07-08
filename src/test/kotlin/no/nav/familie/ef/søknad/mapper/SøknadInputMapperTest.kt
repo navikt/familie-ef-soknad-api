@@ -33,7 +33,7 @@ internal class SøknadInputMapperTest {
     @Test
     fun `mapPersonalia mapper dto fra frontend til forventet Personalia`() {
         // When
-        val personaliaFraSøknadDto = PersonaliaMapper.mapPersonalia(søknadDto)
+        val personaliaFraSøknadDto = PersonaliaMapper.mapPersonalia(søknadDto.person.søker)
         // Then
         assertThat(personaliaFraSøknadDto.toString()).isEqualTo(personalia().toString())
     }

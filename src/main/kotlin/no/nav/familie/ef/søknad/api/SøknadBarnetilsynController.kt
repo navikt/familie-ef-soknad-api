@@ -1,9 +1,10 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BarnetilsynDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
-import no.nav.familie.ef.søknad.service.SøknadService
+import no.nav.familie.ef.søknad.service.BarnetilsynSøknadService
 import no.nav.familie.ef.søknad.util.InnloggingUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.slf4j.LoggerFactory
@@ -20,16 +21,16 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/soknadbarnetilsyn"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
-class SøknadBarnetilsynController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
+class SøknadBarnetilsynController(val søknadService: BarnetilsynSøknadService, val featureToggleService: FeatureToggleService) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    // TODO - Bytt ut String med barnetilsyn når denne er klar
     @PostMapping
-    fun sendInn(@RequestBody søknad: String): Kvittering {
+    fun sendInn(@RequestBody søknad: BarnetilsynDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.send-barnetilsynsoknad") {
             try {
                 val innsendingMottatt = LocalDateTime.now()
+                søknadService.sendInn(søknad, innsendingMottatt)
                 Kvittering("ok", mottattDato = innsendingMottatt)
             } catch (e: Exception) {
                 logger.error("Feil - får ikke sendt barnetilsyn-søknad til mottak ", e)

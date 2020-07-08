@@ -4,7 +4,5 @@ import javax.validation.Valid
 
 class BarnetilsynDto(
         @field:Valid val person: Person,
-        val bosituasjon: Bosituasjon,
-
-        val sivilstatus: Sivilstatus
+        val dokumentasjonsbehov: List<Dokumentasjonsbehov>
 )

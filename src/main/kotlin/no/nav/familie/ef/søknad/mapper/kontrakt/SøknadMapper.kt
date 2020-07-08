@@ -5,6 +5,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Situasjon
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.integration.SøknadRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
+import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.tilLocalDateEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.ef.søknad.service.DokumentService
@@ -23,7 +24,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
         val søknad = Søknad(
                 innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
                                                   Innsendingsdetaljer(Søknadsfelt("Dato mottatt", innsendingMottatt))),
-                personalia = Søknadsfelt("Søker", PersonaliaMapper.mapPersonalia(frontendDto)),
+                personalia = frontendDto.person.søker.tilSøknadsFelt(),
                 sivilstandsdetaljer = Søknadsfelt("Årsak til alene med barn",
                                                   SivilstandsdetaljerMapper.mapSivilstandsdetaljer(frontendDto, vedlegg)),
                 medlemskapsdetaljer = Søknadsfelt("Opphold i Norge", MedlemsskapsMapper.mapMedlemskap(frontendDto)),
@@ -31,8 +32,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
                                           BosituasjonMapper.mapBosituasjon(frontendDto.bosituasjon, vedlegg)),
                 sivilstandsplaner = Søknadsfelt("Fremtidsplaner",
                                                 SivilstandsplanerMapper.mapSivilstandsplaner(frontendDto.bosituasjon)),
-                barn = Søknadsfelt("Barna dine",
-                                   BarnMapper.mapBarn(frontendDto.person.barn, vedlegg)),
+                barn = frontendDto.person.barn.tilSøknadsfelt(vedlegg),
                 aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter", AktivitetsMapper.map(frontendDto, vedlegg)),
                 situasjon = Søknadsfelt("Mer om situasjonen din", SituasjonsMapper.mapSituasjon(frontendDto, vedlegg)),
                 stønadsstart = Søknadsfelt("Når søker du stønad fra?", stønadsstart(frontendDto.merOmDinSituasjon)))
@@ -48,19 +48,19 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
         }.toMap()
     }
 
-    private fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, DokumentasjonWrapper> {
-        return dokumentasjonsbehov.associate {
-            // it.id er dokumenttype/tittel, eks "Gift i utlandet"
-            val vedlegg = it.opplastedeVedlegg.map { dokumentFelt ->
-                Vedlegg(id = dokumentFelt.dokumentId,
-                        navn = dokumentFelt.navn,
-                        tittel = it.label,
-                        bytes = null)
-            }
-            val harSendtInn = Søknadsfelt("Jeg har sendt inn denne dokumentasjonen til NAV tidligere", it.harSendtInn)
-            it.id to DokumentasjonWrapper(it.label, harSendtInn, vedlegg)
-        }
-    }
+//    private fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, DokumentasjonWrapper> {
+//        return dokumentasjonsbehov.associate {
+//            // it.id er dokumenttype/tittel, eks "Gift i utlandet"
+//            val vedlegg = it.opplastedeVedlegg.map { dokumentFelt ->
+//                Vedlegg(id = dokumentFelt.dokumentId,
+//                        navn = dokumentFelt.navn,
+//                        tittel = it.label,
+//                        bytes = null)
+//            }
+//            val harSendtInn = Søknadsfelt("Jeg har sendt inn denne dokumentasjonen til NAV tidligere", it.harSendtInn)
+//            it.id to DokumentasjonWrapper(it.label, harSendtInn, vedlegg)
+//        }
+//    }
 
     private fun stønadsstart(merOmDinSituasjon: Situasjon): Stønadsstart {
         val month = merOmDinSituasjon.søknadsdato?.tilLocalDateEllerNull()?.month

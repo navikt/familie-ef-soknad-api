@@ -76,5 +76,17 @@ private fun fraStrengTilLocalDate(verdi: String): LocalDate {
     }
 }
 
-
+fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, DokumentasjonWrapper> {
+    return dokumentasjonsbehov.associate {
+        // it.id er dokumenttype/tittel, eks "Gift i utlandet"
+        val vedlegg = it.opplastedeVedlegg.map { dokumentFelt ->
+            Vedlegg(id = dokumentFelt.dokumentId,
+                    navn = dokumentFelt.navn,
+                    tittel = it.label,
+                    bytes = null)
+        }
+        val harSendtInn = Søknadsfelt("Jeg har sendt inn denne dokumentasjonen til NAV tidligere", it.harSendtInn)
+        it.id to DokumentasjonWrapper(it.label, harSendtInn, vedlegg)
+    }
+}
 

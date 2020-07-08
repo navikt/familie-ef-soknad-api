@@ -1,0 +1,282 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "19128449828",
+      "forkortetNavn": "Kari Nordmann",
+      "adresse": {
+        "adresse": "Jerpefaret 5C",
+        "adressetillegg": "",
+        "kommune": "0104",
+        "postnummer": "1440"
+      },
+      "egenansatt": false,
+      "innvandretDato": null,
+      "utvandretDato": null,
+      "oppholdstillatelse": null,
+      "sivilstand": "UGIF",
+      "språk": "",
+      "statsborgerskap": "NOR",
+      "privattelefon": null,
+      "mobiltelefon": null,
+      "jobbtelefon": null,
+      "kontakttelefon": "99988877",
+      "bankkontonummer": null
+    },
+    "barn": [
+      {
+        "id": "12345",
+        "fnr": "28021078036",
+        "ident": {
+          "label": "Fødselsnummer (11 siffer) / d-nummer",
+          "verdi": "28021078036"
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "SHIBA INU"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 9
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2010-02-28"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "født": {
+          "label": "Er barnet født?",
+          "verdi": true
+        },
+        "forelder": {
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Kan ikke oppgi annen forelder",
+            "verdi": false
+          },
+          "navn": {
+            "label": "halla",
+            "verdi": "Ola N"
+          },
+          "personnr": {
+            "label": "Personnr",
+            "verdi": "01056638934"
+          },
+          "borINorge": {
+            "spørsmålid": "borINorge",
+            "svarid": "JA",
+            "label": "Bor [0]s andre forelder i Norge?",
+            "verdi": true
+          },
+          "borAnnenForelderISammeHus": {
+            "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
+            "verdi": "Nei"
+          },
+          "boddSammenFør": {
+            "spørsmålid": "boddSammenFør",
+            "svarid": "NEI",
+            "label": "Har du bodd sammen med den andre forelderen til [0] før?",
+            "verdi": false
+          },
+          "flyttetFra": {
+            "label": "Flyttet fra",
+            "verdi": "2000-04-22"
+          },
+          "hvorMyeSammen": {
+            "label": "Hvor mye er du sammen med den andre forelderen til Solveig?",
+            "verdi": "Vi møtes ikke"
+          },
+          "avtaleOmDeltBosted": {
+            "spørsmålid": "avtaleOmDeltBosted",
+            "svarid": "NEI",
+            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
+            "verdi": false
+          },
+          "harAnnenForelderSamværMedBarn": {
+            "spørsmålid": "harAnnenForelderSamværMedBarn",
+            "svarid": "nei",
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Nei"
+          },
+          "harDereSkriftligSamværsavtale": {
+            "spørsmålid": "harDereSkriftligSamværsavtale",
+            "svarid": "nei",
+            "label": "Har dere sktiflig samværsavtale?",
+            "verdi": "Nei"
+          },
+          "hvordanPraktiseresSamværet": {
+            "spørsmålid": "hvordanPraktiseresSamværet",
+            "svarid": "nei",
+            "label": "Hvordan praktiseres samværet?",
+            "verdi": "Praktiseres ikke"
+          },
+          "beskrivSamværUtenBarn": {
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Vi møtes nå og da, gjerne for en tur i skogen eller et glass vin, hyggelig det."
+          }
+        }
+      },
+      {
+        "personnummer": {
+          "label": "Personnummer",
+          "verdi": "12345678913"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 0
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "Nyadoptert"
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2020-04-22"
+        },
+        "harSammeAdresse": {
+          "label": "Er barnet født?",
+          "verdi": true
+        },
+        "født": {
+          "spørsmålid": "født",
+          "svarid": "JA",
+          "label": "Er barnet født?",
+          "verdi": true
+        },
+        "lagtTil": true,
+        "skalBarnBoHosDeg": {
+          "label": "skalBarnetBoHosSøker?",
+          "verdi": true
+        },
+        "id": "16405e7a-3104-4cf7-bc53-3612ce99c5ee",
+        "forelder": {
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Kan ikke oppgi annen forelder",
+            "verdi": true
+          },
+          "ikkeOppgittAnnenForelderBegrunnelse": {
+            "label": "Kan ikke oppgi annen forelder",
+            "verdi": "Ingen kommentar"
+          },
+          "navn": {
+            "label": "halla",
+            "verdi": "Ola N"
+          },
+          "personnr": {
+            "label": "Personnr",
+            "verdi": "01056638934"
+          },
+          "borINorge": {
+            "spørsmålid": "borINorge",
+            "svarid": "JA",
+            "label": "Bor [0]s andre forelder i Norge?",
+            "verdi": true
+          },
+          "borISammeHus": {
+            "label": "Bor du og den andre forelderen til [0] i samme hus, blokk, gårdstun, kvartal eller vei/gate?",
+            "verdi": "Nei"
+          },
+          "boddSammenFør": {
+            "spørsmålid": "boddSammenFør",
+            "svarid": "NEI",
+            "label": "Har du bodd sammen med den andre forelderen til [0] før?",
+            "verdi": false
+          },
+          "hvorMyeSammen": {
+            "label": "Hvor mye er du sammen med den andre forelderen til Solveig?",
+            "verdi": "Vi møtes ikke"
+          },
+          "avtaleOmDeltBosted": {
+            "spørsmålid": "avtaleOmDeltBosted",
+            "svarid": "NEI",
+            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
+            "verdi": false
+          },
+          "harAnnenForelderSamværMedBarn": {
+            "spørsmålid": "harAnnenForelderSamværMedBarn",
+            "svarid": "nei",
+            "label": "Har den andre forelderen samvær med [0]?",
+            "verdi": "Nei"
+          }
+        }
+      }
+    ]
+  },
+  "dokumentasjonsbehov": [
+    {
+      "id": "INNGÅTT_EKTESKAP",
+      "spørsmålid": "erUformeltGift",
+      "svarid": "JA",
+      "tittel": "dokumentasjon.inngåttEkteskap.tittel",
+      "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
+      "harSendtInn": false,
+      "label": "Dokumentasjon på inngått ekteskap",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "56ca1b13-9167-4ff4-98a6-f34b8fc8a95d",
+          "navn": "Avtalebetingelser_23.pdf",
+          "størrelse": 138439
+        },
+        {
+          "dokumentId": "a60c026a-ac2b-4b70-8cc3-bbe0d8e94e67",
+          "navn": "Avtalebetingelser_23.pdf",
+          "størrelse": 138439
+        },
+        {
+          "dokumentId": "9480ca05-f19e-4eb8-9219-d7b7bdc857fd",
+          "navn": "Treningsopplegg09_06_2020.pdf",
+          "størrelse": 540420
+        }
+      ]
+    },
+    {
+      "id": "BOR_PÅ_ULIKE_ADRESSER",
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "tidligereSamboerFortsattRegistrertPåAdresse",
+      "tittel": "dokumentasjon.ulikeAdresser.tittel",
+      "beskrivelse": "dokumentasjon.ulikeAdresser.beskrivelse",
+      "label": "Bor på ulike adresser",
+      "harSendtInn": false
+    },
+    {
+      "id": "DELT_BOSTED",
+      "spørsmålid": "avtaleOmDeltBosted",
+      "svarid": "JA",
+      "tittel": "dokumentasjon.deltBosted.tittel",
+      "beskrivelse": "dokumentasjon.deltBosted.beskrivelse",
+      "label": "Delt bosted",
+      "harSendtInn": false
+    },
+    {
+      "id": "SYKDOM",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "erSyk",
+      "tittel": "dokumentasjon.sykdom.tittel",
+      "beskrivelse": "dokumentasjon.sykdom.beskrivelse",
+      "label": "Sykdom",
+      "harSendtInn": false
+    },
+    {
+      "id": "UTDANNING",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "skalTaUtdanning",
+      "tittel": "dokumentasjon.utdanning.tittel",
+      "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
+      "harSendtInn": false,
+      "label": "Dokumentasjon på utdanningen du skal ta",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "a8368a39-e80d-48e5-9160-fee3d1bd2ecb",
+          "navn": "Avtalebetingelser_23.pdf",
+          "størrelse": 138439
+        },
+        {
+          "dokumentId": "0647c95c-c2c3-4789-8eaf-8440fbc67feb",
+          "navn": "Kontrakt-1954   1-VH98825_encrypted_.pdf",
+          "størrelse": 62841
+        }
+      ]
+    }
+  ]
+}
