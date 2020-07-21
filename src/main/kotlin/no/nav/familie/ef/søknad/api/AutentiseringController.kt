@@ -14,6 +14,6 @@ class AutentiseringController {
 
     @GetMapping("/innlogget")
     fun verifiserAutentisering(): String {
-        return "Autentisert kall"
+        return "Autentisert kall løihbkjvgjvyvt"
     }
 }
