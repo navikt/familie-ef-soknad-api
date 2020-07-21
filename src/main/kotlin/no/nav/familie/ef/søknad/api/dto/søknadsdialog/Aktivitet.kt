@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
 data class Aktivitet(
         val arbeidsforhold: List<Arbeidsgiver>?,
-        val arbeidssøker: Arbeidssøker?=null,
+        val arbeidssøker: Arbeidssøker? = null,
         val firma: Firma? = null,
         val hvaErDinArbeidssituasjon: ListFelt<String>,
         val underUtdanning: UnderUtdanning? = null,
@@ -11,18 +11,18 @@ data class Aktivitet(
         val datoOppstartJobb: DatoFelt? = null
 )
 
-data class Aksjeselskap (
+data class Aksjeselskap(
         val navn: TekstFelt,
         val arbeidsmengde: TekstFelt
 )
 
 data class Arbeidsgiver(
-    val ansettelsesforhold: TekstFelt,
-    val arbeidsmengde: TekstFelt,
-    val id: String,
-    val navn: TekstFelt,
-    val harSluttDato: BooleanFelt?,
-    val sluttdato: DatoFelt?
+        val ansettelsesforhold: TekstFelt,
+        val arbeidsmengde: TekstFelt,
+        val id: String,
+        val navn: TekstFelt,
+        val harSluttDato: BooleanFelt?,
+        val sluttdato: DatoFelt?
 )
 
 

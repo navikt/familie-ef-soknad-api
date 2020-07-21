@@ -13,7 +13,7 @@ data class DokumentFelt(val dokumentId: String,
                         val navn: String)
 
 data class ListFelt<T>(val label: String,
-                    val verdi: List<T>)
+                       val verdi: List<T>)
 
 data class HeltallFelt(val label: String,
                        val verdi: Int)

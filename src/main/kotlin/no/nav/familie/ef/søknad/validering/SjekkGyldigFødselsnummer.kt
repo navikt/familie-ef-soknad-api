@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 @Suppress("unused")
 @MustBeDocumented
 @Constraint(validatedBy = [FnrValidator::class])
-@Target( AnnotationTarget.FIELD)
+@Target(AnnotationTarget.FIELD)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class SjekkGyldigFødselsnummer(val message: String = "Personident i søknad er ikke samme som innlogget bruker",
                                           val groups: Array<KClass<*>> = [],

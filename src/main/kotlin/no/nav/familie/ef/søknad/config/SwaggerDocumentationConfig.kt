@@ -19,6 +19,7 @@ class SwaggerDocumentationConfig {
 
     private val basePackage = "no.nav.familie.ef.søknad"
     private val bearer = "Bearer"
+
     /**
      * Builder and primary interface of swagger-spring framework.
      */
