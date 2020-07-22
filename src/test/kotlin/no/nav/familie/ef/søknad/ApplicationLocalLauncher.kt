@@ -8,12 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.context.annotation.Import
-import springfox.documentation.swagger2.annotations.EnableSwagger2
 
 @SpringBootApplication(scanBasePackages = ["no.nav.familie.ef.søknad"], exclude = [ErrorMvcAutoConfiguration::class])
-@EnableSwagger2
 @Import(ApplicationConfig::class, TokenGeneratorConfiguration::class, TpsInnsynMockController::class)
-@EnableJwtTokenValidation(ignore = ["org.springframework", "springfox.documentation.swagger.web.ApiResourceController"])
+@EnableJwtTokenValidation(ignore = ["org.springframework", "springfox.documentation.swagger"])
 class ApplicationLocalLauncher
 
 fun main(args: Array<String>) {
