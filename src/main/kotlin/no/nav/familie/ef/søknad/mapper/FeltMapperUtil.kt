@@ -51,7 +51,7 @@ fun DatoFelt.tilLocalDate(): LocalDate {
     return if (this.verdi.isNotBlank()) {
         fraStrengTilLocalDate(this.verdi)
     } else {
-        throw IllegalArgumentException("Kan ikke mappe datoFelt sin verdi når den er tom for ${this.label}")
+        throw IllegalArgumentException("Kan ikke mappe datoFelt sin verdi når den er tom for ${this.label} - '${this.verdi}'")
     }
 }
 
