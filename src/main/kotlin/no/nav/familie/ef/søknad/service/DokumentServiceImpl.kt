@@ -10,11 +10,4 @@ internal class DokumentServiceImpl(private val client: FamilieDokumentClient) : 
         return client.hentVedlegg(vedleggsId)
     }
 
-//    override fun hentDokumenter(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, ByteArray> {
-//        return dokumentasjonsbehov.flatMap { dok ->
-//            dok.opplastedeVedlegg.map {
-//                it.dokumentId to hentVedlegg(it.dokumentId)
-//            }
-//        }.toMap()
-//    }
 }

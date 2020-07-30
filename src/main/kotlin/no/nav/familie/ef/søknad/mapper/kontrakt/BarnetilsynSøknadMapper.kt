@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BarnetilsynDto
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.integration.BarnetilsynRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
@@ -15,9 +14,7 @@ class BarnetilsynSøknadMapper(private val dokumentServiceService: DokumentServi
 
     fun mapTilIntern(barnetilsynDto: BarnetilsynDto,
                      innsendingMottatt: LocalDateTime): BarnetilsynRequestData {
-
-
-        val vedleggData: Map<String, ByteArray> = hentDokumenter(barnetilsynDto.dokumentasjonsbehov)
+        val vedleggData: Map<String, ByteArray> = dokumentServiceService.hentDokumenter(barnetilsynDto.dokumentasjonsbehov)
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(barnetilsynDto.dokumentasjonsbehov)
 
         val barnetilsynSøknad = BarnetilsynSøknadKontrakt(innsendingsDetaljer(innsendingMottatt),
@@ -32,14 +29,6 @@ class BarnetilsynSøknadMapper(private val dokumentServiceService: DokumentServi
         return Søknadsfelt("Innsendingsdetaljer",
                            Innsendingsdetaljer(Søknadsfelt("Dato mottatt",
                                                            innsendingMottatt)))
-    }
-
-    private fun hentDokumenter(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, ByteArray> {
-        return dokumentasjonsbehov.flatMap { dok ->
-            dok.opplastedeVedlegg.map {
-                it.dokumentId to dokumentServiceService.hentVedlegg(it.dokumentId)
-            }
-        }.toMap()
     }
 
 }

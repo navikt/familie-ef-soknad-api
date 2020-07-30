@@ -18,7 +18,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
 
     fun mapTilIntern(frontendDto: SøknadDto,
                      innsendingMottatt: LocalDateTime): SøknadRequestData {
-        val vedleggData: Map<String, ByteArray> = hentDokumenter(frontendDto.dokumentasjonsbehov)
+        val vedleggData: Map<String, ByteArray> = dokumentServiceService.hentDokumenter(frontendDto.dokumentasjonsbehov)
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(frontendDto.dokumentasjonsbehov)
 
         val søknad = Søknad(
@@ -39,27 +39,6 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
 
         return SøknadRequestData(SøknadMedVedlegg(søknad, vedlegg.values.map { it.vedlegg }.flatten()), vedleggData)
     }
-
-    private fun hentDokumenter(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, ByteArray> {
-        return dokumentasjonsbehov.flatMap { dok ->
-            dok.opplastedeVedlegg.map {
-                it.dokumentId to dokumentServiceService.hentVedlegg(it.dokumentId)
-            }
-        }.toMap()
-    }
-
-//    private fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, DokumentasjonWrapper> {
-//        return dokumentasjonsbehov.associate {
-//            // it.id er dokumenttype/tittel, eks "Gift i utlandet"
-//            val vedlegg = it.opplastedeVedlegg.map { dokumentFelt ->
-//                Vedlegg(id = dokumentFelt.dokumentId,
-//                        navn = dokumentFelt.navn,
-//                        tittel = it.label)
-//            }
-//            val harSendtInn = Søknadsfelt("Jeg har sendt inn denne dokumentasjonen til NAV tidligere", it.harSendtInn)
-//            it.id to DokumentasjonWrapper(it.label, harSendtInn, vedlegg)
-//        }
-//    }
 
     private fun stønadsstart(merOmDinSituasjon: Situasjon): Stønadsstart {
         val month = merOmDinSituasjon.søknadsdato?.tilLocalDateEllerNull()?.month
