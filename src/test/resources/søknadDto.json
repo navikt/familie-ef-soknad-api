@@ -293,10 +293,6 @@
       }
     ]
   },
-  "søkerBosattINorgeSisteTreÅr": {
-    "label": "Har du vært bosatt i Norge de siste tre årene?",
-    "verdi": true
-  },
   "bosituasjon": {
     "delerBoligMedAndreVoksne": {
       "label": "Deler du bolig med andre voksne?",

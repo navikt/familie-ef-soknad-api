@@ -203,5 +203,387 @@
       }
     ]
   },
-  "dokumentasjonsbehov": []
+  "sivilstatus": {
+    "harSøktSeparasjon": {
+      "label": "Søker har søkt separasjon",
+      "verdi": false
+    },
+    "datoSøktSeparasjon": {
+      "label": "Dato for samlivsbrudd",
+      "verdi": "2020-01-01"
+    },
+    "erUformeltGift": {
+      "label": "Søker gift i utlandet",
+      "verdi": false
+    },
+    "erUformeltSeparertEllerSkilt": {
+      "label": "søker Separert Eller Skilt I Utlandet",
+      "verdi": true
+    },
+    "årsakEnslig": {
+      "label": "årsakEnslig",
+      "verdi": "Jeg trenger hjelp"
+    },
+    "datoForSamlivsbrudd": {
+      "label": "Dato for samlivsbrudd",
+      "verdi": "2014-10-03"
+    },
+    "datoFlyttetFraHverandre": {
+      "label": "datoFlyttetFraHverandre",
+      "verdi": "2014-10-04"
+    },
+    "datoEndretSamvær": {
+      "label": "datoEndretSamvær",
+      "verdi": "2014-10-05"
+    },
+    "tidligereSamboerDetaljer": {
+      "navn": {
+        "label": "Navn",
+        "verdi": "Pelle proff"
+      },
+      "fødselsdato": {
+        "label": "Fødselsdato",
+        "verdi": "2020-05-31T22:00:00.000Z"
+      }
+    }
+  },
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du vært bosatt i Norge de siste tre årene?",
+      "verdi": false
+    },
+    "perioderBoddIUtlandet": [
+      {
+        "react_key": "83637c0a-faca-40c3-85db-f7898662e7f0",
+        "periode": {
+          "fra": {
+            "label": "Fra",
+            "verdi": "2019-05-01T08:02:03.000Z"
+          },
+          "til": {
+            "label": "Til",
+            "verdi": "2019-10-01T08:02:03.000Z"
+          }
+        },
+        "begrunnelse": {
+          "label": "Hvorfor bodde du i utlandet?",
+          "verdi": "Jobbet litt"
+        }
+      },
+      {
+        "react_key": "32fad487-3b05-448e-a2c1-2adac7f5c8e5",
+        "periode": {
+          "fra": {
+            "label": "Fra",
+            "verdi": "2019-11-27T09:02:03.000Z"
+          },
+          "til": {
+            "label": "Til",
+            "verdi": "2020-02-01T09:02:03.000Z"
+          }
+        },
+        "begrunnelse": {
+          "label": "Hvorfor bodde du i utlandet?",
+          "verdi": "Jobbet mer"
+        }
+      }
+    ]
+  },
+  "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "datoFlyttetSammenMedSamboer": {
+      "label": "Label",
+      "verdi": "2020-01-01"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    },
+    "datoSkalGifteSegEllerBliSamboer": {
+      "label": "Dato skal gifte seg eller bli samboer",
+      "verdi": "2020-01-01"
+    },
+    "samboerDetaljer": {
+      "navn": {
+        "label": "Navn",
+        "verdi": "Pelle proff"
+      },
+      "fødselsdato": {
+        "label": "Fødselsdato",
+        "verdi": "2020-05-31T22:00:00.000Z"
+      }
+    },
+    "datoFlyttetFraHverandre": {
+      "label": "datoFlyttetFraHverandre",
+      "verdi": "2014-10-04"
+    }
+  },
+  "dokumentasjonsbehov": [
+    {
+      "id": "INNGÅTT_EKTESKAP",
+      "spørsmålid": "erUformeltGift",
+      "svarid": "JA",
+      "tittel": "dokumentasjon.inngåttEkteskap.tittel",
+      "beskrivelse": "dokumentasjon.inngåttEkteskap.beskrivelse",
+      "harSendtInn": false,
+      "label": "Dokumentasjon på inngått ekteskap",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "56ca1b13-9167-4ff4-98a6-f34b8fc8a95d",
+          "navn": "Avtalebetingelser_23.pdf",
+          "størrelse": 138439
+        },
+        {
+          "dokumentId": "a60c026a-ac2b-4b70-8cc3-bbe0d8e94e67",
+          "navn": "Avtalebetingelser_23.pdf",
+          "størrelse": 138439
+        },
+        {
+          "dokumentId": "9480ca05-f19e-4eb8-9219-d7b7bdc857fd",
+          "navn": "Treningsopplegg09_06_2020.pdf",
+          "størrelse": 540420
+        }
+      ]
+    },
+    {
+      "id": "BOR_PÅ_ULIKE_ADRESSER",
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "tidligereSamboerFortsattRegistrertPåAdresse",
+      "tittel": "dokumentasjon.ulikeAdresser.tittel",
+      "beskrivelse": "dokumentasjon.ulikeAdresser.beskrivelse",
+      "label": "Bor på ulike adresser",
+      "harSendtInn": false
+    },
+    {
+      "id": "DELT_BOSTED",
+      "spørsmålid": "avtaleOmDeltBosted",
+      "svarid": "JA",
+      "tittel": "dokumentasjon.deltBosted.tittel",
+      "beskrivelse": "dokumentasjon.deltBosted.beskrivelse",
+      "label": "Delt bosted",
+      "harSendtInn": false
+    },
+    {
+      "id": "SYKDOM",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "erSyk",
+      "tittel": "dokumentasjon.sykdom.tittel",
+      "beskrivelse": "dokumentasjon.sykdom.beskrivelse",
+      "label": "Sykdom",
+      "harSendtInn": false
+    },
+    {
+      "id": "UTDANNING",
+      "spørsmålid": "gjelderDetteDeg",
+      "svarid": "skalTaUtdanning",
+      "tittel": "dokumentasjon.utdanning.tittel",
+      "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
+      "harSendtInn": false,
+      "label": "Dokumentasjon på utdanningen du skal ta",
+      "opplastedeVedlegg": [
+        {
+          "dokumentId": "a8368a39-e80d-48e5-9160-fee3d1bd2ecb",
+          "navn": "Avtalebetingelser_23.pdf",
+          "størrelse": 138439
+        },
+        {
+          "dokumentId": "0647c95c-c2c3-4789-8eaf-8440fbc67feb",
+          "navn": "Kontrakt-1954   1-VH98825_encrypted_.pdf",
+          "størrelse": 62841
+        }
+      ]
+    }
+  ],
+  "aktivitet": {
+    "datoOppstartJobb": {
+      "label": "Når skal du starte i ny jobb?",
+      "verdi": "2020-03-27T13:52:42.742Z"
+    },
+    "hvaErDinArbeidssituasjon": {
+      "label": "Hva er din arbeidsituasjon?",
+      "verdi": [
+        "Jeg er hjemme med barn under 1 år",
+        "Jeg er arbeidstaker",
+        "Jeg er selvstendig næringsdrivende eller frilanser",
+        "Jeg er ansatt i eget AS",
+        "Jeg etablerer egen virksomhet",
+        "Jeg er arbeidssøker",
+        "Jeg tar utdanning",
+        "Jeg er hverken i arbeid, utdanning eller er arbeidssøker",
+        "Jeg er syk",
+        "Barnet mitt er sykt",
+        "Jeg har søkt om barnepass, men ikke fått plass enda",
+        "Jeg har barn som har behov for særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
+        "Jeg har fått tilbud om jobb",
+        "Jeg skal begynne å ta utdanning"
+      ]
+    },
+    "arbeidsforhold": [
+      {
+        "id": "3e1fdc94-e163-4f95-8d8e-05b552d9fabc",
+        "navn": {
+          "label": "Navn på arbeidsgiver",
+          "verdi": "Nav"
+        },
+        "arbeidsmengde": {
+          "label": "Hvor mye jobber du?",
+          "verdi": "23"
+        },
+        "ansettelsesforhold": {
+          "spørsmålid": "ansettelsesforhold",
+          "svarid": "fast",
+          "label": "Hva slags ansettelsesforhold har du?",
+          "verdi": "Fast"
+        },
+        "harSluttDato": {
+          "label": "Har du en sluttdato?",
+          "verdi": true
+        },
+        "sluttdato": {
+          "label": "Når skal du slutte?",
+          "verdi": "2020-03-31T06:33:41.000Z"
+        }
+      }
+    ],
+    "firma": {
+      "etableringsdato": {
+        "label": "Etableringsdato",
+        "verdi": "2020-03-27T13:52:42.742Z"
+      },
+      "navn": {
+        "label": "Navn på arbeidsgiver",
+        "verdi": "Boller og brus"
+      },
+      "organisasjonsnummer": {
+        "label": "Organisasjonsnummer",
+        "verdi": "123"
+      },
+      "arbeidsmengde": {
+        "label": "Arbeidsmengde",
+        "verdi": "34"
+      },
+      "arbeidsuke": {
+        "label": "Arbeidsukebeskrivelse",
+        "verdi": "Jobber mandager"
+      }
+    },
+    "etablererEgenVirksomhet": {
+      "label": "Hva er din arbeidsituasjon?",
+      "verdi": "Dette er en spennende gründerbedrift"
+    },
+    "arbeidssøker": {
+      "registrertSomArbeidssøkerNav": {
+        "label": "Er du registrert som arbeidssøker hos NAV?",
+        "verdi": true
+      },
+      "villigTilÅTaImotTilbudOmArbeid": {
+        "label": "Er du villig til å ta imot tilbud om arbeid eller arbeidsmarkedstiltak?",
+        "verdi": true
+      },
+      "kanBegynneInnenEnUke": {
+        "label": "Kan du begynne i arbeid senest én uke etter at du har fått tilbud om jobb?",
+        "verdi": true
+      },
+      "kanSkaffeBarnepassInnenEnUke": {
+        "label": "Har du eller kan du skaffe barnepass senest innen en uke etter at du har fått tilbud om jobb eller arbeidsmarkedtiltak?",
+        "verdi": true
+      },
+      "hvorØnskerSøkerArbeid": {
+        "label": "Hvor ønsker du å søke arbeid?",
+        "verdi": "Hvor som helst i landet"
+      },
+      "ønskerSøker50ProsentStilling": {
+        "label": "Ønsker du å stå som arbeidssøker til minst 50% stilling?",
+        "verdi": true
+      }
+    },
+    "underUtdanning": {
+      "react_key": "cd87ae81-9885-40e3-92b7-bb2764553544",
+      "skoleUtdanningssted": {
+        "label": "Skole / utdanningssted",
+        "verdi": "Skoleskolen"
+      },
+      "linjeKursGrad": {
+        "label": "Linje / kurs / grad",
+        "verdi": "Stor kurs grad"
+      },
+      "offentligEllerPrivat": {
+        "label": "Er utdanningen privat eller offentlig?",
+        "verdi": "Offentlig"
+      },
+      "periode": {
+        "fra": {
+          "label": "",
+          "verdi": "2020-03-26T13:52:42.742Z"
+        },
+        "til": {
+          "label": "",
+          "verdi": "2020-03-27T13:52:42.742Z"
+        }
+      },
+      "heltidEllerDeltid": {
+        "label": "Er utdanningen på heltid eller deltid?",
+        "verdi": "Deltid"
+      },
+      "arbeidsmengde": {
+        "label": "Hvor mye skal du studere?",
+        "verdi": "50"
+      },
+      "målMedUtdanning": {
+        "label": "Hva er målet med utdanningen?",
+        "verdi": "Bli flink"
+      },
+      "harTattUtdanningEtterGrunnskolen": {
+        "label": "Har du tatt utdanning etter grunnskolen",
+        "verdi": true
+      },
+      "tidligereUtdanning": [
+        {
+          "react_key": "ab8d1628-18c0-40ec-9806-4adfba38be4e",
+          "linjeKursGrad": {
+            "label": "Linje / kurs / grad",
+            "verdi": "Skole ting"
+          },
+          "periode": {
+            "fra": {
+              "label": "",
+              "verdi": "2020-03-26T13:52:42.742Z"
+            },
+            "til": {
+              "label": "utdanning.datovelger.studieperiode",
+              "verdi": "2020-03-27T13:52:42.742Z"
+            }
+          }
+        }
+      ]
+    },
+    "egetAS": [
+      {
+        "id": "fe2c0070-7f95-4b0d-939a-5f1298d1826b",
+        "navn": {
+          "label": "Navn på aksjeselskapet ditt",
+          "verdi": "Mitt eget AS"
+        },
+        "arbeidsmengde": {
+          "label": "Hvor mye jobber du?",
+          "verdi": "55"
+        }
+      }
+    ]
+  },
+  "søkerFraBestemtMåned": {
+    "label": "søkerFraBestemtMåned",
+    "verdi": true
+  },
+  "søknadsdato": {
+    "label": "søknadsdato",
+    "verdi": "2020-01-01"
+  }
 }
