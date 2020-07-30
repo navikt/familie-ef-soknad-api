@@ -54,8 +54,7 @@ class SøknadMapper(private val dokumentServiceService: DokumentService) {
 //            val vedlegg = it.opplastedeVedlegg.map { dokumentFelt ->
 //                Vedlegg(id = dokumentFelt.dokumentId,
 //                        navn = dokumentFelt.navn,
-//                        tittel = it.label,
-//                        bytes = null)
+//                        tittel = it.label)
 //            }
 //            val harSendtInn = Søknadsfelt("Jeg har sendt inn denne dokumentasjonen til NAV tidligere", it.harSendtInn)
 //            it.id to DokumentasjonWrapper(it.label, harSendtInn, vedlegg)

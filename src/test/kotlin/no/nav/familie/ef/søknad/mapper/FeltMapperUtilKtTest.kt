@@ -56,8 +56,8 @@ internal class FeltMapperUtilKtTest {
         val bytes = byteArrayOf(12)
         val dokumentasjonWrapper = DokumentasjonWrapper("label",
                                                         Søknadsfelt("Har sendt inn tidligere", false),
-                                                        listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok", bytes),
-                                                               Vedlegg("id2", "dok2.pdf", "Annen tittel på dok", bytes)))
+                                                        listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok"),
+                                                               Vedlegg("id2", "dok2.pdf", "Annen tittel på dok")))
         val dokumenter = mapOf(DokumentIdentifikator.SYKDOM.name to dokumentasjonWrapper)
         val dokumentSomFinnes = dokumentfelt(DokumentIdentifikator.SYKDOM, dokumenter)!!
         assertThat(dokumentSomFinnes.verdi.dokumenter.first().id).isEqualTo("id1")

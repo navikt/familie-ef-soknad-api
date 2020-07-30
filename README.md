@@ -14,4 +14,4 @@ PS. Mapping av fødselsnummer til kontrakt krever gyldig fødselsnummer: Logg in
 http://localhost:8091/local/cookie?subject=[gyldigFødselsnummer] dersom du skal teste noe som krever at mapping skal fungere.   
 
 ### Swagger api kall med autentisering: 
-http://localhost:8091/swagger-ui.html
+http://localhost:8091/swagger-ui/index.html
