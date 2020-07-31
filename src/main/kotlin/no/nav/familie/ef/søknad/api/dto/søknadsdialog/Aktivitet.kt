@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
 data class Aktivitet(
+        val erIArbeid: TekstFelt?, //TODO må mappes
         val arbeidsforhold: List<Arbeidsgiver>?,
         val arbeidssøker: Arbeidssøker?=null,
         val firma: Firma? = null,

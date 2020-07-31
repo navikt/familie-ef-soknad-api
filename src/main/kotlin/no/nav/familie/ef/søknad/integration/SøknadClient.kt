@@ -22,6 +22,12 @@ class SøknadClient(private val config: MottakConfig,
         return postForEntity(config.sendInnUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
     }
 
+    fun sendInnBarnetilsynsøknad(søknadRequestData: BarnetilsynRequestData): KvitteringDto {
+        val multipartBuilder = MultipartBuilder().withJson("søknad", søknadRequestData.barnetilsyn)
+        søknadRequestData.vedlegg.forEach { multipartBuilder.withByteArray("vedlegg", it.key, it.value) }
+        return postForEntity(config.sendInnBarnetilsynUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
+    }
+
     fun sendInnArbeidsRegistreringsskjema(skjema: SkjemaForArbeidssøker): KvitteringDto {
         return postForEntity(config.sendInnSkjemaArbeidUri, skjema)
     }
