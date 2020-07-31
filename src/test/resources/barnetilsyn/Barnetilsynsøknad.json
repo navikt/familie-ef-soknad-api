@@ -115,6 +115,10 @@
             "label": "Har den andre forelderen samvær med [0]?",
             "verdi": "Vi møtes nå og da, gjerne for en tur i skogen eller et glass vin, hyggelig det."
           }
+        },
+        "skalHaBarnepass": {
+          "label": "Skal barnet være med i søknaden?",
+          "verdi": false
         }
       },
       {
@@ -199,6 +203,41 @@
             "label": "Har den andre forelderen samvær med [0]?",
             "verdi": "Nei"
           }
+        },
+        "Skal barnet være med i søknaden?": {
+          "label": "",
+          "verdi": true
+        },
+        "barnepass": {
+          "barnepassordninger": [
+            {
+              "id": "04f7b52c-3bc0-47f9-bda8-beb3d5226725",
+              "hvaSlagsBarnepassOrdning": {
+                "spørsmålid": "hvaSlagsBarnepassOrdning",
+                "svarid": "barnehageOgLiknende",
+                "label": "Hva slags barnepassordning har [0]?",
+                "verdi": "Barnehage, SFO eller liknende"
+              },
+              "navn": {
+                "label": "Navn på barnepassordningen eller personen som passer KARAFFEL STERK",
+                "verdi": "asd"
+              },
+              "periode": {
+                "fra": {
+                  "label": "I hvilken periode har KARAFFEL STERK denne barnepassordningen?",
+                  "verdi": "2020-07-08T22:00:00.000Z"
+                },
+                "til": {
+                  "label": "I hvilken periode har KARAFFEL STERK denne barnepassordningen?",
+                  "verdi": "2020-07-29T22:00:00.000Z"
+                }
+              },
+              "belop": {
+                "label": "Beløp pr måned (ikke inkludert kost)",
+                "verdi": "1234"
+              }
+            }
+          ]
         }
       }
     ]

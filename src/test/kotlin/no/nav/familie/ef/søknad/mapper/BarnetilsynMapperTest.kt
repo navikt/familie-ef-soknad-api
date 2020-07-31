@@ -15,7 +15,7 @@ internal class BarnetilsynMapperTest {
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
-    @Test //TODO må få in barnepass på en av barnen
+    @Test
     fun `Barnetilsyn skal mappes `() {
         val søknad = objectMapper.readValue(File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
                                             BarnetilsynDto::class.java)
