@@ -9,11 +9,11 @@ import java.time.LocalDate
 internal class ArbeidsforholdMapperTest {
 
     // Gitt
-    private val søknadDto = søknadDto()
+    private val aktivitet = søknadDto().aktivitet
 
     // Når
-    private val aktivitet = AktivitetsMapper.map(søknadDto, mapOf())
-    private val arbeidsforhold = aktivitet.arbeidsforhold?.verdi?.get(0)
+    private val aktivitetMapped = AktivitetsMapper.map(aktivitet, mapOf())
+    private val arbeidsforhold = aktivitetMapped.arbeidsforhold?.verdi?.get(0)
 
     @Test
     fun `Map arbeidsforhold arbeidsgivernavn label `() {

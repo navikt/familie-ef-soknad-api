@@ -17,7 +17,7 @@ internal class SøknadInputControllerTest {
     private val søknadService: SøknadService = mockk()
     private val featureToggleService: FeatureToggleService = mockk()
 
-    private val søknadController = SøknadController(søknadService, featureToggleService)
+    private val søknadController = SøknadOvergangsstønadController(søknadService, featureToggleService)
 
     @Test
     fun `sendInn returnerer kvittering riktig kvittering`() {

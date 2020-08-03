@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.service.SøknadService
@@ -21,12 +21,12 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/soknad"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
-class SøknadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
+class SøknadOvergangsstønadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @PostMapping
-    fun sendInn(@RequestBody @Validated søknad: SøknadDto): Kvittering {
+    fun sendInn(@RequestBody @Validated søknad: SøknadOvergangsstønadDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
             try {
                 val innsendingMottatt = LocalDateTime.now()

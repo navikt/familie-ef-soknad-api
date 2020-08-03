@@ -28,7 +28,9 @@ object BarnMapper {
                              fødselTermindato = barn.fødselsdato?.tilSøknadsDatoFeltEllerNull(),
                              terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, vedlegg),
                              annenForelder = mapAnnenForelder(barn.forelder),
-                             samvær = mapSamvær(barn.forelder, vedlegg))
+                             samvær = mapSamvær(barn.forelder, vedlegg),
+                             skalHaBarnepass = barn.skalHaBarnepass?.tilSøknadsfelt(),
+                             barnepass = barn.barnepass?.let { Søknadsfelt("", BarnepassMapper.tilBarnepass(it)) }) //TODO
             } catch (e: Exception) {
                 secureLogger.error("Feil ved mapping av barn: $barnliste")
                 throw e
