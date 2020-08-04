@@ -115,6 +115,10 @@
             "label": "Har den andre forelderen samvær med [0]?",
             "verdi": "Vi møtes nå og da, gjerne for en tur i skogen eller et glass vin, hyggelig det."
           }
+        },
+        "skalHaBarnepass": {
+          "label": "Skal barnet være med i søknaden?",
+          "verdi": false
         }
       },
       {
@@ -199,6 +203,41 @@
             "label": "Har den andre forelderen samvær med [0]?",
             "verdi": "Nei"
           }
+        },
+        "Skal barnet være med i søknaden?": {
+          "label": "",
+          "verdi": true
+        },
+        "barnepass": {
+          "barnepassordninger": [
+            {
+              "id": "04f7b52c-3bc0-47f9-bda8-beb3d5226725",
+              "hvaSlagsBarnepassOrdning": {
+                "spørsmålid": "hvaSlagsBarnepassOrdning",
+                "svarid": "barnehageOgLiknende",
+                "label": "Hva slags barnepassordning har [0]?",
+                "verdi": "Barnehage, SFO eller liknende"
+              },
+              "navn": {
+                "label": "Navn på barnepassordningen eller personen som passer KARAFFEL STERK",
+                "verdi": "asd"
+              },
+              "periode": {
+                "fra": {
+                  "label": "I hvilken periode har KARAFFEL STERK denne barnepassordningen?",
+                  "verdi": "2020-07-08T22:00:00.000Z"
+                },
+                "til": {
+                  "label": "I hvilken periode har KARAFFEL STERK denne barnepassordningen?",
+                  "verdi": "2020-07-29T22:00:00.000Z"
+                }
+              },
+              "belop": {
+                "label": "Beløp pr måned (ikke inkludert kost)",
+                "verdi": "1234"
+              }
+            }
+          ]
         }
       }
     ]
@@ -578,47 +617,12 @@
       }
     ]
   },
-  "merOmDinSituasjon": {
-    "gjelderDetteDeg": {
-      "label": "Gjelder noe av dette deg?",
-      "verdi": [
-        "Jeg er hjemme med barn under 1 år",
-        "Jeg er arbeidstaker",
-        "Jeg er selvstendig næringsdrivende eller frilanser",
-        "Jeg er ansatt i eget AS",
-        "Jeg etablerer egen virksomhet",
-        "Jeg er arbeidssøker",
-        "Jeg tar utdanning",
-        "Jeg er hverken i arbeid, utdanning eller er arbeidssøker",
-        "Jeg er syk",
-        "Barnet mitt er sykt",
-        "Jeg har søkt om barnepass, men ikke fått plass enda",
-        "Jeg har barn som har behov for særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
-        "Jeg har fått tilbud om jobb",
-        "Jeg skal begynne å ta utdanning"
-      ]
-    },
-    "søknadsdato": {
-      "label": "Jeg søker overgangsstønad fra og med",
-      "verdi": "2020-03-27T13:52:42.742Z"
-    },
-    "søkerFraBestemtMåned": {
-      "spørsmålid": "søkerFraBestemtMåned",
-      "svarid": "neiNavKanVurdere",
-      "label": "Søker du om overgangsstønad fra en bestemt måned?",
-      "verdi": "false"
-    },
-    "sagtOppEllerRedusertStilling": {
-      "label": "Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?",
-      "verdi": "Ja, jeg har sagt opp jobben eller tatt frivillig permisjon, men ikke foreldrepermisjon"
-    },
-    "datoSagtOppEllerRedusertStilling": {
-      "label": "sagtOppEllerRedusertStilling.datovelger.sagtOpp",
-      "verdi": "2020-03-30T06:33:41.160Z"
-    },
-    "begrunnelseSagtOppEllerRedusertStilling": {
-      "label": "Hvorfor sa du opp?",
-      "verdi": "Ville finne en spennende jobb"
-    }
+  "søkerFraBestemtMåned": {
+    "label": "søkerFraBestemtMåned",
+    "verdi": true
+  },
+  "søknadsdato": {
+    "label": "søknadsdato",
+    "verdi": "2020-01-01"
   }
 }

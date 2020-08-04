@@ -9,4 +9,5 @@ internal class DokumentServiceImpl(private val client: FamilieDokumentClient) : 
     override fun hentVedlegg(vedleggsId: String): ByteArray {
         return client.hentVedlegg(vedleggsId)
     }
+
 }

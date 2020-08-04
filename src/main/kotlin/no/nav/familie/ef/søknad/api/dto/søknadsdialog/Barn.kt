@@ -10,7 +10,9 @@ data class Barn(val alder: TekstFelt?, // TODO Bare for visning (kan fjernes?)
                 val lagtTil: Boolean? = false,
                 val navn: TekstFelt?, // optional på nye barn - TODO - validere at denne er satt dersom lagtTil = false?
                 val født: BooleanFelt,
-                val forelder: AnnenForelder)
+                val forelder: AnnenForelder,
+                val skalHaBarnepass: BooleanFelt?, //TODO må mappes
+                val barnepass: Barnepass?) //TODO må mappes
 
 data class AnnenForelder(
         val ikkeOppgittAnnenForelderBegrunnelse: TekstFelt?,

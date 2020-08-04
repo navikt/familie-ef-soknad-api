@@ -21,6 +21,6 @@ fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
 }
 
 fun dokumentMap(): Map<String, DokumentasjonWrapper> {
-    val vedlegg = Vedlegg("id", "navn", "tittel", "data".toByteArray())
+    val vedlegg = Vedlegg("id", "navn", "tittel")
     return mapOf("samlivsbrudd" to DokumentasjonWrapper("label", Søknadsfelt("Har allerede sendt inn", false), listOf(vedlegg)))
 }
