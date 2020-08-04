@@ -24,7 +24,7 @@
         <springfox.version>3.0.0</springfox.version>
         <mockk.version>1.10.0</mockk.version>
         <fasterxml.version>2.11.1</fasterxml.version>
-        <com.amazonaws.version>1.11.815</com.amazonaws.version>
+        <com.amazonaws.version>1.11.816</com.amazonaws.version>
         <token-validation-spring.version>1.2.0</token-validation-spring.version>
         <felles.version>1.20200703124425_7e616f5</felles.version>
         <kontrakter.version>2.0_20200729113840_b9178ce</kontrakter.version>
