@@ -1,12 +1,9 @@
 package no.nav.familie.ef.søknad.mapper
 
-import io.mockk.every
-import io.mockk.mockk
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadMapper
-import no.nav.familie.ef.søknad.service.DokumentService
+import no.nav.familie.ef.søknad.mock.DokumentServiceStub
 import no.nav.familie.kontrakter.felles.objectMapper
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.io.File
@@ -19,15 +16,9 @@ import kotlin.test.assertNull
 
 internal class JsonSisteInnspurtMapperTest {
 
-    private val dokumentServiceServiceMock: DokumentService = mockk()
-    private val mapper = SøknadMapper(dokumentServiceServiceMock)
+    private val mapper = SøknadMapper(DokumentServiceStub())
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
-
-    @BeforeEach
-    fun setUp() {
-        every { dokumentServiceServiceMock.hentVedlegg(any()) } returns "DOKUMENTID123".toByteArray()
-    }
 
     @Test
     fun `favro-tea1554 `() {
@@ -179,7 +170,7 @@ internal class JsonSisteInnspurtMapperTest {
     @Test
     fun `søknadFraHilde mapTilIntern - mapper datoer til riktig verdi`() {
         fun søknadFraHilde(): SøknadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/feilfraHilde.json"),
-                                                                  SøknadDto::class.java)
+                                                                 SøknadDto::class.java)
 
         val søknadRequestData = mapper.mapTilIntern(søknadFraHilde(), innsendingMottatt)
         val søknad = søknadRequestData.søknadMedVedlegg.søknad

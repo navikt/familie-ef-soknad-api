@@ -24,7 +24,7 @@ internal class PersonaliaMapperTest {
         // Given
         val søknadDto = søknadDto()
         // When
-        val personaliaFraSøknadDto = PersonaliaMapper.mapPersonalia(søknadDto)
+        val personaliaFraSøknadDto = PersonaliaMapper.mapPersonalia(søknadDto.person.søker)
         // Then
         assertThat(personaliaFraSøknadDto.toString()).isEqualTo(personalia().toString())
     }
