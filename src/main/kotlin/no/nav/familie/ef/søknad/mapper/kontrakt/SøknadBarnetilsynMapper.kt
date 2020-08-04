@@ -6,10 +6,7 @@ import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
 import no.nav.familie.ef.søknad.service.DokumentService
-import no.nav.familie.kontrakter.ef.søknad.Innsendingsdetaljer
-import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
-import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
-import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import no.nav.familie.kontrakter.ef.søknad.*
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
@@ -39,9 +36,13 @@ class SøknadBarnetilsynMapper(private val dokumentServiceService: DokumentServi
                 stønadsstart = Søknadsfelt("Når søker du stønad fra?",
                                            StønadsstartMapper.mapStønadsstart(dto.søknadsdato,
                                                                               dto.søkerFraBestemtMåned)),
-                tidligereFakturaer = dokumentfelt(DokumentIdentifikator.TIDLIGERE_FAKTURAER, vedlegg),
-                barnepassordningFaktura = dokumentfelt(DokumentIdentifikator.FAKTURA_BARNEPASSORDNING, vedlegg),
-                avtaleBarnepasser = dokumentfelt(DokumentIdentifikator.AVTALE_BARNEPASSER, vedlegg)
+                dokumentasjon = BarnetilsynDokumentasjon(
+                        tidligereFakturaer = dokumentfelt(DokumentIdentifikator.TIDLIGERE_FAKTURAER, vedlegg),
+                        barnepassordningFaktura = dokumentfelt(DokumentIdentifikator.FAKTURA_BARNEPASSORDNING, vedlegg),
+                        avtaleBarnepasser = dokumentfelt(DokumentIdentifikator.AVTALE_BARNEPASSER, vedlegg),
+                        arbeidstid = dokumentfelt(DokumentIdentifikator.ARBEIDSTID, vedlegg),
+                        spesielleBehov = dokumentfelt(DokumentIdentifikator.TRENGER_MER_PASS_ENN_JEVNALDREDE, vedlegg)
+                )
         )
 
         return SøknadRequestData(SøknadMedVedlegg(barnetilsynSøknad, vedlegg.values.map { it.vedlegg }.flatten()),
