@@ -32,7 +32,8 @@ object AktivitetsMapper {
                                                   arbeidsmengde = aksjeselskap.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall))
                                  })
                              },
-                             erIArbeid = aktivitet.erIArbeid?.tilSøknadsfelt()
+                             erIArbeid = aktivitet.erIArbeid?.tilSøknadsfelt(),
+                             erIArbeidDokumentasjon = dokumentfelt(DokumentIdentifikator.FOR_SYK_TIL_Å_JOBBE, vedlegg)
             )
         } catch (e: Exception) {
             secureLogger.error("Feil ved mapping av aktivitet: $aktivitet")
