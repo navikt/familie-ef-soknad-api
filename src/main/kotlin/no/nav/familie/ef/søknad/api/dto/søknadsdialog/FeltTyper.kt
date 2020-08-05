@@ -18,8 +18,6 @@ data class ListFelt<T>(val label: String,
 data class HeltallFelt(val label: String,
                        val verdi: Int)
 
-data class PeriodeFelt(
-        val label: String?, // Hvis den ikke finnes med i alle ennå så er den optional
-        val fra: DatoFelt,
-        val til: DatoFelt
-)
+data class PeriodeFelt(val label: String?, // Hvis den ikke finnes med i alle ennå så er den optional
+                       val fra: DatoFelt,
+                       val til: DatoFelt)
