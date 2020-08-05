@@ -51,12 +51,12 @@ data class UnderUtdanning(
         val linjeKursGrad: TekstFelt,
         val målMedUtdanning: TekstFelt?, //TODO valider - nullable hvis heltid
         val offentligEllerPrivat: TekstFelt,
-        val periode: Periode,
+        val periode: PeriodeFelt,
         val skoleUtdanningssted: TekstFelt,
         val tidligereUtdanning: List<TidligereUtdanning>? = null
 )
 
 data class TidligereUtdanning(
         val linjeKursGrad: TekstFelt,
-        val periode: Periode
+        val periode: PeriodeFelt
 )

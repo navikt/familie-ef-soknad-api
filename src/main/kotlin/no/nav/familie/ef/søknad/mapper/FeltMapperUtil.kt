@@ -2,19 +2,24 @@ package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator
-import no.nav.familie.kontrakter.ef.søknad.Dokument
-import no.nav.familie.kontrakter.ef.søknad.Dokumentasjon
-import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
-import no.nav.familie.kontrakter.ef.søknad.Vedlegg
+import no.nav.familie.kontrakter.ef.søknad.*
 import java.time.*
 import java.time.format.DateTimeFormatter
 
 
 fun BooleanFelt.tilSøknadsfelt(): Søknadsfelt<Boolean> = Søknadsfelt(this.label, this.verdi)
 
-fun TekstFelt.tilSøknadsfelt(): Søknadsfelt<String> = Søknadsfelt(this.label, this.verdi)
 fun HeltallFelt.tilSøknadsfelt(): Søknadsfelt<Int> = Søknadsfelt(this.label, this.verdi)
+
+fun TekstFelt.tilSøknadsfelt(): Søknadsfelt<String> = Søknadsfelt(this.label, this.verdi)
 fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsfelt(this.label, t.invoke(this.verdi))
+
+fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<Periode> =
+        Søknadsfelt(this.label ?: error("Savner label"),
+                    Periode(this.fra.tilLocalDate().month,
+                            this.fra.tilLocalDate().year,
+                            this.til.tilLocalDate().month,
+                            this.til.tilLocalDate().year))
 
 fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi)
 

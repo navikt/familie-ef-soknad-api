@@ -30,7 +30,7 @@ object BarnMapper {
                              annenForelder = mapAnnenForelder(barn.forelder),
                              samvær = mapSamvær(barn.forelder, vedlegg),
                              skalHaBarnepass = barn.skalHaBarnepass?.tilSøknadsfelt(),
-                             barnepass = barn.barnepass?.let { Søknadsfelt("", BarnepassMapper.tilBarnepass(it)) }) //TODO
+                             barnepass = barn.barnepass?.let { Søknadsfelt("Om barnepassordningen", BarnepassMapper.tilBarnepass(it)) }) //TODO label?
             } catch (e: Exception) {
                 secureLogger.error("Feil ved mapping av barn: $barnliste")
                 throw e
