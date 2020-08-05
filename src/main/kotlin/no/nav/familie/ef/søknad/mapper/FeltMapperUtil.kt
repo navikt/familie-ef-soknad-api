@@ -34,8 +34,8 @@ fun dokumentfelt(dokumentIdentifikator: DokumentIdentifikator,
 
 data class DokumentasjonWrapper(val label: String, val harSendtInnTidligere: Søknadsfelt<Boolean>, val vedlegg: List<Vedlegg>)
 
-fun String.tilDesimaltall(): Double = this.toDouble()
-fun String.tilHeltall(): Int = this.toDouble().toInt()
+fun String.tilDesimaltall(): Double = this.replace(",", ".").toDouble()
+fun String.tilHeltall(): Int = this.tilDesimaltall().toInt()
 
 fun DatoFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? {
     return if (this.verdi.isNotBlank()) {
