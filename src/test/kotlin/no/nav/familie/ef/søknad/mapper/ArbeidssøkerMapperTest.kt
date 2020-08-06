@@ -11,7 +11,7 @@ internal class ArbeidssøkerMapperTest {
     private val søknadDto = søknadDto()
 
     // Når
-    private val aktivitet = AktivitetsMapper.map(søknadDto.aktivitet, mapOf())
+    private val aktivitet = AktivitetsMapper.map(søknadDto.aktivitet, mapOf()).verdi
     private val arbeidssøker = aktivitet.arbeidssøker?.verdi
 
     @Test

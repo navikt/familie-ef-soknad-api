@@ -13,8 +13,8 @@ internal class BarnMapperTest {
     private val søknadDto = søknadDto()
 
     // Når
-    private val folkeregistrerteBarn = BarnMapper.mapBarn(søknadDto.person.barn, dokumenter).first()
-    private val nyregistrertBarn = BarnMapper.mapBarn(søknadDto.person.barn, dokumenter)[1]
+    private val folkeregistrerteBarn = BarnMapper.map(søknadDto.person.barn, dokumenter).verdi.first()
+    private val nyregistrertBarn = BarnMapper.map(søknadDto.person.barn, dokumenter).verdi[1]
 
     @Test
     fun `Folkeregistrert barn har riktig fødselsnummer`() {

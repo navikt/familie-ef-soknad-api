@@ -24,7 +24,7 @@ internal class SivilstandsdetaljerMapperTest {
         // Given
         val sivilstatus = søknadDto().sivilstatus
         // When
-        val kontrakt = SivilstandsdetaljerMapper.mapSivilstandsdetaljer(sivilstatus, dokumentMap())
+        val kontrakt = SivilstandsdetaljerMapper.map(sivilstatus, dokumentMap()).verdi
         // Then
 
         assertThat(kontrakt.søktOmSkilsmisseSeparasjon?.label).isEqualTo(sivilstatus.harSøktSeparasjon?.label)

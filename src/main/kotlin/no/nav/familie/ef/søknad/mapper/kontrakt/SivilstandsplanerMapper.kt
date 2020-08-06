@@ -1,22 +1,16 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
+import no.nav.familie.ef.søknad.mapper.Mapper
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsplaner
-import org.slf4j.LoggerFactory
 
-object SivilstandsplanerMapper {
+object SivilstandsplanerMapper : Mapper<Bosituasjon, Sivilstandsplaner>("Fremtidsplaner") {
 
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
-
-    fun mapSivilstandsplaner(bosituasjon: Bosituasjon): Sivilstandsplaner {
-        try {
-            return Sivilstandsplaner(harPlaner = bosituasjon.skalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
-                                     fraDato = bosituasjon.datoSkalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
-                                     vordendeSamboerEktefelle = bosituasjon.samboerDetaljer?.let(PersonMinimumMapper::map))
-        } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av bosituasjon $bosituasjon")
-            throw e
-        }
+    override fun mapDto(bosituasjon: Bosituasjon): Sivilstandsplaner {
+        return Sivilstandsplaner(harPlaner = bosituasjon.skalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
+                                 fraDato = bosituasjon.datoSkalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
+                                 vordendeSamboerEktefelle = bosituasjon.samboerDetaljer?.let(PersonMinimumMapper::map))
     }
+
 }

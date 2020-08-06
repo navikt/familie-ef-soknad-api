@@ -10,7 +10,12 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 object StønadsstartMapper {
 
     fun mapStønadsstart(søknadsdato: DatoFelt?,
-                        søkerFraBestemtMåned: BooleanFelt): Stønadsstart {
+                        søkerFraBestemtMåned: BooleanFelt): Søknadsfelt<Stønadsstart> {
+        return Søknadsfelt("Når søker du stønad fra?", map(søknadsdato, søkerFraBestemtMåned))
+    }
+
+    private fun map(søknadsdato: DatoFelt?,
+                    søkerFraBestemtMåned: BooleanFelt): Stønadsstart {
         val month = søknadsdato?.tilLocalDateEllerNull()?.month
         val year = søknadsdato?.tilLocalDateEllerNull()?.year
         return Stønadsstart(month?.let { Søknadsfelt("Fra måned", month) },

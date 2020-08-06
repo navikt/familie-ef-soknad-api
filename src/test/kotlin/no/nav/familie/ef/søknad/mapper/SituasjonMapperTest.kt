@@ -13,7 +13,7 @@ import java.time.LocalDate
 internal class SituasjonMapperTest {
     private val dokumentServiceServiceMock: DokumentService = mockk()
     private val søknadDto = søknadDto()
-    private val situasjon = SituasjonsMapper.mapSituasjon(søknadDto, mapOf())
+    private val situasjon = SituasjonsMapper.map(søknadDto, mapOf()).verdi
 
     @BeforeEach
     fun setUp() {
