@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
@@ -12,7 +12,7 @@ object SituasjonsMapper {
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    fun mapSituasjon(frontendDto: SøknadDto, vedlegg: Map<String, DokumentasjonWrapper>): Situasjon {
+    fun mapSituasjon(frontendDto: SøknadOvergangsstønadDto, vedlegg: Map<String, DokumentasjonWrapper>): Situasjon {
 
         val merOmDinSituasjon = frontendDto.merOmDinSituasjon
 

@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Medlemskap
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.PerioderBoddIUtlandet
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Medlemskapsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
@@ -12,8 +12,7 @@ object MedlemsskapsMapper {
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    fun mapMedlemskap(frontendDto: SøknadDto): Medlemskapsdetaljer {
-        val medlemskap = frontendDto.medlemskap
+    fun mapMedlemskap(medlemskap: Medlemskap): Medlemskapsdetaljer {
         try {
 
             return Medlemskapsdetaljer(medlemskap.søkerOppholderSegINorge.tilSøknadsfelt(),

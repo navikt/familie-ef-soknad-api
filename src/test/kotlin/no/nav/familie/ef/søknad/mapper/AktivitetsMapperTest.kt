@@ -10,27 +10,27 @@ import java.time.LocalDate
 internal class AktivitetsMapperTest {
 
     // Gitt
-    private val søknadDto = søknadDto()
+    private val aktivitet = søknadDto().aktivitet
 
     // Når
-    private val aktivitet = AktivitetsMapper.map(søknadDto, mapOf())
+    private val aktivitetMapped = AktivitetsMapper.map(aktivitet, mapOf())
 
     @Test
     fun `Map hvordanErArbeidssituasjonen label `() {
-        Assertions.assertThat(aktivitet.hvordanErArbeidssituasjonen.label).isEqualTo("Hva er din arbeidsituasjon?")
+        Assertions.assertThat(aktivitetMapped.hvordanErArbeidssituasjonen.label).isEqualTo("Hva er din arbeidsituasjon?")
     }
 
     @Test
     fun `Map hvordanErArbeidssituasjonen verdi `() {
-        Assertions.assertThat(aktivitet.hvordanErArbeidssituasjonen.verdi).hasSize(14)
+        Assertions.assertThat(aktivitetMapped.hvordanErArbeidssituasjonen.verdi).hasSize(14)
     }
 
     @Test
     fun `Map arbeidsforhold verdi `() {
-        Assertions.assertThat(aktivitet.arbeidsforhold).isNotNull
+        Assertions.assertThat(aktivitetMapped.arbeidsforhold).isNotNull
     }
 
-    private val firma = aktivitet.selvstendig?.verdi
+    private val firma = aktivitetMapped.selvstendig?.verdi
 
     @Test
     fun `Map firmanavn label `() {
@@ -84,22 +84,22 @@ internal class AktivitetsMapperTest {
 
     @Test
     fun `Map etablererEgenVirksomhet label `() {
-        Assertions.assertThat((aktivitet.virksomhet?.verdi?.virksomhetsbeskrivelse?.label))
+        Assertions.assertThat((aktivitetMapped.virksomhet?.verdi?.virksomhetsbeskrivelse?.label))
                 .isEqualTo("Hva er din arbeidsituasjon?")
     }
 
     @Test
     fun `Map etablererEgenVirksomhet verdi `() {
-        Assertions.assertThat(aktivitet.virksomhet?.verdi?.virksomhetsbeskrivelse?.verdi)
+        Assertions.assertThat(aktivitetMapped.virksomhet?.verdi?.virksomhetsbeskrivelse?.verdi)
                 .isEqualTo("Dette er en spennende gründerbedrift")
     }
 
     @Test
     fun `Map ansatt i eget AS `() {
-        val aksjeselskap: Aksjeselskap = aktivitet.aksjeselskap?.verdi?.get(0)!!
+        val aksjeselskap: Aksjeselskap = aktivitetMapped.aksjeselskap?.verdi?.get(0)!!
         Assertions.assertThat(aksjeselskap.navn.label).isEqualTo("Navn på aksjeselskapet ditt")
         Assertions.assertThat(aksjeselskap.navn.verdi).isEqualTo("Mitt eget AS")
-        Assertions.assertThat(aksjeselskap.arbeidsmengde.label).isEqualTo("Hvor mye jobber du?")
-        Assertions.assertThat(aksjeselskap.arbeidsmengde.verdi).isEqualTo(55)
+        Assertions.assertThat(aksjeselskap.arbeidsmengde!!.label).isEqualTo("Hvor mye jobber du?")
+        Assertions.assertThat(aksjeselskap.arbeidsmengde!!.verdi).isEqualTo(55)
     }
 }

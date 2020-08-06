@@ -13,7 +13,11 @@ data class DokumentFelt(val dokumentId: String,
                         val navn: String)
 
 data class ListFelt<T>(val label: String,
-                    val verdi: List<T>)
+                       val verdi: List<T>)
 
 data class HeltallFelt(val label: String,
                        val verdi: Int)
+
+data class PeriodeFelt(val label: String?, // Hvis den ikke finnes med i alle ennå så er den optional
+                       val fra: DatoFelt,
+                       val til: DatoFelt)
