@@ -22,11 +22,10 @@ internal class SivilstandsdetaljerMapperTest {
     @Test
     fun `mapSivilstandsdetaljer mapper dto fra frontend til forventet Sivilstandsdetaljer`() {
         // Given
-        val søknadDto = søknadDto()
+        val sivilstatus = søknadDto().sivilstatus
         // When
-        val kontrakt = SivilstandsdetaljerMapper.mapSivilstandsdetaljer(søknadDto, dokumentMap())
+        val kontrakt = SivilstandsdetaljerMapper.mapSivilstandsdetaljer(sivilstatus, dokumentMap())
         // Then
-        val sivilstatus = søknadDto.sivilstatus
 
         assertThat(kontrakt.søktOmSkilsmisseSeparasjon?.label).isEqualTo(sivilstatus.harSøktSeparasjon?.label)
         assertThat(kontrakt.søktOmSkilsmisseSeparasjon?.verdi).isEqualTo(sivilstatus.harSøktSeparasjon?.verdi)

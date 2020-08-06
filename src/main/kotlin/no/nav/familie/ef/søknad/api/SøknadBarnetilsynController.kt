@@ -1,10 +1,10 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BarnetilsynDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
-import no.nav.familie.ef.søknad.service.BarnetilsynSøknadService
+import no.nav.familie.ef.søknad.service.SøknadBarnetilsynService
 import no.nav.familie.ef.søknad.util.InnloggingUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.slf4j.LoggerFactory
@@ -21,12 +21,12 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/soknadbarnetilsyn"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
-class SøknadBarnetilsynController(val søknadService: BarnetilsynSøknadService, val featureToggleService: FeatureToggleService) {
+class SøknadBarnetilsynController(val søknadService: SøknadBarnetilsynService, val featureToggleService: FeatureToggleService) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @PostMapping
-    fun sendInn(@RequestBody søknad: BarnetilsynDto): Kvittering {
+    fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.send-barnetilsynsoknad") {
             try {
                 val innsendingMottatt = LocalDateTime.now()

@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Sivilstatus
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
@@ -13,9 +13,7 @@ object SivilstandsdetaljerMapper {
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    fun mapSivilstandsdetaljer(frontendDto: SøknadDto, vedlegg: Map<String, DokumentasjonWrapper>): Sivilstandsdetaljer {
-
-        val sivilstatus = frontendDto.sivilstatus
+    fun mapSivilstandsdetaljer(sivilstatus: Sivilstatus, vedlegg: Map<String, DokumentasjonWrapper>): Sivilstandsdetaljer {
         try {
             return Sivilstandsdetaljer(samlivsbruddsdokumentasjon = dokumentfelt(SAMLIVSBRUDD, vedlegg),
                                        samlivsbruddsdato = sivilstatus.datoForSamlivsbrudd?.tilSøknadsfelt(),

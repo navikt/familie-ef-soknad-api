@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
 data class Aktivitet(
-        val erIArbeid: TekstFelt?, //TODO må mappes
         val arbeidsforhold: List<Arbeidsgiver>?,
         val arbeidssøker: Arbeidssøker?=null,
         val firma: Firma? = null,
@@ -9,17 +8,18 @@ data class Aktivitet(
         val underUtdanning: UnderUtdanning? = null,
         val etablererEgenVirksomhet: TekstFelt? = null,
         val egetAS: List<Aksjeselskap>?,
-        val datoOppstartJobb: DatoFelt? = null
+        val datoOppstartJobb: DatoFelt? = null,
+        val erIArbeid: TekstFelt?
 )
 
 data class Aksjeselskap (
         val navn: TekstFelt,
-        val arbeidsmengde: TekstFelt
+        val arbeidsmengde: TekstFelt?
 )
 
 data class Arbeidsgiver(
     val ansettelsesforhold: TekstFelt,
-    val arbeidsmengde: TekstFelt,
+    val arbeidsmengde: TekstFelt?,
     val id: String,
     val navn: TekstFelt,
     val harSluttDato: BooleanFelt?,
@@ -37,7 +37,7 @@ data class Arbeidssøker(
 )
 
 data class Firma(
-        val arbeidsmengde: TekstFelt,
+        val arbeidsmengde: TekstFelt?,
         val arbeidsuke: TekstFelt,
         val etableringsdato: DatoFelt,
         val navn: TekstFelt,
@@ -45,18 +45,18 @@ data class Firma(
 )
 
 data class UnderUtdanning(
-        val arbeidsmengde: TekstFelt?, //TODO valider - nullable hvis heltid
+        val arbeidsmengde: TekstFelt?, //TODO valider - nullable hvis heltid og ikke med i Barnetilsyn
         val harTattUtdanningEtterGrunnskolen: BooleanFelt,
         val heltidEllerDeltid: TekstFelt,
         val linjeKursGrad: TekstFelt,
         val målMedUtdanning: TekstFelt?, //TODO valider - nullable hvis heltid
         val offentligEllerPrivat: TekstFelt,
-        val periode: Periode,
+        val periode: PeriodeFelt,
         val skoleUtdanningssted: TekstFelt,
         val tidligereUtdanning: List<TidligereUtdanning>? = null
 )
 
 data class TidligereUtdanning(
         val linjeKursGrad: TekstFelt,
-        val periode: Periode
+        val periode: PeriodeFelt
 )

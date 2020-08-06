@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Test
 
 internal class MedlemskapDtoMapperTest {
 
-    private val søknadDto = søknadDto()
+    private val medlemskap = søknadDto().medlemskap
 
 
     @Test
     fun `mapPersonalia mapper dto mapper bosatt til false`() {
         // When
-        val medlemsskapDetaljer = MedlemsskapsMapper.mapMedlemskap(søknadDto)
+        val medlemsskapDetaljer = MedlemsskapsMapper.mapMedlemskap(medlemskap)
         // Then
         assertThat(medlemsskapDetaljer.bosattNorgeSisteÅrene.verdi).isEqualTo(false)
     }
@@ -23,10 +23,9 @@ internal class MedlemskapDtoMapperTest {
     fun `mapPersonalia mapper dto mapper bosatt til true`() {
         // Given
         val label = "Bodd i Norge?"
-        val medlemskap = søknadDto.medlemskap.copy(søkerBosattINorgeSisteTreÅr = BooleanFelt(label, true))
-        val søknad = søknadDto.copy(medlemskap = medlemskap)
+        val medlemskap = medlemskap.copy(søkerBosattINorgeSisteTreÅr = BooleanFelt(label, true))
         // When
-        val medlemsskapDetaljer = MedlemsskapsMapper.mapMedlemskap(søknad)
+        val medlemsskapDetaljer = MedlemsskapsMapper.mapMedlemskap(medlemskap)
         // Then
         assertThat(medlemsskapDetaljer.bosattNorgeSisteÅrene.verdi).isEqualTo(true)
         assertThat(medlemsskapDetaljer.bosattNorgeSisteÅrene.label).isEqualTo(label)
@@ -35,7 +34,7 @@ internal class MedlemskapDtoMapperTest {
     @Test
     fun `mapPersonalia mapper perioder bodd i utland`() {
         // When
-        val medlemsskapDetaljer = MedlemsskapsMapper.mapMedlemskap(søknadDto)
+        val medlemsskapDetaljer = MedlemsskapsMapper.mapMedlemskap(medlemskap)
         // Then
         assertThat(medlemsskapDetaljer.utenlandsopphold?.verdi).hasSize(2)
     }

@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TidligereUtdanning
 import no.nav.familie.ef.søknad.mapper.*
@@ -9,6 +8,7 @@ import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.ETABLERER
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.IKKE_VILLIG_TIL_ARBEID
 import no.nav.familie.kontrakter.ef.søknad.*
 import org.slf4j.LoggerFactory
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Aktivitet as AktivitetDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidsgiver as ArbeidsgiverDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning as UnderUtdanningDto
 
@@ -16,9 +16,7 @@ object AktivitetsMapper {
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    fun map(frontendDto: SøknadDto, vedlegg: Map<String, DokumentasjonWrapper>): Aktivitet {
-        val aktivitet = frontendDto.aktivitet
-
+    fun map(aktivitet: AktivitetDto, vedlegg: Map<String, DokumentasjonWrapper>): Aktivitet {
         try {
             return Aktivitet(hvordanErArbeidssituasjonen = aktivitet.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
                              arbeidsforhold = aktivitet.arbeidsforhold?.let {
@@ -31,9 +29,12 @@ object AktivitetsMapper {
                              aksjeselskap = aktivitet.egetAS?.let {
                                  Søknadsfelt("Ansatt i eget AS", it.map { aksjeselskap ->
                                      Aksjeselskap(navn = aksjeselskap.navn.tilSøknadsfelt(),
-                                                  arbeidsmengde = aksjeselskap.arbeidsmengde.tilSøknadsfelt(String::tilHeltall))
+                                                  arbeidsmengde = aksjeselskap.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall))
                                  })
-                             })
+                             },
+                             erIArbeid = aktivitet.erIArbeid?.tilSøknadsfelt(),
+                             erIArbeidDokumentasjon = dokumentfelt(DokumentIdentifikator.FOR_SYK_TIL_Å_JOBBE, vedlegg)
+            )
         } catch (e: Exception) {
             secureLogger.error("Feil ved mapping av aktivitet: $aktivitet")
             throw e
@@ -100,7 +101,7 @@ object AktivitetsMapper {
         return Selvstendig(firmanavn = firma.navn.tilSøknadsfelt(),
                            organisasjonsnummer = firma.organisasjonsnummer.tilSøknadsfelt(),
                            etableringsdato = firma.etableringsdato.tilSøknadsfelt(),
-                           arbeidsmengde = firma.arbeidsmengde.tilSøknadsfelt(String::tilHeltall),
+                           arbeidsmengde = firma.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
                            hvordanSerArbeidsukenUt = firma.arbeidsuke.tilSøknadsfelt())
     }
 
@@ -108,7 +109,7 @@ object AktivitetsMapper {
 
         return arbeidsforhold.map { arbeid ->
             Arbeidsgiver(arbeidsgivernavn = arbeid.navn.tilSøknadsfelt(),
-                         arbeidsmengde = arbeid.arbeidsmengde.tilSøknadsfelt(String::tilHeltall),
+                         arbeidsmengde = arbeid.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
                          fastEllerMidlertidig = arbeid.ansettelsesforhold.tilSøknadsfelt(),
                          harSluttdato = arbeid.harSluttDato?.tilSøknadsfelt(),
                          sluttdato = arbeid.sluttdato?.tilSøknadsfelt()

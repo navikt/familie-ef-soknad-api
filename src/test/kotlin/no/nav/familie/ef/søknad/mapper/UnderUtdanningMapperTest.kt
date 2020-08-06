@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test
 internal class UnderUtdanningMapperTest {
 
     // Gitt
-    private val søknadDto = søknadDto()
+    private val aktivitet = søknadDto().aktivitet
 
     // Når
-    private val aktivitet = AktivitetsMapper.map(søknadDto, mapOf())
-    val uderUtdanning = aktivitet.underUtdanning?.verdi
+    private val aktivitetMapped = AktivitetsMapper.map(aktivitet, mapOf())
+    val uderUtdanning = aktivitetMapped.underUtdanning?.verdi
 
     @Test
     fun `Map underUtdanning er mappet `() {

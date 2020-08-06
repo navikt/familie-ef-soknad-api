@@ -8,10 +8,5 @@ data class Medlemskap(
 
 data class PerioderBoddIUtlandet(
         val begrunnelse: TekstFelt,
-        val periode: Periode
-)
-
-data class Periode(
-        val fra: DatoFelt,
-        val til: DatoFelt
+        val periode: PeriodeFelt
 )

@@ -1,18 +1,19 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ListFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
+import no.nav.familie.kontrakter.ef.søknad.Periode
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
+import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
+import java.time.Month
 import java.time.format.DateTimeParseException
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNull
@@ -49,6 +50,43 @@ internal class FeltMapperUtilKtTest {
     internal fun `ListFelt`() {
         val felt = ListFelt("label", listOf("a")).tilSøknadsfelt()
         assertEquals(Søknadsfelt("label", listOf("a")), felt)
+    }
+
+    @Test
+    internal fun `PeriodeFelt`() {
+        var felt = PeriodeFelt("label",
+                               DatoFelt("fra", "2020-01-01"),
+                               DatoFelt("til", "2021-12-30")).tilSøknadsfelt()
+        assertEquals(Søknadsfelt("label", Periode(Month.JANUARY, 2020, Month.DECEMBER, 2021)), felt)
+    }
+
+    @Test // kan slettes når label er endret til required
+    internal fun `PeriodeFelt med null i label`() {
+        var felt = PeriodeFelt(null, DatoFelt("fra", "2020-01-01"), DatoFelt("til", "2021-12-30"))
+        assertThat(catchThrowable { felt.tilSøknadsfelt() }).isInstanceOf(IllegalStateException::class.java)
+    }
+
+    @Test
+    internal fun `String til desimaltall`() {
+        assertThat(Assertions.catchThrowable { "".tilDesimaltall() }).hasMessage("empty String")
+        assertEquals(0.0, "0".tilDesimaltall())
+        assertEquals(123.0, "123".tilDesimaltall())
+        assertEquals(123.0, "123,".tilDesimaltall())
+        assertEquals(123.1, "123.1".tilDesimaltall())
+        assertEquals(123.1, "123,1".tilDesimaltall())
+        assertEquals(123.12, "123,12".tilDesimaltall())
+    }
+
+    @Test
+    internal fun `String til heltall`() {
+        assertThat(Assertions.catchThrowable { "".tilHeltall() }).hasMessage("empty String")
+        assertEquals(0, "0".tilHeltall())
+        assertEquals(123, "123".tilHeltall())
+        assertEquals(123, "123,".tilHeltall())
+        assertEquals(123, "123.1".tilHeltall())
+        assertEquals(123, "123,1".tilHeltall())
+        assertEquals(123, "123,12".tilHeltall())
+        assertEquals(123, "123,99".tilHeltall())
     }
 
     @Test
