@@ -14,7 +14,7 @@ internal class MedlemskapDtoMapperTest {
     @Test
     fun `mapPersonalia mapper dto mapper bosatt til false`() {
         // When
-        val medlemsskapDetaljer = MedlemsskapsMapper.mapMedlemskap(medlemskap)
+        val medlemsskapDetaljer = MedlemsskapsMapper.map(medlemskap).verdi
         // Then
         assertThat(medlemsskapDetaljer.bosattNorgeSisteÅrene.verdi).isEqualTo(false)
     }
@@ -25,7 +25,7 @@ internal class MedlemskapDtoMapperTest {
         val label = "Bodd i Norge?"
         val medlemskap = medlemskap.copy(søkerBosattINorgeSisteTreÅr = BooleanFelt(label, true))
         // When
-        val medlemsskapDetaljer = MedlemsskapsMapper.mapMedlemskap(medlemskap)
+        val medlemsskapDetaljer = MedlemsskapsMapper.map(medlemskap).verdi
         // Then
         assertThat(medlemsskapDetaljer.bosattNorgeSisteÅrene.verdi).isEqualTo(true)
         assertThat(medlemsskapDetaljer.bosattNorgeSisteÅrene.label).isEqualTo(label)
@@ -34,7 +34,7 @@ internal class MedlemskapDtoMapperTest {
     @Test
     fun `mapPersonalia mapper perioder bodd i utland`() {
         // When
-        val medlemsskapDetaljer = MedlemsskapsMapper.mapMedlemskap(medlemskap)
+        val medlemsskapDetaljer = MedlemsskapsMapper.map(medlemskap).verdi
         // Then
         assertThat(medlemsskapDetaljer.utenlandsopphold?.verdi).hasSize(2)
     }

@@ -2,79 +2,34 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TidligereUtdanning
 import no.nav.familie.ef.søknad.mapper.*
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.ETABLERER_VIRKSOMHET
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.IKKE_VILLIG_TIL_ARBEID
 import no.nav.familie.kontrakter.ef.søknad.*
-import org.slf4j.LoggerFactory
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Aktivitet as AktivitetDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidsgiver as ArbeidsgiverDto
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning as UnderUtdanningDto
 
-object AktivitetsMapper {
+object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>("Arbeid, utdanning og andre aktiviteter") {
 
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
-
-    fun map(aktivitet: AktivitetDto, vedlegg: Map<String, DokumentasjonWrapper>): Aktivitet {
-        try {
-            return Aktivitet(hvordanErArbeidssituasjonen = aktivitet.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
-                             arbeidsforhold = aktivitet.arbeidsforhold?.let {
-                                 Søknadsfelt("Om arbeidsforholdet ditt", mapArbeidsforhold(it))
-                             },
-                             selvstendig = aktivitet.firma?.let { Søknadsfelt("Om firmaet du driver", mapOmFirma(it)) },
-                             virksomhet = aktivitet.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it, vedlegg) },
-                             arbeidssøker = aktivitet.arbeidssøker?.let { mapArbeidssøker(it, vedlegg) },
-                             underUtdanning = aktivitet.underUtdanning?.let { mapUtdanning(it) },
-                             aksjeselskap = aktivitet.egetAS?.let {
-                                 Søknadsfelt("Ansatt i eget AS", it.map { aksjeselskap ->
-                                     Aksjeselskap(navn = aksjeselskap.navn.tilSøknadsfelt(),
-                                                  arbeidsmengde = aksjeselskap.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall))
-                                 })
-                             },
-                             erIArbeid = aktivitet.erIArbeid?.tilSøknadsfelt(),
-                             erIArbeidDokumentasjon = dokumentfelt(DokumentIdentifikator.FOR_SYK_TIL_Å_JOBBE, vedlegg)
-            )
-        } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av aktivitet: $aktivitet")
-            throw e
-        }
-    }
-
-    private fun mapUtdanning(underUtdanning: UnderUtdanningDto): Søknadsfelt<UnderUtdanning> {
-        return Søknadsfelt("Utdanningen du skal ta", mapUnderUtdanning(underUtdanning))
-
-    }
-
-    private fun mapUnderUtdanning(underUtdanning: no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning): UnderUtdanning {
-        return UnderUtdanning(skoleUtdanningssted = underUtdanning.skoleUtdanningssted.tilSøknadsfelt(),
-                              utdanning =
-                              Søknadsfelt("Utdanning",
-                                          Utdanning(underUtdanning.linjeKursGrad.tilSøknadsfelt(),
-                                                    Søknadsfelt("Når skal du være elev/student?",
-                                                                Periode(underUtdanning.periode.fra.tilLocalDate().month,
-                                                                        underUtdanning.periode.fra.tilLocalDate().year,
-                                                                        underUtdanning.periode.til.tilLocalDate().month,
-                                                                        underUtdanning.periode.til.tilLocalDate().year)))),
-                              offentligEllerPrivat = underUtdanning.offentligEllerPrivat.tilSøknadsfelt(),
-                              hvorMyeSkalDuStudere = underUtdanning.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
-                              heltidEllerDeltid = underUtdanning.heltidEllerDeltid.tilSøknadsfelt(),
-                              hvaErMåletMedUtdanningen = underUtdanning.målMedUtdanning?.tilSøknadsfelt(),
-                              utdanningEtterGrunnskolen = underUtdanning.harTattUtdanningEtterGrunnskolen.tilSøknadsfelt(),
-                              tidligereUtdanninger = underUtdanning.tidligereUtdanning?.let { mapTidligereUtdanning(it) }
+    override fun mapDto(data: AktivitetDto,
+                        vedlegg: Map<String, DokumentasjonWrapper>): Aktivitet {
+        return Aktivitet(hvordanErArbeidssituasjonen = data.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
+                         arbeidsforhold = data.arbeidsforhold?.let {
+                             Søknadsfelt("Om arbeidsforholdet ditt", mapArbeidsforhold(it))
+                         },
+                         selvstendig = data.firma?.let { Søknadsfelt("Om firmaet du driver", mapOmFirma(it)) },
+                         virksomhet = data.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it, vedlegg) },
+                         arbeidssøker = data.arbeidssøker?.let { mapArbeidssøker(it, vedlegg) },
+                         underUtdanning = data.underUtdanning?.let { UtdanningMapper.map(it) },
+                         aksjeselskap = data.egetAS?.let {
+                             Søknadsfelt("Ansatt i eget AS", it.map { aksjeselskap ->
+                                 Aksjeselskap(navn = aksjeselskap.navn.tilSøknadsfelt(),
+                                              arbeidsmengde = aksjeselskap.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall))
+                             })
+                         },
+                         erIArbeid = data.erIArbeid?.tilSøknadsfelt(),
+                         erIArbeidDokumentasjon = dokumentfelt(DokumentIdentifikator.FOR_SYK_TIL_Å_JOBBE, vedlegg)
         )
-    }
-
-    private fun mapTidligereUtdanning(tidligereUtdanning: List<TidligereUtdanning>): Søknadsfelt<List<Utdanning>> {
-        val tidligereUtdanningList = tidligereUtdanning.map {
-            Utdanning(it.linjeKursGrad.tilSøknadsfelt(),
-                      Søknadsfelt("Når var du elev/student?",
-                                  Periode(it.periode.fra.tilLocalDate().month,
-                                          it.periode.fra.tilLocalDate().year,
-                                          it.periode.til.tilLocalDate().month,
-                                          it.periode.til.tilLocalDate().year)))
-        }
-        return Søknadsfelt("Tidligere Utdanning", tidligereUtdanningList)
     }
 
     private fun mapArbeidssøker(arbeidssøker: no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker,

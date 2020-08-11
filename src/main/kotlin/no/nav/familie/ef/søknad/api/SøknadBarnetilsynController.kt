@@ -4,7 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
-import no.nav.familie.ef.søknad.service.SøknadBarnetilsynService
+import no.nav.familie.ef.søknad.service.SøknadService
 import no.nav.familie.ef.søknad.util.InnloggingUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.slf4j.LoggerFactory
@@ -18,24 +18,19 @@ import java.time.LocalDateTime
 
 
 @RestController
-@RequestMapping(path = ["/api/soknadbarnetilsyn"], produces = [APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/api/soknadbarnetilsyn", "/api/soknad/barnetilsyn"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
-class SøknadBarnetilsynController(val søknadService: SøknadBarnetilsynService, val featureToggleService: FeatureToggleService) {
+class SøknadBarnetilsynController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @PostMapping
     fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.send-barnetilsynsoknad") {
-            try {
-                val innsendingMottatt = LocalDateTime.now()
-                søknadService.sendInn(søknad, innsendingMottatt)
-                Kvittering("ok", mottattDato = innsendingMottatt)
-            } catch (e: Exception) {
-                logger.error("Feil - får ikke sendt barnetilsyn-søknad til mottak ", e)
-                error("Noe gikk galt ved innsending")
-            }
+            val innsendingMottatt = LocalDateTime.now()
+            søknadService.sendInn(søknad, innsendingMottatt)
+            Kvittering("ok", mottattDato = innsendingMottatt)
         }
     }
 }

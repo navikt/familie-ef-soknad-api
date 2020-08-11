@@ -24,7 +24,7 @@ internal class SøknadOvergangsstønadMapperTest {
     @Test
     fun `mapPersonalia mapper dto fra frontend til forventet Personalia`() {
         // When
-        val personaliaFraSøknadDto = PersonaliaMapper.mapPersonalia(søknadDto.person.søker)
+        val personaliaFraSøknadDto = PersonaliaMapper.map(søknadDto.person.søker).verdi
         // Then
         assertThat(personaliaFraSøknadDto.toString()).isEqualTo(personalia().toString())
     }

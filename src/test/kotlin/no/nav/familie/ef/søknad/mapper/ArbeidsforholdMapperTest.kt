@@ -12,7 +12,7 @@ internal class ArbeidsforholdMapperTest {
     private val aktivitet = søknadDto().aktivitet
 
     // Når
-    private val aktivitetMapped = AktivitetsMapper.map(aktivitet, mapOf())
+    private val aktivitetMapped = AktivitetsMapper.map(aktivitet, mapOf()).verdi
     private val arbeidsforhold = aktivitetMapped.arbeidsforhold?.verdi?.get(0)
 
     @Test
