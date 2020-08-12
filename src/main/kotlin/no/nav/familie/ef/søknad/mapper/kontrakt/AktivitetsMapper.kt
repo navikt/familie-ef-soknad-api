@@ -18,6 +18,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>("Arbeid, utd
                              Søknadsfelt("Om arbeidsforholdet ditt", mapArbeidsforhold(it))
                          },
                          selvstendig = data.firma?.let { Søknadsfelt("Om firmaet du driver", mapOmFirma(it)) },
+                         firmaer = data.firmaer?.let { Søknadsfelt("Om firmaet du driver", mapOmFirmaer(it)) },
                          virksomhet = data.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it, vedlegg) },
                          arbeidssøker = data.arbeidssøker?.let { mapArbeidssøker(it, vedlegg) },
                          underUtdanning = data.underUtdanning?.let { UtdanningMapper.map(it) },
@@ -52,6 +53,9 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>("Arbeid, utd
                                                                       dokumentfelt(ETABLERER_VIRKSOMHET, vedlegg)))
     }
 
+    private fun mapOmFirmaer(firmaer: List<Firma>): List<Selvstendig> {
+        return firmaer.map { firma -> mapOmFirma(firma) }
+    }
     private fun mapOmFirma(firma: Firma): Selvstendig {
         return Selvstendig(firmanavn = firma.navn.tilSøknadsfelt(),
                            organisasjonsnummer = firma.organisasjonsnummer.tilSøknadsfelt(),
