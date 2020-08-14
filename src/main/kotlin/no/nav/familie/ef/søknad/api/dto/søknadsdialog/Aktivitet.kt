@@ -3,7 +3,8 @@ package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 data class Aktivitet(
         val arbeidsforhold: List<Arbeidsgiver>?,
         val arbeidssøker: Arbeidssøker? = null,
-        val firma: Firma? = null,
+        @Deprecated("Bruk firmaer istedenfor") val firma: Firma? = null,
+        val firmaer: List<Firma>?,
         val hvaErDinArbeidssituasjon: ListFelt<String>,
         val underUtdanning: UnderUtdanning? = null,
         val etablererEgenVirksomhet: TekstFelt? = null,
