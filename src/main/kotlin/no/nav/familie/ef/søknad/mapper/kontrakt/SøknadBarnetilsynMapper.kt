@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.integration.SøknadRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
 import no.nav.familie.ef.søknad.mapper.kontrakt.FellesMapper.mapInnsendingsdetaljer
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
 import no.nav.familie.ef.søknad.service.DokumentService
@@ -33,11 +34,10 @@ class SøknadBarnetilsynMapper(private val dokumentServiceService: DokumentServi
                 stønadsstart = StønadsstartMapper.mapStønadsstart(dto.søknadsdato,
                                                                   dto.søkerFraBestemtMåned),
                 dokumentasjon = BarnetilsynDokumentasjon(
-                        tidligereFakturaer = dokumentfelt(DokumentIdentifikator.TIDLIGERE_FAKTURAER, vedlegg),
-                        barnepassordningFaktura = dokumentfelt(DokumentIdentifikator.FAKTURA_BARNEPASSORDNING, vedlegg),
-                        avtaleBarnepasser = dokumentfelt(DokumentIdentifikator.AVTALE_BARNEPASSER, vedlegg),
-                        arbeidstid = dokumentfelt(DokumentIdentifikator.ARBEIDSTID, vedlegg),
-                        spesielleBehov = dokumentfelt(DokumentIdentifikator.TRENGER_MER_PASS_ENN_JEVNALDREDE, vedlegg)
+                        barnepassordningFaktura = dokumentfelt(FAKTURA_BARNEPASSORDNING, vedlegg),
+                        avtaleBarnepasser = dokumentfelt(AVTALE_BARNEPASSER, vedlegg),
+                        arbeidstid = dokumentfelt(ARBEIDSTID, vedlegg),
+                        spesielleBehov = dokumentfelt(TRENGER_MER_PASS_ENN_JEVNALDREDE, vedlegg)
                 )
         )
 
