@@ -7,7 +7,8 @@ import java.net.URI
 
 @ConfigurationProperties("familie.integrasjoner")
 @ConstructorBinding
-data class FamilieIntegrasjonerConfig(val uri: URI) {
+data class FamilieIntegrasjonerConfig(val uri: URI,
+                                      val passord: String) {
 
     val kodeverkLandkoderUri: URI =
             UriComponentsBuilder.fromUri(uri).pathSegment(PATH_KODEVERK_LANDKODER).build().toUri()

@@ -7,7 +7,8 @@ import java.net.URI
 
 @ConfigurationProperties("familie.ef.mottak")
 @ConstructorBinding
-data class MottakConfig(val uri: URI) {
+data class MottakConfig(val uri: URI,
+                        val passord: String) {
 
     internal val sendInnOvergangsstønadUri = byggUri(PATH_SEND_INN_OVERGANGSSTØNAD)
     internal val sendInnSkjemaArbeidUri = byggUri(PATH_SEND_INN_ARBEIDS_SKJEMA)
