@@ -29,9 +29,7 @@ class SøknadSkolepengerMapper(private val dokumentServiceService: DokumentServi
                 sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
                 utdanning = UtdanningMapper.map(dto.utdanning),
                 dokumentasjon = SkolepengerDokumentasjon(
-                        semesteravgift = dokumentfelt(DokumentIdentifikator.SEMESTERAVGIFT, vedlegg),
-                        studieavgift = dokumentfelt(DokumentIdentifikator.STUDIEAVGIFT, vedlegg),
-                        eksamensgebyr = dokumentfelt(DokumentIdentifikator.EKSAMENSGEBYR, vedlegg)
+                        utdanningsutgifter = dokumentfelt(DokumentIdentifikator.UTGIFTER_UTDANNING, vedlegg)
                 )
         )
 

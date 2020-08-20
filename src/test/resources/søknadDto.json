@@ -544,6 +544,14 @@
         "label": "Har du tatt utdanning etter grunnskolen",
         "verdi": true
       },
+      "semesteravgift": {
+        "label": "Semesteravgift",
+        "verdi": ""
+      },
+      "eksamensgebyr": {
+        "label": "Eksamensgebyr",
+        "verdi": "2000"
+      },
       "tidligereUtdanning": [
         {
           "react_key": "ab8d1628-18c0-40ec-9806-4adfba38be4e",

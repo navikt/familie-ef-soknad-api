@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TidligereUtdanning
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning
 import no.nav.familie.ef.søknad.mapper.*
@@ -26,9 +27,9 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>("Utdanni
                                       hvaErMåletMedUtdanningen = underUtdanning.målMedUtdanning?.tilSøknadsfelt(),
                                       utdanningEtterGrunnskolen = underUtdanning.harTattUtdanningEtterGrunnskolen.tilSøknadsfelt(),
                                       tidligereUtdanninger = underUtdanning.tidligereUtdanning?.let { mapTidligereUtdanning(it) },
-                                      semesteravgift = underUtdanning.semesteravgift?.tilSøknadsfelt(String::tilDesimaltall),
-                                      studieavgift = underUtdanning.studieavgift?.tilSøknadsfelt(String::tilDesimaltall),
-                                      eksamensgebyr = underUtdanning.eksamensgebyr?.tilSøknadsfelt(String::tilDesimaltall)
+                                      semesteravgift = mapUtgifterTilUtdanning(underUtdanning.semesteravgift),
+                                      studieavgift = mapUtgifterTilUtdanning(underUtdanning.studieavgift),
+                                      eksamensgebyr = mapUtgifterTilUtdanning(underUtdanning.eksamensgebyr)
         )
     }
 
@@ -42,6 +43,16 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>("Utdanni
                                           it.periode.til.tilLocalDate().year)))
         }
         return Søknadsfelt("Tidligere Utdanning", tidligereUtdanningList)
+    }
+
+    private fun mapUtgifterTilUtdanning(utgift: TekstFelt?): Søknadsfelt<Double>? {
+        return utgift?.let {
+            return if (it.verdi.isNotBlank()) {
+                utgift.tilSøknadsfelt(String::tilDesimaltall)
+            } else {
+                null
+            }
+        }
     }
 
 }
