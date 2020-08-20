@@ -1,16 +1,18 @@
 familie:
   dokument:
-    uri: https:/familie-dokument.dev-sbs.nais.io/api
+    uri: https://www-q0.nav.no/familie/alene-med-barn/mellomlagring/api
   ef:
     mottak:
-      uri: https://familie-ef-mottak.dev-fss.nais.io/api
+      uri: https://api-gw-q0.oera.no/familie-ef-mottak/api
+      passord: ${FAMILIE_EF_MOTTAK_PASSORD}
   integrasjoner:
-    uri:  https://familie-integrasjoner.dev-fss.nais.io/api
+    uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
+    passord: ${FAMILIE_INTEGRASJONER_PASSORD}
 
 tps:
   innsyn:
     uri:  https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
-    passord: ${TPS_API_KEY}
+    passord: ${TPS_INNSYN_PROXY_PASSORD}
 
 funksjonsbrytere:
   enabled: true

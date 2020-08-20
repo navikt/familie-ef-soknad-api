@@ -9,10 +9,12 @@ familie:
   ef:
     mottak:
       uri: https://api-gw.oera.no/familie-ef-mottak/api
+      passord: ${FAMILIE_EF_MOTTAK_PASSORD}
   dokument:
     uri: https://www.nav.no/familie/alene-med-barn/mellomlagring/api
   integrasjoner:
     uri:  https://api-gw.oera.no/familie-integrasjoner/api
+    passord: ${FAMILIE_INTEGRASJONER_PASSORD}
 
 regelverk:
   alder:
@@ -23,7 +25,7 @@ health:
 tps:
   innsyn:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
-    passord: ${TPS_API_KEY}
+    passord: ${TPS_INNSYN_PROXY_PASSORD}
 
 funksjonsbrytere:
   enabled: true
