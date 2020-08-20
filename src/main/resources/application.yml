@@ -23,11 +23,12 @@ health:
 tps:
   innsyn:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
+    passord: ${TPS_API_KEY}
 
 funksjonsbrytere:
   enabled: true
   unleash:
-    uri: https://unleashproxy.nais.oera.no/api/
+    uri: https://unleash.adeo.no/api/
     environment: ${NAIS_CLUSTER_NAME:}
     applicationName: ${NAIS_APP_NAME:}
 
@@ -63,5 +64,4 @@ no.nav.security.jwt:
   issuer.selvbetjening:
     discoveryurl: https://login.microsoftonline.com/navnob2c.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten
     accepted_audience: ${ACCEPTEDAUDIENCE}
-    proxyurl: http://webproxy-nais.nav.no:8088
     cookie_name: selvbetjening-idtoken

@@ -26,12 +26,7 @@ internal class ApplicationConfig {
     fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig,
                                          mottak: MottakConfig,
                                          integrasjoner: FamilieIntegrasjonerConfig): ClientHttpRequestInterceptor {
-        val map =
-                mapOf(oppslag.uri to Pair(apiKey, oppslag.passord),
-                      mottak.uri to Pair(apiKey, mottak.passord),
-                      integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
-        return ApiKeyInjectingClientInterceptor(map)
-
+        return ApiKeyInjectingClientInterceptor(mapOf(oppslag.uri to Pair(apiKey, oppslag.passord)))
     }
 
     @Bean

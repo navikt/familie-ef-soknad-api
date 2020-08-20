@@ -56,14 +56,15 @@ class DokumentController(@Qualifier("dokumentlager") private val dokumenter: Mut
         }
     }
 
-    @PostMapping("mellomlager",
+    @PostMapping(path = ["mellomlager/{stonad}"],
                  consumes = [MediaType.APPLICATION_JSON_VALUE],
                  produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun mellomlagreSøknad(@RequestBody(required = true) søknad: String): ResponseEntity<Unit> {
+    fun mellomlagreSøknad(@PathVariable("stonad") stønad: StønadParameter,
+                          @RequestBody(required = true) søknad: String): ResponseEntity<Unit> {
         log.info("Mellomlagrer søknad om overgangsstønad")
 
         validerGyldigJson(søknad)
-        val directory = contextHolder.hentFnr()
+        val directory = "${contextHolder.hentFnr()}/$stønad"
 
         try {
             mellomlager[directory] = søknad
@@ -75,9 +76,9 @@ class DokumentController(@Qualifier("dokumentlager") private val dokumenter: Mut
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 
-    @GetMapping("mellomlager", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun hentMellomlagretSøknad(): ResponseEntity<String> {
-        val directory = contextHolder.hentFnr()
+    @GetMapping(path = ["mellomlager/{stonad}"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun hentMellomlagretSøknad(@PathVariable("stonad") stønad: StønadParameter): ResponseEntity<String> {
+        val directory = "${contextHolder.hentFnr()}/$stønad"
         return try {
             ResponseEntity.ok(mellomlager[directory])
         } catch (e: RuntimeException) {
@@ -90,9 +91,9 @@ class DokumentController(@Qualifier("dokumentlager") private val dokumenter: Mut
         }
     }
 
-    @DeleteMapping("mellomlager", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun slettMellomlagretSøknad(): ResponseEntity<String> {
-        val directory = contextHolder.hentFnr()
+    @DeleteMapping(path = ["mellomlager/{stonad}"], produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun slettMellomlagretSøknad(@PathVariable("stonad") stønad: StønadParameter): ResponseEntity<String> {
+        val directory = "${contextHolder.hentFnr()}/$stønad"
         return try {
             log.debug("Sletter mellomlagret overgangsstønad")
             mellomlager.remove(directory)
@@ -113,5 +114,11 @@ class DokumentController(@Qualifier("dokumentlager") private val dokumenter: Mut
 
     companion object {
         const val MAX_FILE_SIZE_MB = 20
+    }
+
+    enum class StønadParameter(val stønadKey: String) {
+        overgangsstonad("overgangsstønad"),
+        barnetilsyn("barnetilsyn"),
+        skolepenger("skolepenger")
     }
 }

@@ -1,22 +1,21 @@
 familie:
   dokument:
-    uri: https://www-q0.nav.no/familie/alene-med-barn/mellomlagring/api
+    uri: https:/familie-dokument.dev-sbs.nais.io/api
   ef:
     mottak:
-      uri: https://api-gw-q0.oera.no/familie-ef-mottak/api
+      uri: https://familie-ef-mottak.dev-fss.nais.io/api
   integrasjoner:
-    uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
+    uri:  https://familie-integrasjoner.dev-fss.nais.io/api
 
 tps:
   innsyn:
     uri:  https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
+    passord: ${TPS_API_KEY}
 
 cors:
   allowed_origins:
-    - "https://familie-ef-soknad.nais.oera-q.local"
-    - "https://familie-ef-soknad-api.nais.oera-q.local"
-    - "https://www-q0.nav.no/familie/alene-med-barn/soknad"
-    - "https://www-q0.nav.no/familie/alene-med-barn/soknad-api"
+    - "https://www.dev.nav.no/familie/alene-med-barn/soknad"
+    - "https://www.dev.nav.no/familie/alene-med-barn/soknad-api"
 
 
 no.nav.security.jwt:
@@ -24,5 +23,4 @@ no.nav.security.jwt:
   issuer.selvbetjening:
     discoveryurl: https://login.microsoftonline.com/NAVtestB2C.onmicrosoft.com/v2.0/.well-known/openid-configuration?p=B2C_1A_idporten_ver1
     accepted_audience: ${ACCEPTEDAUDIENCE}
-    proxyurl: http://webproxy-nais.nav.no:8088
     cookie_name: selvbetjening-idtoken
