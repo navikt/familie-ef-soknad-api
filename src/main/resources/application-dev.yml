@@ -12,6 +12,13 @@ tps:
     uri:  https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
     passord: ${TPS_API_KEY}
 
+funksjonsbrytere:
+  enabled: true
+  unleash:
+    uri: https://unleash.dev-adeo.no/api/
+    environment: ${NAIS_CLUSTER_NAME:}
+    applicationName: ${NAIS_APP_NAME:}
+
 cors:
   allowed_origins:
     - "https://www.dev.nav.no/familie/alene-med-barn/soknad"

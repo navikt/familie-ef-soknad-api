@@ -39,7 +39,7 @@ spec:
     outbound:
       external:
         - host: login.microsoftonline.com
-        - host: unleash.adeo.no
+        - host: unleash.dev-adeo.no
         - host: familie-integrasjoner.dev-fss.nais.io
         - host: familie-dokument.dev-sbs.nais.io
         - host: api-gw-q2.oera.no
