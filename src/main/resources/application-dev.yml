@@ -23,8 +23,8 @@ funksjonsbrytere:
 
 cors:
   allowed_origins:
-    - "https://www.dev.nav.no/familie/alene-med-barn/soknad"
-    - "https://www.dev.nav.no/familie/alene-med-barn/soknad-api"
+    - "https://dev.nav.no/familie/alene-med-barn/soknad"
+    - "https://dev.nav.no/familie/alene-med-barn/soknad-api"
 
 
 no.nav.security.jwt:
