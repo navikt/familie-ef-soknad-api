@@ -3,7 +3,7 @@ familie:
     uri: https://familie-dokument.dev-sbs.nais.io/familie/alene-med-barn/mellomlagring/api
   ef:
     mottak:
-      uri: https://api-gw-q0.oera.no/familie-ef-mottak/api
+      uri: https://api-gw-q2.oera.no/familie-ef-mottak/api
       passord: ${FAMILIE_EF_MOTTAK_PASSORD}
   integrasjoner:
     uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
