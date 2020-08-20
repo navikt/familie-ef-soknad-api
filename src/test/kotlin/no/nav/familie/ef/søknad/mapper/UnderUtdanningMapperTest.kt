@@ -85,6 +85,13 @@ internal class UnderUtdanningMapperTest {
         Assertions.assertThat(uderUtdanning?.tidligereUtdanninger?.verdi).hasSize(1)
     }
 
+    @Test
+    fun `Map eksamensgebyr og semesteravgift`() {
+        Assertions.assertThat(uderUtdanning?.semesteravgift).isNull()
+        Assertions.assertThat(uderUtdanning?.eksamensgebyr?.verdi).isEqualTo(2000.0)
+        Assertions.assertThat(uderUtdanning?.studieavgift).isNull()
+    }
+
 
 
 }
