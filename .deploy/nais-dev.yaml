@@ -40,6 +40,7 @@ spec:
       external:
         - host: login.microsoftonline.com
         - host: unleash.dev-adeo.no
+        - host: familie-dokument.dev-sbs.nais.io
         - host: api-gw-q2.oera.no
   env:
     - name: SPRING_PROFILES_ACTIVE
