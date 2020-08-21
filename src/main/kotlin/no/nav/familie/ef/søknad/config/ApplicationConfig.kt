@@ -31,7 +31,6 @@ internal class ApplicationConfig {
                       mottak.uri to Pair(apiKey, mottak.passord),
                       integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
         return ApiKeyInjectingClientInterceptor(map)
-
     }
 
     @Bean
