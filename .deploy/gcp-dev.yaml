@@ -35,6 +35,7 @@ spec:
     enabled: true
   ingresses:
     - https://dev.nav.no/familie/alene-med-barn/soknad-api
+    - https://familie-ef-soknad-api.dev.nav.no
   accessPolicy:
     outbound:
       external:
