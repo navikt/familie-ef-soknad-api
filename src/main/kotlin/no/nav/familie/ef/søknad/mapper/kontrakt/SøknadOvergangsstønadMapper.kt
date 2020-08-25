@@ -5,6 +5,7 @@ import no.nav.familie.ef.søknad.integration.SøknadRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.StønadsstartMapper.mapStønadsstart
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
+import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
 import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
@@ -34,7 +35,9 @@ class SøknadOvergangsstønadMapper(private val dokumentServiceService: Dokument
 
         OvergangsstønadValidering.validate(søknad)
 
-        return SøknadRequestData(SøknadMedVedlegg(søknad, vedlegg.values.map { it.vedlegg }.flatten()), vedleggData)
+        return SøknadRequestData(SøknadMedVedlegg(søknad,
+                                                  vedlegg.values.map { it.vedlegg }.flatten(),
+                                                  dto.dokumentasjonsbehov.tilKontrakt()), vedleggData)
     }
 
 }

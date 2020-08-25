@@ -5,6 +5,7 @@ import no.nav.familie.ef.søknad.integration.SøknadRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
+import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.SkolepengerDokumentasjon
 import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
@@ -33,8 +34,9 @@ class SøknadSkolepengerMapper(private val dokumentServiceService: DokumentServi
                 )
         )
 
-        return SøknadRequestData(SøknadMedVedlegg(barnetilsynSøknad, vedlegg.values.map { it.vedlegg }.flatten()),
-                                 vedleggData)
+        return SøknadRequestData(SøknadMedVedlegg(barnetilsynSøknad,
+                                                  vedlegg.values.map { it.vedlegg }.flatten(),
+                                                  dto.dokumentasjonsbehov.tilKontrakt()), vedleggData)
     }
 
 }

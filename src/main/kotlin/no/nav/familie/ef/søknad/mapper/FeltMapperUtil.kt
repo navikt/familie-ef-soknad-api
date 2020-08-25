@@ -1,10 +1,12 @@
 package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator
 import no.nav.familie.kontrakter.ef.søknad.*
 import java.time.*
 import java.time.format.DateTimeFormatter
+import no.nav.familie.kontrakter.ef.søknad.Dokumentasjonsbehov as DokumentasjonsbehovKontrakt
 
 
 fun BooleanFelt.tilSøknadsfelt(): Søknadsfelt<Boolean> = Søknadsfelt(this.label, this.verdi)
@@ -22,6 +24,14 @@ fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<Periode> =
                             this.til.tilLocalDate().year))
 
 fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi)
+
+fun List<Dokumentasjonsbehov>.tilKontrakt() : List<DokumentasjonsbehovKontrakt> =
+        this.map {
+            DokumentasjonsbehovKontrakt(it.label,
+                                        it.id,
+                                        it.harSendtInn,
+                                        it.opplastedeVedlegg.map { vedlegg -> vedlegg.navn })
+        }
 
 fun dokumentfelt(dokumentIdentifikator: DokumentIdentifikator,
                  vedleggMap: Map<String, DokumentasjonWrapper>): Søknadsfelt<Dokumentasjon>? {
