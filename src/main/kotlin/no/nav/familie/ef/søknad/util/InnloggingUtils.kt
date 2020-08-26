@@ -15,6 +15,10 @@ object InnloggingUtils {
         return fødselsnummer
     }
 
+    fun sjekkPersonIdentMotInnloggetBruker(personIdent: String): Boolean {
+        return personIdent == hentFnrFraToken()
+    }
+
     fun getBearerTokenForLoggedInUser(): String {
         return getTokenValidationContext().getJwtToken(ISSUER).tokenAsString
     }
