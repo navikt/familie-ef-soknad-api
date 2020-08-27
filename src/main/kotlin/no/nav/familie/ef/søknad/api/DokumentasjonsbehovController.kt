@@ -20,7 +20,9 @@ class DokumentasjonsbehovController(private val søknadClient: SøknadClient) {
     @GetMapping("/{soknadId}")
     fun hentDokumentasjonsbehov(@PathVariable("soknadId") søknadId: UUID): ResponseEntity<DokumentasjonsbehovDto> {
         val dokumentasjonsbehovDto = søknadClient.hentDokumentasjonsbehovForSøknad(søknadId)
-        sjekkPersonIdentMotInnloggetBruker(dokumentasjonsbehovDto.personIdent)
+        if(sjekkPersonIdentMotInnloggetBruker(dokumentasjonsbehovDto.personIdent)) {
+            //TODO
+        }
 
         return ResponseEntity.ok(dokumentasjonsbehovDto)
     }
