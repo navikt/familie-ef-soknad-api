@@ -12,84 +12,84 @@ internal class UnderUtdanningMapperTest {
 
     // Når
     private val aktivitetMapped = AktivitetsMapper.map(aktivitet, mapOf()).verdi
-    val uderUtdanning = aktivitetMapped.underUtdanning?.verdi
+    val underUtdanning = aktivitetMapped.underUtdanning?.verdi
 
     @Test
     fun `Map underUtdanning er mappet `() {
-        Assertions.assertThat(uderUtdanning).isNotNull()
+        Assertions.assertThat(underUtdanning).isNotNull()
     }
 
     @Test
     fun `Map arbeidsforhold sluttdato verdi `() {
-        Assertions.assertThat(uderUtdanning?.utdanningEtterGrunnskolen?.verdi).isTrue()
+        Assertions.assertThat(underUtdanning?.utdanningEtterGrunnskolen?.verdi).isTrue()
     }
 
     @Test
     fun `Map arbeidsforhold sluttdato label `() {
         val expected = "Har du tatt utdanning etter grunnskolen"
-        Assertions.assertThat(uderUtdanning?.utdanningEtterGrunnskolen?.label).isEqualTo(expected)
+        Assertions.assertThat(underUtdanning?.utdanningEtterGrunnskolen?.label).isEqualTo(expected)
     }
 
     @Test
     fun `Map arbeidsforhold linjeKursGrad verdi `() {
-        Assertions.assertThat(uderUtdanning?.utdanning?.verdi?.linjeKursGrad?.verdi).isEqualTo("Stor kurs grad")
+        Assertions.assertThat(underUtdanning?.gjeldendeUtdanning?.verdi?.linjeKursGrad?.verdi).isEqualTo("Stor kurs grad")
     }
 
     @Test
     fun `Map arbeidsforhold linjeKursGrad label `() {
-        Assertions.assertThat(uderUtdanning?.utdanning?.verdi?.linjeKursGrad?.label).isEqualTo("Linje / kurs / grad")
+        Assertions.assertThat(underUtdanning?.gjeldendeUtdanning?.verdi?.linjeKursGrad?.label).isEqualTo("Linje / kurs / grad")
     }
 
     @Test
     fun `Map arbeidsforhold hvaErMåletMedUtdanningen verdi `() {
-        Assertions.assertThat(uderUtdanning?.hvaErMåletMedUtdanningen?.verdi).isEqualTo("Bli flink")
+        Assertions.assertThat(underUtdanning?.hvaErMåletMedUtdanningen?.verdi).isEqualTo("Bli flink")
     }
 
     @Test
     fun `Map arbeidsforhold hvaErMåletMedUtdanningen label `() {
-        Assertions.assertThat(uderUtdanning?.hvaErMåletMedUtdanningen?.label).isEqualTo("Hva er målet med utdanningen?")
+        Assertions.assertThat(underUtdanning?.hvaErMåletMedUtdanningen?.label).isEqualTo("Hva er målet med utdanningen?")
     }
 
     @Test
     fun `Map arbeidsforhold offentligEllerPrivat verdi `() {
-        Assertions.assertThat(uderUtdanning?.offentligEllerPrivat?.verdi).isEqualTo("Offentlig")
+        Assertions.assertThat(underUtdanning?.offentligEllerPrivat?.verdi).isEqualTo("Offentlig")
     }
 
     @Test
     fun `Map arbeidsforhold offentligEllerPrivat label `() {
-        Assertions.assertThat(uderUtdanning?.offentligEllerPrivat?.label).isEqualTo("Er utdanningen privat eller offentlig?")
+        Assertions.assertThat(underUtdanning?.offentligEllerPrivat?.label).isEqualTo("Er utdanningen privat eller offentlig?")
     }
 
     @Test
     fun `Map arbeidsforhold hvorMyeSkalDuStudere verdi `() {
-        Assertions.assertThat(uderUtdanning?.hvorMyeSkalDuStudere?.verdi).isEqualTo(50)
+        Assertions.assertThat(underUtdanning?.hvorMyeSkalDuStudere?.verdi).isEqualTo(50)
     }
 
     @Test
     fun `Map arbeidsforhold hvorMyeSkalDuStudere label `() {
-        Assertions.assertThat(uderUtdanning?.hvorMyeSkalDuStudere?.label).isEqualTo("Hvor mye skal du studere?")
+        Assertions.assertThat(underUtdanning?.hvorMyeSkalDuStudere?.label).isEqualTo("Hvor mye skal du studere?")
     }
 
     @Test
     fun `Map arbeidsforhold skoleUtdanningssted verdi `() {
-        Assertions.assertThat(uderUtdanning?.skoleUtdanningssted?.verdi).isEqualTo("Skoleskolen")
+        Assertions.assertThat(underUtdanning?.skoleUtdanningssted?.verdi).isEqualTo("Skoleskolen")
     }
 
     @Test
     fun `Map arbeidsforhold skoleUtdanningssted label `() {
-        Assertions.assertThat(uderUtdanning?.skoleUtdanningssted?.label).isEqualTo("Skole / utdanningssted")
+        Assertions.assertThat(underUtdanning?.skoleUtdanningssted?.label).isEqualTo("Skole / utdanningssted")
     }
 
     @Test
     fun `Map arbeidsforhold tidligereUtdanninger verdi `() {
-        Assertions.assertThat(uderUtdanning?.tidligereUtdanninger?.verdi).hasSize(1)
+        Assertions.assertThat(underUtdanning?.tidligereUtdanninger?.verdi).hasSize(1)
     }
 
     @Test
     fun `Map eksamensgebyr og semesteravgift`() {
-        Assertions.assertThat(uderUtdanning?.semesteravgift).isNull()
-        Assertions.assertThat(uderUtdanning?.eksamensgebyr?.verdi).isEqualTo(2000.0)
-        Assertions.assertThat(uderUtdanning?.studieavgift).isNull()
+        Assertions.assertThat(underUtdanning?.semesteravgift).isNull()
+        Assertions.assertThat(underUtdanning?.eksamensgebyr?.verdi).isEqualTo(2000.0)
+        Assertions.assertThat(underUtdanning?.studieavgift).isNull()
     }
 
 

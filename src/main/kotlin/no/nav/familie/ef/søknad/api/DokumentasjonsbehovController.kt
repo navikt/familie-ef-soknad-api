@@ -1,9 +1,9 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.integration.SøknadClient
-import no.nav.familie.ef.søknad.util.InnloggingUtils
-import no.nav.familie.ef.søknad.util.InnloggingUtils.sjekkPersonIdentMotInnloggetBruker
 import no.nav.familie.kontrakter.ef.søknad.dokumentasjonsbehov.DokumentasjonsbehovDto
+import no.nav.familie.sikkerhet.EksternBrukerUtils
+import no.nav.familie.sikkerhet.EksternBrukerUtils.personIdentErLikInnloggetBruker
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,14 +15,14 @@ import java.util.*
 
 @RestController
 @RequestMapping(path = ["/api/dokumentasjonsbehov"])
-@ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
+@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 class DokumentasjonsbehovController(private val søknadClient: SøknadClient) {
 
     @GetMapping("/{soknadId}")
     fun hentDokumentasjonsbehov(@PathVariable("soknadId") søknadId: UUID): ResponseEntity<DokumentasjonsbehovDto> {
         val dokumentasjonsbehovDto = søknadClient.hentDokumentasjonsbehovForSøknad(søknadId)
 
-        if (sjekkPersonIdentMotInnloggetBruker(dokumentasjonsbehovDto.personIdent)) {
+        if (personIdentErLikInnloggetBruker(dokumentasjonsbehovDto.personIdent)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
 

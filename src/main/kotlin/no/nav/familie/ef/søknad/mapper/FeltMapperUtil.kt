@@ -16,9 +16,9 @@ fun HeltallFelt.tilSøknadsfelt(): Søknadsfelt<Int> = Søknadsfelt(this.label, 
 fun TekstFelt.tilSøknadsfelt(): Søknadsfelt<String> = Søknadsfelt(this.label, this.verdi)
 fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsfelt(this.label, t.invoke(this.verdi))
 
-fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<Periode> =
+fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<MånedÅrPeriode> =
         Søknadsfelt(this.label ?: error("Savner label"),
-                    Periode(this.fra.tilLocalDate().month,
+                MånedÅrPeriode(this.fra.tilLocalDate().month,
                             this.fra.tilLocalDate().year,
                             this.til.tilLocalDate().month,
                             this.til.tilLocalDate().year))
