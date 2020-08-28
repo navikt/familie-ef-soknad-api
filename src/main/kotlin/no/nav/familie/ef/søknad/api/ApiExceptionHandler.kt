@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.api
 
+import no.nav.familie.ef.søknad.api.dto.FeilDto
 import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -34,6 +35,13 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
             return håndtertResponseStatusFeil(throwable, responseStatus)
         }
         return uventetFeil(throwable)
+    }
+
+    @ExceptionHandler(ApiFeil::class)
+    fun handleThrowable(e: ApiFeil): ResponseEntity<FeilDto> {
+        return ResponseEntity
+                .status(e.httpStatus)
+                .body(FeilDto(e.feil))
     }
 
     private fun uventetFeil(throwable: Throwable): ResponseEntity<String> {

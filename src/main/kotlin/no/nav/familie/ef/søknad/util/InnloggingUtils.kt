@@ -7,6 +7,7 @@ import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
 import org.springframework.web.context.request.RequestContextHolder
 
 
+//TODO bruk klasse i felles
 object InnloggingUtils {
 
     const val ISSUER = "selvbetjening"
