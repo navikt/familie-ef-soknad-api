@@ -22,7 +22,7 @@ class DokumentasjonsbehovController(private val søknadClient: SøknadClient) {
     fun hentDokumentasjonsbehov(@PathVariable("soknadId") søknadId: UUID): ResponseEntity<DokumentasjonsbehovDto> {
         val dokumentasjonsbehovDto = søknadClient.hentDokumentasjonsbehovForSøknad(søknadId)
 
-        if (personIdentErLikInnloggetBruker(dokumentasjonsbehovDto.personIdent)) {
+        if (!personIdentErLikInnloggetBruker(dokumentasjonsbehovDto.personIdent)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
 
