@@ -30,7 +30,7 @@ fun List<Dokumentasjonsbehov>.tilKontrakt() : List<DokumentasjonsbehovKontrakt> 
             DokumentasjonsbehovKontrakt(it.label,
                                         it.id,
                                         it.harSendtInn,
-                                        it.opplastedeVedlegg.map { vedlegg -> vedlegg.navn })
+                                        it.opplastedeVedlegg.map { vedlegg -> Dokument(vedlegg.dokumentId, vedlegg.navn) })
         }
 
 fun dokumentfelt(dokumentIdentifikator: DokumentIdentifikator,
