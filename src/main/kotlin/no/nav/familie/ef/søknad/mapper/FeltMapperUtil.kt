@@ -4,10 +4,12 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator
 import no.nav.familie.kontrakter.ef.søknad.*
+import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
+import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import java.time.*
 import java.time.format.DateTimeFormatter
 import no.nav.familie.kontrakter.ef.søknad.Dokumentasjonsbehov as DokumentasjonsbehovKontrakt
-
 
 fun BooleanFelt.tilSøknadsfelt(): Søknadsfelt<Boolean> = Søknadsfelt(this.label, this.verdi)
 
@@ -18,10 +20,10 @@ fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsf
 
 fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<MånedÅrPeriode> =
         Søknadsfelt(this.label ?: error("Savner label"),
-                MånedÅrPeriode(this.fra.tilLocalDate().month,
-                            this.fra.tilLocalDate().year,
-                            this.til.tilLocalDate().month,
-                            this.til.tilLocalDate().year))
+                    MånedÅrPeriode(this.fra.tilLocalDate().month,
+                                   this.fra.tilLocalDate().year,
+                                   this.til.tilLocalDate().month,
+                                   this.til.tilLocalDate().year))
 
 fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi)
 
@@ -32,17 +34,6 @@ fun List<Dokumentasjonsbehov>.tilKontrakt() : List<DokumentasjonsbehovKontrakt> 
                                         it.harSendtInn,
                                         it.opplastedeVedlegg.map { vedlegg -> Dokument(vedlegg.dokumentId, vedlegg.navn) })
         }
-
-fun dokumentfelt(dokumentIdentifikator: DokumentIdentifikator,
-                 vedleggMap: Map<String, DokumentasjonWrapper>): Søknadsfelt<Dokumentasjon>? {
-    val dokumentasjon = vedleggMap[dokumentIdentifikator.name]
-    return dokumentasjon?.let {
-        val dokumenter = it.vedlegg.map { vedlegg -> Dokument(vedlegg.id, vedlegg.navn) }
-        Søknadsfelt(it.label, Dokumentasjon(it.harSendtInnTidligere, dokumenter))
-    }
-}
-
-data class DokumentasjonWrapper(val label: String, val harSendtInnTidligere: Søknadsfelt<Boolean>, val vedlegg: List<Vedlegg>)
 
 fun String.tilDesimaltall(): Double = this.replace(",", ".").toDouble()
 fun String.tilHeltall(): Int = this.tilDesimaltall().toInt()

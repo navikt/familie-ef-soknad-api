@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.mapper.*
+import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.ETABLERER_VIRKSOMHET
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.IKKE_VILLIG_TIL_ARBEID
 import no.nav.familie.kontrakter.ef.søknad.*

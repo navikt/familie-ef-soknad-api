@@ -2,8 +2,8 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
+import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.MapperMedVedlegg
-import no.nav.familie.ef.søknad.mapper.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Situasjon
