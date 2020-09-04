@@ -89,25 +89,6 @@ internal class FeltMapperUtilKtTest {
         assertEquals(123, "123,99".tilHeltall())
     }
 
-    @Test
-    internal fun `hent dokumentfelt`() {
-        val bytes = byteArrayOf(12)
-        val dokumentasjonWrapper = DokumentasjonWrapper("label",
-                                                        Søknadsfelt("Har sendt inn tidligere", false),
-                                                        listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok"),
-                                                               Vedlegg("id2", "dok2.pdf", "Annen tittel på dok")))
-        val dokumenter = mapOf(DokumentIdentifikator.SYKDOM.name to dokumentasjonWrapper)
-        val dokumentSomFinnes = dokumentfelt(DokumentIdentifikator.SYKDOM, dokumenter)!!
-        assertThat(dokumentSomFinnes.verdi.dokumenter.first().id).isEqualTo("id1")
-        assertThat(dokumentSomFinnes.verdi.dokumenter.first().navn).isEqualTo("dok1.pdf")
-
-        assertThat(dokumentSomFinnes.verdi.dokumenter.last().id).isEqualTo("id2")
-        assertThat(dokumentSomFinnes.verdi.dokumenter.last().navn).isEqualTo("dok2.pdf")
-
-        assertThat(dokumentfelt(DokumentIdentifikator.SAMLIVSBRUDD, dokumenter)).isNull()
-    }
-
-
     /* TekstFelt -> Dato */
 
     @Test
