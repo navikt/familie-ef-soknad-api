@@ -23,7 +23,7 @@
         <kotlin.version>1.3.72</kotlin.version>
         <springfox.version>3.0.0</springfox.version>
         <mockk.version>1.10.0</mockk.version>
-        <fasterxml.version>2.11.1</fasterxml.version>
+        <fasterxml.version>2.11.2</fasterxml.version>
         <com.amazonaws.version>1.11.820</com.amazonaws.version>
         <token-validation-spring.version>1.2.0</token-validation-spring.version>
         <felles.version>1.20200703124425_7e616f5</felles.version>
