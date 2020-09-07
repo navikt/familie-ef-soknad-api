@@ -5,7 +5,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.service.SøknadService
-import no.nav.familie.ef.søknad.util.InnloggingUtils
+import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
@@ -19,7 +19,7 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping(path = ["/api/soknadbarnetilsyn", "/api/soknad/barnetilsyn"], produces = [APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
+@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
 class SøknadBarnetilsynController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 

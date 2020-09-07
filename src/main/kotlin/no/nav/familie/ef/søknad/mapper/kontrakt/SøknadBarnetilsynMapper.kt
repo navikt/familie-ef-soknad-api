@@ -7,6 +7,7 @@ import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
 import no.nav.familie.ef.søknad.mapper.kontrakt.FellesMapper.mapInnsendingsdetaljer
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
+import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.BarnetilsynDokumentasjon
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
@@ -42,8 +43,9 @@ class SøknadBarnetilsynMapper(private val dokumentServiceService: DokumentServi
                 )
         )
 
-        return SøknadRequestData(SøknadMedVedlegg(barnetilsynSøknad, vedlegg.values.map { it.vedlegg }.flatten()),
-                                 vedleggData)
+        return SøknadRequestData(SøknadMedVedlegg(barnetilsynSøknad,
+                                                  vedlegg.values.flatMap { it.vedlegg },
+                                                  dto.dokumentasjonsbehov.tilKontrakt()), vedleggData)
     }
 
 }

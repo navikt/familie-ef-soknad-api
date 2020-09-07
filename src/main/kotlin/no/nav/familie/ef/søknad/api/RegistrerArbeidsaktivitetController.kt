@@ -7,7 +7,7 @@ import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.service.OppslagService
 import no.nav.familie.ef.søknad.service.SkjemaService
-import no.nav.familie.ef.søknad.util.InnloggingUtils
+import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping(path = ["/api/registrerarbeid"], produces = [APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = InnloggingUtils.ISSUER, claimMap = ["acr=Level4"])
+@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService, val featureToggleService: FeatureToggleService,  private val oppslagService: OppslagService) {
 
     @PostMapping
@@ -28,7 +28,7 @@ class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService, val 
     fun sendRegistrerArbeidsAktivitet(@RequestBody arbeidssøker: Arbeidssøker): Kvittering {
 
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.registrerarbeidssoker") {
-            val fnrFraToken = InnloggingUtils.hentFnrFraToken()
+            val fnrFraToken = EksternBrukerUtils.hentFnrFraToken()
             val forkortetNavn = oppslagService.hentSøkerinfo().søker.forkortetNavn
             val innsendingMottatt = LocalDateTime.now()
             val kvittering = skjemaService.sendInn(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
