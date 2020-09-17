@@ -8,6 +8,7 @@ import no.nav.familie.ef.søknad.service.SøknadService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
@@ -27,6 +28,9 @@ class SøknadSkolepengerController(val søknadService: SøknadService, val featu
 
     @PostMapping
     fun sendInn(@RequestBody søknad: SøknadSkolepengerDto): Kvittering {
+        if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
+            throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
+        }
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.send-skolepengersoknad") {
             val innsendingMottatt = LocalDateTime.now()
             søknadService.sendInn(søknad, innsendingMottatt)

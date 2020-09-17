@@ -1,0 +1,190 @@
+{
+  "person": {
+    "søker": {
+      "fnr": "21057822284",
+      "forkortetNavn": "KOPP LUNKEN",
+      "adresse": {
+        "adresse": "JAABÆKVEGEN 16",
+        "postnummer": "1533",
+        "poststed": "Oslo"
+      },
+      "egenansatt": false,
+      "sivilstand": "UGIF",
+      "statsborgerskap": "Norge",
+      "kontakttelefon": "12341234"
+    },
+    "barn": [
+      {
+        "id": "29d2f994-96c0-4ed9-b958-986fcb824803",
+        "født": {
+          "label": "Født",
+          "verdi": true
+        },
+        "skalHaBarnepass": {
+          "label": "Med i søknaden",
+          "verdi": false
+        },
+        "navn": {
+          "label": "Navn",
+          "verdi": "KARAFFEL STERK"
+        },
+        "alder": {
+          "label": "Alder",
+          "verdi": 9
+        },
+        "fødselsdato": {
+          "label": "Fødselsdato",
+          "verdi": "2010-02-28"
+        },
+        "harSammeAdresse": {
+          "label": "Har barnet samme adresse som deg?",
+          "verdi": true
+        },
+        "ident": {
+          "label": "Fødselsnummer eller d-nummer",
+          "verdi": "28021078036"
+        },
+        "forelder": {
+          "kanIkkeOppgiAnnenForelderFar": {
+            "label": "Jeg kan ikke oppgi den andre forelderen",
+            "verdi": true
+          },
+          "ikkeOppgittAnnenForelderBegrunnelse": {
+            "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
+            "verdi": "Donorbarn"
+          },
+          "hvorforIkkeOppgi": {
+            "spørsmålid": "hvorforIkkeOppgi",
+            "svarid": "donorbarn",
+            "label": "Hvorfor kan du ikke oppgi den andre forelderen?",
+            "verdi": "Donorbarn"
+          }
+        }
+      }
+    ],
+    "hash": "1142874545"
+  },
+  "sivilstatus": {
+    "erUformeltGift": {
+      "spørsmålid": "erUformeltGift",
+      "svarid": "NEI",
+      "label": "Du er registrert som ugift i folkeregisteret. Er du gift uten at det er registrert i folkeregisteret i Norge?",
+      "verdi": false
+    },
+    "erUformeltSeparertEllerSkilt": {
+      "spørsmålid": "erUformeltSeparertEllerSkilt",
+      "svarid": "NEI",
+      "label": "Er du separert eller skilt uten at dette er registrert i folkeregisteret i Norge?",
+      "verdi": false
+    },
+    "årsakEnslig": {
+      "spørsmålid": "årsakEnslig",
+      "svarid": "aleneFraFødsel",
+      "label": "Hvorfor er du alene med barn?",
+      "verdi": "Jeg er alene med barn fra fødsel"
+    }
+  },
+  "medlemskap": {
+    "søkerOppholderSegINorge": {
+      "label": "Oppholder du deg i Norge?",
+      "verdi": true
+    },
+    "søkerBosattINorgeSisteTreÅr": {
+      "label": "Har du bodd i Norge de siste tre årene?",
+      "verdi": true
+    }
+  },
+  "bosituasjon": {
+    "delerBoligMedAndreVoksne": {
+      "spørsmålid": "delerBoligMedAndreVoksne",
+      "svarid": "borAleneMedBarnEllerGravid",
+      "label": "Deler du bolig med andre voksne?",
+      "verdi": "Nei, jeg bor alene med barn eller jeg er gravid og bor alene"
+    },
+    "skalGifteSegEllerBliSamboer": {
+      "spørsmålid": "skalGifteSegEllerBliSamboer",
+      "svarid": "NEI",
+      "label": "Har du konkrete planer om å gifte deg eller bli samboer?",
+      "verdi": false
+    }
+  },
+  "utdanning": {
+    "id": "9032acc3-92c3-413d-8686-0d30a29be9da",
+    "skoleUtdanningssted": {
+      "label": "Skole / utdanningssted",
+      "verdi": "Skolen"
+    },
+    "linjeKursGrad": {
+      "label": "Linje / kurs / grad",
+      "verdi": "en"
+    },
+    "offentligEllerPrivat": {
+      "label": "Er utdanningen offentlig eller privat?",
+      "verdi": "Privat"
+    },
+    "periode": {
+      "label": "Når skal du være elev/student?",
+      "fra": {
+        "label": "Fra",
+        "verdi": "2020-09-07T22:00:00.000Z"
+      },
+      "til": {
+        "label": "Til",
+        "verdi": "2020-09-24T22:00:00.000Z"
+      }
+    },
+    "heltidEllerDeltid": {
+      "spørsmålid": "heltidEllerDeltid",
+      "svarid": "heltid",
+      "label": "Er utdanningen på heltid eller deltid?",
+      "verdi": "Heltid"
+    },
+    "målMedUtdanning": {
+      "label": "Hva er målet med utdanningen?",
+      "verdi": "Bli flink"
+    },
+    "semesteravgift": {
+      "label": "Semesteravgift",
+      "verdi": "123"
+    },
+    "studieavgift": {
+      "label": "Studieavgift",
+      "verdi": "123"
+    },
+    "eksamensgebyr": {
+      "label": "Eksamensgebyr",
+      "verdi": "123"
+    },
+    "harTattUtdanningEtterGrunnskolen": {
+      "label": "Har du tatt utdanning etter grunnskolen?",
+      "verdi": false
+    }
+  },
+  "dokumentasjonsbehov": [
+    {
+      "id": "UTGIFTER_UTDANNING",
+      "spørsmålid": "semesteravgift",
+      "svarid": "tarUtdanning",
+      "label": "Utgifter til skolepenger",
+      "tittel": "utdanning.label.utgifter",
+      "beskrivelse": "utdanning.label.utgifter.dokumentasjon",
+      "harSendtInn": false
+    },
+    {
+      "id": "UTDANNING",
+      "spørsmålid": "hvaErDinArbeidssituasjon",
+      "svarid": "tarUtdanning",
+      "label": "Dokumentasjon på utdanningen du tar eller skal ta",
+      "tittel": "dokumentasjon.utdanning.tittel",
+      "beskrivelse": "dokumentasjon.utdanning.beskrivelse",
+      "harSendtInn": false
+    }
+  ],
+  "harBekreftet": true,
+  "søkerBorPåRegistrertAdresse": {
+    "spørsmålid": "søkerBorPåRegistrertAdresse",
+    "svarid": "JA",
+    "label": "søkerBorPåRegistrertAdresse",
+    "verdi": true
+  }
+}
