@@ -4,13 +4,12 @@ import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.http.client.MultipartBuilder
-import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
-import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
-import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
-import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
+import no.nav.familie.kontrakter.ef.søknad.*
+import no.nav.familie.kontrakter.ef.søknad.dokumentasjonsbehov.DokumentasjonsbehovDto
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
 import java.net.URI
+import java.util.*
 
 
 @Service
@@ -39,6 +38,10 @@ class SøknadClient(private val config: MottakConfig,
 
     fun sendInnArbeidsRegistreringsskjema(skjema: SkjemaForArbeidssøker): KvitteringDto {
         return postForEntity(config.sendInnSkjemaArbeidUri, skjema)
+    }
+
+    fun hentDokumentasjonsbehovForSøknad(søknadId: UUID): DokumentasjonsbehovDto {
+        return getForEntity(config.byggUriForDokumentasjonsbehov(søknadId))
     }
 
 }

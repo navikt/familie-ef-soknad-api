@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 
 abstract class MapperMedVedlegg<T, R>(private val rootLabel: String) {
 
-    private val secureLogger = LoggerFactory.getLogger(javaClass)
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     fun map(data: T, vedlegg: Map<String, DokumentasjonWrapper>): Søknadsfelt<R> {
         try {

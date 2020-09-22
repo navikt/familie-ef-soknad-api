@@ -37,10 +37,10 @@ spec:
     cpuThresholdPercentage: 50
   resources:
     limits:
-      memory: 4Gi
+      memory: 2Gi
       cpu: "1"
     requests:
-      memory: 2Gi
+      memory: 1Gi
       cpu: 500m
   secureLogs:
     enabled: true
