@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 
 abstract class Mapper<T, R>(val rootLabel: String) {
 
-    private val secureLogger = LoggerFactory.getLogger(javaClass)
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     fun map(data: T): Søknadsfelt<R> {
         try {

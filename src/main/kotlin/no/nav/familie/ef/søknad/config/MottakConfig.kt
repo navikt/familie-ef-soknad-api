@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
+import java.util.*
 
 @ConfigurationProperties("familie.ef.mottak")
 @ConstructorBinding
@@ -19,11 +20,15 @@ data class MottakConfig(val uri: URI,
 
     private fun byggUri(path: String) = UriComponentsBuilder.fromUri(uri).path(path).build().toUri()
 
+    fun byggUriForDokumentasjonsbehov(søknadId: UUID) = UriComponentsBuilder.fromUri(uri).path(
+            "$PATH_HENT_DOKUMENTASJONSBEHOV/$søknadId").build().toUri()
+
     companion object {
         private const val PATH_SEND_INN_OVERGANGSSTØNAD = "/soknad" //TODO endre til soknad/overgangsstonad senere
         private const val PATH_SEND_INN_ARBEIDS_SKJEMA = "/skjema"
         private const val PATH_SEND_INN_BARNETILSYNSØKNAD = "/soknad/barnetilsyn"
         private const val PATH_SEND_INN_SKOLEPENGERSØKNAD = "/soknad/skolepenger"
+        private const val PATH_HENT_DOKUMENTASJONSBEHOV = "/soknad/dokumentasjonsbehov"
         private const val PATH_PING = "/ping"
     }
 
