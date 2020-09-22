@@ -3,7 +3,7 @@ package no.nav.familie.ef.søknad.mapper
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
-import no.nav.familie.kontrakter.ef.søknad.Periode
+import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import org.assertj.core.api.Assertions
@@ -57,7 +57,7 @@ internal class FeltMapperUtilKtTest {
         var felt = PeriodeFelt("label",
                                DatoFelt("fra", "2020-01-01"),
                                DatoFelt("til", "2021-12-30")).tilSøknadsfelt()
-        assertEquals(Søknadsfelt("label", Periode(Month.JANUARY, 2020, Month.DECEMBER, 2021)), felt)
+        assertEquals(Søknadsfelt("label", MånedÅrPeriode(Month.JANUARY, 2020, Month.DECEMBER, 2021)), felt)
     }
 
     @Test // kan slettes når label er endret til required
@@ -88,25 +88,6 @@ internal class FeltMapperUtilKtTest {
         assertEquals(123, "123,12".tilHeltall())
         assertEquals(123, "123,99".tilHeltall())
     }
-
-    @Test
-    internal fun `hent dokumentfelt`() {
-        val bytes = byteArrayOf(12)
-        val dokumentasjonWrapper = DokumentasjonWrapper("label",
-                                                        Søknadsfelt("Har sendt inn tidligere", false),
-                                                        listOf(Vedlegg("id1", "dok1.pdf", "Tittel på dok"),
-                                                               Vedlegg("id2", "dok2.pdf", "Annen tittel på dok")))
-        val dokumenter = mapOf(DokumentIdentifikator.SYKDOM.name to dokumentasjonWrapper)
-        val dokumentSomFinnes = dokumentfelt(DokumentIdentifikator.SYKDOM, dokumenter)!!
-        assertThat(dokumentSomFinnes.verdi.dokumenter.first().id).isEqualTo("id1")
-        assertThat(dokumentSomFinnes.verdi.dokumenter.first().navn).isEqualTo("dok1.pdf")
-
-        assertThat(dokumentSomFinnes.verdi.dokumenter.last().id).isEqualTo("id2")
-        assertThat(dokumentSomFinnes.verdi.dokumenter.last().navn).isEqualTo("dok2.pdf")
-
-        assertThat(dokumentfelt(DokumentIdentifikator.SAMLIVSBRUDD, dokumenter)).isNull()
-    }
-
 
     /* TekstFelt -> Dato */
 

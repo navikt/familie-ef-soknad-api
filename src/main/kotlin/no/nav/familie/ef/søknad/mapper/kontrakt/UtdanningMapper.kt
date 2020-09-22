@@ -1,0 +1,59 @@
+package no.nav.familie.ef.søknad.mapper.kontrakt
+
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TidligereUtdanning
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.UnderUtdanning
+import no.nav.familie.ef.søknad.mapper.*
+import no.nav.familie.kontrakter.ef.søknad.Datoperiode
+import no.nav.familie.kontrakter.ef.søknad.GjeldendeUtdanning
+import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
+import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import no.nav.familie.kontrakter.ef.søknad.TidligereUtdanning as TidligereUtdanningKontrakt
+import no.nav.familie.kontrakter.ef.søknad.UnderUtdanning as UnderUtdanningKontrakt
+
+object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>("Utdanningen du skal ta") {
+
+    override fun mapDto(underUtdanning: UnderUtdanning): UnderUtdanningKontrakt {
+        return UnderUtdanningKontrakt(skoleUtdanningssted = underUtdanning.skoleUtdanningssted.tilSøknadsfelt(),
+                                      utdanning = null,
+                                      gjeldendeUtdanning =
+                                      Søknadsfelt("Utdanning",
+                                                  GjeldendeUtdanning(underUtdanning.linjeKursGrad.tilSøknadsfelt(),
+                                                            Søknadsfelt("Når skal du være elev/student?",
+                                                                        Datoperiode(underUtdanning.periode.fra.tilLocalDate(),
+                                                                                underUtdanning.periode.til.tilLocalDate())))),
+                                      offentligEllerPrivat = underUtdanning.offentligEllerPrivat.tilSøknadsfelt(),
+                                      hvorMyeSkalDuStudere = underUtdanning.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
+                                      heltidEllerDeltid = underUtdanning.heltidEllerDeltid.tilSøknadsfelt(),
+                                      hvaErMåletMedUtdanningen = underUtdanning.målMedUtdanning?.tilSøknadsfelt(),
+                                      utdanningEtterGrunnskolen = underUtdanning.harTattUtdanningEtterGrunnskolen.tilSøknadsfelt(),
+                                      tidligereUtdanninger = underUtdanning.tidligereUtdanning?.let { mapTidligereUtdanning(it) },
+                                      semesteravgift = mapUtgifterTilUtdanning(underUtdanning.semesteravgift),
+                                      studieavgift = mapUtgifterTilUtdanning(underUtdanning.studieavgift),
+                                      eksamensgebyr = mapUtgifterTilUtdanning(underUtdanning.eksamensgebyr)
+        )
+    }
+
+    private fun mapTidligereUtdanning(tidligereUtdanning: List<TidligereUtdanning>): Søknadsfelt<List<TidligereUtdanningKontrakt>> {
+        val tidligereUtdanningList = tidligereUtdanning.map {
+            TidligereUtdanningKontrakt(it.linjeKursGrad.tilSøknadsfelt(),
+                      Søknadsfelt("Når var du elev/student?",
+                                  MånedÅrPeriode(it.periode.fra.tilLocalDate().month,
+                                          it.periode.fra.tilLocalDate().year,
+                                          it.periode.til.tilLocalDate().month,
+                                          it.periode.til.tilLocalDate().year)))
+        }
+        return Søknadsfelt("Tidligere Utdanning", tidligereUtdanningList)
+    }
+
+    private fun mapUtgifterTilUtdanning(utgift: TekstFelt?): Søknadsfelt<Double>? {
+        return utgift?.let {
+            return if (it.verdi.isNotBlank()) {
+                utgift.tilSøknadsfelt(String::tilDesimaltall)
+            } else {
+                null
+            }
+        }
+    }
+
+}

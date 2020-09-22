@@ -1,40 +1,29 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn
-import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
-import no.nav.familie.ef.søknad.mapper.dokumentfelt
+import no.nav.familie.ef.søknad.mapper.*
+import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
-import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
-import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
-import org.slf4j.LoggerFactory
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
 import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
 
-object BarnMapper {
+object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>("Barna dine") {
 
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
-
-    fun mapBarn(barnliste: List<Barn>, vedlegg: Map<String, DokumentasjonWrapper>): List<Kontraktbarn> {
-
+    override fun mapDto(barnliste: List<Barn>, vedlegg: Map<String, DokumentasjonWrapper>): List<Kontraktbarn> {
         return barnliste.map { barn ->
-            try {
-                Kontraktbarn(navn = barn.navn?.tilSøknadsfelt(),
-                             fødselsnummer = mapFødselsnummer(barn),
-                             harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
-                             ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse
-                                     ?.tilSøknadsfelt(),
-                             erBarnetFødt = barn.født.tilSøknadsfelt(),
-                             fødselTermindato = barn.fødselsdato?.tilSøknadsDatoFeltEllerNull(),
-                             terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, vedlegg),
-                             annenForelder = mapAnnenForelder(barn.forelder),
-                             samvær = mapSamvær(barn.forelder, vedlegg),
-                             skalHaBarnepass = barn.skalHaBarnepass?.tilSøknadsfelt(),
-                             barnepass = barn.barnepass?.let { Søknadsfelt("Om barnepassordningen", BarnepassMapper.tilBarnepass(it)) }) //TODO label?
-            } catch (e: Exception) {
-                secureLogger.error("Feil ved mapping av barn: $barnliste")
-                throw e
-            }
+            Kontraktbarn(navn = barn.navn?.tilSøknadsfelt(),
+                         fødselsnummer = mapFødselsnummer(barn),
+                         harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
+                         ikkeRegistrertPåSøkersAdresseBeskrivelse = barn.ikkeRegistrertPåSøkersAdresseBeskrivelse
+                                 ?.tilSøknadsfelt(),
+                         erBarnetFødt = barn.født.tilSøknadsfelt(),
+                         fødselTermindato = barn.fødselsdato?.tilSøknadsDatoFeltEllerNull(),
+                         terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, vedlegg),
+                         annenForelder = mapAnnenForelder(barn.forelder),
+                         samvær = mapSamvær(barn.forelder, vedlegg),
+                         skalHaBarnepass = barn.skalHaBarnepass?.tilSøknadsfelt(),
+                         barnepass = barn.barnepass?.let { BarnepassMapper.map(it) })
         }
     }
 

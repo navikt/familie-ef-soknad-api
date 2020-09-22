@@ -3,10 +3,15 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.integration.SøknadRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
-import no.nav.familie.ef.søknad.mapper.dokumentfelt
+import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
+import no.nav.familie.ef.søknad.mapper.kontrakt.FellesMapper.mapInnsendingsdetaljer
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
+import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
-import no.nav.familie.kontrakter.ef.søknad.*
+import no.nav.familie.kontrakter.ef.søknad.BarnetilsynDokumentasjon
+import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
+import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
@@ -19,34 +24,28 @@ class SøknadBarnetilsynMapper(private val dokumentServiceService: DokumentServi
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
 
         val barnetilsynSøknad = SøknadBarnetilsyn(
-                innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
-                                                  Innsendingsdetaljer(Søknadsfelt("Dato mottatt", innsendingMottatt))),
-                personalia = dto.person.søker.tilSøknadsFelt(),
-                sivilstandsdetaljer = Søknadsfelt("Årsak til alene med barn",
-                                                  SivilstandsdetaljerMapper.mapSivilstandsdetaljer(dto.sivilstatus,
-                                                                                                   vedlegg)),
-                medlemskapsdetaljer = Søknadsfelt("Opphold i Norge", MedlemsskapsMapper.mapMedlemskap(dto.medlemskap)),
-                bosituasjon = Søknadsfelt("Bosituasjonen din",
-                                          BosituasjonMapper.mapBosituasjon(dto.bosituasjon, vedlegg)),
-                sivilstandsplaner = Søknadsfelt("Fremtidsplaner",
-                                                SivilstandsplanerMapper.mapSivilstandsplaner(dto.bosituasjon)),
+                innsendingsdetaljer = mapInnsendingsdetaljer(innsendingMottatt),
+                personalia = PersonaliaMapper.map(dto.person.søker),
+                sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
+                medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
+                bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
+                sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
                 barn = dto.person.barn.tilSøknadsfelt(vedlegg),
-                aktivitet = Søknadsfelt("Arbeid, utdanning og andre aktiviteter",
-                                        AktivitetsMapper.map(dto.aktivitet, vedlegg)),
-                stønadsstart = Søknadsfelt("Når søker du stønad fra?",
-                                           StønadsstartMapper.mapStønadsstart(dto.søknadsdato,
-                                                                              dto.søkerFraBestemtMåned)),
+                aktivitet = AktivitetsMapper.map(dto.aktivitet, vedlegg),
+                stønadsstart = StønadsstartMapper.mapStønadsstart(dto.søknadsdato,
+                                                                  dto.søkerFraBestemtMåned),
                 dokumentasjon = BarnetilsynDokumentasjon(
-                        tidligereFakturaer = dokumentfelt(DokumentIdentifikator.TIDLIGERE_FAKTURAER, vedlegg),
-                        barnepassordningFaktura = dokumentfelt(DokumentIdentifikator.FAKTURA_BARNEPASSORDNING, vedlegg),
-                        avtaleBarnepasser = dokumentfelt(DokumentIdentifikator.AVTALE_BARNEPASSER, vedlegg),
-                        arbeidstid = dokumentfelt(DokumentIdentifikator.ARBEIDSTID, vedlegg),
-                        spesielleBehov = dokumentfelt(DokumentIdentifikator.TRENGER_MER_PASS_ENN_JEVNALDREDE, vedlegg)
+                        barnepassordningFaktura = dokumentfelt(FAKTURA_BARNEPASSORDNING, vedlegg),
+                        avtaleBarnepasser = dokumentfelt(AVTALE_BARNEPASSER, vedlegg),
+                        arbeidstid = dokumentfelt(ARBEIDSTID, vedlegg),
+                        roterendeArbeidstid = dokumentfelt(ROTERENDE_ARBEIDSTID, vedlegg),
+                        spesielleBehov = dokumentfelt(TRENGER_MER_PASS_ENN_JEVNALDREDE, vedlegg)
                 )
         )
 
-        return SøknadRequestData(SøknadMedVedlegg(barnetilsynSøknad, vedlegg.values.map { it.vedlegg }.flatten()),
-                                 vedleggData)
+        return SøknadRequestData(SøknadMedVedlegg(barnetilsynSøknad,
+                                                  vedlegg.values.flatMap { it.vedlegg },
+                                                  dto.dokumentasjonsbehov.tilKontrakt()), vedleggData)
     }
 
 }

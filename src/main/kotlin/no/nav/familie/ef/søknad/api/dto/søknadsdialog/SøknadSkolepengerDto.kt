@@ -1,13 +1,11 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
-data class SøknadBarnetilsynDto(
+data class SøknadSkolepengerDto(
         val bosituasjon: Bosituasjon,
         val medlemskap: Medlemskap,
         val person: Person,
         val sivilstatus: Sivilstatus,
         val søkerBorPåRegistrertAdresse: BooleanFelt?,
-        val aktivitet: Aktivitet,
-        val søkerFraBestemtMåned: BooleanFelt,
-        val søknadsdato: DatoFelt?,
+        val utdanning: UnderUtdanning,
         val dokumentasjonsbehov: List<Dokumentasjonsbehov>
 )

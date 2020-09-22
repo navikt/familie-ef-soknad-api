@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadSkolepengerDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.service.SøknadService
@@ -19,19 +19,19 @@ import java.time.LocalDateTime
 
 
 @RestController
-@RequestMapping(path = ["/api/soknadbarnetilsyn", "/api/soknad/barnetilsyn"], produces = [APPLICATION_JSON_VALUE])
+@RequestMapping(path = ["/api/soknad/skolepenger"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
-class SøknadBarnetilsynController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
+class SøknadSkolepengerController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     @PostMapping
-    fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
+    fun sendInn(@RequestBody søknad: SøknadSkolepengerDto): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
-        return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.send-barnetilsynsoknad") {
+        return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.send-skolepengersoknad") {
             val innsendingMottatt = LocalDateTime.now()
             søknadService.sendInn(søknad, innsendingMottatt)
             Kvittering("ok", mottattDato = innsendingMottatt)
