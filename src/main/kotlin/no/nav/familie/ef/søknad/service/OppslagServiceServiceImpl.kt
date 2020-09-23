@@ -3,7 +3,11 @@ package no.nav.familie.ef.søknad.service
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
+import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
+import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
+import org.apache.commons.logging.LogFactory
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
@@ -13,13 +17,35 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
                                          private val regelverkConfig: RegelverkConfig,
                                          private val søkerinfoMapper: SøkerinfoMapper) : OppslagService {
 
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+    private val logger = LogFactory.getLog(this.javaClass)
+
+
     override fun hentSøkerinfo(): Søkerinfo {
         val personinfoDto = client.hentPersoninfo()
         val barn = client.hentBarn()
 
+        logSecure(personinfoDto, barn)
+
         val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
 
+        if (aktuelleBarn.size < barn.size) {
+            logSecure(personinfoDto, aktuelleBarn, "Aktuelle barn")
+        }
         return søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn)
+    }
+
+    private fun logSecure(personinfoDto: PersoninfoDto,
+                          barn: List<RelasjonDto>, tekst: String = "Barn alder/samme adresse") {
+        try {
+            val logTekst = "Personinfo: ${personinfoDto.ident}, $tekst : ${
+                barn.map { Pair(it.alder, it.harSammeAdresse) }
+            },  "
+            secureLogger.info(logTekst)
+        } catch (e: Exception) {
+            // svelg denne, kun logging
+        }
+
     }
 
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {
