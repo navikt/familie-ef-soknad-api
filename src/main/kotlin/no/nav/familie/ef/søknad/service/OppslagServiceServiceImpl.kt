@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
@@ -13,12 +14,15 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
                                          private val regelverkConfig: RegelverkConfig,
                                          private val søkerinfoMapper: SøkerinfoMapper) : OppslagService {
 
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+
     override fun hentSøkerinfo(): Søkerinfo {
         val personinfoDto = client.hentPersoninfo()
         val barn = client.hentBarn()
-
+        secureLogger.info("Personinfo: ${personinfoDto.ident}, Barn alder/samme adresse : ${
+            barn.map { Pair(it.alder, it.harSammeAdresse) }
+        },  ")
         val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
-
         return søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn)
     }
 

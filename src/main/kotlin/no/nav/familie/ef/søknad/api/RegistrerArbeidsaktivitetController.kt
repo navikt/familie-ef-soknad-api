@@ -21,7 +21,9 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping(path = ["/api/registrerarbeid"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
-class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService, val featureToggleService: FeatureToggleService,  private val oppslagService: OppslagService) {
+class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService,
+                                          val featureToggleService: FeatureToggleService,
+                                          private val oppslagService: OppslagService) {
 
     @PostMapping
     @Protected
