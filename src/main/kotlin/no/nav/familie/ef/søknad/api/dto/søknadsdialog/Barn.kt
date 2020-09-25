@@ -12,6 +12,7 @@ data class Barn(val alder: TekstFelt?, // TODO Bare for visning (kan fjernes?)
                 val født: BooleanFelt,
                 val forelder: AnnenForelder,
                 val skalHaBarnepass: BooleanFelt?, //TODO må mappes
+                val særligeTilsynsbehov: TekstFelt?,
                 val barnepass: Barnepass?) //TODO må mappes
 
 data class AnnenForelder(
