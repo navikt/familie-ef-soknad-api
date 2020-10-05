@@ -72,4 +72,9 @@ internal class BarnMapperTest {
                 .isEqualTo("Vi møtes nå og da, gjerne for en tur i skogen eller et glass vin, hyggelig det.")
     }
 
+    @Test
+    fun `SærligeTilsynsbehov må ha verdi`() {
+        assertThat(folkeregistrerteBarn.særligeTilsynsbehov?.verdi).isEqualTo("Har jo fort litt særlige tilsynsbehov da!")
+    }
+
 }
