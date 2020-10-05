@@ -21,9 +21,10 @@ class SøknadSkolepengerMapper(private val dokumentServiceService: DokumentServi
         val vedleggData: Map<String, ByteArray> = dokumentServiceService.hentDokumenter(dto.dokumentasjonsbehov)
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
 
-        val barnetilsynSøknad = SøknadSkolepenger(
+        val søknadSkolepenger = SøknadSkolepenger(
                 innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
                 personalia = PersonaliaMapper.map(dto.person.søker),
+                barn = dto.person.barn.tilSøknadsfelt(vedlegg),
                 sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
                 medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
                 bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
@@ -34,7 +35,7 @@ class SøknadSkolepengerMapper(private val dokumentServiceService: DokumentServi
                 )
         )
 
-        return SøknadRequestData(SøknadMedVedlegg(barnetilsynSøknad,
+        return SøknadRequestData(SøknadMedVedlegg(søknadSkolepenger,
                                                   vedlegg.values.flatMap { it.vedlegg },
                                                   dto.dokumentasjonsbehov.tilKontrakt()), vedleggData)
     }
