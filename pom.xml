@@ -20,14 +20,14 @@
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
         <jvmTarget>11</jvmTarget>
-        <kotlin.version>1.4.0</kotlin.version>
+        <kotlin.version>1.4.10</kotlin.version>
         <springfox.version>3.0.0</springfox.version>
         <mockk.version>1.10.0</mockk.version>
         <token-validation-spring.version>1.3.0</token-validation-spring.version>
         <fasterxml.version>2.11.2</fasterxml.version>
-        <com.amazonaws.version>1.11.852</com.amazonaws.version>
+        <com.amazonaws.version>1.11.854</com.amazonaws.version>
         <felles.version>1.20200828124055_aa07403</felles.version>
-        <kontrakter.version>2.0_20200904102330_d1b3555</kontrakter.version>
+        <kontrakter.version>2.0_20201005130453_a188b4e</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>

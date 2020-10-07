@@ -50,6 +50,10 @@
           "label": "Er barnet født?",
           "verdi": true
         },
+        "særligeTilsynsbehov": {
+          "label": "Har man det?",
+          "verdi": "Har jo fort litt særlige tilsynsbehov da!"
+        },
         "forelder": {
           "kanIkkeOppgiAnnenForelderFar": {
             "label": "Kan ikke oppgi annen forelder",
