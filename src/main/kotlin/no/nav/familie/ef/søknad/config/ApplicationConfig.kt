@@ -2,9 +2,11 @@ package no.nav.familie.ef.søknad.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
+import no.nav.familie.http.config.RestTemplateSts
 import no.nav.familie.http.interceptor.ApiKeyInjectingClientInterceptor
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
+import no.nav.familie.http.sts.StsRestClient
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.sikkerhet.EksternBrukerUtils
@@ -22,7 +24,10 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestOperations
 
 @SpringBootConfiguration
-@Import(MdcValuesPropagatingClientInterceptor::class, ConsumerIdClientInterceptor::class)
+@Import(MdcValuesPropagatingClientInterceptor::class,
+        ConsumerIdClientInterceptor::class,
+        StsRestClient::class,
+        RestTemplateSts::class)
 internal class ApplicationConfig {
 
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)

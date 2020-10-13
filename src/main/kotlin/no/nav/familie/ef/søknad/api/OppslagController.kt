@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.api
 
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
+import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.ef.søknad.service.OppslagService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
@@ -19,11 +20,24 @@ import org.springframework.web.bind.annotation.RestController
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
 class OppslagController(private val oppslagService: OppslagService,
-                        private val kodeverkService: KodeverkService) {
+                        private val kodeverkService: KodeverkService,
+                        private val pdlClient: PdlClient) {
 
     @GetMapping("/sokerinfo")
     fun søkerinfo(): Søkerinfo {
         return oppslagService.hentSøkerinfo()
+    }
+
+    @GetMapping("/sokerinfoV2")
+    fun søkerinfo_V2(): Søkerinfo {
+        val tps_søkerinfo = oppslagService.hentSøkerinfo()
+
+        val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
+
+        val søker = tps_søkerinfo.søker
+        val oppdaterSøker =
+                søker.copy(forkortetNavn = "${pdlSøker.navn.last().fornavn} ${pdlSøker.navn.last().mellomnavn} ${pdlSøker.navn.last().etternavn}")
+        return tps_søkerinfo.copy(søker = oppdaterSøker)
     }
 
     @GetMapping("/poststed/{postnummer}")

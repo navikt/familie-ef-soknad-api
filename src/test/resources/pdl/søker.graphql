@@ -1,0 +1,218 @@
+query($ident: ID!){
+    person: hentPerson(ident: $ident) {
+        adressebeskyttelse {
+            gradering
+        }
+        bostedsadresse(historikk: true) {
+            angittFlyttedato
+            coAdressenavn
+            folkeregistermetadata {
+                gyldighetstidspunkt
+                opphoerstidspunkt
+            }
+            utenlandskAdresse {
+                adressenavnNummer
+                bySted
+                bygningEtasjeLeilighet
+                landkode
+                postboksNummerNavn
+                postkode
+                regionDistriktOmraade
+            }
+            vegadresse {
+                husnummer
+                husbokstav
+                bruksenhetsnummer
+                adressenavn
+                kommunenummer
+                tilleggsnavn
+                postnummer
+                koordinater {
+                    x
+                    y
+                    z
+                    kvalitet
+                }
+            }
+            ukjentBosted {
+                bostedskommune
+            }
+        }
+        doedsfall {
+            doedsdato
+        }
+        familierelasjoner {
+            relatertPersonsIdent
+            relatertPersonsRolle
+            minRolleForPerson
+        }
+        foedsel {
+            foedselsaar
+            foedselsdato
+            foedeland
+            foedested
+            foedekommune
+        }
+        folkeregisterpersonstatus(historikk: true) {
+            status
+            forenkletStatus
+        }
+        fullmakt(historikk: true) {
+            gyldigFraOgMed
+            gyldigTilOgMed
+            motpartsPersonident
+            motpartsRolle
+            omraader
+        }
+        kjoenn {
+            kjoenn
+        }
+        navn {
+            fornavn
+            mellomnavn
+            etternavn
+            metadata {
+                endringer {
+                    registrert
+                }
+            }
+        }
+        opphold(historikk: true) {
+            type
+            oppholdFra
+            oppholdTil
+        }
+        vergemaalEllerFremtidsfullmakt {
+            embete
+            folkeregistermetadata {
+                gyldighetstidspunkt
+                opphoerstidspunkt
+            }
+            type
+            vergeEllerFullmektig {
+                motpartsPersonident
+                navn {
+                    fornavn
+                    mellomnavn
+                    etternavn
+                }
+                omfang
+                omfangetErInnenPersonligOmraade
+            }
+        }
+        kontaktadresse{
+            coAdressenavn
+            gyldigFraOgMed
+            gyldigTilOgMed
+            postadresseIFrittFormat {
+                adresselinje1
+                adresselinje2
+                adresselinje3
+                postnummer
+            }
+            postboksadresse {
+                postboks
+                postbokseier
+                postnummer
+            }
+            type
+            utenlandskAdresse {
+                adressenavnNummer
+                bySted
+                bygningEtasjeLeilighet
+                landkode
+                postboksNummerNavn
+                postkode
+                regionDistriktOmraade
+            }
+            utenlandskAdresseIFrittFormat {
+                adresselinje1
+                adresselinje2
+                adresselinje3
+                byEllerStedsnavn
+                landkode
+                postkode
+            }
+            vegadresse {
+                husnummer
+                husbokstav
+                bruksenhetsnummer
+                adressenavn
+                kommunenummer
+                tilleggsnavn
+                postnummer
+                koordinater {
+                    x
+                    y
+                    z
+                    kvalitet
+                }
+            }
+        }
+        oppholdsadresse(historikk: true) {
+            oppholdsadressedato
+            coAdressenavn
+            utenlandskAdresse {
+                adressenavnNummer
+                bySted
+                bygningEtasjeLeilighet
+                postkode
+                landkode
+                postboksNummerNavn
+                regionDistriktOmraade
+            }
+            vegadresse {
+                husnummer
+                husbokstav
+                bruksenhetsnummer
+                adressenavn
+                kommunenummer
+                tilleggsnavn
+                postnummer
+                koordinater {
+                    x
+                    y
+                    z
+                    kvalitet
+                }
+            }
+            oppholdAnnetSted
+        }
+        sivilstand(historikk: true) {
+            type
+            gyldigFraOgMed
+            myndighet
+            kommune
+            sted
+            utland
+            relatertVedSivilstand
+            bekreftelsesdato
+        }
+        statsborgerskap {
+            land
+            gyldigFraOgMed
+            gyldigTilOgMed
+        }
+        telefonnummer {
+            landskode
+            nummer
+            prioritet
+        }
+        tilrettelagtKommunikasjon {
+            talespraaktolk {
+                spraak
+            }
+            tegnspraaktolk {
+                spraak
+            }
+        }
+        innflyttingTilNorge {
+            fraflyttingsland
+            fraflyttingsstedIUtlandet
+        }
+        utflyttingFraNorge {
+            tilflyttingsland
+            tilflyttingsstedIUtlandet
+        }
+    }
+}

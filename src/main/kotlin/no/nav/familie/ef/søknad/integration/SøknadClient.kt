@@ -4,8 +4,12 @@ import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.http.client.MultipartBuilder
-import no.nav.familie.kontrakter.ef.søknad.*
+import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
+import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
+import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
+import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
 import no.nav.familie.kontrakter.ef.søknad.dokumentasjonsbehov.DokumentasjonsbehovDto
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
 import java.net.URI
@@ -14,7 +18,8 @@ import java.util.*
 
 @Service
 class SøknadClient(private val config: MottakConfig,
-                   operations: RestOperations) : AbstractPingableRestClient(operations, "søknad.innsending") {
+                   @Qualifier("restTemplate") operations: RestOperations) : AbstractPingableRestClient(operations,
+                                                                                                       "søknad.innsending") {
 
     override val pingUri: URI = config.pingUri
 

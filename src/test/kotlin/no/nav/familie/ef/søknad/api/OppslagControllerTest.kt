@@ -9,9 +9,12 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 internal class OppslagControllerTest {
+
     private val oppslagService: OppslagService = mockk()
     private val kodeverkService: KodeverkService = mockk()
-    private val oppslagsController = OppslagController(oppslagService = oppslagService, kodeverkService = kodeverkService)
+    private val oppslagsController = OppslagController(oppslagService = oppslagService,
+                                                       kodeverkService = kodeverkService,
+                                                       pdlClient = mockk())
 
     @Test
     fun `Feiler med ulovlig (tekst) input`() {
