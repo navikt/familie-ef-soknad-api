@@ -18,7 +18,7 @@ object SituasjonsMapper : MapperMedVedlegg<SøknadOvergangsstønadDto, Situasjon
                 "Barnet mitt er sykt",
                 "Jeg har søkt om barnepass, men ikke fått plass enda",
                 "Jeg har barn som trenger særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
-                "Nei") // TODO Fjern elvis når vi får data fra UI
+                "Nei") // TODO Fjern elvis når vi får data fra UI - gjør mapping av alternativer i tilSøknadsfelt
         return Situasjon(gjelderDetteDeg = Søknadsfelt(merOmDinSituasjon.gjelderDetteDeg.label,
                                                        merOmDinSituasjon.gjelderDetteDeg.verdi,
                                                        gjelderDetteDegAlternativer),
