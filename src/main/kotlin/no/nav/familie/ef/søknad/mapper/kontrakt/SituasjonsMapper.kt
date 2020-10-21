@@ -13,14 +13,15 @@ object SituasjonsMapper : MapperMedVedlegg<SøknadOvergangsstønadDto, Situasjon
 
     override fun mapDto(frontendDto: SøknadOvergangsstønadDto, vedlegg: Map<String, DokumentasjonWrapper>): Situasjon {
         val merOmDinSituasjon = frontendDto.merOmDinSituasjon
-        val alternativer = listOf("Jeg er syk",
-                                  "Barnet mitt er sykt",
-                                  "Jeg har søkt om barnepass, men ikke fått plass enda",
-                                  "Jeg har barn som trenger særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
-                                  "Nei") // TODO Endre når vi har dto som kan ta imot dette fra UI
+        val gjelderDetteDegAlternativer = merOmDinSituasjon.gjelderDetteDeg.alternativer ?: listOf(
+                "Jeg er syk",
+                "Barnet mitt er sykt",
+                "Jeg har søkt om barnepass, men ikke fått plass enda",
+                "Jeg har barn som trenger særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
+                "Nei") // TODO Fjern elvis når vi får data fra UI
         return Situasjon(gjelderDetteDeg = Søknadsfelt(merOmDinSituasjon.gjelderDetteDeg.label,
                                                        merOmDinSituasjon.gjelderDetteDeg.verdi,
-                                                       alternativer),
+                                                       gjelderDetteDegAlternativer),
                          sykdom = dokumentfelt(SYKDOM, vedlegg),
                          barnsSykdom = dokumentfelt(SYKT_BARN, vedlegg),
                          manglendeBarnepass = dokumentfelt(BARNEPASS, vedlegg),
