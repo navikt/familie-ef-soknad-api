@@ -26,6 +26,9 @@ tps:
     uri: http://localhost:8091/mockapi/
     passord: pwdInnsyn
 
+pdl:
+  passord: pwdPassord
+
 funksjonsbrytere:
   enabled: false
   unleash:
