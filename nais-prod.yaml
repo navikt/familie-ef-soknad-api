@@ -31,6 +31,8 @@ spec:
         mountPath: /secrets/apikey/tps-innsyn
       - kvPath: /apikey/apigw/prod/pdl-api/familie-ef-soknad-api
         mountPath: /secrets/apikey/pdl-api
+      - kvPath: /apikey/apigw/dev/security-token-service-token/familie-ef-soknad-api
+        mountPath: /secrets/apikey/security-token-service-token
       - kvPath: /kv/prod/sbs/familie-ef-soknad-api/default
         mountPath: /var/run/secrets/nais.io/vault
   replicas:

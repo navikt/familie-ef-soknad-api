@@ -13,7 +13,7 @@ import org.springframework.web.client.RestOperations
 
 @Component
 class PdlClient(val pdlConfig: PdlConfig,
-                @Qualifier("sts") restOperations: RestOperations,
+                @Qualifier("restKlientMedApiKey") restOperations: RestOperations,
                 private val stsRestClient: StsRestClient)
     : AbstractRestClient(restOperations, "pdl.personinfo") {
 

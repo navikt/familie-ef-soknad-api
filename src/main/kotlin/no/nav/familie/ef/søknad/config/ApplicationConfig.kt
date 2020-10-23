@@ -37,11 +37,13 @@ internal class ApplicationConfig {
     fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig,
                                          mottak: MottakConfig,
                                          pdlConfig: PdlConfig,
+                                         stsConfig: StsConfig,
                                          integrasjoner: FamilieIntegrasjonerConfig): ClientHttpRequestInterceptor {
         val map =
                 mapOf(oppslag.uri to Pair(apiKey, oppslag.passord),
                       mottak.uri to Pair(apiKey, mottak.passord),
                       pdlConfig.pdlUri to Pair(apiKey, pdlConfig.passord),
+                      stsConfig.uri to Pair(apiKey, stsConfig.passord),
                       integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
         return ApiKeyInjectingClientInterceptor(map)
 
@@ -89,6 +91,18 @@ internal class ApplicationConfig {
                 .interceptors(consumerIdClientInterceptor,
                               apiKeyInjectingClientInterceptor,
                               jwtTokenInjectingInterceptor,
+                              MdcValuesPropagatingClientInterceptor())
+                .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
+                .build()
+    }
+
+    // TODO skal bruke STS for å hente barn
+    @Bean("stsRestKlientMedApiKey")
+    fun stsRestTemplateMedApiKey(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                                 apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor): RestOperations {
+        return RestTemplateBuilder()
+                .interceptors(consumerIdClientInterceptor,
+                              apiKeyInjectingClientInterceptor,
                               MdcValuesPropagatingClientInterceptor())
                 .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
                 .build()
