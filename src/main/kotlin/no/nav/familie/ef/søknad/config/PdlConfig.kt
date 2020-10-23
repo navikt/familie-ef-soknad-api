@@ -1,19 +1,13 @@
 package no.nav.familie.ef.søknad.config
 
 import org.apache.commons.lang3.StringUtils
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Configuration
-class PdlConfig(@Value("\${PDL_URL}") pdlUrl: URI, @Value("\${pdl.passord}") val passord: String,
-                @Value("\${CREDENTIAL_USERNAME}") str: String ) {
-
-    init {
-        LoggerFactory.getLogger(PdlConfig::class.java).info("cred-username $str")
-    }
+class PdlConfig(@Value("\${PDL_URL}") pdlUrl: URI, @Value("\${pdl.passord}") val passord: String) {
 
     val pdlUri: URI = UriComponentsBuilder.fromUri(pdlUrl).path(PATH_GRAPHQL).build().toUri()
 
