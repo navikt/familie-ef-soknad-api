@@ -35,6 +35,8 @@ spec:
         mountPath: /secrets/apikey/security-token-service-token
       - kvPath: /kv/prod/sbs/familie-ef-soknad-api/default
         mountPath: /var/run/secrets/nais.io/vault
+      - kvPath: /serviceuser/data/prod/srvfam-ef-soknad-api-sbs
+        mountPath: /var/run/secrets/nais.io/srvfam-ef-soknad-api-sbs
   replicas:
     min: 2
     max: 4
