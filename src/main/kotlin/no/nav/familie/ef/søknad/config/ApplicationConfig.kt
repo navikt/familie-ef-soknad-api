@@ -6,6 +6,7 @@ import no.nav.familie.http.config.RestTemplateSts
 import no.nav.familie.http.interceptor.ApiKeyInjectingClientInterceptor
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
+import no.nav.familie.http.interceptor.StsBearerTokenClientInterceptor
 import no.nav.familie.http.sts.StsRestClient
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.filter.LogFilter
@@ -47,11 +48,11 @@ internal class ApplicationConfig {
 
     }
 
-    @Bean
+    @Bean("restTemplate")
     fun restTemplate(vararg interceptors: ClientHttpRequestInterceptor): RestOperations {
         logger.info("Registrerer interceptors {}", interceptors.contentToString())
         return RestTemplateBuilder()
-                .interceptors(*interceptors)
+                .interceptors(interceptors.filterNot { it is StsBearerTokenClientInterceptor })
                 .build()
     }
 
@@ -97,10 +98,12 @@ internal class ApplicationConfig {
     // TODO skal bruke STS for å hente barn
     @Bean("stsRestKlientMedApiKey")
     fun stsRestTemplateMedApiKey(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                                 stsBearerTokenClientInterceptor: StsBearerTokenClientInterceptor,
                                  apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor): RestOperations {
         return RestTemplateBuilder()
                 .interceptors(consumerIdClientInterceptor,
                               apiKeyInjectingClientInterceptor,
+                              stsBearerTokenClientInterceptor,
                               MdcValuesPropagatingClientInterceptor())
                 .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
                 .build()
