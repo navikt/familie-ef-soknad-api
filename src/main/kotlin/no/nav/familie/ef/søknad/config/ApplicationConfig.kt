@@ -77,19 +77,13 @@ internal class ApplicationConfig {
         return filterRegistration
     }
 
-    @Bean
-    fun jwtTokenInjectingInterceptor(): ClientHttpRequestInterceptor {
-        return AddJwtTokenInterceptor()
-    }
-
     @Bean("restKlientMedApiKey")
     fun restTemplateMedApiKey(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-                              apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor,
-                              jwtTokenInjectingInterceptor: ClientHttpRequestInterceptor): RestOperations {
+                              apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor): RestOperations {
         return RestTemplateBuilder()
                 .interceptors(consumerIdClientInterceptor,
                               apiKeyInjectingClientInterceptor,
-                              jwtTokenInjectingInterceptor,
+                              AddJwtTokenInterceptor(),
                               MdcValuesPropagatingClientInterceptor())
                 .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
                 .build()
