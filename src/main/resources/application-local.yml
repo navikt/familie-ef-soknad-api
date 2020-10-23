@@ -27,7 +27,10 @@ tps:
     passord: pwdInnsyn
 
 pdl:
-  passord: pwdPassord
+  passord: pdlPassord
+
+sts:
+  passord: stsPassord
 
 funksjonsbrytere:
   enabled: false
