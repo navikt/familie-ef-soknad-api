@@ -29,7 +29,7 @@ spec:
         mountPath: /secrets/apikey/familie-ef-mottak
       - kvPath: /apikey/apigw/prod/tps-proxy.api.v1.innsyn/familie-ef-soknad-api
         mountPath: /secrets/apikey/tps-innsyn
-      - kvPath: /apikey/apigw/dev/pdl-api/familie-ef-soknad-api_q2
+      - kvPath: /apikey/apigw/prod/pdl-api/familie-ef-soknad-api
         mountPath: /secrets/apikey/pdl-api
       - kvPath: /kv/prod/sbs/familie-ef-soknad-api/default
         mountPath: /var/run/secrets/nais.io/vault
