@@ -29,8 +29,7 @@ tps:
 pdl:
   passord: pdlPassord
 
-sts:
-  passord: stsPassord
+STS_APIKEY: test
 
 funksjonsbrytere:
   enabled: false
