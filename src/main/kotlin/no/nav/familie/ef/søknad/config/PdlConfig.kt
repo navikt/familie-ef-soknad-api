@@ -7,7 +7,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Configuration
-class PdlConfig(@Value("\${PDL_URL}") pdlUrl: URI) {
+class PdlConfig(@Value("\${PDL_URL}") pdlUrl: URI, @Value("\${pdl.passord}") val passord: String) {
 
     val pdlUri: URI = UriComponentsBuilder.fromUri(pdlUrl).path(PATH_GRAPHQL).build().toUri()
 
@@ -15,15 +15,9 @@ class PdlConfig(@Value("\${PDL_URL}") pdlUrl: URI) {
 
         const val PATH_GRAPHQL = "graphql"
 
-        // val personBolkKortQuery = graphqlQuery("/pdl/person_kort_bolk.graphql")
-
-        // val søkerKortBolkQuery = graphqlQuery("/pdl/søker_kort_bolk.graphql")
-
         val søkerQuery = graphqlQuery("/pdl/søker.graphql")
 
-        // val barnQuery = graphqlQuery("/pdl/barn.graphql")
-
-        //  val annenForelderQuery = graphqlQuery("/pdl/andreForeldre.graphql")
+        val barnQuery = graphqlQuery("/pdl/barn.graphql")
 
         private fun graphqlQuery(path: String) = PdlConfig::class.java.getResource(path)
                 .readText()

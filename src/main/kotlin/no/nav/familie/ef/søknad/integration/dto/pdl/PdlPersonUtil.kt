@@ -1,8 +1,4 @@
-package no.nav.familie.ef.sak.integration.dto.pdl
-
-fun List<Navn>.gjeldende(): Navn = this.maxByOrNull {
-    it.metadata.endringer.maxByOrNull(MetadataEndringer::registrert)!!.registrert
-}!!
+package no.nav.familie.ef.søknad.integration.dto.pdl
 
 fun Navn.visningsnavn(): String {
     return if (mellomnavn == null) "$fornavn $etternavn"

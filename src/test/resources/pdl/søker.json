@@ -1,0 +1,62 @@
+{
+  "data": {
+    "person": {
+      "adressebeskyttelse": [
+        {
+          "gradering": "UGRADERT"
+        }
+      ],
+      "bostedsadresse": [
+        {
+          "angittFlyttedato": "1966-11-18",
+          "coAdressenavn": null,
+          "vegadresse": {
+            "husnummer": "77",
+            "husbokstav": null,
+            "bruksenhetsnummer": null,
+            "adressenavn": "INNGJERDSVEGEN",
+            "kommunenummer": "0301",
+            "tilleggsnavn": null,
+            "postnummer": "0862"
+          },
+          "ukjentBosted": null
+        }
+      ],
+      "familierelasjoner": [],
+      "folkeregisterpersonstatus": [
+        {
+          "status": "bosatt",
+          "forenkletStatus": "bosattEtterFolkeregisterloven"
+        }
+      ],
+      "navn": [
+        {
+          "fornavn": "BRÅKETE",
+          "mellomnavn": null,
+          "etternavn": "KAMELEON",
+          "forkortetNavn": "Bråkete Kamelon"
+        }
+      ],
+      "sivilstand": [
+        {
+          "type": "UGIFT",
+          "gyldigFraOgMed": null,
+          "myndighet": null,
+          "kommune": null,
+          "sted": null,
+          "utland": null,
+          "relatertVedSivilstand": null,
+          "bekreftelsesdato": null
+        }
+      ],
+      "statsborgerskap": [
+        {
+          "land": "NOR",
+          "gyldigFraOgMed": null,
+          "gyldigTilOgMed": null
+        }
+      ],
+      "tilrettelagtKommunikasjon": []
+    }
+  }
+}
