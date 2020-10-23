@@ -66,8 +66,8 @@ no.nav.security.jwt:
     proxyurl: http://webproxy-nais.nav.no:8088
     cookie_name: selvbetjening-idtoken
 
-PDL_URL: https://api-gw-q1.oera.no/pdl-api
-STS_URL: https://api-gw-q1.oera.no/security-token-service/rest/v1/sts/token
+PDL_URL: https://api-gw.oera.no/pdl-api
+STS_URL: https://api-gw.oera.no/security-token-service/rest/v1/sts/token
 
 #STS_URL: http://security-token-service.default.svc.nais.local/rest/v1/sts/token?grant_type=client_credentials&scope=openid
 #PDL_URL: http://pdl-api

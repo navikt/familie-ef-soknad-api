@@ -18,6 +18,8 @@ cors:
     - "https://www-q0.nav.no/familie/alene-med-barn/soknad"
     - "https://www-q0.nav.no/familie/alene-med-barn/soknad-api"
 
+PDL_URL: https://api-gw-q1.oera.no/pdl-api
+STS_URL: https://api-gw-q1.oera.no/security-token-service/rest/v1/sts/token
 
 no.nav.security.jwt:
   issuers: selvbetjening
