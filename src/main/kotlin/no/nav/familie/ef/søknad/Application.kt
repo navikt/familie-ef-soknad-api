@@ -18,6 +18,6 @@ fun main(args: Array<String>) {
     props["familie.integrasjoner.passord"] = getFileAsString("/secrets/apikey/familie-integrasjoner/x-nav-apiKey")
     props["tps.innsyn.passord"] = getFileAsString("/secrets/apikey/tps-innsyn/x-nav-apiKey")
     props["pdl.passord"] = getFileAsString("/secrets/apikey/pdl-api/x-nav-apiKey")
-    props["sts.passord"] = getFileAsString("/secrets/apikey/security-token-service-token/x-nav-apiKey")
+    props["STS_APIKEY"] = getFileAsString("/secrets/apikey/security-token-service-token/x-nav-apiKey")
     SpringApplicationBuilder(Application::class.java).properties(props).run(*args)
 }

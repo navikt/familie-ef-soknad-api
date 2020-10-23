@@ -37,13 +37,11 @@ internal class ApplicationConfig {
     fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig,
                                          mottak: MottakConfig,
                                          pdlConfig: PdlConfig,
-                                         stsConfig: StsConfig,
                                          integrasjoner: FamilieIntegrasjonerConfig): ClientHttpRequestInterceptor {
         val map =
                 mapOf(oppslag.uri to Pair(apiKey, oppslag.passord),
                       mottak.uri to Pair(apiKey, mottak.passord),
                       pdlConfig.pdlUri to Pair(apiKey, pdlConfig.passord),
-                      stsConfig.uri to Pair(apiKey, stsConfig.passord),
                       integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
         return ApiKeyInjectingClientInterceptor(map)
 
