@@ -3,19 +3,22 @@ package no.nav.familie.ef.søknad.integration
 import no.nav.familie.ef.søknad.config.PdlConfig
 import no.nav.familie.ef.søknad.exception.PdlRequestException
 import no.nav.familie.ef.søknad.integration.dto.pdl.*
+import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.http.sts.StsRestClient
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
+import org.springframework.web.client.getForEntity
+import java.net.URI
 
 
 @Component
 class PdlClient(val pdlConfig: PdlConfig,
                 @Qualifier("restKlientMedApiKey") restOperations: RestOperations,
                 private val stsRestClient: StsRestClient)
-    : AbstractRestClient(restOperations, "pdl.personinfo") {
+    : AbstractPingableRestClient(restOperations, "pdl.personinfo") {
 
     fun hentSøker(personIdent: String): PdlSøker {
         val pdlPersonRequest = PdlPersonRequest(variables = PdlPersonRequestVariables(personIdent),
@@ -67,5 +70,10 @@ class PdlClient(val pdlConfig: PdlConfig,
         }
     }
 
+    override val pingUri: URI
+        get() = pdlConfig.pdlUri
 
+    override fun ping() {
+        operations.headForHeaders(pingUri)
+    }
 }
