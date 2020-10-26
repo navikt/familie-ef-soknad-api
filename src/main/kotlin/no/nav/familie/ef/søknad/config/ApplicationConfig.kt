@@ -88,7 +88,6 @@ internal class ApplicationConfig {
                               apiKeyInjectingClientInterceptor,
                               stsBearerTokenClientInterceptor,
                               mdcValuesPropagatingClientInterceptor)
-                .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
                 .build()
     }
 
