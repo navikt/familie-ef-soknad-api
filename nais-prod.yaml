@@ -47,6 +47,8 @@ spec:
   ingresses:
     - https://www.nav.no/familie/alene-med-barn/soknad-api
     - https://familie-ef-soknad-api.prod-sbs.nais.io
+  envFrom:
+    - configmap: loginservice-idporten
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod

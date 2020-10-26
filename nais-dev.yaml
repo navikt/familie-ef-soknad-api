@@ -53,6 +53,8 @@ spec:
     - https://www-q2.nav.no/familie/alene-med-barn/soknad-api
     - https://www-q0.nav.no/familie/alene-med-barn/soknad-api
     - https://familie-ef-soknad-api.dev-sbs.nais.io
+  envFrom:
+    - configmap: loginservice-idporten
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
