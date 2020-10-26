@@ -13,9 +13,8 @@ import org.springframework.web.client.RestOperations
 
 @Component
 internal class TpsInnsynServiceClient(val tpsInnsynConfig: TpsInnsynConfig,
-                                      @Qualifier("restKlientMedApiKey") operations: RestOperations) : AbstractRestClient(
-        operations,
-        "tps.innsyn") {
+                                      @Qualifier("restKlientMedApiKey") operations: RestOperations)
+    : AbstractRestClient(operations, "tps.innsyn") {
 
     fun hentPersoninfo(): PersoninfoDto {
         return getForEntity(tpsInnsynConfig.personUri, httpHeaders())

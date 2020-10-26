@@ -18,8 +18,8 @@ import java.util.*
 
 @Service
 class SøknadClient(private val config: MottakConfig,
-                   @Qualifier("restTemplate") operations: RestOperations) : AbstractPingableRestClient(operations,
-                                                                                                       "søknad.innsending") {
+                   @Qualifier("restKlientMedApiKey") operations: RestOperations)
+    : AbstractPingableRestClient(operations, "søknad.innsending") {
 
     override val pingUri: URI = config.pingUri
 

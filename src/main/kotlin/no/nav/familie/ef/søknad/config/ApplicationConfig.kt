@@ -3,11 +3,13 @@ package no.nav.familie.ef.søknad.config
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import no.nav.familie.http.config.RestTemplateSts
-import no.nav.familie.http.interceptor.*
+import no.nav.familie.http.interceptor.ApiKeyInjectingClientInterceptor
+import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
+import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
+import no.nav.familie.http.interceptor.StsBearerTokenClientInterceptor
 import no.nav.familie.http.sts.StsRestClient
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.filter.LogFilter
-import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.spring.validation.interceptor.BearerTokenClientHttpRequestInterceptor
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
@@ -15,10 +17,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
-import org.springframework.http.HttpRequest
-import org.springframework.http.client.ClientHttpRequestExecution
 import org.springframework.http.client.ClientHttpRequestInterceptor
-import org.springframework.http.client.ClientHttpResponse
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestOperations
 
@@ -45,7 +44,7 @@ internal class ApplicationConfig {
         return ApiKeyInjectingClientInterceptor(map)
     }
 
-    @Bean("restTemplate")
+    @Bean("restKlientMedApiKey")
     fun restTemplate(bearerTokenClientHttpRequestInterceptor: BearerTokenClientHttpRequestInterceptor,
                      mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
                      consumerIdClientInterceptor: ConsumerIdClientInterceptor,
@@ -55,6 +54,7 @@ internal class ApplicationConfig {
                               mdcValuesPropagatingClientInterceptor,
                               consumerIdClientInterceptor,
                               apiKeyInjectingClientInterceptor)
+                .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
                 .build()
     }
 
@@ -79,36 +79,18 @@ internal class ApplicationConfig {
         return filterRegistration
     }
 
-    @Bean("restKlientMedApiKey")
-    fun restTemplateMedApiKey(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-                              apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor): RestOperations {
-        return RestTemplateBuilder()
-                .interceptors(consumerIdClientInterceptor,
-                              apiKeyInjectingClientInterceptor,
-                              AddJwtTokenInterceptor(),
-                              MdcValuesPropagatingClientInterceptor())
-                .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
-                .build()
-    }
-
     @Bean("stsRestKlientMedApiKey")
     fun stsRestTemplateMedApiKey(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
                                  stsBearerTokenClientInterceptor: StsBearerTokenClientInterceptor,
-                                 apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor): RestOperations {
+                                 apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor,
+                                 mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
         return RestTemplateBuilder()
                 .interceptors(consumerIdClientInterceptor,
                               apiKeyInjectingClientInterceptor,
                               stsBearerTokenClientInterceptor,
-                              MdcValuesPropagatingClientInterceptor())
+                              mdcValuesPropagatingClientInterceptor)
                 .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
                 .build()
     }
 
-    class AddJwtTokenInterceptor : ClientHttpRequestInterceptor {
-
-        override fun intercept(request: HttpRequest, body: ByteArray, execution: ClientHttpRequestExecution): ClientHttpResponse {
-            request.headers["Authorization"] = "Bearer ${EksternBrukerUtils.getBearerTokenForLoggedInUser()}"
-            return execution.execute(request, body)
-        }
-    }
 }
