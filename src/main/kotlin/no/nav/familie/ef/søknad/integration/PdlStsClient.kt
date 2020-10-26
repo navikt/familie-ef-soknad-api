@@ -31,6 +31,6 @@ class PdlStsClient(val pdlConfig: PdlConfig,
         get() = pdlConfig.pdlUri
 
     override fun ping() {
-        operations.headForHeaders(pingUri)
+        operations.optionsForAllow(pingUri)
     }
 }

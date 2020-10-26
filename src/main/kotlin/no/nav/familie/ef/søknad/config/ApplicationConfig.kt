@@ -54,7 +54,6 @@ internal class ApplicationConfig {
                               mdcValuesPropagatingClientInterceptor,
                               consumerIdClientInterceptor,
                               apiKeyInjectingClientInterceptor)
-                .additionalMessageConverters(MappingJackson2HttpMessageConverter(objectMapper))
                 .build()
     }
 
