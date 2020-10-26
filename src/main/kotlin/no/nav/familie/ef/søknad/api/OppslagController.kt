@@ -35,8 +35,9 @@ class OppslagController(private val oppslagService: OppslagService,
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
 
         val søker = tps_søkerinfo.søker
+        val mellomnavn = pdlSøker.navn.last().mellomnavn?.let { " $it " } ?: " "
         val oppdaterSøker =
-                søker.copy(forkortetNavn = "${pdlSøker.navn.last().fornavn} ${pdlSøker.navn.last().mellomnavn} ${pdlSøker.navn.last().etternavn}")
+                søker.copy(forkortetNavn = "${pdlSøker.navn.last().fornavn}$mellomnavn${pdlSøker.navn.last().etternavn}")
         return tps_søkerinfo.copy(søker = oppdaterSøker)
     }
 
