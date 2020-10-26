@@ -18,7 +18,7 @@ import java.net.URI
 class PdlClient(val pdlConfig: PdlConfig,
                 @Qualifier("restKlientMedApiKey") restOperations: RestOperations,
                 private val stsRestClient: StsRestClient)
-    : AbstractPingableRestClient(restOperations, "pdl.personinfo") {
+    : AbstractRestClient(restOperations, "pdl.personinfo") {
 
     fun hentSøker(personIdent: String): PdlSøker {
         val pdlPersonRequest = PdlPersonRequest(variables = PdlPersonRequestVariables(personIdent),
@@ -70,10 +70,4 @@ class PdlClient(val pdlConfig: PdlConfig,
         }
     }
 
-    override val pingUri: URI
-        get() = pdlConfig.pdlUri
-
-    override fun ping() {
-        operations.headForHeaders(pingUri)
-    }
 }

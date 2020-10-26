@@ -91,7 +91,6 @@ internal class ApplicationConfig {
                 .build()
     }
 
-    // TODO skal bruke STS for å hente barn
     @Bean("stsRestKlientMedApiKey")
     fun stsRestTemplateMedApiKey(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
                                  stsBearerTokenClientInterceptor: StsBearerTokenClientInterceptor,
