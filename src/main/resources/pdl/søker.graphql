@@ -32,7 +32,6 @@ query($ident: ID!){
             fornavn
             mellomnavn
             etternavn
-            forkortetNavn
         }
         sivilstand {
             type

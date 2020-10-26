@@ -43,8 +43,7 @@ class PdlClientConfig {
                         etternavn: String = "Etternavn"): List<Navn> =
             listOf(Navn(fornavn,
                         mellomnavn,
-                        etternavn,
-                        "$fornavn $etternavn"))
+                        etternavn))
 
     private fun statsborgerskap(): List<Statsborgerskap> =
             listOf(Statsborgerskap(land = "NOR",

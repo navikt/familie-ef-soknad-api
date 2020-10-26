@@ -47,7 +47,6 @@ query($identer: [ID!]!){
                 fornavn
                 mellomnavn
                 etternavn
-                forkortetNavn
             }
         }
     }

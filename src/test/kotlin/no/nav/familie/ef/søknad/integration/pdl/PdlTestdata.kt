@@ -17,7 +17,7 @@ object PdlTestdata {
 
     private val folkeregistermetadata = Folkeregistermetadata(LocalDateTime.now(), LocalDateTime.now())
 
-    private val navn = listOf(Navn("", "", "", ""))
+    private val navn = listOf(Navn("", "", ""))
 
     private val adressebeskyttelse = listOf(Adressebeskyttelse(AdressebeskyttelseGradering.FORTROLIG))
 

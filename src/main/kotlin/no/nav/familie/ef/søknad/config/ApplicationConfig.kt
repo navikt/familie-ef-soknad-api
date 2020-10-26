@@ -3,14 +3,12 @@ package no.nav.familie.ef.søknad.config
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import no.nav.familie.http.config.RestTemplateSts
-import no.nav.familie.http.interceptor.ApiKeyInjectingClientInterceptor
-import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
-import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
-import no.nav.familie.http.interceptor.StsBearerTokenClientInterceptor
+import no.nav.familie.http.interceptor.*
 import no.nav.familie.http.sts.StsRestClient
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.sikkerhet.EksternBrukerUtils
+import no.nav.security.token.support.spring.validation.interceptor.BearerTokenClientHttpRequestInterceptor
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.web.client.RestTemplateBuilder
@@ -38,21 +36,25 @@ internal class ApplicationConfig {
     fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig,
                                          mottak: MottakConfig,
                                          pdlConfig: PdlConfig,
-                                         integrasjoner: FamilieIntegrasjonerConfig): ClientHttpRequestInterceptor {
+                                         integrasjoner: FamilieIntegrasjonerConfig): ApiKeyInjectingClientInterceptor {
         val map =
                 mapOf(oppslag.uri to Pair(apiKey, oppslag.passord),
                       mottak.uri to Pair(apiKey, mottak.passord),
                       pdlConfig.pdlUri to Pair(apiKey, pdlConfig.passord),
                       integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
         return ApiKeyInjectingClientInterceptor(map)
-
     }
 
     @Bean("restTemplate")
-    fun restTemplate(vararg interceptors: ClientHttpRequestInterceptor): RestOperations {
-        logger.info("Registrerer interceptors {}", interceptors.contentToString())
+    fun restTemplate(bearerTokenClientHttpRequestInterceptor: BearerTokenClientHttpRequestInterceptor,
+                     mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+                     consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                     apiKeyInjectingClientInterceptor: ApiKeyInjectingClientInterceptor): RestOperations {
         return RestTemplateBuilder()
-                .interceptors(interceptors.filterNot { it is StsBearerTokenClientInterceptor })
+                .interceptors(bearerTokenClientHttpRequestInterceptor,
+                              mdcValuesPropagatingClientInterceptor,
+                              consumerIdClientInterceptor,
+                              apiKeyInjectingClientInterceptor)
                 .build()
     }
 

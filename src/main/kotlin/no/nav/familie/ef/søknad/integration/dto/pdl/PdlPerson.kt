@@ -95,12 +95,7 @@ data class Folkeregisterpersonstatus(val status: String,
 
 data class Navn(val fornavn: String,
                 val mellomnavn: String?,
-                val etternavn: String,
-                val forkortetNavn: String?)
-
-data class Personnavn(val etternavn: String,
-                      val fornavn: String,
-                      val mellomnavn: String?)
+                val etternavn: String)
 
 data class TilrettelagtKommunikasjon(@JsonProperty("talespraaktolk") val talespråktolk: Tolk?,
                                      @JsonProperty("tegnspraaktolk") val tegnspråktolk: Tolk?)

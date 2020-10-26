@@ -2,8 +2,10 @@ package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.config.RegelverkConfig
+import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
+import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
@@ -11,6 +13,7 @@ import java.time.Period
 
 @Service
 internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceClient,
+                                         private val pdlClient: PdlClient,
                                          private val regelverkConfig: RegelverkConfig,
                                          private val søkerinfoMapper: SøkerinfoMapper) : OppslagService {
 
@@ -24,6 +27,18 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
         },  ")
         val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
         return søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn)
+    }
+
+    override fun hentSøkerinfoV2(): Søkerinfo {
+        val søkerinfo = hentSøkerinfo()
+
+        val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
+
+        val søker = søkerinfo.søker
+        val mellomnavn = pdlSøker.navn.last().mellomnavn?.let { " $it " } ?: " "
+        val oppdaterSøker =
+                søker.copy(forkortetNavn = "${pdlSøker.navn.last().fornavn}$mellomnavn${pdlSøker.navn.last().etternavn}")
+        return søkerinfo.copy(søker = oppdaterSøker)
     }
 
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {

@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.RestController
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
 class OppslagController(private val oppslagService: OppslagService,
-                        private val kodeverkService: KodeverkService,
-                        private val pdlClient: PdlClient) {
+                        private val kodeverkService: KodeverkService) {
 
     @GetMapping("/sokerinfo")
     fun søkerinfo(): Søkerinfo {
@@ -30,15 +29,7 @@ class OppslagController(private val oppslagService: OppslagService,
 
     @GetMapping("/sokerinfoV2")
     fun søkerinfo_V2(): Søkerinfo {
-        val tps_søkerinfo = oppslagService.hentSøkerinfo()
-
-        val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
-
-        val søker = tps_søkerinfo.søker
-        val mellomnavn = pdlSøker.navn.last().mellomnavn?.let { " $it " } ?: " "
-        val oppdaterSøker =
-                søker.copy(forkortetNavn = "${pdlSøker.navn.last().fornavn}$mellomnavn${pdlSøker.navn.last().etternavn}")
-        return tps_søkerinfo.copy(søker = oppdaterSøker)
+        return oppslagService.hentSøkerinfoV2()
     }
 
     @GetMapping("/poststed/{postnummer}")
