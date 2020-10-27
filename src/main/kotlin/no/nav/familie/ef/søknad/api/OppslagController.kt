@@ -31,7 +31,6 @@ class OppslagController(private val oppslagService: OppslagService,
 
     @GetMapping("/sokerinfoV2")
     fun søkerinfo_V2(): Søkerinfo {
-        logger.info("Kall til sokerinfoV2")
         return oppslagService.hentSøkerinfoV2()
     }
 

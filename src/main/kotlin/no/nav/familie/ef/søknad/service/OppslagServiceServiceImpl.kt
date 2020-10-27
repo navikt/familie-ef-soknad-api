@@ -32,18 +32,13 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
     override fun hentSøkerinfoV2(): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
         secureLogger.info("PDL: $pdlSøker")
-        try {
-            val søkerinfo = hentSøkerinfo()
-            secureLogger.info("TPS: $secureLogger")
-            val søker = søkerinfo.søker
-            val mellomnavn = pdlSøker.navn.last().mellomnavn?.let { " $it " } ?: " "
-            val oppdaterSøker =
-                    søker.copy(forkortetNavn = "${pdlSøker.navn.last().fornavn}$mellomnavn${pdlSøker.navn.last().etternavn}")
-            return søkerinfo.copy(søker = oppdaterSøker)
-        } catch (e: Exception) {
-            secureLogger.error("Feil: $e")
-            throw e
-        }
+        val søkerinfo = hentSøkerinfo()
+        secureLogger.info("TPS: $secureLogger")
+        val søker = søkerinfo.søker
+        val mellomnavn = pdlSøker.navn.last().mellomnavn?.let { " $it " } ?: " "
+        val oppdaterSøker =
+                søker.copy(forkortetNavn = "${pdlSøker.navn.last().fornavn}$mellomnavn${pdlSøker.navn.last().etternavn}")
+        return søkerinfo.copy(søker = oppdaterSøker)
     }
 
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {
