@@ -31,9 +31,7 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
 
     override fun hentSøkerinfoV2(): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
-        secureLogger.info("PDL: $pdlSøker")
         val søkerinfo = hentSøkerinfo()
-        secureLogger.info("TPS: $secureLogger")
         val søker = søkerinfo.søker
         val mellomnavn = pdlSøker.navn.last().mellomnavn?.let { " $it " } ?: " "
         val oppdaterSøker =
