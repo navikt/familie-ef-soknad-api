@@ -2,11 +2,11 @@ package no.nav.familie.ef.søknad.api
 
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
-import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.ef.søknad.service.OppslagService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController
 class OppslagController(private val oppslagService: OppslagService,
                         private val kodeverkService: KodeverkService) {
 
+    private val logger = LoggerFactory.getLogger(this::class.java)
+
     @GetMapping("/sokerinfo")
     fun søkerinfo(): Søkerinfo {
         return oppslagService.hentSøkerinfo()
@@ -29,6 +31,7 @@ class OppslagController(private val oppslagService: OppslagService,
 
     @GetMapping("/sokerinfoV2")
     fun søkerinfo_V2(): Søkerinfo {
+        logger.info("Kall til sokerinfoV2")
         return oppslagService.hentSøkerinfoV2()
     }
 
