@@ -26,7 +26,7 @@
         <token-validation-spring.version>1.3.0</token-validation-spring.version>
         <fasterxml.version>2.11.2</fasterxml.version>
         <com.amazonaws.version>1.11.871</com.amazonaws.version>
-        <felles.version>1.20200828124055_aa07403</felles.version>
+        <felles.version>1.20201027143428_f1299be</felles.version>
         <kontrakter.version>2.0_20201019114215_23568f6</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
