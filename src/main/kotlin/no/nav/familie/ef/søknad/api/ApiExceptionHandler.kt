@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.api
 import no.nav.familie.ef.søknad.api.dto.FeilDto
 import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
 import org.slf4j.LoggerFactory
+import org.springframework.core.NestedExceptionUtils
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,13 +19,17 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
+    private fun rootCause(throwable: Throwable): String {
+        return NestedExceptionUtils.getMostSpecificCause(throwable).javaClass.simpleName
+    }
+
     override fun handleExceptionInternal(ex: Exception,
                                          body: Any?,
                                          headers: HttpHeaders,
                                          status: HttpStatus,
                                          request: WebRequest): ResponseEntity<Any> {
         secureLogger.error("En feil har oppstått", ex)
-        logger.error("En feil har oppstått - throwable=${ex.javaClass.simpleName} status=${status.value()}")
+        logger.error("En feil har oppstått - throwable=${rootCause(ex)} status=${status.value()}")
         return super.handleExceptionInternal(ex, body, headers, status, request)
     }
 
@@ -46,7 +51,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
 
     private fun uventetFeil(throwable: Throwable): ResponseEntity<String> {
         secureLogger.error("En feil har oppstått", throwable)
-        logger.error("En feil har oppstått - throwable=${throwable.javaClass.simpleName} ")
+        logger.error("En feil har oppstått - throwable=${rootCause(throwable)} ")
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Uventet feil")
@@ -57,7 +62,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
                                            responseStatus: ResponseStatus): ResponseEntity<String> {
         val status = if (responseStatus.value != HttpStatus.INTERNAL_SERVER_ERROR) responseStatus.value else responseStatus.code
         val loggMelding = "En håndtert feil har oppstått" +
-                          " throwable=${throwable.javaClass.simpleName}" +
+                          " throwable=${rootCause(throwable)}" +
                           " reason=${responseStatus.reason}" +
                           " status=$status"
 
