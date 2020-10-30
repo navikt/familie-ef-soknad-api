@@ -10,7 +10,12 @@ object SivilstandsplanerMapper : Mapper<Bosituasjon, Sivilstandsplaner>("Fremtid
     override fun mapDto(bosituasjon: Bosituasjon): Sivilstandsplaner {
         return Sivilstandsplaner(harPlaner = bosituasjon.skalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
                                  fraDato = bosituasjon.datoSkalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
-                                 vordendeSamboerEktefelle = bosituasjon.samboerDetaljer?.let(PersonMinimumMapper::map))
+                                 vordendeSamboerEktefelle = bosituasjon.skalGifteSegEllerBliSamboer?.let {
+                                     when (it.verdi) {
+                                         true -> bosituasjon.samboerDetaljer?.let(PersonMinimumMapper::map)
+                                         false -> null
+                                     }
+                                 })
     }
 
 }
