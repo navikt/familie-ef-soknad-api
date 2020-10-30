@@ -2,10 +2,15 @@ package no.nav.familie.ef.søknad.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
+import no.nav.familie.http.config.RestTemplateSts
 import no.nav.familie.http.interceptor.ApiKeyInjectingClientInterceptor
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
+import no.nav.familie.http.interceptor.StsBearerTokenClientInterceptor
+import no.nav.familie.http.sts.StsRestClient
+import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.filter.LogFilter
+import no.nav.security.token.support.spring.validation.interceptor.BearerTokenClientHttpRequestInterceptor
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.web.client.RestTemplateBuilder
@@ -13,10 +18,14 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.http.client.ClientHttpRequestInterceptor
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestOperations
 
 @SpringBootConfiguration
-@Import(MdcValuesPropagatingClientInterceptor::class, ConsumerIdClientInterceptor::class)
+@Import(MdcValuesPropagatingClientInterceptor::class,
+        ConsumerIdClientInterceptor::class,
+        StsRestClient::class,
+        RestTemplateSts::class)
 internal class ApplicationConfig {
 
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
@@ -25,20 +34,26 @@ internal class ApplicationConfig {
     @Bean
     fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig,
                                          mottak: MottakConfig,
-                                         integrasjoner: FamilieIntegrasjonerConfig): ClientHttpRequestInterceptor {
+                                         pdlConfig: PdlConfig,
+                                         integrasjoner: FamilieIntegrasjonerConfig): ApiKeyInjectingClientInterceptor {
         val map =
                 mapOf(oppslag.uri to Pair(apiKey, oppslag.passord),
                       mottak.uri to Pair(apiKey, mottak.passord),
+                      pdlConfig.pdlUri to Pair(apiKey, pdlConfig.passord),
                       integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
         return ApiKeyInjectingClientInterceptor(map)
-
     }
 
-    @Bean
-    fun restTemplate(vararg interceptors: ClientHttpRequestInterceptor): RestOperations {
-        logger.info("Registrerer interceptors {}", interceptors.contentToString())
+    @Bean("restKlientMedApiKey")
+    fun restTemplate(bearerTokenClientHttpRequestInterceptor: BearerTokenClientHttpRequestInterceptor,
+                     mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+                     consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                     apiKeyInjectingClientInterceptor: ApiKeyInjectingClientInterceptor): RestOperations {
         return RestTemplateBuilder()
-                .interceptors(*interceptors)
+                .interceptors(bearerTokenClientHttpRequestInterceptor,
+                              mdcValuesPropagatingClientInterceptor,
+                              consumerIdClientInterceptor,
+                              apiKeyInjectingClientInterceptor)
                 .build()
     }
 
@@ -62,4 +77,18 @@ internal class ApplicationConfig {
         filterRegistration.order = 1
         return filterRegistration
     }
+
+    @Bean("stsRestKlientMedApiKey")
+    fun stsRestTemplateMedApiKey(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                                 stsBearerTokenClientInterceptor: StsBearerTokenClientInterceptor,
+                                 apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor,
+                                 mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
+        return RestTemplateBuilder()
+                .interceptors(consumerIdClientInterceptor,
+                              apiKeyInjectingClientInterceptor,
+                              stsBearerTokenClientInterceptor,
+                              mdcValuesPropagatingClientInterceptor)
+                .build()
+    }
+
 }

@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.service
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ef.søknad.config.RegelverkConfig
+import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.integration.dto.NavnDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
@@ -18,12 +19,13 @@ import kotlin.test.assertNotEquals
 internal class OppslagServiceServiceImplTest {
 
 
-    val client: TpsInnsynServiceClient = mockk()
+    val tpsClient: TpsInnsynServiceClient = mockk()
+    val pdlClient: PdlClient = mockk()
     val tpsInnsynMockController = TpsInnsynMockController()
     val regelverkConfig: RegelverkConfig = mockk()
 
     private val søkerinfoMapper = SøkerinfoMapper(mockk(relaxed = true))
-    private val oppslagServiceService = OppslagServiceServiceImpl(client, regelverkConfig, søkerinfoMapper)
+    private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, pdlClient, regelverkConfig, søkerinfoMapper)
 
     @Before
     fun setUp() {
@@ -65,13 +67,13 @@ internal class OppslagServiceServiceImplTest {
                 objectMapper.getTypeFactory().constructCollectionType(List::class.java, RelasjonDto::class.java)
         val barnListDto: List<RelasjonDto> = objectMapper.readValue(barnFraTpsMocked, collectionType)
         val copyAvBarn = barnListDto[0].copy(forkortetNavn = navn)
-        every { client.hentBarn() } returns (listOf(copyAvBarn))
+        every { tpsClient.hentBarn() } returns (listOf(copyAvBarn))
     }
 
     private fun mockHentPersonInfo(nyttNavn: String = "TestNavn") {
         val søkerinfoFraTpsMocked = tpsInnsynMockController.søkerinfoFraTpsMocked()
         val personInfoDto: PersoninfoDto = objectMapper.readValue(søkerinfoFraTpsMocked, PersoninfoDto::class.java)
-        every { client.hentPersoninfo() } returns (personInfoDto.copy(navn = NavnDto(nyttNavn)))
+        every { tpsClient.hentPersoninfo() } returns (personInfoDto.copy(navn = NavnDto(nyttNavn)))
     }
 
 }
