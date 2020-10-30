@@ -65,3 +65,6 @@ no.nav.security.jwt:
     accepted_audience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
     proxyurl: http://webproxy-nais.nav.no:8088
     cookie_name: selvbetjening-idtoken
+
+PDL_URL: https://api-gw.oera.no/pdl-api
+STS_URL: https://api-gw.oera.no/security-token-service/rest/v1/sts/token?grant_type=client_credentials&scope=openid
