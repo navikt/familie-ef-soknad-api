@@ -48,6 +48,13 @@ query($identer: [ID!]!){
                 mellomnavn
                 etternavn
             }
+            foedsel {
+                foedselsaar
+                foedselsdato
+                foedeland
+                foedested
+                foedekommune
+            }
         }
     }
 }

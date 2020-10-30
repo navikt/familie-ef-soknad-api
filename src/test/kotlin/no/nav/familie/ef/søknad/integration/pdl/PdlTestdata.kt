@@ -30,6 +30,9 @@ object PdlTestdata {
 
     private val statsborgerskap = listOf(Statsborgerskap("", LocalDate.now(), LocalDate.now()))
 
+    private val fødsel = listOf(Fødsel(1, LocalDate.now(), "", "", ""))
+
+
     val pdlSøkerData =
             PdlSøkerData(PdlSøker(adressebeskyttelse,
                                   bostedsadresse,
@@ -48,6 +51,8 @@ object PdlTestdata {
                                                                                             vegadresse,
                                                                                             UkjentBosted(""))),
                                                                           familierelasjon,
-                                                                          navn))))
+                                                                          navn,
+                                                                          fødsel))))
+
 
 }

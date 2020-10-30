@@ -34,6 +34,15 @@
               "mellomnavn": null,
               "etternavn": "KAMELEON"
             }
+          ],
+          "foedsel": [
+            {
+              "foedselsaar": null,
+              "foedselsdato": "1966-11-18",
+              "foedeland": null,
+              "foedested": null,
+              "foedekommune": null
+            }
           ]
         }
       }

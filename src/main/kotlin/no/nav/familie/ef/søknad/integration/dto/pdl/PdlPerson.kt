@@ -37,7 +37,9 @@ data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
                    val bostedsadresse: List<Bostedsadresse>,
                    val deltBosted: List<DeltBosted>,
                    val familierelasjoner: List<Familierelasjon>,
-                   val navn: List<Navn>)
+                   val navn: List<Navn>,
+                   @JsonProperty("foedsel") val fødsel: List<Fødsel>)
+
 
 data class DeltBosted(val startdatoForKontrakt: LocalDateTime,
                       val sluttdatoForKontrakt: LocalDateTime?,
