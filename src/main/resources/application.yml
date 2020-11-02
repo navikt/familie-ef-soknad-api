@@ -11,6 +11,7 @@ familie:
       uri: https://api-gw.oera.no/familie-ef-mottak/api
   dokument:
     uri: https://www.nav.no/familie/alene-med-barn/mellomlagring/api
+    sbsUri: https://familie-dokument.prod-gcp.nais.io/api
   integrasjoner:
     uri:  https://api-gw.oera.no/familie-integrasjoner/api
 
