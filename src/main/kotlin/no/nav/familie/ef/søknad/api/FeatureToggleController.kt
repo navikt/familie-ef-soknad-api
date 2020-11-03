@@ -14,12 +14,16 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
 
     @GetMapping
     fun sjekkAlle(): Map<String, Boolean> {
-        return funksjonsbrytere.associateWith { featureToggleService.isEnabled(it) }
+        return funksjonsbrytere.associateWith { true }
+        // return funksjonsbrytere.associateWith { featureToggleService.isEnabled(it) }
     }
 
     @GetMapping("/{toggleId}")
     fun sjekkFunksjonsbryter(@PathVariable toggleId: String,
                              @RequestParam("defaultverdi") defaultVerdi: Boolean? = false): Boolean {
-        return featureToggleService.isEnabled(toggleId, defaultVerdi ?: false)
+
+        return true
+
+        // return featureToggleService.isEnabled(toggleId, defaultVerdi ?: false)
     }
 }
