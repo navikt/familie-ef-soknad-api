@@ -25,7 +25,7 @@ tps:
     uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
 
 funksjonsbrytere:
-  enabled: true
+  enabled: false
   unleash:
     uri: https://unleashproxy.nais.oera.no/api/
     environment: ${NAIS_CLUSTER_NAME:}

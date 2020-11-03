@@ -65,7 +65,7 @@ class FeatureToggleConfig(private val enabled: Boolean,
                 if (unleash.environment == "local") {
                     return true
                 }
-                return defaultValue
+                return true
             }
         }
     }
