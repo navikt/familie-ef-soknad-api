@@ -14,6 +14,7 @@ internal class DokumentServiceImpl(private val client: FamilieDokumentClient,
 
     override fun hentVedlegg(vedleggsId: String): ByteArray {
         return try {
+            logger.info("Henter vedlegg $vedleggsId fra gcp")
             val hentVedlegg = client.hentVedlegg(vedleggsId)
             logger.info("Fant vedlegg=$vedleggsId i gcp")
             hentVedlegg
