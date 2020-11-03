@@ -22,6 +22,11 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
     fun sjekkFunksjonsbryter(@PathVariable toggleId: String,
                              @RequestParam("defaultverdi") defaultVerdi: Boolean? = false): Boolean {
 
+        if (toggleId == "familie.ef.soknad.feilsituasjon") {
+            return false
+        }
+
+
         return true
 
         // return featureToggleService.isEnabled(toggleId, defaultVerdi ?: false)
