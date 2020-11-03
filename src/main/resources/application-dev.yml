@@ -1,7 +1,7 @@
 familie:
   dokument:
-    uri: https://www-q0.nav.no/familie/alene-med-barn/mellomlagring/api
-    sbsUri: https://familie-dokument.dev-gcp.nais.io/api
+    uri: https://familie-dokument.dev-gcp.nais.io/api
+    sbsUri: https://www-q0.nav.no/familie/alene-med-barn/mellomlagring/api
   ef:
     mottak:
       uri: https://api-gw-q0.oera.no/familie-ef-mottak/api
