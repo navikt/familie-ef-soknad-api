@@ -14,7 +14,9 @@ internal class DokumentServiceImpl(private val client: FamilieDokumentClient,
 
     override fun hentVedlegg(vedleggsId: String): ByteArray {
         return try {
-            client.hentVedlegg(vedleggsId)
+            val hentVedlegg = client.hentVedlegg(vedleggsId)
+            logger.info("Fant vedlegg=$vedleggsId i gcp")
+            hentVedlegg
         } catch (e: HttpClientErrorException.BadRequest) {
             logger.warn("Finner ikke vedlegg=$vedleggsId i gcp - prøver å hente fra sbs")
             sbsClient.hentVedlegg(vedleggsId)
