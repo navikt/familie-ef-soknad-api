@@ -57,7 +57,7 @@ internal class DokumentServiceImplTest {
 
     @Test
     internal fun `skal prøve å finne vedlegget i sbs hvis gcp feiler`() {
-        wireMockServer.stubFor(WireMock.get(WireMock.anyUrl()).willReturn(WireMock.badRequest()))
+        wireMockServer.stubFor(WireMock.get(WireMock.anyUrl()).willReturn(WireMock.notFound()))
         dokumentService.hentVedlegg(VEDLEGG_ID)
 
         verify(exactly = 1) { client.hentVedlegg(VEDLEGG_ID) }
