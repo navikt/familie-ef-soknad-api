@@ -23,6 +23,11 @@ object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>("B
     private fun mapSøkerDelerBoligMedAndre(bosituasjon: Bosituasjon) = bosituasjon.delerBoligMedAndreVoksne.tilSøknadsfelt()
 
     private fun mapSamboer(bosituasjon: Bosituasjon): Søknadsfelt<PersonMinimum>? {
+
+        if (bosituasjon.skalGifteSegEllerBliSamboer?.verdi == true) {
+            return null
+        }
+
         return bosituasjon.samboerDetaljer?.let {
             PersonMinimumMapper.map(it)
         }

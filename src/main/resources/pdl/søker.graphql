@@ -1,0 +1,60 @@
+query($ident: ID!){
+    person: hentPerson(ident: $ident) {
+        adressebeskyttelse {
+            gradering
+        }
+        bostedsadresse {
+            angittFlyttedato
+            coAdressenavn
+            vegadresse {
+                husnummer
+                husbokstav
+                bruksenhetsnummer
+                adressenavn
+                kommunenummer
+                tilleggsnavn
+                postnummer
+            }
+            ukjentBosted {
+                bostedskommune
+            }
+        }
+        familierelasjoner {
+            relatertPersonsIdent
+            relatertPersonsRolle
+            minRolleForPerson
+        }
+        folkeregisterpersonstatus {
+            status
+            forenkletStatus
+        }
+        navn {
+            fornavn
+            mellomnavn
+            etternavn
+        }
+        sivilstand {
+            type
+            gyldigFraOgMed
+            myndighet
+            kommune
+            sted
+            utland
+            relatertVedSivilstand
+            bekreftelsesdato
+        }
+        statsborgerskap {
+            land
+            gyldigFraOgMed
+            gyldigTilOgMed
+        }
+        tilrettelagtKommunikasjon {
+            talespraaktolk {
+                spraak
+            }
+            tegnspraaktolk {
+                spraak
+            }
+        }
+    }
+}
