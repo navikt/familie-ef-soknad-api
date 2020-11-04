@@ -608,6 +608,13 @@
         "Jeg har barn som har behov for særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
         "Jeg har fått tilbud om jobb",
         "Jeg skal begynne å ta utdanning"
+      ],
+      "alternativer": [
+        "Jeg er syk",
+        "Barnet mitt er sykt",
+        "Jeg har søkt om barnepass, men ikke fått plass enda",
+        "Jeg har barn som trenger særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
+        "Nei"
       ]
     },
     "søknadsdato": {
