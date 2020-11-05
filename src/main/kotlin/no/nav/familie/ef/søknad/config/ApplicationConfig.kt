@@ -8,8 +8,8 @@ import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
 import no.nav.familie.http.interceptor.StsBearerTokenClientInterceptor
 import no.nav.familie.http.sts.StsRestClient
-import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.filter.LogFilter
+import no.nav.familie.log.filter.RequestTimeFilter
 import no.nav.security.token.support.spring.validation.interceptor.BearerTokenClientHttpRequestInterceptor
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
@@ -18,7 +18,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.http.client.ClientHttpRequestInterceptor
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestOperations
 
 @SpringBootConfiguration
@@ -75,6 +74,15 @@ internal class ApplicationConfig {
         val filterRegistration = FilterRegistrationBean<LogFilter>()
         filterRegistration.filter = LogFilter()
         filterRegistration.order = 1
+        return filterRegistration
+    }
+
+    @Bean
+    fun requestTimeFilter(): FilterRegistrationBean<RequestTimeFilter> {
+        logger.info("Registering RequestTimeFilter filter")
+        val filterRegistration = FilterRegistrationBean<RequestTimeFilter>()
+        filterRegistration.filter = RequestTimeFilter()
+        filterRegistration.order = 2
         return filterRegistration
     }
 
