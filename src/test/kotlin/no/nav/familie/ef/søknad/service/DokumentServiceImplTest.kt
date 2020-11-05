@@ -8,6 +8,7 @@ import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
 import no.nav.familie.ef.søknad.config.FamilieDokumentConfig
+import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.integration.FamilieDokumentClient
 import no.nav.familie.ef.søknad.integration.FamilieDokumentSbsClient
 import org.junit.jupiter.api.AfterAll
@@ -52,7 +53,9 @@ internal class DokumentServiceImplTest {
                                            URI.create("http://mocked"))
         client = spyk(FamilieDokumentClient(config, restOperations))
         every { sbsClient.hentVedlegg(any()) } returns byteArrayOf(12)
-        dokumentService = DokumentServiceImpl(client, sbsClient)
+        val featureToggleService = mockk<FeatureToggleService>()
+        every { featureToggleService.isEnabled(any()) } returns true
+        dokumentService = DokumentServiceImpl(client, featureToggleService, sbsClient)
     }
 
     @Test
