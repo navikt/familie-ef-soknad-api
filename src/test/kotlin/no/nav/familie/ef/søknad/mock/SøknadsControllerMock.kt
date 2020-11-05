@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.mock
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
-import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
@@ -24,9 +23,7 @@ class SøknadsControllerMock(val featureToggleService: FeatureToggleService) {
     fun sendInnTest(@RequestBody søknad: Map<Any, Any>): Kvittering {
         val valueAsString = objectMapper.writeValueAsString(søknad)
         // val readValue : SøknadDto= objectMapper.readValue(valueAsString)
-        return featureToggleService.enabledEllersHttp403("familie.ef.soknad.send-soknad") {
-            Kvittering("Kontakt med api, søknad ikke sendt inn. Du forsøkte å sende inn:  $valueAsString", innsendingMottatt)
-        }
+        return Kvittering("Kontakt med api, søknad ikke sendt inn. Du forsøkte å sende inn:  $valueAsString", innsendingMottatt)
     }
 
 }

@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.api
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
-import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.service.OppslagService
 import no.nav.familie.ef.søknad.service.SkjemaService
@@ -28,13 +27,10 @@ class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService,
     @PostMapping
     @Protected
     fun sendRegistrerArbeidsAktivitet(@RequestBody arbeidssøker: Arbeidssøker): Kvittering {
-
-        return featureToggleService.enabledEllersHttp403("familie.ef.soknad.registrerarbeidssoker") {
-            val fnrFraToken = EksternBrukerUtils.hentFnrFraToken()
-            val forkortetNavn = oppslagService.hentSøkerinfo().søker.forkortetNavn
-            val innsendingMottatt = LocalDateTime.now()
-            val kvittering = skjemaService.sendInn(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
-            KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
-        }
+        val fnrFraToken = EksternBrukerUtils.hentFnrFraToken()
+        val forkortetNavn = oppslagService.hentSøkerinfo().søker.forkortetNavn
+        val innsendingMottatt = LocalDateTime.now()
+        val kvittering = skjemaService.sendInn(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
+        return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 }

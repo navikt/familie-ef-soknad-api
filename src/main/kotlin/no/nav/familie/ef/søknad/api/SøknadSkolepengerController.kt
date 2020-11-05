@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.api
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadSkolepengerDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
-import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.service.SøknadService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
@@ -31,10 +30,8 @@ class SøknadSkolepengerController(val søknadService: SøknadService, val featu
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
-        return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.send-skolepengersoknad") {
-            val innsendingMottatt = LocalDateTime.now()
-            søknadService.sendInn(søknad, innsendingMottatt)
-            Kvittering("ok", mottattDato = innsendingMottatt)
-        }
+        val innsendingMottatt = LocalDateTime.now()
+        søknadService.sendInn(søknad, innsendingMottatt)
+        return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 }
