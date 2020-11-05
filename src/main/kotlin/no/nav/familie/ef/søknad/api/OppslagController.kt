@@ -31,11 +31,6 @@ class OppslagController(private val oppslagService: OppslagService,
         return oppslagService.hentSøkerinfoV2()
     }
 
-    @GetMapping("/sokerinfoV3")
-    fun søkerinfo_V3(): Søkerinfo {
-        return oppslagService.hentSøkerinfoV2()
-    }
-
     @GetMapping("/poststed/{postnummer}")
     fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
         require(gyldigPostnummer(postnummer))

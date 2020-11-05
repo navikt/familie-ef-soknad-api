@@ -1,13 +1,10 @@
 package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
-import no.nav.familie.ef.søknad.api.dto.tps.Adresse
-import no.nav.familie.ef.søknad.api.dto.tps.Barn
-import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
-import no.nav.familie.ef.søknad.integration.dto.pdl.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
@@ -34,8 +31,22 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
     }
 
     override fun hentSøkerinfoV2(): Søkerinfo {
-        val søkerinfo = hentSøkerinfo()
-        return settNavnFraPdlPåSøkerinfo(søkerinfo)
+        val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
+        secureLogger.warn("pdlSoker: ", pdlSøker)
+
+        val barnIdentifikatorer = pdlSøker.familierelasjoner
+                .filter { it.minRolleForPerson == Familierelasjonsrolle.BARN }
+                .map { it.relatertPersonsIdent }
+        val pdlBarn = pdlClient.hentBarn(barnIdentifikatorer)
+
+        secureLogger.warn("pdlBarn: ", pdlBarn)
+
+        val aktuelleBarn = pdlBarn.filter { erIAktuellAlder(it.value.fødsel.last().fødselsdato) }
+
+        secureLogger.warn("pdlBarn: ", aktuelleBarn)
+
+        return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, pdlBarn)
+
     }
 
     private fun settNavnFraPdlPåSøkerinfo(søkerinfo: Søkerinfo): Søkerinfo {
@@ -47,19 +58,7 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
         return søkerinfo.copy(søker = oppdaterSøker)
     }
 
-    override fun hentSøkerinfoV3(): Søkerinfo {
-        val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
 
-        secureLogger.warn("pdlSoker")
-
-        val barnIdentifikatorer = pdlSøker.familierelasjoner
-                .filter { it.minRolleForPerson == Familierelasjonsrolle.BARN }
-                .map { it.relatertPersonsIdent }
-        val pdlBarn = pdlClient.hentBarn(barnIdentifikatorer)
-        val søker: Person = pdlSøker.tilPersonDto()
-        val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.last().vegadresse)
-        return Søkerinfo(søker, barn)
-    }
 
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {
         if (fødselsdato == null) {
@@ -73,64 +72,4 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
 }
 
 
-private fun tilBarneListeDto(pdlBarn: Map<String, PdlBarn>, søkersAdresse: Vegadresse?): List<Barn> {
-
-
-    // TODO Finn bor hos (matrikkelId?)
-    // Todo filter på alder -> erIAktuellAlder
-    // TODO dobbeltsjekk "doedsfall"! (ikke med i query ennå)
-
-    pdlBarn.mapValues {
-        val mellomnavn = it.value.navn.last().mellomnavn?.let { " $it " } ?: " "
-        val navn = it.value.navn.last().fornavn + mellomnavn + it.value.navn.last().etternavn
-        val fødselsdato = it.value.fødsel.last().fødselsdato ?: error("Ingen fødselsdato registrert")
-        val alder = Period.between(fødselsdato, LocalDate.now()).years
-
-        // TODO - denne fungerer dårlig!! Se metrikkelId - usikker på om denne er implementer?
-        val harSammeAdresse =
-                søkersAdresse == it.value.bostedsadresse.last().vegadresse
-//      Fra PDL dokumentasjon - hva betyr dette?
-//       3.6.1. TPS
-//       TPS tilbyr informasjon om hvem som har samme bosted sammen med familierelasjoner.
-//       I PDLs bostedsadresser har man en matrikkelId som kan benyttes for å sammenligne om
-//       personer med relasjoner har samme bosted.
-//       Dersom matrikkelId er lik er de registrert som bosatt på samme adresse.
-
-
-        Barn(it.key, navn, alder, fødselsdato, harSammeAdresse)
-    }
-
-
-    return listOf<Barn>()
-}
-
-private fun PdlSøker.tilPersonDto(): Person {
-    // TODO poststed
-    val adresse = Adresse(adresse = tilFormatertAdresse(bostedsadresse.last().vegadresse),
-                          poststed = "",
-                          postnummer = bostedsadresse.last().vegadresse?.postnummer ?: " ")
-    return Person(fnr = EksternBrukerUtils.hentFnrFraToken(),
-                  forkortetNavn = navn.last().visningsnavn(),
-                  adresse = adresse,
-                  egenansatt = false,
-                  sivilstand = sivilstand.last().type.toString(),
-                  statsborgerskap = statsborgerskap.last().land)
-}
-
-private fun tilFormatertAdresse(vegadresse: Vegadresse?): String {
-
-    return join(space(vegadresse?.adressenavn ?: "",
-                      vegadresse?.husnummer ?: "",
-                      vegadresse?.husbokstav ?: "",
-                      vegadresse?.bruksenhetsnummer ?: "")) ?: ""
-}
-
-private fun join(vararg args: String?, separator: String = ", "): String? {
-    val filterNotNull = args.filterNotNull().filterNot(String::isEmpty)
-    return if (filterNotNull.isEmpty()) {
-        null
-    } else filterNotNull.joinToString(separator)
-}
-
-private fun space(vararg args: String?): String? = join(*args, separator = " ")
 
