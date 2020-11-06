@@ -37,6 +37,15 @@ class PdlClient(val pdlConfig: PdlConfig,
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
+    fun hentBarnString(personIdenter: List<String>): String {
+        if (personIdenter.isEmpty()) return ""
+        val pdlPersonRequest = PdlPersonBolkRequest(variables = PdlPersonBolkRequestVariables(personIdenter),
+                                                    query = PdlConfig.barnQuery)
+        return postForEntity(pdlConfig.pdlUri,
+                             pdlPersonRequest,
+                             httpHeaders())
+    }
+
     private inline fun <reified T : Any> feilsjekkOgReturnerData(ident: String,
                                                                  pdlResponse: PdlResponse<T>): T {
         if (pdlResponse.harFeil()) {

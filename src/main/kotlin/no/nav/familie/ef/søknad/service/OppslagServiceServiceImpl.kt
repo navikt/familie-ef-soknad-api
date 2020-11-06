@@ -41,6 +41,10 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
 
         secureLogger.warn("pdlbarnIdentifikatorerSoker: $barnIdentifikatorer")
 
+        val hentBarnString = pdlClient.hentBarnString(barnIdentifikatorer)
+
+        secureLogger.warn("hentBarnString: $hentBarnString")
+
         val pdlBarn = pdlClient.hentBarn(barnIdentifikatorer)
 
         secureLogger.warn("pdlBarn: $pdlBarn")
