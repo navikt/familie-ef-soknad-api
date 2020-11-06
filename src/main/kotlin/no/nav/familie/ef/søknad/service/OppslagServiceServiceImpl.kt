@@ -36,7 +36,7 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
         secureLogger.warn("pdlSoker: $pdlSøker")
 
         val barnIdentifikatorer = pdlSøker.familierelasjoner
-                .filter { it.minRolleForPerson == Familierelasjonsrolle.BARN }
+                .filter { it.minRolleForPerson != Familierelasjonsrolle.BARN }
                 .map { it.relatertPersonsIdent }
 
         secureLogger.warn("pdlbarnIdentifikatorerSoker: $barnIdentifikatorer")
