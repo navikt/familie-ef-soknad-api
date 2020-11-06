@@ -14,6 +14,7 @@ query($ident: ID!){
                 kommunenummer
                 tilleggsnavn
                 postnummer
+                matrikkelId
             }
             ukjentBosted {
                 bostedskommune

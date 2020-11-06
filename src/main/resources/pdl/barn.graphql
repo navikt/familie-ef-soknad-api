@@ -17,6 +17,7 @@ query($identer: [ID!]!){
                     kommunenummer
                     tilleggsnavn
                     postnummer
+                    matrikkelId
                 }
                 ukjentBosted {
                     bostedskommune
@@ -33,6 +34,7 @@ query($identer: [ID!]!){
                     kommunenummer
                     tilleggsnavn
                     postnummer
+                    matrikkelId
                 }
                 ukjentBosted {
                     bostedskommune

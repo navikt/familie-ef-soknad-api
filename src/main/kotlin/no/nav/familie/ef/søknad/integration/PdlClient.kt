@@ -42,15 +42,6 @@ class PdlClient(val pdlConfig: PdlConfig,
         return pdlResponse.data
     }
 
-    private inline fun <reified T : Any> feilsjekkOgReturnerData(pdlResponse: PdlBolkResponse<T>): Map<String, T> {
-        val feil = pdlResponse.data.personBolk.filter { it.code != "ok" }.map { it.ident to it.code }.toMap()
-        if (feil.isNotEmpty()) {
-            secureLogger.error("Feil ved henting av ${T::class} fra PDL: $feil")
-            throw PdlRequestException("Feil ved henting av ${T::class} fra PDL. Se secure logg for detaljer.")
-        }
-        return pdlResponse.data.personBolk.associateBy({ it.ident }, { it.person!! })
-    }
-
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
             add("Nav-Consumer-Token", "Bearer ${stsRestClient.systemOIDCToken}")

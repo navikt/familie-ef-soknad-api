@@ -12,7 +12,8 @@ object PdlTestdata {
                                         "",
                                         "",
                                         "",
-                                        "")
+                                        "",
+                                        0L)
 
 
     private val folkeregistermetadata = Folkeregistermetadata(LocalDateTime.now(), LocalDateTime.now())

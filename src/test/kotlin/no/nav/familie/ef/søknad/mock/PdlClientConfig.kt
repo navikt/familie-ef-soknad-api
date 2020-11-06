@@ -77,5 +77,6 @@ class PdlClientConfig {
                        kommunenummer = "0301",
                        postnummer = "0575",
                        bruksenhetsnummer = "",
-                       tilleggsnavn = null)
+                       tilleggsnavn = null,
+                       matrikkelId = 1L)
 }

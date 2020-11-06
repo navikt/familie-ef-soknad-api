@@ -80,40 +80,27 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
 
     private fun tilBarneListeDto(pdlBarn: Map<String, PdlBarn>, søkersAdresse: Vegadresse?): List<Barn> {
-
-
-        // TODO Finn bor hos (matrikkelId?)
         // Todo filter på alder -> erIAktuellAlder
         // TODO dobbeltsjekk "doedsfall"! (ikke med i query ennå)
+        // TODO trenger vi sjekk mot deltBosted i harSammeAdresse?
 
-        pdlBarn.mapValues {
-            val mellomnavn = it.value.navn.last().mellomnavn?.let { " $it " } ?: " "
+        return pdlBarn.entries.map {
+            val mellomnavn = it.value.navn.first().mellomnavn?.let { " $it " } ?: " "
             val navn = it.value.navn.last().fornavn + mellomnavn + it.value.navn.last().etternavn
-            val fødselsdato = it.value.fødsel.last().fødselsdato ?: error("Ingen fødselsdato registrert")
+            val fødselsdato = it.value.fødsel.first().fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
-            // TODO - denne fungerer dårlig!! Se metrikkelId - usikker på om denne er implementer?
-            val harSammeAdresse =
-                    søkersAdresse == it.value.bostedsadresse.last().vegadresse
-//      Fra PDL dokumentasjon - hva betyr dette?
-//       3.6.1. TPS
-//       TPS tilbyr informasjon om hvem som har samme bosted sammen med familierelasjoner.
-//       I PDLs bostedsadresser har man en matrikkelId som kan benyttes for å sammenligne om
-//       personer med relasjoner har samme bosted.
-//       Dersom matrikkelId er lik er de registrert som bosatt på samme adresse.
-
+            // TODO hvordan håndtere att vegadresse er null?
+            val harSammeAdresse = søkersAdresse?.matrikkelId != null &&
+                                  søkersAdresse.matrikkelId == it.value.bostedsadresse.first().vegadresse?.matrikkelId
 
             Barn(it.key, navn, alder, fødselsdato, harSammeAdresse)
         }
-
-
-        return listOf<Barn>()
     }
 
     private fun PdlSøker.tilPersonDto(): Person {
-        // TODO poststed
         val adresse = Adresse(adresse = tilFormatertAdresse(bostedsadresse.last().vegadresse),
-                              poststed = "",
+                              poststed = hentPoststed(bostedsadresse.last().vegadresse?.postnummer),
                               postnummer = bostedsadresse.last().vegadresse?.postnummer ?: " ")
         return Person(fnr = EksternBrukerUtils.hentFnrFraToken(),
                       forkortetNavn = navn.last().visningsnavn(),
@@ -124,7 +111,6 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     }
 
     private fun tilFormatertAdresse(vegadresse: Vegadresse?): String {
-
         return join(space(vegadresse?.adressenavn ?: "",
                           vegadresse?.husnummer ?: "",
                           vegadresse?.husbokstav ?: "",

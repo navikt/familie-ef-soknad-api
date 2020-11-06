@@ -60,7 +60,8 @@ data class Vegadresse(val husnummer: String?,
                       val adressenavn: String?,
                       val kommunenummer: String?,
                       val tilleggsnavn: String?,
-                      val postnummer: String?)
+                      val postnummer: String?,
+                      val matrikkelId: Long?)
 
 data class UkjentBosted(val bostedskommune: String?)
 
@@ -120,6 +121,7 @@ data class Sivilstand(val type: Sivilstandstype,
 
 @Suppress("unused")
 enum class Sivilstandstype {
+
     UOPPGITT,
     UGIFT,
     GIFT,

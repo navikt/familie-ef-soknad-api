@@ -1,5 +1,7 @@
 package no.nav.familie.ef.søknad.integration.pdl
 
+import com.fasterxml.jackson.databind.SerializationFeature
+import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -20,7 +22,11 @@ class PdlDtoTest {
 
         val dtoFelter = PdlTestUtil.finnFeltStruktur(PdlTestdata.pdlBarnData)!!
 
-        assertThat(dtoFelter).isEqualTo(spørringsfelter["data"])
+        val writerWithDefaultPrettyPrinter = objectMapper
+                .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
+                .writerWithDefaultPrettyPrinter()
+        assertThat(writerWithDefaultPrettyPrinter.writeValueAsString(dtoFelter))
+                .isEqualTo(writerWithDefaultPrettyPrinter.writeValueAsString(spørringsfelter["data"]))
     }
 
 }
