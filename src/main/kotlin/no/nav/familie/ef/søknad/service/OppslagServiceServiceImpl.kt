@@ -32,18 +32,22 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
 
     override fun hentSøkerinfoV2(): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
-        secureLogger.warn("pdlSoker: ", pdlSøker)
+
+        secureLogger.warn("pdlSoker: $pdlSøker")
 
         val barnIdentifikatorer = pdlSøker.familierelasjoner
                 .filter { it.minRolleForPerson == Familierelasjonsrolle.BARN }
                 .map { it.relatertPersonsIdent }
+
+        secureLogger.warn("pdlbarnIdentifikatorerSoker: $barnIdentifikatorer")
+
         val pdlBarn = pdlClient.hentBarn(barnIdentifikatorer)
 
-        secureLogger.warn("pdlBarn: ", pdlBarn)
+        secureLogger.warn("pdlBarn: $pdlBarn")
 
         val aktuelleBarn = pdlBarn.filter { erIAktuellAlder(it.value.fødsel.last().fødselsdato) }
 
-        secureLogger.warn("pdlBarn: ", aktuelleBarn)
+        secureLogger.warn("aktuelleBarn: $aktuelleBarn", aktuelleBarn)
 
         return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, pdlBarn)
 
