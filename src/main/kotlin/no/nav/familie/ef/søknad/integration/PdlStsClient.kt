@@ -1,6 +1,8 @@
 package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.PdlConfig
+import no.nav.familie.ef.søknad.exception.PdlRequestException
+import no.nav.familie.ef.søknad.integration.dto.pdl.*
 import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.http.sts.StsRestClient
 import org.springframework.beans.factory.annotation.Qualifier
@@ -20,6 +22,50 @@ class PdlStsClient(val pdlConfig: PdlConfig,
             add("Nav-Consumer-Token", "Bearer ${stsRestClient.systemOIDCToken}")
             add("Tema", "ENF")
         }
+    }
+
+
+    fun hentBarn(personIdenter: List<String>): Map<String, PdlBarn> {
+        if (personIdenter.isEmpty()) return emptyMap()
+        val pdlPersonRequest = PdlPersonBolkRequest(variables = PdlPersonBolkRequestVariables(personIdenter),
+                                                    query = PdlConfig.barnQuery)
+        val pdlResponse: PdlBolkResponse<PdlBarn> = postForEntity(pdlConfig.pdlUri,
+                                                                  pdlPersonRequest,
+                                                                  httpHeaders())
+        return feilsjekkOgReturnerData(pdlResponse)
+    }
+
+    fun hentBarnString(personIdenter: List<String>): String {
+        if (personIdenter.isEmpty()) return ""
+        val pdlPersonRequest = PdlPersonBolkRequest(variables = PdlPersonBolkRequestVariables(personIdenter),
+                                                    query = PdlConfig.barnQuery)
+        return postForEntity(pdlConfig.pdlUri,
+                             pdlPersonRequest,
+                             httpHeaders())
+    }
+
+    private inline fun <reified T : Any> feilsjekkOgReturnerData(ident: String,
+                                                                 pdlResponse: PdlResponse<T>): T {
+        if (pdlResponse.harFeil()) {
+            secureLogger.error("Feil ved henting av ${T::class} fra PDL: ${pdlResponse.errorMessages()}")
+            throw PdlRequestException("Feil ved henting av ${T::class} fra PDL. Se secure logg for detaljer.")
+        }
+
+        if (pdlResponse.data == null) {
+            secureLogger.error("Feil ved oppslag på ident $ident. " +
+                               "PDL rapporterte ingen feil men returnerte tomt datafelt")
+            throw PdlRequestException("Manglende ${T::class} ved feilfri respons fra PDL. Se secure logg for detaljer.")
+        }
+        return pdlResponse.data
+    }
+
+    private inline fun <reified T : Any> feilsjekkOgReturnerData(pdlResponse: PdlBolkResponse<T>): Map<String, T> {
+        val feil = pdlResponse.data.personBolk.filter { it.code != "ok" }.map { it.ident to it.code }.toMap()
+        if (feil.isNotEmpty()) {
+            secureLogger.error("Feil ved henting av ${T::class} fra PDL: $feil")
+            throw PdlRequestException("Feil ved henting av ${T::class} fra PDL. Se secure logg for detaljer.")
+        }
+        return pdlResponse.data.personBolk.associateBy({ it.ident }, { it.person!! })
     }
 
 }

@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.service
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
+import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
@@ -15,6 +16,7 @@ import java.time.Period
 @Service
 internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceClient,
                                          private val pdlClient: PdlClient,
+                                         private val pdlStsClient: PdlStsClient,
                                          private val regelverkConfig: RegelverkConfig,
                                          private val søkerinfoMapper: SøkerinfoMapper) : OppslagService {
 
@@ -41,11 +43,11 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
 
         secureLogger.warn("pdlbarnIdentifikatorerSoker: $barnIdentifikatorer")
 
-        val hentBarnString = pdlClient.hentBarnString(barnIdentifikatorer)
+        val hentBarnString = pdlStsClient.hentBarnString(barnIdentifikatorer)
 
         secureLogger.warn("hentBarnString: $hentBarnString")
 
-        val pdlBarn = pdlClient.hentBarn(barnIdentifikatorer)
+        val pdlBarn = pdlStsClient.hentBarn(barnIdentifikatorer)
 
         secureLogger.warn("pdlBarn: $pdlBarn")
 
