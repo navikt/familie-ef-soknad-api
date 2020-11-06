@@ -2,15 +2,19 @@ package no.nav.familie.ef.søknad.service
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.integration.dto.NavnDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
+import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
 import no.nav.familie.kontrakter.felles.objectMapper
+import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -29,14 +33,18 @@ internal class OppslagServiceServiceImplTest {
 
     @Before
     fun setUp() {
+        mockkObject(EksternBrukerUtils)
+        every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
         mockRegelverksConfig()
         mockHentBarn()
         mockHentPersonInfo()
+        mockPdlClient()
     }
 
     @Test
     fun `Lik søkerInfo skal ha lik hash`() {
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
+        mockPdlClient()
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertEquals(søkerinfo.hash, søkerinfo2.hash)
     }
@@ -44,7 +52,7 @@ internal class OppslagServiceServiceImplTest {
     @Test
     fun `SøkerInfo med ulike navn skal ikke ha lik hash`() {
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
-        mockHentPersonInfo("Et annet navn")
+        mockPdlClient("Et annet navn")
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertNotEquals(søkerinfo.hash, søkerinfo2.hash)
     }
@@ -74,6 +82,18 @@ internal class OppslagServiceServiceImplTest {
         val søkerinfoFraTpsMocked = tpsInnsynMockController.søkerinfoFraTpsMocked()
         val personInfoDto: PersoninfoDto = objectMapper.readValue(søkerinfoFraTpsMocked, PersoninfoDto::class.java)
         every { tpsClient.hentPersoninfo() } returns (personInfoDto.copy(navn = NavnDto(nyttNavn)))
+    }
+
+    private fun mockPdlClient(fornavn: String = "TestNavn", mellomnavn: String = "TestNavn", etternavn: String = "TestNavn") {
+
+        every { pdlClient.hentSøker(any()) } returns (PdlSøker(listOf(),
+                                                               listOf(),
+                                                               listOf(),
+                                                               listOf(),
+                                                               navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
+                                                               listOf(),
+                                                               listOf(),
+                                                               listOf()))
     }
 
 }

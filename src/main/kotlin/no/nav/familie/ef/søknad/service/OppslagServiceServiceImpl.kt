@@ -26,12 +26,16 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
             barn.map { Pair(it.alder, it.harSammeAdresse) }
         },  ")
         val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
-        return søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn)
+        return settNavnFraPdlPåSøkerinfo(søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn))
     }
 
     override fun hentSøkerinfoV2(): Søkerinfo {
-        val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
         val søkerinfo = hentSøkerinfo()
+        return settNavnFraPdlPåSøkerinfo(søkerinfo)
+    }
+
+    private fun settNavnFraPdlPåSøkerinfo(søkerinfo: Søkerinfo): Søkerinfo {
+        val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
         val søker = søkerinfo.søker
         val mellomnavn = pdlSøker.navn.last().mellomnavn?.let { " $it " } ?: " "
         val oppdaterSøker =
