@@ -29,7 +29,7 @@ internal class OppslagServiceServiceImplTest {
     val regelverkConfig: RegelverkConfig = mockk()
 
     private val søkerinfoMapper = SøkerinfoMapper(mockk(relaxed = true))
-    private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, pdlClient, regelverkConfig, søkerinfoMapper)
+    private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, pdlClient, mockk(), regelverkConfig, søkerinfoMapper)
 
     @Before
     fun setUp() {
