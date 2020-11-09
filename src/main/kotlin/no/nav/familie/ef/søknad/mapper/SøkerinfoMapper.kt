@@ -64,7 +64,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
     private fun hentKodeverdi(type: String, kode: String?, hentKodeverdiFunction: Function1<String, String?>): String {
         return try {
-            kode?.let(hentKodeverdiFunction) ?: ""
+            kode?.let(hentKodeverdiFunction) ?: kode ?: ""
         } catch (e: Exception) {
             //Ikke la feil fra integrasjon stoppe henting av data
             logger.error("Feilet henting av $type til $kode message=${e.message} cause=${e.cause?.message}")
@@ -74,7 +74,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
     fun mapTilSøkerinfo(pdlSøker: PdlSøker, pdlBarn: Map<String, PdlBarn>): Søkerinfo {
         val søker: Person = pdlSøker.tilPersonDto()
-        val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.last().vegadresse)
+        val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.first().vegadresse)
         return Søkerinfo(søker, barn)
     }
 
@@ -86,7 +86,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
         return pdlBarn.entries.map {
             val mellomnavn = it.value.navn.first().mellomnavn?.let { " $it " } ?: " "
-            val navn = it.value.navn.last().fornavn + mellomnavn + it.value.navn.last().etternavn
+            val navn = it.value.navn.first().fornavn + mellomnavn + it.value.navn.first().etternavn
             val fødselsdato = it.value.fødsel.first().fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
@@ -99,15 +99,18 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     }
 
     private fun PdlSøker.tilPersonDto(): Person {
-        val adresse = Adresse(adresse = tilFormatertAdresse(bostedsadresse.last().vegadresse),
-                              poststed = hentPoststed(bostedsadresse.last().vegadresse?.postnummer),
-                              postnummer = bostedsadresse.last().vegadresse?.postnummer ?: " ")
+        val adresse = Adresse(adresse = tilFormatertAdresse(bostedsadresse.first().vegadresse),
+                              poststed = hentPoststed(bostedsadresse.first().vegadresse?.postnummer),
+                              postnummer = bostedsadresse.first().vegadresse?.postnummer ?: " ")
+
+        val statsborgerskapListe = statsborgerskap.mapNotNull { it.land }.map { hentLand(it) }.joinToString(", ")
+
         return Person(fnr = EksternBrukerUtils.hentFnrFraToken(),
-                      forkortetNavn = navn.last().visningsnavn(),
+                      forkortetNavn = navn.first().visningsnavn(),
                       adresse = adresse,
                       egenansatt = false,
-                      sivilstand = sivilstand.last().type.toString(),
-                      statsborgerskap = statsborgerskap.last().land)
+                      sivilstand = sivilstand.first().type.toString(),
+                      statsborgerskap = statsborgerskapListe)
     }
 
     private fun tilFormatertAdresse(vegadresse: Vegadresse?): String {
