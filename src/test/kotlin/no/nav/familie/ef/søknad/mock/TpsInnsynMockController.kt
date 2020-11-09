@@ -100,7 +100,7 @@ class TpsInnsynMockController {
     "datoFraOgMed": "",
     "kilde": "SKD",
     "kode": {
-      "verdi": "UGIF",
+      "verdi": "GIFT",
       "kodeverk": "Sivilstander"
     }
   },
