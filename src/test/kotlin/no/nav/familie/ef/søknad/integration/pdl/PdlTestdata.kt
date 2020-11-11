@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.integration.pdl
 
 import no.nav.familie.ef.søknad.integration.dto.pdl.*
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 object PdlTestdata {
 
@@ -11,18 +10,14 @@ object PdlTestdata {
                                         "",
                                         "",
                                         "",
-                                        "",
-                                        "",
                                         0L)
 
-
-    private val folkeregistermetadata = Folkeregistermetadata(LocalDateTime.now(), LocalDateTime.now())
 
     private val navn = listOf(Navn("", "", ""))
 
     private val adressebeskyttelse = listOf(Adressebeskyttelse(AdressebeskyttelseGradering.FORTROLIG))
 
-    private val matrikkeladresse = Matrikkeladresse(null, null, null, null, null)
+    private val matrikkeladresse = Matrikkeladresse(null)
 
     private val bostedsadresse = listOf(Bostedsadresse(LocalDate.now(),
                                                        "",

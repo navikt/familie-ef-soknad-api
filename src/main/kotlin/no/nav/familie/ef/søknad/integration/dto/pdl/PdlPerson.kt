@@ -55,16 +55,10 @@ data class Vegadresse(val husnummer: String?,
                       val husbokstav: String?,
                       val bruksenhetsnummer: String?,
                       val adressenavn: String?,
-                      val kommunenummer: String?,
-                      val tilleggsnavn: String?,
                       val postnummer: String?,
                       val matrikkelId: Long?)
 
-data class Matrikkeladresse(val bruksenhetsnummer: String?,
-                            val kommunenummer: String?,
-                            val matrikkelId: String?,
-                            val postnummer: String?,
-                            val tilleggsnavn: String?)
+data class Matrikkeladresse(val matrikkelId: Long?)
 
 data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
 

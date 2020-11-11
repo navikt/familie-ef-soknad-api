@@ -14,17 +14,11 @@ query($identer: [ID!]!){
                     bruksenhetsnummer
                     husbokstav
                     husnummer
-                    kommunenummer
                     matrikkelId
                     postnummer
-                    tilleggsnavn
                 }
                 matrikkeladresse {
-                    bruksenhetsnummer
-                    kommunenummer
                     matrikkelId
-                    postnummer
-                    tilleggsnavn
                 }
             }
             deltBosted {

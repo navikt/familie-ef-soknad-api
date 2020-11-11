@@ -74,9 +74,7 @@ class PdlClientConfig {
             Vegadresse(husnummer = "13",
                        husbokstav = "b",
                        adressenavn = "Charlies vei",
-                       kommunenummer = "0301",
                        postnummer = "0575",
                        bruksenhetsnummer = "",
-                       tilleggsnavn = null,
                        matrikkelId = 1L)
 }

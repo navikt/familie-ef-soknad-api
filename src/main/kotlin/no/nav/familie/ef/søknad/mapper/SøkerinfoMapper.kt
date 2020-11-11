@@ -93,39 +93,38 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         }
     }
 
-    private fun harSammeAdresse(søkersAdresse: Bostedsadresse?,
-                                pdlBarn: PdlBarn): Boolean {
+    fun harSammeAdresse(søkersAdresse: Bostedsadresse?,
+                        pdlBarn: PdlBarn): Boolean {
         val barnetsAdresse = pdlBarn.bostedsadresse.firstOrNull()
-        if (søkersAdresse == null || barnetsAdresse == null || pdlBarn.deltBosted.isNotEmpty()) {
+        if (søkersAdresse == null || barnetsAdresse == null || harDeltBosted(pdlBarn)) {
             return false
         }
 
-        return if (søkersAdresse.vegadresse != null && søkersAdresse.vegadresse.matrikkelId == barnetsAdresse.vegadresse?.matrikkelId) {
+        return if (søkersAdresse.vegadresse?.matrikkelId != null
+                   && søkersAdresse.vegadresse.matrikkelId == barnetsAdresse.vegadresse?.matrikkelId) {
             true
-        } else if (søkersAdresse.matrikkeladresse != null && søkersAdresse.matrikkeladresse.matrikkelId == barnetsAdresse.matrikkeladresse?.matrikkelId) {
+        } else if (søkersAdresse.matrikkeladresse?.matrikkelId != null
+                   && søkersAdresse.matrikkeladresse.matrikkelId == barnetsAdresse.matrikkeladresse?.matrikkelId) {
             true
         } else {
             if (harIkkeMatrikkelId(søkersAdresse) && harIkkeMatrikkelId(barnetsAdresse)) {
                 logger.info("Finner ikke matrikkelId på noen av adressene")
             }
-            borMedSøker(søkersAdresse, barnetsAdresse)
+            return søkersAdresse.vegadresse != null && søkersAdresse.vegadresse == barnetsAdresse.vegadresse
         }
     }
+
+    private fun harDeltBosted(pdlBarn: PdlBarn) =
+            pdlBarn.deltBosted.any {
+                it.startdatoForKontrakt.isBefore(LocalDate.now())
+                && (it.sluttdatoForKontrakt == null || it.sluttdatoForKontrakt.isAfter(LocalDate.now()))
+            }
 
     private fun harIkkeMatrikkelId(bostedsadresse: Bostedsadresse) =
             harIkkeMatrikkelId(bostedsadresse.vegadresse) && harIkkeMatrikkelId(bostedsadresse.matrikkeladresse)
 
     private fun harIkkeMatrikkelId(adresse: Vegadresse?) = adresse != null && adresse.matrikkelId == null
     private fun harIkkeMatrikkelId(adresse: Matrikkeladresse?) = adresse != null && adresse.matrikkelId == null
-
-    fun borMedSøker(søkerAdresse: Bostedsadresse, barneAdresse: Bostedsadresse): Boolean {
-        fun adresseListe(bostedsadresse: Bostedsadresse): List<Any?> {
-            return listOfNotNull(bostedsadresse.matrikkeladresse, bostedsadresse.vegadresse)
-        }
-
-        val barneAdresser = adresseListe(barneAdresse)
-        return adresseListe(søkerAdresse).any { barneAdresser.contains(it) }
-    }
 
     private fun PdlSøker.tilPersonDto(): Person {
         val formatertAdresse = formaterAdresse(this)
@@ -151,7 +150,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         } else if (bosted.vegadresse != null) {
             tilFormatertAdresse(bosted.vegadresse)
         } else if (bosted.matrikkeladresse != null) {
-            tilFormatertAdresse(bosted.matrikkeladresse)
+            return "Matrikkeladresse"
         } else {
             logger.info("Søker har hverken vegadresse eller matrikkeladresse")
             ""
@@ -163,11 +162,6 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                        vegadresse.husnummer ?: "",
                        vegadresse.husbokstav ?: "",
                        vegadresse.bruksenhetsnummer ?: "")) ?: ""
-
-    private fun tilFormatertAdresse(matrikkeladresse: Matrikkeladresse): String =
-            join(space(matrikkeladresse.postnummer ?: "",
-                       matrikkeladresse.kommunenummer ?: "",
-                       matrikkeladresse.bruksenhetsnummer ?: "")) ?: ""
 
     private fun join(vararg args: String?, separator: String = ", "): String? {
         val filterNotNull = args.filterNotNull().filterNot(String::isEmpty)

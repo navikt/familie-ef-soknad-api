@@ -5,6 +5,7 @@ import io.mockk.mockk
 import no.nav.familie.ef.søknad.api.dto.tps.Adresse
 import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.integration.dto.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.*
 import no.nav.familie.ef.søknad.service.KodeverkService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -112,6 +113,90 @@ internal class SøkerinfoMapperTest {
         assertThat(person.adresse.poststed).isEqualTo("OSLO")
         assertThat(person.statsborgerskap).isEqualTo("")
     }
+
+    @Test
+    internal fun `harSammeAdresse - tester ulike varianter av nullverdier`() {
+        assertThat(søkerinfoMapper.harSammeAdresse(null, barn()))
+                .withFailMessage("Søkers adresse er null")
+                .isFalse
+        assertThat(søkerinfoMapper.harSammeAdresse(bostedsadresse(), barn(bostedsadresse(vegadresse(1)))))
+                .withFailMessage("Søker har ikke vegadresse eller matrikkeladresse")
+                .isFalse
+        assertThat(søkerinfoMapper.harSammeAdresse(bostedsadresse(vegadresse(1)), barn()))
+                .withFailMessage("Barnet har ikke vegadresse eller matrikkeladresse")
+                .isFalse
+    }
+
+    @Test
+    internal fun `harSammeAdresse - skal teste vegadresse`() {
+        assertThat(søkerinfoMapper.harSammeAdresse(bostedsadresse(vegadresse(matrikkelId = 1)),
+                                                   barn(bostedsadresse(vegadresse(matrikkelId = 1)))))
+                .withFailMessage("MatrikkelId er lik på vegadresse")
+                .isTrue
+        assertThat(søkerinfoMapper.harSammeAdresse(bostedsadresse(vegadresse(adressenavn = "1")),
+                                                   barn(bostedsadresse(vegadresse(adressenavn = "1")))))
+                .withFailMessage("Har samme adressenavn")
+                .isTrue
+        assertThat(søkerinfoMapper.harSammeAdresse(bostedsadresse(vegadresse(adressenavn = "1")),
+                                                   barn(bostedsadresse(vegadresse(adressenavn = "2")))))
+                .withFailMessage("Har ulike adressenavn")
+                .isFalse
+    }
+
+    @Test
+    internal fun `harSammeAdresse - skal teste matrikkeladresse`() {
+        assertThat(søkerinfoMapper.harSammeAdresse(bostedsadresse(matrikkeladresse = Matrikkeladresse(matrikkelId = 1)),
+                                                   barn(bostedsadresse(matrikkeladresse = Matrikkeladresse(matrikkelId = 1)))))
+                .withFailMessage("MatrikkelId er lik på matrikkelId")
+                .isTrue
+        assertThat(søkerinfoMapper.harSammeAdresse(bostedsadresse(matrikkeladresse = Matrikkeladresse(null)),
+                                                   barn(bostedsadresse(matrikkeladresse = Matrikkeladresse(null)))))
+                .isFalse
+    }
+
+    @Test
+    internal fun `har samme adresse men har delt bosted`() {
+        val søkersAdresse = bostedsadresse(vegadresse(matrikkelId = 1))
+        val datoEtterIdag = LocalDate.now().plusDays(1)
+        val datoFørIdag = LocalDate.now().minusDays(1)
+        assertThat(søkerinfoMapper.harSammeAdresse(søkersAdresse,
+                                                   barn(søkersAdresse, DeltBosted(datoEtterIdag, null))))
+                .withFailMessage("Delt bosted frem i tid")
+                .isTrue
+        assertThat(søkerinfoMapper.harSammeAdresse(søkersAdresse,
+                                                   barn(søkersAdresse, DeltBosted(datoFørIdag, datoFørIdag))))
+                .withFailMessage("Delt bosted avsluttet")
+                .isTrue
+
+        assertThat(søkerinfoMapper.harSammeAdresse(søkersAdresse,
+                                                   barn(søkersAdresse, DeltBosted(datoFørIdag, datoEtterIdag))))
+                .withFailMessage("Har delt bosted med sluttdato frem i tid")
+                .isFalse
+
+        assertThat(søkerinfoMapper.harSammeAdresse(søkersAdresse,
+                                                   barn(søkersAdresse, DeltBosted(datoFørIdag, null))))
+                .withFailMessage("Har delt bosted med sluttdato null")
+                .isFalse
+    }
+
+    private fun vegadresse(matrikkelId: Long? = null, adressenavn: String? = null) =
+            Vegadresse(null,
+                       null,
+                       null,
+                       adressenavn,
+                       null,
+                       matrikkelId)
+
+    private fun bostedsadresse(vegadresse: Vegadresse? = null, matrikkeladresse: Matrikkeladresse? = null) =
+            Bostedsadresse(null, null, vegadresse, matrikkeladresse)
+
+    private fun barn(bostedsadresse: Bostedsadresse? = null, deltBosted: DeltBosted? = null) =
+            PdlBarn(emptyList(),
+                    bostedsadresse?.let { listOf(it) } ?: emptyList(),
+                    deltBosted?.let { listOf(it) } ?: emptyList(),
+                    emptyList(),
+                    emptyList(),
+                    emptyList())
 
     private fun person(): Person {
         val bostedsadresse = BostedsadresseDto(null, null, null, null, "0575")

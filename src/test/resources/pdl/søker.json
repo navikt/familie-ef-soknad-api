@@ -15,17 +15,11 @@
             "husbokstav": null,
             "bruksenhetsnummer": null,
             "adressenavn": "INNGJERDSVEGEN",
-            "kommunenummer": "0301",
-            "tilleggsnavn": null,
             "postnummer": "0862",
             "matrikkelId": 1
           },
           "matrikkeladresse": {
-            "bruksenhetsnummer": null,
-            "kommunenummer": "0301",
-            "matrikkelId": 2,
-            "postnummer": "0862",
-            "tilleggsnavn": null
+            "matrikkelId": 2
           }
         }
       ],
