@@ -69,15 +69,15 @@ internal class OppslagServiceServiceImplTest {
 
     @Test
     fun `Test filtrering på dødsdato`() {
-        Assertions.assertThat(oppslagServiceService.erIkkeDød(pdlBarn(Dødsfall(LocalDate.MIN)))).isTrue
-        Assertions.assertThat(oppslagServiceService.erIkkeDød(pdlBarn(null))).isFalse
+        Assertions.assertThat(oppslagServiceService.erILive(pdlBarn(Dødsfall(LocalDate.MIN)))).isFalse
+        Assertions.assertThat(oppslagServiceService.erILive(pdlBarn())).isTrue
     }
 
     @Test
     fun `Skal filtrere bort døde barn`() {
         val slot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
-        val mapOfBarn = mapOf<String, PdlBarn>("2" to pdlBarn(Dødsfall(LocalDate.MIN)))
+        val mapOfBarn = mapOf("2" to pdlBarn(Dødsfall(LocalDate.MIN)))
         every { pdlStsClient.hentBarn(any()) } returns mapOfBarn
         every {
             søkerinfoMapper.mapTilSøkerinfo(any(), capture(slot))
@@ -86,8 +86,22 @@ internal class OppslagServiceServiceImplTest {
         Assertions.assertThat(slot.captured).hasSize(0)
     }
 
-    private fun pdlBarn(dødsfall: Dødsfall?): PdlBarn {
-        val fødsel = Fødsel(LocalDate.now().minusMonths(6).year, null, null, null, null)
+    @Test
+    fun `Skal ikke filtrere bort levende barn`() {
+        val slot = slot<Map<String, PdlBarn>>()
+        mockHentPersonPdlClient()
+        val mapOfBarn = mapOf("2" to pdlBarn())
+        every { pdlStsClient.hentBarn(any()) } returns mapOfBarn
+        every {
+            søkerinfoMapper.mapTilSøkerinfo(any(), capture(slot))
+        } returns mockk()
+        oppslagServiceService.hentSøkerinfoV2()
+        Assertions.assertThat(slot.captured).hasSize(1)
+    }
+
+    private fun pdlBarn(dødsfall: Dødsfall? = null): PdlBarn {
+        val fødselsdato = LocalDate.now().minusMonths(6)
+        val fødsel = Fødsel(fødselsdato.year, fødselsdato, null, null, null)
         return PdlBarn(emptyList(),
                        emptyList(),
                        emptyList(),

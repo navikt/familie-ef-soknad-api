@@ -48,12 +48,12 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
         // TODO trenger vi sjekk/filtrering av foreldreansvar
         val aktuelleBarn = pdlBarn
                 .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
-                .filter { erIkkeDød(it.value) }
+                .filter { erILive(it.value) }
         return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn)
     }
 
-    fun erIkkeDød(pdlBarn: PdlBarn) =
-            pdlBarn.dødsfall.firstOrNull()?.dødsdato != null
+    fun erILive(pdlBarn: PdlBarn) =
+            pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
 
     private fun settNavnFraPdlPåSøkerinfo(søkerinfo: Søkerinfo): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
