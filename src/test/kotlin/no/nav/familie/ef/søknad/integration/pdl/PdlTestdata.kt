@@ -48,7 +48,8 @@ object PdlTestdata {
                                                                                             LocalDate.now())),
                                                                           familierelasjon,
                                                                           navn,
-                                                                          fødsel))))
+                                                                          fødsel,
+                                                                          listOf(Dødsfall(LocalDate.now()))))))
 
 
 }

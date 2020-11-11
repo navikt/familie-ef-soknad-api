@@ -6,6 +6,7 @@ import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
@@ -51,13 +52,19 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
 
         secureLogger.warn("pdlBarn: $pdlBarn")
 
-        val aktuelleBarn = pdlBarn.filter { erIAktuellAlder(it.value.fødsel.last().fødselsdato) }
+        // TODO trenger vi sjekk/filtrering av foreldreansvar
+        val aktuelleBarn = pdlBarn
+                .filter { erIAktuellAlder(it.value.fødsel.last().fødselsdato) }
+                .filter { erIkkeDød(it) }
 
         secureLogger.warn("aktuelleBarn: $aktuelleBarn", aktuelleBarn)
 
-        return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, pdlBarn)
+        return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn)
 
     }
+
+    private fun erIkkeDød(it: Map.Entry<String, PdlBarn>) =
+            it.value.dødsfall.firstOrNull()?.dødsdato != null
 
     private fun settNavnFraPdlPåSøkerinfo(søkerinfo: Søkerinfo): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())

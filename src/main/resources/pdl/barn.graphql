@@ -42,6 +42,9 @@ query($identer: [ID!]!){
                 foedested
                 foedekommune
             }
+            doedsfall {
+                doedsdato
+            }
         }
     }
 }

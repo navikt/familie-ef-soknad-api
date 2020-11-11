@@ -38,7 +38,8 @@ data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
                    val deltBosted: List<DeltBosted>,
                    val familierelasjoner: List<Familierelasjon>,
                    val navn: List<Navn>,
-                   @JsonProperty("foedsel") val fødsel: List<Fødsel>)
+                   @JsonProperty("foedsel") val fødsel: List<Fødsel>,
+                   @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>)
 
 data class DeltBosted(val startdatoForKontrakt: LocalDate,
                       val sluttdatoForKontrakt: LocalDate?)
@@ -76,6 +77,8 @@ data class Fødsel(@JsonProperty("foedselsaar") val fødselsår: Int?,
                   @JsonProperty("foedeland") val fødeland: String?,
                   @JsonProperty("foedested") val fødested: String?,
                   @JsonProperty("foedekommune") val fødekommune: String?)
+
+data class Dødsfall(@JsonProperty("doedsdato") val dødsdato: LocalDate?)
 
 data class Familierelasjon(val relatertPersonsIdent: String,
                            val relatertPersonsRolle: Familierelasjonsrolle,

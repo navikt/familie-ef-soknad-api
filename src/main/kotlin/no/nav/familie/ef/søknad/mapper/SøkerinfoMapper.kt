@@ -33,7 +33,6 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                     relasjonDto.harSammeAdresse)
     }
 
-
     fun mapTilPerson(personinfoDto: PersoninfoDto): Person {
         return Person(personinfoDto.ident,
                       personinfoDto.navn.forkortetNavn,
@@ -77,10 +76,6 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
 
     private fun tilBarneListeDto(pdlBarn: Map<String, PdlBarn>, søkersAdresse: Bostedsadresse?): List<Barn> {
-        // Todo filter på alder -> erIAktuellAlder
-        // TODO dobbeltsjekk "doedsfall"! (ikke med i query ennå)
-        // TODO trenger vi sjekk mot deltBosted i harSammeAdresse?
-
         return pdlBarn.entries.map {
             val mellomnavn = it.value.navn.first().mellomnavn?.let { " $it " } ?: " "
             val navn = it.value.navn.first().fornavn + mellomnavn + it.value.navn.first().etternavn
