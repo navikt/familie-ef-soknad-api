@@ -7,10 +7,7 @@ import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
-import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
-import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
-import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
-import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
+import no.nav.familie.ef.søknad.integration.dto.pdl.*
 import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
@@ -74,12 +71,12 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
     fun mapTilSøkerinfo(pdlSøker: PdlSøker, pdlBarn: Map<String, PdlBarn>): Søkerinfo {
         val søker: Person = pdlSøker.tilPersonDto()
-        val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.first().vegadresse)
+        val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.firstOrNull())
         return Søkerinfo(søker, barn)
     }
 
 
-    private fun tilBarneListeDto(pdlBarn: Map<String, PdlBarn>, søkersAdresse: Vegadresse?): List<Barn> {
+    private fun tilBarneListeDto(pdlBarn: Map<String, PdlBarn>, søkersAdresse: Bostedsadresse?): List<Barn> {
         // Todo filter på alder -> erIAktuellAlder
         // TODO dobbeltsjekk "doedsfall"! (ikke med i query ennå)
         // TODO trenger vi sjekk mot deltBosted i harSammeAdresse?
@@ -90,20 +87,53 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             val fødselsdato = it.value.fødsel.first().fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
-            // TODO hvordan håndtere att vegadresse er null?
-            val harSammeAdresse = søkersAdresse?.matrikkelId != null &&
-                                  søkersAdresse.matrikkelId == it.value.bostedsadresse.first().vegadresse?.matrikkelId
+            val harSammeAdresse = harSammeAdresse(søkersAdresse, it.value)
 
             Barn(it.key, navn, alder, fødselsdato, harSammeAdresse)
         }
     }
 
+    private fun harSammeAdresse(søkersAdresse: Bostedsadresse?,
+                                pdlBarn: PdlBarn): Boolean {
+        val barnetsAdresse = pdlBarn.bostedsadresse.firstOrNull()
+        if (søkersAdresse == null || barnetsAdresse == null || pdlBarn.deltBosted.isNotEmpty()) {
+            return false
+        }
+
+        return if (søkersAdresse.vegadresse != null && søkersAdresse.vegadresse.matrikkelId == barnetsAdresse.vegadresse?.matrikkelId) {
+            true
+        } else if (søkersAdresse.matrikkeladresse != null && søkersAdresse.matrikkeladresse.matrikkelId == barnetsAdresse.matrikkeladresse?.matrikkelId) {
+            true
+        } else {
+            if (harIkkeMatrikkelId(søkersAdresse) && harIkkeMatrikkelId(barnetsAdresse)) {
+                logger.info("Finner ikke matrikkelId på noen av adressene")
+            }
+            borMedSøker(søkersAdresse, barnetsAdresse)
+        }
+    }
+
+    private fun harIkkeMatrikkelId(bostedsadresse: Bostedsadresse) =
+            harIkkeMatrikkelId(bostedsadresse.vegadresse) && harIkkeMatrikkelId(bostedsadresse.matrikkeladresse)
+
+    private fun harIkkeMatrikkelId(adresse: Vegadresse?) = adresse != null && adresse.matrikkelId == null
+    private fun harIkkeMatrikkelId(adresse: Matrikkeladresse?) = adresse != null && adresse.matrikkelId == null
+
+    fun borMedSøker(søkerAdresse: Bostedsadresse, barneAdresse: Bostedsadresse): Boolean {
+        fun adresseListe(bostedsadresse: Bostedsadresse): List<Any?> {
+            return listOfNotNull(bostedsadresse.matrikkeladresse, bostedsadresse.vegadresse)
+        }
+
+        val barneAdresser = adresseListe(barneAdresse)
+        return adresseListe(søkerAdresse).any { barneAdresser.contains(it) }
+    }
+
     private fun PdlSøker.tilPersonDto(): Person {
-        val adresse = Adresse(adresse = tilFormatertAdresse(bostedsadresse.first().vegadresse),
+        val formatertAdresse = formaterAdresse(this)
+        val adresse = Adresse(adresse = formatertAdresse,
                               poststed = hentPoststed(bostedsadresse.first().vegadresse?.postnummer),
                               postnummer = bostedsadresse.first().vegadresse?.postnummer ?: " ")
 
-        val statsborgerskapListe = statsborgerskap.mapNotNull { it.land }.map { hentLand(it) }.joinToString(", ")
+        val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
         return Person(fnr = EksternBrukerUtils.hentFnrFraToken(),
                       forkortetNavn = navn.first().visningsnavn(),
@@ -113,12 +143,31 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                       statsborgerskap = statsborgerskapListe)
     }
 
-    private fun tilFormatertAdresse(vegadresse: Vegadresse?): String {
-        return join(space(vegadresse?.adressenavn ?: "",
-                          vegadresse?.husnummer ?: "",
-                          vegadresse?.husbokstav ?: "",
-                          vegadresse?.bruksenhetsnummer ?: "")) ?: ""
+    private fun formaterAdresse(pdlSøker: PdlSøker): String {
+        val bosted = pdlSøker.bostedsadresse.firstOrNull()
+        return if (bosted == null) {
+            logger.info("Finner ikke bostedadresse")
+            return ""
+        } else if (bosted.vegadresse != null) {
+            tilFormatertAdresse(bosted.vegadresse)
+        } else if (bosted.matrikkeladresse != null) {
+            tilFormatertAdresse(bosted.matrikkeladresse)
+        } else {
+            logger.info("Søker har hverken vegadresse eller matrikkeladresse")
+            ""
+        }
     }
+
+    private fun tilFormatertAdresse(vegadresse: Vegadresse): String =
+            join(space(vegadresse.adressenavn ?: "",
+                       vegadresse.husnummer ?: "",
+                       vegadresse.husbokstav ?: "",
+                       vegadresse.bruksenhetsnummer ?: "")) ?: ""
+
+    private fun tilFormatertAdresse(matrikkeladresse: Matrikkeladresse): String =
+            join(space(matrikkeladresse.postnummer ?: "",
+                       matrikkeladresse.kommunenummer ?: "",
+                       matrikkeladresse.bruksenhetsnummer ?: "")) ?: ""
 
     private fun join(vararg args: String?, separator: String = ", "): String? {
         val filterNotNull = args.filterNotNull().filterNot(String::isEmpty)
