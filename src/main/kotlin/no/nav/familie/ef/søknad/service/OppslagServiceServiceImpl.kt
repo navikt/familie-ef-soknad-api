@@ -22,59 +22,47 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
                                          private val søkerinfoMapper: SøkerinfoMapper) : OppslagService {
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     override fun hentSøkerinfo(): Søkerinfo {
+
+        try {
+            hentSøkerinfoV2()
+        } catch (e: Exception) {
+            secureLogger.info("Exception - hent søker fra pdl", e)
+            logger.warn("Exception - hent søker fra pdl (se securelogs for detaljer)")
+        }
+
         val personinfoDto = client.hentPersoninfo()
         val barn = client.hentBarn()
-        secureLogger.info("Personinfo: ${personinfoDto.ident}, Barn alder/samme adresse : ${
-            barn.map { Pair(it.alder, it.harSammeAdresse) }
-        },  ")
         val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
         return settNavnFraPdlPåSøkerinfo(søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn))
     }
 
     override fun hentSøkerinfoV2(): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
-
-        secureLogger.warn("pdlSoker: $pdlSøker")
-
         val barnIdentifikatorer = pdlSøker.familierelasjoner
                 .filter { it.minRolleForPerson != Familierelasjonsrolle.BARN }
                 .map { it.relatertPersonsIdent }
-
-        secureLogger.warn("pdlbarnIdentifikatorerSoker: $barnIdentifikatorer")
-
-        val hentBarnString = pdlStsClient.hentBarnString(barnIdentifikatorer)
-
-        secureLogger.warn("hentBarnString: $hentBarnString")
-
         val pdlBarn = pdlStsClient.hentBarn(barnIdentifikatorer)
-
-        secureLogger.warn("pdlBarn: $pdlBarn")
-
         // TODO trenger vi sjekk/filtrering av foreldreansvar
         val aktuelleBarn = pdlBarn
-                .filter { erIAktuellAlder(it.value.fødsel.last().fødselsdato) }
-                .filter { erIkkeDød(it) }
-
-        secureLogger.warn("aktuelleBarn: $aktuelleBarn", aktuelleBarn)
-
+                .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
+                .filter { erIkkeDød(it.value) }
         return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn)
-
     }
 
-    private fun erIkkeDød(it: Map.Entry<String, PdlBarn>) =
-            it.value.dødsfall.firstOrNull()?.dødsdato != null
+    fun erIkkeDød(pdlBarn: PdlBarn) =
+            pdlBarn.dødsfall.firstOrNull()?.dødsdato != null
 
     private fun settNavnFraPdlPåSøkerinfo(søkerinfo: Søkerinfo): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
         val søker = søkerinfo.søker
-        val mellomnavn = pdlSøker.navn.last().mellomnavn?.let { " $it " } ?: " "
+        val mellomnavn = pdlSøker.navn.first().mellomnavn?.let { " $it " } ?: " "
         val oppdaterSøker =
-                søker.copy(forkortetNavn = "${pdlSøker.navn.last().fornavn}$mellomnavn${pdlSøker.navn.last().etternavn}")
+                søker.copy(forkortetNavn = "${pdlSøker.navn.first().fornavn}$mellomnavn${pdlSøker.navn.first().etternavn}")
         return søkerinfo.copy(søker = oppdaterSøker)
     }
-
 
 
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {

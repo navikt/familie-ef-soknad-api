@@ -2,7 +2,10 @@ package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.PdlConfig
 import no.nav.familie.ef.søknad.exception.PdlRequestException
-import no.nav.familie.ef.søknad.integration.dto.pdl.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBolkResponse
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequest
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequestVariables
 import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.http.sts.StsRestClient
 import org.springframework.beans.factory.annotation.Qualifier
@@ -35,14 +38,6 @@ class PdlStsClient(val pdlConfig: PdlConfig,
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
-    fun hentBarnString(personIdenter: List<String>): String {
-        if (personIdenter.isEmpty()) return ""
-        val pdlPersonRequest = PdlPersonBolkRequest(variables = PdlPersonBolkRequestVariables(personIdenter),
-                                                    query = PdlConfig.barnQuery)
-        return postForEntity(pdlConfig.pdlUri,
-                             pdlPersonRequest,
-                             httpHeaders())
-    }
 
     private inline fun <reified T : Any> feilsjekkOgReturnerData(pdlResponse: PdlBolkResponse<T>): Map<String, T> {
         val feil = pdlResponse.data.personBolk.filter { it.code != "ok" }.map { it.ident to it.code }.toMap()

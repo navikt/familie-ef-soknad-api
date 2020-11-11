@@ -1,22 +1,22 @@
 package no.nav.familie.ef.søknad.service
 
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.mockkObject
+import io.mockk.*
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
+import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.integration.dto.NavnDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
-import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
-import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
+import no.nav.familie.ef.søknad.integration.dto.pdl.*
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
+import org.assertj.core.api.Assertions
 import org.junit.Before
 import org.junit.Test
+import java.time.LocalDate
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
@@ -27,9 +27,11 @@ internal class OppslagServiceServiceImplTest {
     val pdlClient: PdlClient = mockk()
     val tpsInnsynMockController = TpsInnsynMockController()
     val regelverkConfig: RegelverkConfig = mockk()
+    val pdlStsClient: PdlStsClient = mockk()
 
-    private val søkerinfoMapper = SøkerinfoMapper(mockk(relaxed = true))
-    private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, pdlClient, mockk(), regelverkConfig, søkerinfoMapper)
+    private val søkerinfoMapper = spyk(SøkerinfoMapper(mockk(relaxed = true)))
+    private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, pdlClient,
+                                                                  pdlStsClient, regelverkConfig, søkerinfoMapper)
 
     @Before
     fun setUp() {
@@ -38,13 +40,13 @@ internal class OppslagServiceServiceImplTest {
         mockRegelverksConfig()
         mockHentBarn()
         mockHentPersonInfo()
-        mockPdlClient()
+        mockHentPersonPdlClient()
     }
 
     @Test
     fun `Lik søkerInfo skal ha lik hash`() {
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
-        mockPdlClient()
+        mockHentPersonPdlClient()
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertEquals(søkerinfo.hash, søkerinfo2.hash)
     }
@@ -52,7 +54,7 @@ internal class OppslagServiceServiceImplTest {
     @Test
     fun `SøkerInfo med ulike navn skal ikke ha lik hash`() {
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
-        mockPdlClient("Et annet navn")
+        mockHentPersonPdlClient("Et annet navn")
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertNotEquals(søkerinfo.hash, søkerinfo2.hash)
     }
@@ -63,6 +65,36 @@ internal class OppslagServiceServiceImplTest {
         mockHentBarn("AnnetBarnenavn")
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertNotEquals(søkerinfo.hash, søkerinfo2.hash)
+    }
+
+    @Test
+    fun `Test filtrering på dødsdato`() {
+        Assertions.assertThat(oppslagServiceService.erIkkeDød(pdlBarn(Dødsfall(LocalDate.MIN)))).isTrue
+        Assertions.assertThat(oppslagServiceService.erIkkeDød(pdlBarn(null))).isFalse
+    }
+
+    @Test
+    fun `Skal filtrere bort døde barn`() {
+        val slot = slot<Map<String, PdlBarn>>()
+        mockHentPersonPdlClient()
+        val mapOfBarn = mapOf<String, PdlBarn>("2" to pdlBarn(Dødsfall(LocalDate.MIN)))
+        every { pdlStsClient.hentBarn(any()) } returns mapOfBarn
+        every {
+            søkerinfoMapper.mapTilSøkerinfo(any(), capture(slot))
+        } returns mockk()
+        oppslagServiceService.hentSøkerinfoV2()
+        Assertions.assertThat(slot.captured).hasSize(0)
+    }
+
+    private fun pdlBarn(dødsfall: Dødsfall?): PdlBarn {
+        val fødsel = Fødsel(LocalDate.now().minusMonths(6).year, null, null, null, null)
+        return PdlBarn(emptyList(),
+                       emptyList(),
+                       emptyList(),
+                       emptyList(),
+                       emptyList(),
+                       fødsel = listOf(fødsel),
+                       dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList())
     }
 
     private fun mockRegelverksConfig() {
@@ -84,7 +116,9 @@ internal class OppslagServiceServiceImplTest {
         every { tpsClient.hentPersoninfo() } returns (personInfoDto.copy(navn = NavnDto(nyttNavn)))
     }
 
-    private fun mockPdlClient(fornavn: String = "TestNavn", mellomnavn: String = "TestNavn", etternavn: String = "TestNavn") {
+    private fun mockHentPersonPdlClient(fornavn: String = "TestNavn",
+                                        mellomnavn: String = "TestNavn",
+                                        etternavn: String = "TestNavn") {
 
         every { pdlClient.hentSøker(any()) } returns (PdlSøker(listOf(),
                                                                listOf(),
