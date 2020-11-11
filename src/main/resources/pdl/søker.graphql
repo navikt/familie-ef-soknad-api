@@ -7,17 +7,21 @@ query($ident: ID!){
             angittFlyttedato
             coAdressenavn
             vegadresse {
-                husnummer
-                husbokstav
-                bruksenhetsnummer
                 adressenavn
+                bruksenhetsnummer
+                husbokstav
+                husnummer
                 kommunenummer
-                tilleggsnavn
-                postnummer
                 matrikkelId
+                postnummer
+                tilleggsnavn
             }
-            ukjentBosted {
-                bostedskommune
+            matrikkeladresse {
+                bruksenhetsnummer
+                kommunenummer
+                matrikkelId
+                postnummer
+                tilleggsnavn
             }
         }
         familierelasjoner {

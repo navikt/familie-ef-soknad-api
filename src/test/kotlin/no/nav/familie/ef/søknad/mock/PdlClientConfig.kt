@@ -68,7 +68,7 @@ class PdlClientConfig {
             listOf(Bostedsadresse(angittFlyttedato = startdato,
                                   coAdressenavn = "CONAVN",
                                   vegadresse = vegadresse(),
-                                  ukjentBosted = null))
+                                  matrikkeladresse = null))
 
     private fun vegadresse(): Vegadresse =
             Vegadresse(husnummer = "13",

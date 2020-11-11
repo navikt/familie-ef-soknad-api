@@ -44,7 +44,7 @@ cors:
     - "http://localhost:8080"
 
 logging:
-  config: classpath:logback-spring-test.xml
+  config: classpath:logback-test.xml
 
 no.nav.security.jwt:
   issuers: selvbetjening

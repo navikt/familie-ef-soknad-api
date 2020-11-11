@@ -24,10 +24,21 @@
                 "postnummer": "0862",
                 "matrikkelId": 1
               },
-              "ukjentBosted": null
+              "matrikkeladresse": {
+                "bruksenhetsnummer": null,
+                "kommunenummer": "0301",
+                "matrikkelId": 2,
+                "postnummer": "0862",
+                "tilleggsnavn": null
+              }
             }
           ],
-          "deltBosted": [],
+          "deltBosted": [
+            {
+              "startdatoForKontrakt": "2000-01-01",
+              "sluttdatoForKontrakt": null
+            }
+          ],
           "familierelasjoner": [],
           "navn": [
             {

@@ -10,35 +10,26 @@ query($identer: [ID!]!){
                 angittFlyttedato
                 coAdressenavn
                 vegadresse {
-                    husnummer
-                    husbokstav
-                    bruksenhetsnummer
                     adressenavn
+                    bruksenhetsnummer
+                    husbokstav
+                    husnummer
                     kommunenummer
-                    tilleggsnavn
-                    postnummer
                     matrikkelId
+                    postnummer
+                    tilleggsnavn
                 }
-                ukjentBosted {
-                    bostedskommune
+                matrikkeladresse {
+                    bruksenhetsnummer
+                    kommunenummer
+                    matrikkelId
+                    postnummer
+                    tilleggsnavn
                 }
             }
             deltBosted {
                 startdatoForKontrakt
                 sluttdatoForKontrakt
-                vegadresse {
-                    husnummer
-                    husbokstav
-                    bruksenhetsnummer
-                    adressenavn
-                    kommunenummer
-                    tilleggsnavn
-                    postnummer
-                    matrikkelId
-                }
-                ukjentBosted {
-                    bostedskommune
-                }
             }
             familierelasjoner {
                 relatertPersonsIdent

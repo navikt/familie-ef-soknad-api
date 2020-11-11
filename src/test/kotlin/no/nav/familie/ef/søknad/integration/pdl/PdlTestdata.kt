@@ -22,10 +22,12 @@ object PdlTestdata {
 
     private val adressebeskyttelse = listOf(Adressebeskyttelse(AdressebeskyttelseGradering.FORTROLIG))
 
+    private val matrikkeladresse = Matrikkeladresse(null, null, null, null, null)
+
     private val bostedsadresse = listOf(Bostedsadresse(LocalDate.now(),
                                                        "",
                                                        vegadresse,
-                                                       UkjentBosted("")))
+                                                       matrikkeladresse))
 
     private val familierelasjon = listOf(Familierelasjon("", Familierelasjonsrolle.BARN, Familierelasjonsrolle.FAR))
 
@@ -47,10 +49,8 @@ object PdlTestdata {
     val pdlBarnData =
             PersonBolk(listOf(PersonDataBolk("11111122222", "ok", PdlBarn(adressebeskyttelse,
                                                                           bostedsadresse,
-                                                                          listOf(DeltBosted(LocalDateTime.now(),
-                                                                                            LocalDateTime.now(),
-                                                                                            vegadresse,
-                                                                                            UkjentBosted(""))),
+                                                                          listOf(DeltBosted(LocalDate.now(),
+                                                                                            LocalDate.now())),
                                                                           familierelasjon,
                                                                           navn,
                                                                           fødsel))))

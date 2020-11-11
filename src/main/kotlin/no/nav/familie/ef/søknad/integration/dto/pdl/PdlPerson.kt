@@ -40,11 +40,8 @@ data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
                    val navn: List<Navn>,
                    @JsonProperty("foedsel") val fødsel: List<Fødsel>)
 
-
-data class DeltBosted(val startdatoForKontrakt: LocalDateTime,
-                      val sluttdatoForKontrakt: LocalDateTime?,
-                      val vegadresse: Vegadresse?,
-                      val ukjentBosted: UkjentBosted?)
+data class DeltBosted(val startdatoForKontrakt: LocalDate,
+                      val sluttdatoForKontrakt: LocalDate?)
 
 data class Folkeregistermetadata(val gyldighetstidspunkt: LocalDateTime?,
                                  @JsonProperty("opphoerstidspunkt") val opphørstidspunkt: LocalDateTime?)
@@ -52,7 +49,7 @@ data class Folkeregistermetadata(val gyldighetstidspunkt: LocalDateTime?,
 data class Bostedsadresse(val angittFlyttedato: LocalDate?,
                           val coAdressenavn: String?,
                           val vegadresse: Vegadresse?,
-                          val ukjentBosted: UkjentBosted?)
+                          val matrikkeladresse: Matrikkeladresse?)
 
 data class Vegadresse(val husnummer: String?,
                       val husbokstav: String?,
@@ -63,7 +60,11 @@ data class Vegadresse(val husnummer: String?,
                       val postnummer: String?,
                       val matrikkelId: Long?)
 
-data class UkjentBosted(val bostedskommune: String?)
+data class Matrikkeladresse(val bruksenhetsnummer: String?,
+                            val kommunenummer: String?,
+                            val matrikkelId: String?,
+                            val postnummer: String?,
+                            val tilleggsnavn: String?)
 
 data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
 

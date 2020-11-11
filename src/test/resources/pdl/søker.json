@@ -20,7 +20,13 @@
             "postnummer": "0862",
             "matrikkelId": 1
           },
-          "ukjentBosted": null
+          "matrikkeladresse": {
+            "bruksenhetsnummer": null,
+            "kommunenummer": "0301",
+            "matrikkelId": 2,
+            "postnummer": "0862",
+            "tilleggsnavn": null
+          }
         }
       ],
       "familierelasjoner": [],
