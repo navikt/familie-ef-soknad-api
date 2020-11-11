@@ -28,7 +28,7 @@ tps:
 funksjonsbrytere:
   enabled: true
   unleash:
-    uri: https://unleashproxy.nais.oera.no/api/
+    uri: https://unleash.nais.io/api/
     environment: ${NAIS_CLUSTER_NAME:}
     applicationName: ${NAIS_APP_NAME:}
 
