@@ -7,7 +7,6 @@ import no.nav.familie.kontrakter.felles.kodeverk.KodeverkDto
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
-import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Component
@@ -25,10 +24,4 @@ class FamilieIntegrasjonerClient(private val config: FamilieIntegrasjonerConfig,
         return getForEntity<Ressurs<KodeverkDto>>(config.kodeverkPoststedUri).data!!
     }
 
-}
-
-fun main() {
-    println(UriComponentsBuilder.fromUriString("http://abc/")
-                    .pathSegment("abc/abc/")
-                    .pathSegment("/a").build().toUri())
 }
