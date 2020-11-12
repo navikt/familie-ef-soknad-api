@@ -13,10 +13,11 @@ import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
@@ -69,28 +70,43 @@ internal class OppslagServiceServiceImplTest {
 
     @Test
     fun `Test filtrering på dødsdato`() {
-        Assertions.assertThat(oppslagServiceService.erILive(pdlBarn(Dødsfall(LocalDate.MIN)))).isFalse
-        Assertions.assertThat(oppslagServiceService.erILive(pdlBarn())).isTrue
+        assertThat(oppslagServiceService.erILive(pdlBarn(Dødsfall(LocalDate.MIN)).second)).isFalse
+        assertThat(oppslagServiceService.erILive(pdlBarn().second)).isTrue
     }
 
     @Test
     fun `Skal filtrere bort døde barn`() {
-        every { pdlStsClient.hentBarn(any()) } returns mapOf("2" to pdlBarn(Dødsfall(LocalDate.MIN)))
+        every { pdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn(Dødsfall(LocalDate.MIN)))
         val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
         captureAktuelleBarn(aktuelleBarnSlot)
         oppslagServiceService.hentSøkerinfoV2()
-        Assertions.assertThat(aktuelleBarnSlot.captured).hasSize(0)
+        assertThat(aktuelleBarnSlot.captured).hasSize(0)
     }
 
     @Test
     fun `Skal ikke filtrere bort levende barn`() {
-        every { pdlStsClient.hentBarn(any()) } returns mapOf("2" to pdlBarn())
+        every { pdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn())
         val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
         captureAktuelleBarn(aktuelleBarnSlot)
         oppslagServiceService.hentSøkerinfoV2()
-        Assertions.assertThat(aktuelleBarnSlot.captured).hasSize(1)
+        assertThat(aktuelleBarnSlot.captured).hasSize(1)
+    }
+
+    @Test
+    fun `Skal filtrere bort døde barn og barn i for høy alder`() {
+        val dødtBarn = pdlBarn(Dødsfall(LocalDate.MIN), LocalDate.now().minusYears(1))
+        val levendeBarn = pdlBarn(fødselsdato = LocalDate.now().minusYears(2))
+        val barnForHøyAlder = pdlBarn(fødselsdato = LocalDate.now().minusYears(20))
+
+        every { pdlStsClient.hentBarn(any()) } returns mapOf(dødtBarn, levendeBarn, barnForHøyAlder)
+        val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
+        mockHentPersonPdlClient()
+        captureAktuelleBarn(aktuelleBarnSlot)
+        oppslagServiceService.hentSøkerinfoV2()
+        assertThat(aktuelleBarnSlot.captured).hasSize(1)
+        assertThat(aktuelleBarnSlot.captured).containsKey(levendeBarn.first)
     }
 
     private fun captureAktuelleBarn(aktuelleBarnSlot: CapturingSlot<Map<String, PdlBarn>>) {
@@ -99,16 +115,17 @@ internal class OppslagServiceServiceImplTest {
         } returns mockk()
     }
 
-    private fun pdlBarn(dødsfall: Dødsfall? = null): PdlBarn {
-        val fødselsdato = LocalDate.now().minusMonths(6)
+    private fun pdlBarn(dødsfall: Dødsfall? = null,
+                        fødselsdato: LocalDate = LocalDate.now().minusMonths(6)): Pair<String, PdlBarn> {
         val fødsel = Fødsel(fødselsdato.year, fødselsdato, null, null, null)
-        return PdlBarn(emptyList(),
-                       emptyList(),
-                       emptyList(),
-                       emptyList(),
-                       emptyList(),
-                       fødsel = listOf(fødsel),
-                       dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList())
+        return Pair(fødselsdato.format(ISO_LOCAL_DATE),
+                    PdlBarn(emptyList(),
+                            emptyList(),
+                            emptyList(),
+                            emptyList(),
+                            emptyList(),
+                            fødsel = listOf(fødsel),
+                            dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList()))
     }
 
     private fun mockRegelverksConfig() {
