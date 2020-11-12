@@ -27,7 +27,7 @@ internal class OppslagServiceServiceImplTest {
     val tpsClient: TpsInnsynServiceClient = mockk()
     val pdlClient: PdlClient = mockk()
     val tpsInnsynMockController = TpsInnsynMockController()
-    val regelverkConfig: RegelverkConfig = mockk()
+    val regelverkConfig: RegelverkConfig = RegelverkConfig(RegelverkConfig.Alder(18))
     val pdlStsClient: PdlStsClient = mockk()
 
     private val søkerinfoMapper = spyk(SøkerinfoMapper(mockk(relaxed = true)))
@@ -38,7 +38,6 @@ internal class OppslagServiceServiceImplTest {
     fun setUp() {
         mockkObject(EksternBrukerUtils)
         every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
-        mockRegelverksConfig()
         mockHentBarn()
         mockHentPersonInfo()
         mockHentPersonPdlClient()
@@ -72,6 +71,21 @@ internal class OppslagServiceServiceImplTest {
     fun `Test filtrering på dødsdato`() {
         assertThat(oppslagServiceService.erILive(pdlBarn(Dødsfall(LocalDate.MIN)).second)).isFalse
         assertThat(oppslagServiceService.erILive(pdlBarn().second)).isTrue
+    }
+
+    @Test
+    fun `erIAktuellAlder`() {
+        assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now())).isTrue
+        assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now()
+                .minusYears(18))).isTrue
+
+        assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now()
+                .minusYears(19).plusDays(1)))
+                .withFailMessage("Personen har ikke fylt 19 ennå")
+                .isTrue
+        assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now()
+                .minusYears(19).minusDays(2)))
+                .isFalse
     }
 
     @Test
@@ -126,10 +140,6 @@ internal class OppslagServiceServiceImplTest {
                             emptyList(),
                             fødsel = listOf(fødsel),
                             dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList()))
-    }
-
-    private fun mockRegelverksConfig() {
-        every { regelverkConfig.alder } returns RegelverkConfig.Alder(18)
     }
 
     private fun mockHentBarn(navn: String = "Ola") {
