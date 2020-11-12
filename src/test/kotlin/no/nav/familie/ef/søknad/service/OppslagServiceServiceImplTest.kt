@@ -75,28 +75,28 @@ internal class OppslagServiceServiceImplTest {
 
     @Test
     fun `Skal filtrere bort døde barn`() {
-        val slot = slot<Map<String, PdlBarn>>()
+        every { pdlStsClient.hentBarn(any()) } returns mapOf("2" to pdlBarn(Dødsfall(LocalDate.MIN)))
+        val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
-        val mapOfBarn = mapOf("2" to pdlBarn(Dødsfall(LocalDate.MIN)))
-        every { pdlStsClient.hentBarn(any()) } returns mapOfBarn
-        every {
-            søkerinfoMapper.mapTilSøkerinfo(any(), capture(slot))
-        } returns mockk()
+        captureAktuelleBarn(aktuelleBarnSlot)
         oppslagServiceService.hentSøkerinfoV2()
-        Assertions.assertThat(slot.captured).hasSize(0)
+        Assertions.assertThat(aktuelleBarnSlot.captured).hasSize(0)
     }
 
     @Test
     fun `Skal ikke filtrere bort levende barn`() {
-        val slot = slot<Map<String, PdlBarn>>()
+        every { pdlStsClient.hentBarn(any()) } returns mapOf("2" to pdlBarn())
+        val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
-        val mapOfBarn = mapOf("2" to pdlBarn())
-        every { pdlStsClient.hentBarn(any()) } returns mapOfBarn
-        every {
-            søkerinfoMapper.mapTilSøkerinfo(any(), capture(slot))
-        } returns mockk()
+        captureAktuelleBarn(aktuelleBarnSlot)
         oppslagServiceService.hentSøkerinfoV2()
-        Assertions.assertThat(slot.captured).hasSize(1)
+        Assertions.assertThat(aktuelleBarnSlot.captured).hasSize(1)
+    }
+
+    private fun captureAktuelleBarn(aktuelleBarnSlot: CapturingSlot<Map<String, PdlBarn>>) {
+        every {
+            søkerinfoMapper.mapTilSøkerinfo(any(), capture(aktuelleBarnSlot))
+        } returns mockk()
     }
 
     private fun pdlBarn(dødsfall: Dødsfall? = null): PdlBarn {
