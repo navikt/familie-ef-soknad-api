@@ -116,7 +116,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             }
 
     private fun harIkkeMatrikkelId(bostedsadresse: Bostedsadresse) =
-            harIkkeMatrikkelId(bostedsadresse.vegadresse) && harIkkeMatrikkelId(bostedsadresse.matrikkeladresse)
+            harIkkeMatrikkelId(bostedsadresse.vegadresse) || harIkkeMatrikkelId(bostedsadresse.matrikkeladresse)
 
     private fun harIkkeMatrikkelId(adresse: Vegadresse?) = adresse != null && adresse.matrikkelId == null
     private fun harIkkeMatrikkelId(adresse: Matrikkeladresse?) = adresse != null && adresse.matrikkelId == null
