@@ -15,13 +15,12 @@ import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 internal class OppslagServiceServiceImplTest {
-
 
     val tpsClient: TpsInnsynServiceClient = mockk()
     val pdlClient: PdlClient = mockk()
@@ -31,7 +30,7 @@ internal class OppslagServiceServiceImplTest {
     private val søkerinfoMapper = SøkerinfoMapper(mockk(relaxed = true))
     private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, pdlClient, regelverkConfig, søkerinfoMapper)
 
-    @Before
+    @BeforeEach
     fun setUp() {
         mockkObject(EksternBrukerUtils)
         every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"

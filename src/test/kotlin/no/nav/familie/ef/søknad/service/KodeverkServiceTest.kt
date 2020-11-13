@@ -8,8 +8,8 @@ import no.nav.familie.ef.søknad.integration.FamilieIntegrasjonerClient
 import no.nav.familie.kontrakter.felles.kodeverk.BeskrivelseDto
 import no.nav.familie.kontrakter.felles.kodeverk.BetydningDto
 import no.nav.familie.kontrakter.felles.kodeverk.KodeverkDto
-import org.junit.Test
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Bean
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.time.LocalDate
 
 @Profile("kodeverk-cache-test")
@@ -42,7 +42,7 @@ class KodeerkTestConfig {
 }
 
 @ActiveProfiles("local", "kodeverk-cache-test")
-@RunWith(SpringRunner::class)
+@ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 class KodeverkServiceTest {
 
@@ -54,13 +54,13 @@ class KodeverkServiceTest {
         kodeverkService.hentPoststed("0575")
         kodeverkService.hentPoststed("0575")
 
-        verify(exactly = 1) { familieIntegrasjonerClient.hentKodeverkPoststed()  }
+        verify(exactly = 1) { familieIntegrasjonerClient.hentKodeverkPoststed() }
     }
 
     @Test
     fun `skal cache henting av land mot familieIntegrasjonerClient`() {
         kodeverkService.hentLand("NOR")
         kodeverkService.hentLand("SWE")
-        verify(exactly = 1) { familieIntegrasjonerClient.hentKodeverkLandkoder()  }
+        verify(exactly = 1) { familieIntegrasjonerClient.hentKodeverkLandkoder() }
     }
 }
