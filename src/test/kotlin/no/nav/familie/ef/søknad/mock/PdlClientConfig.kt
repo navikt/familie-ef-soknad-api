@@ -28,11 +28,9 @@ class PdlClientConfig {
                         adressebeskyttelse = listOf(Adressebeskyttelse(gradering = AdressebeskyttelseGradering.UGRADERT)),
                         bostedsadresse = bostedsadresse(),
                         familierelasjoner = listOf(),
-                        folkeregisterpersonstatus = listOf(Folkeregisterpersonstatus("bosatt", "bosattEtterFolkeregisterloven")),
                         navn = lagNavn(),
                         sivilstand = sivilstand(),
-                        statsborgerskap = statsborgerskap(),
-                        tilrettelagtKommunikasjon = listOf(),
+                        statsborgerskap = statsborgerskap()
                 )
 
         return pdlClient

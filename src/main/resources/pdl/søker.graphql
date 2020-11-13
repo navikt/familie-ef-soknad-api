@@ -23,10 +23,6 @@ query($ident: ID!){
             relatertPersonsRolle
             minRolleForPerson
         }
-        folkeregisterpersonstatus {
-            status
-            forenkletStatus
-        }
         navn {
             fornavn
             mellomnavn
@@ -46,14 +42,6 @@ query($ident: ID!){
             land
             gyldigFraOgMed
             gyldigTilOgMed
-        }
-        tilrettelagtKommunikasjon {
-            talespraaktolk {
-                spraak
-            }
-            tegnspraaktolk {
-                spraak
-            }
         }
     }
 }

@@ -196,7 +196,6 @@ internal class SøkerinfoMapperTest {
                     deltBosted?.let { listOf(it) } ?: emptyList(),
                     emptyList(),
                     emptyList(),
-                    emptyList(),
                     emptyList())
 
     private fun person(): Person {

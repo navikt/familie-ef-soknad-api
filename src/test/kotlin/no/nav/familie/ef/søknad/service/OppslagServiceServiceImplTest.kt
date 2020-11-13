@@ -137,7 +137,6 @@ internal class OppslagServiceServiceImplTest {
                             emptyList(),
                             emptyList(),
                             emptyList(),
-                            emptyList(),
                             fødsel = listOf(fødsel),
                             dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList()))
     }
@@ -164,9 +163,7 @@ internal class OppslagServiceServiceImplTest {
         every { pdlClient.hentSøker(any()) } returns (PdlSøker(listOf(),
                                                                listOf(),
                                                                listOf(),
-                                                               listOf(),
                                                                navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
-                                                               listOf(),
                                                                listOf(),
                                                                listOf()))
     }

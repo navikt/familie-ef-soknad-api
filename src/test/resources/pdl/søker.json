@@ -24,12 +24,6 @@
         }
       ],
       "familierelasjoner": [],
-      "folkeregisterpersonstatus": [
-        {
-          "status": "bosatt",
-          "forenkletStatus": "bosattEtterFolkeregisterloven"
-        }
-      ],
       "navn": [
         {
           "fornavn": "BRÅKETE",
@@ -55,8 +49,7 @@
           "gyldigFraOgMed": null,
           "gyldigTilOgMed": null
         }
-      ],
-      "tilrettelagtKommunikasjon": []
+      ]
     }
   }
 }

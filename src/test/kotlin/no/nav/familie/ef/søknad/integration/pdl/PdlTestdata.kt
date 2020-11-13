@@ -35,21 +35,19 @@ object PdlTestdata {
             PdlSøkerData(PdlSøker(adressebeskyttelse,
                                   bostedsadresse,
                                   familierelasjon,
-                                  listOf(Folkeregisterpersonstatus("", "")),
                                   navn,
                                   listOf(Sivilstand(Sivilstandstype.GIFT, LocalDate.now(), "", "", "", "", "", "")),
-                                  statsborgerskap,
-                                  listOf(TilrettelagtKommunikasjon(Tolk(""), Tolk("")))))
+                                  statsborgerskap))
 
     val pdlBarnData =
             PersonBolk(listOf(PersonDataBolk("11111122222", "ok", PdlBarn(adressebeskyttelse,
                                                                           bostedsadresse,
                                                                           listOf(DeltBosted(LocalDate.now(),
                                                                                             LocalDate.now())),
-                                                                          familierelasjon,
                                                                           navn,
                                                                           fødsel,
-                                                                          listOf(Dødsfall(LocalDate.now()))))))
+                                                                          listOf(Dødsfall(LocalDate.now())
+                                                                          )))))
 
 
 }

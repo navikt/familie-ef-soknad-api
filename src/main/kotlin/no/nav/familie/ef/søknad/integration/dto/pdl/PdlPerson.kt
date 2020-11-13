@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.integration.dto.pdl
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 data class PdlResponse<T>(val data: T?,
                           val errors: List<PdlError>?) {
@@ -27,16 +26,13 @@ data class PdlBolkResponse<T>(val data: PersonBolk<T>)
 data class PdlSøker(val adressebeskyttelse: List<Adressebeskyttelse>,
                     val bostedsadresse: List<Bostedsadresse>,
                     val familierelasjoner: List<Familierelasjon>,
-                    val folkeregisterpersonstatus: List<Folkeregisterpersonstatus>,
                     val navn: List<Navn>,
                     val sivilstand: List<Sivilstand>,
-                    val statsborgerskap: List<Statsborgerskap>,
-                    val tilrettelagtKommunikasjon: List<TilrettelagtKommunikasjon>)
+                    val statsborgerskap: List<Statsborgerskap>)
 
 data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
                    val bostedsadresse: List<Bostedsadresse>,
                    val deltBosted: List<DeltBosted>,
-                   val familierelasjoner: List<Familierelasjon>,
                    val navn: List<Navn>,
                    @JsonProperty("foedsel") val fødsel: List<Fødsel>,
                    @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>)
@@ -44,8 +40,6 @@ data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
 data class DeltBosted(val startdatoForKontrakt: LocalDate,
                       val sluttdatoForKontrakt: LocalDate?)
 
-data class Folkeregistermetadata(val gyldighetstidspunkt: LocalDateTime?,
-                                 @JsonProperty("opphoerstidspunkt") val opphørstidspunkt: LocalDateTime?)
 
 data class Bostedsadresse(val angittFlyttedato: LocalDate?,
                           val coAdressenavn: String?,
@@ -91,22 +85,13 @@ enum class Familierelasjonsrolle {
     MEDMOR
 }
 
-data class Folkeregisterpersonstatus(val status: String,
-                                     val forenkletStatus: String)
-
 data class Navn(val fornavn: String,
                 val mellomnavn: String?,
                 val etternavn: String)
 
-data class TilrettelagtKommunikasjon(@JsonProperty("talespraaktolk") val talespråktolk: Tolk?,
-                                     @JsonProperty("tegnspraaktolk") val tegnspråktolk: Tolk?)
-
-data class Tolk(@JsonProperty("spraak") val språk: String?)
-
 data class Statsborgerskap(val land: String,
                            val gyldigFraOgMed: LocalDate?,
                            val gyldigTilOgMed: LocalDate?)
-
 
 data class Sivilstand(val type: Sivilstandstype,
                       val gyldigFraOgMed: LocalDate?,
@@ -119,7 +104,6 @@ data class Sivilstand(val type: Sivilstandstype,
 
 @Suppress("unused")
 enum class Sivilstandstype {
-
     UOPPGITT,
     UGIFT,
     GIFT,
