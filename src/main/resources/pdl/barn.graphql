@@ -3,12 +3,7 @@ query($identer: [ID!]!){
         code
         ident
         person {
-            adressebeskyttelse {
-                gradering
-            }
             bostedsadresse {
-                angittFlyttedato
-                coAdressenavn
                 vegadresse {
                     adressenavn
                     bruksenhetsnummer
@@ -33,9 +28,6 @@ query($identer: [ID!]!){
             foedsel {
                 foedselsaar
                 foedselsdato
-                foedeland
-                foedested
-                foedekommune
             }
             doedsfall {
                 doedsdato

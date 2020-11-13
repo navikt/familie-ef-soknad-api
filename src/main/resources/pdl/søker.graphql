@@ -1,11 +1,6 @@
 query($ident: ID!){
     person: hentPerson(ident: $ident) {
-        adressebeskyttelse {
-            gradering
-        }
         bostedsadresse {
-            angittFlyttedato
-            coAdressenavn
             vegadresse {
                 adressenavn
                 bruksenhetsnummer
@@ -21,7 +16,6 @@ query($ident: ID!){
         familierelasjoner {
             relatertPersonsIdent
             relatertPersonsRolle
-            minRolleForPerson
         }
         navn {
             fornavn
@@ -30,13 +24,6 @@ query($ident: ID!){
         }
         sivilstand {
             type
-            gyldigFraOgMed
-            myndighet
-            kommune
-            sted
-            utland
-            relatertVedSivilstand
-            bekreftelsesdato
         }
         statsborgerskap {
             land

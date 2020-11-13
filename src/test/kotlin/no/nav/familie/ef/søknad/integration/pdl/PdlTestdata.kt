@@ -15,37 +15,30 @@ object PdlTestdata {
 
     private val navn = listOf(Navn("", "", ""))
 
-    private val adressebeskyttelse = listOf(Adressebeskyttelse(AdressebeskyttelseGradering.FORTROLIG))
 
     private val matrikkeladresse = Matrikkeladresse(null)
 
-    private val bostedsadresse = listOf(Bostedsadresse(LocalDate.now(),
-                                                       "",
-                                                       vegadresse,
+    private val bostedsadresse = listOf(Bostedsadresse(vegadresse,
                                                        matrikkeladresse))
 
-    private val familierelasjon = listOf(Familierelasjon("", Familierelasjonsrolle.BARN, Familierelasjonsrolle.FAR))
+    private val familierelasjon = listOf(Familierelasjon("", Familierelasjonsrolle.BARN))
 
     private val statsborgerskap = listOf(Statsborgerskap("", LocalDate.now(), LocalDate.now()))
 
-    private val fødsel = listOf(Fødsel(1, LocalDate.now(), "", "", ""))
-
 
     val pdlSøkerData =
-            PdlSøkerData(PdlSøker(adressebeskyttelse,
-                                  bostedsadresse,
+            PdlSøkerData(PdlSøker(bostedsadresse,
                                   familierelasjon,
                                   navn,
-                                  listOf(Sivilstand(Sivilstandstype.GIFT, LocalDate.now(), "", "", "", "", "", "")),
+                                  listOf(Sivilstand(Sivilstandstype.GIFT)),
                                   statsborgerskap))
 
     val pdlBarnData =
-            PersonBolk(listOf(PersonDataBolk("11111122222", "ok", PdlBarn(adressebeskyttelse,
-                                                                          bostedsadresse,
+            PersonBolk(listOf(PersonDataBolk("11111122222", "ok", PdlBarn(bostedsadresse,
                                                                           listOf(DeltBosted(LocalDate.now(),
                                                                                             LocalDate.now())),
                                                                           navn,
-                                                                          fødsel,
+                                                                          listOf(Fødsel(1, LocalDate.now())),
                                                                           listOf(Dødsfall(LocalDate.now())
                                                                           )))))
 

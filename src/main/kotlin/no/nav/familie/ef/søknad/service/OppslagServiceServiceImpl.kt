@@ -42,7 +42,7 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
     override fun hentSøkerinfoV2(): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
         val barnIdentifikatorer = pdlSøker.familierelasjoner
-                .filter { it.minRolleForPerson != Familierelasjonsrolle.BARN }
+                .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
                 .map { it.relatertPersonsIdent }
         val pdlBarn = pdlStsClient.hentBarn(barnIdentifikatorer)
         // TODO trenger vi sjekk/filtrering av foreldreansvar

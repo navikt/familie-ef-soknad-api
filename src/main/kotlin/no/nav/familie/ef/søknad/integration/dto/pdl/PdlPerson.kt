@@ -23,15 +23,13 @@ data class PersonDataBolk<T>(val ident: String, val code: String, val person: T?
 data class PersonBolk<T>(val personBolk: List<PersonDataBolk<T>>)
 data class PdlBolkResponse<T>(val data: PersonBolk<T>)
 
-data class PdlSøker(val adressebeskyttelse: List<Adressebeskyttelse>,
-                    val bostedsadresse: List<Bostedsadresse>,
+data class PdlSøker(val bostedsadresse: List<Bostedsadresse>,
                     val familierelasjoner: List<Familierelasjon>,
                     val navn: List<Navn>,
                     val sivilstand: List<Sivilstand>,
                     val statsborgerskap: List<Statsborgerskap>)
 
-data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
-                   val bostedsadresse: List<Bostedsadresse>,
+data class PdlBarn(val bostedsadresse: List<Bostedsadresse>,
                    val deltBosted: List<DeltBosted>,
                    val navn: List<Navn>,
                    @JsonProperty("foedsel") val fødsel: List<Fødsel>,
@@ -41,9 +39,7 @@ data class DeltBosted(val startdatoForKontrakt: LocalDate,
                       val sluttdatoForKontrakt: LocalDate?)
 
 
-data class Bostedsadresse(val angittFlyttedato: LocalDate?,
-                          val coAdressenavn: String?,
-                          val vegadresse: Vegadresse?,
+data class Bostedsadresse(val vegadresse: Vegadresse?,
                           val matrikkeladresse: Matrikkeladresse?)
 
 data class Vegadresse(val husnummer: String?,
@@ -55,28 +51,13 @@ data class Vegadresse(val husnummer: String?,
 
 data class Matrikkeladresse(val matrikkelId: Long?)
 
-data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
-
-@Suppress("unused")
-enum class AdressebeskyttelseGradering {
-
-    STRENGT_FORTROLIG,
-    STRENGT_FORTROLIG_UTLAND,
-    FORTROLIG,
-    UGRADERT
-}
-
 data class Fødsel(@JsonProperty("foedselsaar") val fødselsår: Int?,
-                  @JsonProperty("foedselsdato") val fødselsdato: LocalDate?,
-                  @JsonProperty("foedeland") val fødeland: String?,
-                  @JsonProperty("foedested") val fødested: String?,
-                  @JsonProperty("foedekommune") val fødekommune: String?)
+                  @JsonProperty("foedselsdato") val fødselsdato: LocalDate?)
 
 data class Dødsfall(@JsonProperty("doedsdato") val dødsdato: LocalDate?)
 
 data class Familierelasjon(val relatertPersonsIdent: String,
-                           val relatertPersonsRolle: Familierelasjonsrolle,
-                           val minRolleForPerson: Familierelasjonsrolle?)
+                           val relatertPersonsRolle: Familierelasjonsrolle)
 
 enum class Familierelasjonsrolle {
     BARN,
@@ -93,14 +74,7 @@ data class Statsborgerskap(val land: String,
                            val gyldigFraOgMed: LocalDate?,
                            val gyldigTilOgMed: LocalDate?)
 
-data class Sivilstand(val type: Sivilstandstype,
-                      val gyldigFraOgMed: LocalDate?,
-                      val myndighet: String?,
-                      val kommune: String?,
-                      val sted: String?,
-                      val utland: String?,
-                      val relatertVedSivilstand: String?,
-                      val bekreftelsesdato: String?)
+data class Sivilstand(val type: Sivilstandstype)
 
 @Suppress("unused")
 enum class Sivilstandstype {

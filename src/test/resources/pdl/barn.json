@@ -5,15 +5,8 @@
         "ident": "11111122222",
         "code": "ok",
         "person": {
-          "adressebeskyttelse": [
-            {
-              "gradering": "UGRADERT"
-            }
-          ],
           "bostedsadresse": [
             {
-              "angittFlyttedato": "1966-11-18",
-              "coAdressenavn": null,
               "vegadresse": {
                 "husnummer": "77",
                 "husbokstav": null,
@@ -43,10 +36,7 @@
           "foedsel": [
             {
               "foedselsaar": null,
-              "foedselsdato": "1966-11-18",
-              "foedeland": null,
-              "foedested": null,
-              "foedekommune": null
+              "foedselsdato": "1966-11-18"
             }
           ],
           "doedsfall": []

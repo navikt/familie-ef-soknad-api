@@ -131,10 +131,9 @@ internal class OppslagServiceServiceImplTest {
 
     private fun pdlBarn(dødsfall: Dødsfall? = null,
                         fødselsdato: LocalDate = LocalDate.now().minusMonths(6)): Pair<String, PdlBarn> {
-        val fødsel = Fødsel(fødselsdato.year, fødselsdato, null, null, null)
+        val fødsel = Fødsel(fødselsdato.year, fødselsdato)
         return Pair(fødselsdato.format(ISO_LOCAL_DATE),
                     PdlBarn(emptyList(),
-                            emptyList(),
                             emptyList(),
                             emptyList(),
                             fødsel = listOf(fødsel),
@@ -161,7 +160,6 @@ internal class OppslagServiceServiceImplTest {
                                         etternavn: String = "TestNavn") {
 
         every { pdlClient.hentSøker(any()) } returns (PdlSøker(listOf(),
-                                                               listOf(),
                                                                listOf(),
                                                                navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
                                                                listOf(),

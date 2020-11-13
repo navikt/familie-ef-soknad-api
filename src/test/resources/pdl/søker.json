@@ -1,15 +1,8 @@
 {
   "data": {
     "person": {
-      "adressebeskyttelse": [
-        {
-          "gradering": "UGRADERT"
-        }
-      ],
       "bostedsadresse": [
         {
-          "angittFlyttedato": "1966-11-18",
-          "coAdressenavn": null,
           "vegadresse": {
             "husnummer": "77",
             "husbokstav": null,
@@ -23,7 +16,12 @@
           }
         }
       ],
-      "familierelasjoner": [],
+      "familierelasjoner": [
+        {
+          "relatertPersonsRolle": "BARN",
+          "relatertPersonsIdent": "11111112345"
+        }
+      ],
       "navn": [
         {
           "fornavn": "BRÅKETE",
@@ -33,14 +31,7 @@
       ],
       "sivilstand": [
         {
-          "type": "UGIFT",
-          "gyldigFraOgMed": null,
-          "myndighet": null,
-          "kommune": null,
-          "sted": null,
-          "utland": null,
-          "relatertVedSivilstand": null,
-          "bekreftelsesdato": null
+          "type": "UGIFT"
         }
       ],
       "statsborgerskap": [
