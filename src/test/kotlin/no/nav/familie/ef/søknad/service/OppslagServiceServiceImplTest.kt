@@ -31,7 +31,7 @@ internal class OppslagServiceServiceImplTest {
     val pdlStsClient: PdlStsClient = mockk()
 
     private val søkerinfoMapper = spyk(SøkerinfoMapper(mockk(relaxed = true)))
-    private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, pdlClient,
+    private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, mockk(), pdlClient,
                                                                   pdlStsClient, regelverkConfig, søkerinfoMapper)
 
     @Before

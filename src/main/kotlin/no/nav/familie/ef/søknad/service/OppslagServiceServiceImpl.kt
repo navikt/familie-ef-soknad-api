@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.config.RegelverkConfig
+import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
@@ -16,6 +17,7 @@ import java.time.Period
 
 @Service
 internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceClient,
+                                         private val featureToggleService: FeatureToggleService,
                                          private val pdlClient: PdlClient,
                                          private val pdlStsClient: PdlStsClient,
                                          private val regelverkConfig: RegelverkConfig,
@@ -27,7 +29,10 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
     override fun hentSøkerinfo(): Søkerinfo {
 
         try {
-            hentSøkerinfoV2()
+            val hentSøkerinfoV2 = hentSøkerinfoV2()
+            if (featureToggleService.isEnabled("familie.ef.soknad.bruk-pdl")) {
+                return hentSøkerinfoV2
+            }
         } catch (e: Exception) {
             secureLogger.info("Exception - hent søker fra pdl", e)
             logger.warn("Exception - hent søker fra pdl (se securelogs for detaljer)")
