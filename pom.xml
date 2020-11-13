@@ -148,6 +148,13 @@
             <version>${kontrakter.version}</version>
         </dependency>
 
+        <!-- Setter samme versjon som token-validation-spring bruker. Blir ellers overskreven av spring-boot -->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>8.19</version>
+        </dependency>
+
         <!-- Test -->
         <dependency>
             <groupId>no.nav.security</groupId>
