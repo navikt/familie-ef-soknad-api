@@ -16,10 +16,14 @@ object PdlTestdata {
     private val navn = listOf(Navn("", "", ""))
 
 
-    private val matrikkeladresse = Matrikkeladresse(null)
+    private val matrikkeladresse = Matrikkeladresse(null, null, null)
+    private val matrikkeladresseBarn = MatrikkeladresseBarn(null)
 
     private val bostedsadresse = listOf(Bostedsadresse(vegadresse,
                                                        matrikkeladresse))
+
+    private val bostedsadresseBarn = listOf(BostedsadresseBarn(vegadresse,
+                                                               matrikkeladresseBarn))
 
     private val familierelasjon = listOf(Familierelasjon("", Familierelasjonsrolle.BARN))
 
@@ -34,7 +38,7 @@ object PdlTestdata {
                                   statsborgerskap))
 
     val pdlBarnData =
-            PersonBolk(listOf(PersonDataBolk("11111122222", "ok", PdlBarn(bostedsadresse,
+            PersonBolk(listOf(PersonDataBolk("11111122222", "ok", PdlBarn(bostedsadresseBarn,
                                                                           listOf(DeltBosted(LocalDate.now(),
                                                                                             LocalDate.now())),
                                                                           navn,

@@ -12,7 +12,9 @@
             "matrikkelId": 1
           },
           "matrikkeladresse": {
-            "matrikkelId": 2
+            "matrikkelId": 2,
+            "tilleggsnavn": "Noe",
+            "postnummer": "0862"
           }
         }
       ],

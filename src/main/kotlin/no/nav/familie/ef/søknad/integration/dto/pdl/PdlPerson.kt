@@ -29,7 +29,7 @@ data class PdlSøker(val bostedsadresse: List<Bostedsadresse>,
                     val sivilstand: List<Sivilstand>,
                     val statsborgerskap: List<Statsborgerskap>)
 
-data class PdlBarn(val bostedsadresse: List<Bostedsadresse>,
+data class PdlBarn(val bostedsadresse: List<BostedsadresseBarn>,
                    val deltBosted: List<DeltBosted>,
                    val navn: List<Navn>,
                    @JsonProperty("foedsel") val fødsel: List<Fødsel>,
@@ -42,6 +42,9 @@ data class DeltBosted(val startdatoForKontrakt: LocalDate,
 data class Bostedsadresse(val vegadresse: Vegadresse?,
                           val matrikkeladresse: Matrikkeladresse?)
 
+data class BostedsadresseBarn(val vegadresse: Vegadresse?,
+                              val matrikkeladresse: MatrikkeladresseBarn?)
+
 data class Vegadresse(val husnummer: String?,
                       val husbokstav: String?,
                       val bruksenhetsnummer: String?,
@@ -49,7 +52,16 @@ data class Vegadresse(val husnummer: String?,
                       val postnummer: String?,
                       val matrikkelId: Long?)
 
-data class Matrikkeladresse(val matrikkelId: Long?)
+interface MatrikkelId {
+
+    val matrikkelId: Long?
+}
+
+data class Matrikkeladresse(override val matrikkelId: Long?,
+                            val tilleggsnavn: String?,
+                            val postnummer: String?) : MatrikkelId
+
+data class MatrikkeladresseBarn(override val matrikkelId: Long?) : MatrikkelId
 
 data class Fødsel(@JsonProperty("foedselsaar") val fødselsår: Int?,
                   @JsonProperty("foedselsdato") val fødselsdato: LocalDate?)
@@ -78,6 +90,7 @@ data class Sivilstand(val type: Sivilstandstype)
 
 @Suppress("unused")
 enum class Sivilstandstype {
+
     UOPPGITT,
     UGIFT,
     GIFT,

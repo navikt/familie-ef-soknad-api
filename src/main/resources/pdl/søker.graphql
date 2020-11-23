@@ -11,6 +11,8 @@ query($ident: ID!){
             }
             matrikkeladresse {
                 matrikkelId
+                tilleggsnavn
+                postnummer
             }
         }
         familierelasjoner {

@@ -102,7 +102,8 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                    && søkersAdresse.matrikkeladresse.matrikkelId == barnetsAdresse.matrikkeladresse?.matrikkelId) {
             true
         } else {
-            if (harIkkeMatrikkelId(søkersAdresse) && harIkkeMatrikkelId(barnetsAdresse)) {
+            if (harIkkeMatrikkelId(søkersAdresse.vegadresse, søkersAdresse.matrikkeladresse)
+                && harIkkeMatrikkelId(barnetsAdresse.vegadresse, barnetsAdresse.matrikkeladresse)) {
                 logger.info("Finner ikke matrikkelId på noen av adressene")
             }
             return søkersAdresse.vegadresse != null && søkersAdresse.vegadresse == barnetsAdresse.vegadresse
@@ -115,11 +116,11 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                 && (it.sluttdatoForKontrakt == null || it.sluttdatoForKontrakt.isAfter(LocalDate.now()))
             }
 
-    private fun harIkkeMatrikkelId(bostedsadresse: Bostedsadresse) =
-            harIkkeMatrikkelId(bostedsadresse.vegadresse) || harIkkeMatrikkelId(bostedsadresse.matrikkeladresse)
+    private fun harIkkeMatrikkelId(vegadresse: Vegadresse?, matrikkeladresse: MatrikkelId?) =
+            harIkkeMatrikkelId(vegadresse) || harIkkeMatrikkelId(matrikkeladresse)
 
     private fun harIkkeMatrikkelId(adresse: Vegadresse?) = adresse != null && adresse.matrikkelId == null
-    private fun harIkkeMatrikkelId(adresse: Matrikkeladresse?) = adresse != null && adresse.matrikkelId == null
+    private fun harIkkeMatrikkelId(adresse: MatrikkelId?) = adresse != null && adresse.matrikkelId == null
 
     private fun PdlSøker.tilPersonDto(): Person {
         val formatertAdresse = formaterAdresse(this)
@@ -142,14 +143,13 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         return when {
             bosted == null -> {
                 logger.info("Finner ikke bostedadresse")
-                return ""
+                ""
             }
             bosted.vegadresse != null -> {
                 tilFormatertAdresse(bosted.vegadresse)
             }
             bosted.matrikkeladresse != null -> {
-                logger.info("Søker har matrikkeladresse - returnerer tom streng")
-                return ""
+                join(bosted.matrikkeladresse.tilleggsnavn, hentPoststed(bosted.matrikkeladresse.postnummer)) ?: ""
             }
             else -> {
                 logger.info("Søker har hverken vegadresse eller matrikkeladresse")
