@@ -139,16 +139,22 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
     private fun formaterAdresse(pdlSøker: PdlSøker): String {
         val bosted = pdlSøker.bostedsadresse.firstOrNull()
-        return if (bosted == null) {
-            logger.info("Finner ikke bostedadresse")
-            return ""
-        } else if (bosted.vegadresse != null) {
-            tilFormatertAdresse(bosted.vegadresse)
-        } else if (bosted.matrikkeladresse != null) {
-            return "Matrikkeladresse"
-        } else {
-            logger.info("Søker har hverken vegadresse eller matrikkeladresse")
-            ""
+        return when {
+            bosted == null -> {
+                logger.info("Finner ikke bostedadresse")
+                return ""
+            }
+            bosted.vegadresse != null -> {
+                tilFormatertAdresse(bosted.vegadresse)
+            }
+            bosted.matrikkeladresse != null -> {
+                logger.info("Søker har matrikkeladresse - returnerer tom streng")
+                return ""
+            }
+            else -> {
+                logger.info("Søker har hverken vegadresse eller matrikkeladresse")
+                ""
+            }
         }
     }
 
