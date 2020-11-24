@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
+import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.integration.PdlClient
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
+import kotlin.reflect.full.memberProperties
 
 @Service
 internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceClient,
@@ -27,9 +29,14 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     override fun hentSøkerinfo(): Søkerinfo {
+        val personinfoDto = client.hentPersoninfo()
+        val barn = client.hentBarn()
+        val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
+        val søkerinfoDto = settNavnFraPdlPåSøkerinfo(søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn))
 
         try {
             val hentSøkerinfoV2 = hentSøkerinfoV2()
+            logDiff(søkerinfoDto, hentSøkerinfoV2)
             if (featureToggleService.isEnabled("familie.ef.soknad.bruk-pdl")) {
                 return hentSøkerinfoV2
             }
@@ -38,11 +45,30 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
             logger.warn("Exception - hent søker fra pdl (se securelogs for detaljer)")
         }
 
-        val personinfoDto = client.hentPersoninfo()
-        val barn = client.hentBarn()
-        val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
-        return settNavnFraPdlPåSøkerinfo(søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn))
+
+        return søkerinfoDto
     }
+
+    fun logDiff(søkerinfoV1: Søkerinfo, søkerinfoV2: Søkerinfo) {
+
+        val builder = StringBuilder()
+
+        for (prop in Person::class.memberProperties) {
+            val property1 = prop.get(søkerinfoV1.søker)
+            val property2 = prop.get(søkerinfoV2.søker)
+            if (property1 != property2) {
+                builder.append("Person: ${prop.name} = V1: $property1, V2: $property2")
+            }
+        }
+
+        if (søkerinfoV1.barn != søkerinfoV2.barn) {
+            builder.append("Ulike barn: V1: ${søkerinfoV1.barn}, V2: ${søkerinfoV2.barn}")
+        }
+
+        return secureLogger.warn(builder.toString())
+
+    }
+
 
     override fun hentSøkerinfoV2(): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
