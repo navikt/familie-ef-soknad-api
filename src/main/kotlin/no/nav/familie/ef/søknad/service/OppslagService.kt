@@ -8,4 +8,5 @@ interface OppslagService {
 
     fun hentSøkerinfoV2(): Søkerinfo
 
+
 }

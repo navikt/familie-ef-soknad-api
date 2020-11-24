@@ -15,18 +15,18 @@ import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.web.client.RestOperations
 import java.net.URI
 
-class PdlClientTest {
+class PdlStsClientTest {
 
     private val wireMockServer = WireMockServer(wireMockConfig().dynamicPort())
     private val restOperations: RestOperations = RestTemplateBuilder().build()
-    private lateinit var pdlClient: PdlClient
+    private lateinit var pdlStsClient: PdlStsClient
 
     @BeforeEach
     fun setUp() {
         wireMockServer.start()
         val stsRestClient = mockk<StsRestClient>()
         every { stsRestClient.systemOIDCToken } returns "token"
-        pdlClient = PdlClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations, stsRestClient)
+        pdlStsClient = PdlStsClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations, stsRestClient)
     }
 
     @AfterEach
@@ -36,13 +36,13 @@ class PdlClientTest {
     }
 
     @Test
-    fun `pdlClient håndterer response for søker-query mot pdl-tjenesten riktig`() {
+    fun `pdlClient håndterer response for barn-query mot pdl-tjenesten riktig`() {
         wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                                       .willReturn(okJson(readFile("søker.json"))))
+                                       .willReturn(okJson(readFile("barn.json"))))
 
-        val response = pdlClient.hentSøker("")
+        val response = pdlStsClient.hentBarn(listOf("11111122222"))
 
-        assertThat(response.bostedsadresse[0].vegadresse?.adressenavn).isEqualTo("INNGJERDSVEGEN")
+        assertThat(response["11111122222"]?.navn?.firstOrNull()?.fornavn).isEqualTo("BRÅKETE")
     }
 
     private fun readFile(filnavn: String): String {

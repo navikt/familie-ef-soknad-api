@@ -1,6 +1,11 @@
 package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.PdlConfig
+import no.nav.familie.ef.søknad.exception.PdlRequestException
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBolkResponse
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequest
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequestVariables
 import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.http.sts.StsRestClient
 import org.springframework.beans.factory.annotation.Qualifier
@@ -20,6 +25,27 @@ class PdlStsClient(val pdlConfig: PdlConfig,
             add("Nav-Consumer-Token", "Bearer ${stsRestClient.systemOIDCToken}")
             add("Tema", "ENF")
         }
+    }
+
+
+    fun hentBarn(personIdenter: List<String>): Map<String, PdlBarn> {
+        if (personIdenter.isEmpty()) return emptyMap()
+        val pdlPersonRequest = PdlPersonBolkRequest(variables = PdlPersonBolkRequestVariables(personIdenter),
+                                                    query = PdlConfig.barnQuery)
+        val pdlResponse: PdlBolkResponse<PdlBarn> = postForEntity(pdlConfig.pdlUri,
+                                                                  pdlPersonRequest,
+                                                                  httpHeaders())
+        return feilsjekkOgReturnerData(pdlResponse)
+    }
+
+
+    private inline fun <reified T : Any> feilsjekkOgReturnerData(pdlResponse: PdlBolkResponse<T>): Map<String, T> {
+        val feil = pdlResponse.data.personBolk.filter { it.code != "ok" }.map { it.ident to it.code }.toMap()
+        if (feil.isNotEmpty()) {
+            secureLogger.error("Feil ved henting av ${T::class} fra PDL: $feil")
+            throw PdlRequestException("Feil ved henting av ${T::class} fra PDL. Se secure logg for detaljer.")
+        }
+        return pdlResponse.data.personBolk.associateBy({ it.ident }, { it.person!! })
     }
 
 }

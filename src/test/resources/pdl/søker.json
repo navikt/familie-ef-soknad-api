@@ -1,32 +1,27 @@
 {
   "data": {
     "person": {
-      "adressebeskyttelse": [
-        {
-          "gradering": "UGRADERT"
-        }
-      ],
       "bostedsadresse": [
         {
-          "angittFlyttedato": "1966-11-18",
-          "coAdressenavn": null,
           "vegadresse": {
             "husnummer": "77",
             "husbokstav": null,
             "bruksenhetsnummer": null,
             "adressenavn": "INNGJERDSVEGEN",
-            "kommunenummer": "0301",
-            "tilleggsnavn": null,
-            "postnummer": "0862"
+            "postnummer": "0862",
+            "matrikkelId": 1
           },
-          "ukjentBosted": null
+          "matrikkeladresse": {
+            "matrikkelId": 2,
+            "tilleggsnavn": "Noe",
+            "postnummer": "0862"
+          }
         }
       ],
-      "familierelasjoner": [],
-      "folkeregisterpersonstatus": [
+      "familierelasjoner": [
         {
-          "status": "bosatt",
-          "forenkletStatus": "bosattEtterFolkeregisterloven"
+          "relatertPersonsRolle": "BARN",
+          "relatertPersonsIdent": "11111112345"
         }
       ],
       "navn": [
@@ -38,14 +33,7 @@
       ],
       "sivilstand": [
         {
-          "type": "UGIFT",
-          "gyldigFraOgMed": null,
-          "myndighet": null,
-          "kommune": null,
-          "sted": null,
-          "utland": null,
-          "relatertVedSivilstand": null,
-          "bekreftelsesdato": null
+          "type": "UGIFT"
         }
       ],
       "statsborgerskap": [
@@ -54,8 +42,7 @@
           "gyldigFraOgMed": null,
           "gyldigTilOgMed": null
         }
-      ],
-      "tilrettelagtKommunikasjon": []
+      ]
     }
   }
 }

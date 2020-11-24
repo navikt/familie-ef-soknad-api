@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.integration.dto.pdl
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 data class PdlResponse<T>(val data: T?,
                           val errors: List<PdlError>?) {
@@ -24,64 +23,53 @@ data class PersonDataBolk<T>(val ident: String, val code: String, val person: T?
 data class PersonBolk<T>(val personBolk: List<PersonDataBolk<T>>)
 data class PdlBolkResponse<T>(val data: PersonBolk<T>)
 
-data class PdlSøker(val adressebeskyttelse: List<Adressebeskyttelse>,
-                    val bostedsadresse: List<Bostedsadresse>,
+data class PdlSøker(val bostedsadresse: List<Bostedsadresse>,
                     val familierelasjoner: List<Familierelasjon>,
-                    val folkeregisterpersonstatus: List<Folkeregisterpersonstatus>,
                     val navn: List<Navn>,
                     val sivilstand: List<Sivilstand>,
-                    val statsborgerskap: List<Statsborgerskap>,
-                    val tilrettelagtKommunikasjon: List<TilrettelagtKommunikasjon>)
+                    val statsborgerskap: List<Statsborgerskap>)
 
-data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
-                   val bostedsadresse: List<Bostedsadresse>,
+data class PdlBarn(val bostedsadresse: List<BostedsadresseBarn>,
                    val deltBosted: List<DeltBosted>,
-                   val familierelasjoner: List<Familierelasjon>,
-                   val navn: List<Navn>)
+                   val navn: List<Navn>,
+                   @JsonProperty("foedsel") val fødsel: List<Fødsel>,
+                   @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>)
 
-data class DeltBosted(val startdatoForKontrakt: LocalDateTime,
-                      val sluttdatoForKontrakt: LocalDateTime?,
-                      val vegadresse: Vegadresse?,
-                      val ukjentBosted: UkjentBosted?)
+data class DeltBosted(val startdatoForKontrakt: LocalDate,
+                      val sluttdatoForKontrakt: LocalDate?)
 
-data class Folkeregistermetadata(val gyldighetstidspunkt: LocalDateTime?,
-                                 @JsonProperty("opphoerstidspunkt") val opphørstidspunkt: LocalDateTime?)
 
-data class Bostedsadresse(val angittFlyttedato: LocalDate?,
-                          val coAdressenavn: String?,
-                          val vegadresse: Vegadresse?,
-                          val ukjentBosted: UkjentBosted?)
+data class Bostedsadresse(val vegadresse: Vegadresse?,
+                          val matrikkeladresse: Matrikkeladresse?)
+
+data class BostedsadresseBarn(val vegadresse: Vegadresse?,
+                              val matrikkeladresse: MatrikkeladresseBarn?)
 
 data class Vegadresse(val husnummer: String?,
                       val husbokstav: String?,
                       val bruksenhetsnummer: String?,
                       val adressenavn: String?,
-                      val kommunenummer: String?,
-                      val tilleggsnavn: String?,
-                      val postnummer: String?)
+                      val postnummer: String?,
+                      val matrikkelId: Long?)
 
-data class UkjentBosted(val bostedskommune: String?)
+interface MatrikkelId {
 
-data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
-
-@Suppress("unused")
-enum class AdressebeskyttelseGradering {
-
-    STRENGT_FORTROLIG,
-    STRENGT_FORTROLIG_UTLAND,
-    FORTROLIG,
-    UGRADERT
+    val matrikkelId: Long?
 }
 
+data class Matrikkeladresse(override val matrikkelId: Long?,
+                            val tilleggsnavn: String?,
+                            val postnummer: String?) : MatrikkelId
+
+data class MatrikkeladresseBarn(override val matrikkelId: Long?) : MatrikkelId
+
 data class Fødsel(@JsonProperty("foedselsaar") val fødselsår: Int?,
-                  @JsonProperty("foedselsdato") val fødselsdato: LocalDate?,
-                  @JsonProperty("foedeland") val fødeland: String?,
-                  @JsonProperty("foedested") val fødested: String?,
-                  @JsonProperty("foedekommune") val fødekommune: String?)
+                  @JsonProperty("foedselsdato") val fødselsdato: LocalDate?)
+
+data class Dødsfall(@JsonProperty("doedsdato") val dødsdato: LocalDate?)
 
 data class Familierelasjon(val relatertPersonsIdent: String,
-                           val relatertPersonsRolle: Familierelasjonsrolle,
-                           val minRolleForPerson: Familierelasjonsrolle?)
+                           val relatertPersonsRolle: Familierelasjonsrolle)
 
 enum class Familierelasjonsrolle {
     BARN,
@@ -90,34 +78,19 @@ enum class Familierelasjonsrolle {
     MEDMOR
 }
 
-data class Folkeregisterpersonstatus(val status: String,
-                                     val forenkletStatus: String)
-
 data class Navn(val fornavn: String,
                 val mellomnavn: String?,
                 val etternavn: String)
-
-data class TilrettelagtKommunikasjon(@JsonProperty("talespraaktolk") val talespråktolk: Tolk?,
-                                     @JsonProperty("tegnspraaktolk") val tegnspråktolk: Tolk?)
-
-data class Tolk(@JsonProperty("spraak") val språk: String?)
 
 data class Statsborgerskap(val land: String,
                            val gyldigFraOgMed: LocalDate?,
                            val gyldigTilOgMed: LocalDate?)
 
-
-data class Sivilstand(val type: Sivilstandstype,
-                      val gyldigFraOgMed: LocalDate?,
-                      val myndighet: String?,
-                      val kommune: String?,
-                      val sted: String?,
-                      val utland: String?,
-                      val relatertVedSivilstand: String?,
-                      val bekreftelsesdato: String?)
+data class Sivilstand(val type: Sivilstandstype)
 
 @Suppress("unused")
 enum class Sivilstandstype {
+
     UOPPGITT,
     UGIFT,
     GIFT,

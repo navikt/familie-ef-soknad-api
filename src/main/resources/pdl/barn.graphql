@@ -3,50 +3,34 @@ query($identer: [ID!]!){
         code
         ident
         person {
-            adressebeskyttelse {
-                gradering
-            }
             bostedsadresse {
-                angittFlyttedato
-                coAdressenavn
                 vegadresse {
-                    husnummer
-                    husbokstav
-                    bruksenhetsnummer
                     adressenavn
-                    kommunenummer
-                    tilleggsnavn
+                    bruksenhetsnummer
+                    husbokstav
+                    husnummer
+                    matrikkelId
                     postnummer
                 }
-                ukjentBosted {
-                    bostedskommune
+                matrikkeladresse {
+                    matrikkelId
                 }
             }
             deltBosted {
                 startdatoForKontrakt
                 sluttdatoForKontrakt
-                vegadresse {
-                    husnummer
-                    husbokstav
-                    bruksenhetsnummer
-                    adressenavn
-                    kommunenummer
-                    tilleggsnavn
-                    postnummer
-                }
-                ukjentBosted {
-                    bostedskommune
-                }
-            }
-            familierelasjoner {
-                relatertPersonsIdent
-                relatertPersonsRolle
-                minRolleForPerson
             }
             navn {
                 fornavn
                 mellomnavn
                 etternavn
+            }
+            foedsel {
+                foedselsaar
+                foedselsdato
+            }
+            doedsfall {
+                doedsdato
             }
         }
     }

@@ -25,14 +25,11 @@ class PdlClientConfig {
 
         every { pdlClient.hentSøker(any()) } returns
                 PdlSøker(
-                        adressebeskyttelse = listOf(Adressebeskyttelse(gradering = AdressebeskyttelseGradering.UGRADERT)),
                         bostedsadresse = bostedsadresse(),
                         familierelasjoner = listOf(),
-                        folkeregisterpersonstatus = listOf(Folkeregisterpersonstatus("bosatt", "bosattEtterFolkeregisterloven")),
                         navn = lagNavn(),
                         sivilstand = sivilstand(),
-                        statsborgerskap = statsborgerskap(),
-                        tilrettelagtKommunikasjon = listOf(),
+                        statsborgerskap = statsborgerskap()
                 )
 
         return pdlClient
@@ -54,28 +51,18 @@ class PdlClientConfig {
                                    gyldigTilOgMed = startdato))
 
     private fun sivilstand(): List<Sivilstand> =
-            listOf(Sivilstand(type = Sivilstandstype.SKILT,
-                              gyldigFraOgMed = startdato,
-                              myndighet = "Myndighet",
-                              kommune = "0301",
-                              sted = "Oslo",
-                              utland = null,
-                              relatertVedSivilstand = "11111122222",
-                              bekreftelsesdato = "2020-01-01"))
+            listOf(Sivilstand(type = Sivilstandstype.SKILT))
 
 
     private fun bostedsadresse(): List<Bostedsadresse> =
-            listOf(Bostedsadresse(angittFlyttedato = startdato,
-                                  coAdressenavn = "CONAVN",
-                                  vegadresse = vegadresse(),
-                                  ukjentBosted = null))
+            listOf(Bostedsadresse(vegadresse = vegadresse(),
+                                  matrikkeladresse = null))
 
     private fun vegadresse(): Vegadresse =
             Vegadresse(husnummer = "13",
                        husbokstav = "b",
                        adressenavn = "Charlies vei",
-                       kommunenummer = "0301",
                        postnummer = "0575",
                        bruksenhetsnummer = "",
-                       tilleggsnavn = null)
+                       matrikkelId = 1L)
 }
