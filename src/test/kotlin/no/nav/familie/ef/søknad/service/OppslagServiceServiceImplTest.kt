@@ -1,9 +1,6 @@
 package no.nav.familie.ef.søknad.service
 
 import io.mockk.*
-import no.nav.familie.ef.søknad.api.dto.Søkerinfo
-import no.nav.familie.ef.søknad.api.dto.tps.Adresse
-import no.nav.familie.ef.søknad.api.dto.tps.Barn
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient
@@ -17,15 +14,14 @@ import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 internal class OppslagServiceServiceImplTest {
-
 
     val tpsClient: TpsInnsynServiceClient = mockk()
     val pdlClient: PdlClient = mockk()
@@ -37,54 +33,13 @@ internal class OppslagServiceServiceImplTest {
     private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, mockk(), pdlClient,
                                                                   pdlStsClient, regelverkConfig, søkerinfoMapper)
 
-    @Before
+    @BeforeEach
     fun setUp() {
         mockkObject(EksternBrukerUtils)
         every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
         mockHentBarn()
         mockHentPersonInfo()
         mockHentPersonPdlClient()
-    }
-
-
-    @Test
-    fun `Skal ikke logge forskjeller når alt er likt`() {
-        val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
-
-        val søkerPdl = søkerinfo.søker.copy(sivilstand = "UGIFT")
-        val søkerTps = søkerinfo.søker.copy(sivilstand = "UGIF")
-
-        val barnPdl = søkerinfo.barn.first().copy(navn = "Ola Olsen")
-        val barnTps = søkerinfo.barn.first().copy(navn = "Olsen Ola")
-
-        val søkerinfoPdl = søkerinfo.copy(søker = søkerPdl, barn = listOf(barnPdl))
-        val søkerinfoTps = søkerinfo.copy(søker = søkerTps, barn = listOf(barnTps))
-        assertThat(oppslagServiceService.logDiff(søkerinfoTps, søkerinfoPdl)).isBlank
-    }
-
-    @Test
-    fun `Skal logge forskjeller på Person og barn data`() {
-        val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
-        val endretSøker = søkerinfo.søker.copy(fnr = "54325432",
-                                               adresse = Adresse("nyAdresse", "7654", "AnnetSted"),
-                                               statsborgerskap = "ANNET",
-                                               sivilstand = "UKJENT",
-                                               egenansatt = true,
-                                               forkortetNavn = "KORT")
-        val barn = Barn("456776544567",
-                        "Ole Annetnavn",
-                        2,
-                        LocalDate.now(),
-                        false)
-        val søkerinfo2 = søkerinfo.copy(søker = endretSøker, barn = listOf(barn))
-        assertThat(oppslagServiceService.logDiff(søkerinfo, søkerinfo2)).isNotBlank
-    }
-
-    @Test
-    fun `Skal logge forskjeller - manglende barn`() {
-        val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
-        val søkerinfo2 = søkerinfo.copy(barn = listOf())
-        assertThat(oppslagServiceService.logDiff(søkerinfo, søkerinfo2)).isNotBlank
     }
 
     @Test
@@ -118,7 +73,7 @@ internal class OppslagServiceServiceImplTest {
     }
 
     @Test
-    fun `erIAktuellAlder`() {
+    fun `er i aktuell alder`() {
         assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now())).isTrue
         assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now()
                 .minusYears(18))).isTrue
@@ -187,7 +142,7 @@ internal class OppslagServiceServiceImplTest {
     private fun mockHentBarn(navn: String = "Ola") {
         val barnFraTpsMocked = tpsInnsynMockController.barnFraTpsMocked()
         val collectionType =
-                objectMapper.getTypeFactory().constructCollectionType(List::class.java, RelasjonDto::class.java)
+                objectMapper.typeFactory.constructCollectionType(List::class.java, RelasjonDto::class.java)
         val barnListDto: List<RelasjonDto> = objectMapper.readValue(barnFraTpsMocked, collectionType)
         val copyAvBarn = barnListDto[0].copy(forkortetNavn = navn)
         every { tpsClient.hentBarn() } returns (listOf(copyAvBarn))
@@ -211,28 +166,3 @@ internal class OppslagServiceServiceImplTest {
     }
 
 }
-
-val søkerInfo = """{
-  "søker": {
-    "fnr": "08018820243",
-    "forkortetNavn": "TUNGSINDIG GASELLE",
-    "adresse": {
-      "adresse": "SELSBAKKEN 93",
-      "postnummer": "0561",
-      "poststed": "OSLO"
-    },
-    "egenansatt": false,
-    "sivilstand": "UGIF",
-    "statsborgerskap": "NORGE"
-  },
-  "barn": [
-    {
-      "fnr": "28021961053",
-      "navn": "DORULL RASK",
-      "alder": 1,
-      "fødselsdato": "2019-02-28",
-      "harSammeAdresse": true
-    }
-  ],
-  "hash": "664551484"
-} """
