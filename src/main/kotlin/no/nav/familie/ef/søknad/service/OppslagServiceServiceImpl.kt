@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
+import no.nav.familie.ef.søknad.api.dto.tps.Barn
 import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
@@ -50,9 +51,7 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
     }
 
     fun logDiff(søkerinfoV1: Søkerinfo, søkerinfoV2: Søkerinfo) {
-
         val builder = StringBuilder()
-
         for (prop in Person::class.memberProperties) {
             val property1 = prop.get(søkerinfoV1.søker)
             val property2 = prop.get(søkerinfoV2.søker)
@@ -61,9 +60,25 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
             }
         }
 
-        if (søkerinfoV1.barn != søkerinfoV2.barn) {
-            builder.append("Ulike barn: V1: ${søkerinfoV1.barn}, V2: ${søkerinfoV2.barn}")
+        if (søkerinfoV1.barn.size != søkerinfoV2.barn.size) {
+            builder.append("Ikke samme antall barn fra tps og pdl: ${System.lineSeparator()} ${søkerinfoV1.barn}, ${System.lineSeparator()} V2: ${søkerinfoV2.barn}")
+        } else {
+            val barn1Liste = søkerinfoV1.barn.sortedBy { it.fnr }
+            val barn2Liste = søkerinfoV2.barn.sortedBy { it.fnr }
+            val zip = barn1Liste.zip(barn2Liste)
+            zip.forEach {
+                for (prop in Barn::class.memberProperties) {
+                    val property1 = prop.get(it.first)
+                    val property2 = prop.get(it.second)
+                    if (property1 != property2) {
+                        builder.append("Barn: ${prop.name} = V1: $property1, V2: $property2")
+                    }
+                }
+            }
         }
+//        if (søkerinfoV1.barn != søkerinfoV2.barn) {
+//            builder.append("Ulike barn: V1: ${søkerinfoV1.barn}, V2: ${søkerinfoV2.barn}")
+//        }
 
         return secureLogger.warn(builder.toString())
 

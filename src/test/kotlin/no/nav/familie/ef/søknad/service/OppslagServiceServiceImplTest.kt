@@ -43,6 +43,40 @@ internal class OppslagServiceServiceImplTest {
         mockHentPersonPdlClient()
     }
 
+
+    @Test
+    fun `Skal ikke logge forskjeller når alt er likt`() {
+        val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
+        val søkerinfo2 = søkerinfo.copy()
+        assertThat(oppslagServiceService.hentDiff(søkerinfo, søkerinfo2)).isBlank()
+    }
+
+    @Test
+    fun `Skal logge forskjeller på Person og barn data`() {
+        val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
+        val endretSøker = søkerinfo.søker.copy(fnr = "54325432",
+                                               adresse = Adresse("nyAdresse", "7654", "AnnetSted"),
+                                               statsborgerskap = "ANNET",
+                                               sivilstand = "UKJENT",
+                                               egenansatt = true,
+                                               forkortetNavn = "KORT")
+        val barn = Barn("456776544567",
+                        "Ole Annetnavn",
+                        2,
+                        LocalDate.now(),
+                        false)
+        val søkerinfo2 = søkerinfo.copy(søker = endretSøker, barn = listOf(barn))
+        assertThat(oppslagServiceService.hentDiff(søkerinfo, søkerinfo2)).isNotBlank
+    }
+
+    @Test
+    fun `Skal logge forskjeller - manglende barn`() {
+        val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
+        val søkerinfo2 = søkerinfo.copy(barn = listOf())
+        assertThat(oppslagServiceService.hentDiff(søkerinfo, søkerinfo2)).isNotBlank()
+    }
+
+
     @Test
     fun `Lik søkerInfo skal ha lik hash`() {
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
