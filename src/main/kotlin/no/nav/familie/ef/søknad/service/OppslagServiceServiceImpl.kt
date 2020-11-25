@@ -109,7 +109,7 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
 
     private fun logSivilstandsDiff(builder: StringBuilder, sivilstand1: String, sivilstand2: String) {
 
-        val skalLogge = !when (sivilstand1) {
+        val erLikSivilstand = !when (sivilstand1) {
             "SEPA", "SEPARERT" -> {
                 listOf("SEPA", "SEPARERT").contains(sivilstand2)
             }
@@ -125,7 +125,7 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
             else -> sivilstand1 == sivilstand2
         }
 
-        if (skalLogge) {
+        if (erLikSivilstand) {
             builder.append(builder.append("\n Person: sivilstand = V1: $sivilstand1, V2: $sivilstand2"))
         }
 
