@@ -1,6 +1,9 @@
 package no.nav.familie.ef.søknad.service
 
 import io.mockk.*
+import no.nav.familie.ef.søknad.api.dto.Søkerinfo
+import no.nav.familie.ef.søknad.api.dto.tps.Adresse
+import no.nav.familie.ef.søknad.api.dto.tps.Barn
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient
@@ -47,8 +50,11 @@ internal class OppslagServiceServiceImplTest {
     @Test
     fun `Skal ikke logge forskjeller når alt er likt`() {
         val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
-        val søkerinfo2 = søkerinfo.copy()
-        assertThat(oppslagServiceService.hentDiff(søkerinfo, søkerinfo2)).isBlank()
+        val søkerPdl = søkerinfo.søker.copy(sivilstand = "UGIFT")
+        val søkerTps = søkerinfo.søker.copy(sivilstand = "UGIF")
+        val søkerinfoPdl = søkerinfo.copy(søker = søkerPdl)
+        val søkerinfoTps = søkerinfo.copy(søker = søkerTps)
+        assertThat(oppslagServiceService.logDiff(søkerinfoTps, søkerinfoPdl)).isBlank
     }
 
     @Test
@@ -66,16 +72,15 @@ internal class OppslagServiceServiceImplTest {
                         LocalDate.now(),
                         false)
         val søkerinfo2 = søkerinfo.copy(søker = endretSøker, barn = listOf(barn))
-        assertThat(oppslagServiceService.hentDiff(søkerinfo, søkerinfo2)).isNotBlank
+        assertThat(oppslagServiceService.logDiff(søkerinfo, søkerinfo2)).isNotBlank
     }
 
     @Test
     fun `Skal logge forskjeller - manglende barn`() {
         val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
         val søkerinfo2 = søkerinfo.copy(barn = listOf())
-        assertThat(oppslagServiceService.hentDiff(søkerinfo, søkerinfo2)).isNotBlank()
+        assertThat(oppslagServiceService.logDiff(søkerinfo, søkerinfo2)).isNotBlank
     }
-
 
     @Test
     fun `Lik søkerInfo skal ha lik hash`() {
@@ -201,3 +206,28 @@ internal class OppslagServiceServiceImplTest {
     }
 
 }
+
+val søkerInfo = """{
+  "søker": {
+    "fnr": "08018820243",
+    "forkortetNavn": "TUNGSINDIG GASELLE",
+    "adresse": {
+      "adresse": "SELSBAKKEN 93",
+      "postnummer": "0561",
+      "poststed": "OSLO"
+    },
+    "egenansatt": false,
+    "sivilstand": "UGIF",
+    "statsborgerskap": "NORGE"
+  },
+  "barn": [
+    {
+      "fnr": "28021961053",
+      "navn": "DORULL RASK",
+      "alder": 1,
+      "fødselsdato": "2019-02-28",
+      "harSammeAdresse": true
+    }
+  ],
+  "hash": "664551484"
+} """

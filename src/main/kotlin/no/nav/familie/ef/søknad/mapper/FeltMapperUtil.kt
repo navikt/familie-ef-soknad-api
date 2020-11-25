@@ -45,19 +45,13 @@ fun DatoFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? {
 }
 
 fun DatoFelt.tilSøknadsfelt(): Søknadsfelt<LocalDate> {
-    return if (this.verdi.isNotBlank()) {
-        Søknadsfelt(this.label, fraStrengTilLocalDate(this.verdi))
-    } else {
-        throw IllegalArgumentException("Kan ikke mappe datoFelt sin verdi når den er tom for ${this.label}")
-    }
+    require(this.verdi.isNotBlank()) { "Kan ikke mappe datoFelt sin verdi når den er tom for ${this.label}" }
+    return Søknadsfelt(this.label, fraStrengTilLocalDate(this.verdi))
 }
 
 fun DatoFelt.tilLocalDate(): LocalDate {
-    return if (this.verdi.isNotBlank()) {
-        fraStrengTilLocalDate(this.verdi)
-    } else {
-        throw IllegalArgumentException("Kan ikke mappe datoFelt sin verdi når den er tom for ${this.label}")
-    }
+    require(this.verdi.isNotBlank()) { "Kan ikke mappe datoFelt sin verdi når den er tom for ${this.label}" }
+    return fraStrengTilLocalDate(this.verdi)
 }
 
 fun DatoFelt.tilLocalDateEllerNull(): LocalDate? {
