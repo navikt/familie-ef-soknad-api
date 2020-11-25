@@ -50,10 +50,15 @@ internal class OppslagServiceServiceImplTest {
     @Test
     fun `Skal ikke logge forskjeller når alt er likt`() {
         val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
+
         val søkerPdl = søkerinfo.søker.copy(sivilstand = "UGIFT")
         val søkerTps = søkerinfo.søker.copy(sivilstand = "UGIF")
-        val søkerinfoPdl = søkerinfo.copy(søker = søkerPdl)
-        val søkerinfoTps = søkerinfo.copy(søker = søkerTps)
+
+        val barnPdl = søkerinfo.barn.first().copy(navn = "Ola Olsen")
+        val barnTps = søkerinfo.barn.first().copy(navn = "Olsen Ola")
+
+        val søkerinfoPdl = søkerinfo.copy(søker = søkerPdl, barn = listOf(barnPdl))
+        val søkerinfoTps = søkerinfo.copy(søker = søkerTps, barn = listOf(barnTps))
         assertThat(oppslagServiceService.logDiff(søkerinfoTps, søkerinfoPdl)).isBlank
     }
 

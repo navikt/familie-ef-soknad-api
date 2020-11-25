@@ -71,13 +71,22 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
             val zip = barn1Liste.zip(barn2Liste)
             zip.forEach {
                 for (prop in Barn::class.memberProperties) {
-                    if (prop.name != "barn" && prop.get(it.first) != prop.get(it.second)) {
+                    val detErDiff = when (prop.name) {
+                        "navn" -> {
+                            listOfSeparatedNames(it.first.navn) != listOfSeparatedNames(it.second.navn)
+                        }
+                        else -> prop.get(it.first) != prop.get(it.second)
+                    }
+                    if (detErDiff) {
                         builder.append("\n Barn: ${prop.name} = V1: ${prop.get(it.first)}, V2: ${prop.get(it.second)}")
                     }
                 }
             }
         }
     }
+
+    private fun listOfSeparatedNames(name: String) =
+            name.split(" ").sorted()
 
     private fun leggTilSøkerDiff(søkerinfoV1: Søkerinfo,
                                  søkerinfoV2: Søkerinfo,
