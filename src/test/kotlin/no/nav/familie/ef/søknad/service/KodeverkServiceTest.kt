@@ -23,7 +23,7 @@ import java.time.LocalDate
 @Profile("kodeverk-cache-test")
 @Configuration
 @Primary
-class KodeerkTestConfig {
+class KodeverkTestConfig {
 
     @Bean
     fun familieIntegrasjonerClient(): FamilieIntegrasjonerClient {
