@@ -33,10 +33,10 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
         val søkerinfoDto = settNavnFraPdlPåSøkerinfo(søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn))
 
         try {
-            val hentSøkerinfoV2 = hentSøkerinfoV2()
-            OppslagServiceLoggHjelper.logDiff(søkerinfoDto, hentSøkerinfoV2)
+            val hentSøkerinfoFraPdl = hentSøkerinfoV2()
+            OppslagServiceLoggHjelper.logDiff(søkerinfoDto, hentSøkerinfoFraPdl)
             if (featureToggleService.isEnabled("familie.ef.soknad.bruk-pdl")) {
-                return hentSøkerinfoV2
+                return hentSøkerinfoFraPdl
             }
         } catch (e: Exception) {
             secureLogger.info("Exception - hent søker fra pdl", e)
