@@ -24,7 +24,7 @@ class PdlClient(val pdlConfig: PdlConfig,
         val pdlResponse: PdlResponse<PdlSøkerData> = postForEntity(pdlConfig.pdlUri,
                                                                    pdlPersonRequest,
                                                                    httpHeaders())
-        return feilsjekkOgReturnerData(personIdent, pdlResponse) { it?.person }
+        return feilsjekkOgReturnerData(personIdent, pdlResponse) { it.person }
     }
 
     /**
@@ -32,7 +32,7 @@ class PdlClient(val pdlConfig: PdlConfig,
      */
     private inline fun <reified DATA : Any, reified T : Any> feilsjekkOgReturnerData(ident: String,
                                                                                      pdlResponse: PdlResponse<DATA>,
-                                                                                     dataMapper: (DATA?) -> T?): T {
+                                                                                     dataMapper: (DATA) -> T?): T {
         if (pdlResponse.harFeil()) {
             secureLogger.error("Feil ved henting av ${T::class} fra PDL: ${pdlResponse.errorMessages()}")
             throw PdlRequestException("Feil ved henting av ${T::class} fra PDL. Se secure logg for detaljer.")

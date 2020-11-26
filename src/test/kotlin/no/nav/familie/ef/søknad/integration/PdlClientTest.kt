@@ -52,14 +52,7 @@ class PdlClientTest {
         wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
                                        .willReturn(okJson("{\"data\": {}}")))
         assertThat(catchThrowable { pdlClient.hentSøker("") })
-                .isInstanceOf(PdlRequestException::class.java)
-    }
-
-    @Test
-    fun `pdlClient håndterer response for søker-query mot pdl-tjenesten der data er null`() {
-        wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                                       .willReturn(okJson("{}")))
-        assertThat(catchThrowable { pdlClient.hentSøker("") })
+                .hasMessageStartingWith("Manglende ")
                 .isInstanceOf(PdlRequestException::class.java)
     }
 
@@ -68,6 +61,7 @@ class PdlClientTest {
         wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
                                        .willReturn(okJson(readFile("pdlErrorResponse.json"))))
         assertThat(catchThrowable { pdlClient.hentSøker("") })
+                .hasMessageStartingWith("Feil ved henting av")
                 .isInstanceOf(PdlRequestException::class.java)
     }
 
