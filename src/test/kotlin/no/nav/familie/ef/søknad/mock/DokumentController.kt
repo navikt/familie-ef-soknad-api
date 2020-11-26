@@ -43,9 +43,7 @@ class DokumentController(@Qualifier("dokumentlager") private val dokumenter: Mut
         val bytes = multipartFile.bytes
         val maxFileSizeInBytes = MAX_FILE_SIZE_MB * 1024 * 1024
 
-        if (bytes.size > maxFileSizeInBytes) {
-            throw IllegalArgumentException(HttpStatus.PAYLOAD_TOO_LARGE.toString())
-        }
+        require(bytes.size > maxFileSizeInBytes) { HttpStatus.PAYLOAD_TOO_LARGE.toString() }
 
         return try {
             val uuid = UUID.randomUUID().toString()

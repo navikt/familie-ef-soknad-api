@@ -14,15 +14,14 @@ import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter.ISO_LOCAL_DATE
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 internal class OppslagServiceServiceImplTest {
-
 
     val tpsClient: TpsInnsynServiceClient = mockk()
     val pdlClient: PdlClient = mockk()
@@ -34,7 +33,7 @@ internal class OppslagServiceServiceImplTest {
     private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, mockk(), pdlClient,
                                                                   pdlStsClient, regelverkConfig, søkerinfoMapper)
 
-    @Before
+    @BeforeEach
     fun setUp() {
         mockkObject(EksternBrukerUtils)
         every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
@@ -74,7 +73,7 @@ internal class OppslagServiceServiceImplTest {
     }
 
     @Test
-    fun `erIAktuellAlder`() {
+    fun `er i aktuell alder`() {
         assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now())).isTrue
         assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now()
                 .minusYears(18))).isTrue
@@ -143,7 +142,7 @@ internal class OppslagServiceServiceImplTest {
     private fun mockHentBarn(navn: String = "Ola") {
         val barnFraTpsMocked = tpsInnsynMockController.barnFraTpsMocked()
         val collectionType =
-                objectMapper.getTypeFactory().constructCollectionType(List::class.java, RelasjonDto::class.java)
+                objectMapper.typeFactory.constructCollectionType(List::class.java, RelasjonDto::class.java)
         val barnListDto: List<RelasjonDto> = objectMapper.readValue(barnFraTpsMocked, collectionType)
         val copyAvBarn = barnListDto[0].copy(forkortetNavn = navn)
         every { tpsClient.hentBarn() } returns (listOf(copyAvBarn))

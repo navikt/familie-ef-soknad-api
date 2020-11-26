@@ -27,9 +27,14 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     override fun hentSøkerinfo(): Søkerinfo {
+        val personinfoDto = client.hentPersoninfo()
+        val barn = client.hentBarn()
+        val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
+        val søkerinfoDto = settNavnFraPdlPåSøkerinfo(søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn))
 
         try {
             val hentSøkerinfoV2 = hentSøkerinfoV2()
+            OppslagServiceLoggHjelper.logDiff(søkerinfoDto, hentSøkerinfoV2)
             if (featureToggleService.isEnabled("familie.ef.soknad.bruk-pdl")) {
                 return hentSøkerinfoV2
             }
@@ -38,11 +43,12 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
             logger.warn("Exception - hent søker fra pdl (se securelogs for detaljer)")
         }
 
-        val personinfoDto = client.hentPersoninfo()
-        val barn = client.hentBarn()
-        val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
-        return settNavnFraPdlPåSøkerinfo(søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn))
+
+        return søkerinfoDto
     }
+
+
+
 
     override fun hentSøkerinfoV2(): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
