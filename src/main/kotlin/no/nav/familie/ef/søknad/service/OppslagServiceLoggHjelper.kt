@@ -11,25 +11,28 @@ object OppslagServiceLoggHjelper {
 
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
-    fun logDiff(søkerinfoV1: Søkerinfo, søkerinfoV2: Søkerinfo): String {
+
+    fun logDiff(søkerinfoTps: Søkerinfo, søkerinfoPdl: Søkerinfo): String {
         val builder = StringBuilder()
-        leggTilSøkerDiff(søkerinfoV1, søkerinfoV2, builder)
-        leggTilBarneDiff(søkerinfoV1, søkerinfoV2, builder)
+        leggTilSøkerDiff(søkerinfoTps, søkerinfoPdl, builder)
+        leggTilBarneDiff(søkerinfoTps, søkerinfoPdl, builder)
         if (builder.isNotBlank()) {
             secureLogger.warn(builder.toString())
+            logger.warn("Diff funnet mellom tps/pdl data. Se securelogs for detaljer")
         }
         return builder.toString()
     }
 
-    private fun leggTilBarneDiff(søkerinfoV1: Søkerinfo,
-                                 søkerinfoV2: Søkerinfo,
+    private fun leggTilBarneDiff(søkerinfoTps: Søkerinfo,
+                                 søkerinfoPdl: Søkerinfo,
                                  builder: StringBuilder) {
-        if (søkerinfoV1.barn.size != søkerinfoV2.barn.size) {
-            builder.append("Ikke samme antall barn fra tps og pdl: \n V1: ${søkerinfoV1.barn}, \n V2: ${søkerinfoV2.barn}")
+        if (søkerinfoTps.barn.size != søkerinfoPdl.barn.size) {
+            builder.append("Ikke samme antall barn fra tps og pdl: \n Tps: ${søkerinfoTps.barn}, \n V2: ${søkerinfoPdl.barn}")
         } else {
-            val barn1Liste = søkerinfoV1.barn.sortedBy { it.fnr }
-            val barn2Liste = søkerinfoV2.barn.sortedBy { it.fnr }
+            val barn1Liste = søkerinfoTps.barn.sortedBy { it.fnr }
+            val barn2Liste = søkerinfoPdl.barn.sortedBy { it.fnr }
             val zip = barn1Liste.zip(barn2Liste)
             zip.forEach {
                 for (prop in Barn::class.memberProperties) {
@@ -40,7 +43,7 @@ object OppslagServiceLoggHjelper {
                         else -> prop.get(it.first) != prop.get(it.second)
                     }
                     if (detErDiff) {
-                        builder.append("\n Barn: ${prop.name} = V1: ${prop.get(it.first)}, V2: ${prop.get(it.second)}")
+                        builder.append("\n Barn: ${prop.name} = Tps: ${prop.get(it.first)}, V2: ${prop.get(it.second)}")
                     }
                 }
             }
@@ -50,48 +53,44 @@ object OppslagServiceLoggHjelper {
     private fun listOfSeparatedNames(name: String) =
             name.split(" ").sorted()
 
-    private fun leggTilSøkerDiff(søkerinfoV1: Søkerinfo,
-                                 søkerinfoV2: Søkerinfo,
+    private fun leggTilSøkerDiff(søkerinfoTps: Søkerinfo,
+                                 søkerinfoPdl: Søkerinfo,
                                  builder: StringBuilder) {
         for (prop in Person::class.memberProperties) {
-            val property1 = prop.get(søkerinfoV1.søker)
-            val property2 = prop.get(søkerinfoV2.søker)
+            val property1 = prop.get(søkerinfoTps.søker)
+            val property2 = prop.get(søkerinfoPdl.søker)
             when (prop.name) {
                 "sivilstand" -> {
-                    logSivilstandsDiff(builder, søkerinfoV1.søker.sivilstand, søkerinfoV2.søker.sivilstand)
+                    logSivilstandsDiff(builder, søkerinfoTps.søker.sivilstand, søkerinfoPdl.søker.sivilstand)
                 }
                 else -> {
                     if (property1 != property2 && prop.name != "sivilstand") {
-                        builder.append("\n Person: ${prop.name} = V1: $property1, V2: $property2")
+                        builder.append("\n Person: ${prop.name} = Tps: $property1, Pdl: $property2")
                     }
                 }
             }
         }
     }
 
-    private fun logSivilstandsDiff(builder: StringBuilder, sivilstand1: String, sivilstand2: String) {
-
-        val erLikSivilstand = !when (sivilstand1) {
-            "SEPA", "SEPARERT" -> {
-                listOf("SEPA", "SEPARERT").contains(sivilstand2)
-            }
-            "UGIF", "UGIFT" -> {
-                listOf("UGIF", "UGIFT").contains(sivilstand2)
-            }
-            "SKIL", "SKILT" -> {
-                listOf("SKIL", "SKILT").contains(sivilstand2)
-            }
-            "ENKE", "ENKE_ELLER_ENKEMANN" -> {
-                listOf("ENKE", "ENKE_ELLER_ENKEMANN").contains(sivilstand2)
-            }
-            else -> sivilstand1 == sivilstand2
+    private fun logSivilstandsDiff(builder: StringBuilder, tpsSivilstand: String, pdlSivilstand: String) {
+        if (erUlike(tpsSivilstand, pdlSivilstand)) {
+            builder.append(builder.append("\n Person: sivilstand = Tps: $tpsSivilstand, Pdl: $pdlSivilstand"))
         }
+    }
 
-        if (erLikSivilstand) {
-            builder.append(builder.append("\n Person: sivilstand = V1: $sivilstand1, V2: $sivilstand2"))
+    private fun erUlike(tpsSivilstand: String, pdlSivilstand: String): Boolean {
+        val tpsTilPdlSivilstand = when (tpsSivilstand) {
+            "REPA" -> "PARTNER"
+            "SEPA" -> "SEPARERT"
+            "SEPR" -> "SEPARERT_PARTNER"
+            "GJPA" -> "GJENLEVENDE_PARTNER"
+            "UGIF" -> "UGIFT"
+            "SAMB" -> "UGIFT"
+            "SKIL" -> "SKILT"
+            "ENKE" -> "ENKE_ELLER_ENKEMANN"
+            else -> tpsSivilstand
         }
-
-
+        return tpsTilPdlSivilstand != pdlSivilstand
     }
 
 }
