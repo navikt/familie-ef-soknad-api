@@ -24,22 +24,27 @@ class PdlClient(val pdlConfig: PdlConfig,
         val pdlResponse: PdlResponse<PdlSøkerData> = postForEntity(pdlConfig.pdlUri,
                                                                    pdlPersonRequest,
                                                                    httpHeaders())
-        return feilsjekkOgReturnerData(personIdent, pdlResponse).person
+        return feilsjekkOgReturnerData(personIdent, pdlResponse) { it.person }
     }
 
-    private inline fun <reified T : Any> feilsjekkOgReturnerData(ident: String,
-                                                                 pdlResponse: PdlResponse<T>): T {
+    /**
+     * dataMapper håndterer att både data i PdlResponse og eks person i PdlSøker er null
+     */
+    private inline fun <reified DATA : Any, reified T : Any> feilsjekkOgReturnerData(ident: String,
+                                                                                     pdlResponse: PdlResponse<DATA>,
+                                                                                     dataMapper: (DATA) -> T?): T {
         if (pdlResponse.harFeil()) {
             secureLogger.error("Feil ved henting av ${T::class} fra PDL: ${pdlResponse.errorMessages()}")
             throw PdlRequestException("Feil ved henting av ${T::class} fra PDL. Se secure logg for detaljer.")
         }
 
-        if (pdlResponse.data == null) {
+        val data = dataMapper.invoke(pdlResponse.data)
+        if (data == null) {
             secureLogger.error("Feil ved oppslag på ident $ident. " +
                                "PDL rapporterte ingen feil men returnerte tomt datafelt")
             throw PdlRequestException("Manglende ${T::class} ved feilfri respons fra PDL. Se secure logg for detaljer.")
         }
-        return pdlResponse.data
+        return data
     }
 
     private fun httpHeaders(): HttpHeaders {

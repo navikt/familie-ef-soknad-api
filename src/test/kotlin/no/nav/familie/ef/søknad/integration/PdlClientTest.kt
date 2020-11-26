@@ -6,8 +6,10 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ef.søknad.config.PdlConfig
+import no.nav.familie.ef.søknad.exception.PdlRequestException
 import no.nav.familie.http.sts.StsRestClient
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -43,6 +45,24 @@ class PdlClientTest {
         val response = pdlClient.hentSøker("")
 
         assertThat(response.bostedsadresse[0].vegadresse?.adressenavn).isEqualTo("INNGJERDSVEGEN")
+    }
+
+    @Test
+    fun `pdlClient håndterer response for søker-query mot pdl-tjenesten der person i data er null`() {
+        wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
+                                       .willReturn(okJson("{\"data\": {}}")))
+        assertThat(catchThrowable { pdlClient.hentSøker("") })
+                .hasMessageStartingWith("Manglende ")
+                .isInstanceOf(PdlRequestException::class.java)
+    }
+
+    @Test
+    fun `pdlClient håndterer response for søker-query mot pdl-tjenesten der data er null og har errors`() {
+        wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
+                                       .willReturn(okJson(readFile("pdlErrorResponse.json"))))
+        assertThat(catchThrowable { pdlClient.hentSøker("") })
+                .hasMessageStartingWith("Feil ved henting av")
+                .isInstanceOf(PdlRequestException::class.java)
     }
 
     private fun readFile(filnavn: String): String {

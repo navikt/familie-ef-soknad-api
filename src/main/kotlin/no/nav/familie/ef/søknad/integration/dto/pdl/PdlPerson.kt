@@ -3,7 +3,7 @@ package no.nav.familie.ef.søknad.integration.dto.pdl
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
 
-data class PdlResponse<T>(val data: T?,
+data class PdlResponse<T>(val data: T,
                           val errors: List<PdlError>?) {
 
     fun harFeil(): Boolean {
@@ -17,7 +17,7 @@ data class PdlResponse<T>(val data: T?,
 
 data class PdlError(val message: String)
 
-data class PdlSøkerData(val person: PdlSøker)
+data class PdlSøkerData(val person: PdlSøker?)
 
 data class PersonDataBolk<T>(val ident: String, val code: String, val person: T?)
 data class PersonBolk<T>(val personBolk: List<PersonDataBolk<T>>)
