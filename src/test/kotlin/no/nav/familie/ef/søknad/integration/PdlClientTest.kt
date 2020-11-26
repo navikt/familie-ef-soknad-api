@@ -63,6 +63,14 @@ class PdlClientTest {
                 .isInstanceOf(PdlRequestException::class.java)
     }
 
+    @Test
+    fun `pdlClient håndterer response for søker-query mot pdl-tjenesten der data er null og har errors`() {
+        wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
+                                       .willReturn(okJson(readFile("pdlErrorResponse.json"))))
+        assertThat(catchThrowable { pdlClient.hentSøker("") })
+                .isInstanceOf(PdlRequestException::class.java)
+    }
+
     private fun readFile(filnavn: String): String {
         return this::class.java.getResource("/pdl/$filnavn").readText()
     }
