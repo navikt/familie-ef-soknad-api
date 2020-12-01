@@ -64,10 +64,13 @@ object OppslagServiceLoggHjelper {
                     logSivilstandsDiff(builder, søkerinfoTps.søker.sivilstand, søkerinfoPdl.søker.sivilstand)
                 }
                 "adresse" -> {
-                    logSivilstandsDiff(builder, søkerinfoTps.søker.sivilstand, søkerinfoPdl.søker.sivilstand)
+                    // TODO implementer denne bedre
+                    if (søkerinfoTps.søker.adresse == søkerinfoPdl.søker.adresse) {
+                        builder.append("\n Person: ${prop.name} = Tps: $property1, Pdl: $property2")
+                    }
                 }
                 else -> {
-                    if (property1 != property2 && prop.name != "sivilstand") {
+                    if (property1 != property2) {
                         builder.append("\n Person: ${prop.name} = Tps: $property1, Pdl: $property2")
                     }
                 }
