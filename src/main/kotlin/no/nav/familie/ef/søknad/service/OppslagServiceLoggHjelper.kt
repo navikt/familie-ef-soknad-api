@@ -65,7 +65,7 @@ object OppslagServiceLoggHjelper {
                 }
                 "adresse" -> {
                     // TODO implementer denne bedre
-                    if (søkerinfoTps.søker.adresse == søkerinfoPdl.søker.adresse) {
+                    if (søkerinfoTps.søker.adresse != søkerinfoPdl.søker.adresse) {
                         builder.append("\n Person: ${prop.name} = Tps: $property1, Pdl: $property2")
                     }
                 }
