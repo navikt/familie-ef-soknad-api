@@ -40,6 +40,11 @@ class PdlStsClient(val pdlConfig: PdlConfig,
 
 
     private inline fun <reified T : Any> feilsjekkOgReturnerData(pdlResponse: PdlBolkResponse<T>): Map<String, T> {
+        if (pdlResponse.data == null) {
+            secureLogger.error("Data fra pdl er null ved bolkoppslag av ${T::class} fra PDL: ${pdlResponse.errorMessages()}")
+            throw PdlRequestException("Data er null fra PDL -  ${T::class}. Se secure logg for detaljer.")
+        }
+
         val feil = pdlResponse.data.personBolk.filter { it.code != "ok" }.map { it.ident to it.code }.toMap()
         if (feil.isNotEmpty()) {
             secureLogger.error("Feil ved henting av ${T::class} fra PDL: $feil")
