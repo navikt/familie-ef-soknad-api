@@ -51,7 +51,8 @@ internal class OppslagServiceLoggHjelperTest {
         val nyAdresse = søkerinfo.søker.adresse.adresse.toLowerCase().capitalize() + " H0102"
 
         val endretSøker = søkerinfo.søker.copy(
-                adresse = søkerinfo.søker.adresse.copy(adresse = nyAdresse)
+                adresse = søkerinfo.søker.adresse.copy(adresse = nyAdresse),
+                sivilstand = "UGIFT"
         )
 
         val søkerinfo2 = søkerinfo.copy(søker = endretSøker)
