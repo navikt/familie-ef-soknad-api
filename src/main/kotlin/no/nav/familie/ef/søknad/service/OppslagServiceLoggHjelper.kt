@@ -62,10 +62,12 @@ object OppslagServiceLoggHjelper {
             val property2 = prop.get(søkerinfoPdl.søker)
             when (prop.name) {
                 "sivilstand" -> {
-                    logSivilstandsDiff(builder, søkerinfoTps.søker.sivilstand, søkerinfoPdl.søker.sivilstand)
+                    if (erUlikSivilstand(søkerinfoTps.søker.sivilstand, søkerinfoPdl.søker.sivilstand)) {
+                        builder.append(builder.append("\n Person: sivilstand = Tps: ${søkerinfoTps.søker.sivilstand}, Pdl: ${søkerinfoPdl.søker.sivilstand}"))
+                    }
                 }
                 "adresse" -> {
-                    if (erUlike(søkerinfoTps.søker.adresse, søkerinfoPdl.søker.adresse)) {
+                    if (erUlikAdresse(søkerinfoTps.søker.adresse, søkerinfoPdl.søker.adresse)) {
                         builder.append("\n Person: ${prop.name} = Tps: $property1, Pdl: $property2")
                     }
                 }
@@ -78,8 +80,8 @@ object OppslagServiceLoggHjelper {
         }
     }
 
-    private fun erUlike(adresseTps: Adresse,
-                        adressePdl: Adresse): Boolean {
+    private fun erUlikAdresse(adresseTps: Adresse,
+                              adressePdl: Adresse): Boolean {
         val postnummerDiff = adresseTps.postnummer != adressePdl.postnummer
         val postStedDiff = adresseTps.poststed != adressePdl.poststed
         val adresseDiff = !adressePdl.adresse.startsWith(adresseTps.adresse, ignoreCase = true)
@@ -87,13 +89,7 @@ object OppslagServiceLoggHjelper {
     }
 
 
-    private fun logSivilstandsDiff(builder: StringBuilder, tpsSivilstand: String, pdlSivilstand: String) {
-        if (erUlike(tpsSivilstand, pdlSivilstand)) {
-            builder.append(builder.append("\n Person: sivilstand = Tps: $tpsSivilstand, Pdl: $pdlSivilstand"))
-        }
-    }
-
-    private fun erUlike(tpsSivilstand: String, pdlSivilstand: String): Boolean {
+    private fun erUlikSivilstand(tpsSivilstand: String, pdlSivilstand: String): Boolean {
         val tpsTilPdlSivilstand = when (tpsSivilstand) {
             "REPA" -> "PARTNER"
             "SEPA" -> "SEPARERT"
