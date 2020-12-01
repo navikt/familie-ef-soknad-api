@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
+import no.nav.familie.ef.søknad.api.dto.tps.Adresse
 import no.nav.familie.ef.søknad.api.dto.tps.Barn
 import no.nav.familie.ef.søknad.api.dto.tps.Person
 import org.slf4j.LoggerFactory
@@ -64,8 +65,7 @@ object OppslagServiceLoggHjelper {
                     logSivilstandsDiff(builder, søkerinfoTps.søker.sivilstand, søkerinfoPdl.søker.sivilstand)
                 }
                 "adresse" -> {
-                    // TODO implementer denne bedre
-                    if (søkerinfoTps.søker.adresse != søkerinfoPdl.søker.adresse) {
+                    if (erUlike(søkerinfoTps.søker.adresse, søkerinfoPdl.søker.adresse)) {
                         builder.append("\n Person: ${prop.name} = Tps: $property1, Pdl: $property2")
                     }
                 }
@@ -77,6 +77,15 @@ object OppslagServiceLoggHjelper {
             }
         }
     }
+
+    private fun erUlike(adresseTps: Adresse,
+                        adressePdl: Adresse): Boolean {
+        val postnummerDiff = adresseTps.postnummer != adressePdl.postnummer
+        val postStedDiff = adresseTps.poststed != adressePdl.poststed
+        val adresseDiff = !adressePdl.adresse.startsWith(adresseTps.adresse, ignoreCase = true)
+        return postStedDiff or postnummerDiff or adresseDiff
+    }
+
 
     private fun logSivilstandsDiff(builder: StringBuilder, tpsSivilstand: String, pdlSivilstand: String) {
         if (erUlike(tpsSivilstand, pdlSivilstand)) {
