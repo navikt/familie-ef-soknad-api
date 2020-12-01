@@ -1,0 +1,29 @@
+{
+  "errors": [
+    {
+      "message": "Ukjent problem oppsto, feilen har blitt logget og følges opp",
+      "locations": [
+        {
+          "line": 2,
+          "column": 5
+        }
+      ],
+      "path": [
+        "hentPerson", "bostedsadresse"
+      ],
+      "extensions": {
+        "code": "server_error",
+        "classification": "ExecutionAborted"
+      }
+    }
+  ],
+  "data": {
+    "personBolk": [
+      {
+        "code": "not_found",
+        "ident": "1234567891",
+        "person": null
+      }
+    ]
+  }
+}
