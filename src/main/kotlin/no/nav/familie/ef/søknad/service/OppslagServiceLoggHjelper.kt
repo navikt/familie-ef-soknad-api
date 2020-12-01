@@ -63,6 +63,9 @@ object OppslagServiceLoggHjelper {
                 "sivilstand" -> {
                     logSivilstandsDiff(builder, søkerinfoTps.søker.sivilstand, søkerinfoPdl.søker.sivilstand)
                 }
+                "adresse" -> {
+                    logSivilstandsDiff(builder, søkerinfoTps.søker.sivilstand, søkerinfoPdl.søker.sivilstand)
+                }
                 else -> {
                     if (property1 != property2 && prop.name != "sivilstand") {
                         builder.append("\n Person: ${prop.name} = Tps: $property1, Pdl: $property2")

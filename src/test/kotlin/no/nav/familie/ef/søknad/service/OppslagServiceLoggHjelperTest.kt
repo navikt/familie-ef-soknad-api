@@ -43,6 +43,22 @@ internal class OppslagServiceLoggHjelperTest {
         assertThat(OppslagServiceLoggHjelper.logDiff(søkerinfo, søkerinfo2)).isNotBlank
     }
 
+
+    @Test
+    fun `Skal ikke logge forskjell på nesten like adresser`() {
+        val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
+
+        val nyAdresse = søkerinfo.søker.adresse.adresse.toLowerCase().capitalize() + " H0102"
+
+        val endretSøker = søkerinfo.søker.copy(
+                adresse = søkerinfo.søker.adresse.copy(adresse = nyAdresse)
+        )
+
+        val søkerinfo2 = søkerinfo.copy(søker = endretSøker)
+        assertThat(OppslagServiceLoggHjelper.logDiff(søkerinfo, søkerinfo2)).isBlank
+    }
+
+
     @Test
     fun `Skal logge forskjeller - manglende barn`() {
         val søkerinfo = objectMapper.readValue(søkerInfo, Søkerinfo::class.java)
