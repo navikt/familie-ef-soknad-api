@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
+import no.nav.familie.ef.søknad.api.dto.tps.Adresse
 import no.nav.familie.ef.søknad.api.dto.tps.Barn
 import no.nav.familie.ef.søknad.api.dto.tps.Person
 import org.slf4j.LoggerFactory
@@ -61,10 +62,17 @@ object OppslagServiceLoggHjelper {
             val property2 = prop.get(søkerinfoPdl.søker)
             when (prop.name) {
                 "sivilstand" -> {
-                    logSivilstandsDiff(builder, søkerinfoTps.søker.sivilstand, søkerinfoPdl.søker.sivilstand)
+                    if (erUlikSivilstand(søkerinfoTps.søker.sivilstand, søkerinfoPdl.søker.sivilstand)) {
+                        builder.append(builder.append("\n Person: sivilstand = Tps: ${søkerinfoTps.søker.sivilstand}, Pdl: ${søkerinfoPdl.søker.sivilstand}"))
+                    }
+                }
+                "adresse" -> {
+                    if (erUlikAdresse(søkerinfoTps.søker.adresse, søkerinfoPdl.søker.adresse)) {
+                        builder.append("\n Person: ${prop.name} = Tps: $property1, Pdl: $property2")
+                    }
                 }
                 else -> {
-                    if (property1 != property2 && prop.name != "sivilstand") {
+                    if (property1 != property2) {
                         builder.append("\n Person: ${prop.name} = Tps: $property1, Pdl: $property2")
                     }
                 }
@@ -72,13 +80,16 @@ object OppslagServiceLoggHjelper {
         }
     }
 
-    private fun logSivilstandsDiff(builder: StringBuilder, tpsSivilstand: String, pdlSivilstand: String) {
-        if (erUlike(tpsSivilstand, pdlSivilstand)) {
-            builder.append(builder.append("\n Person: sivilstand = Tps: $tpsSivilstand, Pdl: $pdlSivilstand"))
-        }
+    private fun erUlikAdresse(adresseTps: Adresse,
+                              adressePdl: Adresse): Boolean {
+        val postnummerDiff = adresseTps.postnummer != adressePdl.postnummer
+        val postStedDiff = adresseTps.poststed != adressePdl.poststed
+        val adresseDiff = !adressePdl.adresse.startsWith(adresseTps.adresse, ignoreCase = true)
+        return postStedDiff or postnummerDiff or adresseDiff
     }
 
-    private fun erUlike(tpsSivilstand: String, pdlSivilstand: String): Boolean {
+
+    private fun erUlikSivilstand(tpsSivilstand: String, pdlSivilstand: String): Boolean {
         val tpsTilPdlSivilstand = when (tpsSivilstand) {
             "REPA" -> "PARTNER"
             "SEPA" -> "SEPARERT"
