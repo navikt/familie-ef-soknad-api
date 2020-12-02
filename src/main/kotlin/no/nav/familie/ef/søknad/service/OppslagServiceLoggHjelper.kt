@@ -92,8 +92,8 @@ object OppslagServiceLoggHjelper {
     private fun erUlikSivilstand(tpsSivilstand: String, pdlSivilstand: String): Boolean {
         val tpsTilPdlSivilstand = when (tpsSivilstand) {
             "REPA" -> "PARTNER"
-            "SEPA" -> "SEPARERT"
-            "SEPR" -> "SEPARERT_PARTNER"
+            "SEPA" -> "SEPARERT_PARTNER"
+            "SEPR" -> "SEPARERT"
             "GJPA" -> "GJENLEVENDE_PARTNER"
             "UGIF" -> "UGIFT"
             "SAMB" -> "UGIFT"
