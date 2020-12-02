@@ -6,12 +6,3 @@ data class Situasjon(val gjelderDetteDeg: ListFelt<String>,
                      val begrunnelseSagtOppEllerRedusertStilling: TekstFelt? = null,
                      val søknadsdato: DatoFelt?,
                      val søkerFraBestemtMåned: BooleanFelt)
-
-//export interface IDinSituasjon {
-//    gjelderDetteDeg: ISpørsmålListeFelt;
-//    søknadsdato?: IDatoFelt;
-//    sagtOppEllerRedusertStilling?: ISpørsmålFelt;
-//    begrunnelseSagtOppEllerRedusertStilling?: ITekstFelt;
-//    datoSagtOppEllerRedusertStilling?: IDatoFelt;
-//    søkerFraBestemtMåned?: ISpørsmålFelt;
-//}

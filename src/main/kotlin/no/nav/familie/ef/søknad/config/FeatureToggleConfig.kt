@@ -62,6 +62,8 @@ class FeatureToggleConfig(private val enabled: Boolean,
     private fun lagDummyFeatureToggleService(): FeatureToggleService {
         return object : FeatureToggleService {
             override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
+                if (toggleId == "familie.ef.soknad.feilsituasjon")
+                    return false
                 if (unleash.environment == "local") {
                     return true
                 }
