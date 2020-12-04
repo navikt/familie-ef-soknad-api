@@ -20,7 +20,7 @@ object OppslagServiceLoggHjelper {
         leggTilSøkerDiff(søkerinfoTps, søkerinfoPdl, builder)
         leggTilBarneDiff(søkerinfoTps, søkerinfoPdl, builder)
         if (builder.isNotBlank()) {
-            secureLogger.warn(builder.toString())
+            secureLogger.warn(builder.toString() + " \n Gjelder søker: ${søkerinfoTps.søker.fnr}  ")
             logger.warn("Diff funnet mellom tps/pdl data. Se securelogs for detaljer")
         }
         return builder.toString()
