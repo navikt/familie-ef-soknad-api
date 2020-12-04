@@ -63,7 +63,10 @@ class FeatureToggleConfig(private val enabled: Boolean,
         return object : FeatureToggleService {
             override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
                 if (unleash.environment == "local") {
-                    return true
+                    return when (toggleId) {
+                        "familie.ef.soknad.feilsituasjon" -> false
+                        else -> true
+                    }
                 }
                 return defaultValue
             }

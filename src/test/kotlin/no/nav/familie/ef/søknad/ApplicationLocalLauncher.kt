@@ -19,7 +19,9 @@ fun main(args: Array<String>) {
             .profiles("local",
                       "mock-kodeverk",
                       "mock-dokument",
-                      "mock-pdl"
+                      "mock-pdl",
+                      "mock-pdlbarn",
+                      "mock-mottak"
             )
             .run(*args)
 }

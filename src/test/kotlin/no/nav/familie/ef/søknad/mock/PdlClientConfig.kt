@@ -23,16 +23,22 @@ class PdlClientConfig {
     fun pdlClient(): PdlClient {
         val pdlClient: PdlClient = mockk()
 
+        every { pdlClient.ping() } returns Unit
+
         every { pdlClient.hentSøker(any()) } returns
                 PdlSøker(
                         bostedsadresse = bostedsadresse(),
-                        familierelasjoner = listOf(),
+                        familierelasjoner = lagBarn(),
                         navn = lagNavn(),
                         sivilstand = sivilstand(),
                         statsborgerskap = statsborgerskap()
                 )
 
         return pdlClient
+    }
+
+    private fun lagBarn(): List<Familierelasjon> {
+        return listOf(Familierelasjon("28021078036", Familierelasjonsrolle.BARN))
     }
 
     private fun lagNavn(fornavn: String = "Fornavn",

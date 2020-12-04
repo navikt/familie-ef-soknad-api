@@ -6,7 +6,6 @@ import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.service.SøknadService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.validation.annotation.Validated
@@ -22,8 +21,6 @@ import java.time.LocalDateTime
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
 class SøknadBarnetilsynController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
-
-    private val logger = LoggerFactory.getLogger(this::class.java)
 
     @PostMapping
     fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
