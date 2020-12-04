@@ -25,9 +25,9 @@
         <mockk.version>1.10.3</mockk.version>
         <token-validation-spring.version>1.3.1</token-validation-spring.version>
         <fasterxml.version>2.12.0</fasterxml.version>
-        <com.amazonaws.version>1.11.911</com.amazonaws.version>
+        <com.amazonaws.version>1.11.912</com.amazonaws.version>
         <felles.version>1.20201123131335_671787f</felles.version>
-        <kontrakter.version>2.0_20201120120200_aabf9c6</kontrakter.version>
+        <kontrakter.version>2.0_20201203142041_46fb8fb</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
