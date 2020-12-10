@@ -16,15 +16,15 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>("Arbeid, utd
                         vedlegg: Map<String, DokumentasjonWrapper>): Aktivitet {
         return Aktivitet(hvordanErArbeidssituasjonen = data.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
                          arbeidsforhold = data.arbeidsforhold?.let {
-                             Søknadsfelt("Om arbeidsforholdet ditt", mapArbeidsforhold(it))
+                             Søknadsfelt("Om arbeidsforholdet ditt".hentTekst(), mapArbeidsforhold(it))
                          },
-                         selvstendig = data.firma?.let { Søknadsfelt("Om firmaet du driver", mapOmFirma(it)) },
-                         firmaer = data.firmaer?.let { Søknadsfelt("Om firmaet du driver", mapOmFirmaer(it)) },
+                         selvstendig = data.firma?.let { Søknadsfelt("Om firmaet du driver".hentTekst(), mapOmFirma(it)) },
+                         firmaer = data.firmaer?.let { Søknadsfelt("Om firmaet du driver".hentTekst(), mapOmFirmaer(it)) },
                          virksomhet = data.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it, vedlegg) },
                          arbeidssøker = data.arbeidssøker?.let { mapArbeidssøker(it, vedlegg) },
                          underUtdanning = data.underUtdanning?.let { UtdanningMapper.map(it) },
                          aksjeselskap = data.egetAS?.let {
-                             Søknadsfelt("Ansatt i eget AS", it.map { aksjeselskap ->
+                             Søknadsfelt("Ansatt i eget AS".hentTekst(), it.map { aksjeselskap ->
                                  Aksjeselskap(navn = aksjeselskap.navn.tilSøknadsfelt(),
                                               arbeidsmengde = aksjeselskap.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall))
                              })
@@ -36,7 +36,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>("Arbeid, utd
 
     private fun mapArbeidssøker(arbeidssøker: no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker,
                                 vedlegg: Map<String, DokumentasjonWrapper>): Søknadsfelt<Arbeidssøker> {
-        return Søknadsfelt("Når du er arbeidssøker",
+        return Søknadsfelt("Når du er arbeidssøker".hentTekst(),
                            Arbeidssøker(
                                    registrertSomArbeidssøkerNav = arbeidssøker.registrertSomArbeidssøkerNav.tilSøknadsfelt(),
                                    villigTilÅTaImotTilbudOmArbeid = arbeidssøker.villigTilÅTaImotTilbudOmArbeid.tilSøknadsfelt(),
@@ -50,8 +50,8 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>("Arbeid, utd
 
     private fun mapEtablererVirksomhet(it: TekstFelt,
                                        vedlegg: Map<String, DokumentasjonWrapper>): Søknadsfelt<Virksomhet> {
-        return Søknadsfelt("Om virksomheten du etablerer", Virksomhet(it.tilSøknadsfelt(),
-                                                                      dokumentfelt(ETABLERER_VIRKSOMHET, vedlegg)))
+        return Søknadsfelt("Om virksomheten du etablerer".hentTekst(), Virksomhet(it.tilSøknadsfelt(),
+                                                                                  dokumentfelt(ETABLERER_VIRKSOMHET, vedlegg)))
     }
 
     private fun mapOmFirmaer(firmaer: List<Firma>): List<Selvstendig> {

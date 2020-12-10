@@ -7,5 +7,6 @@ data class SøknadSkolepengerDto(
         val sivilstatus: Sivilstatus,
         val søkerBorPåRegistrertAdresse: BooleanFelt?,
         val utdanning: UnderUtdanning,
-        val dokumentasjonsbehov: List<Dokumentasjonsbehov>
+        val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
+        val locale: String = "nb"
 )

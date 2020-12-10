@@ -34,7 +34,8 @@ data class Arbeidssøker(
         val kanSkaffeBarnepassInnenEnUke: BooleanFelt?,
         val registrertSomArbeidssøkerNav: BooleanFelt,
         val villigTilÅTaImotTilbudOmArbeid: BooleanFelt,
-        val ønskerSøker50ProsentStilling: BooleanFelt
+        val ønskerSøker50ProsentStilling: BooleanFelt,
+        val locale: String = "nb"
 )
 
 data class Firma(

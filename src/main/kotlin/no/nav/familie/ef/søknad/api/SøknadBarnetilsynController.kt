@@ -6,6 +6,7 @@ import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.service.SøknadService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.validation.annotation.Validated
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
+import java.util.*
 
 
 @RestController
@@ -27,6 +29,7 @@ class SøknadBarnetilsynController(val søknadService: SøknadService, val featu
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
+        LocaleContextHolder.setLocale(Locale(søknad.locale))
         val innsendingMottatt = LocalDateTime.now()
         søknadService.sendInn(søknad, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)

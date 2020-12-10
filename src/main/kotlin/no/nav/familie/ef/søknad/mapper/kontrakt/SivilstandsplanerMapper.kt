@@ -2,10 +2,11 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
 import no.nav.familie.ef.søknad.mapper.Mapper
+import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsplaner
 
-object SivilstandsplanerMapper : Mapper<Bosituasjon, Sivilstandsplaner>("Fremtidsplaner") {
+object SivilstandsplanerMapper : Mapper<Bosituasjon, Sivilstandsplaner>("Fremtidsplaner".hentTekst()) {
 
     override fun mapDto(bosituasjon: Bosituasjon): Sivilstandsplaner {
         return Sivilstandsplaner(harPlaner = bosituasjon.skalGifteSegEllerBliSamboer?.tilSøknadsfelt(),

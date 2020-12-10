@@ -9,12 +9,14 @@ import no.nav.familie.ef.søknad.service.SkjemaService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
+import java.util.*
 
 
 @RestController
@@ -29,6 +31,7 @@ class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService,
     fun sendRegistrerArbeidsAktivitet(@RequestBody arbeidssøker: Arbeidssøker): Kvittering {
         val fnrFraToken = EksternBrukerUtils.hentFnrFraToken()
         val forkortetNavn = oppslagService.hentSøkerinfo().søker.forkortetNavn
+        LocaleContextHolder.setLocale(Locale(arbeidssøker.locale))
         val innsendingMottatt = LocalDateTime.now()
         val kvittering = skjemaService.sendInn(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)

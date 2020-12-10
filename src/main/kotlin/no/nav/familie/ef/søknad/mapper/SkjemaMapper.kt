@@ -13,12 +13,13 @@ object SkjemaMapper {
                        innsendingMottatt: LocalDateTime): SkjemaForArbeidssøker {
         val arbeidssøkerKontrakt = arbeidssøker.toArbeidssøkerKontrakt()
         return SkjemaForArbeidssøker(
-                innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer",
-                                                  Innsendingsdetaljer(Søknadsfelt("Dato mottatt", innsendingMottatt))),
+                innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer".hentTekst(),
+                                                  Innsendingsdetaljer(Søknadsfelt("Dato mottatt".hentTekst(),
+                                                                                  innsendingMottatt))),
                 arbeidssøker = arbeidssøkerKontrakt,
                 personaliaArbeidssøker = Søknadsfelt("NAV 15-08.01",
-                                                     PersonaliaArbeidssøker(navn = Søknadsfelt("Navn", navn),
-                                                                            fødselsnummer = Søknadsfelt("Fødselsnummer",
+                                                     PersonaliaArbeidssøker(navn = Søknadsfelt("Navn".hentTekst(), navn),
+                                                                            fødselsnummer = Søknadsfelt("Fødselsnummer".hentTekst(),
                                                                                                         Fødselsnummer(fnr)))
                 )
         )
@@ -28,7 +29,7 @@ object SkjemaMapper {
 }
 
 private fun Arbeidssøker.toArbeidssøkerKontrakt(): Søknadsfelt<ArbeidssøkerKontrakt> {
-    return Søknadsfelt("Enslig mor og far som er arbeidssøker",
+    return Søknadsfelt("Enslig mor og far som er arbeidssøker".hentTekst(),
                        ArbeidssøkerKontrakt(ønskerDuMinst50ProsentStilling = Søknadsfelt(ønskerSøker50ProsentStilling.label,
                                                                                          ønskerSøker50ProsentStilling.verdi),
                                             hvorØnskerDuArbeid = Søknadsfelt(hvorØnskerSøkerArbeid.label,
