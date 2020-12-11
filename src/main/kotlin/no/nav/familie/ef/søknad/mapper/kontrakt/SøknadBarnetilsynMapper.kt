@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.integration.SøknadRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
+import no.nav.familie.ef.søknad.mapper.kontekst
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
 import no.nav.familie.ef.søknad.mapper.kontrakt.FellesMapper.mapInnsendingsdetaljer
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
@@ -22,7 +23,7 @@ class SøknadBarnetilsynMapper(private val dokumentServiceService: DokumentServi
                      innsendingMottatt: LocalDateTime): SøknadRequestData<SøknadBarnetilsyn> {
         val vedleggData: Map<String, ByteArray> = dokumentServiceService.hentDokumenter(dto.dokumentasjonsbehov)
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
-
+        kontekst.set(dto.locale)
         val barnetilsynSøknad = SøknadBarnetilsyn(
                 innsendingsdetaljer = mapInnsendingsdetaljer(innsendingMottatt),
                 personalia = PersonaliaMapper.map(dto.person.søker),

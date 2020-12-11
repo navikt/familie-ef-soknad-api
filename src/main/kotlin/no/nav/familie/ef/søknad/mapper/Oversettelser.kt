@@ -3,11 +3,10 @@ package no.nav.familie.ef.søknad.mapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.slf4j.LoggerFactory
-import org.springframework.context.i18n.LocaleContextHolder
-import java.util.*
 
 fun String.hentTekst(): String = Oversettelser.hentTekst(this)
 
+val kontekst = ThreadLocal<String>()
 
 object Oversettelser {
 
@@ -25,17 +24,15 @@ object Oversettelser {
 
 
     private fun hentSpråk(): String {
-        val locale: Locale = LocaleContextHolder.getLocale()
-        return when (locale.language) {
+        val språk = kontekst.get() ?: "nb"
+        return when (språk) {
             "nb" -> "nb"
             "en" -> "en"
             else -> run {
-                logger.warn("Locale (${locale.language}) ikke gyldig, returnerer default (nb)")
+                logger.warn("Locale (${språk}) ikke gyldig, returnerer default (nb)")
                 "nb"
             }
-
         }
-
     }
 
 }
