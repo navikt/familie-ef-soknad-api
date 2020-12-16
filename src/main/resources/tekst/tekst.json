@@ -38,7 +38,8 @@
     "Tidligere Utdanning": "Tidligere Utdanning",
     "Enslig mor og far som er arbeidssøker": "Enslig mor og far som er arbeidssøker",
     "Opphold i Norge": "Opphold i Norge",
-    "Barnepassordninger": "Barnepassordninger"
+    "Barnepassordninger": "Barnepassordninger",
+    "Jeg har sendt inn denne dokumentasjonen til NAV tidligere": "Jeg har sendt inn denne dokumentasjonen til NAV tidligere"
   },
   "en": {
     "Fødselsnummer": "National identity number or D number",
@@ -79,6 +80,7 @@
     "Tidligere Utdanning": "Previous education",
     "Enslig mor og far som er arbeidssøker": "Enslig mor og far som er arbeidssøker [English TBA]",
     "Opphold i Norge": "Opphold i Norge [English TBA]",
-    "Barnepassordninger": "Barnepassordninger [English TBA]"
+    "Barnepassordninger": "Barnepassordninger [English TBA]",
+    "Jeg har sendt inn denne dokumentasjonen til NAV tidligere": "I have already submitted this documentation to NAV in the past"
   }
 }
