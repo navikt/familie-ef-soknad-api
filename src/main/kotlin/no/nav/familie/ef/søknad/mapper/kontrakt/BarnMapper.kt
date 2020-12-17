@@ -1,12 +1,9 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn
-import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
+import no.nav.familie.ef.søknad.mapper.*
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
-import no.nav.familie.ef.søknad.mapper.MapperMedVedlegg
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
-import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
-import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
 import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
@@ -51,22 +48,29 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>("Barna dine
             ))
 
     private fun mapSamvær(forelder: AnnenForelderDto,
-                          dokumentMap: Map<String, DokumentasjonWrapper>): Søknadsfelt<Samvær> = Søknadsfelt("Samvær", Samvær(
-            spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted?.tilSøknadsfelt(),
-            avtaleOmDeltBosted = dokumentfelt(DELT_BOSTED, dokumentMap),
-            skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
-            harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
-            samværsavtale = dokumentfelt(SAMVÆRSAVTALE, dokumentMap),
-            borAnnenForelderISammeHus = forelder.borAnnenForelderISammeHus?.tilSøknadsfelt(),
-            borAnnenForelderISammeHusBeskrivelse = forelder.borAnnenForelderISammeHusBeskrivelse?.tilSøknadsfelt(),
-            harDereTidligereBoddSammen = forelder.boddSammenFør?.tilSøknadsfelt(),
-            nårFlyttetDereFraHverandre = forelder.flyttetFra?.tilSøknadsfelt(),
-            hvorMyeErDuSammenMedAnnenForelder = forelder.hvorMyeSammen?.tilSøknadsfelt(),
-            // Ytterligere informasjon som innhentes dersom hvorMyeErDuSammenMedAnnenForelder =
-            // "Vi møtes også utenom henting og levering" => (hvordanPraktiseresSamværet)
-            hvordanPraktiseresSamværet = forelder.hvordanPraktiseresSamværet?.tilSøknadsfelt(),
-            beskrivSamværUtenBarn = forelder.beskrivSamværUtenBarn?.tilSøknadsfelt(),
-            skalBarnetBoHosSøkerMenAnnenForelderSamarbeiderIkke = dokumentfelt(BARN_BOR_HOS_SØKER, dokumentMap)
-    ))
+                          dokumentMap: Map<String, DokumentasjonWrapper>): Søknadsfelt<Samvær> = Søknadsfelt("Samvær".hentTekst(),
+                                                                                                             Samvær(
+                                                                                                                     spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted?.tilSøknadsfelt(),
+                                                                                                                     avtaleOmDeltBosted = dokumentfelt(
+                                                                                                                             DELT_BOSTED,
+                                                                                                                             dokumentMap),
+                                                                                                                     skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
+                                                                                                                     harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
+                                                                                                                     samværsavtale = dokumentfelt(
+                                                                                                                             SAMVÆRSAVTALE,
+                                                                                                                             dokumentMap),
+                                                                                                                     borAnnenForelderISammeHus = forelder.borAnnenForelderISammeHus?.tilSøknadsfelt(),
+                                                                                                                     borAnnenForelderISammeHusBeskrivelse = forelder.borAnnenForelderISammeHusBeskrivelse?.tilSøknadsfelt(),
+                                                                                                                     harDereTidligereBoddSammen = forelder.boddSammenFør?.tilSøknadsfelt(),
+                                                                                                                     nårFlyttetDereFraHverandre = forelder.flyttetFra?.tilSøknadsfelt(),
+                                                                                                                     hvorMyeErDuSammenMedAnnenForelder = forelder.hvorMyeSammen?.tilSøknadsfelt(),
+                                                                                                                     // Ytterligere informasjon som innhentes dersom hvorMyeErDuSammenMedAnnenForelder =
+                                                                                                                     // "Vi møtes også utenom henting og levering" => (hvordanPraktiseresSamværet)
+                                                                                                                     hvordanPraktiseresSamværet = forelder.hvordanPraktiseresSamværet?.tilSøknadsfelt(),
+                                                                                                                     beskrivSamværUtenBarn = forelder.beskrivSamværUtenBarn?.tilSøknadsfelt(),
+                                                                                                                     skalBarnetBoHosSøkerMenAnnenForelderSamarbeiderIkke = dokumentfelt(
+                                                                                                                             BARN_BOR_HOS_SØKER,
+                                                                                                                             dokumentMap)
+                                                                                                             ))
 
 }

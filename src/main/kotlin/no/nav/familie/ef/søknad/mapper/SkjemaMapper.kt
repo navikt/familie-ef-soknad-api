@@ -11,7 +11,7 @@ object SkjemaMapper {
                        fnr: String,
                        navn: String,
                        innsendingMottatt: LocalDateTime): SkjemaForArbeidssøker {
-        kontekst.set(arbeidssøker.locale)
+        kontekst.set(Språk.fromString(arbeidssøker.locale))
         val arbeidssøkerKontrakt = arbeidssøker.toArbeidssøkerKontrakt()
         return SkjemaForArbeidssøker(
                 innsendingsdetaljer = Søknadsfelt("Innsendingsdetaljer".hentTekst(),
