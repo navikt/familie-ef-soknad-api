@@ -3,7 +3,7 @@ on:
   push:
     branches-ignore:
       - 'master'
-    workflow_dispatch:
+  workflow_dispatch:
 env:
   IMAGE: docker.pkg.github.com/${{ github.repository }}/familie-ef-soknad-api:${{ github.sha }}
 
