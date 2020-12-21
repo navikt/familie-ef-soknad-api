@@ -9,7 +9,7 @@ import no.nav.familie.kontrakter.ef.søknad.Medlemskapsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Utenlandsopphold as KontraksUtenlandsopphold
 
-object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>("Opphold i Norge".hentTekst()) {
+object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>("Opphold i Norge") {
 
 
     override fun mapDto(medlemskap: Medlemskap): Medlemskapsdetaljer {

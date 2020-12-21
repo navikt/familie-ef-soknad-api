@@ -4,14 +4,13 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.MapperMedVedlegg
-import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.BOR_PÅ_ULIKE_ADRESSER
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Bosituasjon as KontraktBosituasjon
 
-object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>("Bosituasjonen din".hentTekst()) {
+object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>("Bosituasjonen din") {
 
     override fun mapDto(bosituasjon: Bosituasjon, vedlegg: Map<String, DokumentasjonWrapper>): KontraktBosituasjon {
         return KontraktBosituasjon(delerDuBolig = mapSøkerDelerBoligMedAndre(bosituasjon),

@@ -11,7 +11,7 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.TidligereUtdanning as TidligereUtdanningKontrakt
 import no.nav.familie.kontrakter.ef.søknad.UnderUtdanning as UnderUtdanningKontrakt
 
-object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>("Utdanningen du skal ta".hentTekst()) {
+object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>("Utdanningen du skal ta") {
 
     override fun mapDto(underUtdanning: UnderUtdanning): UnderUtdanningKontrakt {
         return UnderUtdanningKontrakt(skoleUtdanningssted = underUtdanning.skoleUtdanningssted.tilSøknadsfelt(),

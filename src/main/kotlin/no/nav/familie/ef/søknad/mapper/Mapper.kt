@@ -9,7 +9,7 @@ abstract class Mapper<T, R>(val rootLabel: String) {
 
     fun map(data: T): Søknadsfelt<R> {
         try {
-            return Søknadsfelt(rootLabel, mapDto(data))
+            return Søknadsfelt(rootLabel.hentTekst(), mapDto(data))
         } catch (e: Exception) {
             secureLogger.error("Feil ved mapping av ${javaClass.simpleName}: $data")
             throw e

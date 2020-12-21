@@ -4,12 +4,11 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadOvergangsstønadD
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.MapperMedVedlegg
-import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Situasjon
 
-object SituasjonsMapper : MapperMedVedlegg<SøknadOvergangsstønadDto, Situasjon>("Mer om situasjonen din".hentTekst()) {
+object SituasjonsMapper : MapperMedVedlegg<SøknadOvergangsstønadDto, Situasjon>("Mer om situasjonen din") {
 
     override fun mapDto(frontendDto: SøknadOvergangsstønadDto, vedlegg: Map<String, DokumentasjonWrapper>): Situasjon {
         val merOmDinSituasjon = frontendDto.merOmDinSituasjon

@@ -10,7 +10,7 @@ import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 
-object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdetaljer>("Årsak til alene med barn".hentTekst()) {
+object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdetaljer>("Årsak til alene med barn") {
 
 
     override fun mapDto(sivilstatus: Sivilstatus,
