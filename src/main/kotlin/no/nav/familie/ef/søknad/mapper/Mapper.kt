@@ -3,7 +3,7 @@ package no.nav.familie.ef.søknad.mapper
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import org.slf4j.LoggerFactory
 
-abstract class Mapper<T, R>(val rootLabel: String) {
+abstract class Mapper<T, R>(private val rootLabel: Språktekster) {
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 

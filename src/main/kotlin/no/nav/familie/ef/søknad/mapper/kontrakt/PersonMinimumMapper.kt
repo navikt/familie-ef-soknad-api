@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SamboerDetaljer
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.ef.søknad.mapper.Språktekster.*
 import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
@@ -17,7 +18,7 @@ object PersonMinimumMapper {
 
     fun map(samboerDetaljer: SamboerDetaljer): Søknadsfelt<PersonMinimum> {
         try {
-            return Søknadsfelt("Om samboeren din".hentTekst(), personMinimum(samboerDetaljer))
+            return Søknadsfelt(OmSamboer.hentTekst(), personMinimum(samboerDetaljer))
         } catch (e: Exception) {
             secureLogger.error("Feil ved mapping av samboerdetaljer: $samboerDetaljer")
             throw e
@@ -26,7 +27,7 @@ object PersonMinimumMapper {
 
     fun map(annenForelder: AnnenForelder): Søknadsfelt<PersonMinimum> {
         try {
-            return Søknadsfelt("Persondata".hentTekst(), personMinimum(annenForelder))
+            return Søknadsfelt(Persondata.hentTekst(), personMinimum(annenForelder))
         } catch (e: Exception) {
             secureLogger.error("Feil ved mapping av annen forelder: $annenForelder")
             throw e
@@ -36,8 +37,8 @@ object PersonMinimumMapper {
     private fun personMinimum(annenForelder: AnnenForelder): PersonMinimum {
         val søknadsfeltFødselsnummer = mapFødselsnummer(annenForelder.ident)
         val søknadsfeltFødselsdato = annenForelder.fødselsdato?.tilSøknadsDatoFeltEllerNull()
-        return PersonMinimum(annenForelder.navn?.tilSøknadsfelt() ?: Søknadsfelt("Annen forelder navn".hentTekst(),
-                                                                                 "ikke oppgitt".hentTekst()),
+        return PersonMinimum(annenForelder.navn?.tilSøknadsfelt() ?: Søknadsfelt(AnnenForelderNavn.hentTekst(),
+                                                                                 IkkeOppgitt.hentTekst()),
                              søknadsfeltFødselsnummer,
                              søknadsfeltFødselsdato,
                              null)

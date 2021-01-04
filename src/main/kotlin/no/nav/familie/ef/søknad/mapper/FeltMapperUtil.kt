@@ -83,7 +83,7 @@ fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map
                     navn = dokumentFelt.navn,
                     tittel = it.label)
         }
-        val harSendtInn = Søknadsfelt("Jeg har sendt inn denne dokumentasjonen til NAV tidligere".hentTekst(), it.harSendtInn)
+        val harSendtInn = Søknadsfelt(Språktekster.SendtInnTidligere.hentTekst(), it.harSendtInn)
         it.id to DokumentasjonWrapper(it.label, harSendtInn, vedlegg)
     }
 }
