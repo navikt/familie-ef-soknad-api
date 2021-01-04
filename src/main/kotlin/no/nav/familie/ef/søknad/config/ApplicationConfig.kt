@@ -19,6 +19,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.web.client.RestOperations
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 
 @SpringBootConfiguration
 @Import(MdcValuesPropagatingClientInterceptor::class,
@@ -49,6 +51,8 @@ internal class ApplicationConfig {
                      consumerIdClientInterceptor: ConsumerIdClientInterceptor,
                      apiKeyInjectingClientInterceptor: ApiKeyInjectingClientInterceptor): RestOperations {
         return RestTemplateBuilder()
+                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+                .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
                 .interceptors(bearerTokenClientHttpRequestInterceptor,
                               mdcValuesPropagatingClientInterceptor,
                               consumerIdClientInterceptor,
@@ -92,6 +96,8 @@ internal class ApplicationConfig {
                                  apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor,
                                  mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
         return RestTemplateBuilder()
+                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+                .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
                 .interceptors(consumerIdClientInterceptor,
                               apiKeyInjectingClientInterceptor,
                               stsBearerTokenClientInterceptor,
