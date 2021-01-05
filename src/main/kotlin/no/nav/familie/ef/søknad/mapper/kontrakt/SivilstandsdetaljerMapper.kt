@@ -4,16 +4,21 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Sivilstatus
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.MapperMedVedlegg
+import no.nav.familie.ef.søknad.mapper.Språktekster.OmDenTidligereSamboeren
+import no.nav.familie.ef.søknad.mapper.Språktekster.ÅrsakTilAleneMedBarn
+import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 
-object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdetaljer>("Årsak til alene med barn") {
+object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdetaljer>(ÅrsakTilAleneMedBarn) {
 
 
-    override fun mapDto(sivilstatus: Sivilstatus,
-                        vedlegg: Map<String, DokumentasjonWrapper>): Sivilstandsdetaljer {
+    override fun mapDto(
+            sivilstatus: Sivilstatus,
+            vedlegg: Map<String, DokumentasjonWrapper>,
+    ): Sivilstandsdetaljer {
         return Sivilstandsdetaljer(samlivsbruddsdokumentasjon = dokumentfelt(SAMLIVSBRUDD, vedlegg),
                                    samlivsbruddsdato = sivilstatus.datoForSamlivsbrudd?.tilSøknadsfelt(),
                                    endringSamværsordningDato = sivilstatus.datoEndretSamvær?.tilSøknadsfelt(),
@@ -28,7 +33,7 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
                                    søktOmSkilsmisseSeparasjon = sivilstatus.harSøktSeparasjon?.tilSøknadsfelt(),
                                    årsakEnslig = sivilstatus.årsakEnslig?.tilSøknadsfelt(),
                                    tidligereSamboerdetaljer = sivilstatus.tidligereSamboerDetaljer?.let {
-                                       Søknadsfelt("Om den tidligere samboeren din",
+                                       Søknadsfelt(OmDenTidligereSamboeren.hentTekst(),
                                                    PersonMinimumMapper.personMinimum(it))
                                    })
     }

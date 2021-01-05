@@ -9,5 +9,6 @@ data class SøknadBarnetilsynDto(
         val aktivitet: Aktivitet,
         val søkerFraBestemtMåned: BooleanFelt,
         val søknadsdato: DatoFelt?,
-        val dokumentasjonsbehov: List<Dokumentasjonsbehov>
+        val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
+        val locale: String = "nb"
 )
