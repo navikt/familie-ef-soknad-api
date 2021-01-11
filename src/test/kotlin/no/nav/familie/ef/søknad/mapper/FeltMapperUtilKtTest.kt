@@ -23,15 +23,15 @@ internal class FeltMapperUtilKtTest {
 
     @Test
     internal fun `TekstFelt`() {
-        val felt = TekstFelt("label", "verdi").tilSøknadsfelt()
-        assertEquals(Søknadsfelt("label", "verdi"), felt)
-        assertNotEquals(Søknadsfelt("label", "verdi2"), felt)
+        val felt = TekstFelt("label", "verdi", "svarid").tilSøknadsfelt()
+        assertEquals(Søknadsfelt(label = "label", verdi = "verdi", svarId = "svarid"), felt)
+        assertNotEquals(Søknadsfelt(label = "label", verdi = "verdi2", svarId = "svarid"), felt)
     }
 
     @Test
     internal fun `TekstFelt med mapper`() {
-        val felt = TekstFelt("label", "08031499039").tilSøknadsfelt(::Fødselsnummer)
-        assertEquals(Søknadsfelt("label", Fødselsnummer("08031499039")), felt)
+        val felt = TekstFelt("label", "08031499039", "svarid").tilSøknadsfelt(::Fødselsnummer)
+        assertEquals(Søknadsfelt("label", Fødselsnummer("08031499039"), svarId = "svarid"), felt)
     }
 
     @Test
@@ -48,8 +48,8 @@ internal class FeltMapperUtilKtTest {
 
     @Test
     internal fun `ListFelt`() {
-        val felt = ListFelt("label", listOf("a")).tilSøknadsfelt()
-        assertEquals(Søknadsfelt("label", listOf("a")), felt)
+        val felt = ListFelt(label = "label", verdi = listOf("a"), svarIder = listOf("1")).tilSøknadsfelt()
+        assertEquals(Søknadsfelt(label = "label", verdi = listOf("a"), svarId = listOf("1")), felt)
     }
 
     @Test
