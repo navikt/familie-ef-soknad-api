@@ -23,7 +23,7 @@ fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<MånedÅrPeriode> =
                                    this.til.tilLocalDate().month,
                                    this.til.tilLocalDate().year))
 
-fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi, this.alternativer, this.svarIder)
+fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi, this.alternativer, this.svarid)
 
 fun List<Dokumentasjonsbehov>.tilKontrakt() : List<DokumentasjonsbehovKontrakt> =
         this.map {

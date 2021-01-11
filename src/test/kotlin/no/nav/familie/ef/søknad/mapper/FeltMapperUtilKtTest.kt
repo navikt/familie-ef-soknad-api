@@ -50,7 +50,7 @@ internal class FeltMapperUtilKtTest {
 
     @Test
     internal fun `ListFelt`() {
-        val felt = ListFelt(label = "label", verdi = listOf("a"), svarIder = listOf("1")).tilSøknadsfelt()
+        val felt = ListFelt(label = "label", verdi = listOf("a"), svarid = listOf("1")).tilSøknadsfelt()
         assertEquals(Søknadsfelt(label = "label", verdi = listOf("a"), svarId = listOf("1")), felt)
     }
 
