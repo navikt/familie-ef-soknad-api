@@ -30,9 +30,11 @@ internal class FeltMapperUtilKtTest {
 
     @Test
     internal fun `TekstFelt med mapper`() {
-        val felt = TekstFelt("label", "08031499039", "svarid").tilSøknadsfelt(::Fødselsnummer)
-        assertEquals(Søknadsfelt("label", Fødselsnummer("08031499039"), svarId = "svarid"), felt)
+        val felt = TekstFelt("label", "08031499039").tilSøknadsfelt(::Fødselsnummer)
+        assertEquals(Søknadsfelt("label", Fødselsnummer("08031499039")), felt)
     }
+
+
 
     @Test
     internal fun `BooleanFelt`() {
