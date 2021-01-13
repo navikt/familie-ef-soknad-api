@@ -125,8 +125,8 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     private fun PdlSøker.tilPersonDto(): Person {
         val formatertAdresse = formaterAdresse(this)
         val adresse = Adresse(adresse = formatertAdresse,
-                              poststed = hentPoststed(bostedsadresse.first().vegadresse?.postnummer),
-                              postnummer = bostedsadresse.first().vegadresse?.postnummer ?: " ")
+                              poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
+                              postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ")
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
