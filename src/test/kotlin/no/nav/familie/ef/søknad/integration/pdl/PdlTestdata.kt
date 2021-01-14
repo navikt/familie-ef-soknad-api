@@ -31,20 +31,24 @@ object PdlTestdata {
 
 
     val pdlSøkerData =
-            PdlSøkerData(PdlSøker(bostedsadresse,
+            PdlSøkerData(PdlSøker(listOf(Adressebeskyttelse(AdressebeskyttelseGradering.UGRADERT)),
+                                  bostedsadresse,
                                   familierelasjon,
                                   navn,
                                   listOf(Sivilstand(Sivilstandstype.GIFT)),
                                   statsborgerskap))
 
     val pdlBarnData =
-            PersonBolk(listOf(PersonDataBolk("11111122222", "ok", PdlBarn(bostedsadresseBarn,
-                                                                          listOf(DeltBosted(LocalDate.now(),
-                                                                                            LocalDate.now())),
-                                                                          navn,
-                                                                          listOf(Fødsel(1, LocalDate.now())),
-                                                                          listOf(Dødsfall(LocalDate.now())
-                                                                          )))))
+            PersonBolk(listOf(PersonDataBolk("11111122222",
+                                             "ok",
+                                             PdlBarn(listOf(Adressebeskyttelse(AdressebeskyttelseGradering.UGRADERT)),
+                                                     bostedsadresseBarn,
+                                                     listOf(DeltBosted(LocalDate.now(),
+                                                                       LocalDate.now())),
+                                                     navn,
+                                                     listOf(Fødsel(1, LocalDate.now())),
+                                                     listOf(Dødsfall(LocalDate.now())
+                                                     )))))
 
 
 }

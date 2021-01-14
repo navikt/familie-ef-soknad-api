@@ -6,6 +6,8 @@ import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
+import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
@@ -16,12 +18,14 @@ import java.time.LocalDate
 import java.time.Period
 
 @Service
-internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceClient,
-                                         private val featureToggleService: FeatureToggleService,
-                                         private val pdlClient: PdlClient,
-                                         private val pdlStsClient: PdlStsClient,
-                                         private val regelverkConfig: RegelverkConfig,
-                                         private val søkerinfoMapper: SøkerinfoMapper) : OppslagService {
+internal class OppslagServiceServiceImpl(
+        private val client: TpsInnsynServiceClient,
+        private val featureToggleService: FeatureToggleService,
+        private val pdlClient: PdlClient,
+        private val pdlStsClient: PdlStsClient,
+        private val regelverkConfig: RegelverkConfig,
+        private val søkerinfoMapper: SøkerinfoMapper,
+) : OppslagService {
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
     private val logger = LoggerFactory.getLogger(this::class.java)
@@ -48,8 +52,6 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
     }
 
 
-
-
     override fun hentSøkerinfoV2(): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
         val barnIdentifikatorer = pdlSøker.familierelasjoner
@@ -60,7 +62,21 @@ internal class OppslagServiceServiceImpl(private val client: TpsInnsynServiceCli
         val aktuelleBarn = pdlBarn
                 .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
                 .filter { erILive(it.value) }
+                .filter { harIkkeBeskyttetAdresse(it.value.adressebeskyttelse) }
         return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn)
+    }
+
+    private fun harIkkeBeskyttetAdresse(adressebeskyttelse: List<Adressebeskyttelse>): Boolean {
+        val adressebeskyttelse: AdressebeskyttelseGradering =
+                adressebeskyttelse.firstOrNull()?.gradering ?: AdressebeskyttelseGradering.UGRADERT
+
+        val kreverAdressebeskyttelse = listOf(AdressebeskyttelseGradering.FORTROLIG,
+                                              AdressebeskyttelseGradering.STRENGT_FORTROLIG,
+                                              AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND)
+
+        return !kreverAdressebeskyttelse.contains(adressebeskyttelse)
+
+
     }
 
     fun erILive(pdlBarn: PdlBarn) =

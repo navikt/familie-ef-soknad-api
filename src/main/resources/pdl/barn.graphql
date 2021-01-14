@@ -3,6 +3,9 @@ query($identer: [ID!]!){
         code
         ident
         person {
+            adressebeskyttelse {
+                gradering
+            }
             bostedsadresse {
                 vegadresse {
                     adressenavn

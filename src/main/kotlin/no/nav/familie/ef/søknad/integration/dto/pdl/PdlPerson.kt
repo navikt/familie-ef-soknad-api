@@ -28,27 +28,48 @@ data class PdlBolkResponse<T>(val data: PersonBolk<T>?, val errors: List<PdlErro
     }
 }
 
-data class PdlSøker(val bostedsadresse: List<Bostedsadresse>,
-                    val familierelasjoner: List<Familierelasjon>,
-                    val navn: List<Navn>,
-                    val sivilstand: List<Sivilstand>,
-                    val statsborgerskap: List<Statsborgerskap>)
+data class PdlSøker(
+        val adressebeskyttelse: List<Adressebeskyttelse>,
+        val bostedsadresse: List<Bostedsadresse>,
+        val familierelasjoner: List<Familierelasjon>,
+        val navn: List<Navn>,
+        val sivilstand: List<Sivilstand>,
+        val statsborgerskap: List<Statsborgerskap>,
+)
 
-data class PdlBarn(val bostedsadresse: List<BostedsadresseBarn>,
-                   val deltBosted: List<DeltBosted>,
-                   val navn: List<Navn>,
-                   @JsonProperty("foedsel") val fødsel: List<Fødsel>,
-                   @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>)
+data class PdlBarn(
+        val adressebeskyttelse: List<Adressebeskyttelse>,
+        val bostedsadresse: List<BostedsadresseBarn>,
+        val deltBosted: List<DeltBosted>,
+        val navn: List<Navn>,
+        @JsonProperty("foedsel") val fødsel: List<Fødsel>,
+        @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
+)
 
-data class DeltBosted(val startdatoForKontrakt: LocalDate,
-                      val sluttdatoForKontrakt: LocalDate?)
+data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
+
+enum class AdressebeskyttelseGradering {
+    STRENGT_FORTROLIG, // Fra pdl dok: Tidligere spesregkode kode 6 fra TPS
+    STRENGT_FORTROLIG_UTLAND, // Fra pdl dok: Tilsvarer paragraf 19 i Bisys (henvisning til Forvaltningslovens §19). Ved strengt fortrolig utland behandles personen i NAV tilsvarende som ved graderingen strengt fortrolig fra Folkeregisteret.
+    FORTROLIG, // Fra pdl dok: Tidligere spesregkode kode 7 fra TPS.
+    UGRADERT // Fra pdl dok: Kode vi kan få fra Folkeregisteret. Vi har ingen tilfeller per i dag i produksjon.
+}
+
+data class DeltBosted(
+        val startdatoForKontrakt: LocalDate,
+        val sluttdatoForKontrakt: LocalDate?,
+)
 
 
-data class Bostedsadresse(val vegadresse: Vegadresse?,
-                          val matrikkeladresse: Matrikkeladresse?)
+data class Bostedsadresse(
+        val vegadresse: Vegadresse?,
+        val matrikkeladresse: Matrikkeladresse?,
+)
 
-data class BostedsadresseBarn(val vegadresse: Vegadresse?,
-                              val matrikkeladresse: MatrikkeladresseBarn?)
+data class BostedsadresseBarn(
+        val vegadresse: Vegadresse?,
+        val matrikkeladresse: MatrikkeladresseBarn?,
+)
 
 data class Vegadresse(val husnummer: String?,
                       val husbokstav: String?,

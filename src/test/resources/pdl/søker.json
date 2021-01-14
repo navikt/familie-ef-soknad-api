@@ -1,6 +1,11 @@
 {
   "data": {
     "person": {
+      "adressebeskyttelse": [
+        {
+          "gradering": "UGRADERT"
+        }
+      ],
       "bostedsadresse": [
         {
           "vegadresse": {
