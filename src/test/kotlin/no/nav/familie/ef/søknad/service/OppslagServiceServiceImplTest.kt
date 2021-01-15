@@ -68,7 +68,7 @@ internal class OppslagServiceServiceImplTest {
 
     @Test
     fun `Test filtrering på dødsdato`() {
-        assertThat(oppslagServiceService.erILive(pdlBarn(Dødsfall(LocalDate.MIN)).second)).isFalse
+        assertThat(oppslagServiceService.erILive(pdlBarn(dødsfall = Dødsfall(LocalDate.MIN)).second)).isFalse
         assertThat(oppslagServiceService.erILive(pdlBarn().second)).isTrue
     }
 
@@ -89,7 +89,18 @@ internal class OppslagServiceServiceImplTest {
 
     @Test
     fun `Skal filtrere bort døde barn`() {
-        every { pdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn(Dødsfall(LocalDate.MIN)))
+        every { pdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn(dødsfall = Dødsfall(LocalDate.MIN)))
+        val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
+        mockHentPersonPdlClient()
+        captureAktuelleBarn(aktuelleBarnSlot)
+        oppslagServiceService.hentSøkerinfoV2()
+        assertThat(aktuelleBarnSlot.captured).hasSize(0)
+    }
+
+    @Test
+    fun `Skal filtrere bort barn med adressebeskyttelse`() {
+        every { pdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn(adressebeskyttelse = Adressebeskyttelse(
+                AdressebeskyttelseGradering.STRENGT_FORTROLIG)))
         val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
         captureAktuelleBarn(aktuelleBarnSlot)
@@ -109,7 +120,7 @@ internal class OppslagServiceServiceImplTest {
 
     @Test
     fun `Skal filtrere bort døde barn og barn i for høy alder`() {
-        val dødtBarn = pdlBarn(Dødsfall(LocalDate.MIN), LocalDate.now().minusYears(1))
+        val dødtBarn = pdlBarn(null, Dødsfall(LocalDate.MIN), LocalDate.now().minusYears(1))
         val levendeBarn = pdlBarn(fødselsdato = LocalDate.now().minusYears(2))
         val barnForHøyAlder = pdlBarn(fødselsdato = LocalDate.now().minusYears(20))
 
@@ -128,14 +139,18 @@ internal class OppslagServiceServiceImplTest {
         } returns mockk()
     }
 
-    private fun pdlBarn(dødsfall: Dødsfall? = null,
-                        fødselsdato: LocalDate = LocalDate.now().minusMonths(6)): Pair<String, PdlBarn> {
+    private fun pdlBarn(
+            adressebeskyttelse: Adressebeskyttelse? = null,
+            dødsfall: Dødsfall? = null,
+            fødselsdato: LocalDate = LocalDate.now().minusMonths(6),
+    ): Pair<String, PdlBarn> {
         val fødsel = Fødsel(fødselsdato.year, fødselsdato)
         return Pair(fødselsdato.format(ISO_LOCAL_DATE),
-                    PdlBarn(emptyList(),
-                            emptyList(),
-                            emptyList(),
+                    PdlBarn(adressebeskyttelse = adressebeskyttelse?.let { listOf(adressebeskyttelse) } ?: emptyList(),
+                            bostedsadresse = emptyList(),
+                            deltBosted = emptyList(),
                             fødsel = listOf(fødsel),
+                            navn = emptyList(),
                             dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList()))
     }
 
@@ -159,6 +174,7 @@ internal class OppslagServiceServiceImplTest {
                                         etternavn: String = "TestNavn") {
 
         every { pdlClient.hentSøker(any()) } returns (PdlSøker(listOf(),
+                                                               listOf(),
                                                                listOf(),
                                                                navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
                                                                listOf(),

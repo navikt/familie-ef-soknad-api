@@ -21,6 +21,7 @@ class StsPdlClientConfig {
         val pdlClient: PdlStsClient = mockk()
         every { pdlClient.hentBarn(any()) } returns
                 mapOf("28021078036" to PdlBarn(
+                        adressebeskyttelse = listOf(),
                         bostedsadresse = bostedsadresseBarn(),
                         deltBosted = listOf(),
                         navn = lagNavn("Hei", "På", "Deg"),

@@ -27,6 +27,7 @@ class PdlClientConfig {
 
         every { pdlClient.hentSøker(any()) } returns
                 PdlSøker(
+                        adressebeskyttelse = listOf(),
                         bostedsadresse = bostedsadresse(),
                         familierelasjoner = lagBarn(),
                         navn = lagNavn(),
