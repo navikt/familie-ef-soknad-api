@@ -199,7 +199,8 @@ internal class SøkerinfoMapperTest {
     private fun matrikkeladresseBarn(matrikkelId: Long?) = MatrikkeladresseBarn(matrikkelId)
 
     private fun barn(bostedsadresse: BostedsadresseBarn? = null, deltBosted: DeltBosted? = null) =
-            PdlBarn(bostedsadresse?.let { listOf(it) } ?: emptyList(),
+            PdlBarn(emptyList(),
+                    bostedsadresse?.let { listOf(it) } ?: emptyList(),
                     deltBosted?.let { listOf(it) } ?: emptyList(),
                     emptyList(),
                     emptyList(),
