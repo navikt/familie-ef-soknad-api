@@ -29,6 +29,9 @@ internal class OppslagServiceServiceImpl(
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
     private val logger = LoggerFactory.getLogger(this::class.java)
+    private val kreverAdressebeskyttelse = listOf(AdressebeskyttelseGradering.FORTROLIG,
+                                          AdressebeskyttelseGradering.STRENGT_FORTROLIG,
+                                          AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND)
 
     override fun hentSøkerinfo(): Søkerinfo {
         val personinfoDto = client.hentPersoninfo()
@@ -70,13 +73,7 @@ internal class OppslagServiceServiceImpl(
         val adressebeskyttelse: AdressebeskyttelseGradering =
                 adressebeskyttelse.firstOrNull()?.gradering ?: AdressebeskyttelseGradering.UGRADERT
 
-        val kreverAdressebeskyttelse = listOf(AdressebeskyttelseGradering.FORTROLIG,
-                                              AdressebeskyttelseGradering.STRENGT_FORTROLIG,
-                                              AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND)
-
         return !kreverAdressebeskyttelse.contains(adressebeskyttelse)
-
-
     }
 
     fun erILive(pdlBarn: PdlBarn) =
