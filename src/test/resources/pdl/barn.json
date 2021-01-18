@@ -5,6 +5,11 @@
         "ident": "11111122222",
         "code": "ok",
         "person": {
+          "adressebeskyttelse": [
+            {
+              "gradering": "UGRADERT"
+            }
+          ],
           "bostedsadresse": [
             {
               "vegadresse": {

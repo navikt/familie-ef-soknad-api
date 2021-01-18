@@ -19,6 +19,7 @@ import java.time.Period
 internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     fun mapTilSøkerinfo(personinfoDto: PersoninfoDto, aktuelleBarn: List<RelasjonDto>): Søkerinfo {
         return Søkerinfo(mapTilPerson(personinfoDto),
@@ -83,7 +84,9 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
             val harSammeAdresse = harSammeAdresse(søkersAdresse, it.value)
-
+            if (!harSammeAdresse) {
+                secureLogger.info("Søkers adresse: [${søkersAdresse?.vegadresse}] - Barnets adresse: [${it.value.bostedsadresse.firstOrNull()?.vegadresse}]")
+            }
             Barn(it.key, navn, alder, fødselsdato, harSammeAdresse)
         }
     }
@@ -125,8 +128,8 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     private fun PdlSøker.tilPersonDto(): Person {
         val formatertAdresse = formaterAdresse(this)
         val adresse = Adresse(adresse = formatertAdresse,
-                              poststed = hentPoststed(bostedsadresse.first().vegadresse?.postnummer),
-                              postnummer = bostedsadresse.first().vegadresse?.postnummer ?: " ")
+                              poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
+                              postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ")
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
