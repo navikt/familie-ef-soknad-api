@@ -6,7 +6,4 @@ interface OppslagService {
 
     fun hentSøkerinfo(): Søkerinfo
 
-    fun hentSøkerinfoV2(): Søkerinfo
-
-
 }
