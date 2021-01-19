@@ -15,6 +15,16 @@ internal class AktivitetsMapperTest {
     // Når
     private val aktivitetMapped = AktivitetsMapper.map(aktivitet, mapOf()).verdi
 
+
+    @Test
+    fun `Skal mappe blank verdi til tallet 0 `() {
+        val arbeidsmengdeUtenVerdi = aktivitet.arbeidsforhold?.first()?.arbeidsmengde?.copy(verdi = "")
+        val arbeidsforhold = aktivitet.arbeidsforhold?.first()?.copy(arbeidsmengde = arbeidsmengdeUtenVerdi)
+        val mapArbeidsforhold = AktivitetsMapper.mapArbeidsforhold(listOf(arbeidsforhold!!))
+        Assertions.assertThat(mapArbeidsforhold.first().arbeidsmengde?.verdi).isEqualTo(0)
+    }
+
+
     @Test
     fun `Map hvordanErArbeidssituasjonen label `() {
         Assertions.assertThat(aktivitetMapped.hvordanErArbeidssituasjonen.label).isEqualTo("Hva er din arbeidsituasjon?")
