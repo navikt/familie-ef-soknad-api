@@ -1,11 +1,21 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.HeltallFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ListFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.PeriodeFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
-import java.time.*
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import no.nav.familie.kontrakter.ef.søknad.Dokumentasjonsbehov as DokumentasjonsbehovKontrakt
 
@@ -25,7 +35,7 @@ fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<MånedÅrPeriode> =
 
 fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi, this.alternativer)
 
-fun List<Dokumentasjonsbehov>.tilKontrakt() : List<DokumentasjonsbehovKontrakt> =
+fun List<Dokumentasjonsbehov>.tilKontrakt(): List<DokumentasjonsbehovKontrakt> =
         this.map {
             DokumentasjonsbehovKontrakt(it.label,
                                         it.id,
@@ -35,6 +45,12 @@ fun List<Dokumentasjonsbehov>.tilKontrakt() : List<DokumentasjonsbehovKontrakt> 
 
 fun String.tilDesimaltall(): Double = this.replace(",", ".").toDouble()
 fun String.tilHeltall(): Int = this.tilDesimaltall().toInt()
+
+fun String.tilHeltallEllerTalletNull(): Int = when (this.isNotBlank()) {
+    true -> this.tilDesimaltall().toInt()
+    false -> 0
+}
+
 
 fun DatoFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? {
     return if (this.verdi.isNotBlank()) {
