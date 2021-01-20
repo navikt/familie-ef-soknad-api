@@ -1,6 +1,11 @@
 package no.nav.familie.ef.søknad.service
 
-import io.mockk.*
+import io.mockk.CapturingSlot
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.slot
+import io.mockk.spyk
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient
@@ -8,7 +13,15 @@ import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
 import no.nav.familie.ef.søknad.integration.dto.NavnDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
-import no.nav.familie.ef.søknad.integration.dto.pdl.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
+import no.nav.familie.ef.søknad.integration.dto.pdl.Dødsfall
+import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
+import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
 import no.nav.familie.kontrakter.felles.objectMapper
@@ -30,7 +43,7 @@ internal class OppslagServiceServiceImplTest {
     val pdlStsClient: PdlStsClient = mockk()
 
     private val søkerinfoMapper = spyk(SøkerinfoMapper(mockk(relaxed = true)))
-    private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, mockk(), pdlClient,
+    private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, pdlClient,
                                                                   pdlStsClient, regelverkConfig, søkerinfoMapper)
 
     @BeforeEach
@@ -38,14 +51,17 @@ internal class OppslagServiceServiceImplTest {
         mockkObject(EksternBrukerUtils)
         every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
         mockHentBarn()
+        mockPdlHentBarn()
         mockHentPersonInfo()
         mockHentPersonPdlClient()
     }
 
     @Test
     fun `Lik søkerInfo skal ha lik hash`() {
+        mockPdlHentBarn()
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
         mockHentPersonPdlClient()
+
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertEquals(søkerinfo.hash, søkerinfo2.hash)
     }
@@ -60,8 +76,11 @@ internal class OppslagServiceServiceImplTest {
 
     @Test
     fun `SøkerInfo med endring i barn skal ikke ha lik hash`() {
+        mockHentPersonPdlClient()
+        mockPdlHentBarn("FørsteNavn")
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
         mockHentBarn("AnnetBarnenavn")
+        mockPdlHentBarn("AnnetBarnenavn")
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertNotEquals(søkerinfo.hash, søkerinfo2.hash)
     }
@@ -93,7 +112,7 @@ internal class OppslagServiceServiceImplTest {
         val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
         captureAktuelleBarn(aktuelleBarnSlot)
-        oppslagServiceService.hentSøkerinfoV2()
+        oppslagServiceService.hentSøkerinfo()
         assertThat(aktuelleBarnSlot.captured).hasSize(0)
     }
 
@@ -104,7 +123,7 @@ internal class OppslagServiceServiceImplTest {
         val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
         captureAktuelleBarn(aktuelleBarnSlot)
-        oppslagServiceService.hentSøkerinfoV2()
+        oppslagServiceService.hentSøkerinfo()
         assertThat(aktuelleBarnSlot.captured).hasSize(0)
     }
 
@@ -114,7 +133,7 @@ internal class OppslagServiceServiceImplTest {
         val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
         captureAktuelleBarn(aktuelleBarnSlot)
-        oppslagServiceService.hentSøkerinfoV2()
+        oppslagServiceService.hentSøkerinfo()
         assertThat(aktuelleBarnSlot.captured).hasSize(1)
     }
 
@@ -128,7 +147,7 @@ internal class OppslagServiceServiceImplTest {
         val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
         captureAktuelleBarn(aktuelleBarnSlot)
-        oppslagServiceService.hentSøkerinfoV2()
+        oppslagServiceService.hentSøkerinfo()
         assertThat(aktuelleBarnSlot.captured).hasSize(1)
         assertThat(aktuelleBarnSlot.captured).containsKey(levendeBarn.first)
     }
@@ -163,6 +182,12 @@ internal class OppslagServiceServiceImplTest {
         every { tpsClient.hentBarn() } returns (listOf(copyAvBarn))
     }
 
+    private fun mockPdlHentBarn(navn: String = "Ola") {
+        val pdlBarn = pdlBarn()
+        val copy = pdlBarn.second.copy(navn = listOf(Navn(navn, navn, navn)))
+        every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
+    }
+
     private fun mockHentPersonInfo(nyttNavn: String = "TestNavn") {
         val søkerinfoFraTpsMocked = tpsInnsynMockController.søkerinfoFraTpsMocked()
         val personInfoDto: PersoninfoDto = objectMapper.readValue(søkerinfoFraTpsMocked, PersoninfoDto::class.java)
@@ -177,7 +202,7 @@ internal class OppslagServiceServiceImplTest {
                                                                listOf(),
                                                                listOf(),
                                                                navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
-                                                               listOf(),
+                                                               sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
                                                                listOf()))
     }
 
