@@ -4,7 +4,8 @@ data class BooleanFelt(val label: String,
                        val verdi: Boolean)
 
 data class TekstFelt(val label: String,
-                     val verdi: String)
+                     val verdi: String,
+                     val svarid: String? = null)
 
 data class DatoFelt(val label: String,
                     val verdi: String)
@@ -14,7 +15,8 @@ data class DokumentFelt(val dokumentId: String,
 
 data class ListFelt<T>(val label: String,
                        val verdi: List<T>,
-                       val alternativer: List<String>? = null)
+                       val alternativer: List<String>? = null,
+                       val svarid: List<T>? = null)
 
 data class HeltallFelt(val label: String,
                        val verdi: Int)

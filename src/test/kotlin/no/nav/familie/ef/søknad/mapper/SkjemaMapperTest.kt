@@ -11,7 +11,7 @@ import kotlin.test.assertFailsWith
 internal class SkjemaMapperTest {
 
 
-    val hvorØnskerSøkerArbeid: TekstFelt = TekstFelt("label", "Hvorsomhelst")
+    val hvorØnskerSøkerArbeid: TekstFelt = TekstFelt("label", "Hvorsomhelst", "hvasomhelst")
     val kanBegynneInnenEnUke: BooleanFelt = BooleanFelt("label", false)
     val kanSkaffeBarnepassInnenEnUke: BooleanFelt = BooleanFelt("label", false)
     val registrertSomArbeidssøkerNav: BooleanFelt = BooleanFelt("label", false)
