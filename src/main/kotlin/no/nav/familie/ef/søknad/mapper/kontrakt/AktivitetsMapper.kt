@@ -2,11 +2,21 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
-import no.nav.familie.ef.søknad.mapper.*
+import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
-import no.nav.familie.ef.søknad.mapper.Språktekster.*
+import no.nav.familie.ef.søknad.mapper.MapperMedVedlegg
+import no.nav.familie.ef.søknad.mapper.Språktekster.ArbeidUtanningOgAndreAktiviteter
+import no.nav.familie.ef.søknad.mapper.Språktekster.NårDuErArbeidssøker
+import no.nav.familie.ef.søknad.mapper.Språktekster.OmAksjeselskapetDitt
+import no.nav.familie.ef.søknad.mapper.Språktekster.OmArbeidsforholdet
+import no.nav.familie.ef.søknad.mapper.Språktekster.OmFirmaDuDriver
+import no.nav.familie.ef.søknad.mapper.Språktekster.OmVirksomhetenDuEtablerer
+import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.ETABLERER_VIRKSOMHET
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.IKKE_VILLIG_TIL_ARBEID
+import no.nav.familie.ef.søknad.mapper.tilHeltall
+import no.nav.familie.ef.søknad.mapper.tilHeltallEllerTalletNull
+import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Aktivitet as AktivitetDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidsgiver as ArbeidsgiverDto
@@ -68,11 +78,11 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                            hvordanSerArbeidsukenUt = firma.arbeidsuke.tilSøknadsfelt())
     }
 
-    private fun mapArbeidsforhold(arbeidsforhold: List<ArbeidsgiverDto>): List<Arbeidsgiver> {
+    fun mapArbeidsforhold(arbeidsforhold: List<ArbeidsgiverDto>): List<Arbeidsgiver> {
 
         return arbeidsforhold.map { arbeid ->
             Arbeidsgiver(arbeidsgivernavn = arbeid.navn.tilSøknadsfelt(),
-                         arbeidsmengde = arbeid.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
+                         arbeidsmengde = arbeid.arbeidsmengde?.tilSøknadsfelt(String::tilHeltallEllerTalletNull),
                          fastEllerMidlertidig = arbeid.ansettelsesforhold.tilSøknadsfelt(),
                          harSluttdato = arbeid.harSluttDato?.tilSøknadsfelt(),
                          sluttdato = arbeid.sluttdato?.tilSøknadsfelt()

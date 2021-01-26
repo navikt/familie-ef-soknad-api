@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.config.RegelverkConfig
-import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
@@ -20,7 +19,6 @@ import java.time.Period
 @Service
 internal class OppslagServiceServiceImpl(
         private val client: TpsInnsynServiceClient,
-        private val featureToggleService: FeatureToggleService,
         private val pdlClient: PdlClient,
         private val pdlStsClient: PdlStsClient,
         private val regelverkConfig: RegelverkConfig,
@@ -30,50 +28,42 @@ internal class OppslagServiceServiceImpl(
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
     private val logger = LoggerFactory.getLogger(this::class.java)
     private val kreverAdressebeskyttelse = listOf(AdressebeskyttelseGradering.FORTROLIG,
-                                          AdressebeskyttelseGradering.STRENGT_FORTROLIG,
-                                          AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND)
+                                                  AdressebeskyttelseGradering.STRENGT_FORTROLIG,
+                                                  AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND)
 
     override fun hentSøkerinfo(): Søkerinfo {
-        val personinfoDto = client.hentPersoninfo()
-        val barn = client.hentBarn()
-        val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
-        val søkerinfoDto = settNavnFraPdlPåSøkerinfo(søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn))
 
-        try {
-            val hentSøkerinfoFraPdl = hentSøkerinfoV2()
-            OppslagServiceLoggHjelper.logDiff(søkerinfoDto, hentSøkerinfoFraPdl)
-            if (featureToggleService.isEnabled("familie.ef.soknad.bruk-pdl")) {
-                return hentSøkerinfoFraPdl
-            }
-        } catch (e: Exception) {
-            secureLogger.info("Exception - hent søker fra pdl", e)
-            logger.warn("Exception - hent søker fra pdl (se securelogs for detaljer)")
-        }
-
-
-        return søkerinfoDto
-    }
-
-
-    override fun hentSøkerinfoV2(): Søkerinfo {
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
         val barnIdentifikatorer = pdlSøker.familierelasjoner
                 .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
                 .map { it.relatertPersonsIdent }
         val pdlBarn = pdlStsClient.hentBarn(barnIdentifikatorer)
-        // TODO trenger vi sjekk/filtrering av foreldreansvar
         val aktuelleBarn = pdlBarn
                 .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
                 .filter { erILive(it.value) }
                 .filter { harIkkeBeskyttetAdresse(it.value.adressebeskyttelse) }
-        return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn)
+        val søkerinfoFraPdl = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn)
+        try {
+            val søkerinfoFraTPS = hentSøkerinfoFraTPSDto()
+            OppslagServiceLoggHjelper.logDiff(søkerinfoFraTPS, søkerinfoFraPdl)
+        } catch (e: Exception) {
+            secureLogger.info("Exception - hent søker fra pdl", e)
+            logger.warn("Exception - hent søker fra pdl (se securelogs for detaljer)")
+        }
+        return søkerinfoFraPdl
+
+    }
+
+    private fun hentSøkerinfoFraTPSDto(): Søkerinfo {
+        val personinfoDto = client.hentPersoninfo()
+        val barn = client.hentBarn()
+        val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
+        return settNavnFraPdlPåSøkerinfo(søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn))
     }
 
     private fun harIkkeBeskyttetAdresse(adressebeskyttelse: List<Adressebeskyttelse>): Boolean {
-        val adressebeskyttelse: AdressebeskyttelseGradering =
-                adressebeskyttelse.firstOrNull()?.gradering ?: AdressebeskyttelseGradering.UGRADERT
-
-        return !kreverAdressebeskyttelse.contains(adressebeskyttelse)
+        return !kreverAdressebeskyttelse.contains(adressebeskyttelse.firstOrNull()?.gradering
+                                                  ?: AdressebeskyttelseGradering.UGRADERT)
     }
 
     fun erILive(pdlBarn: PdlBarn) =
