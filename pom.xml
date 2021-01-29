@@ -25,7 +25,7 @@
         <mockk.version>1.10.5</mockk.version>
         <token-validation-spring.version>1.3.2</token-validation-spring.version>
         <fasterxml.version>2.12.1</fasterxml.version>
-        <com.amazonaws.version>1.11.941</com.amazonaws.version>
+        <com.amazonaws.version>1.11.945</com.amazonaws.version>
         <felles.version>1.20210114091432_ef96974</felles.version>
         <kontrakter.version>2.0_20210115120711_1c93af9</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
