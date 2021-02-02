@@ -13,7 +13,7 @@ data class Barn(val alder: TekstFelt?, // TODO Bare for visning (kan fjernes?)
                 val forelder: AnnenForelder,
                 val skalHaBarnepass: BooleanFelt?, //TODO må mappes
                 val særligeTilsynsbehov: TekstFelt?,
-                val barnepass: Barnepass?) //TODO må mappes
+                val barnepass: Barnepass?)
 
 data class AnnenForelder(
         val ikkeOppgittAnnenForelderBegrunnelse: TekstFelt?,
@@ -32,10 +32,7 @@ data class AnnenForelder(
         val flyttetFra: DatoFelt?,
         val hvorMyeSammen: TekstFelt?,
         val beskrivSamværUtenBarn: TekstFelt?,
-        val skalBarnetBoHosSøker: TekstFelt?
+        val skalBarnetBoHosSøker: TekstFelt?,
+        val hvorforIkkeOppgi: TekstFelt?,
 )
-
-
-//    hvorforIkkeOppgi?: ISpørsmålFelt; // TODO brukes ikke
-//TODO skal barn bo hos deg
 

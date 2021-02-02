@@ -25,7 +25,8 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                          samvær = mapSamvær(barn.forelder, vedlegg),
                          skalHaBarnepass = barn.skalHaBarnepass?.tilSøknadsfelt(),
                          særligeTilsynsbehov = barn.særligeTilsynsbehov?.tilSøknadsfelt(),
-                         barnepass = barn.barnepass?.let { BarnepassMapper.map(it) })
+                         barnepass = barn.barnepass?.let { BarnepassMapper.map(it) },
+                         skalBarnetBoHosSøker = barn.forelder.skalBarnetBoHosSøker?.tilSøknadsfelt())
         }
     }
 
@@ -45,7 +46,8 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                     ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.tilSøknadsfelt(),
                     bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                     land = forelder.land?.tilSøknadsfelt(),
-                    person = PersonMinimumMapper.map(forelder)
+                    person = PersonMinimumMapper.map(forelder),
+                    ikkeOppgittAnnenForelderÅrsak = forelder.hvorforIkkeOppgi?.tilSøknadsfelt()
             ))
 
     private fun mapSamvær(
