@@ -46,8 +46,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                     ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.tilSøknadsfelt(),
                     bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                     land = forelder.land?.tilSøknadsfelt(),
-                    person = PersonMinimumMapper.map(forelder),
-                    ikkeOppgittAnnenForelderÅrsak = forelder.hvorforIkkeOppgi?.tilSøknadsfelt()
+                    person = PersonMinimumMapper.map(forelder)
             ))
 
     private fun mapSamvær(
