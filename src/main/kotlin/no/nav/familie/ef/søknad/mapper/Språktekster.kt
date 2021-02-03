@@ -28,7 +28,7 @@ enum class Språktekster(val norsk: String, val engelsk: String) {
     Sivilstatus("Sivilstatus", "Marital status"),
     Telefonnummer("Telefonnummer", "Telephone number"),
     Adresse("Adresse", "Address"),
-    OmSamboer("Om samboeren din", "About your cohabitant"),
+    OmSamboer("Om den tidligere samboeren din", "About your former cohabitant"),
     Persondata("Persondata", "Person"),
     AnnenForelderNavn("Annen forelder navn", "The other parent"),
     IkkeOppgitt("ikke oppgitt", "ikke oppgitt"),
