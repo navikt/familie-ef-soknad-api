@@ -3,7 +3,6 @@ ENV APPLICATION_NAME=familie-ef-soknad-api
 ENV APPD_ENABLED=TRUE
 
 COPY init.sh /init-scripts/init.sh
-RUN chmod +x /init-scripts/init.sh
 
 EXPOSE 8000
 COPY ./target/familie-ef-soknad-api-1.0-SNAPSHOT.jar "app.jar"
