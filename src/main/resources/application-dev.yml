@@ -1,6 +1,6 @@
 familie:
   dokument:
-    uri: https://familie-dokument.dev.nav.no/api
+    uri: https://familie-dokument.dev.nav.no/familie/dokument/api
     sbsUri: https://www-q0.nav.no/familie/alene-med-barn/mellomlagring/api
   ef:
     mottak:
