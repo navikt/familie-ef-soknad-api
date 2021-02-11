@@ -21,7 +21,7 @@ internal class DokumentServiceImpl(private val client: FamilieDokumentClient,
                 val hentVedlegg = client.hentVedlegg(vedleggsId)
                 logger.info("Fant vedlegg=$vedleggsId i gcp")
                 hentVedlegg
-            } catch (e: HttpClientErrorException.NotFound) {
+            } catch (e: Exception) { // TODO endre til HttpClientErrorException.NotFound, exception er midlertidlig pga url-test
                 logger.warn("Finner ikke vedlegg=$vedleggsId i gcp - prøver å hente fra sbs")
                 sbsClient.hentVedlegg(vedleggsId)
             }
