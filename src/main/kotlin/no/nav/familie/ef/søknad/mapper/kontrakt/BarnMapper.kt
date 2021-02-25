@@ -26,7 +26,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                          skalHaBarnepass = barn.skalHaBarnepass?.tilSøknadsfelt(),
                          særligeTilsynsbehov = barn.særligeTilsynsbehov?.tilSøknadsfelt(),
                          barnepass = barn.barnepass?.let { BarnepassMapper.map(it) },
-                         lagtTilManuellt = barn.lagtTil,
+                         lagtTilManuelt = barn.lagtTil,
                          skalBarnetBoHosSøker = barn.forelder.skalBarnetBoHosSøker?.tilSøknadsfelt())
         }
     }
