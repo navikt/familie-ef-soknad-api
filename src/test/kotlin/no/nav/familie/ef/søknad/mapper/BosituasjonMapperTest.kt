@@ -79,7 +79,7 @@ internal class BosituasjonMapperTest {
         // When
         val samboerdetaljer = BosituasjonMapper.map(bosituasjonGifteplaner, dokumenter).verdi.samboerdetaljer
         // Then
-        assertThat(samboerdetaljer?.verdi?.navn?.verdi).isNull()
+        assertThat(samboerdetaljer?.verdi?.navn?.verdi).isEqualTo("Giflteklar Navnesen")
     }
 
     @Test
@@ -87,7 +87,7 @@ internal class BosituasjonMapperTest {
         // When
         val samboerdetaljer = BosituasjonMapper.map(bosituasjonGifteplaner, dokumenter).verdi.samboerdetaljer
         // Then
-        assertThat(samboerdetaljer?.verdi?.fødselsnummer?.verdi).isNull()
+        assertThat(samboerdetaljer?.verdi?.fødselsnummer?.verdi?.verdi).isEqualTo("26077624804")
     }
 
     @Test
@@ -95,7 +95,7 @@ internal class BosituasjonMapperTest {
         // When
         val samboerdetaljer = BosituasjonMapper.map(bosituasjonGifteplaner, dokumenter).verdi.samboerdetaljer
         // Then
-        assertThat(samboerdetaljer?.verdi?.fødselsdato?.verdi).isNull()
+        assertThat(samboerdetaljer?.verdi?.fødselsdato?.verdi).isEqualTo(LocalDate.parse("1976-07-26"))
     }
 
     private fun getBosituasjon(fileName: String) = objectMapper.readValue(File("src/test/resources/$fileName"),
