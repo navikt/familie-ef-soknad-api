@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad.mock
 
-import com.amazonaws.services.s3.model.AmazonS3Exception
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.security.token.support.core.api.Unprotected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
@@ -11,7 +10,14 @@ import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import java.util.*
 
@@ -79,12 +85,8 @@ class DokumentController(@Qualifier("dokumentlager") private val dokumenter: Mut
         return try {
             ResponseEntity.ok(mellomlager[directory])
         } catch (e: RuntimeException) {
-            if (e is AmazonS3Exception && e.statusCode == 404) {
-                ResponseEntity.noContent().build()
-            } else {
-                log.info("Noe gikk galt", e)
-                ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
-            }
+            log.info("Noe gikk galt", e)
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
         }
     }
 
