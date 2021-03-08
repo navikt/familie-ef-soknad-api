@@ -26,7 +26,7 @@
         <token-validation-spring.version>1.3.2</token-validation-spring.version>
         <fasterxml.version>2.12.1</fasterxml.version>
         <felles.version>1.20210211124125_d23b4fa</felles.version>
-        <kontrakter.version>2.0_20210225150823_36d3519</kontrakter.version>
+        <kontrakter.version>2.0_20210305131536_dd4cd5d</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
