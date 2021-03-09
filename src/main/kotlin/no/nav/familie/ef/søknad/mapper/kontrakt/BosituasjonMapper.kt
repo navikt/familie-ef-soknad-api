@@ -25,10 +25,6 @@ object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>(Bo
 
     private fun mapSamboer(bosituasjon: Bosituasjon): Søknadsfelt<PersonMinimum>? {
 
-        if (bosituasjon.skalGifteSegEllerBliSamboer?.verdi == true) {
-            return null
-        }
-
         return bosituasjon.samboerDetaljer?.let {
             PersonMinimumMapper.map(it)
         }
