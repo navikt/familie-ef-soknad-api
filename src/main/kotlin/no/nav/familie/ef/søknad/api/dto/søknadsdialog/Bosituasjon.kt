@@ -6,18 +6,11 @@ data class Bosituasjon(
         val samboerDetaljer: SamboerDetaljer?,
         val datoSkalGifteSegEllerBliSamboer: DatoFelt? = null,
         val skalGifteSegEllerBliSamboer: BooleanFelt?,
-        val datoFlyttetFraHverandre: DatoFelt?
-)
-
-//delerBoligMedAndreVoksne: ISpørsmålBooleanFeltlFelt;
-//datoFlyttetSammenMedSamboer?: IDatoFelt;
-//samboerDetaljer?: IPersonDetaljer;
-//datoSkalGifteSegEllerBliSamboer?: IDatoFelt;
-//skalGifteSegEllerBliSamboer?: ISpørsmålBooleanFelt;
-//datoFlyttetFraHverandre?: IDatoFelt;
+        val datoFlyttetFraHverandre: DatoFelt?,
+        val vordendeSamboerEktefelle: SamboerDetaljer?,
+        )
 
 data class SamboerDetaljer(
-       // val fødselsnummer: String?,
         val fødselsdato: DatoFelt?,
         val navn: TekstFelt,
         val ident: TekstFelt? = null
