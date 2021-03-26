@@ -35,6 +35,10 @@ query($identer: [ID!]!){
             doedsfall {
                 doedsdato
             }
+            familierelasjoner {
+                relatertPersonsIdent
+                relatertPersonsRolle
+            }
         }
     }
 }

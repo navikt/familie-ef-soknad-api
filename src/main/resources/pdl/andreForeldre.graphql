@@ -1,0 +1,27 @@
+query($ident: ID!){
+    person: hentPerson(ident: $ident) {
+        adressebeskyttelse {
+            gradering
+            metadata {
+                historisk
+            }
+        }
+        doedsfall {
+            doedsdato
+        }
+        familierelasjoner {
+            relatertPersonsIdent
+            relatertPersonsRolle
+        }
+        navn {
+            fornavn
+            mellomnavn
+            etternavn
+            metadata {
+                historisk
+            }
+        }
+
+
+    }
+}

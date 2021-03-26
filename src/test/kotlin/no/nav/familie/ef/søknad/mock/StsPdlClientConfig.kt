@@ -3,7 +3,11 @@ package no.nav.familie.ef.søknad.mock
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ef.søknad.integration.PdlStsClient
-import no.nav.familie.ef.søknad.integration.dto.pdl.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
+import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -26,7 +30,8 @@ class StsPdlClientConfig {
                         deltBosted = listOf(),
                         navn = lagNavn("Hei", "På", "Deg"),
                         fødsel = listOf(Fødsel(2000, LocalDate.now().minusMonths(6))),
-                        dødsfall = listOf()
+                        dødsfall = listOf(),
+                        familierelasjoner = listOf()
                 ))
         return pdlClient
     }

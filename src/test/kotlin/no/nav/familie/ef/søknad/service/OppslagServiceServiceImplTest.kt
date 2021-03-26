@@ -6,25 +6,26 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.spyk
+import no.nav.familie.ef.søknad.api.dto.tps.Adresse
+import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient
-import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
-import no.nav.familie.ef.søknad.integration.dto.NavnDto
+import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
-import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.Dødsfall
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
 import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
 import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
 import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
-import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
-import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -36,31 +37,28 @@ import kotlin.test.assertNotEquals
 
 internal class OppslagServiceServiceImplTest {
 
-    val tpsClient: TpsInnsynServiceClient = mockk()
     val pdlClient: PdlClient = mockk()
-    val tpsInnsynMockController = TpsInnsynMockController()
     val regelverkConfig: RegelverkConfig = RegelverkConfig(RegelverkConfig.Alder(18))
     val pdlStsClient: PdlStsClient = mockk()
 
     private val søkerinfoMapper = spyk(SøkerinfoMapper(mockk(relaxed = true)))
-    private val oppslagServiceService = OppslagServiceServiceImpl(tpsClient, pdlClient,
+    private val oppslagServiceService = OppslagServiceServiceImpl(pdlClient,
                                                                   pdlStsClient, regelverkConfig, søkerinfoMapper)
 
     @BeforeEach
     fun setUp() {
         mockkObject(EksternBrukerUtils)
         every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
-        mockHentBarn()
         mockPdlHentBarn()
-        mockHentPersonInfo()
         mockHentPersonPdlClient()
     }
 
     @Test
     fun `Lik søkerInfo skal ha lik hash`() {
         mockPdlHentBarn()
+        mockHentPersonPdlClient("Et navn")
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
-        mockHentPersonPdlClient()
+        mockHentPersonPdlClient("Et navn")
 
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertEquals(søkerinfo.hash, søkerinfo2.hash)
@@ -79,11 +77,32 @@ internal class OppslagServiceServiceImplTest {
         mockHentPersonPdlClient()
         mockPdlHentBarn("FørsteNavn")
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
-        mockHentBarn("AnnetBarnenavn")
         mockPdlHentBarn("AnnetBarnenavn")
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertNotEquals(søkerinfo.hash, søkerinfo2.hash)
     }
+
+    @Test
+    fun `SøkerInfo med endring i familierelasjoner skal ikke ha lik hash`() {
+        mockHentPersonPdlClient()
+        mockPdlHentBarn("navn")
+        val søkerinfo = oppslagServiceService.hentSøkerinfo()
+        val pdlBarn = pdlBarn()
+        //  mockPdlHentBarn()
+        val copy = pdlBarn.second.copy(familierelasjoner = listOf(Familierelasjon("1234", Familierelasjonsrolle.FAR)),
+                                       navn = listOf(Navn("navn", "navn", "navn")))
+        every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
+        every { pdlStsClient.hentAnnenForelder(any()) } returns PdlAnnenForelder(listOf(),
+                                                                                 listOf(),
+                                                                                 listOf(),
+                                                                                 listOf(Navn("forelder",
+                                                                                             "forelder",
+                                                                                             "forelder")))
+
+        val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
+        assertNotEquals(søkerinfo.hash, søkerinfo2.hash)
+    }
+
 
     @Test
     fun `Test filtrering på dødsdato`() {
@@ -154,7 +173,7 @@ internal class OppslagServiceServiceImplTest {
 
     private fun captureAktuelleBarn(aktuelleBarnSlot: CapturingSlot<Map<String, PdlBarn>>) {
         every {
-            søkerinfoMapper.mapTilSøkerinfo(any(), capture(aktuelleBarnSlot))
+            søkerinfoMapper.mapTilSøkerinfo(any(), capture(aktuelleBarnSlot), mutableMapOf())
         } returns mockk()
     }
 
@@ -162,6 +181,7 @@ internal class OppslagServiceServiceImplTest {
             adressebeskyttelse: Adressebeskyttelse? = null,
             dødsfall: Dødsfall? = null,
             fødselsdato: LocalDate = LocalDate.now().minusMonths(6),
+            familierelasjoner: List<Familierelasjon> = listOf()
     ): Pair<String, PdlBarn> {
         val fødsel = Fødsel(fødselsdato.year, fødselsdato)
         return Pair(fødselsdato.format(ISO_LOCAL_DATE),
@@ -170,17 +190,11 @@ internal class OppslagServiceServiceImplTest {
                             deltBosted = emptyList(),
                             fødsel = listOf(fødsel),
                             navn = emptyList(),
-                            dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList()))
+                            dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList(),
+                            familierelasjoner = familierelasjoner))
     }
 
-    private fun mockHentBarn(navn: String = "Ola") {
-        val barnFraTpsMocked = tpsInnsynMockController.barnFraTpsMocked()
-        val collectionType =
-                objectMapper.typeFactory.constructCollectionType(List::class.java, RelasjonDto::class.java)
-        val barnListDto: List<RelasjonDto> = objectMapper.readValue(barnFraTpsMocked, collectionType)
-        val copyAvBarn = barnListDto[0].copy(forkortetNavn = navn)
-        every { tpsClient.hentBarn() } returns (listOf(copyAvBarn))
-    }
+
 
     private fun mockPdlHentBarn(navn: String = "Ola") {
         val pdlBarn = pdlBarn()
@@ -188,11 +202,6 @@ internal class OppslagServiceServiceImplTest {
         every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
     }
 
-    private fun mockHentPersonInfo(nyttNavn: String = "TestNavn") {
-        val søkerinfoFraTpsMocked = tpsInnsynMockController.søkerinfoFraTpsMocked()
-        val personInfoDto: PersoninfoDto = objectMapper.readValue(søkerinfoFraTpsMocked, PersoninfoDto::class.java)
-        every { tpsClient.hentPersoninfo() } returns (personInfoDto.copy(navn = NavnDto(nyttNavn)))
-    }
 
     private fun mockHentPersonPdlClient(fornavn: String = "TestNavn",
                                         mellomnavn: String = "TestNavn",
@@ -204,6 +213,24 @@ internal class OppslagServiceServiceImplTest {
                                                                navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
                                                                sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
                                                                listOf()))
+    }
+
+
+    fun mapTilPerson(personinfoDto: PersoninfoDto): Person {
+        return Person(personinfoDto.ident,
+                      personinfoDto.navn.forkortetNavn,
+                      mapTilAdresse(personinfoDto.adresseinfo),
+                      personinfoDto.egenansatt?.isErEgenansatt ?: false,
+                      personinfoDto.sivilstand?.kode?.verdi ?: "",
+                      søkerinfoMapper.hentLand(personinfoDto.statsborgerskap?.kode?.verdi))
+    }
+
+    private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {
+        val postnummer: String? = adresseinfoDto?.bostedsadresse?.postnummer
+        return Adresse(adresse = adresseinfoDto?.bostedsadresse?.adresse
+                                 ?: "",
+                       postnummer = postnummer ?: "",
+                       poststed = søkerinfoMapper.hentPoststed(postnummer))
     }
 
 }

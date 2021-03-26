@@ -1,6 +1,26 @@
 package no.nav.familie.ef.søknad.integration.pdl
 
-import no.nav.familie.ef.søknad.integration.dto.pdl.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.UGRADERT
+import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.DeltBosted
+import no.nav.familie.ef.søknad.integration.dto.pdl.Dødsfall
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle.BARN
+import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
+import no.nav.familie.ef.søknad.integration.dto.pdl.Matrikkeladresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkeladresseBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøkerData
+import no.nav.familie.ef.søknad.integration.dto.pdl.PersonBolk
+import no.nav.familie.ef.søknad.integration.dto.pdl.PersonDataBolk
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
+import no.nav.familie.ef.søknad.integration.dto.pdl.Statsborgerskap
+import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
 import java.time.LocalDate
 
 object PdlTestdata {
@@ -25,30 +45,33 @@ object PdlTestdata {
     private val bostedsadresseBarn = listOf(BostedsadresseBarn(vegadresse,
                                                                matrikkeladresseBarn))
 
-    private val familierelasjon = listOf(Familierelasjon("", Familierelasjonsrolle.BARN))
+    private val familierelasjon = listOf(Familierelasjon("", BARN))
 
     private val statsborgerskap = listOf(Statsborgerskap("", LocalDate.now(), LocalDate.now()))
 
 
     val pdlSøkerData =
-            PdlSøkerData(PdlSøker(listOf(Adressebeskyttelse(AdressebeskyttelseGradering.UGRADERT)),
+            PdlSøkerData(PdlSøker(listOf(Adressebeskyttelse(UGRADERT)),
                                   bostedsadresse,
                                   familierelasjon,
                                   navn,
                                   listOf(Sivilstand(Sivilstandstype.GIFT)),
                                   statsborgerskap))
 
+    val familieRelasjonBarn = Familierelasjon("", BARN)
     val pdlBarnData =
             PersonBolk(listOf(PersonDataBolk("11111122222",
                                              "ok",
-                                             PdlBarn(listOf(Adressebeskyttelse(AdressebeskyttelseGradering.UGRADERT)),
-                                                     bostedsadresseBarn,
-                                                     listOf(DeltBosted(LocalDate.now(),
-                                                                       LocalDate.now())),
-                                                     navn,
-                                                     listOf(Fødsel(1, LocalDate.now())),
-                                                     listOf(Dødsfall(LocalDate.now())
-                                                     )))))
+                                             PdlBarn(adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
+                                                     bostedsadresse = bostedsadresseBarn,
+                                                     deltBosted = listOf(DeltBosted(LocalDate.now(),
+                                                                                    LocalDate.now())),
+                                                     navn = navn,
+                                                     fødsel = listOf(Fødsel(1, LocalDate.now())),
+                                                     dødsfall = listOf(Dødsfall(LocalDate.now())),
+                                                     familierelasjoner = listOf(familieRelasjonBarn)
+                                             )
+            )))
 
 
 }

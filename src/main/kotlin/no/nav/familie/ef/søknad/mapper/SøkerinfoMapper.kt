@@ -2,12 +2,16 @@ package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.api.dto.tps.Adresse
+import no.nav.familie.ef.søknad.api.dto.tps.AnnenForelder
 import no.nav.familie.ef.søknad.api.dto.tps.Barn
 import no.nav.familie.ef.søknad.api.dto.tps.Person
-import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
-import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
-import no.nav.familie.ef.søknad.integration.dto.RelasjonDto
-import no.nav.familie.ef.søknad.integration.dto.pdl.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkelId
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
+import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
 import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
@@ -21,41 +25,11 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     private val logger = LoggerFactory.getLogger(this::class.java)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    fun mapTilSøkerinfo(personinfoDto: PersoninfoDto, aktuelleBarn: List<RelasjonDto>): Søkerinfo {
-        return Søkerinfo(mapTilPerson(personinfoDto),
-                         aktuelleBarn.map(this::mapTilBarn))
-    }
-
-    fun mapTilBarn(relasjonDto: RelasjonDto): Barn {
-        return Barn(relasjonDto.ident,
-                    relasjonDto.forkortetNavn,
-                    relasjonDto.alder,
-                    relasjonDto.fødselsdato,
-                    relasjonDto.harSammeAdresse)
-    }
-
-    fun mapTilPerson(personinfoDto: PersoninfoDto): Person {
-        return Person(personinfoDto.ident,
-                      personinfoDto.navn.forkortetNavn,
-                      mapTilAdresse(personinfoDto.adresseinfo),
-                      personinfoDto.egenansatt?.isErEgenansatt ?: false,
-                      personinfoDto.sivilstand?.kode?.verdi ?: "",
-                      hentLand(personinfoDto.statsborgerskap?.kode?.verdi))
-    }
-
-    private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {
-        val postnummer: String? = adresseinfoDto?.bostedsadresse?.postnummer
-        return Adresse(adresse = adresseinfoDto?.bostedsadresse?.adresse
-                                 ?: "",
-                       postnummer = postnummer ?: "",
-                       poststed = hentPoststed(postnummer))
-    }
-
-    private fun hentPoststed(postnummer: String?): String {
+    fun hentPoststed(postnummer: String?): String {
         return hentKodeverdi("poststed", postnummer, kodeverkService::hentPoststed)
     }
 
-    private fun hentLand(landkode: String?): String {
+    fun hentLand(landkode: String?): String {
         return hentKodeverdi("land", landkode, kodeverkService::hentLand)
     }
 
@@ -69,14 +43,18 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         }
     }
 
-    fun mapTilSøkerinfo(pdlSøker: PdlSøker, pdlBarn: Map<String, PdlBarn>): Søkerinfo {
+    fun mapTilSøkerinfo(pdlSøker: PdlSøker,
+                        pdlBarn: Map<String, PdlBarn>,
+                        andreForeldre: Map<String, PdlAnnenForelder>): Søkerinfo {
         val søker: Person = pdlSøker.tilPersonDto()
-        val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.firstOrNull())
+        val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.firstOrNull(), andreForeldre)
         return Søkerinfo(søker, barn)
     }
 
 
-    private fun tilBarneListeDto(pdlBarn: Map<String, PdlBarn>, søkersAdresse: Bostedsadresse?): List<Barn> {
+    private fun tilBarneListeDto(pdlBarn: Map<String, PdlBarn>,
+                                 søkersAdresse: Bostedsadresse?,
+                                 andreForeldre: Map<String, PdlAnnenForelder>): List<Barn> {
         return pdlBarn.entries.map {
             val mellomnavn = it.value.navn.first().mellomnavn?.let { " $it " } ?: " "
             val navn = it.value.navn.first().fornavn + mellomnavn + it.value.navn.first().etternavn
@@ -87,7 +65,8 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             if (!harSammeAdresse) {
                 secureLogger.info("Søkers adresse: [${søkersAdresse?.vegadresse}] - Barnets adresse: [${it.value.bostedsadresse.firstOrNull()?.vegadresse}]")
             }
-            Barn(it.key, navn, alder, fødselsdato, harSammeAdresse)
+
+            Barn(it.key, navn, alder, fødselsdato, harSammeAdresse, andreForeldre[it.key]?.tilDto())
         }
     }
 
@@ -175,5 +154,20 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     }
 
     private fun space(vararg args: String?): String? = join(*args, separator = " ")
+
+
+}
+
+private fun PdlAnnenForelder.tilDto(): AnnenForelder {
+
+
+    val navn = this.navn.first()
+    val annenForelderNavn = navn?.let {
+        val mellomnavn = it.mellomnavn?.let { " $it " } ?: " "
+        it.fornavn + mellomnavn + it.etternavn
+    }
+
+    return AnnenForelder(annenForelderNavn, this.adressebeskyttelse, this.dødsfall)
+
 
 }
