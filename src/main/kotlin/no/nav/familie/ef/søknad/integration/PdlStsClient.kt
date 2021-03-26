@@ -1,6 +1,8 @@
 package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.PdlConfig
+import no.nav.familie.ef.søknad.exception.PdlNotFoundException
+import no.nav.familie.ef.søknad.exception.PdlRequestException
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBolkResponse
@@ -53,8 +55,8 @@ class PdlStsClient(val pdlConfig: PdlConfig,
     }
 
 
-    open class PdlRequestException(melding: String? = null) : Exception(melding)
-    class PdlNotFoundException : PdlRequestException()
+    // open class PdlRequestException(melding: String? = null) : Exception(melding)
+    // class PdlNotFoundException : PdlRequestException()
 
 
     private inline fun <reified DATA : Any, reified T : Any> feilsjekkOgReturnerData(ident: String,
