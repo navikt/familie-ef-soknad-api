@@ -53,7 +53,6 @@ data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
 )
 
 data class PdlAnnenForelder(val adressebeskyttelse: List<Adressebeskyttelse>,
-                            val familierelasjoner: List<Familierelasjon>,
                             @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
                             val navn: List<Navn>
 )

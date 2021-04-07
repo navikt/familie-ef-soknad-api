@@ -45,41 +45,19 @@ internal class OppslagServiceServiceImpl(
                 .filter { erILive(it.value) }
                 .filter { harIkkeBeskyttetAdresse(it.value.adressebeskyttelse) }
 
-
         val andreForeldre = hentAndreForeldre(aktuelleBarn, søkersPersonIdent)
-
         return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn, andreForeldre)
 
     }
 
     private fun hentAndreForeldre(aktuelleBarn: Map<String, PdlBarn>,
                                   søkersPersonIdent: String): Map<String, PdlAnnenForelder> {
-        // val mapMedBarnOgAndreForeldre = mutableMapOf<String, PdlAnnenForelder>()
-
-
         return aktuelleBarn.map { it.value.familierelasjoner }
                 .flatten()
                 .filter { it.relatertPersonsIdent != søkersPersonIdent && it.relatertPersonsRolle != Familierelasjonsrolle.BARN }
                 .map { it.relatertPersonsIdent }
                 .distinct()
                 .let { pdlStsClient.hentAndreForeldre(it) }
-
-
-//        aktuelleBarn.map {
-//            val annenForelderRelasjon =
-//                    it.value.familierelasjoner.find { erAnnenForelderRelasjon(it, søkersPersonIdent) }
-//            val relatertPersonsIdent = annenForelderRelasjon?.relatertPersonsIdent
-//            if (relatertPersonsIdent != null) {
-//                logger.info("")
-//
-//
-//
-//
-//                val annenForelder = pdlStsClient.hentAnnenForelder(relatertPersonsIdent)
-//                mapMedBarnOgAndreForeldre[it.key] = annenForelder
-//            }
-//        }
-//        return mapMedBarnOgAndreForeldre
     }
 
 

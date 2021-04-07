@@ -95,7 +95,6 @@ internal class OppslagServiceServiceImplTest {
         every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
         every { pdlStsClient.hentAndreForeldre(any()) } returns mapOf("1234" to PdlAnnenForelder(listOf(),
                                                                                                  listOf(),
-                                                                                                 listOf(),
                                                                                                  listOf(Navn("forelder",
                                                                                                              "forelder",
                                                                                                              "forelder"))))

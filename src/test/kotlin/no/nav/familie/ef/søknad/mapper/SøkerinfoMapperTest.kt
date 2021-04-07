@@ -74,7 +74,7 @@ internal class SøkerinfoMapperTest {
                                navn = listOf(Navn("Boy", "", "Moy")),
                                familierelasjoner = listOf(Familierelasjon("1234", Familierelasjonsrolle.FAR)))
         val adressebeskyttelse = Adressebeskyttelse(AdressebeskyttelseGradering.UGRADERT)
-        val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(), listOf(navn))
+        val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
         val andreForeldre = mapOf("1234" to pdlAnnenForelder)
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), andreForeldre)
         assertThat(person.barn.first().annenForelder?.navn).isEqualTo("Roy Toy")
