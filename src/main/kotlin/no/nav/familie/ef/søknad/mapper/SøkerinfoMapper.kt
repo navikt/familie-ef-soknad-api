@@ -6,6 +6,8 @@ import no.nav.familie.ef.søknad.api.dto.tps.AnnenForelder
 import no.nav.familie.ef.søknad.api.dto.tps.Barn
 import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkelId
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
@@ -47,28 +49,33 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                         pdlBarn: Map<String, PdlBarn>,
                         andreForeldre: Map<String, PdlAnnenForelder>): Søkerinfo {
         val søker: Person = pdlSøker.tilPersonDto()
-        val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.firstOrNull(), andreForeldre)
+        val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.firstOrNull(), andreForeldre, søker.fnr)
         return Søkerinfo(søker, barn)
     }
 
 
     private fun tilBarneListeDto(pdlBarn: Map<String, PdlBarn>,
                                  søkersAdresse: Bostedsadresse?,
-                                 andreForeldre: Map<String, PdlAnnenForelder>): List<Barn> {
+                                 andreForeldre: Map<String, PdlAnnenForelder>,
+                                 søkerPersonIdent: String): List<Barn> {
         return pdlBarn.entries.map {
             val mellomnavn = it.value.navn.first().mellomnavn?.let { " $it " } ?: " "
             val navn = it.value.navn.first().fornavn + mellomnavn + it.value.navn.first().etternavn
-            val fødselsdato = it.value.fødsel.first().fødselsdato ?: error("Ingen fødselsdato registrert")
+            val fødselsdato = it.value.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
             val harSammeAdresse = harSammeAdresse(søkersAdresse, it.value)
-            if (!harSammeAdresse) {
-                secureLogger.info("Søkers adresse: [${søkersAdresse?.vegadresse}] - Barnets adresse: [${it.value.bostedsadresse.firstOrNull()?.vegadresse}]")
-            }
 
-            Barn(it.key, navn, alder, fødselsdato, harSammeAdresse, andreForeldre[it.key]?.tilDto())
+            val annenForelderRelasjon = it.value.familierelasjoner.find { erAnnenForelderRelasjon(it, søkerPersonIdent) }
+            val annenForelder = annenForelderRelasjon?.let { andreForeldre[it.relatertPersonsIdent]?.tilDto() }
+            Barn(it.key, navn, alder, fødselsdato, harSammeAdresse, annenForelder)
         }
     }
+
+    private fun erAnnenForelderRelasjon(familierelasjon: Familierelasjon,
+                                        søkersPersonIdent: String) =
+            familierelasjon.relatertPersonsIdent != søkersPersonIdent &&
+            familierelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
 
     fun harSammeAdresse(søkersAdresse: Bostedsadresse?,
                         pdlBarn: PdlBarn): Boolean {
@@ -159,15 +166,6 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 }
 
 private fun PdlAnnenForelder.tilDto(): AnnenForelder {
-
-
-    val navn = this.navn.first()
-    val annenForelderNavn = navn?.let {
-        val mellomnavn = it.mellomnavn?.let { " $it " } ?: " "
-        it.fornavn + mellomnavn + it.etternavn
-    }
-
-    return AnnenForelder(annenForelderNavn, this.adressebeskyttelse, this.dødsfall)
-
-
+    val annenForelderNavn = this.navn.first()
+    return AnnenForelder(annenForelderNavn.visningsnavn(), this.adressebeskyttelse, this.dødsfall)
 }

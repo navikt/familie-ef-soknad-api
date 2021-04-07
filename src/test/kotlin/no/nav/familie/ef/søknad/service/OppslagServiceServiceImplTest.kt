@@ -51,6 +51,7 @@ internal class OppslagServiceServiceImplTest {
         every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
         mockPdlHentBarn()
         mockHentPersonPdlClient()
+        every { pdlStsClient.hentAndreForeldre(any()) } returns (mapOf())
     }
 
     @Test
@@ -92,12 +93,12 @@ internal class OppslagServiceServiceImplTest {
         val copy = pdlBarn.second.copy(familierelasjoner = listOf(Familierelasjon("1234", Familierelasjonsrolle.FAR)),
                                        navn = listOf(Navn("navn", "navn", "navn")))
         every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
-        every { pdlStsClient.hentAnnenForelder(any()) } returns PdlAnnenForelder(listOf(),
-                                                                                 listOf(),
-                                                                                 listOf(),
-                                                                                 listOf(Navn("forelder",
-                                                                                             "forelder",
-                                                                                             "forelder")))
+        every { pdlStsClient.hentAndreForeldre(any()) } returns mapOf("1234" to PdlAnnenForelder(listOf(),
+                                                                                                 listOf(),
+                                                                                                 listOf(),
+                                                                                                 listOf(Navn("forelder",
+                                                                                                             "forelder",
+                                                                                                             "forelder"))))
 
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertNotEquals(søkerinfo.hash, søkerinfo2.hash)

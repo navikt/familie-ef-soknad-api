@@ -1,6 +1,8 @@
 package no.nav.familie.ef.søknad.integration.dto.pdl
 
 fun Navn.visningsnavn(): String {
-    return if (mellomnavn == null) "$fornavn $etternavn"
-    else "$fornavn $mellomnavn $etternavn"
+    return this.let {
+        val mellomnavn = it.mellomnavn.takeUnless { mellomnavn -> mellomnavn.isNullOrEmpty() }?.let { " ${it} " } ?: " "
+        it.fornavn + mellomnavn + it.etternavn
+    }
 }

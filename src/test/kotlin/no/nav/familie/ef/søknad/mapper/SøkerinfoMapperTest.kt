@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.mapper
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import no.nav.familie.ef.søknad.api.dto.tps.Adresse
 import no.nav.familie.ef.søknad.api.dto.tps.Person
 import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
@@ -10,14 +11,26 @@ import no.nav.familie.ef.søknad.integration.dto.KodeDto
 import no.nav.familie.ef.søknad.integration.dto.KodeMedDatoOgKildeDto
 import no.nav.familie.ef.søknad.integration.dto.NavnDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
+import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
 import no.nav.familie.ef.søknad.integration.dto.pdl.DeltBosted
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
+import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
 import no.nav.familie.ef.søknad.integration.dto.pdl.Matrikkeladresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkeladresseBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
 import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
 import no.nav.familie.ef.søknad.service.KodeverkService
+import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -32,78 +45,40 @@ internal class SøkerinfoMapperTest {
     internal fun setUp() {
         every { kodeverkService.hentPoststed(any()) } returns "OSLO"
         every { kodeverkService.hentLand(any()) } returns "NORGE"
+        mockkObject(EksternBrukerUtils)
+        every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
     }
 
-//    @Test
-//    fun `mapTilBarn konverterer alle felter i RelasjonDto fra TPS til rett felt i Barn`() {
-//        val relasjonDto = RelasjonDto("fødselsnummer",
-//                                      "Bob Kåre",
-//                                      15,
-//                                      null,
-//                                      LocalDate.of(2004, 4, 15),
-//                                      true)
-//
-//        val barn = søkerinfoMapper.mapTilBarn(relasjonDto)
-//
-//        assertThat(barn.fnr).isEqualTo("fødselsnummer")
-//        assertThat(barn.navn).isEqualTo("Bob Kåre")
-//        assertThat(barn.alder).isEqualTo(15)
-//        assertThat(barn.fødselsdato).isEqualTo(LocalDate.of(2004, 4, 15))
-//        assertThat(barn.harSammeAdresse).isEqualTo(true)
-//    }
+    @Test
+    fun `Test visningsnavn`() {
+        val navn1 = Navn("Roy", "", "Toy").visningsnavn()
+        val navn2 = Navn("Roy", null, "Toy").visningsnavn()
+        val navn3 = Navn("Roy", "Tull", "Toy").visningsnavn()
+        assertThat(navn1).isEqualTo("Roy Toy")
+        assertThat(navn2).isEqualTo("Roy Toy")
+        assertThat(navn3).isEqualTo("Roy Tull Toy")
+    }
 
-//    @Test
-//    fun `mapTilPerson konverterer alle felter i personinfoDto fra TPS til rett felt i Person`() {
-//        val personinfoDto = PersoninfoDto("fødselsnummer",
-//                                          NavnDto("Roy Tony"),
-//                                          AdresseinfoDto(BostedsadresseDto("Veien 24", "v/noen", "Oslo", "NOR", "0265")),
-//                                          DødsdatoDto(LocalDate.of(2024, 5, 16)),
-//                                          EgenansattDto(LocalDate.of(2017, 8, 30), true),
-//                                          KodeMedDatoOgKildeDto(KodeDto("kode")),
-//                                          InnvandringUtvandringDto(LocalDate.of(1999, 5, 4), LocalDate.of(2016, 8, 3)),
-//                                          KontonummerDto("8675309"),
-//                                          KodeMedDatoOgKildeDto(KodeDto("opphold")),
-//                                          KodeMedDatoOgKildeDto(KodeDto("GIFT")),
-//                                          KodeMedDatoOgKildeDto(KodeDto("bm")),
-//                                          KodeMedDatoOgKildeDto(KodeDto("NOR")),
-//                                          TelefoninfoDto("jobb", "mobil", "privat"))
-//
-//        val person = søkerinfoMapper.mapTilPerson(personinfoDto)
-//
-//        assertThat(person.fnr).isEqualTo("fødselsnummer")
-//        assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
-//        assertThat(person.adresse).isEqualTo(Adresse("Veien 24", "0265", "OSLO"))
-//        assertThat(person.egenansatt).isEqualTo(true)
-//        assertThat(person.sivilstand).isEqualTo("GIFT")
-//        assertThat(person.statsborgerskap).isEqualTo("NORGE")
-//
-//    }
+    @Test
+    fun `AnnenForelder mappes til barn`() {
+        val pdlSøker = PdlSøker(listOf(),
+                                listOf(),
+                                listOf(),
+                                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
+                                sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
+                                listOf())
 
-//    @Test
-//    fun `mapTilPerson konverterer alle null-felter i personinfoDto fra TPS til deafault-verdier i Person`() {
-//        val personinfoDto = PersoninfoDto("fødselsnummer",
-//                                          NavnDto("Roy Tony"),
-//                                          null,
-//                                          null,
-//                                          null,
-//                                          null,
-//                                          null,
-//                                          null,
-//                                          null,
-//                                          null,
-//                                          null,
-//                                          null,
-//                                          null)
-//
-//        val person = søkerinfoMapper.mapTilPerson(personinfoDto)
-//
-//        assertThat(person.fnr).isEqualTo("fødselsnummer")
-//        assertThat(person.forkortetNavn).isEqualTo("Roy Tony")
-//        assertThat(person.adresse).isEqualTo(Adresse("", "", ""))
-//        assertThat(person.egenansatt).isEqualTo(false)
-//        assertThat(person.sivilstand).isEqualTo("")
-//        assertThat(person.statsborgerskap).isEqualTo("")
-//    }
+
+        val navn = Navn("Roy", "", "Toy")
+        val barn = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+                               navn = listOf(Navn("Boy", "", "Moy")),
+                               familierelasjoner = listOf(Familierelasjon("1234", Familierelasjonsrolle.FAR)))
+        val adressebeskyttelse = Adressebeskyttelse(AdressebeskyttelseGradering.UGRADERT)
+        val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(), listOf(navn))
+        val andreForeldre = mapOf("1234" to pdlAnnenForelder)
+        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), andreForeldre)
+        assertThat(person.barn.first().annenForelder?.navn).isEqualTo("Roy Toy")
+    }
 
     @Test
     internal fun `ikke feile når henting av poststed feiler`() {

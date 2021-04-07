@@ -1,27 +1,22 @@
-query($ident: ID!){
-    person: hentPerson(ident: $ident) {
-        adressebeskyttelse {
-            gradering
-            metadata {
-                historisk
+query($identer: [ID!]!){
+    personBolk: hentPersonBolk(identer: $identer) {
+        code
+        ident
+        person {
+            adressebeskyttelse {
+                gradering
+            }
+            doedsfall {
+                doedsdato
+            }
+            navn {
+                fornavn
+                mellomnavn
+                etternavn
+                metadata {
+                    historisk
+                }
             }
         }
-        doedsfall {
-            doedsdato
-        }
-        familierelasjoner {
-            relatertPersonsIdent
-            relatertPersonsRolle
-        }
-        navn {
-            fornavn
-            mellomnavn
-            etternavn
-            metadata {
-                historisk
-            }
-        }
-
-
     }
 }
