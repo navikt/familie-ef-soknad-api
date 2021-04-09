@@ -5,6 +5,8 @@ import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
 import no.nav.familie.ef.søknad.api.dto.pdl.AnnenForelder
 import no.nav.familie.ef.søknad.api.dto.pdl.Barn
 import no.nav.familie.ef.søknad.api.dto.pdl.Person
+import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
@@ -68,7 +70,13 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
             val annenForelderRelasjon = it.value.familierelasjoner.find { erAnnenForelderRelasjon(it, søkerPersonIdent) }
             val annenForelder = annenForelderRelasjon?.let { andreForeldre[it.relatertPersonsIdent]?.tilDto() }
-            Barn(it.key, navn, alder, fødselsdato, harSammeAdresse, annenForelder)
+            Barn(it.key,
+                 navn,
+                 alder,
+                 fødselsdato,
+                 harSammeAdresse,
+                 annenForelder,
+                 it.value.adressebeskyttelse.harBeskyttetAdresse())
         }
     }
 
@@ -124,7 +132,8 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                       adresse = adresse,
                       egenansatt = false,
                       sivilstand = sivilstand.first().type.toString(),
-                      statsborgerskap = statsborgerskapListe)
+                      statsborgerskap = statsborgerskapListe,
+                      harAdressesperre = adressebeskyttelse.harBeskyttetAdresse())
     }
 
     private fun formaterAdresse(pdlSøker: PdlSøker): String {
@@ -165,8 +174,14 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
 }
 
-private fun PdlAnnenForelder.tilDto(): AnnenForelder {
+fun PdlAnnenForelder.tilDto(): AnnenForelder {
     val annenForelderNavn = this.navn.first()
-
-    return AnnenForelder(annenForelderNavn.visningsnavn(), this.adressebeskyttelse, this.dødsfall)
+    return AnnenForelder(annenForelderNavn.visningsnavn(),
+                         this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any())
 }
+
+fun List<Adressebeskyttelse>.harBeskyttetAdresse(): Boolean = kreverAdressebeskyttelse.contains(this.firstOrNull()?.gradering)
+
+private val kreverAdressebeskyttelse = listOf(AdressebeskyttelseGradering.FORTROLIG,
+                                              AdressebeskyttelseGradering.STRENGT_FORTROLIG,
+                                              AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND)

@@ -222,7 +222,8 @@ internal class OppslagServiceServiceImplTest {
                       mapTilAdresse(personinfoDto.adresseinfo),
                       personinfoDto.egenansatt?.isErEgenansatt ?: false,
                       personinfoDto.sivilstand?.kode?.verdi ?: "",
-                      søkerinfoMapper.hentLand(personinfoDto.statsborgerskap?.kode?.verdi))
+                      søkerinfoMapper.hentLand(personinfoDto.statsborgerskap?.kode?.verdi),
+                      false)
     }
 
     private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {

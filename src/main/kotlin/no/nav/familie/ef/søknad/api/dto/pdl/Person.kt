@@ -5,4 +5,6 @@ data class Person(val fnr: String,
                   val adresse: Adresse,
                   val egenansatt: Boolean,
                   val sivilstand: String,
-                  val statsborgerskap: String)
+                  val statsborgerskap: String,
+                  val harAdressesperre: Boolean
+)

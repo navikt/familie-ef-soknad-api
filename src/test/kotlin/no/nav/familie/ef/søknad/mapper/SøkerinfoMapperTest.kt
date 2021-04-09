@@ -12,7 +12,10 @@ import no.nav.familie.ef.søknad.integration.dto.KodeMedDatoOgKildeDto
 import no.nav.familie.ef.søknad.integration.dto.NavnDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
-import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.FORTROLIG
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.UGRADERT
 import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
 import no.nav.familie.ef.søknad.integration.dto.pdl.DeltBosted
@@ -60,6 +63,42 @@ internal class SøkerinfoMapperTest {
     }
 
     @Test
+    fun `AnnenForelder adressebeskyttelse fortrolig mappes til harAdressesperre`() {
+        val navn = Navn("Roy", "", "Toy")
+        val annenForelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
+        val annenForelderStrengtFortrolig =
+                PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG)), listOf(), listOf(navn))
+        val annenForelderStrengtFortroligUtland =
+                PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)), listOf(), listOf(navn))
+        //
+        assertThat(annenForelderFortrolig.tilDto().harAdressesperre == true)
+        assertThat(annenForelderStrengtFortrolig.tilDto().harAdressesperre == true)
+        assertThat(annenForelderStrengtFortroligUtland.tilDto().harAdressesperre == true)
+    }
+
+    @Test
+    fun `AnnenForelder adressebeskyttelse UGRADERT skal ikke ha adressesperre`() {
+        val navn = Navn("Roy", "", "Toy")
+        val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
+        val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
+        //
+        val tilDto = pdlAnnenForelder.tilDto()
+        //
+        assertThat(tilDto.harAdressesperre == false)
+    }
+
+    @Test
+    fun `AnnenForelder adressebeskyttelse tom skal ikke ha adressesperre`() {
+        val navn = Navn("Roy", "", "Toy")
+
+        val pdlAnnenForelder = PdlAnnenForelder(listOf(), listOf(), listOf(navn))
+        //
+        val tilDto = pdlAnnenForelder.tilDto()
+        //
+        assertThat(tilDto.harAdressesperre == false)
+    }
+
+    @Test
     fun `AnnenForelder mappes til barn`() {
         val pdlSøker = PdlSøker(listOf(),
                                 listOf(),
@@ -73,7 +112,7 @@ internal class SøkerinfoMapperTest {
         val barn = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
                                navn = listOf(Navn("Boy", "", "Moy")),
                                familierelasjoner = listOf(Familierelasjon("1234", Familierelasjonsrolle.FAR)))
-        val adressebeskyttelse = Adressebeskyttelse(AdressebeskyttelseGradering.UGRADERT)
+        val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
         val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
         val andreForeldre = mapOf("1234" to pdlAnnenForelder)
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), andreForeldre)
@@ -219,7 +258,9 @@ internal class SøkerinfoMapperTest {
                       mapTilAdresse(personinfoDto.adresseinfo),
                       personinfoDto.egenansatt?.isErEgenansatt ?: false,
                       personinfoDto.sivilstand?.kode?.verdi ?: "",
-                      søkerinfoMapper.hentLand(personinfoDto.statsborgerskap?.kode?.verdi))
+                      søkerinfoMapper.hentLand(personinfoDto.statsborgerskap?.kode?.verdi),
+                      false
+        )
     }
 
     private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {

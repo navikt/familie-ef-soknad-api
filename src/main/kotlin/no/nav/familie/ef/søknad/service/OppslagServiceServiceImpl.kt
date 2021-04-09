@@ -11,7 +11,6 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
@@ -29,8 +28,6 @@ internal class OppslagServiceServiceImpl(
                                                   AdressebeskyttelseGradering.STRENGT_FORTROLIG,
                                                   AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND)
 
-    private val logger = LoggerFactory.getLogger(this::class.java)
-
 
     override fun hentSøkerinfo(): Søkerinfo {
 
@@ -43,7 +40,7 @@ internal class OppslagServiceServiceImpl(
         val aktuelleBarn = pdlBarn
                 .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
                 .filter { erILive(it.value) }
-                .filter { harIkkeBeskyttetAdresse(it.value.adressebeskyttelse) }
+              //  .filter { harIkkeBeskyttetAdresse(it.value.adressebeskyttelse) }
 
         val andreForeldre = hentAndreForeldre(aktuelleBarn, søkersPersonIdent)
         return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn, andreForeldre)
