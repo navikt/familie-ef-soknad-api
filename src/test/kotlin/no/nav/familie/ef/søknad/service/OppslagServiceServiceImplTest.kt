@@ -14,7 +14,6 @@ import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
-import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.Dødsfall
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
@@ -128,17 +127,6 @@ internal class OppslagServiceServiceImplTest {
     @Test
     fun `Skal filtrere bort døde barn`() {
         every { pdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn(dødsfall = Dødsfall(LocalDate.MIN)))
-        val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
-        mockHentPersonPdlClient()
-        captureAktuelleBarn(aktuelleBarnSlot)
-        oppslagServiceService.hentSøkerinfo()
-        assertThat(aktuelleBarnSlot.captured).hasSize(0)
-    }
-
-    @Test
-    fun `Skal filtrere bort barn med adressebeskyttelse`() {
-        every { pdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn(adressebeskyttelse = Adressebeskyttelse(
-                AdressebeskyttelseGradering.STRENGT_FORTROLIG)))
         val aktuelleBarnSlot = slot<Map<String, PdlBarn>>()
         mockHentPersonPdlClient()
         captureAktuelleBarn(aktuelleBarnSlot)
