@@ -6,8 +6,8 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
 import io.mockk.spyk
-import no.nav.familie.ef.søknad.api.dto.tps.Adresse
-import no.nav.familie.ef.søknad.api.dto.tps.Person
+import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
+import no.nav.familie.ef.søknad.api.dto.pdl.Person
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient

@@ -1,10 +1,10 @@
 package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
-import no.nav.familie.ef.søknad.api.dto.tps.Adresse
-import no.nav.familie.ef.søknad.api.dto.tps.AnnenForelder
-import no.nav.familie.ef.søknad.api.dto.tps.Barn
-import no.nav.familie.ef.søknad.api.dto.tps.Person
+import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
+import no.nav.familie.ef.søknad.api.dto.pdl.AnnenForelder
+import no.nav.familie.ef.søknad.api.dto.pdl.Barn
+import no.nav.familie.ef.søknad.api.dto.pdl.Person
 import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
@@ -167,5 +167,6 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
 private fun PdlAnnenForelder.tilDto(): AnnenForelder {
     val annenForelderNavn = this.navn.first()
+
     return AnnenForelder(annenForelderNavn.visningsnavn(), this.adressebeskyttelse, this.dødsfall)
 }

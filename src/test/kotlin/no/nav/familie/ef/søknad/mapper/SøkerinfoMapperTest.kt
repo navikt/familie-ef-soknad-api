@@ -3,8 +3,8 @@ package no.nav.familie.ef.søknad.mapper
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
-import no.nav.familie.ef.søknad.api.dto.tps.Adresse
-import no.nav.familie.ef.søknad.api.dto.tps.Person
+import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
+import no.nav.familie.ef.søknad.api.dto.pdl.Person
 import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
 import no.nav.familie.ef.søknad.integration.dto.BostedsadresseDto
 import no.nav.familie.ef.søknad.integration.dto.KodeDto
