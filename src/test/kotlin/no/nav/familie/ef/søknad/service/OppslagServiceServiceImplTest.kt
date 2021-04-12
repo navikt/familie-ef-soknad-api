@@ -14,6 +14,7 @@ import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.Dødsfall
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
@@ -26,6 +27,7 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
 import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
+import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -65,6 +67,19 @@ internal class OppslagServiceServiceImplTest {
     }
 
     @Test
+    fun `Lik søkerInfo med adressesperre skal ha lik hash`() {
+        mockPdlHentBarn(adressebeskyttelseGradering = AdressebeskyttelseGradering.FORTROLIG)
+        mockHentPersonPdlClient(fornavn = "Et navn")
+        val søkerinfo = oppslagServiceService.hentSøkerinfo()
+        mockHentPersonPdlClient(fornavn = "Et navn")
+
+        print("BArn: " + søkerinfo.barn.first().toString())
+
+        val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
+        assertEquals(søkerinfo.hash, søkerinfo2.hash)
+    }
+
+    @Test
     fun `SøkerInfo med ulike navn skal ikke ha lik hash`() {
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
         mockHentPersonPdlClient("Et annet navn")
@@ -89,14 +104,15 @@ internal class OppslagServiceServiceImplTest {
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
         val pdlBarn = pdlBarn()
         //  mockPdlHentBarn()
-        val copy = pdlBarn.second.copy(familierelasjoner = listOf(Familierelasjon("1234", Familierelasjonsrolle.FAR)),
+        val generer = FnrGenerator.generer()
+        val copy = pdlBarn.second.copy(familierelasjoner = listOf(Familierelasjon(generer, Familierelasjonsrolle.FAR)),
                                        navn = listOf(Navn("navn", "navn", "navn")))
         every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
-        every { pdlStsClient.hentAndreForeldre(any()) } returns mapOf("1234" to PdlAnnenForelder(listOf(),
-                                                                                                 listOf(),
-                                                                                                 listOf(Navn("forelder",
-                                                                                                             "forelder",
-                                                                                                             "forelder"))))
+        every { pdlStsClient.hentAndreForeldre(any()) } returns mapOf(generer to PdlAnnenForelder(listOf(),
+                                                                                                  listOf(),
+                                                                                                  listOf(Navn("forelder",
+                                                                                                              "forelder",
+                                                                                                              "forelder"))))
 
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertNotEquals(søkerinfo.hash, søkerinfo2.hash)
@@ -183,9 +199,9 @@ internal class OppslagServiceServiceImplTest {
     }
 
 
-
-    private fun mockPdlHentBarn(navn: String = "Ola") {
-        val pdlBarn = pdlBarn()
+    private fun mockPdlHentBarn(navn: String = "Ola",
+                                adressebeskyttelseGradering: AdressebeskyttelseGradering = AdressebeskyttelseGradering.UGRADERT) {
+        val pdlBarn = pdlBarn(Adressebeskyttelse(adressebeskyttelseGradering))
         val copy = pdlBarn.second.copy(navn = listOf(Navn(navn, navn, navn)))
         every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
     }
@@ -193,9 +209,10 @@ internal class OppslagServiceServiceImplTest {
 
     private fun mockHentPersonPdlClient(fornavn: String = "TestNavn",
                                         mellomnavn: String = "TestNavn",
-                                        etternavn: String = "TestNavn") {
+                                        etternavn: String = "TestNavn",
+                                        adressebeskyttelseGradering: AdressebeskyttelseGradering = AdressebeskyttelseGradering.UGRADERT) {
 
-        every { pdlClient.hentSøker(any()) } returns (PdlSøker(listOf(),
+        every { pdlClient.hentSøker(any()) } returns (PdlSøker(listOf(Adressebeskyttelse(adressebeskyttelseGradering)),
                                                                listOf(),
                                                                listOf(),
                                                                navn = listOf(Navn(fornavn, mellomnavn, etternavn)),

@@ -21,6 +21,7 @@ class Barn(val fnr: String,
 
     }
 
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -47,6 +48,10 @@ class Barn(val fnr: String,
         result = 31 * result + harAdressesperre.hashCode()
         result = 31 * result + navn.hashCode()
         return result
+    }
+
+    override fun toString(): String {
+        return "Barn(fnr='****', alder=$alder, fødselsdato=$fødselsdato, harSammeAdresse=$harSammeAdresse, annenForelder=$annenForelder, harAdressesperre=$harAdressesperre, navn='***')"
     }
 
 

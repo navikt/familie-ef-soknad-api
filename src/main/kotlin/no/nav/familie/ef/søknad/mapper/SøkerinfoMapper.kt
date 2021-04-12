@@ -69,7 +69,8 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             val harSammeAdresse = harSammeAdresse(søkersAdresse, it.value)
 
             val annenForelderRelasjon = it.value.familierelasjoner.find { erAnnenForelderRelasjon(it, søkerPersonIdent) }
-            val annenForelder = annenForelderRelasjon?.let { andreForeldre[it.relatertPersonsIdent]?.tilDto() }
+            val annenForelder =
+                    annenForelderRelasjon?.let { andreForeldre[it.relatertPersonsIdent]?.tilDto(it.relatertPersonsIdent) }
             Barn(it.key,
                  navn,
                  alder,
@@ -174,10 +175,12 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
 }
 
-fun PdlAnnenForelder.tilDto(): AnnenForelder {
+fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): AnnenForelder {
     val annenForelderNavn = this.navn.first()
+
+
     return AnnenForelder(annenForelderNavn.visningsnavn(),
-                         this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any())
+                         this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any(), annenForelderPersonsIdent)
 }
 
 fun List<Adressebeskyttelse>.harBeskyttetAdresse(): Boolean = kreverAdressebeskyttelse.contains(this.firstOrNull()?.gradering)
