@@ -72,9 +72,6 @@ internal class OppslagServiceServiceImplTest {
         mockHentPersonPdlClient(fornavn = "Et navn")
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
         mockHentPersonPdlClient(fornavn = "Et navn")
-
-        print("BArn: " + søkerinfo.barn.first().toString())
-
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertEquals(søkerinfo.hash, søkerinfo2.hash)
     }
