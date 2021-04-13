@@ -2,8 +2,8 @@ package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
-import no.nav.familie.ef.søknad.api.dto.pdl.AnnenForelder
 import no.nav.familie.ef.søknad.api.dto.pdl.Barn
+import no.nav.familie.ef.søknad.api.dto.pdl.MedForelder
 import no.nav.familie.ef.søknad.api.dto.pdl.Person
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
@@ -68,21 +68,21 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
             val harSammeAdresse = harSammeAdresse(søkersAdresse, it.value)
 
-            val annenForelderRelasjon = it.value.familierelasjoner.find { erAnnenForelderRelasjon(it, søkerPersonIdent) }
-            val annenForelder =
-                    annenForelderRelasjon?.let { andreForeldre[it.relatertPersonsIdent]?.tilDto(it.relatertPersonsIdent) }
+            val medForelderRelasjon = it.value.familierelasjoner.find { erMedForelderRelasjon(it, søkerPersonIdent) }
+            val medForelder =
+                    medForelderRelasjon?.let { andreForeldre[it.relatertPersonsIdent]?.tilDto(it.relatertPersonsIdent) }
             Barn(it.key,
                  navn,
                  alder,
                  fødselsdato,
                  harSammeAdresse,
-                 annenForelder,
+                 medForelder,
                  it.value.adressebeskyttelse.harBeskyttetAdresse())
         }
     }
 
-    private fun erAnnenForelderRelasjon(familierelasjon: Familierelasjon,
-                                        søkersPersonIdent: String) =
+    private fun erMedForelderRelasjon(familierelasjon: Familierelasjon,
+                                      søkersPersonIdent: String) =
             familierelasjon.relatertPersonsIdent != søkersPersonIdent &&
             familierelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
 
@@ -175,12 +175,12 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
 }
 
-fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): AnnenForelder {
+fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): MedForelder {
     val annenForelderNavn = this.navn.first()
 
 
-    return AnnenForelder(annenForelderNavn.visningsnavn(),
-                         this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any(), annenForelderPersonsIdent)
+    return MedForelder(annenForelderNavn.visningsnavn(),
+                       this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any(), annenForelderPersonsIdent)
 }
 
 fun List<Adressebeskyttelse>.harBeskyttetAdresse(): Boolean = kreverAdressebeskyttelse.contains(this.firstOrNull()?.gradering)

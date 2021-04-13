@@ -29,7 +29,7 @@ class StsPdlClientConfig {
     @Primary
     fun pdlStsClient(): PdlStsClient {
         val pdlClient: PdlStsClient = mockk()
-        val annenForelderFnr = FnrGenerator.generer()
+        val medForelderFnr = FnrGenerator.generer()
         every { pdlClient.hentBarn(any()) } returns
                 mapOf("28021078036" to PdlBarn(
                         adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
@@ -38,11 +38,11 @@ class StsPdlClientConfig {
                         navn = lagNavn("Hei", "På", "Deg"),
                         fødsel = listOf(Fødsel(2000, LocalDate.now().minusMonths(6))),
                         dødsfall = listOf(),
-                        familierelasjoner = listOf(Familierelasjon(annenForelderFnr, Familierelasjonsrolle.MEDMOR))
+                        familierelasjoner = listOf(Familierelasjon(medForelderFnr, Familierelasjonsrolle.MEDMOR))
                 ))
 
         every { pdlClient.hentAndreForeldre(any()) } returns
-                mapOf(annenForelderFnr to PdlAnnenForelder(
+                mapOf(medForelderFnr to PdlAnnenForelder(
                         adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
                         navn = lagNavn("Bjørn", "Borg", "Borgersen"),
                         dødsfall = listOf(),

@@ -7,7 +7,7 @@ class Barn(val fnr: String,
            val alder: Int,
            val fødselsdato: LocalDate,
            val harSammeAdresse: Boolean,
-           val annenForelder: AnnenForelder?,
+           val medForelder: MedForelder?,
            val harAdressesperre: Boolean
 ) {
 
@@ -32,7 +32,7 @@ class Barn(val fnr: String,
         if (alder != other.alder) return false
         if (fødselsdato != other.fødselsdato) return false
         if (harSammeAdresse != other.harSammeAdresse) return false
-        if (annenForelder != other.annenForelder) return false
+        if (medForelder != other.medForelder) return false
         if (harAdressesperre != other.harAdressesperre) return false
         if (navn != other.navn) return false
 
@@ -44,14 +44,14 @@ class Barn(val fnr: String,
         result = 31 * result + alder
         result = 31 * result + fødselsdato.hashCode()
         result = 31 * result + harSammeAdresse.hashCode()
-        result = 31 * result + (annenForelder?.hashCode() ?: 0)
+        result = 31 * result + (medForelder?.hashCode() ?: 0)
         result = 31 * result + harAdressesperre.hashCode()
         result = 31 * result + navn.hashCode()
         return result
     }
 
     override fun toString(): String {
-        return "Barn(fnr='****', alder=$alder, fødselsdato=$fødselsdato, harSammeAdresse=$harSammeAdresse, annenForelder=$annenForelder, harAdressesperre=$harAdressesperre, navn='***')"
+        return "Barn(fnr='****', alder=$alder, fødselsdato=$fødselsdato, harSammeAdresse=$harSammeAdresse, annenForelder=$medForelder, harAdressesperre=$harAdressesperre, navn='***')"
     }
 
 

@@ -33,12 +33,14 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
 import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
 import no.nav.familie.ef.søknad.service.KodeverkService
+import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
+import java.time.Period
 
 internal class SøkerinfoMapperTest {
 
@@ -64,10 +66,25 @@ internal class SøkerinfoMapperTest {
     }
 
     @Test
+    fun `MedForelder alder og navn`() {
+        val navn = Navn("Roy", "", "Toy")
+        val medForelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
+
+        val ident = FnrGenerator.generer()
+        val fnr = Fødselsnummer(ident)
+        val expectedAlder = Period.between(fnr.fødselsdato, LocalDate.now()).years
+        val annenForelder = medForelderFortrolig.tilDto(ident)
+        assertThat(annenForelder.harAdressesperre).isTrue
+
+        val alder = annenForelder.alder
+        assertThat(alder).isGreaterThan(0)
+        assertThat(annenForelder.navn).isNotEqualTo("Roy Toy")
+        assertThat(annenForelder.navn).isEqualTo("Person $expectedAlder år")
+    }
+
+    @Test
     fun `AnnenForelder adressebeskyttelse fortrolig mappes til harAdressesperre`() {
         val navn = Navn("Roy", "", "Toy")
-
-
         val annenForelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
         val annenForelderStrengtFortrolig =
                 PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG)), listOf(), listOf(navn))
@@ -75,10 +92,11 @@ internal class SøkerinfoMapperTest {
                 PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)), listOf(), listOf(navn))
         //
         val ident = FnrGenerator.generer()
+        val annenForelder = annenForelderFortrolig.tilDto(ident)
+        assertThat(annenForelder.harAdressesperre).isTrue
+        assertThat(annenForelderStrengtFortrolig.tilDto(ident).harAdressesperre).isTrue
+        assertThat(annenForelderStrengtFortroligUtland.tilDto(ident).harAdressesperre).isTrue
 
-        assertThat(annenForelderFortrolig.tilDto(ident).harAdressesperre == true)
-        assertThat(annenForelderStrengtFortrolig.tilDto(ident).harAdressesperre == true)
-        assertThat(annenForelderStrengtFortroligUtland.tilDto(ident).harAdressesperre == true)
     }
 
     @Test
@@ -122,7 +140,7 @@ internal class SøkerinfoMapperTest {
         val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
         val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), andreForeldre)
-        assertThat(person.barn.first().annenForelder?.navn).isEqualTo("Roy Toy")
+        assertThat(person.barn.first().medForelder?.navn).isEqualTo("Roy Toy")
     }
 
     @Test

@@ -94,6 +94,8 @@ internal class OppslagServiceServiceImplTest {
         assertNotEquals(søkerinfo.hash, søkerinfo2.hash)
     }
 
+    // TODO test hash av person med barn med annen forelder (med fortrolig adresse?)
+
     @Test
     fun `SøkerInfo med endring i familierelasjoner skal ikke ha lik hash`() {
         mockHentPersonPdlClient()

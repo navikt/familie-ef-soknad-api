@@ -4,7 +4,7 @@ import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import java.time.LocalDate
 import java.time.Period
 
-class AnnenForelder(_navn: String, val harAdressesperre: Boolean, val død: Boolean = false, val ident: String) {
+class MedForelder(_navn: String, val harAdressesperre: Boolean, val død: Boolean = false, val ident: String) {
 
     val navn: String
     val alder: Int
@@ -23,7 +23,7 @@ class AnnenForelder(_navn: String, val harAdressesperre: Boolean, val død: Bool
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as AnnenForelder
+        other as MedForelder
 
         if (harAdressesperre != other.harAdressesperre) return false
         if (død != other.død) return false
