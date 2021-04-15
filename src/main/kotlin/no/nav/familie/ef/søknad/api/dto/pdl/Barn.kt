@@ -51,7 +51,7 @@ class Barn(val fnr: String,
     }
 
     override fun toString(): String {
-        return "Barn(fnr='****', alder=$alder, fødselsdato=$fødselsdato, harSammeAdresse=$harSammeAdresse, annenForelder=$medForelder, harAdressesperre=$harAdressesperre, navn='***')"
+        return "Barn(alder=$alder, fødselsdato=$fødselsdato, annenForelder=$medForelder, harAdressesperre=$harAdressesperre)"
     }
 
 

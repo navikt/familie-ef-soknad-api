@@ -43,5 +43,9 @@ class MedForelder(_navn: String, val harAdressesperre: Boolean, val død: Boolea
         return result
     }
 
+    override fun toString(): String {
+        return "MedForelder(harAdressesperre=$harAdressesperre, død=$død, alder=$alder)"
+    }
+
 
 }
