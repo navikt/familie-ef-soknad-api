@@ -5,33 +5,9 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
 import no.nav.familie.ef.søknad.api.dto.pdl.Person
-import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
-import no.nav.familie.ef.søknad.integration.dto.BostedsadresseDto
-import no.nav.familie.ef.søknad.integration.dto.KodeDto
-import no.nav.familie.ef.søknad.integration.dto.KodeMedDatoOgKildeDto
-import no.nav.familie.ef.søknad.integration.dto.NavnDto
-import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
-import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
-import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.FORTROLIG
-import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG
-import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
-import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.UGRADERT
-import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
-import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
-import no.nav.familie.ef.søknad.integration.dto.pdl.DeltBosted
-import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
-import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
-import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
-import no.nav.familie.ef.søknad.integration.dto.pdl.Matrikkeladresse
-import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkeladresseBarn
-import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
-import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
-import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
-import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
-import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
-import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
-import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
-import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
+import no.nav.familie.ef.søknad.integration.dto.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.*
 import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.sikkerhet.EksternBrukerUtils
@@ -67,17 +43,17 @@ internal class SøkerinfoMapperTest {
 
     @Test
     fun `MedForelder alder og navn`() {
+        // Gitt
         val navn = Navn("Roy", "", "Toy")
         val medForelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
-
         val ident = FnrGenerator.generer()
         val fnr = Fødselsnummer(ident)
         val expectedAlder = Period.between(fnr.fødselsdato, LocalDate.now()).years
+        //Når
         val annenForelder = medForelderFortrolig.tilDto(ident)
+        //Da vil
         assertThat(annenForelder.harAdressesperre).isTrue
-
-        val alder = annenForelder.alder
-        assertThat(alder).isGreaterThan(0)
+        assertThat(annenForelder.alder).isGreaterThan(0)
         assertThat(annenForelder.navn).isNotEqualTo("Roy Toy")
         assertThat(annenForelder.navn).isEqualTo("Person $expectedAlder år")
     }
@@ -87,16 +63,15 @@ internal class SøkerinfoMapperTest {
         val navn = Navn("Roy", "", "Toy")
         val annenForelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
         val annenForelderStrengtFortrolig =
-                PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG)), listOf(), listOf(navn))
+            PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG)), listOf(), listOf(navn))
         val annenForelderStrengtFortroligUtland =
-                PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)), listOf(), listOf(navn))
+            PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)), listOf(), listOf(navn))
         //
         val ident = FnrGenerator.generer()
         val annenForelder = annenForelderFortrolig.tilDto(ident)
         assertThat(annenForelder.harAdressesperre).isTrue
         assertThat(annenForelderStrengtFortrolig.tilDto(ident).harAdressesperre).isTrue
         assertThat(annenForelderStrengtFortroligUtland.tilDto(ident).harAdressesperre).isTrue
-
     }
 
     @Test

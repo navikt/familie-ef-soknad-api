@@ -5,17 +5,7 @@ import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
 import no.nav.familie.ef.søknad.api.dto.pdl.Barn
 import no.nav.familie.ef.søknad.api.dto.pdl.MedForelder
 import no.nav.familie.ef.søknad.api.dto.pdl.Person
-import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
-import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
-import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
-import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
-import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
-import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkelId
-import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
-import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
-import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
-import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
-import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
+import no.nav.familie.ef.søknad.integration.dto.pdl.*
 import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
@@ -61,8 +51,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                                  andreForeldre: Map<String, PdlAnnenForelder>,
                                  søkerPersonIdent: String): List<Barn> {
         return pdlBarn.entries.map {
-            val mellomnavn = it.value.navn.first().mellomnavn?.let { " $it " } ?: " "
-            val navn = it.value.navn.first().fornavn + mellomnavn + it.value.navn.first().etternavn
+            val navn = it.value.navn.firstOrNull()?.visningsnavn() ?: ""
             val fødselsdato = it.value.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
