@@ -8,5 +8,6 @@ data class SøknadSkolepengerDto(
         val søkerBorPåRegistrertAdresse: BooleanFelt?,
         val utdanning: UnderUtdanning,
         val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
-        val locale: String = "nb"
+        val locale: String = "nb",
+        val skalAutomatiskJournalføres: Boolean = true,
 )
