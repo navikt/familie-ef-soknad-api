@@ -13,7 +13,7 @@ class MedForelder(_navn: String, val harAdressesperre: Boolean, val død: Boolea
         val fødselsnummer = Fødselsnummer(ident)
         this.alder = Period.between(fødselsnummer.fødselsdato, LocalDate.now()).years
         this.navn = when (harAdressesperre) {
-            true -> "Person $alder år"
+            true -> ""
             false -> _navn
         }
 
