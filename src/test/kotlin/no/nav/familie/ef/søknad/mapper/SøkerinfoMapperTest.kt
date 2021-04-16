@@ -9,14 +9,12 @@ import no.nav.familie.ef.søknad.integration.dto.*
 import no.nav.familie.ef.søknad.integration.dto.pdl.*
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.*
 import no.nav.familie.ef.søknad.service.KodeverkService
-import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
-import java.time.Period
 
 internal class SøkerinfoMapperTest {
 
@@ -47,15 +45,13 @@ internal class SøkerinfoMapperTest {
         val navn = Navn("Roy", "", "Toy")
         val medForelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
         val ident = FnrGenerator.generer()
-        val fnr = Fødselsnummer(ident)
-        val expectedAlder = Period.between(fnr.fødselsdato, LocalDate.now()).years
         //Når
         val annenForelder = medForelderFortrolig.tilDto(ident)
         //Da vil
         assertThat(annenForelder.harAdressesperre).isTrue
         assertThat(annenForelder.alder).isGreaterThan(0)
         assertThat(annenForelder.navn).isNotEqualTo("Roy Toy")
-        assertThat(annenForelder.navn).isEqualTo("Person $expectedAlder år")
+        assertThat(annenForelder.navn).isEqualTo("")
     }
 
     @Test
