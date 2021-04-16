@@ -9,5 +9,5 @@ data class SøknadOvergangsstønadDto(val bosituasjon: Bosituasjon,
                                     val aktivitet: Aktivitet,
                                     val merOmDinSituasjon: Situasjon,
                                     val locale: String = "nb",
-                                    val skalAutomatiskJournalføres: Boolean = true
+                                    val skalBehandlesINySaksbehandling: Boolean = true
 )

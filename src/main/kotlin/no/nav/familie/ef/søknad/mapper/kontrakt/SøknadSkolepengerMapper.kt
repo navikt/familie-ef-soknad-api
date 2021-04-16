@@ -36,7 +36,7 @@ class SøknadSkolepengerMapper(private val dokumentServiceService: DokumentServi
         return SøknadRequestData(SøknadMedVedlegg(søknadSkolepenger,
                                                   vedlegg.values.flatMap { it.vedlegg },
                                                   dto.dokumentasjonsbehov.tilKontrakt(),
-                                                  dto.skalAutomatiskJournalføres), vedleggData)
+                                                  dto.skalBehandlesINySaksbehandling), vedleggData)
     }
 
 }

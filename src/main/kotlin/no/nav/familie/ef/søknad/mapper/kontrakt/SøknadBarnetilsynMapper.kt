@@ -45,7 +45,7 @@ class SøknadBarnetilsynMapper(private val dokumentServiceService: DokumentServi
         return SøknadRequestData(SøknadMedVedlegg(barnetilsynSøknad,
                                                   vedlegg.values.flatMap { it.vedlegg },
                                                   dto.dokumentasjonsbehov.tilKontrakt(),
-                                                  dto.skalAutomatiskJournalføres), vedleggData)
+                                                  dto.skalBehandlesINySaksbehandling), vedleggData)
     }
 
 }

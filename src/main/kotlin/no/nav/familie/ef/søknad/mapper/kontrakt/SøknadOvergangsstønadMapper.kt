@@ -37,7 +37,7 @@ class SøknadOvergangsstønadMapper(private val dokumentServiceService: Dokument
         return SøknadRequestData(SøknadMedVedlegg(søknad,
                                                   vedlegg.values.flatMap { it.vedlegg },
                                                   dto.dokumentasjonsbehov.tilKontrakt(),
-                                                  dto.skalAutomatiskJournalføres), vedleggData)
+                                                  dto.skalBehandlesINySaksbehandling), vedleggData)
     }
 
 }

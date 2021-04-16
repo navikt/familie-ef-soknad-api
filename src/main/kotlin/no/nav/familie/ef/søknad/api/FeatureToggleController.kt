@@ -12,7 +12,7 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
 
     val funksjonsbrytere = listOf("familie.ef.soknad.feilsituasjon",
                                   "familie.ef.soknad.sprakvelger",
-                                  "familie.ef.soknad.visSkalIkkeJournalfores")
+                                  "familie.ef.soknad.visSkalBehandlesINySaksbehandling")
 
     @GetMapping
     fun sjekkAlle(): Map<String, Boolean> {

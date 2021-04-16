@@ -11,5 +11,5 @@ data class SøknadBarnetilsynDto(
         val søknadsdato: DatoFelt?,
         val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
         val locale: String = "nb",
-        val skalAutomatiskJournalføres: Boolean = true
+        val skalBehandlesINySaksbehandling: Boolean = true
 )
