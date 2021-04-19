@@ -29,7 +29,7 @@ class StsPdlClientConfig {
     @Primary
     fun pdlStsClient(): PdlStsClient {
         val pdlClient: PdlStsClient = mockk()
-        val medForelderFnr = FnrGenerator.generer()
+        val medForelderFnr = FnrGenerator.generer(år = 1999)
         every { pdlClient.hentBarn(any()) } returns
                 mapOf("28021078036" to PdlBarn(
                         adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),

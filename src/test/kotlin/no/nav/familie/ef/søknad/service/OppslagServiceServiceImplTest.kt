@@ -1,6 +1,9 @@
 package no.nav.familie.ef.søknad.service
 
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.spyk
 import no.nav.familie.ef.søknad.api.ApiFeil
 import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
 import no.nav.familie.ef.søknad.api.dto.pdl.Person
@@ -9,9 +12,22 @@ import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
-import no.nav.familie.ef.søknad.integration.dto.pdl.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.FORTROLIG
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.UGRADERT
+import no.nav.familie.ef.søknad.integration.dto.pdl.Dødsfall
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
+import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
+import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.familie.util.FnrGenerator
@@ -30,12 +46,11 @@ internal class OppslagServiceServiceImplTest {
     val regelverkConfig: RegelverkConfig = RegelverkConfig(RegelverkConfig.Alder(18))
     val pdlStsClient: PdlStsClient = mockk()
 
-    //private val søkerinfoMapper = spyk(SøkerinfoMapper(mockk(relaxed = true)))
     private val søkerinfoMapper = spyk(SøkerinfoMapper(mockk(relaxed = true)))
 
     private val oppslagServiceService = OppslagServiceServiceImpl(
-        pdlClient,
-        pdlStsClient, regelverkConfig, søkerinfoMapper
+            pdlClient,
+            pdlStsClient, regelverkConfig, søkerinfoMapper
     )
 
     @BeforeEach
@@ -69,13 +84,56 @@ internal class OppslagServiceServiceImplTest {
     }
 
     @Test
-    fun `Lik søker uten adressesperre skal ikke kunne hente info når relatert person har adressesperre`() {
+    fun `Lik søker uten adressesperre skal ikke kunne hente info når barn har adressesperre`() {
+        mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = UGRADERT)
         mockPdlHentBarn(adressebeskyttelseGradering = FORTROLIG)
-        mockHentPersonPdlClient(fornavn = "Et navn")
-        mockHentPersonPdlClient(fornavn = "Et navn")
         val ex = assertThrows<ApiFeil> { oppslagServiceService.hentSøkerinfo() }
         assertThat(ex.feil).isEqualTo("Personer med tilknytning til søker har adressesperre")
         assertThat(ex.httpStatus).isEqualTo(org.springframework.http.HttpStatus.FORBIDDEN)
+    }
+
+    @Test
+    fun `Søker uten adressesperre skal ikke kunne hente info når medForelder har adressesperre`() {
+        mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = UGRADERT)
+        mockPdlHentAnnenForelder(adressebeskyttelseGradering = FORTROLIG)
+        val ex = assertThrows<ApiFeil> { oppslagServiceService.hentSøkerinfo() }
+        assertThat(ex.feil).isEqualTo("Personer med tilknytning til søker har adressesperre")
+        assertThat(ex.httpStatus).isEqualTo(org.springframework.http.HttpStatus.FORBIDDEN)
+    }
+
+    @Test
+    fun `Søker med adressesperre skal ikke kunne hente info når medForelder har strengt fortrolig adresse`() {
+        mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = FORTROLIG)
+        mockPdlHentAnnenForelder(adressebeskyttelseGradering = STRENGT_FORTROLIG)
+        val ex = assertThrows<ApiFeil> { oppslagServiceService.hentSøkerinfo() }
+        assertThat(ex.feil).isEqualTo("Personer med tilknytning til søker har adressesperre")
+        assertThat(ex.httpStatus).isEqualTo(org.springframework.http.HttpStatus.FORBIDDEN)
+    }
+
+
+    @Test
+    fun `Søker med fortrolig adresse skal ikke kunne hente info når relatert person har strengt fortrolig adresse`() {
+        mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = FORTROLIG)
+        mockPdlHentBarn(adressebeskyttelseGradering = STRENGT_FORTROLIG)
+        val ex = assertThrows<ApiFeil> { oppslagServiceService.hentSøkerinfo() }
+        assertThat(ex.feil).isEqualTo("Personer med tilknytning til søker har adressesperre")
+        assertThat(ex.httpStatus).isEqualTo(org.springframework.http.HttpStatus.FORBIDDEN)
+    }
+
+    @Test
+    fun `Søker med strengt fortrolig adresse skal kunne hente info når relatert person har fortrolig adresse`() {
+        mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = STRENGT_FORTROLIG_UTLAND)
+        mockPdlHentBarn(adressebeskyttelseGradering = FORTROLIG)
+        val søkerinfo = oppslagServiceService.hentSøkerinfo()
+        assertThat(søkerinfo).isNotNull
+    }
+
+    @Test
+    fun `Søker og relasjoner uten fortrolig adresse skal kunne hente info `() {
+        mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = UGRADERT)
+        mockPdlHentBarn(adressebeskyttelseGradering = UGRADERT)
+        val søkerinfo = oppslagServiceService.hentSøkerinfo()
+        assertThat(søkerinfo).isNotNull
     }
 
     @Test
@@ -104,25 +162,24 @@ internal class OppslagServiceServiceImplTest {
         mockPdlHentBarn("navn")
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
         val pdlBarn = pdlBarn()
-        //  mockPdlHentBarn()
         val generer = FnrGenerator.generer()
         val copy = pdlBarn.second.copy(
-            familierelasjoner = listOf(Familierelasjon(generer, Familierelasjonsrolle.FAR)),
-            navn = listOf(Navn("navn", "navn", "navn"))
+                familierelasjoner = listOf(Familierelasjon(generer, Familierelasjonsrolle.FAR)),
+                navn = listOf(Navn("navn", "navn", "navn"))
         )
         every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
         every { pdlStsClient.hentAndreForeldre(any()) } returns mapOf(
-            generer to PdlAnnenForelder(
-                listOf(),
-                listOf(),
-                listOf(
-                    Navn(
-                        "forelder",
-                        "forelder",
-                        "forelder"
-                    )
+                generer to PdlAnnenForelder(
+                        listOf(),
+                        listOf(),
+                        listOf(
+                                Navn(
+                                        "forelder",
+                                        "forelder",
+                                        "forelder"
+                                )
+                        )
                 )
-            )
         )
 
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
@@ -140,27 +197,27 @@ internal class OppslagServiceServiceImplTest {
     fun `er i aktuell alder`() {
         assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now())).isTrue
         assertThat(
-            oppslagServiceService.erIAktuellAlder(
-                fødselsdato = LocalDate.now()
-                    .minusYears(18)
-            )
+                oppslagServiceService.erIAktuellAlder(
+                        fødselsdato = LocalDate.now()
+                                .minusYears(18)
+                )
         ).isTrue
 
         assertThat(
-            oppslagServiceService.erIAktuellAlder(
-                fødselsdato = LocalDate.now()
-                    .minusYears(19).plusDays(1)
-            )
+                oppslagServiceService.erIAktuellAlder(
+                        fødselsdato = LocalDate.now()
+                                .minusYears(19).plusDays(1)
+                )
         )
-            .withFailMessage("Personen har ikke fylt 19 ennå")
-            .isTrue
+                .withFailMessage("Personen har ikke fylt 19 ennå")
+                .isTrue
         assertThat(
-            oppslagServiceService.erIAktuellAlder(
-                fødselsdato = LocalDate.now()
-                    .minusYears(19).minusDays(2)
-            )
+                oppslagServiceService.erIAktuellAlder(
+                        fødselsdato = LocalDate.now()
+                                .minusYears(19).minusDays(2)
+                )
         )
-            .isFalse
+                .isFalse
     }
 
     @Test
@@ -168,8 +225,8 @@ internal class OppslagServiceServiceImplTest {
 
         val mapper = SøkerinfoMapper(kodeverkService = mockk())
         val oppslagServiceServiceMedMapper = OppslagServiceServiceImpl(
-            pdlClient,
-            pdlStsClient, regelverkConfig, mapper
+                pdlClient,
+                pdlStsClient, regelverkConfig, mapper
         )
 
         every { pdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn(dødsfall = Dødsfall(LocalDate.MIN)))
@@ -183,8 +240,8 @@ internal class OppslagServiceServiceImplTest {
     fun `Skal ikke filtrere bort levende barn`() {
         val mapper = SøkerinfoMapper(kodeverkService = mockk())
         val oppslagServiceServiceMedMapper = OppslagServiceServiceImpl(
-            pdlClient,
-            pdlStsClient, regelverkConfig, mapper
+                pdlClient,
+                pdlStsClient, regelverkConfig, mapper
         )
         every { pdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn())
         mockHentPersonPdlClient()
@@ -207,17 +264,11 @@ internal class OppslagServiceServiceImplTest {
         assertThat(søkerinfo.barn.first().fødselsdato).isEqualTo(levendeBarn.second.fødsel.first().fødselsdato)
     }
 
-    private fun captureAktuelleBarn(aktuelleBarnSlot: CapturingSlot<Map<String, PdlBarn>>) {
-        every {
-            søkerinfoMapper.mapTilSøkerinfo(any(), capture(aktuelleBarnSlot), mutableMapOf())
-        } returns mockk()
-    }
-
     private fun pdlBarn(
-        adressebeskyttelse: Adressebeskyttelse? = null,
-        dødsfall: Dødsfall? = null,
-        fødselsdato: LocalDate = LocalDate.now().minusMonths(6),
-        familierelasjoner: List<Familierelasjon> = listOf()
+            adressebeskyttelse: Adressebeskyttelse? = null,
+            dødsfall: Dødsfall? = null,
+            fødselsdato: LocalDate = LocalDate.now().minusMonths(6),
+            familierelasjoner: List<Familierelasjon> = listOf()
     ): Pair<String, PdlBarn> {
         val fødsel = Fødsel(fødselsdato.year, fødselsdato)
         return Pair(fødselsdato.format(ISO_LOCAL_DATE),
@@ -232,52 +283,62 @@ internal class OppslagServiceServiceImplTest {
 
 
     private fun mockPdlHentBarn(
-        navn: String = "Ola",
-        adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT
+            navn: String = "Ola",
+            adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT,
+            familierelasjoner: List<Familierelasjon> = listOf()
+
     ) {
-        val pdlBarn = pdlBarn(Adressebeskyttelse(adressebeskyttelseGradering))
+        val pdlBarn = pdlBarn(Adressebeskyttelse(adressebeskyttelseGradering), familierelasjoner = familierelasjoner)
         val copy = pdlBarn.second.copy(navn = listOf(Navn(navn, navn, navn)))
         every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
     }
 
+    private fun mockPdlHentAnnenForelder(adressebeskyttelseGradering: AdressebeskyttelseGradering) {
+        val annenForelder =
+                PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(adressebeskyttelseGradering)), listOf(), listOf())
+
+        every { pdlStsClient.hentAndreForeldre(any()) } returns (mapOf("enIdent" to annenForelder))
+
+    }
+
 
     private fun mockHentPersonPdlClient(
-        fornavn: String = "TestNavn",
-        mellomnavn: String = "TestNavn",
-        etternavn: String = "TestNavn",
-        adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT
+            fornavn: String = "TestNavn",
+            mellomnavn: String = "TestNavn",
+            etternavn: String = "TestNavn",
+            adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT
     ) {
 
         every { pdlClient.hentSøker(any()) } returns (PdlSøker(
-            listOf(Adressebeskyttelse(adressebeskyttelseGradering)),
-            listOf(),
-            listOf(),
-            navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
-            sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
-            listOf()
+                listOf(Adressebeskyttelse(adressebeskyttelseGradering)),
+                listOf(),
+                listOf(),
+                navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
+                sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
+                listOf()
         ))
     }
 
 
     fun mapTilPerson(personinfoDto: PersoninfoDto): Person {
         return Person(
-            personinfoDto.ident,
-            personinfoDto.navn.forkortetNavn,
-            mapTilAdresse(personinfoDto.adresseinfo),
-            personinfoDto.egenansatt?.isErEgenansatt ?: false,
-            personinfoDto.sivilstand?.kode?.verdi ?: "",
-            søkerinfoMapper.hentLand(personinfoDto.statsborgerskap?.kode?.verdi),
-            false
+                personinfoDto.ident,
+                personinfoDto.navn.forkortetNavn,
+                mapTilAdresse(personinfoDto.adresseinfo),
+                personinfoDto.egenansatt?.isErEgenansatt ?: false,
+                personinfoDto.sivilstand?.kode?.verdi ?: "",
+                søkerinfoMapper.hentLand(personinfoDto.statsborgerskap?.kode?.verdi),
+                false
         )
     }
 
     private fun mapTilAdresse(adresseinfoDto: AdresseinfoDto?): Adresse {
         val postnummer: String? = adresseinfoDto?.bostedsadresse?.postnummer
         return Adresse(
-            adresse = adresseinfoDto?.bostedsadresse?.adresse
-                ?: "",
-            postnummer = postnummer ?: "",
-            poststed = søkerinfoMapper.hentPoststed(postnummer)
+                adresse = adresseinfoDto?.bostedsadresse?.adresse
+                          ?: "",
+                postnummer = postnummer ?: "",
+                poststed = søkerinfoMapper.hentPoststed(postnummer)
         )
     }
 

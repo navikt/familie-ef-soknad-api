@@ -5,9 +5,33 @@ import io.mockk.mockk
 import io.mockk.mockkObject
 import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
 import no.nav.familie.ef.søknad.api.dto.pdl.Person
-import no.nav.familie.ef.søknad.integration.dto.*
-import no.nav.familie.ef.søknad.integration.dto.pdl.*
-import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.*
+import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
+import no.nav.familie.ef.søknad.integration.dto.BostedsadresseDto
+import no.nav.familie.ef.søknad.integration.dto.KodeDto
+import no.nav.familie.ef.søknad.integration.dto.KodeMedDatoOgKildeDto
+import no.nav.familie.ef.søknad.integration.dto.NavnDto
+import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
+import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.FORTROLIG
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.UGRADERT
+import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.DeltBosted
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
+import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
+import no.nav.familie.ef.søknad.integration.dto.pdl.Matrikkeladresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkeladresseBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
+import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
 import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.familie.util.FnrGenerator
@@ -44,7 +68,7 @@ internal class SøkerinfoMapperTest {
         // Gitt
         val navn = Navn("Roy", "", "Toy")
         val medForelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
-        val ident = FnrGenerator.generer()
+        val ident = FnrGenerator.generer(år = 1999)
         //Når
         val annenForelder = medForelderFortrolig.tilDto(ident)
         //Da vil
@@ -63,7 +87,7 @@ internal class SøkerinfoMapperTest {
         val annenForelderStrengtFortroligUtland =
             PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)), listOf(), listOf(navn))
         //
-        val ident = FnrGenerator.generer()
+        val ident = FnrGenerator.generer(år = 1999)
         val annenForelder = annenForelderFortrolig.tilDto(ident)
         assertThat(annenForelder.harAdressesperre).isTrue
         assertThat(annenForelderStrengtFortrolig.tilDto(ident).harAdressesperre).isTrue
@@ -73,8 +97,7 @@ internal class SøkerinfoMapperTest {
     @Test
     fun `AnnenForelder adressebeskyttelse UGRADERT skal ikke ha adressesperre`() {
         val navn = Navn("Roy", "", "Toy")
-        val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
-        val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
+        val pdlAnnenForelder = PdlAnnenForelder(listOf(Adressebeskyttelse(UGRADERT)), listOf(), listOf(navn))
         //
         val tilDto = pdlAnnenForelder.tilDto(FnrGenerator.generer())
         //

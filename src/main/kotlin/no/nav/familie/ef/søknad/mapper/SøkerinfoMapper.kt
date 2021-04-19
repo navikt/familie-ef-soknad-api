@@ -5,7 +5,17 @@ import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
 import no.nav.familie.ef.søknad.api.dto.pdl.Barn
 import no.nav.familie.ef.søknad.api.dto.pdl.MedForelder
 import no.nav.familie.ef.søknad.api.dto.pdl.Person
-import no.nav.familie.ef.søknad.integration.dto.pdl.*
+import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
+import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
+import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkelId
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
+import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
+import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
 import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
@@ -70,27 +80,34 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         }
     }
 
-    private fun erMedForelderRelasjon(familierelasjon: Familierelasjon,
-                                      søkersPersonIdent: String) =
+    private fun erMedForelderRelasjon(
+            familierelasjon: Familierelasjon,
+            søkersPersonIdent: String,
+    ) =
             familierelasjon.relatertPersonsIdent != søkersPersonIdent &&
             familierelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
 
-    fun harSammeAdresse(søkersAdresse: Bostedsadresse?,
-                        pdlBarn: PdlBarn): Boolean {
+    fun harSammeAdresse(
+            søkersAdresse: Bostedsadresse?,
+            pdlBarn: PdlBarn,
+    ): Boolean {
         val barnetsAdresse = pdlBarn.bostedsadresse.firstOrNull()
         if (søkersAdresse == null || barnetsAdresse == null || harDeltBosted(pdlBarn)) {
             return false
         }
 
         return if (søkersAdresse.vegadresse?.matrikkelId != null
-                   && søkersAdresse.vegadresse.matrikkelId == barnetsAdresse.vegadresse?.matrikkelId) {
+                   && søkersAdresse.vegadresse.matrikkelId == barnetsAdresse.vegadresse?.matrikkelId
+        ) {
             true
         } else if (søkersAdresse.matrikkeladresse?.matrikkelId != null
-                   && søkersAdresse.matrikkeladresse.matrikkelId == barnetsAdresse.matrikkeladresse?.matrikkelId) {
+                   && søkersAdresse.matrikkeladresse.matrikkelId == barnetsAdresse.matrikkeladresse?.matrikkelId
+        ) {
             true
         } else {
             if (harIkkeMatrikkelId(søkersAdresse.vegadresse, søkersAdresse.matrikkeladresse)
-                && harIkkeMatrikkelId(barnetsAdresse.vegadresse, barnetsAdresse.matrikkeladresse)) {
+                && harIkkeMatrikkelId(barnetsAdresse.vegadresse, barnetsAdresse.matrikkeladresse)
+            ) {
                 logger.info("Finner ikke matrikkelId på noen av adressene")
             }
             return søkersAdresse.vegadresse != null && søkersAdresse.vegadresse == barnetsAdresse.vegadresse
@@ -111,19 +128,23 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
     private fun PdlSøker.tilPersonDto(): Person {
         val formatertAdresse = formaterAdresse(this)
-        val adresse = Adresse(adresse = formatertAdresse,
-                              poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
-                              postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ")
+        val adresse = Adresse(
+                adresse = formatertAdresse,
+                poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
+                postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " "
+        )
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
-        return Person(fnr = EksternBrukerUtils.hentFnrFraToken(),
-                      forkortetNavn = navn.first().visningsnavn(),
-                      adresse = adresse,
-                      egenansatt = false,
-                      sivilstand = sivilstand.first().type.toString(),
-                      statsborgerskap = statsborgerskapListe,
-                      harAdressesperre = adressebeskyttelse.harBeskyttetAdresse())
+        return Person(
+                fnr = EksternBrukerUtils.hentFnrFraToken(),
+                forkortetNavn = navn.first().visningsnavn(),
+                adresse = adresse,
+                egenansatt = false,
+                sivilstand = sivilstand.first().type.toString(),
+                statsborgerskap = statsborgerskapListe,
+                harAdressesperre = adressebeskyttelse.harBeskyttetAdresse()
+        )
     }
 
     private fun formaterAdresse(pdlSøker: PdlSøker): String {
@@ -147,10 +168,14 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     }
 
     private fun tilFormatertAdresse(vegadresse: Vegadresse): String =
-            join(space(vegadresse.adressenavn ?: "",
-                       vegadresse.husnummer ?: "",
-                       vegadresse.husbokstav ?: "",
-                       vegadresse.bruksenhetsnummer ?: "")) ?: ""
+            join(
+                    space(
+                            vegadresse.adressenavn ?: "",
+                            vegadresse.husnummer ?: "",
+                            vegadresse.husbokstav ?: "",
+                            vegadresse.bruksenhetsnummer ?: ""
+                    )
+            ) ?: ""
 
     private fun join(vararg args: String?, separator: String = ", "): String? {
         val filterNotNull = args.filterNotNull().filterNot(String::isEmpty)
@@ -168,12 +193,30 @@ fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): MedForelder {
     val annenForelderNavn = this.navn.first()
 
 
-    return MedForelder(annenForelderNavn.visningsnavn(),
-                       this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any(), annenForelderPersonsIdent)
+    return MedForelder(
+            annenForelderNavn.visningsnavn(),
+            this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any(), annenForelderPersonsIdent
+    )
 }
 
 fun List<Adressebeskyttelse>.harBeskyttetAdresse(): Boolean = kreverAdressebeskyttelse.contains(this.firstOrNull()?.gradering)
 
-private val kreverAdressebeskyttelse = listOf(AdressebeskyttelseGradering.FORTROLIG,
-                                              AdressebeskyttelseGradering.STRENGT_FORTROLIG,
-                                              AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND)
+fun List<Adressebeskyttelse>.harStrengBeskyttetAdresse(): Boolean =
+        kreverStrengAdressebeskyttelse.contains(this.firstOrNull()?.gradering)
+
+fun List<Adressebeskyttelse>.harBeskyttetAdresseIkkeStreng(): Boolean =
+        kreverAdressebeskyttelseIkkeStreng.contains(this.firstOrNull()?.gradering)
+
+
+private val kreverAdressebeskyttelseIkkeStreng = listOf(AdressebeskyttelseGradering.FORTROLIG)
+
+private val kreverStrengAdressebeskyttelse = listOf(
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG,
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
+)
+
+private val kreverAdressebeskyttelse = listOf(
+        AdressebeskyttelseGradering.FORTROLIG,
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG,
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
+)

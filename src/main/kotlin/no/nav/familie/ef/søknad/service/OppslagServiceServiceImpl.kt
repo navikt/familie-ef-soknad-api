@@ -8,8 +8,12 @@ import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
 import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
+import no.nav.familie.ef.søknad.mapper.harBeskyttetAdresse
+import no.nav.familie.ef.søknad.mapper.harBeskyttetAdresseIkkeStreng
+import no.nav.familie.ef.søknad.mapper.harStrengBeskyttetAdresse
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
@@ -25,8 +29,6 @@ internal class OppslagServiceServiceImpl(
 ) : OppslagService {
 
 
-
-
     override fun hentSøkerinfo(): Søkerinfo {
 
         val søkersPersonIdent = EksternBrukerUtils.hentFnrFraToken()
@@ -37,16 +39,55 @@ internal class OppslagServiceServiceImpl(
         val pdlBarn = pdlStsClient.hentBarn(barnIdentifikatorer)
         val aktuelleBarn = pdlBarn
             .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
-            .filter { erILive(it.value) }
-        //  .filter { harIkkeBeskyttetAdresse(it.value.adressebeskyttelse) }
+                .filter { erILive(it.value) }
 
         val andreForeldre = hentAndreForeldre(aktuelleBarn, søkersPersonIdent)
-        val søkerinfo = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn, andreForeldre)
 
-        validerAdressesperreOk(søkerinfo)
+        validerAdressesperrePåSøkerMedRelasjoner(pdlSøker, aktuelleBarn, andreForeldre)
 
-        return søkerinfo
+        return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn, andreForeldre)
 
+    }
+
+    private fun validerAdressesperrePåSøkerMedRelasjoner(
+            pdlSøker: PdlSøker,
+            aktuelleBarn: Map<String, PdlBarn>,
+            andreForeldre: Map<String, PdlAnnenForelder>
+    ) {
+        when {
+            relasjonerHarAdressesperreSøkerHarIkkeAdressesperre(pdlSøker, aktuelleBarn, andreForeldre) -> throwException()
+            relasjonerHarStrengereBeskyttelseEnnSøker(pdlSøker, aktuelleBarn, andreForeldre) -> throwException()
+        }
+    }
+
+    private fun throwException() {
+        throw ApiFeil("Personer med tilknytning til søker har adressesperre", HttpStatus.FORBIDDEN)
+    }
+
+    private fun relasjonerHarAdressesperreSøkerHarIkkeAdressesperre(
+            pdlSøker: PdlSøker,
+            aktuelleBarn: Map<String, PdlBarn>,
+            andreForeldre: Map<String, PdlAnnenForelder>
+    ): Boolean {
+
+        return when {
+            pdlSøker.harIkkeBeskyttetAdresse() && aktuelleBarn.harBeskyttetAdresse() -> true
+            pdlSøker.harIkkeBeskyttetAdresse() && andreForeldre.harBeskyttetAdresse() -> true
+            else -> false
+        }
+
+    }
+
+    private fun relasjonerHarStrengereBeskyttelseEnnSøker(
+            pdlSøker: PdlSøker,
+            aktuelleBarn: Map<String, PdlBarn>,
+            andreForeldre: Map<String, PdlAnnenForelder>
+    ): Boolean {
+        return when {
+            pdlSøker.harBeskyttetAdresseIkkeStreng() && aktuelleBarn.harStrengBeskyttetAdresse() -> true
+            pdlSøker.harBeskyttetAdresseIkkeStreng() && andreForeldre.harStrengBeskyttetAdresse() -> true
+            else -> false
+        }
     }
 
     override fun hentSøkerNavn(): String {
@@ -55,20 +96,9 @@ internal class OppslagServiceServiceImpl(
         return pdlSøker.navn.first().visningsnavn()
     }
 
-    private fun validerAdressesperreOk(søkerinfo: Søkerinfo) {
-        val adressesperreFunnet = if (!søkerinfo.søker.harAdressesperre) {
-            søkerinfo.barn.any() {
-                it.harAdressesperre || it.medForelder?.harAdressesperre ?: false
-            }
-        } else false
-
-        if (adressesperreFunnet) {
-            throw ApiFeil("Personer med tilknytning til søker har adressesperre", HttpStatus.FORBIDDEN)
-        }
-    }
 
     private fun hentAndreForeldre(
-        aktuelleBarn: Map<String, PdlBarn>,
+            aktuelleBarn: Map<String, PdlBarn>,
         søkersPersonIdent: String
     ): Map<String, PdlAnnenForelder> {
         return aktuelleBarn.map { it.value.familierelasjoner }
@@ -93,6 +123,26 @@ internal class OppslagServiceServiceImpl(
     }
 
 }
+
+@JvmName("harStrengBeskyttetAdresseStringPdlAnnenForelder")
+private fun Map<String, PdlAnnenForelder>.harStrengBeskyttetAdresse(): Boolean =
+        filter { it.value.adressebeskyttelse.harStrengBeskyttetAdresse() }.any()
+
+
+private fun Map<String, PdlBarn>.harStrengBeskyttetAdresse(): Boolean =
+        filter { it.value.adressebeskyttelse.harStrengBeskyttetAdresse() }.any()
+
+
+@JvmName("harBeskyttetAdresseStringPdlAnnenForelder")
+private fun Map<String, PdlAnnenForelder>.harBeskyttetAdresse(): Boolean =
+        filter { it.value.adressebeskyttelse.harBeskyttetAdresse() }.any()
+
+private fun Map<String, PdlBarn>.harBeskyttetAdresse(): Boolean =
+        filter { it.value.adressebeskyttelse.harBeskyttetAdresse() }.any()
+
+private fun PdlSøker.harIkkeBeskyttetAdresse(): Boolean = !this.adressebeskyttelse.harBeskyttetAdresse()
+private fun PdlSøker.harBeskyttetAdresseIkkeStreng(): Boolean = this.adressebeskyttelse.harBeskyttetAdresseIkkeStreng()
+
 
 
 
