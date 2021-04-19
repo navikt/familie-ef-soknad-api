@@ -8,4 +8,6 @@ data class SøknadOvergangsstønadDto(val bosituasjon: Bosituasjon,
                                     val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
                                     val aktivitet: Aktivitet,
                                     val merOmDinSituasjon: Situasjon,
-                                    val locale: String = "nb")
+                                    val locale: String = "nb",
+                                    val skalBehandlesINySaksbehandling: Boolean = false
+)
