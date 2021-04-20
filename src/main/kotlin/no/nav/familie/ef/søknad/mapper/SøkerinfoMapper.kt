@@ -27,7 +27,6 @@ import java.time.Period
 internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
     private val logger = LoggerFactory.getLogger(this::class.java)
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     fun hentPoststed(postnummer: String?): String {
         return hentKodeverdi("poststed", postnummer, kodeverkService::hentPoststed)
@@ -80,17 +79,13 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         }
     }
 
-    private fun erMedForelderRelasjon(
-            familierelasjon: Familierelasjon,
-            søkersPersonIdent: String,
-    ) =
+    private fun erMedForelderRelasjon(familierelasjon: Familierelasjon,
+                                      søkersPersonIdent: String) =
             familierelasjon.relatertPersonsIdent != søkersPersonIdent &&
             familierelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
 
-    fun harSammeAdresse(
-            søkersAdresse: Bostedsadresse?,
-            pdlBarn: PdlBarn,
-    ): Boolean {
+    fun harSammeAdresse(søkersAdresse: Bostedsadresse?,
+                        pdlBarn: PdlBarn): Boolean {
         val barnetsAdresse = pdlBarn.bostedsadresse.firstOrNull()
         if (søkersAdresse == null || barnetsAdresse == null || harDeltBosted(pdlBarn)) {
             return false
@@ -128,22 +123,20 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
     private fun PdlSøker.tilPersonDto(): Person {
         val formatertAdresse = formaterAdresse(this)
-        val adresse = Adresse(
-                adresse = formatertAdresse,
-                poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
-                postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " "
+        val adresse = Adresse(adresse = formatertAdresse,
+                              poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
+                              postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " "
         )
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
-        return Person(
-                fnr = EksternBrukerUtils.hentFnrFraToken(),
-                forkortetNavn = navn.first().visningsnavn(),
-                adresse = adresse,
-                egenansatt = false,
-                sivilstand = sivilstand.first().type.toString(),
-                statsborgerskap = statsborgerskapListe,
-                harAdressesperre = adressebeskyttelse.harBeskyttetAdresse()
+        return Person(fnr = EksternBrukerUtils.hentFnrFraToken(),
+                      forkortetNavn = navn.first().visningsnavn(),
+                      adresse = adresse,
+                      egenansatt = false,
+                      sivilstand = sivilstand.first().type.toString(),
+                      statsborgerskap = statsborgerskapListe,
+                      harAdressesperre = adressebeskyttelse.harBeskyttetAdresse()
         )
     }
 
