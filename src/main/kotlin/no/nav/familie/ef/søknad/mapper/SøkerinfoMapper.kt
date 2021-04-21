@@ -84,25 +84,21 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             familierelasjon.relatertPersonsIdent != søkersPersonIdent &&
             familierelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
 
-    fun harSammeAdresse(søkersAdresse: Bostedsadresse?,
-                        pdlBarn: PdlBarn): Boolean {
+    fun harSammeAdresse(søkersAdresse: Bostedsadresse?, pdlBarn: PdlBarn): Boolean {
         val barnetsAdresse = pdlBarn.bostedsadresse.firstOrNull()
         if (søkersAdresse == null || barnetsAdresse == null || harDeltBosted(pdlBarn)) {
             return false
         }
 
         return if (søkersAdresse.vegadresse?.matrikkelId != null
-                   && søkersAdresse.vegadresse.matrikkelId == barnetsAdresse.vegadresse?.matrikkelId
-        ) {
+                   && søkersAdresse.vegadresse.matrikkelId == barnetsAdresse.vegadresse?.matrikkelId) {
             true
         } else if (søkersAdresse.matrikkeladresse?.matrikkelId != null
-                   && søkersAdresse.matrikkeladresse.matrikkelId == barnetsAdresse.matrikkeladresse?.matrikkelId
-        ) {
+                   && søkersAdresse.matrikkeladresse.matrikkelId == barnetsAdresse.matrikkeladresse?.matrikkelId) {
             true
         } else {
             if (harIkkeMatrikkelId(søkersAdresse.vegadresse, søkersAdresse.matrikkeladresse)
-                && harIkkeMatrikkelId(barnetsAdresse.vegadresse, barnetsAdresse.matrikkeladresse)
-            ) {
+                && harIkkeMatrikkelId(barnetsAdresse.vegadresse, barnetsAdresse.matrikkeladresse)) {
                 logger.info("Finner ikke matrikkelId på noen av adressene")
             }
             return søkersAdresse.vegadresse != null && søkersAdresse.vegadresse == barnetsAdresse.vegadresse
