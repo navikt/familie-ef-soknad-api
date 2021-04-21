@@ -125,8 +125,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         val formatertAdresse = formaterAdresse(this)
         val adresse = Adresse(adresse = formatertAdresse,
                               poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
-                              postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " "
-        )
+                              postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ")
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
@@ -186,27 +185,12 @@ fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
     val annenForelderNavn = this.navn.first()
 
 
-    return Medforelder(
-            annenForelderNavn.visningsnavn(),
-            this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any(), annenForelderPersonsIdent
-    )
+    return Medforelder(annenForelderNavn.visningsnavn(),
+                       this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any(), annenForelderPersonsIdent)
 }
 
 fun List<Adressebeskyttelse>.harBeskyttetAdresse(): Boolean = kreverAdressebeskyttelse.contains(this.firstOrNull()?.gradering)
 
-fun List<Adressebeskyttelse>.harStrengBeskyttetAdresse(): Boolean =
-        kreverStrengAdressebeskyttelse.contains(this.firstOrNull()?.gradering)
-
-fun List<Adressebeskyttelse>.harBeskyttetAdresseIkkeStreng(): Boolean =
-        kreverAdressebeskyttelseIkkeStreng.contains(this.firstOrNull()?.gradering)
-
-
-private val kreverAdressebeskyttelseIkkeStreng = listOf(AdressebeskyttelseGradering.FORTROLIG)
-
-private val kreverStrengAdressebeskyttelse = listOf(
-        AdressebeskyttelseGradering.STRENGT_FORTROLIG,
-        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
-)
 
 private val kreverAdressebeskyttelse = listOf(
         AdressebeskyttelseGradering.FORTROLIG,

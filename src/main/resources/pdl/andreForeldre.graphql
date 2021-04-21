@@ -13,9 +13,6 @@ query($identer: [ID!]!){
                 fornavn
                 mellomnavn
                 etternavn
-                metadata {
-                    historisk
-                }
             }
         }
     }
