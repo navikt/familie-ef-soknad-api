@@ -3,7 +3,7 @@ package no.nav.familie.ef.søknad.mapper
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
 import no.nav.familie.ef.søknad.api.dto.pdl.Barn
-import no.nav.familie.ef.søknad.api.dto.pdl.MedForelder
+import no.nav.familie.ef.søknad.api.dto.pdl.Medforelder
 import no.nav.familie.ef.søknad.api.dto.pdl.Person
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
@@ -66,15 +66,15 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
             val harSammeAdresse = harSammeAdresse(søkersAdresse, it.value)
 
-            val medForelderRelasjon = it.value.familierelasjoner.find { erMedForelderRelasjon(it, søkerPersonIdent) }
-            val medForelder =
-                    medForelderRelasjon?.let { andreForeldre[it.relatertPersonsIdent]?.tilDto(it.relatertPersonsIdent) }
+            val medforelderRelasjon = it.value.familierelasjoner.find { erMedForelderRelasjon(it, søkerPersonIdent) }
+            val medforelder =
+                    medforelderRelasjon?.let { andreForeldre[it.relatertPersonsIdent]?.tilDto(it.relatertPersonsIdent) }
             Barn(it.key,
                  navn,
                  alder,
                  fødselsdato,
                  harSammeAdresse,
-                 medForelder,
+                 medforelder,
                  it.value.adressebeskyttelse.harBeskyttetAdresse())
         }
     }
@@ -182,11 +182,11 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
 }
 
-fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): MedForelder {
+fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
     val annenForelderNavn = this.navn.first()
 
 
-    return MedForelder(
+    return Medforelder(
             annenForelderNavn.visningsnavn(),
             this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any(), annenForelderPersonsIdent
     )

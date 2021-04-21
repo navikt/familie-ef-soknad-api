@@ -93,7 +93,7 @@ internal class OppslagServiceServiceImplTest {
     }
 
     @Test
-    fun `Søker uten adressesperre skal ikke kunne hente info når medForelder har adressesperre`() {
+    fun `Søker uten adressesperre skal ikke kunne hente info når medforelder har adressesperre`() {
         mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = UGRADERT)
         mockPdlHentAnnenForelder(adressebeskyttelseGradering = FORTROLIG)
         val ex = assertThrows<ApiFeil> { oppslagServiceService.hentSøkerinfo() }
@@ -102,7 +102,7 @@ internal class OppslagServiceServiceImplTest {
     }
 
     @Test
-    fun `Søker med adressesperre skal ikke kunne hente info når medForelder har strengt fortrolig adresse`() {
+    fun `Søker med adressesperre skal ikke kunne hente info når medforelder har strengt fortrolig adresse`() {
         mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = FORTROLIG)
         mockPdlHentAnnenForelder(adressebeskyttelseGradering = STRENGT_FORTROLIG)
         val ex = assertThrows<ApiFeil> { oppslagServiceService.hentSøkerinfo() }

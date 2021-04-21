@@ -67,10 +67,10 @@ internal class SøkerinfoMapperTest {
     fun `MedForelder alder og navn`() {
         // Gitt
         val navn = Navn("Roy", "", "Toy")
-        val medForelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
+        val medforelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
         val ident = FnrGenerator.generer(år = 1999)
         //Når
-        val annenForelder = medForelderFortrolig.tilDto(ident)
+        val annenForelder = medforelderFortrolig.tilDto(ident)
         //Da vil
         assertThat(annenForelder.harAdressesperre).isTrue
         assertThat(annenForelder.alder).isGreaterThan(0)
@@ -134,7 +134,7 @@ internal class SøkerinfoMapperTest {
         val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
         val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), andreForeldre)
-        assertThat(person.barn.first().medForelder?.navn).isEqualTo("Roy Toy")
+        assertThat(person.barn.first().medforelder?.navn).isEqualTo("Roy Toy")
     }
 
     @Test
