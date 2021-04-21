@@ -156,14 +156,10 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     }
 
     private fun tilFormatertAdresse(vegadresse: Vegadresse): String =
-            join(
-                    space(
-                            vegadresse.adressenavn ?: "",
-                            vegadresse.husnummer ?: "",
-                            vegadresse.husbokstav ?: "",
-                            vegadresse.bruksenhetsnummer ?: ""
-                    )
-            ) ?: ""
+            join(space(vegadresse.adressenavn ?: "",
+                       vegadresse.husnummer ?: "",
+                       vegadresse.husbokstav ?: "",
+                       vegadresse.bruksenhetsnummer ?: "")) ?: ""
 
     private fun join(vararg args: String?, separator: String = ", "): String? {
         val filterNotNull = args.filterNotNull().filterNot(String::isEmpty)
@@ -173,7 +169,6 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     }
 
     private fun space(vararg args: String?): String? = join(*args, separator = " ")
-
 
 }
 
