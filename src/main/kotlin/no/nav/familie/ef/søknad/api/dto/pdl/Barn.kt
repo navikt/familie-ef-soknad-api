@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.api.dto.pdl
 
 import java.time.LocalDate
+import java.util.Objects
 
 class Barn(val fnr: String,
            _navn: String,
@@ -18,7 +19,6 @@ class Barn(val fnr: String,
             true -> ""
             false -> _navn
         }
-
     }
 
 
@@ -39,15 +39,16 @@ class Barn(val fnr: String,
         return true
     }
 
+
     override fun hashCode(): Int {
-        var result = fnr.hashCode()
-        result = 31 * result + alder
-        result = 31 * result + fødselsdato.hashCode()
-        result = 31 * result + harSammeAdresse.hashCode()
-        result = 31 * result + (medforelder?.hashCode() ?: 0)
-        result = 31 * result + harAdressesperre.hashCode()
-        result = 31 * result + navn.hashCode()
-        return result
+
+        return Objects.hash(fnr,
+                            alder,
+                            fødselsdato.hashCode(),
+                            harAdressesperre.hashCode(),
+                            medforelder?.hashCode() ?: 0,
+                            navn.hashCode())
+
     }
 
     override fun toString(): String {

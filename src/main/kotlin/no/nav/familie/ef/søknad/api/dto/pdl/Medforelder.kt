@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.api.dto.pdl
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import java.time.LocalDate
 import java.time.Period
+import java.util.Objects
 
 class Medforelder(_navn: String, val harAdressesperre: Boolean, val død: Boolean = false, val ident: String) {
 
@@ -35,12 +36,12 @@ class Medforelder(_navn: String, val harAdressesperre: Boolean, val død: Boolea
     }
 
     override fun hashCode(): Int {
-        var result = harAdressesperre.hashCode()
-        result = 31 * result + død.hashCode()
-        result = 31 * result + ident.hashCode()
-        result = 31 * result + navn.hashCode()
-        result = 31 * result + alder
-        return result
+        return Objects.hash(ident.hashCode(),
+                            alder,
+                            harAdressesperre.hashCode(),
+                            navn.hashCode(),
+                            død.hashCode()
+        )
     }
 
     override fun toString(): String {
