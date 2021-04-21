@@ -17,7 +17,6 @@ class Medforelder(_navn: String, val harAdressesperre: Boolean, val død: Boolea
             true -> ""
             false -> _navn
         }
-
     }
 
     override fun equals(other: Any?): Boolean {
