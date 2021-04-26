@@ -47,8 +47,9 @@ class OppslagController(private val oppslagService: OppslagService,
 
         const val OPPSLAG = "/api/oppslag"
     }
+
+    private fun String.tilSøkerMinimumDto(): PersonMinimumDto {
+        return PersonMinimumDto(EksternBrukerUtils.hentFnrFraToken(), this)
+    }
 }
 
-private fun String.tilSøkerMinimumDto(): PersonMinimumDto {
-    return PersonMinimumDto(EksternBrukerUtils.hentFnrFraToken(), this)
-}
