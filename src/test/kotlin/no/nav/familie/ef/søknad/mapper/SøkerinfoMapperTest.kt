@@ -137,6 +137,41 @@ internal class SøkerinfoMapperTest {
         assertThat(person.barn.first().medforelder?.navn).isEqualTo("Roy Toy")
     }
 
+
+    @Test
+    fun `AnnenForelder en annen forelder, to barn mappes til riktig barn`() {
+        // Gitt
+        val pdlSøker = PdlSøker(listOf(),
+                                listOf(),
+                                listOf(),
+                                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
+                                sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
+                                listOf())
+
+
+        val navn = Navn("Roy", "", "Toy")
+        val relatertPersonsIdent = FnrGenerator.generer()
+        val barn = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+                               navn = listOf(Navn("Boy", "", "Moy")),
+                               familierelasjoner = listOf(Familierelasjon(relatertPersonsIdent, Familierelasjonsrolle.FAR)))
+        val barn2 = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+                                navn = listOf(Navn("Boy", "", "Moy")),
+                                familierelasjoner = listOf())
+
+        val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
+        val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
+        val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
+        // når
+        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn, "888" to barn2), andreForeldre)
+        // da skal
+        val barnDto = person.barn.filter { it.fnr.equals("999") }
+        val barn2Dto = person.barn.filter { it.fnr.equals("888") }
+        assertThat(barnDto.first().medforelder).isNotNull
+        assertThat(barn2Dto.first().medforelder).isNull()
+
+    }
+
+
     @Test
     internal fun `ikke feile når henting av poststed feiler`() {
         every { kodeverkService.hentPoststed(any()) } throws RuntimeException("Feil")
