@@ -10,7 +10,6 @@ import io.mockk.verify
 import no.nav.familie.ef.søknad.config.FamilieDokumentConfig
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.integration.FamilieDokumentClient
-import no.nav.familie.ef.søknad.integration.FamilieDokumentSbsClient
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
@@ -43,7 +42,6 @@ internal class DokumentServiceImplTest {
 
     private val restOperations: RestOperations = RestTemplateBuilder()
             .build()
-    private val sbsClient = mockk<FamilieDokumentSbsClient>()
     private lateinit var client: FamilieDokumentClient
     private lateinit var dokumentService: DokumentService
 
@@ -52,29 +50,18 @@ internal class DokumentServiceImplTest {
         val config = FamilieDokumentConfig(URI.create(wireMockServer.baseUrl()),
                                            URI.create("http://mocked"))
         client = spyk(FamilieDokumentClient(config, restOperations))
-        every { sbsClient.hentVedlegg(any()) } returns byteArrayOf(12)
         val featureToggleService = mockk<FeatureToggleService>()
         every { featureToggleService.isEnabled(any()) } returns true
-        dokumentService = DokumentServiceImpl(client, featureToggleService, sbsClient)
+        dokumentService = DokumentServiceImpl(client)
     }
 
-    @Test
-    internal fun `skal prøve å finne vedlegget i sbs hvis gcp feiler`() {
-        wireMockServer.stubFor(WireMock.get(WireMock.anyUrl()).willReturn(WireMock.notFound()))
-        dokumentService.hentVedlegg(VEDLEGG_ID)
-
-        verify(exactly = 1) { client.hentVedlegg(VEDLEGG_ID) }
-        verify(exactly = 1) { sbsClient.hentVedlegg(VEDLEGG_ID) }
-    }
 
     @Test
-    internal fun `skal ikke kalle sbs hvis vedlegget finnes i gcp`() {
+    internal fun `skal kalle gcp minst en gang`() {
         val response = WireMock.okJson("{\"status\": \"SUKSESS\", \"data\": \"data\", \"melding\": \"ok\"}")
         wireMockServer.stubFor(WireMock.get(WireMock.anyUrl()).willReturn(response))
         dokumentService.hentVedlegg(VEDLEGG_ID)
-
         verify(exactly = 1) { client.hentVedlegg(VEDLEGG_ID) }
-        verify(exactly = 0) { sbsClient.hentVedlegg(VEDLEGG_ID) }
     }
 
 }
