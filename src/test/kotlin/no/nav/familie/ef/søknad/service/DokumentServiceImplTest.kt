@@ -47,8 +47,7 @@ internal class DokumentServiceImplTest {
 
     @BeforeEach
     internal fun setUp() {
-        val config = FamilieDokumentConfig(URI.create(wireMockServer.baseUrl()),
-                                           URI.create("http://mocked"))
+        val config = FamilieDokumentConfig(URI.create(wireMockServer.baseUrl()))
         client = spyk(FamilieDokumentClient(config, restOperations))
         val featureToggleService = mockk<FeatureToggleService>()
         every { featureToggleService.isEnabled(any()) } returns true
