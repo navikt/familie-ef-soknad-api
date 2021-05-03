@@ -25,7 +25,7 @@ object PdlTestdata {
     private val bostedsadresseBarn = listOf(BostedsadresseBarn(vegadresse,
                                                                matrikkeladresseBarn))
 
-    private val familierelasjon = listOf(Familierelasjon("", Familierelasjonsrolle.BARN))
+    private val forelderBarnRelasjon = listOf(ForelderBarnRelasjon("", Familierelasjonsrolle.BARN))
 
     private val statsborgerskap = listOf(Statsborgerskap("", LocalDate.now(), LocalDate.now()))
 
@@ -33,7 +33,7 @@ object PdlTestdata {
     val pdlSøkerData =
             PdlSøkerData(PdlSøker(listOf(Adressebeskyttelse(AdressebeskyttelseGradering.UGRADERT)),
                                   bostedsadresse,
-                                  familierelasjon,
+                                  forelderBarnRelasjon,
                                   navn,
                                   listOf(Sivilstand(Sivilstandstype.GIFT)),
                                   statsborgerskap))

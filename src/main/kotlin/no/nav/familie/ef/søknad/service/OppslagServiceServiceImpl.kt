@@ -34,7 +34,7 @@ internal class OppslagServiceServiceImpl(
     override fun hentSøkerinfo(): Søkerinfo {
 
         val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
-        val barnIdentifikatorer = pdlSøker.familierelasjoner
+        val barnIdentifikatorer = pdlSøker.forelderBarnRelasjon
                 .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
                 .map { it.relatertPersonsIdent }
         val pdlBarn = pdlStsClient.hentBarn(barnIdentifikatorer)
