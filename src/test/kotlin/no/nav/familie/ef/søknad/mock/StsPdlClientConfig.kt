@@ -6,6 +6,7 @@ import no.nav.familie.ef.søknad.integration.PdlStsClient
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.UGRADERT
 import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.Dødsfall
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
