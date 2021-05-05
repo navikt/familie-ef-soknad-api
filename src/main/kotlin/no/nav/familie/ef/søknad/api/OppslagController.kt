@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.api
 
 
+import no.nav.familie.ef.søknad.api.dto.PersonMinimumDto
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.ef.søknad.service.OppslagService
@@ -26,6 +27,12 @@ class OppslagController(private val oppslagService: OppslagService,
         return oppslagService.hentSøkerinfo()
     }
 
+    @GetMapping("/sokerminimum")
+    fun søkerinfominimum(): PersonMinimumDto {
+        val søkerNavn = oppslagService.hentSøkerNavn()
+        return søkerNavn.tilSøkerMinimumDto()
+    }
+
     @GetMapping("/poststed/{postnummer}")
     fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
         require(gyldigPostnummer(postnummer))
@@ -37,6 +44,12 @@ class OppslagController(private val oppslagService: OppslagService,
     private fun gyldigPostnummer(postnummer: String) = Regex("""^[0-9]{4}$""").matches(postnummer)
 
     companion object {
+
         const val OPPSLAG = "/api/oppslag"
     }
+
+    private fun String.tilSøkerMinimumDto(): PersonMinimumDto {
+        return PersonMinimumDto(EksternBrukerUtils.hentFnrFraToken(), this)
+    }
 }
+
