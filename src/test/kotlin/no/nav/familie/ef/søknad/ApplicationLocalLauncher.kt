@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad
 
 import no.nav.familie.ef.søknad.config.ApplicationConfig
-import no.nav.familie.ef.søknad.mock.TpsInnsynMockController
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import no.nav.security.token.support.test.spring.TokenGeneratorConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -10,7 +9,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.context.annotation.Import
 
 @SpringBootApplication(scanBasePackages = ["no.nav.familie.ef.søknad"], exclude = [ErrorMvcAutoConfiguration::class])
-@Import(ApplicationConfig::class, TokenGeneratorConfiguration::class, TpsInnsynMockController::class)
+@Import(ApplicationConfig::class, TokenGeneratorConfiguration::class)
 @EnableJwtTokenValidation(ignore = ["org.springframework", "springfox.documentation.swagger"])
 class ApplicationLocalLauncher
 
@@ -20,7 +19,7 @@ fun main(args: Array<String>) {
                       "mock-kodeverk",
                       "mock-dokument",
                       "mock-pdl",
-                      "mock-pdlbarn",
+                      "mock-pdlStsClient",
                       "mock-mottak"
             )
             .run(*args)
