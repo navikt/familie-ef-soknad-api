@@ -46,7 +46,7 @@ internal class OppslagServiceServiceImpl(
     }
 
     private fun throwException() {
-        throw ApiFeil("Personer med tilknytning til søker har adressesperre", HttpStatus.FORBIDDEN)
+        throw ApiFeil("adressesperre", HttpStatus.FORBIDDEN)
     }
 
     private fun validerAdressesperrePåSøkerMedRelasjoner(

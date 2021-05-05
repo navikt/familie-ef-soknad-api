@@ -88,7 +88,7 @@ internal class OppslagServiceServiceImplTest {
         mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = UGRADERT)
         mockPdlHentBarn(adressebeskyttelseGradering = FORTROLIG)
         val ex = assertThrows<ApiFeil> { oppslagServiceService.hentSøkerinfo() }
-        assertThat(ex.feil).isEqualTo("Personer med tilknytning til søker har adressesperre")
+        assertThat(ex.feil).isEqualTo("adressesperre")
         assertThat(ex.httpStatus).isEqualTo(org.springframework.http.HttpStatus.FORBIDDEN)
     }
 
@@ -97,7 +97,7 @@ internal class OppslagServiceServiceImplTest {
         mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = UGRADERT)
         mockPdlHentAnnenForelder(adressebeskyttelseGradering = FORTROLIG)
         val ex = assertThrows<ApiFeil> { oppslagServiceService.hentSøkerinfo() }
-        assertThat(ex.feil).isEqualTo("Personer med tilknytning til søker har adressesperre")
+        assertThat(ex.feil).isEqualTo("adressesperre")
         assertThat(ex.httpStatus).isEqualTo(org.springframework.http.HttpStatus.FORBIDDEN)
     }
 
@@ -106,7 +106,7 @@ internal class OppslagServiceServiceImplTest {
         mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = FORTROLIG)
         mockPdlHentAnnenForelder(adressebeskyttelseGradering = STRENGT_FORTROLIG)
         val ex = assertThrows<ApiFeil> { oppslagServiceService.hentSøkerinfo() }
-        assertThat(ex.feil).isEqualTo("Personer med tilknytning til søker har adressesperre")
+        assertThat(ex.feil).isEqualTo("adressesperre")
         assertThat(ex.httpStatus).isEqualTo(org.springframework.http.HttpStatus.FORBIDDEN)
     }
 
@@ -116,7 +116,7 @@ internal class OppslagServiceServiceImplTest {
         mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = FORTROLIG)
         mockPdlHentBarn(adressebeskyttelseGradering = STRENGT_FORTROLIG)
         val ex = assertThrows<ApiFeil> { oppslagServiceService.hentSøkerinfo() }
-        assertThat(ex.feil).isEqualTo("Personer med tilknytning til søker har adressesperre")
+        assertThat(ex.feil).isEqualTo("adressesperre")
         assertThat(ex.httpStatus).isEqualTo(org.springframework.http.HttpStatus.FORBIDDEN)
     }
 
