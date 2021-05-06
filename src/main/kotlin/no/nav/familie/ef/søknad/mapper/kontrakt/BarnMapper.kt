@@ -1,18 +1,45 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
+import io.micrometer.core.instrument.Counter
+import io.micrometer.core.instrument.Metrics
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn
 import no.nav.familie.ef.søknad.mapper.*
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.Språktekster.BarnaDine
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
 import no.nav.familie.kontrakter.ef.søknad.*
+import org.slf4j.LoggerFactory
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
 import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
 
 object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) {
+    val manglerAnnenForelderTeller: Counter = Metrics.counter("alene.med.barn.soknad.manglerMedforelder")
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+    private val logger = LoggerFactory.getLogger(javaClass)
 
-    override fun mapDto(barnliste: List<Barn>, vedlegg: Map<String, DokumentasjonWrapper>): List<Kontraktbarn> {
-        return barnliste.map { barn ->
+    init {
+        manglerAnnenForelderTeller.count() // For å initialisere telleren til 0 ved første søknad etter oppstart
+    }
+
+    override fun mapDto(data: List<Barn>, vedlegg: Map<String, DokumentasjonWrapper>): List<Kontraktbarn> {
+        return data.map { barn ->
+                loggManglendeMedforelder(barn)
+                tilKontraktBarn(barn, vedlegg)
+        }
+    }
+
+    private fun loggManglendeMedforelder(barn: Barn) {
+        if (barn.forelder == null) {
+            manglerAnnenForelderTeller.increment()
+            if (barn.ident?.verdi == null || barn.ident.verdi.isBlank()) {
+                logger.error("Et barn uten fødselsnummer har ingen opplysninger om medforelder. Sjekk securelogs")
+            }
+            secureLogger.warn("Barn til søker mangler medforelder. BarnIdent=${barn.ident?.verdi}, BarnFødt=${barn.fødselsdato?.verdi}")
+        }
+    }
+
+    private fun tilKontraktBarn(barn: Barn,
+                                vedlegg: Map<String, DokumentasjonWrapper>) =
             Kontraktbarn(navn = barn.navn?.tilSøknadsfelt(),
                          fødselsnummer = mapFødselsnummer(barn),
                          harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
@@ -21,15 +48,13 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                          erBarnetFødt = barn.født.tilSøknadsfelt(),
                          fødselTermindato = barn.fødselsdato?.tilSøknadsDatoFeltEllerNull(),
                          terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, vedlegg),
-                         annenForelder = mapAnnenForelder(barn.forelder),
-                         samvær = mapSamvær(barn.forelder, vedlegg),
+                         annenForelder = barn.forelder?.let { mapAnnenForelder(it) },
+                         samvær = barn.forelder?.let { mapSamvær(it, vedlegg) },
                          skalHaBarnepass = barn.skalHaBarnepass?.tilSøknadsfelt(),
                          særligeTilsynsbehov = barn.særligeTilsynsbehov?.tilSøknadsfelt(),
                          barnepass = barn.barnepass?.let { BarnepassMapper.map(it) },
                          lagtTilManuelt = barn.lagtTil,
-                         skalBarnetBoHosSøker = barn.forelder.skalBarnetBoHosSøker?.tilSøknadsfelt())
-        }
-    }
+                         skalBarnetBoHosSøker = barn.forelder?.skalBarnetBoHosSøker?.tilSøknadsfelt())
 
     private fun mapFødselsnummer(barn: Barn): Søknadsfelt<Fødselsnummer>? {
         return barn.ident?.let {

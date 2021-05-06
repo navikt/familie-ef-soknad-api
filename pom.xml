@@ -144,7 +144,12 @@
             <version>${token-validation-spring.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>util</artifactId>
+            <version>1.20210329154135_57b92f0</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>io.mockk</groupId>
             <artifactId>mockk</artifactId>

@@ -28,7 +28,7 @@ class RegistrerArbeidsaktivitetController(val skjemaService: SkjemaService,
     @Protected
     fun sendRegistrerArbeidsAktivitet(@RequestBody arbeidssøker: Arbeidssøker): Kvittering {
         val fnrFraToken = EksternBrukerUtils.hentFnrFraToken()
-        val forkortetNavn = oppslagService.hentSøkerinfo().søker.forkortetNavn
+        val forkortetNavn = oppslagService.hentSøkerNavn()
         val innsendingMottatt = LocalDateTime.now()
         val kvittering = skjemaService.sendInn(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
