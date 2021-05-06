@@ -19,8 +19,8 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
 import no.nav.familie.ef.søknad.integration.dto.pdl.DeltBosted
-import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
+import no.nav.familie.ef.søknad.integration.dto.pdl.ForelderBarnRelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
 import no.nav.familie.ef.søknad.integration.dto.pdl.Matrikkeladresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkeladresseBarn
@@ -129,7 +129,7 @@ internal class SøkerinfoMapperTest {
         val relatertPersonsIdent = FnrGenerator.generer()
         val barn = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
                                navn = listOf(Navn("Boy", "", "Moy")),
-                               familierelasjoner = listOf(Familierelasjon(relatertPersonsIdent, Familierelasjonsrolle.FAR)))
+                               forelderBarnRelasjon = listOf(ForelderBarnRelasjon(relatertPersonsIdent, Familierelasjonsrolle.FAR)))
         val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
         val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
         val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
@@ -153,10 +153,10 @@ internal class SøkerinfoMapperTest {
         val relatertPersonsIdent = FnrGenerator.generer()
         val barn = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
                                navn = listOf(Navn("Boy", "", "Moy")),
-                               familierelasjoner = listOf(Familierelasjon(relatertPersonsIdent, Familierelasjonsrolle.FAR)))
+                               forelderBarnRelasjon = listOf(ForelderBarnRelasjon(relatertPersonsIdent, Familierelasjonsrolle.FAR)))
         val barn2 = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
                                 navn = listOf(Navn("Boy", "", "Moy")),
-                                familierelasjoner = listOf())
+                                forelderBarnRelasjon = listOf())
 
         val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
         val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))

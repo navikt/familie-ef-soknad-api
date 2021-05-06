@@ -38,7 +38,7 @@ data class PdlBolkResponse<T>(val data: PersonBolk<T>?, val errors: List<PdlErro
 
 data class PdlSøker(val adressebeskyttelse: List<Adressebeskyttelse>,
                     val bostedsadresse: List<Bostedsadresse>,
-                    val familierelasjoner: List<Familierelasjon>,
+                    val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
                     val navn: List<Navn>,
                     val sivilstand: List<Sivilstand>,
                     val statsborgerskap: List<Statsborgerskap>)
@@ -49,7 +49,7 @@ data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
                    val navn: List<Navn>,
                    @JsonProperty("foedsel") val fødsel: List<Fødsel>,
                    @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
-                   val familierelasjoner: List<Familierelasjon>
+                   val forelderBarnRelasjon: List<ForelderBarnRelasjon>
 )
 
 data class PdlAnnenForelder(val adressebeskyttelse: List<Adressebeskyttelse>,
@@ -103,7 +103,7 @@ data class Fødsel(@JsonProperty("foedselsaar") val fødselsår: Int?,
 
 data class Dødsfall(@JsonProperty("doedsdato") val dødsdato: LocalDate?)
 
-data class Familierelasjon(val relatertPersonsIdent: String, val relatertPersonsRolle: Familierelasjonsrolle)
+data class ForelderBarnRelasjon(val relatertPersonsIdent: String, val relatertPersonsRolle: Familierelasjonsrolle)
 
 enum class Familierelasjonsrolle {
     BARN,

@@ -45,7 +45,7 @@
             }
           ],
           "doedsfall": [],
-          "familierelasjoner": [
+          "forelderBarnRelasjon": [
             {
               "relatertPersonsRolle": "FAR",
               "relatertPersonsIdent": "11111112345"

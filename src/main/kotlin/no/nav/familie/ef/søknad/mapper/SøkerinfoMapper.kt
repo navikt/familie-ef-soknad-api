@@ -8,8 +8,8 @@ import no.nav.familie.ef.søknad.api.dto.pdl.Person
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
-import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
+import no.nav.familie.ef.søknad.integration.dto.pdl.ForelderBarnRelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkelId
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
@@ -66,7 +66,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
             val harSammeAdresse = harSammeAdresse(søkersAdresse, it.value)
 
-            val medforelderRelasjon = it.value.familierelasjoner.find { erMedForelderRelasjon(it, søkerPersonIdent) }
+            val medforelderRelasjon = it.value.forelderBarnRelasjon.find { erMedForelderRelasjon(it, søkerPersonIdent) }
             val medforelder =
                     medforelderRelasjon?.let { andreForeldre[it.relatertPersonsIdent]?.tilDto(it.relatertPersonsIdent) }
             Barn(it.key,
@@ -79,10 +79,10 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         }
     }
 
-    private fun erMedForelderRelasjon(familierelasjon: Familierelasjon,
+    private fun erMedForelderRelasjon(forelderBarnRelasjon: ForelderBarnRelasjon,
                                       søkersPersonIdent: String) =
-            familierelasjon.relatertPersonsIdent != søkersPersonIdent &&
-            familierelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
+            forelderBarnRelasjon.relatertPersonsIdent != søkersPersonIdent &&
+            forelderBarnRelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
 
     fun harSammeAdresse(søkersAdresse: Bostedsadresse?, pdlBarn: PdlBarn): Boolean {
         val barnetsAdresse = pdlBarn.bostedsadresse.firstOrNull()

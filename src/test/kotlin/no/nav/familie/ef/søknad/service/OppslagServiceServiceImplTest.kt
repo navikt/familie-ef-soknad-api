@@ -19,8 +19,8 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.UGRADERT
 import no.nav.familie.ef.søknad.integration.dto.pdl.Dødsfall
-import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
+import no.nav.familie.ef.søknad.integration.dto.pdl.ForelderBarnRelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
 import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
@@ -164,7 +164,7 @@ internal class OppslagServiceServiceImplTest {
         val pdlBarn = pdlBarn()
         val generer = FnrGenerator.generer()
         val copy = pdlBarn.second.copy(
-                familierelasjoner = listOf(Familierelasjon(generer, Familierelasjonsrolle.FAR)),
+                forelderBarnRelasjon = listOf(ForelderBarnRelasjon(generer, Familierelasjonsrolle.FAR)),
                 navn = listOf(Navn("navn", "navn", "navn"))
         )
         every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
@@ -268,7 +268,7 @@ internal class OppslagServiceServiceImplTest {
             adressebeskyttelse: Adressebeskyttelse? = null,
             dødsfall: Dødsfall? = null,
             fødselsdato: LocalDate = LocalDate.now().minusMonths(6),
-            familierelasjoner: List<Familierelasjon> = listOf()
+            forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf()
     ): Pair<String, PdlBarn> {
         val fødsel = Fødsel(fødselsdato.year, fødselsdato)
         return Pair(fødselsdato.format(ISO_LOCAL_DATE),
@@ -278,17 +278,17 @@ internal class OppslagServiceServiceImplTest {
                             fødsel = listOf(fødsel),
                             navn = emptyList(),
                             dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList(),
-                            familierelasjoner = familierelasjoner))
+                            forelderBarnRelasjon = forelderBarnRelasjon))
     }
 
 
     private fun mockPdlHentBarn(
             navn: String = "Ola",
             adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT,
-            familierelasjoner: List<Familierelasjon> = listOf()
+            forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf()
 
     ) {
-        val pdlBarn = pdlBarn(Adressebeskyttelse(adressebeskyttelseGradering), familierelasjoner = familierelasjoner)
+        val pdlBarn = pdlBarn(Adressebeskyttelse(adressebeskyttelseGradering), forelderBarnRelasjon = forelderBarnRelasjon)
         val copy = pdlBarn.second.copy(navn = listOf(Navn(navn, navn, navn)))
         every { pdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
     }

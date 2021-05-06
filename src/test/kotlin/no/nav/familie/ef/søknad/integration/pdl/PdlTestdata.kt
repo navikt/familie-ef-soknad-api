@@ -6,8 +6,9 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
 import no.nav.familie.ef.søknad.integration.dto.pdl.DeltBosted
 import no.nav.familie.ef.søknad.integration.dto.pdl.Dødsfall
-import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle.BARN
+import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle.FAR
+import no.nav.familie.ef.søknad.integration.dto.pdl.ForelderBarnRelasjon
 import no.nav.familie.ef.søknad.integration.dto.pdl.Fødsel
 import no.nav.familie.ef.søknad.integration.dto.pdl.Matrikkeladresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkeladresseBarn
@@ -45,7 +46,8 @@ object PdlTestdata {
     private val bostedsadresseBarn = listOf(BostedsadresseBarn(vegadresse,
                                                                matrikkeladresseBarn))
 
-    private val familierelasjon = listOf(Familierelasjon("", BARN))
+    private val forelderBarnRelasjon = listOf(ForelderBarnRelasjon("", BARN))
+    private val barnsRelasjoner = listOf(ForelderBarnRelasjon("", FAR))
 
     private val statsborgerskap = listOf(Statsborgerskap("", LocalDate.now(), LocalDate.now()))
 
@@ -53,12 +55,11 @@ object PdlTestdata {
     val pdlSøkerData =
             PdlSøkerData(PdlSøker(listOf(Adressebeskyttelse(UGRADERT)),
                                   bostedsadresse,
-                                  familierelasjon,
+                                  forelderBarnRelasjon,
                                   navn,
                                   listOf(Sivilstand(Sivilstandstype.GIFT)),
                                   statsborgerskap))
 
-    val familieRelasjonBarn = Familierelasjon("", BARN)
     val pdlBarnData =
             PersonBolk(listOf(PersonDataBolk("11111122222",
                                              "ok",
@@ -69,7 +70,7 @@ object PdlTestdata {
                                                      navn = navn,
                                                      fødsel = listOf(Fødsel(1, LocalDate.now())),
                                                      dødsfall = listOf(Dødsfall(LocalDate.now())),
-                                                     familierelasjoner = listOf(familieRelasjonBarn)
+                                                     forelderBarnRelasjon = barnsRelasjoner
                                              )
             )))
 

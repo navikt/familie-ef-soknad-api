@@ -31,7 +31,7 @@ internal class OppslagServiceServiceImpl(
 
         val søkersPersonIdent = EksternBrukerUtils.hentFnrFraToken()
         val pdlSøker = pdlClient.hentSøker(søkersPersonIdent)
-        val barnIdentifikatorer = pdlSøker.familierelasjoner
+        val barnIdentifikatorer = pdlSøker.forelderBarnRelasjon
             .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
             .map { it.relatertPersonsIdent }
         val pdlBarn = pdlStsClient.hentBarn(barnIdentifikatorer)
@@ -83,7 +83,7 @@ internal class OppslagServiceServiceImpl(
             aktuelleBarn: Map<String, PdlBarn>,
         søkersPersonIdent: String
     ): Map<String, PdlAnnenForelder> {
-        return aktuelleBarn.map { it.value.familierelasjoner }
+        return aktuelleBarn.map { it.value.forelderBarnRelasjon }
             .flatten()
             .filter { it.relatertPersonsIdent != søkersPersonIdent && it.relatertPersonsRolle != Familierelasjonsrolle.BARN }
             .map { it.relatertPersonsIdent }
