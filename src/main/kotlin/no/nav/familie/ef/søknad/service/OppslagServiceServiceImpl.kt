@@ -96,8 +96,8 @@ internal class OppslagServiceServiceImpl(
 
 
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {
-        if (fødselsdato == null) {
-            return false
+        if (fødselsdato == null) { // Vi vet ikke hva alder er, så vi filtrerer ikke bort denne
+            return true
         }
         val alder = Period.between(fødselsdato, LocalDate.now())
         val alderIÅr = alder.years
