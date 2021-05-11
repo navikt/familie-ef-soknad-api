@@ -194,6 +194,11 @@ internal class OppslagServiceServiceImplTest {
     }
 
     @Test
+    fun `Skal ikke filtrere bort barn når vi ikke kjenner fødselsdato `() {
+        assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = null)).isTrue
+    }
+
+    @Test
     fun `er i aktuell alder`() {
         assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now())).isTrue
         assertThat(
