@@ -1,87 +1,104 @@
 package no.nav.familie.ef.søknad.service
 
+import no.nav.familie.ef.søknad.api.ApiFeil
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
 import no.nav.familie.ef.søknad.integration.PdlStsClient
-import no.nav.familie.ef.søknad.integration.TpsInnsynServiceClient
-import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
+import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
 import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
-import org.slf4j.LoggerFactory
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.Period
 
 @Service
 internal class OppslagServiceServiceImpl(
-        private val client: TpsInnsynServiceClient,
         private val pdlClient: PdlClient,
         private val pdlStsClient: PdlStsClient,
         private val regelverkConfig: RegelverkConfig,
         private val søkerinfoMapper: SøkerinfoMapper,
 ) : OppslagService {
 
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
-    private val logger = LoggerFactory.getLogger(this::class.java)
-    private val kreverAdressebeskyttelse = listOf(AdressebeskyttelseGradering.FORTROLIG,
-                                                  AdressebeskyttelseGradering.STRENGT_FORTROLIG,
-                                                  AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND)
 
     override fun hentSøkerinfo(): Søkerinfo {
 
-        val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
-        val barnIdentifikatorer = pdlSøker.familierelasjoner
-                .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
-                .map { it.relatertPersonsIdent }
+        val søkersPersonIdent = EksternBrukerUtils.hentFnrFraToken()
+        val pdlSøker = pdlClient.hentSøker(søkersPersonIdent)
+        val barnIdentifikatorer = pdlSøker.forelderBarnRelasjon
+            .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
+            .map { it.relatertPersonsIdent }
         val pdlBarn = pdlStsClient.hentBarn(barnIdentifikatorer)
         val aktuelleBarn = pdlBarn
-                .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
+            .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
                 .filter { erILive(it.value) }
-                .filter { harIkkeBeskyttetAdresse(it.value.adressebeskyttelse) }
-        val søkerinfoFraPdl = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn)
-        try {
-            val søkerinfoFraTPS = hentSøkerinfoFraTPSDto()
-            OppslagServiceLoggHjelper.logDiff(søkerinfoFraTPS, søkerinfoFraPdl)
-        } catch (e: Exception) {
-            secureLogger.info("Exception - hent søker fra pdl", e)
-            logger.warn("Exception - hent søker fra pdl (se securelogs for detaljer)")
+
+        val andreForeldre = hentAndreForeldre(aktuelleBarn, søkersPersonIdent)
+        validerAdressesperrePåSøkerMedRelasjoner(pdlSøker, aktuelleBarn, andreForeldre)
+        return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn, andreForeldre)
+
+    }
+
+    private fun throwException() {
+        throw ApiFeil("adressesperre", HttpStatus.FORBIDDEN)
+    }
+
+    private fun validerAdressesperrePåSøkerMedRelasjoner(
+            pdlSøker: PdlSøker,
+            aktuelleBarn: Map<String, PdlBarn>,
+            andreForeldre: Map<String, PdlAnnenForelder>
+    ) {
+        val søkernivå = adresseNivå(pdlSøker.adressebeskyttelse.firstOrNull()?.gradering)
+        val barnNivå = aktuelleBarn.values.maxOfOrNull { adresseNivå(it.adressebeskyttelse.firstOrNull()?.gradering) } ?: 0
+        val andreForeldreNivå =
+                andreForeldre.values.maxOfOrNull { adresseNivå(it.adressebeskyttelse.firstOrNull()?.gradering) } ?: 0
+        if (andreForeldreNivå > søkernivå || barnNivå > søkernivå) {
+            throwException()
         }
-        return søkerinfoFraPdl
-
     }
 
-    private fun hentSøkerinfoFraTPSDto(): Søkerinfo {
-        val personinfoDto = client.hentPersoninfo()
-        val barn = client.hentBarn()
-        val aktuelleBarn = barn.filter { erIAktuellAlder(it.fødselsdato) }
-        return settNavnFraPdlPåSøkerinfo(søkerinfoMapper.mapTilSøkerinfo(personinfoDto, aktuelleBarn))
+    fun adresseNivå(adressebeskyttelseGradering: AdressebeskyttelseGradering?): Int {
+        return when (adressebeskyttelseGradering) {
+            null -> 0
+            AdressebeskyttelseGradering.UGRADERT -> 0
+            AdressebeskyttelseGradering.FORTROLIG -> 1
+            AdressebeskyttelseGradering.STRENGT_FORTROLIG -> 2
+            AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND -> 2
+        }
     }
 
-    private fun harIkkeBeskyttetAdresse(adressebeskyttelse: List<Adressebeskyttelse>): Boolean {
-        return !kreverAdressebeskyttelse.contains(adressebeskyttelse.firstOrNull()?.gradering
-                                                  ?: AdressebeskyttelseGradering.UGRADERT)
+    override fun hentSøkerNavn(): String {
+        val søkersPersonIdent = EksternBrukerUtils.hentFnrFraToken()
+        val pdlSøker = pdlClient.hentSøker(søkersPersonIdent)
+        return pdlSøker.navn.first().visningsnavn()
+    }
+
+    private fun hentAndreForeldre(
+            aktuelleBarn: Map<String, PdlBarn>,
+        søkersPersonIdent: String
+    ): Map<String, PdlAnnenForelder> {
+        return aktuelleBarn.map { it.value.forelderBarnRelasjon }
+            .flatten()
+            .filter { it.relatertPersonsIdent != søkersPersonIdent && it.relatertPersonsRolle != Familierelasjonsrolle.BARN }
+            .map { it.relatertPersonsIdent }
+            .distinct()
+            .let { pdlStsClient.hentAndreForeldre(it) }
     }
 
     fun erILive(pdlBarn: PdlBarn) =
             pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
 
-    private fun settNavnFraPdlPåSøkerinfo(søkerinfo: Søkerinfo): Søkerinfo {
-        val pdlSøker = pdlClient.hentSøker(EksternBrukerUtils.hentFnrFraToken())
-        val søker = søkerinfo.søker
-        val mellomnavn = pdlSøker.navn.first().mellomnavn?.let { " $it " } ?: " "
-        val oppdaterSøker =
-                søker.copy(forkortetNavn = "${pdlSøker.navn.first().fornavn}$mellomnavn${pdlSøker.navn.first().etternavn}")
-        return søkerinfo.copy(søker = oppdaterSøker)
-    }
-
 
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {
         if (fødselsdato == null) {
-            return false
+            // Vi vet ikke hva alder er, så vi filtrerer ikke bort denne
+            return true
         }
         val alder = Period.between(fødselsdato, LocalDate.now())
         val alderIÅr = alder.years

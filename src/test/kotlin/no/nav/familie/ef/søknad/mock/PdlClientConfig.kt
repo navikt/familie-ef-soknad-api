@@ -29,7 +29,7 @@ class PdlClientConfig {
                 PdlSøker(
                         adressebeskyttelse = listOf(),
                         bostedsadresse = bostedsadresse(),
-                        familierelasjoner = lagBarn(),
+                        forelderBarnRelasjon = lagBarn(),
                         navn = lagNavn(),
                         sivilstand = sivilstand(),
                         statsborgerskap = statsborgerskap()
@@ -38,8 +38,8 @@ class PdlClientConfig {
         return pdlClient
     }
 
-    private fun lagBarn(): List<Familierelasjon> {
-        return listOf(Familierelasjon("28021078036", Familierelasjonsrolle.BARN))
+    private fun lagBarn(): List<ForelderBarnRelasjon> {
+        return listOf(ForelderBarnRelasjon("28021078036", Familierelasjonsrolle.BARN))
     }
 
     private fun lagNavn(fornavn: String = "Fornavn",

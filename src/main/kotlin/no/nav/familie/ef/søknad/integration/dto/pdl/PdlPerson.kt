@@ -17,7 +17,13 @@ data class PdlResponse<T>(
     }
 }
 
-data class PdlError(val message: String)
+data class PdlError(val message: String,
+                    val extensions: PdlExtensions?)
+
+data class PdlExtensions(val code: String?) {
+
+    fun notFound() = code == "not_found"
+}
 
 data class PdlSøkerData(val person: PdlSøker?)
 
@@ -32,7 +38,7 @@ data class PdlBolkResponse<T>(val data: PersonBolk<T>?, val errors: List<PdlErro
 
 data class PdlSøker(val adressebeskyttelse: List<Adressebeskyttelse>,
                     val bostedsadresse: List<Bostedsadresse>,
-                    val familierelasjoner: List<Familierelasjon>,
+                    val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
                     val navn: List<Navn>,
                     val sivilstand: List<Sivilstand>,
                     val statsborgerskap: List<Statsborgerskap>)
@@ -42,7 +48,13 @@ data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
                    val deltBosted: List<DeltBosted>,
                    val navn: List<Navn>,
                    @JsonProperty("foedsel") val fødsel: List<Fødsel>,
-                   @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>
+                   @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
+                   val forelderBarnRelasjon: List<ForelderBarnRelasjon>
+)
+
+data class PdlAnnenForelder(val adressebeskyttelse: List<Adressebeskyttelse>,
+                            @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
+                            val navn: List<Navn>
 )
 
 data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
@@ -50,7 +62,8 @@ data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
 /**
  * Fra pdl dok 2021-01-14:
  * STRENGT_FORTROLIG, Tidligere spesregkode kode 6 fra TPS
- * STRENGT_FORTROLIG_UTLAND,  Fra pdl dok: Tilsvarer paragraf 19 i Bisys (henvisning til Forvaltningslovens §19). Ved strengt fortrolig utland behandles personen i NAV tilsvarende som ved graderingen strengt fortrolig fra Folkeregisteret.
+ * STRENGT_FORTROLIG_UTLAND,  Fra pdl dok: Tilsvarer paragraf 19 i Bisys (henvisning til Forvaltningslovens §19).
+ * Ved strengt fortrolig utland behandles personen i NAV tilsvarende som ved graderingen strengt fortrolig fra Folkeregisteret.
  * FORTROLIG,  Tidligere spesregkode kode 7 fra TPS.
  * UGRADERT, Kode vi kan få fra Folkeregisteret. Vi har ingen tilfeller per i dag i produksjon.
  */
@@ -90,7 +103,7 @@ data class Fødsel(@JsonProperty("foedselsaar") val fødselsår: Int?,
 
 data class Dødsfall(@JsonProperty("doedsdato") val dødsdato: LocalDate?)
 
-data class Familierelasjon(val relatertPersonsIdent: String, val relatertPersonsRolle: Familierelasjonsrolle)
+data class ForelderBarnRelasjon(val relatertPersonsIdent: String, val relatertPersonsRolle: Familierelasjonsrolle)
 
 enum class Familierelasjonsrolle {
     BARN,

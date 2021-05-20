@@ -7,16 +7,14 @@ import java.net.URI
 
 @ConfigurationProperties("familie.dokument")
 @ConstructorBinding
-internal data class FamilieDokumentConfig(val uri: URI, val sbsUri: URI) {
+internal data class FamilieDokumentConfig(val uri: URI) {
 
     internal val hentVedleggUri = UriComponentsBuilder.fromUri(uri).path(HENT).build().toUri()
 
     internal val pingUri = UriComponentsBuilder.fromUri(uri).path(PING).build().toUri()
 
-    internal val hentVedleggSbsUri = UriComponentsBuilder.fromUri(sbsUri).path(HENT).build().toUri()
-    internal val pingSbsUri = UriComponentsBuilder.fromUri(sbsUri).path(PING).build().toUri()
-
     companion object {
+
         private const val HENT = "/mapper/familievedlegg/"
         private const val PING = "/mapper/ping"
     }

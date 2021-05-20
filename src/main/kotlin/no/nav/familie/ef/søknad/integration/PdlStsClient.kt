@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.PdlConfig
 import no.nav.familie.ef.søknad.exception.PdlRequestException
+import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBolkResponse
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequest
@@ -39,6 +40,16 @@ class PdlStsClient(val pdlConfig: PdlConfig,
     }
 
 
+    fun hentAndreForeldre(personIdenter: List<String>): Map<String, PdlAnnenForelder> {
+        if (personIdenter.isEmpty()) return emptyMap()
+        val pdlPersonRequest = PdlPersonBolkRequest(variables = PdlPersonBolkRequestVariables(personIdenter),
+                                                    query = PdlConfig.annenForelderQuery)
+        val pdlResponse: PdlBolkResponse<PdlAnnenForelder> = postForEntity(pdlConfig.pdlUri,
+                                                                           pdlPersonRequest,
+                                                                           httpHeaders())
+        return feilsjekkOgReturnerData(pdlResponse)
+    }
+
     private inline fun <reified T : Any> feilsjekkOgReturnerData(pdlResponse: PdlBolkResponse<T>): Map<String, T> {
         if (pdlResponse.data == null) {
             secureLogger.error("Data fra pdl er null ved bolkoppslag av ${T::class} fra PDL: ${pdlResponse.errorMessages()}")
@@ -52,5 +63,6 @@ class PdlStsClient(val pdlConfig: PdlConfig,
         }
         return pdlResponse.data.personBolk.associateBy({ it.ident }, { it.person!! })
     }
+
 
 }

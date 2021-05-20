@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.api.dto.tps
+package no.nav.familie.ef.søknad.api.dto.pdl
 
 data class Adresse(val adresse: String,
                    val postnummer: String,

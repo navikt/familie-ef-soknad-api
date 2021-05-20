@@ -44,7 +44,13 @@
               "foedselsdato": "1966-11-18"
             }
           ],
-          "doedsfall": []
+          "doedsfall": [],
+          "forelderBarnRelasjon": [
+            {
+              "relatertPersonsRolle": "FAR",
+              "relatertPersonsIdent": "11111112345"
+            }
+          ]
         }
       }
     ]
