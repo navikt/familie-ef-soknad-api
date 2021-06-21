@@ -35,7 +35,7 @@ object PersonMinimumMapper {
     }
 
     private fun personMinimum(annenForelder: AnnenForelder): PersonMinimum {
-        val søknadsfeltFødselsnummer = mapFødselsnummer(annenForelder.ident)
+        val søknadsfeltFødselsnummer = mapFødselsnummer(annenForelder.ident, annenForelder.identFraFolkeregister)
         val søknadsfeltFødselsdato = annenForelder.fødselsdato?.tilSøknadsDatoFeltEllerNull()
         return PersonMinimum(annenForelder.navn?.tilSøknadsfelt() ?: Søknadsfelt(AnnenForelderNavn.hentTekst(),
                                                                                  IkkeOppgitt.hentTekst()),
@@ -53,13 +53,21 @@ object PersonMinimumMapper {
                              null)
     }
 
-    private fun mapFødselsnummer(ident: TekstFelt?): Søknadsfelt<Fødselsnummer>? {
-        return ident?.let {
+    private fun mapFødselsnummer(ident: TekstFelt?, identFraFolkeregister: TekstFelt? = null): Søknadsfelt<Fødselsnummer>? {
+        val manuelltUtfyltIdent = ident?.let {
             return if (it.verdi.isNotBlank()) {
                 ident.tilSøknadsfelt(::Fødselsnummer)
             } else {
                 null
             }
         }
+        val identFraFolkeregister = identFraFolkeregister?.let {
+            return if (it.verdi.isNotBlank()) {
+                identFraFolkeregister.tilSøknadsfelt(::Fødselsnummer)
+            } else {
+                null
+            }
+        }
+        return manuelltUtfyltIdent ?: identFraFolkeregister
     }
 }

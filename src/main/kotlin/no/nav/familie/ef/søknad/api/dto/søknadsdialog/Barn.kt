@@ -33,5 +33,6 @@ data class AnnenForelder(
         val hvorMyeSammen: TekstFelt?,
         val beskrivSamværUtenBarn: TekstFelt?,
         val skalBarnetBoHosSøker: TekstFelt?,
+        val identFraFolkeregister: TekstFelt? = null,
 )
 
