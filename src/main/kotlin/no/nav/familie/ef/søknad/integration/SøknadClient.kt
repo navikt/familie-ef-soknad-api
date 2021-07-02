@@ -49,4 +49,6 @@ class SøknadClient(private val config: MottakConfig,
         return getForEntity(config.byggUriForDokumentasjonsbehov(søknadId))
     }
 
+
+
 }
