@@ -49,4 +49,8 @@ class SøknadClient(private val config: MottakConfig,
         return getForEntity(config.byggUriForDokumentasjonsbehov(søknadId))
     }
 
+    fun hentSøknaderForPerson(personIdent: String): List<String> {
+        return postForEntity(config.hentSøknaderForPersonUri, personIdent)
+    }
+
 }

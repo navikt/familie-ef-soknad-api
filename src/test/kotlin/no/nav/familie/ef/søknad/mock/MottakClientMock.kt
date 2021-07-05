@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Configuration
 @Profile("mock-mottak")
@@ -31,6 +32,7 @@ class MottakClientMock {
         every { søknadClient.sendInnSkolepenger(any()) } returns KvitteringDto("OK MOCK")
         every { søknadClient.ping() } returns Unit
         every { søknadClient.hentDokumentasjonsbehovForSøknad(any()) } returns dokumentasjonsbehovDto
+        every { søknadClient.hentSøknaderForPerson(any()) } returns listOf(UUID.randomUUID().toString())
 
 
         return søknadClient
