@@ -43,7 +43,7 @@ class SøknadClient(private val config: MottakConfig,
     }
 
     fun sendInnEttersending(ettersendingRequestData: EttersendingRequestData<Ettersending>): KvitteringDto {
-        val multipartBuilder = MultipartBuilder().withJson("søknad", ettersendingRequestData.ettersendingMedVedlegg)
+        val multipartBuilder = MultipartBuilder().withJson("ettersending", ettersendingRequestData.ettersendingMedVedlegg)
         ettersendingRequestData.vedlegg.forEach { multipartBuilder.withByteArray("vedlegg", it.key, it.value) }
         return postForEntity(config.sendInnEttersendingUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
     }

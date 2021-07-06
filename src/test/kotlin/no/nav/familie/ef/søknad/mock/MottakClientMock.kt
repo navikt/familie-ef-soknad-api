@@ -34,7 +34,6 @@ class MottakClientMock {
         every { søknadClient.hentDokumentasjonsbehovForSøknad(any()) } returns dokumentasjonsbehovDto
 
 
-
         return søknadClient
     }
 
@@ -55,6 +54,5 @@ class MottakClientMock {
                                    LocalDateTime.now(),
                                    SøknadType.OVERGANGSSTØNAD,
                                    "12345678910")
-
 
 }
