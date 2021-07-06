@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
-import no.nav.familie.kontrakter.ef.søknad.SøknadEttersending
+import no.nav.familie.kontrakter.ef.søknad.Ettersending
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.http.client.MultipartBuilder
 import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
@@ -42,9 +42,9 @@ class SøknadClient(private val config: MottakConfig,
         return postForEntity(config.sendInnSkolepengerUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
     }
 
-    fun sendInnEttersending(søknadRequestData: SøknadRequestData<SøknadEttersending>): KvitteringDto {
-        val multipartBuilder = MultipartBuilder().withJson("søknad", søknadRequestData.søknadMedVedlegg)
-        søknadRequestData.vedlegg.forEach { multipartBuilder.withByteArray("vedlegg", it.key, it.value) }
+    fun sendInnEttersending(ettersendingRequestData: EttersendingRequestData<Ettersending>): KvitteringDto {
+        val multipartBuilder = MultipartBuilder().withJson("søknad", ettersendingRequestData.ettersendingMedVedlegg)
+        ettersendingRequestData.vedlegg.forEach { multipartBuilder.withByteArray("vedlegg", it.key, it.value) }
         return postForEntity(config.sendInnEttersendingUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
     }
 

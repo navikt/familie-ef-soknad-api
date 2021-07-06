@@ -6,7 +6,6 @@ import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.EttersendingMapper
 import org.springframework.stereotype.Service
-import org.slf4j.LoggerFactory
 import java.time.LocalDateTime
 
 
@@ -16,8 +15,8 @@ class EttersendingService (private val søknadClient: SøknadClient,
 ) {
 
     fun sendInn(ettersending: EttersendingDto, innsendingMottatt: LocalDateTime): Kvittering {
-        val søknadRequestData = ettersendingMapper.mapTilIntern(ettersending, innsendingMottatt)
-        val kvittering = søknadClient.sendInnEttersending(søknadRequestData)
+        val ettersedingRequestData = ettersendingMapper.mapTilIntern(ettersending, innsendingMottatt)
+        val kvittering = søknadClient.sendInnEttersending(ettersedingRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 

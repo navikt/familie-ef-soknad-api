@@ -6,7 +6,6 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.EttersendingDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import no.nav.familie.ef.søknad.service.EttersendingService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -20,10 +19,10 @@ import java.time.LocalDateTime
 class EttersendingController (val ettersendingService: EttersendingService) {
 
     @PostMapping
-    fun postEttersending(@RequestBody ettersending: EttersendingDto): Kvittering { //TODO: Oppdatere type
-        //if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.person.søker.fnr)) {
-        //    throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
-        //}
+    fun postEttersending(@RequestBody ettersending: EttersendingDto): Kvittering {
+        if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.person.søker.fnr)) {
+            throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
+        }
         val innsendingMottatt = LocalDateTime.now()
         ettersendingService.sendInn(ettersending, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
