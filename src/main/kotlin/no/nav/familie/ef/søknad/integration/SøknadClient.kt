@@ -9,7 +9,10 @@ import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
 import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
 import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
 import no.nav.familie.kontrakter.ef.søknad.dokumentasjonsbehov.DokumentasjonsbehovDto
+import no.nav.familie.kontrakter.felles.PersonIdent
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.http.HttpHeaders
+import org.springframework.http.RequestEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
 import java.net.URI
@@ -50,7 +53,11 @@ class SøknadClient(private val config: MottakConfig,
     }
 
     fun hentSøknaderForPerson(personIdent: String): List<String> {
-        return postForEntity(config.hentSøknaderForPersonUri, MultipartBuilder().withJson("ident", personIdent).build())
+        val header = HttpHeaders()
+        header.add("Content-Type", "application/json;charset=UTF-8")
+        header.acceptCharset = listOf(Charsets.UTF_8)
+
+        return postForEntity(config.hentSøknaderForPersonUri, PersonIdent(personIdent), header)
     }
 
 }
