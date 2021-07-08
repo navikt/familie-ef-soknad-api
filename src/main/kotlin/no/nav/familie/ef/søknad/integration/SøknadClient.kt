@@ -50,7 +50,7 @@ class SøknadClient(private val config: MottakConfig,
     }
 
     fun hentSøknaderForPerson(personIdent: String): List<String> {
-        return postForEntity(config.hentSøknaderForPersonUri, personIdent)
+        return postForEntity(config.hentSøknaderForPersonUri, MultipartBuilder().withJson("ident", personIdent).build())
     }
 
 }
