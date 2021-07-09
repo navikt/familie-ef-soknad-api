@@ -12,11 +12,10 @@ import no.nav.familie.kontrakter.ef.søknad.dokumentasjonsbehov.Dokumentasjonsbe
 import no.nav.familie.kontrakter.felles.PersonIdent
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
-import org.springframework.http.RequestEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
 import java.net.URI
-import java.util.*
+import java.util.UUID
 
 
 @Service
@@ -53,11 +52,14 @@ class SøknadClient(private val config: MottakConfig,
     }
 
     fun hentSøknaderForPerson(personIdent: String): List<String> {
-        val header = HttpHeaders()
-        header.add("Content-Type", "application/json;charset=UTF-8")
-        header.acceptCharset = listOf(Charsets.UTF_8)
 
-        return postForEntity(config.hentSøknaderForPersonUri, PersonIdent(personIdent), header)
+        return postForEntity(config.hentSøknaderForPersonUri, PersonIdent(personIdent), HttpHeaders().medContentTypeJsonUTF8())
+    }
+
+    private fun HttpHeaders.medContentTypeJsonUTF8(): HttpHeaders {
+        this.add("Content-Type", "application/json;charset=UTF-8")
+        this.acceptCharset = listOf(Charsets.UTF_8)
+        return this
     }
 
 }
