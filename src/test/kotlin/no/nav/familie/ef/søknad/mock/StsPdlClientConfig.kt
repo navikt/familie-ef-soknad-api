@@ -21,13 +21,13 @@ import org.springframework.context.annotation.Profile
 import java.time.LocalDate
 
 @Configuration
-@Profile("mock-pdlStsClient")
+@Profile("mock-client-credential-pdl")
 class StsPdlClientConfig {
 
 
     @Bean
     @Primary
-    fun pdlStsClient(): PdlClientCredentialClient {
+    fun pdlClientCredentialClient(): PdlClientCredentialClient {
         val pdlClient: PdlClientCredentialClient = mockk()
         val medforelderFnr = FnrGenerator.generer(år = 1999)
         every { pdlClient.hentBarn(any()) } returns

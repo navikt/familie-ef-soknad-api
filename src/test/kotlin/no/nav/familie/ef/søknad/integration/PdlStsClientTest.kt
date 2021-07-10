@@ -26,9 +26,7 @@ class PdlStsClientTest {
     @BeforeEach
     fun setUp() {
         wireMockServer.start()
-        val stsRestClient = mockk<StsRestClient>()
-        every { stsRestClient.systemOIDCToken } returns "token"
-        pdlClientCredentialClient = PdlClientCredentialClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations, stsRestClient)
+        pdlClientCredentialClient = PdlClientCredentialClient(PdlConfig(URI.create(wireMockServer.baseUrl())), restOperations)
     }
 
     @AfterEach

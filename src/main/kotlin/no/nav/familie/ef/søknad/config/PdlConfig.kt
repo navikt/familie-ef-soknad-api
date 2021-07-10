@@ -7,7 +7,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Configuration
-class PdlConfig(@Value("\${PDL_URL}") pdlUrl: URI, @Value("\${pdl.passord}") val passord: String) {
+class PdlConfig(@Value("\${PDL_URL}") pdlUrl: URI) {
 
     val pdlUri: URI = UriComponentsBuilder.fromUri(pdlUrl).pathSegment(PATH_GRAPHQL).build().toUri()
 

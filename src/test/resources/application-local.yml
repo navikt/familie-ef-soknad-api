@@ -11,15 +11,9 @@ spring:
       max-file-size: 20MB
       max-request-size: 21MB
 familie:
-  integrasjoner:
-    uri: http://localhost:8085/api
-    passord: pwdIntegrasjoner
-  ef:
-    mottak:
-      uri: http://localhost:8092/api
-      passord: pwdMottak
-  dokument:
-    uri: http://localhost:8082/api
+  integrasjoner.uri: http://localhost:8085/api
+  ef.mottak.uri: http://localhost:8092/api
+  dokument.uri: http://localhost:8082/api
 
 
 funksjonsbrytere:
@@ -39,10 +33,24 @@ logging:
   config: classpath:logback-test.xml
 
 no.nav.security.jwt:
-  issuers: selvbetjening
   issuer.selvbetjening:
     discoveryurl: http://metadata
     accepted_audience: aud-localhost
     cookie_name: localhost-idtoken
     proxyurl:
+  client.registration:
+    mottak:
+      token-endpoint-url: http://metadata
+    pdl:
+      token-endpoint-url: http://metadata
+
+AZUREAD_TOKEN_ENDPOINT_URL: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/token
+TOKEN_X_WELL_KNOWN_URL: http://localhost
+TOKEN_X_PRIVATE_JWK: '{
+    "kty" : "RSA",
+    "e" : "AQAB",
+    "use" : "sig",
+    "kid" : "mock-oauth2-server-key",
+    "n" : ""
+  }'
 

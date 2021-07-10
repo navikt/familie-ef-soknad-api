@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
                       "mock-kodeverk",
                       "mock-dokument",
                       "mock-pdl",
-                      "mock-pdlStsClient",
+                      "mock-client-credential-pdl",
                       "mock-mottak"
             )
             .run(*args)

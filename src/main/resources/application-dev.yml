@@ -10,5 +10,6 @@ familie:
 
 PDL_URL: https://pdl-api.dev-fss-pub.nais.io
 PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
+PDL_AUDIENCE: dev-fss:pdl:pdl-api
 
-MOTTAK_SCOPE: dev-fss:teamfamilie:familie-ef-mottak
+MOTTAK_AUDIENCE: dev-fss:teamfamilie:familie-ef-mottak

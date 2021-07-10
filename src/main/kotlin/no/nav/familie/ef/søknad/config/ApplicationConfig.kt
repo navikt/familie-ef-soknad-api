@@ -8,6 +8,7 @@ import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
+import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.web.client.RestTemplateBuilder
@@ -19,6 +20,7 @@ import java.time.Duration
 import java.time.temporal.ChronoUnit
 
 @SpringBootConfiguration
+@EnableOAuth2Client(cacheEnabled = true)
 @Import(MdcValuesPropagatingClientInterceptor::class,
         ConsumerIdClientInterceptor::class,
         BearerTokenExchangeClientInterceptor::class,
