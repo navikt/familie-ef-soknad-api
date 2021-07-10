@@ -5,15 +5,6 @@ server:
   servlet:
     context-path: /familie/alene-med-barn/soknad-api
 
-familie:
-  ef:
-    mottak:
-      uri: https://api-gw.oera.no/familie-ef-mottak/api
-  dokument:
-    uri: https://www.nav.no/familie/dokument/api
-  integrasjoner:
-    uri:  https://api-gw.oera.no/familie-integrasjoner/api
-
 regelverk:
   alder:
     maks: 18
@@ -50,18 +41,42 @@ management:
 
 cors:
   allowed_origins:
-    - "https://familie-ef-soknad.nais.oera.no"
-    - "https://familie-ef-soknad-api.nais.oera.no"
     - "https://www.nav.no/familie/alene-med-barn/soknad"
     - "https://www.nav.no/familie/alene-med-barn/soknad-api"
 
 no.nav.security.jwt:
-  issuers: selvbetjening
   issuer.selvbetjening:
     discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
     accepted_audience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
     proxyurl: http://webproxy-nais.nav.no:8088
     cookie_name: selvbetjening-idtoken
+  client.registration:
+    mottak-clientcredentials:
+      resource-url: ${familie.ef.mottak.uri}
+      well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
+      grant-type: urn:ietf:params:oauth:grant-type:token-exchange
+      token-exchange:
+        audience: ${MOTTAK_SCOPE}
+      authentication:
+        client-id: ${TOKEN_X_CLIENT_ID}
+        client-auth-method: private_key_jwt
+        client-jwk: ${TOKEN_X_PRIVATE_JWK}
+    pdl-clientcredentials:
+      resource-url: ${PDL_URL}
+      token-endpoint-url: ${AZUREAD_TOKEN_ENDPOINT_URL}
+      grant-type: client_credentials
+      scope: ${PDL_SCOPE}
+      authentication:
+        client-id: ${AZURE_APP_CLIENT_ID}
+        client-secret: ${AZURE_APP_CLIENT_SECRET}
+        client-auth-method: client_secret_basic
 
-PDL_URL: https://api-gw.oera.no/pdl-api
-STS_URL: https://api-gw.oera.no/security-token-service/rest/v1/sts/token?grant_type=client_credentials&scope=openid
+familie:
+  ef.mottak.uri: https://familie-ef-mottak.prod-fss-pub.nais.io/api
+  dokument.uri: http://familie-dokument/api
+  integrasjoner.uri: https://familie-integrasjoner.prod-fss-pub.nais.io/api
+
+PDL_URL: https://pdl-api.prod-fss-pub.nais.io
+PDL_SCOPE: api://prod-fss.pdl.pdl-api/.default
+
+MOTTAK_SCOPE: prod-fss:teamfamilie:familie-ef-mottak

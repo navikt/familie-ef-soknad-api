@@ -1,27 +1,14 @@
-familie:
-  dokument:
-    uri: https://familie-dokument.dev.nav.no/familie/dokument/api
-  ef:
-    mottak:
-      uri: https://api-gw-q0.oera.no/familie-ef-mottak/api
-  integrasjoner:
-    uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
-
 cors:
   allowed_origins:
-    - "https://familie-ef-soknad.nais.oera-q.local"
-    - "https://familie-ef-soknad-api.nais.oera-q.local"
     - "https://www-q0.nav.no/familie/alene-med-barn/soknad"
-    - "https://www-q0.nav.no/familie/alene-med-barn/soknad-api"
-    - "https://ensligmorellerfar.dev.nav.no"
+    - "https://familie.dev.nav.no/familie/alene-med-barn/soknad"
 
-PDL_URL: https://api-gw-q1.oera.no/pdl-api
-STS_URL: https://api-gw-q1.oera.no/security-token-service/rest/v1/sts/token?grant_type=client_credentials&scope=openid
+familie:
+  dokument.uri: http://familie-dokument/api
+  ef.mottak.uri: https://familie-ef-mottak.dev-fss-pub.nais.io/api
+  integrasjoner.uri: https://familie-integrasjoner.dev-fss-pub.nais.io/api
 
-no.nav.security.jwt:
-  issuers: selvbetjening
-  issuer.selvbetjening:
-    discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
-    accepted_audience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
-    proxyurl: http://webproxy-nais.nav.no:8088
-    cookie_name: selvbetjening-idtoken
+PDL_URL: https://pdl-api.dev-fss-pub.nais.io
+PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
+
+MOTTAK_SCOPE: dev-fss:teamfamilie:familie-ef-mottak

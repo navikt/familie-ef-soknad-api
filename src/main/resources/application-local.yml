@@ -21,10 +21,6 @@ familie:
   dokument:
     uri: http://localhost:8082/api
 
-pdl:
-  passord: pdlPassord
-
-STS_APIKEY: test
 
 funksjonsbrytere:
   enabled: false
@@ -50,5 +46,3 @@ no.nav.security.jwt:
     cookie_name: localhost-idtoken
     proxyurl:
 
-CREDENTIAL_USERNAME: not-a-real-srvuser
-CREDENTIAL_PASSWORD: not-a-real-pw
