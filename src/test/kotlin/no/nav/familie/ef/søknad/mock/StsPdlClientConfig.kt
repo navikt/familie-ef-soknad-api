@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.mock
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.integration.PdlStsClient
+import no.nav.familie.ef.søknad.integration.PdlClientCredentialClient
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.UGRADERT
 import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
@@ -21,14 +21,14 @@ import org.springframework.context.annotation.Profile
 import java.time.LocalDate
 
 @Configuration
-@Profile("mock-pdlStsClient")
+@Profile("mock-client-credential-pdl")
 class StsPdlClientConfig {
 
 
     @Bean
     @Primary
-    fun pdlStsClient(): PdlStsClient {
-        val pdlClient: PdlStsClient = mockk()
+    fun pdlClientCredentialClient(): PdlClientCredentialClient {
+        val pdlClient: PdlClientCredentialClient = mockk()
         val medforelderFnr = FnrGenerator.generer(år = 1999)
         every { pdlClient.hentBarn(any()) } returns
                 mapOf("28021078036" to PdlBarn(

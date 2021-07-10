@@ -28,7 +28,7 @@ class PdlClientTest {
         wireMockServer.start()
         val stsRestClient = mockk<StsRestClient>()
         every { stsRestClient.systemOIDCToken } returns "token"
-        pdlClient = PdlClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations, stsRestClient)
+        pdlClient = PdlClient(PdlConfig(URI.create(wireMockServer.baseUrl())), restOperations)
     }
 
     @AfterEach

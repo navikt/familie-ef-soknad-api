@@ -41,7 +41,7 @@ class KodeverkTestConfig {
     }
 }
 
-@ActiveProfiles("local", "kodeverk-cache-test")
+@ActiveProfiles("local", "mock-oauth", "kodeverk-cache-test")
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 class KodeverkServiceTest {

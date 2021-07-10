@@ -14,20 +14,16 @@ import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
 
-
 @Component
-class PdlStsClient(val pdlConfig: PdlConfig,
-                   @Qualifier("stsRestKlientMedApiKey") restOperations: RestOperations,
-                   private val stsRestClient: StsRestClient)
+class PdlClientCredentialClient(val pdlConfig: PdlConfig,
+                                @Qualifier("azureAuth") restOperations: RestOperations)
     : AbstractRestClient(restOperations, "pdl.personinfo") {
 
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
-            add("Nav-Consumer-Token", "Bearer ${stsRestClient.systemOIDCToken}")
             add("Tema", "ENF")
         }
     }
-
 
     fun hentBarn(personIdenter: List<String>): Map<String, PdlBarn> {
         if (personIdenter.isEmpty()) return emptyMap()
@@ -38,7 +34,6 @@ class PdlStsClient(val pdlConfig: PdlConfig,
                                                                   httpHeaders())
         return feilsjekkOgReturnerData(pdlResponse)
     }
-
 
     fun hentAndreForeldre(personIdenter: List<String>): Map<String, PdlAnnenForelder> {
         if (personIdenter.isEmpty()) return emptyMap()
@@ -63,6 +58,5 @@ class PdlStsClient(val pdlConfig: PdlConfig,
         }
         return pdlResponse.data.personBolk.associateBy({ it.ident }, { it.person!! })
     }
-
 
 }

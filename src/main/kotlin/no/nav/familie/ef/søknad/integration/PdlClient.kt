@@ -14,8 +14,7 @@ import java.net.URI
 
 @Component
 class PdlClient(val pdlConfig: PdlConfig,
-                @Qualifier("restKlientMedApiKey") restOperations: RestOperations,
-                private val stsRestClient: StsRestClient)
+                @Qualifier("bearerClient") restOperations: RestOperations)
     : AbstractPingableRestClient(restOperations, "pdl.personinfo") {
 
     fun hentSøker(personIdent: String): PdlSøker {
@@ -49,7 +48,6 @@ class PdlClient(val pdlConfig: PdlConfig,
 
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
-            add("Nav-Consumer-Token", "Bearer ${stsRestClient.systemOIDCToken}")
             add("Tema", "ENF")
         }
     }

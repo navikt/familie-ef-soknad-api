@@ -19,7 +19,7 @@ import java.util.*
 
 @Service
 class SøknadClient(private val config: MottakConfig,
-                   @Qualifier("restKlientMedApiKey") operations: RestOperations)
+                   @Qualifier("bearerClient") operations: RestOperations)
     : AbstractPingableRestClient(operations, "søknad.innsending") {
 
     override val pingUri: URI = config.pingUri
