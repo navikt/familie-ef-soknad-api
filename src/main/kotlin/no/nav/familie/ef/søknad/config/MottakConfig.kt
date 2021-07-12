@@ -33,7 +33,7 @@ data class MottakConfig(val uri: URI,
         private const val PATH_SEND_INN_SKOLEPENGERSØKNAD = "/soknad/skolepenger"
         private const val PATH_HENT_DOKUMENTASJONSBEHOV = "/soknad/dokumentasjonsbehov"
         private const val PATH_HENT_SØKNADER_FOR_PERSON = "/person/soknader"
-        private const val PATH_SEND_INN_ETTERSENDING ="/soknad/ettersending"
+        private const val PATH_SEND_INN_ETTERSENDING ="/ettersending"
         private const val PATH_PING = "/ping"
     }
 
