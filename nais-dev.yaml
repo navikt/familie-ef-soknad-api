@@ -33,7 +33,7 @@ spec:
         mountPath: /secrets/apikey/pdl-api
       - kvPath: /apikey/apigw/dev/security-token-service-token/familie-ef-soknad-api_q1
         mountPath: /secrets/apikey/security-token-service-token
-      - kvPath: /kv/preprod/sbs/familie-ef-soknad-api/default
+      - kvPath: /kv/preprod/sbs/familie-ef-soknad-api/teamfamilie
         mountPath: /var/run/secrets/nais.io/vault
       - kvPath: /serviceuser/data/dev/srvfam-ef-soknad-api
         mountPath: /var/run/secrets/srvfam-ef-soknad-api
