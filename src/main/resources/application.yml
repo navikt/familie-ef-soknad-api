@@ -59,12 +59,24 @@ cors:
     - "https://www.nav.no/familie/alene-med-barn/soknad-api"
 
 no.nav.security.jwt:
-  issuers: selvbetjening
   issuer.selvbetjening:
     discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
     accepted_audience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
     proxyurl: http://webproxy-nais.nav.no:8088
     cookie_name: selvbetjening-idtoken
+  client.registration:
+    mottak:
+      resource-url: ${familie.ef.mottak.uri}
+      well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
+      grant-type: urn:ietf:params:oauth:grant-type:token-exchange
+      token-exchange:
+        audience: ${MOTTAK_AUDIENCE}
+      authentication:
+        client-id: ${TOKEN_X_CLIENT_ID}
+        client-auth-method: private_key_jwt
+        client-jwk: ${TOKEN_X_PRIVATE_JWK}
 
 PDL_URL: https://api-gw.oera.no/pdl-api
 STS_URL: https://api-gw.oera.no/security-token-service/rest/v1/sts/token?grant_type=client_credentials&scope=openid
+
+MOTTAK_AUDIENCE: prod-fss:teamfamilie:familie-ef-mottak
