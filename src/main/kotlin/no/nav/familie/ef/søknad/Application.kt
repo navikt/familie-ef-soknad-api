@@ -16,7 +16,6 @@ fun main(args: Array<String>) {
     val props = Properties()
     props["familie.ef.mottak.passord"] = getFileAsString("/secrets/apikey/familie-ef-mottak/x-nav-apiKey")
     props["familie.integrasjoner.passord"] = getFileAsString("/secrets/apikey/familie-integrasjoner/x-nav-apiKey")
-    props["tps.innsyn.passord"] = getFileAsString("/secrets/apikey/tps-innsyn/x-nav-apiKey")
     props["pdl.passord"] = getFileAsString("/secrets/apikey/pdl-api/x-nav-apiKey")
     props["STS_APIKEY"] = getFileAsString("/secrets/apikey/security-token-service-token/x-nav-apiKey")
     SpringApplicationBuilder(Application::class.java).properties(props).run(*args)

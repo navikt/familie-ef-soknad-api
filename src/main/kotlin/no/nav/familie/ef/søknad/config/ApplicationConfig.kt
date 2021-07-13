@@ -33,15 +33,12 @@ internal class ApplicationConfig {
     private val apiKey = "x-nav-apiKey"
 
     @Bean
-    fun apiKeyInjectingClientInterceptor(oppslag: TpsInnsynConfig,
-                                         mottak: MottakConfig,
+    fun apiKeyInjectingClientInterceptor(mottak: MottakConfig,
                                          pdlConfig: PdlConfig,
                                          integrasjoner: FamilieIntegrasjonerConfig): ApiKeyInjectingClientInterceptor {
-        val map =
-                mapOf(oppslag.uri to Pair(apiKey, oppslag.passord),
-                      mottak.uri to Pair(apiKey, mottak.passord),
-                      pdlConfig.pdlUri to Pair(apiKey, pdlConfig.passord),
-                      integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
+        val map = mapOf(mottak.uri to Pair(apiKey, mottak.passord),
+                        pdlConfig.pdlUri to Pair(apiKey, pdlConfig.passord),
+                        integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
         return ApiKeyInjectingClientInterceptor(map)
     }
 
