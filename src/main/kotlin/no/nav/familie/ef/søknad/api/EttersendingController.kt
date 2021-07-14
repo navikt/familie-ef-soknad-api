@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mock
 import no.nav.familie.ef.søknad.api.ApiFeil
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.EttersendingDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ÅpenEttersendingDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.HttpStatus
@@ -14,17 +15,28 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
 @RestController
-@RequestMapping(path = ["/api/ettersending"])
+@RequestMapping(path = ["/api"])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 class EttersendingController (val ettersendingService: EttersendingService) {
 
-    @PostMapping
+    @PostMapping("/ettersending")
     fun postEttersending(@RequestBody ettersending: EttersendingDto): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
         val innsendingMottatt = LocalDateTime.now()
         ettersendingService.sendInn(ettersending, innsendingMottatt)
+        return Kvittering("ok", mottattDato = innsendingMottatt)
+
+    }
+
+    @PostMapping("åpen-ettersending")
+    fun postÅpenEttersending(@RequestBody åpenEttersending: ÅpenEttersendingDto): Kvittering {
+        if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(åpenEttersending.person.søker.fnr)) {
+            throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
+        }
+        val innsendingMottatt = LocalDateTime.now()
+        ettersendingService.sendInnÅpenEttersending(åpenEttersending, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
 
     }

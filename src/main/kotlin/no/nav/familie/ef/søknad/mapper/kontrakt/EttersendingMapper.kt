@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DokumentFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.EttersendingDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ÅpenEttersendingDto
 import no.nav.familie.ef.søknad.integration.EttersendingRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
@@ -10,6 +11,7 @@ import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.Ettersending
 import no.nav.familie.kontrakter.ef.søknad.EttersendingMedVedlegg
+import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
@@ -32,6 +34,28 @@ class EttersendingMapper(private val dokumentServiceService: DokumentService) {
         return EttersendingRequestData(EttersendingMedVedlegg(ettersending,
                                                   vedlegg.values.flatMap { it.vedlegg },
                                                  dokumentasjonsbehovTilDokumentService.tilKontrakt()), vedleggData)
+    }
+
+    fun mapTilIntern(dto: ÅpenEttersendingDto,
+                     innsendingMottatt: LocalDateTime): EttersendingRequestData<Ettersending>{
+
+        val vedleggData: Map<String, ByteArray> = dokumentServiceService.hentDokumenterÅpenEttersending(dto.opplastedeVedlegg)
+        val vedlegg = dto.opplastedeVedlegg.map { dokumentFelt ->
+            Vedlegg(
+                id = dokumentFelt.id,
+                navn = dokumentFelt.navn,
+                tittel = dokumentFelt.navn
+            )
+        }
+
+        val ettersending = Ettersending(
+            innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
+            personalia = PersonaliaMapper.map(dto.person.søker),)
+
+
+        return EttersendingRequestData(EttersendingMedVedlegg(ettersending,
+                                                              vedlegg,
+                                                              emptyList()), vedleggData)
     }
 
 }
