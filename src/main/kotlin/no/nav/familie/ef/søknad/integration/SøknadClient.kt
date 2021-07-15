@@ -2,9 +2,10 @@ package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
-import no.nav.familie.kontrakter.ef.søknad.Ettersending
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.http.client.MultipartBuilder
+import no.nav.familie.kontrakter.ef.ettersending.Ettersending
+import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
 import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
 import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
@@ -58,9 +59,8 @@ class SøknadClient(private val config: MottakConfig,
         return getForEntity(config.byggUriForDokumentasjonsbehov(søknadId))
     }
 
-    fun hentSøknaderForPerson(personIdent: String): List<String> {
-
-        return postForEntity(config.hentSøknaderForPersonUri, PersonIdent(personIdent), HttpHeaders().medContentTypeJsonUTF8())
+    fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
+        return postForEntity(config.hentSøknaderMedDokumentasjonsbehovUri, PersonIdent(personIdent), HttpHeaders().medContentTypeJsonUTF8())
     }
 
     private fun HttpHeaders.medContentTypeJsonUTF8(): HttpHeaders {
