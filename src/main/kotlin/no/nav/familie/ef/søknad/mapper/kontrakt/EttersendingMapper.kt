@@ -18,20 +18,22 @@ class EttersendingMapper(private val dokumentServiceService: DokumentService) {
 
     fun mapTilIntern(dto: EttersendingDto,
                      innsendingMottatt: LocalDateTime): EttersendingRequestData<Ettersending>{
-
-        val dokumentasjonsbehovTilDokumentService: List<Dokumentasjonsbehov> = dto.dokumentasjonsbehov.map {Dokumentasjonsbehov(it.label, it.id, it.harSendtInn, it.opplastedeVedlegg.map { DokumentFelt(it.id, it.navn) })}
-
+        val dokumentasjonsbehovTilDokumentService: List<Dokumentasjonsbehov> =
+            dto.søknadMedVedlegg.dokumentasjonsbehov.map {
+                Dokumentasjonsbehov(
+                    it.label,
+                    it.id,
+                    it.harSendtInn,
+                    it.opplastedeVedlegg.map { DokumentFelt(it.id, it.navn) })
+            }
         val vedleggData: Map<String, ByteArray> = dokumentServiceService.hentDokumenter(dokumentasjonsbehovTilDokumentService)
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dokumentasjonsbehovTilDokumentService)
-
         val ettersending = Ettersending(
-                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
-                personalia = PersonaliaMapper.map(dto.person.søker),)
-
+            innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
+            fnr = dto.fnr)
 
         return EttersendingRequestData(EttersendingMedVedlegg(ettersending,
-                                                  vedlegg.values.flatMap { it.vedlegg },
-                                                 dokumentasjonsbehovTilDokumentService.tilKontrakt()), vedleggData)
+            vedlegg.values.flatMap { it.vedlegg },
+            dokumentasjonsbehovTilDokumentService.tilKontrakt()), vedleggData)
     }
-
 }
