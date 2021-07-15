@@ -27,8 +27,6 @@ spec:
         mountPath: /secrets/apikey/familie-integrasjoner
       - kvPath: /apikey/apigw/prod/familie-ef-mottak/familie-ef-soknad-api
         mountPath: /secrets/apikey/familie-ef-mottak
-      - kvPath: /apikey/apigw/prod/tps-proxy.api.v1.innsyn/familie-ef-soknad-api
-        mountPath: /secrets/apikey/tps-innsyn
       - kvPath: /apikey/apigw/prod/pdl-api/familie-ef-soknad-api
         mountPath: /secrets/apikey/pdl-api
       - kvPath: /apikey/apigw/prod/security-token-service-token/familie-ef-soknad-api
