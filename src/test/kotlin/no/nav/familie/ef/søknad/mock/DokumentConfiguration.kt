@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile
 class DokumentConfiguration {
 
     @Bean("dokumentlager")
-    fun dokumenter(): Map<String, ByteArray> = mutableMapOf(Pair("123", "123".toByteArray()), Pair("122", "122".toByteArray()))
+    fun dokumenter(): Map<String, ByteArray> = mutableMapOf(Pair("123", "123".toByteArray()), Pair("122", "122".toByteArray(), ), Pair("99", "99".toByteArray(), ),Pair("98", "98".toByteArray(), ))
 
 
     @Bean
