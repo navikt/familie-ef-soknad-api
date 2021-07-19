@@ -54,7 +54,7 @@ class EttersendingMapper(private val dokumentServiceService: DokumentService) {
             }
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dokumentasjonsbehovTilDokumentService)
 
-        val ettersending = no.nav.familie.kontrakter.ef.ettersending.Ettersending(
+        val ettersending = Ettersending(
             innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
             fnr = dto.fnr
         )
