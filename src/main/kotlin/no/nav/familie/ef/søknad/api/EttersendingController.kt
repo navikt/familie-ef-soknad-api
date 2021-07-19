@@ -20,9 +20,9 @@ class EttersendingController(val ettersendingService: EttersendingService) {
 
     @PostMapping
     fun postEttersending(@RequestBody ettersending: EttersendingDto): Kvittering {
-        /*if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.fnr)) {
+        if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
-        } */
+        }
         val innsendingMottatt = LocalDateTime.now()
         ettersendingService.sendInn(ettersending, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
