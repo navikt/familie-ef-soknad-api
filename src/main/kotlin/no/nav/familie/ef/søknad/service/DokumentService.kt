@@ -15,5 +15,4 @@ interface DokumentService {
 
     fun hentDokumenterFraDokumentFelt(vedleggListe: List<DokumentFelt>): Map<String, ByteArray> =
         vedleggListe.associate { it.dokumentId to hentVedlegg(it.dokumentId) }
-
 }

@@ -16,79 +16,55 @@ import java.time.LocalDateTime
 @Component
 class EttersendingMapper(private val dokumentServiceService: DokumentService) {
 
-    fun mapTilIntern(dto: EttersendingDto,
-                     innsendingMottatt: LocalDateTime): EttersendingRequestData<Ettersending> {
-
-        val vedleggData: Map<String, ByteArray>
-        val ettersending: Ettersending
-
-        if (dto.søknadMedVedlegg === null) {
-            val vedleggTilDokumentService =
-                dto.åpenInnsendingMedStønadType!!.åpenInnsending.map {
-                    DokumentFelt(it.vedlegg.id, it.vedlegg.navn)
-                }
-            vedleggData = dokumentServiceService.hentDokumenterFraDokumentFelt(vedleggTilDokumentService)
-            ettersending = Ettersending(
-                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
-                fnr = dto.fnr
-            )
-            return EttersendingRequestData(EttersendingMedVedlegg(ettersending, null), vedleggData)
-        }
-
-        else if (dto.åpenInnsendingMedStønadType === null) {
-            val dokumentasjonsbehovTilDokumentService: List<Dokumentasjonsbehov> =
-                dto.søknadMedVedlegg.dokumentasjonsbehov.map {
-                    Dokumentasjonsbehov(
-                        it.label,
-                        it.id,
-                        it.harSendtInn,
-                        it.opplastedeVedlegg.map { DokumentFelt(it.id, it.navn) })
-                }
-            vedleggData = dokumentServiceService.hentDokumenter(dokumentasjonsbehovTilDokumentService)
-            val vedlegg: Map<String, DokumentasjonWrapper> =
-                lagDokumentasjonWrapper(dokumentasjonsbehovTilDokumentService)
-            ettersending = Ettersending(
-                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
-                fnr = dto.fnr
-            )
-
-            return EttersendingRequestData(
-                EttersendingMedVedlegg(
-                    ettersending,
-                    vedlegg.values.flatMap { it.vedlegg },
-                    dokumentasjonsbehovTilDokumentService.tilKontrakt()
-                ), vedleggData
-            )
-        }
+    fun mapTilIntern(
+        dto: EttersendingDto,
+        innsendingMottatt: LocalDateTime
+    ): EttersendingRequestData<Ettersending> {
 
         val dokumentasjonsbehovTilDokumentService: List<Dokumentasjonsbehov> =
-            dto.søknadMedVedlegg.dokumentasjonsbehov.map {
+            dto.ettersendingForSøknad.dokumentasjonsbehov.map {
                 Dokumentasjonsbehov(
                     it.label,
                     it.id,
                     it.harSendtInn,
                     it.opplastedeVedlegg.map { DokumentFelt(it.id, it.navn) })
             }
-
-        val vedleggTilDokumentService =
-            dto.åpenInnsendingMedStønadType.åpenInnsending.map {
+        val vedleggTilDokumentService: List<DokumentFelt> =
+            dto.ettersendingUtenSøknad.innsending.map {
                 DokumentFelt(it.vedlegg.id, it.vedlegg.navn)
             }
+        val kontekstfriVedleggTilDokumentService: List<DokumentFelt> = dto.ettersendingForSøknad.innsending.map {
+            DokumentFelt(it.vedlegg.id, it.vedlegg.navn)
+        }
 
-        val vedleggDataSøknad: Map<String, ByteArray> =
+        val vedleggDataForSøknad: Map<String, ByteArray> =
             dokumentServiceService.hentDokumenterFraDokumentFelt(vedleggTilDokumentService)
-        val vedleggDataÅpen: Map<String, ByteArray> =
+        val vedleggDataUtenSøknad: Map<String, ByteArray> =
             dokumentServiceService.hentDokumenter(dokumentasjonsbehovTilDokumentService)
-        vedleggData = (vedleggDataÅpen.keys + vedleggDataSøknad.keys).associateWith{ listOf(vedleggDataÅpen[it], vedleggDataSøknad[it]).joinToString().toByteArray() }
+        val vedleggDataForSøknadUtenDokumentasjonsbehov: Map<String, ByteArray> =
+            dokumentServiceService.hentDokumenterFraDokumentFelt(kontekstfriVedleggTilDokumentService)
 
+        val vedleggData =
+            (vedleggDataForSøknad.keys + vedleggDataUtenSøknad.keys + vedleggDataForSøknadUtenDokumentasjonsbehov.keys).associateWith {
+                listOf(
+                    vedleggDataForSøknad[it],
+                    vedleggDataUtenSøknad[it],
+                    vedleggDataForSøknadUtenDokumentasjonsbehov[it]
+                ).joinToString().toByteArray()
+            }
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dokumentasjonsbehovTilDokumentService)
 
-        ettersending = Ettersending(
+        val ettersending = Ettersending(
             innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
-            fnr = dto.fnr)
+            fnr = dto.fnr
+        )
 
-        return EttersendingRequestData(EttersendingMedVedlegg(ettersending,
-        vedlegg.values.flatMap { it.vedlegg },
-        dokumentasjonsbehovTilDokumentService.tilKontrakt()), vedleggData)
+        return EttersendingRequestData(
+            EttersendingMedVedlegg(
+                ettersending,
+                vedlegg.values.flatMap { it.vedlegg },
+                dokumentasjonsbehovTilDokumentService.tilKontrakt()
+            ), vedleggData
+        )
     }
 }
