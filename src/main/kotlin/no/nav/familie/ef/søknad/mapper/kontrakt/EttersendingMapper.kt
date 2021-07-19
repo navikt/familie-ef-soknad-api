@@ -9,7 +9,7 @@ import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.søknad.Ettersending
-import no.nav.familie.kontrakter.ef.søknad.EttersendingMedVedlegg
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingMedVedlegg
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
@@ -54,7 +54,7 @@ class EttersendingMapper(private val dokumentServiceService: DokumentService) {
             }
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dokumentasjonsbehovTilDokumentService)
 
-        val ettersending = Ettersending(
+        val ettersending = no.nav.familie.kontrakter.ef.ettersending.Ettersending(
             innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
             fnr = dto.fnr
         )

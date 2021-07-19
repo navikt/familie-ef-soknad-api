@@ -16,7 +16,7 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping(path = ["/api/ettersending"])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
-class EttersendingController (val ettersendingService: EttersendingService) {
+class EttersendingController(val ettersendingService: EttersendingService) {
 
     @PostMapping
     fun postEttersending(@RequestBody ettersending: EttersendingDto): Kvittering {
