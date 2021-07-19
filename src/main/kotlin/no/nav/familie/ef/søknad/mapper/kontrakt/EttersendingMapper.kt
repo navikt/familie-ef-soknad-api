@@ -8,7 +8,7 @@ import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
-import no.nav.familie.kontrakter.ef.søknad.Ettersending
+import no.nav.familie.kontrakter.ef.ettersending.Ettersending
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingMedVedlegg
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime

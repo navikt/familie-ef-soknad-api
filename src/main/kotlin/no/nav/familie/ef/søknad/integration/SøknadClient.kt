@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
-import no.nav.familie.kontrakter.ef.søknad.Ettersending
+import no.nav.familie.kontrakter.ef.ettersending.Ettersending
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.http.client.MultipartBuilder
 import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
