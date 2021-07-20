@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.EttersendingDto
+import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingDto
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.EttersendingMapper

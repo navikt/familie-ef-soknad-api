@@ -23,5 +23,4 @@ internal class FamilieDokumentClient(private val config: FamilieDokumentConfig,
         val ressurs: Ressurs<ByteArray> = getForEntity(vedleggUri(vedleggsId))
         return ressurs.data ?: error("Ingen data på ressurs ved henting av vedlegg")
     }
-
 }
