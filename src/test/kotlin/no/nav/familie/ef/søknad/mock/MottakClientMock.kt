@@ -2,9 +2,10 @@ package no.nav.familie.ef.søknad.mock
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DokumentFelt
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
+import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
+import no.nav.familie.kontrakter.ef.felles.StønadType
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Dokumentasjonsbehov
 import no.nav.familie.kontrakter.ef.søknad.SøknadType
@@ -13,7 +14,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.UUID
 
 @Configuration
 @Profile("mock-mottak")
@@ -29,13 +32,15 @@ class MottakClientMock {
         every { søknadClient.sendInnArbeidsRegistreringsskjema(any()) } returns KvitteringDto("OK MOCK")
         every { søknadClient.sendInnBarnetilsynsøknad(any()) } returns KvitteringDto("OK MOCK")
         every { søknadClient.sendInnSkolepenger(any()) } returns KvitteringDto("OK MOCK")
-        every { søknadClient.sendInnEttersending(any())} returns KvitteringDto(("OK MOCK"))
+        every { søknadClient.sendInnEttersending(any()) } returns KvitteringDto(("OK MOCK"))
         every { søknadClient.ping() } returns Unit
         every { søknadClient.hentDokumentasjonsbehovForSøknad(any()) } returns dokumentasjonsbehovDto
+        every { søknadClient.hentSøknaderMedDokumentasjonsbehov(any()) } returns søknaderMedDokumentasjonsbehov
 
 
-        return søknadClient
+                return søknadClient
     }
+
 
     private val dokumentasjonsbehovDto =
             DokumentasjonsbehovDto(dokumentasjonsbehov = listOf(Dokumentasjonsbehov(
@@ -54,5 +59,18 @@ class MottakClientMock {
                                    LocalDateTime.now(),
                                    SøknadType.OVERGANGSSTØNAD,
                                    "12345678910")
+
+    private val søknaderMedDokumentasjonsbehov = listOf(
+            SøknadMedDokumentasjonsbehovDto(UUID.randomUUID()
+                                                    .toString(),
+                                            StønadType.OVERGANGSSTØNAD,
+                                            LocalDate.now(),
+                                            dokumentasjonsbehovDto),
+            SøknadMedDokumentasjonsbehovDto(UUID.randomUUID()
+                                                    .toString(),
+                                            StønadType.BARNETILSYN,
+                                            LocalDate.now(),
+                                            dokumentasjonsbehovDto),
+    )
 
 }
