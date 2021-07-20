@@ -8,8 +8,8 @@ import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
-import no.nav.familie.kontrakter.ef.søknad.Ettersending
-import no.nav.familie.kontrakter.ef.søknad.EttersendingMedVedlegg
+import no.nav.familie.kontrakter.ef.ettersending.Ettersending
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingMedVedlegg
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
@@ -30,8 +30,8 @@ class EttersendingMapper(private val dokumentServiceService: DokumentService) {
 
 
         return EttersendingRequestData(EttersendingMedVedlegg(ettersending,
-                                                  vedlegg.values.flatMap { it.vedlegg },
-                                                 dokumentasjonsbehovTilDokumentService.tilKontrakt()), vedleggData)
+                                                              vedlegg.values.flatMap { it.vedlegg },
+                                                              dokumentasjonsbehovTilDokumentService.tilKontrakt()), vedleggData)
     }
 
 }
