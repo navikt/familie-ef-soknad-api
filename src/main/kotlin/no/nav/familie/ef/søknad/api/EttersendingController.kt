@@ -1,10 +1,11 @@
-package no.nav.familie.ef.søknad.mock
+package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import no.nav.familie.ef.søknad.service.EttersendingService
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -18,9 +19,9 @@ class EttersendingController(val ettersendingService: EttersendingService) {
 
     @PostMapping
     fun postEttersending(@RequestBody ettersending: EttersendingDto): Kvittering {
-        /*if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.fnr)) {
+        if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
-        }*/
+        }
         val innsendingMottatt = LocalDateTime.now()
         ettersendingService.sendInn(ettersending, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
