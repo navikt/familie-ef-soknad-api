@@ -2,7 +2,6 @@
 
 ## Kjør på localhost: 
 bruk Launcher : ApplicationLocalLauncher 
-Vil kjøre med tps-innsyn mock TpsInnsynMockController (som bla.a muliggjør innlogging - se under)
 
 ## Hvordan logge inn på localhost:
 Eksempel: 
