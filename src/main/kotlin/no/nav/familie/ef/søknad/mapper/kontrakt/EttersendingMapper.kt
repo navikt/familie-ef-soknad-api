@@ -68,7 +68,7 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
         val vedlegg = leggSammenVedleggLister(vedleggMedDokumentasjonsbehovWrapper.values.flatMap { it.vedlegg },
                                                    vedleggForSøknadUtenDokumentasjonsbehov,
                                                    vedleggUtenSøknad)
-        print(vedlegg)
+
         return EttersendingRequestData(
                 EttersendingMedVedlegg(
                         ettersending,
