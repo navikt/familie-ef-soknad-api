@@ -1,0 +1,25 @@
+{
+  "fnr": "01048236345",
+  "ettersendingForSøknad": null,
+  "ettersendingUtenSøknad": {
+    "stønadstype": "OVERGANGSSTØNAD",
+    "innsending": [
+      {
+        "beskrivelse": "coronabrev.txt",
+        "dokumenttype": "DOKUMENTASJON_SYKT_BARN",
+        "vedlegg": {
+          "id": "99",
+          "navn": "dummy-pdf"
+        }
+      },
+      {
+        "beskrivelse": "alzheimer.pdf",
+        "dokumenttype": "DOKUMENTASJON_BARNETILSYN_BEHOV",
+        "vedlegg": {
+          "id": "122",
+          "navn": "dummy-pdf2"
+        }
+      }
+    ]
+  }
+}

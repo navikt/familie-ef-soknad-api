@@ -1,0 +1,31 @@
+{
+  "fnr": "01048236345",
+  "ettersendingForSøknad": {
+    "søknadId": "123",
+    "dokumentasjonsbehov": [
+      {
+        "label": "Dokumentasjon på barnets sykdom",
+        "id": "SYKT_BARN",
+        "harSendtInn": false,
+        "opplastedeVedlegg" : [{"id" : "123", "navn": "sykdom.pdf"}]
+      },
+      {
+        "label": "Dokumentasjon på arbeidsforholdet og årsaken til at du reduserte arbeidstiden",
+        "id": "ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID",
+        "harSendtInn": false,
+        "opplastedeVedlegg" : [{"id" : "122", "navn": "jobb.pdf"}]
+      }
+    ],
+    "innsending": [
+      {
+        "beskrivelse": "dokumentasjon på oppsigelse",
+        "dokumenttype": "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
+        "vedlegg": {
+          "id": "98",
+          "navn": "ikketaleom.pdf"
+        }
+      }
+    ]
+  },
+  "ettersendingUtenSøknad": null
+}

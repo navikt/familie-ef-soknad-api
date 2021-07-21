@@ -18,14 +18,17 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/ettersending"])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 
-class EttersendingController(val ettersendingService: EttersendingService, val featureToggleService: FeatureToggleService) {
+class EttersendingController(
+    val ettersendingService: EttersendingService,
+    val featureToggleService: FeatureToggleService
+) {
 
     @PostMapping
     fun postEttersending(@RequestBody ettersending: EttersendingDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.ettersending") {
-            if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.fnr)) {
+            /*if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.fnr)) {
                 throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
-            }
+            } */
             val innsendingMottatt = LocalDateTime.now()
             ettersendingService.sendInn(ettersending, innsendingMottatt)
             Kvittering("ok", mottattDato = innsendingMottatt)

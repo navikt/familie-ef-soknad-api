@@ -47,6 +47,8 @@ class EttersendingMapper(private val dokumentServiceService: DokumentService) {
             fnr = dto.fnr
         )
 
+        print(vedlegg.values.flatMap { it.vedlegg })
+
         return EttersendingRequestData(
             EttersendingMedVedlegg(
                 ettersending,
