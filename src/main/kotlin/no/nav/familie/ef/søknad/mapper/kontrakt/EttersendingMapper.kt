@@ -11,6 +11,7 @@ import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.ettersending.Ettersending
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingMedVedlegg
+import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
@@ -18,8 +19,8 @@ import java.time.LocalDateTime
 class EttersendingMapper(private val dokumentService: DokumentService) {
 
     fun mapTilIntern(
-        dto: EttersendingDto,
-        innsendingMottatt: LocalDateTime
+            dto: EttersendingDto,
+            innsendingMottatt: LocalDateTime
     ): EttersendingRequestData<Ettersending> {
 
         val dokumentasjonsbehovTilDokumentService: List<DokumentasjonsbehovSøknad> =
@@ -29,45 +30,70 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
                             it.id,
                             it.harSendtInn,
                             it.opplastedeVedlegg.map {
-                                DokumentFelt(it.id, it.navn) })
+                                DokumentFelt(it.id, it.navn)
+                            })
                 } ?: emptyList()
         val vedleggForSøknadTilDokumentService: List<DokumentFelt> =
                 dto.ettersendingForSøknad?.let { hentDokumentFeltTilDokumentService(it.innsending) } ?: emptyList()
         val vedleggUtenSøknadTilDokumentService: List<DokumentFelt> =
                 dto.ettersendingUtenSøknad?.let { hentDokumentFeltTilDokumentService(it.innsending) } ?: emptyList()
 
-
         val vedleggData = leggSammenMapFunksjoner(
                 dokumentService.hentDokumenterFraDokumentFelt(vedleggForSøknadTilDokumentService),
                 dokumentService.hentDokumenter(dokumentasjonsbehovTilDokumentService),
                 dokumentService.hentDokumenterFraDokumentFelt(vedleggUtenSøknadTilDokumentService)
         )
-        val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dokumentasjonsbehovTilDokumentService)
 
         val ettersending = Ettersending(
-            innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
-            fnr = dto.fnr
+                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
+                fnr = dto.fnr
         )
 
+        val vedleggForSøknadUtenDokumentasjonsbehov = dto.ettersendingForSøknad?.innsending?.map {
+            Vedlegg(
+                    id = it.vedlegg.id,
+                    navn = it.vedlegg.navn,
+                    tittel = it.beskrivelse
+            )
+        } ?: emptyList()
+        val vedleggUtenSøknad = dto.ettersendingUtenSøknad?.innsending?.map {
+            Vedlegg(
+                    id = it.vedlegg.id,
+                    navn = it.vedlegg.navn,
+                    tittel = it.beskrivelse
+            )
+        } ?: emptyList()
+        val vedleggMedDokumentasjonsbehovWrapper: Map<String, DokumentasjonWrapper> =
+                lagDokumentasjonWrapper(dokumentasjonsbehovTilDokumentService)
+        val vedlegg = leggSammenVedleggLister(vedleggMedDokumentasjonsbehovWrapper.values.flatMap { it.vedlegg },
+                                                   vedleggForSøknadUtenDokumentasjonsbehov,
+                                                   vedleggUtenSøknad)
+        print(vedlegg)
         return EttersendingRequestData(
-            EttersendingMedVedlegg(
-                ettersending,
-                vedlegg.values.flatMap { it.vedlegg },
-                dokumentasjonsbehovTilDokumentService.tilKontrakt()
-            ), vedleggData
+                EttersendingMedVedlegg(
+                        ettersending,
+                        vedlegg,
+                        dokumentasjonsbehovTilDokumentService.tilKontrakt()
+                ), vedleggData
         )
     }
 
+    private fun leggSammenVedleggLister(vedleggForSøknad: List<Vedlegg>,
+                                        vedleggForSøknadÅpen: List<Vedlegg>,
+                                        vedleggUtenSøknad: List<Vedlegg>): List<Vedlegg> {
+        return vedleggForSøknad + vedleggForSøknadÅpen + vedleggUtenSøknad
+    }
+
     private fun leggSammenMapFunksjoner(
-        vedleggDataForSøknad: Map<String, ByteArray>,
-        vedleggDataUtenSøknad: Map<String, ByteArray>,
-        vedleggDataForSøknadUtenDokumentasjonsbehov: Map<String, ByteArray>
+            vedleggDataForSøknad: Map<String, ByteArray>,
+            vedleggDataUtenSøknad: Map<String, ByteArray>,
+            vedleggDataForSøknadUtenDokumentasjonsbehov: Map<String, ByteArray>
     ): Map<String, ByteArray> {
         return (vedleggDataForSøknad.keys + vedleggDataUtenSøknad.keys + vedleggDataForSøknadUtenDokumentasjonsbehov.keys).associateWith {
             listOf(
-                vedleggDataForSøknad[it],
-                vedleggDataUtenSøknad[it],
-                vedleggDataForSøknadUtenDokumentasjonsbehov[it]
+                    vedleggDataForSøknad[it],
+                    vedleggDataUtenSøknad[it],
+                    vedleggDataForSøknadUtenDokumentasjonsbehov[it]
             ).joinToString().toByteArray()
         }
     }
