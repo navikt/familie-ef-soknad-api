@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DokumentFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov as DokumentasjonsbehovSøknad
 import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingDto
 import no.nav.familie.ef.søknad.api.dto.ettersending.Innsending
 import no.nav.familie.ef.søknad.integration.EttersendingRequestData
@@ -15,20 +15,21 @@ import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
 @Component
-class EttersendingMapper(private val dokumentServiceService: DokumentService) {
+class EttersendingMapper(private val dokumentService: DokumentService) {
 
     fun mapTilIntern(
         dto: EttersendingDto,
         innsendingMottatt: LocalDateTime
     ): EttersendingRequestData<Ettersending> {
 
-        val dokumentasjonsbehovTilDokumentService: List<Dokumentasjonsbehov> =
+        val dokumentasjonsbehovTilDokumentService: List<DokumentasjonsbehovSøknad> =
                 dto.ettersendingForSøknad?.dokumentasjonsbehov?.map {
-                    Dokumentasjonsbehov(
+                    DokumentasjonsbehovSøknad(
                             it.label,
                             it.id,
                             it.harSendtInn,
-                            it.opplastedeVedlegg.map { DokumentFelt(it.id, it.navn) })
+                            it.opplastedeVedlegg.map {
+                                DokumentFelt(it.id, it.navn) })
                 } ?: emptyList()
         val vedleggForSøknadTilDokumentService: List<DokumentFelt> =
                 dto.ettersendingForSøknad?.let { hentDokumentFeltTilDokumentService(it.innsending) } ?: emptyList()
@@ -37,9 +38,9 @@ class EttersendingMapper(private val dokumentServiceService: DokumentService) {
 
 
         val vedleggData = leggSammenMapFunksjoner(
-            dokumentServiceService.hentDokumenterFraDokumentFelt(vedleggForSøknadTilDokumentService),
-            dokumentServiceService.hentDokumenter(dokumentasjonsbehovTilDokumentService),
-            dokumentServiceService.hentDokumenterFraDokumentFelt(vedleggUtenSøknadTilDokumentService)
+                dokumentService.hentDokumenterFraDokumentFelt(vedleggForSøknadTilDokumentService),
+                dokumentService.hentDokumenter(dokumentasjonsbehovTilDokumentService),
+                dokumentService.hentDokumenterFraDokumentFelt(vedleggUtenSøknadTilDokumentService)
         )
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dokumentasjonsbehovTilDokumentService)
 
