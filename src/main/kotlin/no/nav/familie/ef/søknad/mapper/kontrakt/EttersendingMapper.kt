@@ -23,17 +23,18 @@ class EttersendingMapper(private val dokumentServiceService: DokumentService) {
     ): EttersendingRequestData<Ettersending> {
 
         val dokumentasjonsbehovTilDokumentService: List<Dokumentasjonsbehov> =
-            dto.ettersendingForSøknad.dokumentasjonsbehov.map {
-                Dokumentasjonsbehov(
-                    it.label,
-                    it.id,
-                    it.harSendtInn,
-                    it.opplastedeVedlegg.map { DokumentFelt(it.id, it.navn) })
-            }
+                dto.ettersendingForSøknad?.dokumentasjonsbehov?.map {
+                    Dokumentasjonsbehov(
+                            it.label,
+                            it.id,
+                            it.harSendtInn,
+                            it.opplastedeVedlegg.map { DokumentFelt(it.id, it.navn) })
+                } ?: emptyList()
         val vedleggForSøknadTilDokumentService: List<DokumentFelt> =
-            hentDokumentFeltTilDokumentService(dto.ettersendingForSøknad.innsending)
+                dto.ettersendingForSøknad?.let { hentDokumentFeltTilDokumentService(it.innsending) } ?: emptyList()
         val vedleggUtenSøknadTilDokumentService: List<DokumentFelt> =
-            hentDokumentFeltTilDokumentService(dto.ettersendingUtenSøknad.innsending)
+                dto.ettersendingUtenSøknad?.let { hentDokumentFeltTilDokumentService(it.innsending) } ?: emptyList()
+
 
         val vedleggData = leggSammenMapFunksjoner(
             dokumentServiceService.hentDokumenterFraDokumentFelt(vedleggForSøknadTilDokumentService),
