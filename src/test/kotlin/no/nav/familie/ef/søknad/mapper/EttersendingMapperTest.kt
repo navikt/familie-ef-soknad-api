@@ -60,7 +60,7 @@ internal class EttersendingMapperTest {
     }
 
     @Test
-    fun `mapTilIntern returnerer samme samme datoMottatt og fnr som blir sendt frontend`() {
+    fun `mapTilIntern returnerer samme datoMottatt og fnr som blir sendt frontend`() {
 
         //Given
         val innsendtDto = ettersendignUtenSøknadDto
