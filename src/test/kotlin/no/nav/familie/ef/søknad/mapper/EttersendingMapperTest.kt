@@ -23,10 +23,8 @@ internal class EttersendingMapperTest {
         //Given
         val vedleggIderFraDto = listOf("98", "123", "122")
         val forventetMap = vedleggIderFraDto.associateWith { it.toByteArray() }
-
         //When
         val ettersendingMap = mapper.mapTilIntern(ettersendignForSøknadDto, innsendingMottatt).vedlegg
-
         //Then
         assertTrue(ettersendingMap.keys.equals(forventetMap.keys))
     }
@@ -44,10 +42,8 @@ internal class EttersendingMapperTest {
         ettersendignForSøknadDto.ettersendingForSøknad?.innsending?.map {
             vedleggListe.add(Vedlegg(id = it.vedlegg.id, navn = it.vedlegg.navn, tittel = it.beskrivelse))
         }
-
         //When
         val ettersendingVedlegg = mapper.mapTilIntern(ettersendignForSøknadDto, innsendingMottatt).ettersendingMedVedlegg.vedlegg
-
         //Then
         assertTrue(vedleggListe.equals(ettersendingVedlegg))
     }
