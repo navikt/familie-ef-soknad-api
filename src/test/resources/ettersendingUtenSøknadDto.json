@@ -5,19 +5,19 @@
     "stønadstype": "OVERGANGSSTØNAD",
     "innsending": [
       {
-        "beskrivelse": "coronabrev.txt",
+        "beskrivelse": "Dokumentasjon på at barnet mitt er syk.",
         "dokumenttype": "DOKUMENTASJON_SYKT_BARN",
         "vedlegg": {
           "id": "99",
-          "navn": "dummy-pdf"
+          "navn": "sykdom.pdf"
         }
       },
       {
-        "beskrivelse": "alzheimer.pdf",
+        "beskrivelse": "Dokumentasjon på at jeg trenger hjelp til å passe på barnet mitt.",
         "dokumenttype": "DOKUMENTASJON_BARNETILSYN_BEHOV",
         "vedlegg": {
           "id": "122",
-          "navn": "dummy-pdf2"
+          "navn": "barnetilsyn.pdf"
         }
       }
     ]
