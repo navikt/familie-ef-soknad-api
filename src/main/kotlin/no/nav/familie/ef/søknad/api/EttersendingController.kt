@@ -18,9 +18,8 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/ettersending"])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 
-class EttersendingController(
-        val ettersendingService: EttersendingService,
-        val featureToggleService: FeatureToggleService
+class EttersendingController(val ettersendingService: EttersendingService,
+                             val featureToggleService: FeatureToggleService
 ) {
 
     @PostMapping
