@@ -41,7 +41,7 @@ class EttersendingController(
     }
 
     @GetMapping
-    fun hentEttersendingForPerson(@RequestBody ettersending: EttersendingDto): ResponseEntity<List<EttersendingDto>> {
+    fun hentEttersendingForPerson(): ResponseEntity<List<EttersendingDto>> {
         val ident = EksternBrukerUtils.hentFnrFraToken()
         //if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ident)) {
         //    throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
