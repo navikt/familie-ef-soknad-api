@@ -18,6 +18,7 @@ data class MottakConfig(val uri: URI,
 
     internal val hentSøknaderMedDokumentasjonsbehovUri = byggUri(PATH_HENT_SØKNADER_MED_DOKUMENTASJONSBEHOV)
     internal val sendInnEttersendingUri = byggUri(PATH_SEND_INN_ETTERSENDING)
+    internal val hentEttersendingForPersonUri = byggUri(PATH_HENT_ETTERSENDING_FOR_PERSON)
 
     internal val pingUri = byggUri(PATH_PING)
 
@@ -27,13 +28,15 @@ data class MottakConfig(val uri: URI,
             "$PATH_HENT_DOKUMENTASJONSBEHOV/$søknadId").build().toUri()
 
     companion object {
+
         private const val PATH_SEND_INN_OVERGANGSSTØNAD = "/soknad" //TODO endre til soknad/overgangsstonad senere
         private const val PATH_SEND_INN_ARBEIDS_SKJEMA = "/skjema"
         private const val PATH_SEND_INN_BARNETILSYNSØKNAD = "/soknad/barnetilsyn"
         private const val PATH_SEND_INN_SKOLEPENGERSØKNAD = "/soknad/skolepenger"
         private const val PATH_HENT_DOKUMENTASJONSBEHOV = "/soknad/dokumentasjonsbehov"
         private const val PATH_HENT_SØKNADER_MED_DOKUMENTASJONSBEHOV = "/person/soknader-med-dokumentasjonsbehov"
-        private const val PATH_SEND_INN_ETTERSENDING ="/ettersending"
+        private const val PATH_SEND_INN_ETTERSENDING = "/ettersending"
+        private const val PATH_HENT_ETTERSENDING_FOR_PERSON = "/ettersending/hent-ettersending-for-person"
         private const val PATH_PING = "/ping"
     }
 

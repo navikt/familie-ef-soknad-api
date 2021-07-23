@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.integration
 
+import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingDto
 import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.kontrakter.ef.ettersending.Ettersending
@@ -60,7 +61,15 @@ class SøknadClient(private val config: MottakConfig,
     }
 
     fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
-        return postForEntity(config.hentSøknaderMedDokumentasjonsbehovUri, PersonIdent(personIdent), HttpHeaders().medContentTypeJsonUTF8())
+        return postForEntity(config.hentSøknaderMedDokumentasjonsbehovUri,
+                             PersonIdent(personIdent),
+                             HttpHeaders().medContentTypeJsonUTF8())
+    }
+
+    fun hentEttersendingForPerson(personIdent: String): List<EttersendingDto> {
+        return postForEntity(config.hentEttersendingForPersonUri,
+                             PersonIdent(personIdent),
+                             HttpHeaders().medContentTypeJsonUTF8())
     }
 
     private fun HttpHeaders.medContentTypeJsonUTF8(): HttpHeaders {
