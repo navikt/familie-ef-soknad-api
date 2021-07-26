@@ -2,12 +2,13 @@ package no.nav.familie.ef.søknad.mock
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingDto
-import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingForSøknad
-import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingUtenSøknad
-import no.nav.familie.ef.søknad.api.dto.ettersending.Innsending
+import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingResponseData
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingForSøknad
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingUtenSøknad
+import no.nav.familie.kontrakter.ef.ettersending.Innsending
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
 import no.nav.familie.kontrakter.ef.felles.StønadType
 import no.nav.familie.kontrakter.ef.søknad.Dokument
@@ -40,7 +41,7 @@ class MottakClientMock {
         every { søknadClient.ping() } returns Unit
         every { søknadClient.hentDokumentasjonsbehovForSøknad(any()) } returns dokumentasjonsbehovDto
         every { søknadClient.hentSøknaderMedDokumentasjonsbehov(any()) } returns søknaderMedDokumentasjonsbehov
-        every { søknadClient.hentEttersendingForPerson(any()) } returns ettersendingDto;
+        every { søknadClient.hentEttersendingForPerson(any()) } returns ettersendingResponseData;
 
 
         return søknadClient
@@ -99,7 +100,8 @@ class MottakClientMock {
                                                                                          false,
                                                                                          listOf(Dokument("e2943989-932a-40fc-a1f0-db912ea8ccce",
                                                                                                          "dokuemnt_tidliger_ettersending.pdf")))),
-                                                              emptyList())
+                                                              listOf(Innsending("Dette er et dokument", "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID", Dokument("093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
+                                                                                                                                                         "dokuemnt_tidliger_ettersending22.pdf"))))
 
     private val ettersendingUtenSøknad = EttersendingUtenSøknad(StønadType.OVERGANGSSTØNAD,
                                                                 listOf(Innsending("dette er et fint dokument",
@@ -107,7 +109,10 @@ class MottakClientMock {
                                                                                   Dokument("093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
                                                                                            "dokuemnt_tidliger_ettersending.pdf"))))
 
-    private val ettersendingDto =
-            listOf(EttersendingDto("01010172272", ettersendingForSøknad, null), EttersendingDto("01010172272", null, ettersendingUtenSøknad))
+    private val ettersendingDto1 =
+            EttersendingDto("01010172272", ettersendingForSøknad, null)
 
+    private val ettersendingDto2 = EttersendingDto("01010172272", null, ettersendingUtenSøknad)
+
+    private val ettersendingResponseData = listOf(EttersendingResponseData(ettersendingDto1, LocalDateTime.now()), EttersendingResponseData(ettersendingDto2, LocalDateTime.now()))
 }

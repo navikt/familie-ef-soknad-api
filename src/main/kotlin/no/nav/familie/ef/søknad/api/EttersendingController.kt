@@ -1,11 +1,12 @@
 package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingDto
+import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingResponseData
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.service.EttersendingService
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.HttpStatus
@@ -41,11 +42,11 @@ class EttersendingController(
     }
 
     @GetMapping
-    fun hentEttersendingForPerson(): ResponseEntity<List<EttersendingDto>> {
+    fun hentEttersendingForPerson(): ResponseEntity<List<EttersendingResponseData>> {
         val ident = EksternBrukerUtils.hentFnrFraToken()
-        //if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ident)) {
-        //    throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
-        //}
+        if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ident)) {
+            throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
+        }
         return ResponseEntity.ok(søknadClient.hentEttersendingForPerson(ident))
     }
 
