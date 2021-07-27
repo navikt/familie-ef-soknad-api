@@ -1,14 +1,10 @@
 package no.nav.familie.ef.søknad.mapper
 
-
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.mapper.kontrakt.EttersendingMapper
 import no.nav.familie.ef.søknad.mock.DokumentServiceStub
 import org.junit.jupiter.api.Test
 import no.nav.familie.ef.søknad.mock.ettersendingUtenSøknadDto
 import no.nav.familie.ef.søknad.mock.ettersendingForSøknadDto
-import no.nav.familie.kontrakter.ef.ettersending.EttersendingForSøknad
-import no.nav.familie.kontrakter.ef.ettersending.Innsending
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import java.time.LocalDateTime
 import org.junit.jupiter.api.Assertions.assertTrue
