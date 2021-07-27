@@ -7,7 +7,6 @@ import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
-import no.nav.familie.kontrakter.ef.ettersending.Ettersending
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingMedVedlegg
 import no.nav.familie.kontrakter.ef.ettersending.Innsending
@@ -44,11 +43,6 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
                 dokumentService.hentDokumenterFraDokumentFelt(vedleggUtenSøknadTilDokumentService)
         )
 
-        val ettersending = Ettersending(
-                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
-                fnr = dto.fnr
-        )
-
         val vedleggForSøknadUtenDokumentasjonsbehov = dto.ettersendingForSøknad?.innsending?.map {
             Vedlegg(
                     id = it.vedlegg.id,
@@ -73,7 +67,6 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
                 EttersendingMedVedlegg(
                         FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
                         vedlegg,
-                        dokumentasjonsbehovTilDokumentService.tilKontrakt(),
                         dto
                 ), vedleggData
         )
