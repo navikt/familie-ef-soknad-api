@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.mock
 
-import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingDto
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
 import no.nav.familie.kontrakter.felles.objectMapper
 import java.io.File
 

@@ -5,7 +5,6 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov as D
 import no.nav.familie.ef.søknad.integration.EttersendingRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
-import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingMedVedlegg

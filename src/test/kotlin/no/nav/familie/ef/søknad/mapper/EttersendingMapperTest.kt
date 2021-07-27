@@ -1,11 +1,14 @@
 package no.nav.familie.ef.søknad.mapper
 
+
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.mapper.kontrakt.EttersendingMapper
 import no.nav.familie.ef.søknad.mock.DokumentServiceStub
 import org.junit.jupiter.api.Test
 import no.nav.familie.ef.søknad.mock.ettersendingUtenSøknadDto
 import no.nav.familie.ef.søknad.mock.ettersendingForSøknadDto
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingForSøknad
+import no.nav.familie.kontrakter.ef.ettersending.Innsending
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import java.time.LocalDateTime
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -18,7 +21,7 @@ internal class EttersendingMapperTest {
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
     @Test
-    fun `mapTilIntern setter sammen en liste på formatet Map(String to ByteArray) fra alle innsendte vedlegg`() {
+    fun `mapTilIntern setter sammen en liste med formatet Map(String to ByteArray) fra alle innsendte vedlegg med id som nøkkel`() {
 
         //Given
         val vedleggIderFraDto = listOf("98", "123", "122")
@@ -48,16 +51,6 @@ internal class EttersendingMapperTest {
         assertTrue(vedleggListe.equals(ettersendingVedlegg))
     }
 
-    @Test
-    fun `mapTilIntern skal fungere med å ikke sende inn innsendingForSøknad og dokumentasjonsbehov skal da bli emptyList()`() {
-
-        //Given
-        val tomDokumentasjonsbehovListe: List<Dokumentasjonsbehov> = emptyList()
-        //When
-        val ettersendingmapper = mapper.mapTilIntern(ettersendignUtenSøknadDto, innsendingMottatt)
-        //Then
-        assertTrue(tomDokumentasjonsbehovListe.equals(ettersendingmapper.ettersendingMedVedlegg.dokumentasjonsbehov))
-    }
 
     @Test
     fun `mapTilIntern returnerer samme datoMottatt og fnr som blir sendt frontend`() {
@@ -65,9 +58,9 @@ internal class EttersendingMapperTest {
         //Given
         val innsendtDto = ettersendignUtenSøknadDto
         //When
-        val mapper = mapper.mapTilIntern(innsendtDto, innsendingMottatt).ettersendingMedVedlegg.ettersending
+        val mapper = mapper.mapTilIntern(innsendtDto, innsendingMottatt).ettersendingMedVedlegg
         //Then
-        assertTrue(innsendingMottatt.equals(mapper.innsendingsdetaljer.verdi.datoMottatt.verdi) && innsendtDto.fnr.equals(mapper.fnr))
+        assertTrue(innsendingMottatt.equals(mapper.innsendingsdetaljer.verdi.datoMottatt.verdi) && innsendtDto.fnr.equals(mapper.ettersending.fnr))
 
     }
 
