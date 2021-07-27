@@ -2,9 +2,9 @@ package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
-import no.nav.familie.kontrakter.ef.ettersending.Ettersending
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.http.client.MultipartBuilder
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingResponseData
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
 import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
@@ -45,7 +45,7 @@ class SøknadClient(private val config: MottakConfig,
         return postForEntity(config.sendInnSkolepengerUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
     }
 
-    fun sendInnEttersending(ettersendingRequestData: EttersendingRequestData<Ettersending>): KvitteringDto {
+    fun sendInnEttersending(ettersendingRequestData: EttersendingRequestData): KvitteringDto {
         val multipartBuilder = MultipartBuilder().withJson("ettersending", ettersendingRequestData.ettersendingMedVedlegg)
         ettersendingRequestData.vedlegg.forEach { multipartBuilder.withByteArray("vedlegg", it.key, it.value) }
         return postForEntity(config.sendInnEttersendingUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
@@ -60,7 +60,15 @@ class SøknadClient(private val config: MottakConfig,
     }
 
     fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
-        return postForEntity(config.hentSøknaderMedDokumentasjonsbehovUri, PersonIdent(personIdent), HttpHeaders().medContentTypeJsonUTF8())
+        return postForEntity(config.hentSøknaderMedDokumentasjonsbehovUri,
+                             PersonIdent(personIdent),
+                             HttpHeaders().medContentTypeJsonUTF8())
+    }
+
+    fun hentEttersendingForPerson(personIdent: String): List<EttersendingResponseData> {
+        return postForEntity(config.hentEttersendingForPersonUri,
+                             PersonIdent(personIdent),
+                             HttpHeaders().medContentTypeJsonUTF8())
     }
 
     private fun HttpHeaders.medContentTypeJsonUTF8(): HttpHeaders {
