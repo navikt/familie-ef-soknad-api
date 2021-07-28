@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 import no.nav.familie.ef.søknad.mock.ettersendingUtenSøknadDto
 import no.nav.familie.ef.søknad.mock.ettersendingForSøknadDto
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
+import org.junit.jupiter.api.Assertions.assertEquals
 import java.time.LocalDateTime
 import org.junit.jupiter.api.Assertions.assertTrue
 
@@ -20,11 +21,13 @@ internal class EttersendingMapperTest {
     fun `mapTilIntern setter sammen en liste med Map(String to ByteArray) fra alle innsendte vedlegg med id som nøkkel`() {
 
         //Given
-        val forventetMap = listOf("98", "123", "122").associateWith { it.toByteArray() }
+        val forventetMap = listOf("59b846eb-12b8-4321-a36b-29170b81a4d1",
+                                  "4f44f53e-5566-4363-9d3c-e30387d4164f",
+                                  "6bcc08af-be76-4756-b938-0a7c5934a736").associateWith { it.toByteArray() }
         //When
         val ettersendingMap = mapper.mapTilIntern(ettersendignForSøknadDto, innsendingMottatt).vedlegg
         //Then
-        assertTrue(ettersendingMap.keys.equals(forventetMap.keys))
+        assertEquals(ettersendingMap.keys, forventetMap.keys)
     }
 
     @Test
@@ -43,7 +46,7 @@ internal class EttersendingMapperTest {
         //When
         val ettersendingVedlegg = mapper.mapTilIntern(ettersendignForSøknadDto, innsendingMottatt).ettersendingMedVedlegg.vedlegg
         //Then
-        assertTrue(vedleggListe.equals(ettersendingVedlegg))
+        assertEquals(vedleggListe, ettersendingVedlegg)
     }
 
 
@@ -55,7 +58,7 @@ internal class EttersendingMapperTest {
         //When
         val mapper = mapper.mapTilIntern(innsendtDto, innsendingMottatt).ettersendingMedVedlegg
         //Then
-        assertTrue(innsendingMottatt.equals(mapper.innsendingsdetaljer.verdi.datoMottatt.verdi) && innsendtDto.fnr.equals(mapper.ettersending.fnr))
+        assertTrue(innsendingMottatt == mapper.innsendingsdetaljer.verdi.datoMottatt.verdi && innsendtDto.fnr == mapper.ettersending.fnr)
     }
 
 }
