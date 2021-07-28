@@ -17,11 +17,10 @@ internal class EttersendingMapperTest {
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
     @Test
-    fun `mapTilIntern setter sammen en liste med formatet Map(String to ByteArray) fra alle innsendte vedlegg med id som nøkkel`() {
+    fun `mapTilIntern setter sammen en liste med Map(String to ByteArray) fra alle innsendte vedlegg med id som nøkkel`() {
 
         //Given
-        val vedleggIderFraDto = listOf("98", "123", "122")
-        val forventetMap = vedleggIderFraDto.associateWith { it.toByteArray() }
+        val forventetMap = listOf("98", "123", "122").associateWith { it.toByteArray() }
         //When
         val ettersendingMap = mapper.mapTilIntern(ettersendignForSøknadDto, innsendingMottatt).vedlegg
         //Then
@@ -57,7 +56,6 @@ internal class EttersendingMapperTest {
         val mapper = mapper.mapTilIntern(innsendtDto, innsendingMottatt).ettersendingMedVedlegg
         //Then
         assertTrue(innsendingMottatt.equals(mapper.innsendingsdetaljer.verdi.datoMottatt.verdi) && innsendtDto.fnr.equals(mapper.ettersending.fnr))
-
     }
 
 }
