@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.api
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
-import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.service.EttersendingService
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingResponseData
@@ -25,7 +24,6 @@ import java.time.LocalDateTime
 class EttersendingController(
         val ettersendingService: EttersendingService,
         val featureToggleService: FeatureToggleService,
-        val søknadClient: SøknadClient
 ) {
 
     @PostMapping
@@ -47,7 +45,7 @@ class EttersendingController(
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ident)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
-        return ResponseEntity.ok(søknadClient.hentEttersendingForPerson(ident))
+        return ResponseEntity.ok(ettersendingService.hentEttersendingForPerson(ident))
     }
 
 }
