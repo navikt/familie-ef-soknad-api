@@ -2,15 +2,14 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DokumentFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Dokumentasjonsbehov as DokumentasjonsbehovSøknad
-import no.nav.familie.ef.søknad.api.dto.ettersending.EttersendingDto
-import no.nav.familie.ef.søknad.api.dto.ettersending.Innsending
 import no.nav.familie.ef.søknad.integration.EttersendingRequestData
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.lagDokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.tilKontrakt
 import no.nav.familie.ef.søknad.service.DokumentService
-import no.nav.familie.kontrakter.ef.ettersending.Ettersending
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingMedVedlegg
+import no.nav.familie.kontrakter.ef.ettersending.Innsending
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -21,7 +20,7 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
     fun mapTilIntern(
             dto: EttersendingDto,
             innsendingMottatt: LocalDateTime
-    ): EttersendingRequestData<Ettersending> {
+    ): EttersendingRequestData {
 
         val dokumentasjonsbehovTilDokumentService: List<DokumentasjonsbehovSøknad> =
                 dto.ettersendingForSøknad?.dokumentasjonsbehov?.map {
@@ -42,11 +41,6 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
                 dokumentService.hentDokumenterFraDokumentFelt(vedleggForSøknadTilDokumentService),
                 dokumentService.hentDokumenter(dokumentasjonsbehovTilDokumentService),
                 dokumentService.hentDokumenterFraDokumentFelt(vedleggUtenSøknadTilDokumentService)
-        )
-
-        val ettersending = Ettersending(
-                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
-                fnr = dto.fnr
         )
 
         val vedleggForSøknadUtenDokumentasjonsbehov = dto.ettersendingForSøknad?.innsending?.map {
@@ -71,9 +65,9 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
 
         return EttersendingRequestData(
                 EttersendingMedVedlegg(
-                        ettersending,
+                        FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
                         vedlegg,
-                        dokumentasjonsbehovTilDokumentService.tilKontrakt()
+                        dto
                 ), vedleggData
         )
     }
