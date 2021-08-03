@@ -7,10 +7,6 @@ familie:
   integrasjoner:
     uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
 
-tps:
-  innsyn:
-    uri:  https://api-gw-q2.oera.no/tps-proxy/api/v1/innsyn/
-
 cors:
   allowed_origins:
     - "https://familie-ef-soknad.nais.oera-q.local"

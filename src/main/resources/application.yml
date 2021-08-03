@@ -20,9 +20,6 @@ regelverk:
 health:
   indicator:
     detailed: true
-tps:
-  innsyn:
-    uri: https://api-gw.oera.no/tps-proxy/api/v1/innsyn/
 
 funksjonsbrytere:
   enabled: true

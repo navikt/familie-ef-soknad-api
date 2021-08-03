@@ -15,7 +15,11 @@ data class MottakConfig(val uri: URI,
     internal val sendInnSkjemaArbeidUri = byggUri(PATH_SEND_INN_ARBEIDS_SKJEMA)
     internal val sendInnBarnetilsynUri = byggUri(PATH_SEND_INN_BARNETILSYNSØKNAD)
     internal val sendInnSkolepengerUri = byggUri(PATH_SEND_INN_SKOLEPENGERSØKNAD)
+
+    internal val hentSøknaderMedDokumentasjonsbehovUri = byggUri(PATH_HENT_SØKNADER)
     internal val sendInnEttersendingUri = byggUri(PATH_SEND_INN_ETTERSENDING)
+    internal val hentEttersendingForPersonUri = byggUri(PATH_HENT_ETTERSENDING_FOR_PERSON)
+
     internal val pingUri = byggUri(PATH_PING)
 
     private fun byggUri(path: String) = UriComponentsBuilder.fromUri(uri).path(path).build().toUri()
@@ -24,12 +28,15 @@ data class MottakConfig(val uri: URI,
             "$PATH_HENT_DOKUMENTASJONSBEHOV/$søknadId").build().toUri()
 
     companion object {
+
         private const val PATH_SEND_INN_OVERGANGSSTØNAD = "/soknad" //TODO endre til soknad/overgangsstonad senere
         private const val PATH_SEND_INN_ARBEIDS_SKJEMA = "/skjema"
         private const val PATH_SEND_INN_BARNETILSYNSØKNAD = "/soknad/barnetilsyn"
         private const val PATH_SEND_INN_SKOLEPENGERSØKNAD = "/soknad/skolepenger"
         private const val PATH_HENT_DOKUMENTASJONSBEHOV = "/soknad/dokumentasjonsbehov"
-        private const val PATH_SEND_INN_ETTERSENDING ="/soknad/ettersending"
+        private const val PATH_HENT_SØKNADER = "/person/soknader"
+        private const val PATH_SEND_INN_ETTERSENDING = "/ettersending"
+        private const val PATH_HENT_ETTERSENDING_FOR_PERSON = "/ettersending/person"
         private const val PATH_PING = "/ping"
     }
 
