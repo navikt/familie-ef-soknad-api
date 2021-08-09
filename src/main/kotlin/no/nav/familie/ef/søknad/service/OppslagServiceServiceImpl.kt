@@ -21,7 +21,7 @@ import java.time.Period
 @Service
 internal class OppslagServiceServiceImpl(
         private val pdlClient: PdlClient,
-        private val unsecurePdlStsClient: UnsecurePdlClient,
+        private val unsecurePdlClient: UnsecurePdlClient,
         private val regelverkConfig: RegelverkConfig,
         private val søkerinfoMapper: SøkerinfoMapper,
 ) : OppslagService {
@@ -34,7 +34,7 @@ internal class OppslagServiceServiceImpl(
         val barnIdentifikatorer = pdlSøker.forelderBarnRelasjon
             .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
             .map { it.relatertPersonsIdent }
-        val pdlBarn = unsecurePdlStsClient.hentBarn(barnIdentifikatorer)
+        val pdlBarn = unsecurePdlClient.hentBarn(barnIdentifikatorer)
         val aktuelleBarn = pdlBarn
             .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
                 .filter { erILive(it.value) }
@@ -88,7 +88,7 @@ internal class OppslagServiceServiceImpl(
             .filter { it.relatertPersonsIdent != søkersPersonIdent && it.relatertPersonsRolle != Familierelasjonsrolle.BARN }
             .map { it.relatertPersonsIdent }
             .distinct()
-            .let { unsecurePdlStsClient.hentAndreForeldre(it) }
+            .let { unsecurePdlClient.hentAndreForeldre(it) }
     }
 
     fun erILive(pdlBarn: PdlBarn) =

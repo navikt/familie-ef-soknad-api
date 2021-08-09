@@ -18,12 +18,12 @@ class PdlStsClientTest {
 
     private val wireMockServer = WireMockServer(wireMockConfig().dynamicPort())
     private val restOperations: RestOperations = RestTemplateBuilder().build()
-    private lateinit var unsecurePdlStsClient: UnsecurePdlClient
+    private lateinit var unsecurePdlClient: UnsecurePdlClient
 
     @BeforeEach
     fun setUp() {
         wireMockServer.start()
-        unsecurePdlStsClient = UnsecurePdlClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations)
+        unsecurePdlClient = UnsecurePdlClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations)
     }
 
     @AfterEach
@@ -37,7 +37,7 @@ class PdlStsClientTest {
         wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
                                        .willReturn(okJson(readFile("barn.json"))))
 
-        val response = unsecurePdlStsClient.hentBarn(listOf("11111122222"))
+        val response = unsecurePdlClient.hentBarn(listOf("11111122222"))
 
         assertThat(response["11111122222"]?.navn?.firstOrNull()?.fornavn).isEqualTo("BRÅKETE")
     }
@@ -46,7 +46,7 @@ class PdlStsClientTest {
     fun `pdlClient håndterer response for bolk-query mot pdl-tjenesten der person er null og har errors`() {
         wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
                                        .willReturn(okJson(readFile("pdlBolkErrorResponse.json"))))
-        assertThat(catchThrowable { unsecurePdlStsClient.hentBarn(listOf("")) })
+        assertThat(catchThrowable { unsecurePdlClient.hentBarn(listOf("")) })
                 .hasMessageStartingWith("Feil ved henting av")
                 .isInstanceOf(PdlRequestException::class.java)
     }
@@ -55,7 +55,7 @@ class PdlStsClientTest {
     fun `pdlClient håndterer response for bolk-query mot pdl-tjenesten der data er null og har errors`() {
         wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
                                        .willReturn(okJson(readFile("pdlBolkErrorResponse_nullData.json"))))
-        assertThat(catchThrowable { unsecurePdlStsClient.hentBarn(listOf("")) })
+        assertThat(catchThrowable { unsecurePdlClient.hentBarn(listOf("")) })
                 .hasMessageStartingWith("Data er null fra PDL")
                 .isInstanceOf(PdlRequestException::class.java)
     }

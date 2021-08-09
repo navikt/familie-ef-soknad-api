@@ -44,13 +44,13 @@ internal class OppslagServiceServiceImplTest {
 
     val pdlClient: PdlClient = mockk()
     val regelverkConfig: RegelverkConfig = RegelverkConfig(RegelverkConfig.Alder(18))
-    val unsecurePdlStsClient: UnsecurePdlClient = mockk()
+    val unsecurePdlClient: UnsecurePdlClient = mockk()
 
     private val søkerinfoMapper = spyk(SøkerinfoMapper(mockk(relaxed = true)))
 
     private val oppslagServiceService = OppslagServiceServiceImpl(
             pdlClient,
-            unsecurePdlStsClient, regelverkConfig, søkerinfoMapper
+            unsecurePdlClient, regelverkConfig, søkerinfoMapper
     )
 
     @BeforeEach
@@ -59,7 +59,7 @@ internal class OppslagServiceServiceImplTest {
         every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
         mockPdlHentBarn()
         mockHentPersonPdlClient()
-        every { unsecurePdlStsClient.hentAndreForeldre(any()) } returns (mapOf())
+        every { unsecurePdlClient.hentAndreForeldre(any()) } returns (mapOf())
     }
 
     @Test
@@ -167,8 +167,8 @@ internal class OppslagServiceServiceImplTest {
                 forelderBarnRelasjon = listOf(ForelderBarnRelasjon(generer, Familierelasjonsrolle.FAR)),
                 navn = listOf(Navn("navn", "navn", "navn"))
         )
-        every { unsecurePdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
-        every { unsecurePdlStsClient.hentAndreForeldre(any()) } returns mapOf(
+        every { unsecurePdlClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
+        every { unsecurePdlClient.hentAndreForeldre(any()) } returns mapOf(
                 generer to PdlAnnenForelder(
                         listOf(),
                         listOf(),
@@ -231,10 +231,10 @@ internal class OppslagServiceServiceImplTest {
         val mapper = SøkerinfoMapper(kodeverkService = mockk())
         val oppslagServiceServiceMedMapper = OppslagServiceServiceImpl(
                 pdlClient,
-                unsecurePdlStsClient, regelverkConfig, mapper
+                unsecurePdlClient, regelverkConfig, mapper
         )
 
-        every { unsecurePdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn(dødsfall = Dødsfall(LocalDate.MIN)))
+        every { unsecurePdlClient.hentBarn(any()) } returns mapOf(pdlBarn(dødsfall = Dødsfall(LocalDate.MIN)))
         mockHentPersonPdlClient()
         val søkerinfo = oppslagServiceServiceMedMapper.hentSøkerinfo()
 
@@ -246,9 +246,9 @@ internal class OppslagServiceServiceImplTest {
         val mapper = SøkerinfoMapper(kodeverkService = mockk())
         val oppslagServiceServiceMedMapper = OppslagServiceServiceImpl(
                 pdlClient,
-                unsecurePdlStsClient, regelverkConfig, mapper
+                unsecurePdlClient, regelverkConfig, mapper
         )
-        every { unsecurePdlStsClient.hentBarn(any()) } returns mapOf(pdlBarn())
+        every { unsecurePdlClient.hentBarn(any()) } returns mapOf(pdlBarn())
         mockHentPersonPdlClient()
         val søkerinfo = oppslagServiceServiceMedMapper.hentSøkerinfo()
         assertThat(søkerinfo.barn).hasSize(1)
@@ -260,7 +260,7 @@ internal class OppslagServiceServiceImplTest {
         val levendeBarn = pdlBarn(fødselsdato = LocalDate.now().minusYears(2))
         val barnForHøyAlder = pdlBarn(fødselsdato = LocalDate.now().minusYears(20))
 
-        every { unsecurePdlStsClient.hentBarn(any()) } returns mapOf(dødtBarn, levendeBarn, barnForHøyAlder)
+        every { unsecurePdlClient.hentBarn(any()) } returns mapOf(dødtBarn, levendeBarn, barnForHøyAlder)
 
         mockHentPersonPdlClient()
 
@@ -295,14 +295,14 @@ internal class OppslagServiceServiceImplTest {
     ) {
         val pdlBarn = pdlBarn(Adressebeskyttelse(adressebeskyttelseGradering), forelderBarnRelasjon = forelderBarnRelasjon)
         val copy = pdlBarn.second.copy(navn = listOf(Navn(navn, navn, navn)))
-        every { unsecurePdlStsClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
+        every { unsecurePdlClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
     }
 
     private fun mockPdlHentAnnenForelder(adressebeskyttelseGradering: AdressebeskyttelseGradering) {
         val annenForelder =
                 PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(adressebeskyttelseGradering)), listOf(), listOf())
 
-        every { unsecurePdlStsClient.hentAndreForeldre(any()) } returns (mapOf("enIdent" to annenForelder))
+        every { unsecurePdlClient.hentAndreForeldre(any()) } returns (mapOf("enIdent" to annenForelder))
 
     }
 
