@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
+import no.nav.familie.http.config.RestTemplateBuilderBean
 import no.nav.familie.http.interceptor.ApiKeyInjectingClientInterceptor
 import no.nav.familie.http.interceptor.BearerTokenClientCredentialsClientInterceptor
 import no.nav.familie.http.interceptor.BearerTokenExchangeClientInterceptor
@@ -26,7 +27,8 @@ import java.time.temporal.ChronoUnit
 @Import(MdcValuesPropagatingClientInterceptor::class,
         ConsumerIdClientInterceptor::class,
         BearerTokenExchangeClientInterceptor::class,
-        BearerTokenClientCredentialsClientInterceptor::class)
+        BearerTokenClientCredentialsClientInterceptor::class,
+        RestTemplateBuilderBean::class) // blir brukt i DefaultOAuth2HttpClient
 internal class ApplicationConfig {
 
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
@@ -103,10 +105,10 @@ internal class ApplicationConfig {
     }
 
     @Bean("utenAuth")
-    fun restTemplate(restTemplateBuilder: RestTemplateBuilder,
-                     consumerIdClientInterceptor: ConsumerIdClientInterceptor): RestOperations {
-        return restTemplateBuilder.additionalInterceptors(consumerIdClientInterceptor,
-                                                          MdcValuesPropagatingClientInterceptor()).build()
+    fun restTemplate(consumerIdClientInterceptor: ConsumerIdClientInterceptor): RestOperations {
+        return RestTemplateBuilder()
+                .additionalInterceptors(consumerIdClientInterceptor,
+                                        MdcValuesPropagatingClientInterceptor()).build()
     }
 
 }
