@@ -17,11 +17,4 @@ cors:
 
 PDL_URL: https://api-gw-q1.oera.no/pdl-api
 STS_URL: https://api-gw-q1.oera.no/security-token-service/rest/v1/sts/token?grant_type=client_credentials&scope=openid
-
-no.nav.security.jwt:
-  issuers: selvbetjening
-  issuer.selvbetjening:
-    discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
-    accepted_audience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
-    proxyurl: http://webproxy-nais.nav.no:8088
-    cookie_name: selvbetjening-idtoken
+MOTTAK_AUDIENCE: dev-fss:teamfamilie:familie-ef-mottak
