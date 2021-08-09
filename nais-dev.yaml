@@ -54,6 +54,9 @@ spec:
     - https://www-q0.nav.no/familie/alene-med-barn/soknad-api
     - https://familie-ef-soknad-api.dev-sbs.nais.io
     - https://familie-ef-soknad-api.dev.nav.no
+  azure:
+    application:
+      enabled: true
   tokenx:
     enabled: true
   envFrom:
