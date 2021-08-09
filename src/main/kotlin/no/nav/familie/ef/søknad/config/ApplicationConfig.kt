@@ -33,7 +33,32 @@ internal class ApplicationConfig {
     private val apiKey = "x-nav-apiKey"
 
     @Bean
+    fun apiKeyInjectingClientInterceptor(mottak: MottakConfig,
+                                         pdlConfig: PdlConfig,
+                                         integrasjoner: FamilieIntegrasjonerConfig): ApiKeyInjectingClientInterceptor {
+        val map = mapOf(mottak.uri to Pair(apiKey, mottak.passord),
+                        pdlConfig.pdlUri to Pair(apiKey, pdlConfig.passord),
+                        integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
+        return ApiKeyInjectingClientInterceptor(map)
+    }
+
+    @Bean
     fun kotlinModule(): KotlinModule = KotlinModule()
+
+    @Bean("tokenExchange")
+    fun restTemplate(bearerTokenExchangeClientInterceptor: BearerTokenExchangeClientInterceptor,
+                     mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+                     consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                     apiKeyInjectingClientInterceptor: ApiKeyInjectingClientInterceptor): RestOperations {
+        return RestTemplateBuilder()
+                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+                .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
+                .interceptors(bearerTokenExchangeClientInterceptor,
+                              mdcValuesPropagatingClientInterceptor,
+                              consumerIdClientInterceptor,
+                              apiKeyInjectingClientInterceptor)
+                .build()
+    }
 
     @Bean
     fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
@@ -60,31 +85,6 @@ internal class ApplicationConfig {
         filterRegistration.filter = RequestTimeFilter()
         filterRegistration.order = 2
         return filterRegistration
-    }
-
-    @Bean
-    fun apiKeyInjectingClientInterceptor(mottak: MottakConfig,
-                                         pdlConfig: PdlConfig,
-                                         integrasjoner: FamilieIntegrasjonerConfig): ApiKeyInjectingClientInterceptor {
-        val map = mapOf(mottak.uri to Pair(apiKey, mottak.passord),
-                        pdlConfig.pdlUri to Pair(apiKey, pdlConfig.passord),
-                        integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
-        return ApiKeyInjectingClientInterceptor(map)
-    }
-
-    @Bean("tokenExchange")
-    fun restTemplate(bearerTokenExchangeClientInterceptor: BearerTokenExchangeClientInterceptor,
-                     mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-                     consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-                     apiKeyInjectingClientInterceptor: ApiKeyInjectingClientInterceptor): RestOperations {
-        return RestTemplateBuilder()
-                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
-                .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
-                .interceptors(bearerTokenExchangeClientInterceptor,
-                              mdcValuesPropagatingClientInterceptor,
-                              consumerIdClientInterceptor,
-                              apiKeyInjectingClientInterceptor)
-                .build()
     }
 
     @Bean("clientCredential")
