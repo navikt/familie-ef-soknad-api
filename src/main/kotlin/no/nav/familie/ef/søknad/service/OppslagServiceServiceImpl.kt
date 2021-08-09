@@ -4,7 +4,7 @@ import no.nav.familie.ef.søknad.api.ApiFeil
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.config.RegelverkConfig
 import no.nav.familie.ef.søknad.integration.PdlClient
-import no.nav.familie.ef.søknad.integration.PdlStsClient
+import no.nav.familie.ef.søknad.integration.UnsecurePdlClient
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
@@ -21,7 +21,7 @@ import java.time.Period
 @Service
 internal class OppslagServiceServiceImpl(
         private val pdlClient: PdlClient,
-        private val pdlStsClient: PdlStsClient,
+        private val unsecurePdlStsClient: UnsecurePdlClient,
         private val regelverkConfig: RegelverkConfig,
         private val søkerinfoMapper: SøkerinfoMapper,
 ) : OppslagService {
@@ -34,7 +34,7 @@ internal class OppslagServiceServiceImpl(
         val barnIdentifikatorer = pdlSøker.forelderBarnRelasjon
             .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
             .map { it.relatertPersonsIdent }
-        val pdlBarn = pdlStsClient.hentBarn(barnIdentifikatorer)
+        val pdlBarn = unsecurePdlStsClient.hentBarn(barnIdentifikatorer)
         val aktuelleBarn = pdlBarn
             .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
                 .filter { erILive(it.value) }
@@ -88,7 +88,7 @@ internal class OppslagServiceServiceImpl(
             .filter { it.relatertPersonsIdent != søkersPersonIdent && it.relatertPersonsRolle != Familierelasjonsrolle.BARN }
             .map { it.relatertPersonsIdent }
             .distinct()
-            .let { pdlStsClient.hentAndreForeldre(it) }
+            .let { unsecurePdlStsClient.hentAndreForeldre(it) }
     }
 
     fun erILive(pdlBarn: PdlBarn) =

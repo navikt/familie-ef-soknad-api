@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.mock
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.integration.PdlStsClient
+import no.nav.familie.ef.søknad.integration.UnsecurePdlClient
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.UGRADERT
 import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
@@ -27,10 +27,10 @@ class StsPdlClientConfig {
 
     @Bean
     @Primary
-    fun pdlStsClient(): PdlStsClient {
-        val pdlClient: PdlStsClient = mockk()
+    fun pdlStsClient(): UnsecurePdlClient {
+        val unsecurePdlClient: UnsecurePdlClient = mockk()
         val medforelderFnr = FnrGenerator.generer(år = 1999)
-        every { pdlClient.hentBarn(any()) } returns
+        every { unsecurePdlClient.hentBarn(any()) } returns
                 mapOf("28021078036" to PdlBarn(
                         adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
                         bostedsadresse = bostedsadresseBarn(),
@@ -41,14 +41,14 @@ class StsPdlClientConfig {
                         forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR))
                 ))
 
-        every { pdlClient.hentAndreForeldre(any()) } returns
+        every { unsecurePdlClient.hentAndreForeldre(any()) } returns
                 mapOf(medforelderFnr to PdlAnnenForelder(
                         adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
                         navn = lagNavn("Bjørn", "Borg", "Borgersen"),
                         dødsfall = listOf(),
                 ))
 
-        return pdlClient
+        return unsecurePdlClient
     }
 
     private fun lagNavn(fornavn: String = "Fornavn",

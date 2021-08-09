@@ -29,8 +29,6 @@ spec:
         mountPath: /secrets/apikey/familie-ef-mottak
       - kvPath: /apikey/apigw/prod/pdl-api/familie-ef-soknad-api
         mountPath: /secrets/apikey/pdl-api
-      - kvPath: /apikey/apigw/prod/security-token-service-token/familie-ef-soknad-api
-        mountPath: /secrets/apikey/security-token-service-token
       - kvPath: /kv/prod/sbs/familie-ef-soknad-api/teamfamilie
         mountPath: /var/run/secrets/nais.io/vault
       - kvPath: /serviceuser/data/prod/srvfam-ef-soknad-api
