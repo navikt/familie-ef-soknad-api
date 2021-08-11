@@ -51,6 +51,9 @@ spec:
   ingresses:
     - https://www.nav.no/familie/alene-med-barn/soknad-api
     - https://familie-ef-soknad-api.prod-sbs.nais.io
+  azure:
+    application:
+      enabled: true
   tokenx:
     enabled: true
   envFrom:
