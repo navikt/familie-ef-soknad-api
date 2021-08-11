@@ -46,14 +46,14 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
             Vedlegg(
                     id = it.vedlegg.id,
                     navn = it.vedlegg.navn,
-                    tittel = it.beskrivelse
+                    tittel = it.dokumenttype.replace('_', ' ')
             )
         } ?: emptyList()
         val vedleggUtenSøknad = dto.ettersendingUtenSøknad?.innsending?.map {
             Vedlegg(
                     id = it.vedlegg.id,
                     navn = it.vedlegg.navn,
-                    tittel = it.beskrivelse
+                    tittel = it.dokumenttype.replace('_', ' ')
             )
         } ?: emptyList()
         val vedleggMedDokumentasjonsbehovWrapper: Map<String, DokumentasjonWrapper> =
