@@ -30,19 +30,19 @@ class SøknadClient(private val config: MottakConfig,
     override val pingUri: URI = config.pingUri
 
     fun sendInn(søknadRequestData: SøknadRequestData<SøknadOvergangsstønad>): KvitteringDto {
-        return postForEntity(config.sendInnOvergangsstønadUri, søknadRequestData)
+        return postForEntity(config.sendInnOvergangsstønadUri, søknadRequestData.søknadMedVedlegg)
     }
 
     fun sendInnBarnetilsynsøknad(søknadRequestData: SøknadRequestData<SøknadBarnetilsyn>): KvitteringDto {
-        return postForEntity(config.sendInnBarnetilsynUri, søknadRequestData)
+        return postForEntity(config.sendInnBarnetilsynUri, søknadRequestData.søknadMedVedlegg)
     }
 
     fun sendInnSkolepenger(søknadRequestData: SøknadRequestData<SøknadSkolepenger>): KvitteringDto {
-        return postForEntity(config.sendInnSkolepengerUri, søknadRequestData)
+        return postForEntity(config.sendInnSkolepengerUri, søknadRequestData.søknadMedVedlegg)
     }
 
     fun sendInnEttersending(ettersendingRequestData: EttersendingRequestData): KvitteringDto {
-        return postForEntity(config.sendInnEttersendingUri, ettersendingRequestData)
+        return postForEntity(config.sendInnEttersendingUri, ettersendingRequestData.ettersendingMedVedlegg)
     }
 
     fun sendInnOld(søknadRequestData: SøknadRequestData<SøknadOvergangsstønad>): KvitteringDto {
