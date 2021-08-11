@@ -37,7 +37,7 @@ internal class EttersendingMapperTest {
             }
         }
         ettersendignForSøknadDto.ettersendingForSøknad?.innsending?.map {
-            vedleggListe.add(Vedlegg(id = it.vedlegg.id, navn = it.vedlegg.navn, tittel = it.beskrivelse))
+            vedleggListe.add(Vedlegg(id = it.vedlegg.id, navn = it.vedlegg.navn, tittel = it.dokumenttype.replace('_', ' ')))
         }
         val ettersendingVedlegg = mapper.mapTilIntern(ettersendignForSøknadDto, innsendingMottatt).ettersendingMedVedlegg.vedlegg
         assertEquals(vedleggListe, ettersendingVedlegg)
