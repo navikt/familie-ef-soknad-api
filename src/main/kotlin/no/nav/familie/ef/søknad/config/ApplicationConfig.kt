@@ -4,12 +4,14 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import no.nav.familie.http.config.RestTemplateSts
 import no.nav.familie.http.interceptor.ApiKeyInjectingClientInterceptor
+import no.nav.familie.http.interceptor.BearerTokenExchangeClientInterceptor
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
 import no.nav.familie.http.interceptor.StsBearerTokenClientInterceptor
 import no.nav.familie.http.sts.StsRestClient
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
+import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import no.nav.security.token.support.spring.validation.interceptor.BearerTokenClientHttpRequestInterceptor
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
@@ -23,8 +25,10 @@ import java.time.Duration
 import java.time.temporal.ChronoUnit
 
 @SpringBootConfiguration
+@EnableOAuth2Client(cacheEnabled = true)
 @Import(MdcValuesPropagatingClientInterceptor::class,
         ConsumerIdClientInterceptor::class,
+        BearerTokenExchangeClientInterceptor::class,
         StsRestClient::class,
         RestTemplateSts::class)
 internal class ApplicationConfig {
@@ -40,6 +44,21 @@ internal class ApplicationConfig {
                         pdlConfig.pdlUri to Pair(apiKey, pdlConfig.passord),
                         integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
         return ApiKeyInjectingClientInterceptor(map)
+    }
+
+    @Bean("tokenExchange")
+    fun restTemplate(bearerTokenExchangeClientInterceptor: BearerTokenExchangeClientInterceptor,
+                     mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+                     consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                     apiKeyInjectingClientInterceptor: ApiKeyInjectingClientInterceptor): RestOperations {
+        return RestTemplateBuilder()
+                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+                .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
+                .interceptors(bearerTokenExchangeClientInterceptor,
+                              mdcValuesPropagatingClientInterceptor,
+                              consumerIdClientInterceptor,
+                              apiKeyInjectingClientInterceptor)
+                .build()
     }
 
     @Bean("restKlientMedApiKey")

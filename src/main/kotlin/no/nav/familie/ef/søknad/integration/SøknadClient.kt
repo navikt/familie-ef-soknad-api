@@ -22,7 +22,7 @@ import java.util.UUID
 
 @Service
 class SøknadClient(private val config: MottakConfig,
-                   @Qualifier("restKlientMedApiKey") operations: RestOperations)
+                   @Qualifier("tokenExchange") operations: RestOperations)
     : AbstractPingableRestClient(operations, "søknad.innsending") {
 
     override val pingUri: URI = config.pingUri
