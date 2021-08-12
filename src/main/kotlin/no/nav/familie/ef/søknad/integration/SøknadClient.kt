@@ -95,12 +95,4 @@ class SøknadClient(private val config: MottakConfig,
         return this
     }
 
-    private fun <T, R> sendInn(request: T, v1: (T) -> R, v2: (T) -> R): R {
-        return if (featureToggleService.isEnabled("familie.ef.soknad.api.dokumentFraMottak")) {
-            v2.invoke(request)
-        } else {
-            v1.invoke(request)
-        }
-    }
-
 }
