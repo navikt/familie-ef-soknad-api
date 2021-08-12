@@ -82,13 +82,8 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
             vedleggDataUtenSøknad: Map<String, ByteArray>,
             vedleggDataForSøknadUtenDokumentasjonsbehov: Map<String, ByteArray>
     ): Map<String, ByteArray> {
-        return (vedleggDataForSøknad.keys + vedleggDataUtenSøknad.keys + vedleggDataForSøknadUtenDokumentasjonsbehov.keys).associateWith {
-            listOf(
-                    vedleggDataForSøknad[it],
-                    vedleggDataUtenSøknad[it],
-                    vedleggDataForSøknadUtenDokumentasjonsbehov[it]
-            ).joinToString().toByteArray()
-        }
+        return vedleggDataForSøknad + vedleggDataUtenSøknad + vedleggDataForSøknadUtenDokumentasjonsbehov
+
     }
 
     private fun hentDokumentFeltTilDokumentService(innsendingsliste: List<Innsending>): List<DokumentFelt> {
