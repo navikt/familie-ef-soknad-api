@@ -106,7 +106,7 @@ class MottakClientMock {
                                                                                          "dokuemnt_tidliger_ettersending22.pdf"))))
 
     private val ettersendingUtenSøknad = EttersendingUtenSøknad(listOf(Innsending("dette er et fint dokument",
-                                                                                  "Dokumentasjon som beskriver grunnen til at du ikke kan ta ethvert arbeid",
+                                                                                  "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
                                                                                   Dokument("093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
                                                                                            "dokuemnt_tidliger_ettersending.pdf"))))
 
