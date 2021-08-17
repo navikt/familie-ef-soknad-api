@@ -15,9 +15,12 @@ import no.nav.familie.kontrakter.ef.søknad.validering.OvergangsstønadValiderin
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
-fun hentVedlegg(bool: Boolean, fn: () -> Map<String, ByteArray>): Map<String, ByteArray> {
-    return if (bool) {
-        fn()
+/**
+ * Bruker [vedleggSupplier] hvis [enabled] er true, hvis ikke returneres en tom map
+ */
+fun hentVedlegg(enabled: Boolean, vedleggSupplier: () -> Map<String, ByteArray>): Map<String, ByteArray> {
+    return if (enabled) {
+        vedleggSupplier()
     } else {
         emptyMap()
     }
