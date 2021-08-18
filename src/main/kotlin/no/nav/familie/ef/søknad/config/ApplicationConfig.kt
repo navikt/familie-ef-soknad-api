@@ -105,10 +105,13 @@ internal class ApplicationConfig {
     }
 
     @Bean("utenAuth")
-    fun restTemplate(consumerIdClientInterceptor: ConsumerIdClientInterceptor): RestOperations {
+    fun restTemplate(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                     apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor,
+                     mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
         return RestTemplateBuilder()
                 .additionalInterceptors(consumerIdClientInterceptor,
-                                        MdcValuesPropagatingClientInterceptor()).build()
+                                        apiKeyInjectingClientInterceptor,
+                                        mdcValuesPropagatingClientInterceptor).build()
     }
 
 }
