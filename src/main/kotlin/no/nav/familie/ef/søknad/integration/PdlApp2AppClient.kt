@@ -15,8 +15,8 @@ import org.springframework.web.client.RestOperations
 
 
 @Component
-class UnsecurePdlClient(val pdlConfig: PdlConfig,
-                        @Qualifier("clientCredential") restOperations: RestOperations)
+class PdlApp2AppClient(val pdlConfig: PdlConfig,
+                       @Qualifier("clientCredential") restOperations: RestOperations)
     : AbstractRestClient(restOperations, "pdl.personinfo") {
 
     fun hentBarn(personIdenter: List<String>): Map<String, PdlBarn> {

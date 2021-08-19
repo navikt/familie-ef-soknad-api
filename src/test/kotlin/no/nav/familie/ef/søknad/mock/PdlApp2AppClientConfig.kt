@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.mock
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.integration.UnsecurePdlClient
+import no.nav.familie.ef.søknad.integration.PdlApp2AppClient
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.UGRADERT
 import no.nav.familie.ef.søknad.integration.dto.pdl.BostedsadresseBarn
@@ -21,16 +21,16 @@ import org.springframework.context.annotation.Profile
 import java.time.LocalDate
 
 @Configuration
-@Profile("mock-pdlStsClient")
-class StsPdlClientConfig {
+@Profile("mock-pdlApp2AppClient")
+class PdlApp2AppClientConfig {
 
 
     @Bean
     @Primary
-    fun pdlStsClient(): UnsecurePdlClient {
-        val unsecurePdlClient: UnsecurePdlClient = mockk()
+    fun pdlApp2AppClient(): PdlApp2AppClient {
+        val pdlApp2AppClient: PdlApp2AppClient = mockk()
         val medforelderFnr = FnrGenerator.generer(år = 1999)
-        every { unsecurePdlClient.hentBarn(any()) } returns
+        every { pdlApp2AppClient.hentBarn(any()) } returns
                 mapOf("28021078036" to PdlBarn(
                         adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
                         bostedsadresse = bostedsadresseBarn(),
@@ -41,14 +41,14 @@ class StsPdlClientConfig {
                         forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR))
                 ))
 
-        every { unsecurePdlClient.hentAndreForeldre(any()) } returns
+        every { pdlApp2AppClient.hentAndreForeldre(any()) } returns
                 mapOf(medforelderFnr to PdlAnnenForelder(
                         adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
                         navn = lagNavn("Bjørn", "Borg", "Borgersen"),
                         dødsfall = listOf(),
                 ))
 
-        return unsecurePdlClient
+        return pdlApp2AppClient
     }
 
     private fun lagNavn(fornavn: String = "Fornavn",

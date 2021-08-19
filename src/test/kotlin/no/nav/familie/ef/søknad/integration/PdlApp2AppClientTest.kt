@@ -14,16 +14,16 @@ import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.web.client.RestOperations
 import java.net.URI
 
-class PdlStsClientTest {
+class PdlApp2AppClientTest {
 
     private val wireMockServer = WireMockServer(wireMockConfig().dynamicPort())
     private val restOperations: RestOperations = RestTemplateBuilder().build()
-    private lateinit var unsecurePdlClient: UnsecurePdlClient
+    private lateinit var pdlApp2AppClient: PdlApp2AppClient
 
     @BeforeEach
     fun setUp() {
         wireMockServer.start()
-        unsecurePdlClient = UnsecurePdlClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations)
+        pdlApp2AppClient = PdlApp2AppClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations)
     }
 
     @AfterEach
@@ -37,7 +37,7 @@ class PdlStsClientTest {
         wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
                                        .willReturn(okJson(readFile("barn.json"))))
 
-        val response = unsecurePdlClient.hentBarn(listOf("11111122222"))
+        val response = pdlApp2AppClient.hentBarn(listOf("11111122222"))
 
         assertThat(response["11111122222"]?.navn?.firstOrNull()?.fornavn).isEqualTo("BRÅKETE")
     }
@@ -46,7 +46,7 @@ class PdlStsClientTest {
     fun `pdlClient håndterer response for bolk-query mot pdl-tjenesten der person er null og har errors`() {
         wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
                                        .willReturn(okJson(readFile("pdlBolkErrorResponse.json"))))
-        assertThat(catchThrowable { unsecurePdlClient.hentBarn(listOf("")) })
+        assertThat(catchThrowable { pdlApp2AppClient.hentBarn(listOf("")) })
                 .hasMessageStartingWith("Feil ved henting av")
                 .isInstanceOf(PdlRequestException::class.java)
     }
@@ -55,7 +55,7 @@ class PdlStsClientTest {
     fun `pdlClient håndterer response for bolk-query mot pdl-tjenesten der data er null og har errors`() {
         wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
                                        .willReturn(okJson(readFile("pdlBolkErrorResponse_nullData.json"))))
-        assertThat(catchThrowable { unsecurePdlClient.hentBarn(listOf("")) })
+        assertThat(catchThrowable { pdlApp2AppClient.hentBarn(listOf("")) })
                 .hasMessageStartingWith("Data er null fra PDL")
                 .isInstanceOf(PdlRequestException::class.java)
     }
