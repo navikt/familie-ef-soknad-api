@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
     SpringApplicationBuilder(ApplicationLocalLauncher::class.java)
             .profiles("local",
                       "mock-kodeverk",
-                      "mock-dokument",
+//                      "mock-dokument",
                       "mock-pdl",
                       "mock-pdlStsClient",
                       "mock-mottak"

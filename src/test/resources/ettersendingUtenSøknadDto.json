@@ -8,18 +8,21 @@
       {
         "beskrivelse": "Dokumentasjon på at barnet mitt er syk.",
         "dokumenttype": "DOKUMENTASJON_SYKT_BARN",
-        "vedlegg": {
-          "id": "9f4d99bf-e76b-4725-a602-e6dcc786a848 ",
+        "vedlegg": [{
+          "id": "9f4d99bf-e76b-4725-a602-e6dcc786a848",
           "navn": "sykdom.pdf"
-        }
+        }]
       },
       {
         "beskrivelse": "Dokumentasjon på at jeg trenger hjelp til å passe på barnet mitt.",
         "dokumenttype": "DOKUMENTASJON_BARNETILSYN_BEHOV",
-        "vedlegg": {
+        "vedlegg": [{
           "id": "30de8f93-884b-4c6f-ae78-2ee6568bc82b",
           "navn": "barnetilsyn.pdf"
-        }
+        }, {
+          "id": "30de9f93-884b-4c6f-ae78-2ee6568bc82b",
+          "navn": "barnetilsyn_side2.pdf"
+        } ]
       }
     ]
   }
