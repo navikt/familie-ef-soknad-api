@@ -8,7 +8,6 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBolkResponse
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequest
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequestVariables
 import no.nav.familie.http.client.AbstractRestClient
-import no.nav.familie.http.sts.StsRestClient
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
@@ -16,18 +15,9 @@ import org.springframework.web.client.RestOperations
 
 
 @Component
-class PdlStsClient(val pdlConfig: PdlConfig,
-                   @Qualifier("stsRestKlientMedApiKey") restOperations: RestOperations,
-                   private val stsRestClient: StsRestClient)
+class PdlApp2AppClient(val pdlConfig: PdlConfig,
+                       @Qualifier("clientCredential") restOperations: RestOperations)
     : AbstractRestClient(restOperations, "pdl.personinfo") {
-
-    private fun httpHeaders(): HttpHeaders {
-        return HttpHeaders().apply {
-            add("Nav-Consumer-Token", "Bearer ${stsRestClient.systemOIDCToken}")
-            add("Tema", "ENF")
-        }
-    }
-
 
     fun hentBarn(personIdenter: List<String>): Map<String, PdlBarn> {
         if (personIdenter.isEmpty()) return emptyMap()
@@ -39,7 +29,6 @@ class PdlStsClient(val pdlConfig: PdlConfig,
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
-
     fun hentAndreForeldre(personIdenter: List<String>): Map<String, PdlAnnenForelder> {
         if (personIdenter.isEmpty()) return emptyMap()
         val pdlPersonRequest = PdlPersonBolkRequest(variables = PdlPersonBolkRequestVariables(personIdenter),
@@ -48,6 +37,12 @@ class PdlStsClient(val pdlConfig: PdlConfig,
                                                                            pdlPersonRequest,
                                                                            httpHeaders())
         return feilsjekkOgReturnerData(pdlResponse)
+    }
+
+    private fun httpHeaders(): HttpHeaders {
+        return HttpHeaders().apply {
+            add("Tema", "ENF")
+        }
     }
 
     private inline fun <reified T : Any> feilsjekkOgReturnerData(pdlResponse: PdlBolkResponse<T>): Map<String, T> {

@@ -1,9 +1,11 @@
 familie:
   dokument:
     uri: https://familie-dokument.dev.nav.no/familie/dokument/api
+    audience: dev-gcp:teamfamilie:familie-dokument
   ef:
     mottak:
       uri: https://api-gw-q0.oera.no/familie-ef-mottak/api
+      audience: dev-fss:teamfamilie:familie-ef-mottak
   integrasjoner:
     uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
 
@@ -16,5 +18,5 @@ cors:
     - "https://ensligmorellerfar.dev.nav.no"
 
 PDL_URL: https://api-gw-q1.oera.no/pdl-api
-STS_URL: https://api-gw-q1.oera.no/security-token-service/rest/v1/sts/token?grant_type=client_credentials&scope=openid
-MOTTAK_AUDIENCE: dev-fss:teamfamilie:familie-ef-mottak
+PDL_AUDIENCE: dev-fss:pdl:pdl-api
+PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default

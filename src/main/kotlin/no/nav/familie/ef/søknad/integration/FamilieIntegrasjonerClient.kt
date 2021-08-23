@@ -11,7 +11,7 @@ import java.net.URI
 
 @Component
 class FamilieIntegrasjonerClient(private val config: FamilieIntegrasjonerConfig,
-                                 @Qualifier("restKlientMedApiKey") restTemplate: RestOperations)
+                                 @Qualifier("utenAuth") restTemplate: RestOperations)
     : AbstractPingableRestClient(restTemplate, "familie.integrasjoner") {
 
     override val pingUri: URI = config.pingUri

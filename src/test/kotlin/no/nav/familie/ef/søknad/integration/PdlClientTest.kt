@@ -7,7 +7,6 @@ import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ef.søknad.config.PdlConfig
 import no.nav.familie.ef.søknad.exception.PdlRequestException
-import no.nav.familie.http.sts.StsRestClient
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.AfterEach
@@ -26,9 +25,7 @@ class PdlClientTest {
     @BeforeEach
     fun setUp() {
         wireMockServer.start()
-        val stsRestClient = mockk<StsRestClient>()
-        every { stsRestClient.systemOIDCToken } returns "token"
-        pdlClient = PdlClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations, stsRestClient)
+        pdlClient = PdlClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations)
     }
 
     @AfterEach
