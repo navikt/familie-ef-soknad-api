@@ -21,10 +21,10 @@
       {
         "beskrivelse": "dokumentasjon på oppsigelse",
         "dokumenttype": "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
-        "vedlegg": {
+        "vedlegg": [{
           "id": "6bcc08af-be76-4756-b938-0a7c5934a736",
           "navn": "ikke-villig.pdf"
-        }
+        }]
       }
     ]
   },

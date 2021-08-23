@@ -102,13 +102,13 @@ class MottakClientMock {
                                                                                                          "dokuemnt_tidliger_ettersending.pdf")))),
                                                               listOf(Innsending("Dette er et dokument",
                                                                                 "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
-                                                                                Dokument("093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
-                                                                                         "dokuemnt_tidliger_ettersending22.pdf"))))
+                                                                                listOf(Dokument("093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
+                                                                                         "dokuemnt_tidliger_ettersending22.pdf")))))
 
     private val ettersendingUtenSøknad = EttersendingUtenSøknad(listOf(Innsending("dette er et fint dokument",
                                                                                   "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
-                                                                                  Dokument("093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
-                                                                                           "dokuemnt_tidliger_ettersending.pdf"))))
+                                                                                  listOf(Dokument("093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
+                                                                                           "dokuemnt_tidliger_ettersending.pdf")))))
 
     private val ettersendingDto1 =
             EttersendingDto("01010172272", StønadType.OVERGANGSSTØNAD, ettersendingForSøknad, null)

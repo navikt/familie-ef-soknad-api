@@ -42,25 +42,28 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
                 dokumentService.hentDokumenterFraDokumentFelt(vedleggUtenSøknadTilDokumentService)
         )
 
-        val vedleggForSøknadUtenDokumentasjonsbehov = dto.ettersendingForSøknad?.innsending?.map {
-            Vedlegg(
-                    id = it.vedlegg.id,
-                    navn = it.vedlegg.navn,
-                    tittel = it.beskrivelse
-            )
-        } ?: emptyList()
-        val vedleggUtenSøknad = dto.ettersendingUtenSøknad?.innsending?.map {
-            Vedlegg(
-                    id = it.vedlegg.id,
-                    navn = it.vedlegg.navn,
-                    tittel = it.beskrivelse
-            )
-        } ?: emptyList()
+        val vedleggForSøknadUtenDokumentasjonsbehov = dto.ettersendingForSøknad?.innsending?.map { innsending ->
+            innsending.vedlegg.map {
+                Vedlegg(
+                        id = it.id,
+                        navn = it.navn,
+                        tittel = innsending.beskrivelse)
+            }
+        }?.flatten() ?: emptyList()
+        val vedleggUtenSøknad = dto.ettersendingUtenSøknad?.innsending?.map { innsending ->
+            innsending.vedlegg.map {
+                Vedlegg(
+                        id = it.id,
+                        navn = it.navn,
+                        tittel = innsending.beskrivelse
+                )
+            }
+        }?.flatten() ?: emptyList()
         val vedleggMedDokumentasjonsbehovWrapper: Map<String, DokumentasjonWrapper> =
                 lagDokumentasjonWrapper(dokumentasjonsbehovTilDokumentService)
         val vedlegg = leggSammenVedleggLister(vedleggMedDokumentasjonsbehovWrapper.values.flatMap { it.vedlegg },
-                                              vedleggForSøknadUtenDokumentasjonsbehov,
-                                              vedleggUtenSøknad)
+                vedleggForSøknadUtenDokumentasjonsbehov,
+                vedleggUtenSøknad)
 
         return EttersendingRequestData(
                 EttersendingMedVedlegg(
@@ -87,8 +90,10 @@ class EttersendingMapper(private val dokumentService: DokumentService) {
     }
 
     private fun hentDokumentFeltTilDokumentService(innsendingsliste: List<Innsending>): List<DokumentFelt> {
-        return innsendingsliste.map {
-            DokumentFelt(it.vedlegg.id, it.vedlegg.navn)
-        }
+        return innsendingsliste.map { innsending ->
+            innsending.vedlegg.map {
+                DokumentFelt(it.id, it.navn)
+            }
+        }.flatten()
     }
 }
