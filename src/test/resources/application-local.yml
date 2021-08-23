@@ -24,8 +24,6 @@ familie:
 pdl:
   passord: pdlPassord
 
-STS_APIKEY: test
-
 funksjonsbrytere:
   enabled: false
   unleash:
@@ -51,6 +49,12 @@ no.nav.security.jwt:
   client.registration:
     mottak:
       token-endpoint-url: http://metadata
+    dokument:
+      token-endpoint-url: http://metadata
+    pdl:
+      token-endpoint-url: http://metadata
+    pdl-clientcredentials:
+      token-endpoint-url: http://metadata
 
 TOKEN_X_WELL_KNOWN_URL: http://localhost
 TOKEN_X_PRIVATE_JWK: '{
@@ -60,6 +64,3 @@ TOKEN_X_PRIVATE_JWK: '{
     "kid" : "mock-oauth2-server-key",
     "n" : ""
   }'
-
-CREDENTIAL_USERNAME: not-a-real-srvuser
-CREDENTIAL_PASSWORD: not-a-real-pw

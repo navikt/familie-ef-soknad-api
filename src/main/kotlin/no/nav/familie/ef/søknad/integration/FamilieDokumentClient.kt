@@ -11,7 +11,7 @@ import java.net.URI
 
 @Component
 internal class FamilieDokumentClient(private val config: FamilieDokumentConfig,
-                                     @Qualifier("restKlientMedApiKey") restTemplate: RestOperations)
+                                     @Qualifier("tokenExchange") restTemplate: RestOperations)
     : AbstractPingableRestClient(restTemplate, "familie.dokument") {
 
     override val pingUri: URI = config.pingUri

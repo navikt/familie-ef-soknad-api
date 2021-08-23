@@ -2,17 +2,15 @@ package no.nav.familie.ef.søknad.config
 
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
-import no.nav.familie.http.config.RestTemplateSts
+import no.nav.familie.http.config.RestTemplateBuilderBean
 import no.nav.familie.http.interceptor.ApiKeyInjectingClientInterceptor
+import no.nav.familie.http.interceptor.BearerTokenClientCredentialsClientInterceptor
 import no.nav.familie.http.interceptor.BearerTokenExchangeClientInterceptor
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
-import no.nav.familie.http.interceptor.StsBearerTokenClientInterceptor
-import no.nav.familie.http.sts.StsRestClient
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
-import no.nav.security.token.support.spring.validation.interceptor.BearerTokenClientHttpRequestInterceptor
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.web.client.RestTemplateBuilder
@@ -29,8 +27,8 @@ import java.time.temporal.ChronoUnit
 @Import(MdcValuesPropagatingClientInterceptor::class,
         ConsumerIdClientInterceptor::class,
         BearerTokenExchangeClientInterceptor::class,
-        StsRestClient::class,
-        RestTemplateSts::class)
+        BearerTokenClientCredentialsClientInterceptor::class,
+        RestTemplateBuilderBean::class) // blir brukt i DefaultOAuth2HttpClient
 internal class ApplicationConfig {
 
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
@@ -46,6 +44,9 @@ internal class ApplicationConfig {
         return ApiKeyInjectingClientInterceptor(map)
     }
 
+    @Bean
+    fun kotlinModule(): KotlinModule = KotlinModule()
+
     @Bean("tokenExchange")
     fun restTemplate(bearerTokenExchangeClientInterceptor: BearerTokenExchangeClientInterceptor,
                      mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
@@ -60,24 +61,6 @@ internal class ApplicationConfig {
                               apiKeyInjectingClientInterceptor)
                 .build()
     }
-
-    @Bean("restKlientMedApiKey")
-    fun restTemplate(bearerTokenClientHttpRequestInterceptor: BearerTokenClientHttpRequestInterceptor,
-                     mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-                     consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-                     apiKeyInjectingClientInterceptor: ApiKeyInjectingClientInterceptor): RestOperations {
-        return RestTemplateBuilder()
-                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
-                .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
-                .interceptors(bearerTokenClientHttpRequestInterceptor,
-                              mdcValuesPropagatingClientInterceptor,
-                              consumerIdClientInterceptor,
-                              apiKeyInjectingClientInterceptor)
-                .build()
-    }
-
-    @Bean
-    fun kotlinModule(): KotlinModule = KotlinModule()
 
     @Bean
     fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
@@ -106,20 +89,31 @@ internal class ApplicationConfig {
         return filterRegistration
     }
 
-    @Bean("stsRestKlientMedApiKey")
-    fun stsRestTemplateMedApiKey(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-                                 stsBearerTokenClientInterceptor: StsBearerTokenClientInterceptor,
-                                 apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor,
-                                 mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
+    @Bean("clientCredential")
+    fun clientCredentialRestTemplateMedApiKey(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                                              bearerTokenClientCredentialsClientInterceptor: BearerTokenClientCredentialsClientInterceptor,
+                                              apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor,
+                                              mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
         return RestTemplateBuilder()
                 .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
                 .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
                 .interceptors(consumerIdClientInterceptor,
                               apiKeyInjectingClientInterceptor,
-                              stsBearerTokenClientInterceptor,
+                              bearerTokenClientCredentialsClientInterceptor,
                               mdcValuesPropagatingClientInterceptor)
                 .build()
     }
 
+    @Bean("utenAuth")
+    fun restTemplate(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+                     apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor,
+                     mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
+        return RestTemplateBuilder()
+                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+                .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
+                .additionalInterceptors(consumerIdClientInterceptor,
+                                        apiKeyInjectingClientInterceptor,
+                                        mdcValuesPropagatingClientInterceptor).build()
+    }
 
 }
