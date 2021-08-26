@@ -1,24 +1,14 @@
 package no.nav.familie.ef.søknad.mapper
 
-import io.mockk.every
-import io.mockk.mockk
 import no.nav.familie.ef.søknad.mapper.kontrakt.SituasjonsMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
-import no.nav.familie.ef.søknad.service.DokumentService
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 internal class SituasjonMapperTest {
-    private val dokumentServiceServiceMock: DokumentService = mockk()
     private val søknadDto = søknadDto()
     private val situasjon = SituasjonsMapper.map(søknadDto, mapOf()).verdi
-
-    @BeforeEach
-    fun setUp() {
-        every { dokumentServiceServiceMock.hentVedlegg(any()) } returns "DOKUMENTID123".toByteArray()
-    }
 
     @Test
     fun `situasjon label gjelderDetteDeg er mappet`() {

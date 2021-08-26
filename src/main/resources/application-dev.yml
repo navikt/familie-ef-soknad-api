@@ -1,7 +1,4 @@
 familie:
-  dokument:
-    uri: https://familie-dokument.dev.nav.no/familie/dokument/api
-    audience: dev-gcp:teamfamilie:familie-dokument
   ef:
     mottak:
       uri: https://api-gw-q0.oera.no/familie-ef-mottak/api
