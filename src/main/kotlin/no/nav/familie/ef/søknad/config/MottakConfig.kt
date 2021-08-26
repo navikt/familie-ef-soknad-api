@@ -29,7 +29,7 @@ data class MottakConfig(val uri: URI,
 
     companion object {
 
-        private const val PATH_SEND_INN_OVERGANGSSTØNAD = "/soknad" //TODO endre til soknad/overgangsstonad senere
+        private const val PATH_SEND_INN_OVERGANGSSTØNAD = "/soknad/overgangsstonad"
         private const val PATH_SEND_INN_ARBEIDS_SKJEMA = "/skjema"
         private const val PATH_SEND_INN_BARNETILSYNSØKNAD = "/soknad/barnetilsyn"
         private const val PATH_SEND_INN_SKOLEPENGERSØKNAD = "/soknad/skolepenger"
