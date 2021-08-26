@@ -36,9 +36,10 @@ internal class EttersendingMapperTest {
                 vedleggListe.add(Vedlegg(id = it.id, navn = it.navn, tittel = dokumenasjonsbehov.label))
             }
         }
-        ettersendignForSøknadDto.ettersendingForSøknad?.innsending?.map {
-            vedleggListe.add(Vedlegg(id = it.vedlegg.id, navn = it.vedlegg.navn, tittel = it.beskrivelse))
-        }
+        ettersendignForSøknadDto.ettersendingForSøknad?.innsending?.map { innsending ->
+            innsending.vedlegg.map {
+                vedleggListe.add(Vedlegg(id = it.id, navn = it.navn, tittel = innsending.beskrivelse))
+        }}
         val ettersendingVedlegg = mapper.mapTilIntern(ettersendignForSøknadDto, innsendingMottatt).ettersendingMedVedlegg.vedlegg
         assertEquals(vedleggListe, ettersendingVedlegg)
     }
@@ -47,12 +48,18 @@ internal class EttersendingMapperTest {
     @Test
     fun `mapTilIntern returnerer samme datoMottatt og fnr, og stønadType som blir sendt frontend`() {
 
-        val innsendtDto = ettersendignUtenSøknadDto
-        val mapper = mapper.mapTilIntern(innsendtDto, innsendingMottatt).ettersendingMedVedlegg
+        val forventetMap = listOf("9f4d99bf-e76b-4725-a602-e6dcc786a848",
+                "30de8f93-884b-4c6f-ae78-2ee6568bc82b",
+                "30de9f93-884b-4c6f-ae78-2ee6568bc82b").associateWith { it.toByteArray() }
 
-        assertTrue(innsendingMottatt == mapper.innsendingsdetaljer.verdi.datoMottatt.verdi
-                   && innsendtDto.fnr == mapper.ettersending.fnr
-                   && innsendtDto.stønadType === mapper.ettersending.stønadType)
+        val innsendtDto = ettersendignUtenSøknadDto
+        val (ettersendingMedVedlegg, vedlegg) = mapper.mapTilIntern(innsendtDto, innsendingMottatt)
+
+        assertTrue(innsendingMottatt == ettersendingMedVedlegg.innsendingsdetaljer.verdi.datoMottatt.verdi
+                   && innsendtDto.fnr == ettersendingMedVedlegg.ettersending.fnr
+                   && innsendtDto.stønadType === ettersendingMedVedlegg.ettersending.stønadType)
+
+        assertEquals(vedlegg.keys, forventetMap.keys)
     }
 
 }

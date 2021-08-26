@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 import javax.ws.rs.client.ClientBuilder
 
 
-@ActiveProfiles("local", "mock-pdl", "mock-pdlStsClient")
+@ActiveProfiles("local", "mock-pdl", "mock-pdlApp2AppClient")
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 class OppslagControllerIntegrationTest {
