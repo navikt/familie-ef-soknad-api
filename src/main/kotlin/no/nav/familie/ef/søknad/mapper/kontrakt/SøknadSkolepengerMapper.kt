@@ -15,9 +15,11 @@ import java.time.LocalDateTime
 class SøknadSkolepengerMapper(private val dokumentServiceService: DokumentService) {
 
     fun mapTilIntern(dto: SøknadSkolepengerDto,
-                     innsendingMottatt: LocalDateTime): SøknadRequestData<SøknadSkolepenger> {
+                     innsendingMottatt: LocalDateTime,
+                     skalHenteVedlegg: Boolean = true): SøknadRequestData<SøknadSkolepenger> {
         kontekst.set(Språk.fromString(dto.locale))
-        val vedleggData: Map<String, ByteArray> = dokumentServiceService.hentDokumenter(dto.dokumentasjonsbehov)
+        val vedleggData: Map<String, ByteArray> =
+                hentVedlegg(skalHenteVedlegg) { dokumentServiceService.hentDokumenter(dto.dokumentasjonsbehov) }
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
         val søknadSkolepenger = SøknadSkolepenger(
                 innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
