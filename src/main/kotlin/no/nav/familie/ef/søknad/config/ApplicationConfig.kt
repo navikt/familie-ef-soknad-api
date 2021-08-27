@@ -17,6 +17,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
+import org.springframework.context.annotation.Primary
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.web.client.RestOperations
 import java.time.Duration
@@ -114,6 +115,12 @@ internal class ApplicationConfig {
                 .additionalInterceptors(consumerIdClientInterceptor,
                                         apiKeyInjectingClientInterceptor,
                                         mdcValuesPropagatingClientInterceptor).build()
+    }
+
+    @Primary
+    @Bean
+    fun oAuth2HttpClient(restTemplateBuilder: RestTemplateBuilder): RetryOAuth2HttpClient {
+        return RetryOAuth2HttpClient(restTemplateBuilder)
     }
 
 }
