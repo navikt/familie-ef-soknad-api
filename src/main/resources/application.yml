@@ -8,10 +8,10 @@ server:
 familie:
   ef:
     mottak:
-      uri: https://api-gw.oera.no/familie-ef-mottak/api
+      uri: https://familie-ef-mottak.prod-fss-pub.nais.io/api
       audience: prod-fss:teamfamilie:familie-ef-mottak
   integrasjoner:
-    uri:  https://api-gw.oera.no/familie-integrasjoner/api
+    uri:  https://familie-integrasjoner.prod-fss-pub.nais.io
 
 regelverk:
   alder:
@@ -49,8 +49,6 @@ management:
 
 cors:
   allowed_origins:
-    - "https://familie-ef-soknad.nais.oera.no"
-    - "https://familie-ef-soknad-api.nais.oera.no"
     - "https://www.nav.no/familie/alene-med-barn/soknad"
     - "https://www.nav.no/familie/alene-med-barn/soknad-api"
 
@@ -91,6 +89,6 @@ no.nav.security.jwt:
         client-secret: ${AZURE_APP_CLIENT_SECRET}
         client-auth-method: client_secret_basic
 
-PDL_URL: https://api-gw.oera.no/pdl-api
+PDL_URL: https://pdl-api.prod-fss-pub.nais.io
 PDL_AUDIENCE: prod-fss:pdl:pdl-api
 PDL_SCOPE: api://prod-fss.pdl.pdl-api/.default

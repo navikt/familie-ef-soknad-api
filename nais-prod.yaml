@@ -20,19 +20,6 @@ spec:
   prometheus:
     enabled: true
     path: /familie/alene-med-barn/soknad-api/internal/prometheus
-  vault:
-    enabled: true
-    paths:
-      - kvPath: /apikey/apigw/prod/familie-integrasjoner/familie-ef-soknad-api
-        mountPath: /secrets/apikey/familie-integrasjoner
-      - kvPath: /apikey/apigw/prod/familie-ef-mottak/familie-ef-soknad-api
-        mountPath: /secrets/apikey/familie-ef-mottak
-      - kvPath: /apikey/apigw/prod/pdl-api/familie-ef-soknad-api
-        mountPath: /secrets/apikey/pdl-api
-      - kvPath: /kv/prod/sbs/familie-ef-soknad-api/teamfamilie
-        mountPath: /var/run/secrets/nais.io/vault
-      - kvPath: /serviceuser/data/prod/srvfam-ef-soknad-api
-        mountPath: /var/run/secrets/srvfam-ef-soknad-api
   replicas:
     min: 2
     max: 4
@@ -48,14 +35,21 @@ spec:
     enabled: true
   ingresses:
     - https://www.nav.no/familie/alene-med-barn/soknad-api
-    - https://familie-ef-soknad-api.prod-sbs.nais.io
   azure:
     application:
       enabled: true
   tokenx:
     enabled: true
+  accessPolicy:
+    outbound:
+      external:
+        - host: unleash.nais.io
+        - host: familie-integrasjoner.prod-fss-pub.nais.io
+        - host: pdl-api.prod-fss-pub.nais.io
   envFrom:
     - configmap: loginservice-idporten
+    - secret: familie
+    - secret: ef-soknad-api
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod

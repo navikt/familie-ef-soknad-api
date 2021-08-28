@@ -1,7 +1,9 @@
 package no.nav.familie.ef.søknad.integration
 
 import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.github.tomakehurst.wiremock.client.WireMock.okJson
+import com.github.tomakehurst.wiremock.client.WireMock.post
+import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import no.nav.familie.ef.søknad.config.PdlConfig
 import no.nav.familie.ef.søknad.exception.PdlRequestException
@@ -23,7 +25,7 @@ class PdlApp2AppClientTest {
     @BeforeEach
     fun setUp() {
         wireMockServer.start()
-        pdlApp2AppClient = PdlApp2AppClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations)
+        pdlApp2AppClient = PdlApp2AppClient(PdlConfig(URI.create(wireMockServer.baseUrl())), restOperations)
     }
 
     @AfterEach
