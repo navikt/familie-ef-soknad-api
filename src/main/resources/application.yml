@@ -5,6 +5,10 @@ server:
   servlet:
     context-path: /familie/alene-med-barn/soknad-api
 
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
 familie:
   ef:
     mottak:
