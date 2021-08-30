@@ -46,6 +46,7 @@ spec:
         - host: unleash.nais.io
         - host: familie-integrasjoner.dev-fss-pub.nais.io
         - host: pdl-api.dev-fss-pub.nais.io
+        - host: familie-ef-mottak.dev-fss-pub.nais.io
   envFrom:
     - configmap: loginservice-idporten
     - secret: familie
