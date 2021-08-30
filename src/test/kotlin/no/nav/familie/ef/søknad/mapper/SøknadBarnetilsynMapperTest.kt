@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadBarnetilsynMapper
-import no.nav.familie.ef.søknad.mock.DokumentServiceStub
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -11,7 +10,7 @@ import kotlin.test.assertNotNull
 
 internal class SøknadBarnetilsynMapperTest {
 
-    private val mapper = SøknadBarnetilsynMapper(DokumentServiceStub())
+    private val mapper = SøknadBarnetilsynMapper()
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
@@ -21,7 +20,7 @@ internal class SøknadBarnetilsynMapperTest {
                                             SøknadBarnetilsynDto::class.java)
         val mapped = mapper.mapTilIntern(søknad, innsendingMottatt)
 
-        assertNotNull(mapped.søknadMedVedlegg.søknad.barn.verdi.first().navn?.verdi)
+        assertNotNull(mapped.søknad.barn.verdi.first().navn?.verdi)
     }
 
 }

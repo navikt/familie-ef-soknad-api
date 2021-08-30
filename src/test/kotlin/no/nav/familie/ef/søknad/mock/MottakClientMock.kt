@@ -37,12 +37,10 @@ class MottakClientMock {
         every { søknadClient.sendInnArbeidsRegistreringsskjema(any()) } returns KvitteringDto("OK MOCK")
         every { søknadClient.sendInnBarnetilsynsøknad(any()) } returns KvitteringDto("OK MOCK")
         every { søknadClient.sendInnSkolepenger(any()) } returns KvitteringDto("OK MOCK")
-        every { søknadClient.sendInnEttersendingOld(any()) } returns KvitteringDto(("OK MOCK"))
         every { søknadClient.ping() } returns Unit
         every { søknadClient.hentDokumentasjonsbehovForSøknad(any()) } returns dokumentasjonsbehovDto
         every { søknadClient.hentSøknaderMedDokumentasjonsbehov(any()) } returns søknaderMedDokumentasjonsbehov
         every { søknadClient.hentEttersendingForPerson(any()) } returns ettersendingResponseData;
-
 
         return søknadClient
     }
