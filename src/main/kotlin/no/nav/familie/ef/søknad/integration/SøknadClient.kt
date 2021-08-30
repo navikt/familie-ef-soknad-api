@@ -4,11 +4,12 @@ import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.http.client.AbstractPingableRestClient
-import no.nav.familie.http.client.MultipartBuilder
+import no.nav.familie.kontrakter.ef.ettersending.EttersendingMedVedlegg
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingResponseData
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
 import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
+import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
 import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
 import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
 import no.nav.familie.kontrakter.ef.søknad.dokumentasjonsbehov.DokumentasjonsbehovDto
@@ -23,50 +24,25 @@ import java.util.UUID
 
 @Service
 class SøknadClient(private val config: MottakConfig,
-                   @Qualifier("tokenExchange") operations: RestOperations,
-                   private val featureToggleService: FeatureToggleService)
+                   @Qualifier("tokenExchange") operations: RestOperations)
     : AbstractPingableRestClient(operations, "søknad.innsending") {
 
     override val pingUri: URI = config.pingUri
 
-    fun sendInn(søknadRequestData: SøknadRequestData<SøknadOvergangsstønad>): KvitteringDto {
-        return postForEntity(config.sendInnOvergangsstønadUri, søknadRequestData.søknadMedVedlegg)
+    fun sendInn(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto {
+        return postForEntity(config.sendInnOvergangsstønadUri, søknadMedVedlegg)
     }
 
-    fun sendInnBarnetilsynsøknad(søknadRequestData: SøknadRequestData<SøknadBarnetilsyn>): KvitteringDto {
-        return postForEntity(config.sendInnBarnetilsynUri, søknadRequestData.søknadMedVedlegg)
+    fun sendInnBarnetilsynsøknad(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto {
+        return postForEntity(config.sendInnBarnetilsynUri, søknadMedVedlegg)
     }
 
-    fun sendInnSkolepenger(søknadRequestData: SøknadRequestData<SøknadSkolepenger>): KvitteringDto {
-        return postForEntity(config.sendInnSkolepengerUri, søknadRequestData.søknadMedVedlegg)
+    fun sendInnSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto {
+        return postForEntity(config.sendInnSkolepengerUri, søknadMedVedlegg)
     }
 
-    fun sendInnEttersending(ettersendingRequestData: EttersendingRequestData): KvitteringDto {
-        return postForEntity(config.sendInnEttersendingUri, ettersendingRequestData.ettersendingMedVedlegg)
-    }
-
-    fun sendInnOld(søknadRequestData: SøknadRequestData<SøknadOvergangsstønad>): KvitteringDto {
-        val multipartBuilder = MultipartBuilder().withJson("søknad", søknadRequestData.søknadMedVedlegg)
-        søknadRequestData.vedlegg.forEach { multipartBuilder.withByteArray("vedlegg", it.key, it.value) }
-        return postForEntity(config.sendInnOvergangsstønadUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
-    }
-
-    fun sendInnBarnetilsynsøknadOld(søknadRequestData: SøknadRequestData<SøknadBarnetilsyn>): KvitteringDto {
-        val multipartBuilder = MultipartBuilder().withJson("søknad", søknadRequestData.søknadMedVedlegg)
-        søknadRequestData.vedlegg.forEach { multipartBuilder.withByteArray("vedlegg", it.key, it.value) }
-        return postForEntity(config.sendInnBarnetilsynUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
-    }
-
-    fun sendInnSkolepengerOld(søknadRequestData: SøknadRequestData<SøknadSkolepenger>): KvitteringDto {
-        val multipartBuilder = MultipartBuilder().withJson("søknad", søknadRequestData.søknadMedVedlegg)
-        søknadRequestData.vedlegg.forEach { multipartBuilder.withByteArray("vedlegg", it.key, it.value) }
-        return postForEntity(config.sendInnSkolepengerUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
-    }
-
-    fun sendInnEttersendingOld(ettersendingRequestData: EttersendingRequestData): KvitteringDto {
-        val multipartBuilder = MultipartBuilder().withJson("ettersending", ettersendingRequestData.ettersendingMedVedlegg)
-        ettersendingRequestData.vedlegg.forEach { multipartBuilder.withByteArray("vedlegg", it.key, it.value) }
-        return postForEntity(config.sendInnEttersendingUri, multipartBuilder.build(), MultipartBuilder.MULTIPART_HEADERS)
+    fun sendInnEttersending(ettersendingMedVedlegg: EttersendingMedVedlegg): KvitteringDto {
+        return postForEntity(config.sendInnEttersendingUri, ettersendingMedVedlegg)
     }
 
     fun sendInnArbeidsRegistreringsskjema(skjema: SkjemaForArbeidssøker): KvitteringDto {

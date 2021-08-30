@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadOvergangsstønadMapper
-import no.nav.familie.ef.søknad.mock.DokumentServiceStub
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -16,7 +15,7 @@ import kotlin.test.assertNull
 
 internal class JsonSisteInnspurtMapperTest {
 
-    private val mapper = SøknadOvergangsstønadMapper(DokumentServiceStub())
+    private val mapper = SøknadOvergangsstønadMapper()
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
@@ -47,7 +46,7 @@ internal class JsonSisteInnspurtMapperTest {
                                                                       SøknadOvergangsstønadDto::class.java)
         val medUtenlandsopphold = mapper.mapTilIntern(mapped, innsendingMottatt)
 
-        val søknad = medUtenlandsopphold.søknadMedVedlegg.søknad
+        val søknad = medUtenlandsopphold.søknad
         assertEquals(søknad.medlemskapsdetaljer.verdi.utenlandsopphold?.verdi?.first()?.årsakUtenlandsopphold?.verdi,
                      "Jobbgreie")
 
@@ -65,7 +64,7 @@ internal class JsonSisteInnspurtMapperTest {
         val mapped: SøknadOvergangsstønadDto = objectMapper.readValue(File("src/test/resources/sisteinnspurt/barnTomStrengFødselsdato.json"),
                                                                       SøknadOvergangsstønadDto::class.java)
         val mappetTilBarnUtenFødselsTermindato = mapper.mapTilIntern(mapped, innsendingMottatt)
-        assertNull(mappetTilBarnUtenFødselsTermindato.søknadMedVedlegg.søknad.barn.verdi.first().fødselTermindato)
+        assertNull(mappetTilBarnUtenFødselsTermindato.søknad.barn.verdi.first().fødselTermindato)
     }
 
 
@@ -127,7 +126,7 @@ internal class JsonSisteInnspurtMapperTest {
                                                                             SøknadOvergangsstønadDto::class.java)
 
         val mapped = mapper.mapTilIntern(identTest3(), innsendingMottatt)
-        assertNotNull(mapped.søknadMedVedlegg.søknad.barn.verdi.last().annenForelder?.verdi?.person?.verdi?.fødselsnummer)
+        assertNotNull(mapped.søknad.barn.verdi.last().annenForelder?.verdi?.person?.verdi?.fødselsnummer)
 
     }
 
@@ -173,7 +172,7 @@ internal class JsonSisteInnspurtMapperTest {
                                                                                 SøknadOvergangsstønadDto::class.java)
 
         val søknadRequestData = mapper.mapTilIntern(søknadFraHilde(), innsendingMottatt)
-        val søknad = søknadRequestData.søknadMedVedlegg.søknad
+        val søknad = søknadRequestData.søknad
         assertEquals(LocalDate.of(1970, 3, 20), søknad.barn.verdi[0].annenForelder?.verdi?.person?.verdi?.fødselsdato?.verdi)
         assertEquals(LocalDate.of(1970, 3, 20), søknad.barn.verdi[1].annenForelder?.verdi?.person?.verdi?.fødselsdato?.verdi)
         assertEquals(LocalDate.of(2020, 6, 2), søknad.barn.verdi[0].samvær?.verdi?.nårFlyttetDereFraHverandre?.verdi)
@@ -187,7 +186,7 @@ internal class JsonSisteInnspurtMapperTest {
                                                                                 SøknadOvergangsstønadDto::class.java)
 
         val søknadRequestData = mapper.mapTilIntern(søknadFraHilde(), innsendingMottatt)
-        val søknad = søknadRequestData.søknadMedVedlegg.søknad
+        val søknad = søknadRequestData.søknad
         assertEquals(LocalDate.of(2015, 11, 18), søknad.barn.verdi[0].fødselTermindato?.verdi)
         assertEquals(LocalDate.of(2019, 8, 25), søknad.barn.verdi[1].fødselTermindato?.verdi)
         assertEquals(LocalDate.of(2021, 3, 20), søknad.sivilstandsplaner?.verdi?.fraDato?.verdi)
