@@ -15,7 +15,7 @@ familie:
       uri: https://familie-ef-mottak.prod-fss-pub.nais.io/api
       audience: prod-fss:teamfamilie:familie-ef-mottak
   integrasjoner:
-    uri:  https://familie-integrasjoner.prod-fss-pub.nais.io
+    uri:  https://familie-integrasjoner.prod-fss-pub.nais.io/api
 
 regelverk:
   alder:

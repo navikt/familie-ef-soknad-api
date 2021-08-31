@@ -33,8 +33,8 @@ spec:
       cpu: 500m
   secureLogs:
     enabled: true
-#  ingresses:
-#    - https://www.nav.no/familie/alene-med-barn/soknad-api # TODO skal med før merge
+  ingresses:
+    - https://www.nav.no/familie/alene-med-barn/soknad-api
   azure:
     application:
       enabled: true
