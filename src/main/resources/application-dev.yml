@@ -9,6 +9,7 @@ familie:
 cors:
   allowed_origins:
     - "https://www-q0.nav.no/familie/alene-med-barn/soknad"
+    - "https://www-q0.nav.no"
     - "https://familie.dev.nav.no/familie/alene-med-barn/soknad"
 
 PDL_URL: https://pdl-api.dev-fss-pub.nais.io
