@@ -1,19 +1,17 @@
 familie:
   ef:
     mottak:
-      uri: https://api-gw-q0.oera.no/familie-ef-mottak/api
+      uri: https://familie-ef-mottak.dev-fss-pub.nais.io/api
       audience: dev-fss:teamfamilie:familie-ef-mottak
   integrasjoner:
-    uri:  https://api-gw-q2.oera.no/familie-integrasjoner/api
+    uri:  https://familie-integrasjoner.dev-fss-pub.nais.io/api
 
 cors:
   allowed_origins:
-    - "https://familie-ef-soknad.nais.oera-q.local"
-    - "https://familie-ef-soknad-api.nais.oera-q.local"
     - "https://www-q0.nav.no/familie/alene-med-barn/soknad"
-    - "https://www-q0.nav.no/familie/alene-med-barn/soknad-api"
-    - "https://ensligmorellerfar.dev.nav.no"
+    - "https://www-q0.nav.no"
+    - "https://familie.dev.nav.no/familie/alene-med-barn/soknad"
 
-PDL_URL: https://api-gw-q1.oera.no/pdl-api
+PDL_URL: https://pdl-api.dev-fss-pub.nais.io
 PDL_AUDIENCE: dev-fss:pdl:pdl-api
 PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default

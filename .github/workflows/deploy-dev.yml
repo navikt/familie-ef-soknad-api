@@ -6,7 +6,7 @@ env:
 
 jobs:
   build:
-    name: Build, push and deploy to dev-sbs
+    name: Build, push and deploy to dev-gcp
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -43,6 +43,6 @@ jobs:
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-sbs
+          CLUSTER: dev-gcp
           RESOURCE: nais-dev.yaml
 

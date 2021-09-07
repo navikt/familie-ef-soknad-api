@@ -10,7 +10,7 @@ env:
 
 jobs:
   build:
-    name: Build, push and deploy to prod-sbs
+    name: Build, push and deploy to prod-gcp
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -56,11 +56,11 @@ jobs:
       #          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
       #          CLUSTER: dev-sbs
       #          RESOURCE: nais-dev.yaml
-      - name: Deploy til prod-sbs
+      - name: Deploy til prod-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: prod-sbs
+          CLUSTER: prod-gcp
           RESOURCE: nais-prod.yaml
       - name: Post deploy failures to Slack
         if: failure()

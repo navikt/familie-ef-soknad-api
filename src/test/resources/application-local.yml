@@ -6,21 +6,13 @@ server:
 spring:
   main:
     allow-bean-definition-overriding: true
-  servlet:
-    multipart:
-      max-file-size: 20MB
-      max-request-size: 21MB
+
 familie:
   integrasjoner:
     uri: http://localhost:8085/api
-    passord: pwdIntegrasjoner
   ef:
     mottak:
       uri: http://localhost:8092/api
-      passord: pwdMottak
-
-pdl:
-  passord: pdlPassord
 
 funksjonsbrytere:
   enabled: false

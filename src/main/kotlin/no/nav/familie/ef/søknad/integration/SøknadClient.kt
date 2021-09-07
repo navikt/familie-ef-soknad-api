@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.MottakConfig
-import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingMedVedlegg

@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.config
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.api.filter.CORSResponseFilter
 import no.nav.familie.http.config.RestTemplateBuilderBean
-import no.nav.familie.http.interceptor.ApiKeyInjectingClientInterceptor
 import no.nav.familie.http.interceptor.BearerTokenClientCredentialsClientInterceptor
 import no.nav.familie.http.interceptor.BearerTokenExchangeClientInterceptor
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
@@ -18,7 +17,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
-import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.web.client.RestOperations
 import java.time.Duration
 import java.time.temporal.ChronoUnit
@@ -28,40 +26,13 @@ import java.time.temporal.ChronoUnit
 @Import(MdcValuesPropagatingClientInterceptor::class,
         ConsumerIdClientInterceptor::class,
         BearerTokenExchangeClientInterceptor::class,
-        BearerTokenClientCredentialsClientInterceptor::class,
-        RestTemplateBuilderBean::class) // blir brukt i DefaultOAuth2HttpClient
+        BearerTokenClientCredentialsClientInterceptor::class)
 internal class ApplicationConfig {
 
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
-    private val apiKey = "x-nav-apiKey"
-
-    @Bean
-    fun apiKeyInjectingClientInterceptor(mottak: MottakConfig,
-                                         pdlConfig: PdlConfig,
-                                         integrasjoner: FamilieIntegrasjonerConfig): ApiKeyInjectingClientInterceptor {
-        val map = mapOf(mottak.uri to Pair(apiKey, mottak.passord),
-                        pdlConfig.pdlUri to Pair(apiKey, pdlConfig.passord),
-                        integrasjoner.uri to Pair(apiKey, integrasjoner.passord))
-        return ApiKeyInjectingClientInterceptor(map)
-    }
 
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule()
-
-    @Bean("tokenExchange")
-    fun restTemplate(bearerTokenExchangeClientInterceptor: BearerTokenExchangeClientInterceptor,
-                     mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-                     consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-                     apiKeyInjectingClientInterceptor: ApiKeyInjectingClientInterceptor): RestOperations {
-        return RestTemplateBuilder()
-                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
-                .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
-                .interceptors(bearerTokenExchangeClientInterceptor,
-                              mdcValuesPropagatingClientInterceptor,
-                              consumerIdClientInterceptor,
-                              apiKeyInjectingClientInterceptor)
-                .build()
-    }
 
     @Bean
     fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
@@ -90,16 +61,27 @@ internal class ApplicationConfig {
         return filterRegistration
     }
 
+    @Bean("tokenExchange")
+    fun restTemplate(bearerTokenExchangeClientInterceptor: BearerTokenExchangeClientInterceptor,
+                     mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+                     consumerIdClientInterceptor: ConsumerIdClientInterceptor): RestOperations {
+        return RestTemplateBuilder()
+                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+                .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
+                .interceptors(bearerTokenExchangeClientInterceptor,
+                              mdcValuesPropagatingClientInterceptor,
+                              consumerIdClientInterceptor)
+                .build()
+    }
+
     @Bean("clientCredential")
     fun clientCredentialRestTemplateMedApiKey(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
                                               bearerTokenClientCredentialsClientInterceptor: BearerTokenClientCredentialsClientInterceptor,
-                                              apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor,
                                               mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
         return RestTemplateBuilder()
                 .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
                 .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
                 .interceptors(consumerIdClientInterceptor,
-                              apiKeyInjectingClientInterceptor,
                               bearerTokenClientCredentialsClientInterceptor,
                               mdcValuesPropagatingClientInterceptor)
                 .build()
@@ -107,20 +89,20 @@ internal class ApplicationConfig {
 
     @Bean("utenAuth")
     fun restTemplate(consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-                     apiKeyInjectingClientInterceptor: ClientHttpRequestInterceptor,
                      mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor): RestOperations {
         return RestTemplateBuilder()
                 .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
                 .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
                 .additionalInterceptors(consumerIdClientInterceptor,
-                                        apiKeyInjectingClientInterceptor,
                                         mdcValuesPropagatingClientInterceptor).build()
     }
 
     @Primary
     @Bean
-    fun oAuth2HttpClient(restTemplateBuilder: RestTemplateBuilder): RetryOAuth2HttpClient {
-        return RetryOAuth2HttpClient(restTemplateBuilder)
+    fun oAuth2HttpClient(): RetryOAuth2HttpClient {
+        return RetryOAuth2HttpClient(RestTemplateBuilder()
+                                             .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
+                                             .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)))
     }
 
 }

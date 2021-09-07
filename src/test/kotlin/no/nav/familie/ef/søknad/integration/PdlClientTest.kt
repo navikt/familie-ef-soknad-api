@@ -1,10 +1,10 @@
 package no.nav.familie.ef.søknad.integration
 
 import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock.*
+import com.github.tomakehurst.wiremock.client.WireMock.okJson
+import com.github.tomakehurst.wiremock.client.WireMock.post
+import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
-import io.mockk.every
-import io.mockk.mockk
 import no.nav.familie.ef.søknad.config.PdlConfig
 import no.nav.familie.ef.søknad.exception.PdlRequestException
 import org.assertj.core.api.Assertions.assertThat
@@ -25,7 +25,7 @@ class PdlClientTest {
     @BeforeEach
     fun setUp() {
         wireMockServer.start()
-        pdlClient = PdlClient(PdlConfig(URI.create(wireMockServer.baseUrl()), ""), restOperations)
+        pdlClient = PdlClient(PdlConfig(URI.create(wireMockServer.baseUrl())), restOperations)
     }
 
     @AfterEach

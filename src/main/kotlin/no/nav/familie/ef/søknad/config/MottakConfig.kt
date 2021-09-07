@@ -4,12 +4,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
-import java.util.*
+import java.util.UUID
 
 @ConfigurationProperties("familie.ef.mottak")
 @ConstructorBinding
-data class MottakConfig(val uri: URI,
-                        val passord: String) {
+data class MottakConfig(val uri: URI) {
 
     internal val sendInnOvergangsstønadUri = byggUri(PATH_SEND_INN_OVERGANGSSTØNAD)
     internal val sendInnSkjemaArbeidUri = byggUri(PATH_SEND_INN_ARBEIDS_SKJEMA)
