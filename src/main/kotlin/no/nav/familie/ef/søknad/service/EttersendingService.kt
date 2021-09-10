@@ -21,7 +21,7 @@ class EttersendingService(private val søknadClient: SøknadClient) {
     }
 
 
-    fun hentEttersendingForPerson(personIdent: String): EttersendelseDto {
+    fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
         return søknadClient.hentEttersendingForPerson(personIdent);
     }
 

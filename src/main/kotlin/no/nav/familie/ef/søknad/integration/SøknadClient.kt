@@ -60,7 +60,7 @@ class SøknadClient(private val config: MottakConfig,
                              HttpHeaders().medContentTypeJsonUTF8())
     }
 
-    fun hentEttersendingForPerson(personIdent: String): EttersendelseDto {
+    fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
         return postForEntity(config.hentEttersendingForPersonUri,
                              PersonIdent(personIdent),
                              HttpHeaders().medContentTypeJsonUTF8())
