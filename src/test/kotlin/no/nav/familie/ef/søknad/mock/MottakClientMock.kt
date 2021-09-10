@@ -4,16 +4,14 @@ import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
-import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
-import no.nav.familie.kontrakter.ef.ettersending.EttersendingForSøknad
-import no.nav.familie.kontrakter.ef.ettersending.EttersendingResponseData
-import no.nav.familie.kontrakter.ef.ettersending.EttersendingUtenSøknad
-import no.nav.familie.kontrakter.ef.ettersending.Innsending
+import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
+import no.nav.familie.kontrakter.ef.ettersending.SøknadMetadata
 import no.nav.familie.kontrakter.ef.felles.StønadType
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Dokumentasjonsbehov
 import no.nav.familie.kontrakter.ef.søknad.SøknadType
+import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import no.nav.familie.kontrakter.ef.søknad.dokumentasjonsbehov.DokumentasjonsbehovDto
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -92,27 +90,45 @@ class MottakClientMock {
                                             dokumentasjonsbehovDto2),
     )
 
-    private val ettersendingForSøknad = EttersendingForSøknad("b017ccb7-43e6-4040-ab9b-aab2d0d4fe98",
-                                                              listOf(Dokumentasjonsbehov("Dokumentasjon på arbeidsforholdet og årsaken til at du reduserte arbeidstiden",
-                                                                                         "ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID",
-                                                                                         false,
-                                                                                         listOf(Dokument("e2943989-932a-40fc-a1f0-db912ea8ccce",
-                                                                                                         "dokuemnt_tidliger_ettersending.pdf")))),
-                                                              listOf(Innsending("Dette er et dokument",
-                                                                                "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
-                                                                                listOf(Dokument("093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
-                                                                                         "dokuemnt_tidliger_ettersending22.pdf")))))
+    private val ettersendingUtenSøknad = no.nav.familie.kontrakter.ef.ettersending.Dokumentasjonsbehov(
+            id = UUID.randomUUID().toString(),
+            søknadsdata = null,
+            dokumenttype = "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
+            beskrivelse = "Dokumentasjon på at du ikke er villig til å ta arbeid",
+            stønadType = StønadType.BARNETILSYN,
+            innsendingstidspunkt = null,
+            vedlegg = listOf(Vedlegg("093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
+                                     "dokuemnt_tidliger_ettersending.pdf",
+                                     "Et kult dokument"))
+    )
 
-    private val ettersendingUtenSøknad = EttersendingUtenSøknad(listOf(Innsending("dette er et fint dokument",
-                                                                                  "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
-                                                                                  listOf(Dokument("093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
-                                                                                           "dokuemnt_tidliger_ettersending.pdf")))))
+    private val ettersendingForSøknad = no.nav.familie.kontrakter.ef.ettersending.Dokumentasjonsbehov(
+            id = UUID.randomUUID().toString(),
+            søknadsdata = SøknadMetadata(søknadId = "b017ccb7-43e6-4040-ab9b-aab2d0d4fe98",
+                                         søknadsdato = LocalDate.of(2021, 3, 12),
+                                         dokumentasjonsbehovId = "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
+                                         harSendtInnTidligere = false),
+            dokumenttype = "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
+            beskrivelse = "Dokumentasjon på at du ikke er villig til arbeid",
+            stønadType = StønadType.OVERGANGSSTØNAD,
+            innsendingstidspunkt = null,
+            vedlegg = listOf(Vedlegg("e2943989-932a-40fc-a1f0-db912ea8ccce",
+                                     "dokuemnt_tidliger_ettersending.pdf", "Et kult dokument")))
 
-    private val ettersendingDto1 =
-            EttersendingDto("01010172272", StønadType.OVERGANGSSTØNAD, ettersendingForSøknad, null)
+    private val ettersendingForSøknadMangler = no.nav.familie.kontrakter.ef.ettersending.Dokumentasjonsbehov(
+            id = UUID.randomUUID().toString(),
+            søknadsdata = SøknadMetadata(søknadId = "b017ccb7-43e6-4040-ab9b-aab2d0d4fe98",
+                                         søknadsdato = LocalDate.of(2021, 3, 12),
+                                         dokumentasjonsbehovId = "ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID",
+                                         harSendtInnTidligere = false),
+            dokumenttype = "ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID",
+            beskrivelse = "Dokumentasjon på arbeidsforholdet og årsaken til at du reduserte arbeidstiden",
+            stønadType = StønadType.OVERGANGSSTØNAD,
+            innsendingstidspunkt = null,
+            vedlegg = emptyList())
 
-    private val ettersendingDto2 = EttersendingDto("01010172272", StønadType.BARNETILSYN, null, ettersendingUtenSøknad)
-
-    private val ettersendingResponseData = listOf(EttersendingResponseData(ettersendingDto1, LocalDateTime.now()),
-                                                  EttersendingResponseData(ettersendingDto2, LocalDateTime.now()))
+    private val ettersendingResponseData = EttersendelseDto(
+            fnr = "01010172272",
+            dokumentasjonsbehov = listOf(ettersendingForSøknad, ettersendingForSøknadMangler, ettersendingUtenSøknad)
+    )
 }

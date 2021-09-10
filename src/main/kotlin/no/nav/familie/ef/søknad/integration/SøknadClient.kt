@@ -3,9 +3,11 @@ package no.nav.familie.ef.søknad.integration
 import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.http.client.AbstractPingableRestClient
+import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingMedVedlegg
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingResponseData
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
+import no.nav.familie.kontrakter.ef.felles.StønadType
 import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
 import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
@@ -40,8 +42,8 @@ class SøknadClient(private val config: MottakConfig,
         return postForEntity(config.sendInnSkolepengerUri, søknadMedVedlegg)
     }
 
-    fun sendInnEttersending(ettersendingMedVedlegg: EttersendingMedVedlegg): KvitteringDto {
-        return postForEntity(config.sendInnEttersendingUri, ettersendingMedVedlegg)
+    fun sendInnEttersending(ettersending: Map<StønadType, EttersendelseDto>): KvitteringDto {
+        return postForEntity(config.sendInnEttersendingUri, ettersending)
     }
 
     fun sendInnArbeidsRegistreringsskjema(skjema: SkjemaForArbeidssøker): KvitteringDto {
@@ -58,7 +60,7 @@ class SøknadClient(private val config: MottakConfig,
                              HttpHeaders().medContentTypeJsonUTF8())
     }
 
-    fun hentEttersendingForPerson(personIdent: String): List<EttersendingResponseData> {
+    fun hentEttersendingForPerson(personIdent: String): EttersendelseDto {
         return postForEntity(config.hentEttersendingForPersonUri,
                              PersonIdent(personIdent),
                              HttpHeaders().medContentTypeJsonUTF8())
