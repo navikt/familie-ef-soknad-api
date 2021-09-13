@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.service.EttersendingService
+import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingResponseData
 import no.nav.familie.sikkerhet.EksternBrukerUtils
@@ -20,17 +21,15 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping(path = ["/api/ettersending"])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
-
-
 class EttersendingController(
         val ettersendingService: EttersendingService,
         val featureToggleService: FeatureToggleService,
 ) {
 
     @PostMapping
-    fun postEttersending(@RequestBody ettersending: EttersendingDto): Kvittering {
+    fun postEttersending(@RequestBody ettersending: EttersendelseDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.ettersending") {
-            if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.fnr)) {
+            if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.personIdent)) {
                 throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
             }
             val innsendingMottatt = LocalDateTime.now()
@@ -41,7 +40,7 @@ class EttersendingController(
     }
 
     @GetMapping
-    fun hentEttersendingForPerson(): ResponseEntity<List<EttersendingResponseData>> {
+    fun hentEttersendingForPerson(): ResponseEntity<List<EttersendelseDto>> {
         val ident = EksternBrukerUtils.hentFnrFraToken()
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ident)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)

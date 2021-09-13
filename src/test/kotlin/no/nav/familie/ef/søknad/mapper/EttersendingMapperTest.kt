@@ -1,57 +1,60 @@
 package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.mapper.kontrakt.EttersendingMapper
-import org.junit.jupiter.api.Test
-import no.nav.familie.ef.søknad.mock.ettersendingUtenSøknadDto
-import no.nav.familie.ef.søknad.mock.ettersendingForSøknadDto
+import no.nav.familie.kontrakter.ef.ettersending.Dokumentasjonsbehov
+import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
+import no.nav.familie.kontrakter.ef.felles.StønadType
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
-import org.junit.jupiter.api.Assertions.assertTrue
+import java.util.UUID
 
 internal class EttersendingMapperTest {
 
-    private val mapper = EttersendingMapper()
-    private val ettersendignUtenSøknadDto = ettersendingUtenSøknadDto()
-    private val ettersendignForSøknadDto = ettersendingForSøknadDto()
-    private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
     @Test
-    fun `mapTilIntern skal mappe alle vedleggene`() {
-        val forventetMap = listOf("59b846eb-12b8-4321-a36b-29170b81a4d1",
-                                  "4f44f53e-5566-4363-9d3c-e30387d4164f",
-                                  "6bcc08af-be76-4756-b938-0a7c5934a736").associateWith { it.toByteArray() }
-        val ettersendingMap = mapper.mapTilIntern(ettersendignForSøknadDto, innsendingMottatt).vedlegg
-        assertThat(ettersendingMap.map { it.id }).containsExactlyElementsOf(forventetMap.keys)
+    internal fun `skal mappe en liste med innsendinger per stønadstype`() {
+
+        val skolepengedokumentasjon = lagDokumentasjonsbehov(stønadType = StønadType.SKOLEPENGER)
+        val barnetilsynDokumentasjon = lagDokumentasjonsbehov(stønadType = StønadType.BARNETILSYN)
+        val overgangsstønadDokumentasjon1 = lagDokumentasjonsbehov(stønadType = StønadType.OVERGANGSSTØNAD)
+        val overgangsstønadDokumentasjon2 = lagDokumentasjonsbehov(stønadType = StønadType.OVERGANGSSTØNAD)
+        val overgangsstønadDokumentasjon3 = lagDokumentasjonsbehov(stønadType = StønadType.OVERGANGSSTØNAD)
+
+        val personIdent = "12345678901"
+        val innsendingMottatt = LocalDateTime.now()
+        val nyttMap =
+                EttersendingMapper.groupByStønad(dto = EttersendelseDto(dokumentasjonsbehov = listOf(skolepengedokumentasjon,
+                                                                                                     barnetilsynDokumentasjon,
+                                                                                                     overgangsstønadDokumentasjon1,
+                                                                                                     overgangsstønadDokumentasjon2,
+                                                                                                     overgangsstønadDokumentasjon3),
+                                                                        personIdent = personIdent),
+                                                 innsendingMottatt = innsendingMottatt)
+        assertThat(nyttMap).containsKey(StønadType.OVERGANGSSTØNAD)
+        assertThat(nyttMap).containsKey(StønadType.BARNETILSYN)
+        assertThat(nyttMap).containsKey(StønadType.SKOLEPENGER)
+        assertThat(nyttMap[StønadType.OVERGANGSSTØNAD]?.dokumentasjonsbehov).hasSize(3)
+        assertThat(nyttMap[StønadType.BARNETILSYN]?.dokumentasjonsbehov).hasSize(1)
+        assertThat(nyttMap[StønadType.SKOLEPENGER]?.dokumentasjonsbehov).hasSize(1)
+        assertThat(nyttMap[StønadType.SKOLEPENGER]?.personIdent).isEqualTo(personIdent)
+        assertThat(nyttMap[StønadType.BARNETILSYN]?.personIdent).isEqualTo(personIdent)
+        assertThat(nyttMap[StønadType.OVERGANGSSTØNAD]?.personIdent).isEqualTo(personIdent)
+        assertThat(nyttMap[StønadType.SKOLEPENGER]?.dokumentasjonsbehov?.first()?.innsendingstidspunkt).isEqualTo(innsendingMottatt)
+        assertThat(nyttMap[StønadType.BARNETILSYN]?.dokumentasjonsbehov?.first()?.innsendingstidspunkt).isEqualTo(innsendingMottatt)
+        assertThat(nyttMap[StønadType.OVERGANGSSTØNAD]?.dokumentasjonsbehov).allMatch{ it.innsendingstidspunkt == innsendingMottatt}
     }
 
-    @Test
-    fun `mapTilIntern skal legge alle vedlegg med og uten dokumentasjonsbehov i liste på formatet Vedlegg(id,navn,tittel)`() {
-
-        val vedleggListe: MutableList<Vedlegg> = mutableListOf()
-        ettersendignForSøknadDto.ettersendingForSøknad?.dokumentasjonsbehov?.map { dokumenasjonsbehov ->
-            dokumenasjonsbehov.opplastedeVedlegg.map {
-                vedleggListe.add(Vedlegg(id = it.id, navn = it.navn, tittel = dokumenasjonsbehov.label))
-            }
-        }
-        ettersendignForSøknadDto.ettersendingForSøknad?.innsending?.map { innsending ->
-            innsending.vedlegg.map {
-                vedleggListe.add(Vedlegg(id = it.id, navn = it.navn, tittel = innsending.beskrivelse))
-        }}
-        val ettersendingVedlegg = mapper.mapTilIntern(ettersendignForSøknadDto, innsendingMottatt).vedlegg
-        assertEquals(vedleggListe, ettersendingVedlegg)
-    }
-
-
-    @Test
-    fun `mapTilIntern returnerer samme datoMottatt og fnr, og stønadType som blir sendt frontend`() {
-        val innsendtDto = ettersendignUtenSøknadDto
-        val ettersendingMedVedlegg = mapper.mapTilIntern(innsendtDto, innsendingMottatt)
-
-        assertTrue(innsendingMottatt == ettersendingMedVedlegg.innsendingsdetaljer.verdi.datoMottatt.verdi
-                   && innsendtDto.fnr == ettersendingMedVedlegg.ettersending.fnr
-                   && innsendtDto.stønadType === ettersendingMedVedlegg.ettersending.stønadType)
-    }
-
+    private fun lagDokumentasjonsbehov(stønadType: StønadType) = Dokumentasjonsbehov(id = UUID.randomUUID().toString(),
+                                                                                     søknadsdata = null,
+                                                                                     dokumenttype = "DOKUMENTASJON_PÅ_SYKDOM",
+                                                                                     beskrivelse = "Dokumentasjon på sykdom",
+                                                                                     stønadType = stønadType,
+                                                                                     innsendingstidspunkt = LocalDateTime.now()
+                                                                                             .minusYears(1),
+                                                                                     vedlegg = listOf(Vedlegg(
+                                                                                             id = "1",
+                                                                                             navn = "Vedlegg 1",
+                                                                                             tittel = "Dokumentasjon på sykdom")))
 }

@@ -4,24 +4,24 @@ import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.EttersendingMapper
-import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
+import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.kontrakter.ef.ettersending.EttersendingResponseData
+import no.nav.familie.kontrakter.ef.felles.StønadType
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 
 @Service
-class EttersendingService(private val søknadClient: SøknadClient,
-                          private val ettersendingMapper: EttersendingMapper) {
+class EttersendingService(private val søknadClient: SøknadClient) {
 
-    fun sendInn(ettersending: EttersendingDto, innsendingMottatt: LocalDateTime): Kvittering {
-        val ettersedingRequestData = ettersendingMapper.mapTilIntern(ettersending, innsendingMottatt)
+    fun sendInn(ettersending: EttersendelseDto, innsendingMottatt: LocalDateTime): Kvittering {
+        val ettersedingRequestData: Map<StønadType, EttersendelseDto> = EttersendingMapper.groupByStønad(ettersending, innsendingMottatt)
         val kvittering = søknadClient.sendInnEttersending(ettersedingRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
 
-    fun hentEttersendingForPerson(personIdent: String): List<EttersendingResponseData> {
+    fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
         return søknadClient.hentEttersendingForPerson(personIdent);
     }
 
