@@ -29,7 +29,7 @@ class EttersendingController(
     @PostMapping
     fun postEttersending(@RequestBody ettersending: EttersendelseDto): Kvittering {
         return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.ettersending") {
-            if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.fnr)) {
+            if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.personIdent)) {
                 throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
             }
             val innsendingMottatt = LocalDateTime.now()

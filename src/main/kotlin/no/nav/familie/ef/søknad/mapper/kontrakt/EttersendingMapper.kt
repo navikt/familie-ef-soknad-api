@@ -13,7 +13,7 @@ object EttersendingMapper {
         return dto.dokumentasjonsbehov
                 .map { it.copy(innsendingstidspunkt = innsendingMottatt) }
                 .groupBy { it.stønadType }
-                .mapValues { entry -> EttersendelseDto(fnr = dto.fnr, dokumentasjonsbehov = entry.value) }
+                .mapValues { entry -> EttersendelseDto(personIdent = dto.personIdent, dokumentasjonsbehov = entry.value) }
     }
 
 }

@@ -106,10 +106,10 @@ class MottakClientMock {
             id = UUID.randomUUID().toString(),
             søknadsdata = SøknadMetadata(søknadId = "b017ccb7-43e6-4040-ab9b-aab2d0d4fe98",
                                          søknadsdato = LocalDate.of(2021, 3, 12),
-                                         dokumentasjonsbehovId = "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
+                                         dokumentasjonsbehovId = "SYKT_BARN",
                                          harSendtInnTidligere = false),
-            dokumenttype = "DOKUMENTASJON_IKKE_VILLIG_TIL_ARBEID",
-            beskrivelse = "Dokumentasjon på at du ikke er villig til arbeid",
+            dokumenttype = "SYKT_BARN",
+            beskrivelse = "Dokumentasjon på barnets sykdom",
             stønadType = StønadType.OVERGANGSSTØNAD,
             innsendingstidspunkt = null,
             vedlegg = listOf(Vedlegg("e2943989-932a-40fc-a1f0-db912ea8ccce",
@@ -120,7 +120,7 @@ class MottakClientMock {
             søknadsdata = SøknadMetadata(søknadId = "b017ccb7-43e6-4040-ab9b-aab2d0d4fe98",
                                          søknadsdato = LocalDate.of(2021, 3, 12),
                                          dokumentasjonsbehovId = "ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID",
-                                         harSendtInnTidligere = false),
+                                         harSendtInnTidligere = true),
             dokumenttype = "ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID",
             beskrivelse = "Dokumentasjon på arbeidsforholdet og årsaken til at du reduserte arbeidstiden",
             stønadType = StønadType.OVERGANGSSTØNAD,
@@ -128,7 +128,7 @@ class MottakClientMock {
             vedlegg = emptyList())
 
     private val ettersendingResponseData = EttersendelseDto(
-            fnr = "01010172272",
+            personIdent = "01010172272",
             dokumentasjonsbehov = listOf(ettersendingForSøknad, ettersendingForSøknadMangler, ettersendingUtenSøknad)
     )
 }

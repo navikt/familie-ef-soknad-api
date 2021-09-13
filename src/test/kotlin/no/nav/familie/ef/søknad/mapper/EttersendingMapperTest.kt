@@ -22,7 +22,7 @@ internal class EttersendingMapperTest {
         val overgangsstønadDokumentasjon2 = lagDokumentasjonsbehov(stønadType = StønadType.OVERGANGSSTØNAD)
         val overgangsstønadDokumentasjon3 = lagDokumentasjonsbehov(stønadType = StønadType.OVERGANGSSTØNAD)
 
-        val fnr = "12345678901"
+        val personIdent = "12345678901"
         val innsendingMottatt = LocalDateTime.now()
         val nyttMap =
                 EttersendingMapper.groupByStønad(dto = EttersendelseDto(dokumentasjonsbehov = listOf(skolepengedokumentasjon,
@@ -30,7 +30,7 @@ internal class EttersendingMapperTest {
                                                                                                      overgangsstønadDokumentasjon1,
                                                                                                      overgangsstønadDokumentasjon2,
                                                                                                      overgangsstønadDokumentasjon3),
-                                                                        fnr = fnr),
+                                                                        personIdent = personIdent),
                                                  innsendingMottatt = innsendingMottatt)
         assertThat(nyttMap).containsKey(StønadType.OVERGANGSSTØNAD)
         assertThat(nyttMap).containsKey(StønadType.BARNETILSYN)
@@ -38,9 +38,9 @@ internal class EttersendingMapperTest {
         assertThat(nyttMap[StønadType.OVERGANGSSTØNAD]?.dokumentasjonsbehov).hasSize(3)
         assertThat(nyttMap[StønadType.BARNETILSYN]?.dokumentasjonsbehov).hasSize(1)
         assertThat(nyttMap[StønadType.SKOLEPENGER]?.dokumentasjonsbehov).hasSize(1)
-        assertThat(nyttMap[StønadType.SKOLEPENGER]?.fnr).isEqualTo(fnr)
-        assertThat(nyttMap[StønadType.BARNETILSYN]?.fnr).isEqualTo(fnr)
-        assertThat(nyttMap[StønadType.OVERGANGSSTØNAD]?.fnr).isEqualTo(fnr)
+        assertThat(nyttMap[StønadType.SKOLEPENGER]?.personIdent).isEqualTo(personIdent)
+        assertThat(nyttMap[StønadType.BARNETILSYN]?.personIdent).isEqualTo(personIdent)
+        assertThat(nyttMap[StønadType.OVERGANGSSTØNAD]?.personIdent).isEqualTo(personIdent)
         assertThat(nyttMap[StønadType.SKOLEPENGER]?.dokumentasjonsbehov?.first()?.innsendingstidspunkt).isEqualTo(innsendingMottatt)
         assertThat(nyttMap[StønadType.BARNETILSYN]?.dokumentasjonsbehov?.first()?.innsendingstidspunkt).isEqualTo(innsendingMottatt)
         assertThat(nyttMap[StønadType.OVERGANGSSTØNAD]?.dokumentasjonsbehov).allMatch{ it.innsendingstidspunkt == innsendingMottatt}
