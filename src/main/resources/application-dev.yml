@@ -11,6 +11,7 @@ cors:
     - "https://www-q0.nav.no/familie/alene-med-barn/soknad"
     - "https://www-q0.nav.no"
     - "https://familie.dev.nav.no/familie/alene-med-barn/soknad"
+    - "https://ensligmorellerfar.dev.nav.no"
 
 PDL_URL: https://pdl-api.dev-fss-pub.nais.io
 PDL_AUDIENCE: dev-fss:pdl:pdl-api
