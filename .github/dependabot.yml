@@ -17,3 +17,7 @@ updates:
     open-pull-requests-limit: 20
     registries:
       - familie-felles
+    versioning-strategy: increase
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-patch" ]
