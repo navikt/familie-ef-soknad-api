@@ -86,7 +86,12 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
     fun harSammeAdresse(søkersAdresse: Bostedsadresse?, pdlBarn: PdlBarn): Boolean {
         val barnetsAdresse = pdlBarn.bostedsadresse.firstOrNull()
-        if (søkersAdresse == null || barnetsAdresse == null || harDeltBosted(pdlBarn)) {
+
+        if (harDeltBosted(pdlBarn)) {
+            return true
+        }
+
+        if (søkersAdresse == null || barnetsAdresse == null) {
             return false
         }
 

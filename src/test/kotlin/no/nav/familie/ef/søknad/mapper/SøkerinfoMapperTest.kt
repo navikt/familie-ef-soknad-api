@@ -222,6 +222,27 @@ internal class SøkerinfoMapperTest {
     }
 
     @Test
+    internal fun `har ikke samme bostedadresse, men har delt bosted`() {
+
+        val datoEtterIdag = LocalDate.now().plusDays(1)
+        val datoFørIdag = LocalDate.now().minusDays(1)
+        val barnAdresse = bostedsadresseBarn(vegadresse(matrikkelId = 1))
+
+
+        // Guard
+        assertThat(søkerinfoMapper.harSammeAdresse(bostedsadresse(vegadresse(matrikkelId = 2)),
+                                                   barn(barnAdresse)))
+                .withFailMessage("MatrikkelId er lik på vegadresse")
+                .isFalse
+        // Har delt adresse -> forventer true
+        assertThat(søkerinfoMapper.harSammeAdresse(bostedsadresse(vegadresse(matrikkelId = 2)),
+                                                   barn(barnAdresse, DeltBosted(datoFørIdag, datoEtterIdag))))
+                .withFailMessage("har delt adresse")
+                .isTrue
+
+    }
+
+    @Test
     internal fun `harSammeAdresse - skal teste matrikkeladresse`() {
         assertThat(søkerinfoMapper.harSammeAdresse(bostedsadresse(matrikkeladresse = matrikkeladresse(1)),
                                                    barn(bostedsadresseBarn(matrikkeladresse = matrikkeladresseBarn(1)))))
@@ -250,12 +271,12 @@ internal class SøkerinfoMapperTest {
         assertThat(søkerinfoMapper.harSammeAdresse(søkersAdresse,
                                                    barn(barnAdresse, DeltBosted(datoFørIdag, datoEtterIdag))))
                 .withFailMessage("Har delt bosted med sluttdato frem i tid")
-                .isFalse
+                .isTrue
 
         assertThat(søkerinfoMapper.harSammeAdresse(søkersAdresse,
                                                    barn(barnAdresse, DeltBosted(datoFørIdag, null))))
                 .withFailMessage("Har delt bosted med sluttdato null")
-                .isFalse
+                .isTrue
     }
 
     private fun vegadresse(matrikkelId: Long? = null, adressenavn: String? = null) =
