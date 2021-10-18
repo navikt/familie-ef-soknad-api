@@ -32,7 +32,7 @@ class SøknadClient(private val config: MottakConfig,
 
     fun config(): MottakConfig {
         return if (featureToggleService.isEnabled("familie.ef.soknad.api.gcp")) {
-            MottakConfig(URI.create("https://familie-ef-mottak/api"))
+            MottakConfig(URI.create("http://familie-ef-mottak/api"))
         } else {
             config
         }
