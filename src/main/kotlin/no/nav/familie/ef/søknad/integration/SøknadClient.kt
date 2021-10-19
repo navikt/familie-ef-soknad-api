@@ -31,6 +31,9 @@ class SøknadClient(private val config: MottakConfig,
     override val pingUri: URI = config.pingUri
 
     fun config(): MottakConfig {
+        if (featureToggleService.isEnabled("familie.ef.soknad.api.disabled")) {
+            throw Exception("Familie-ef-soknad-api er disabled i forbindelse med migrering")
+        }
         return if (featureToggleService.isEnabled("familie.ef.soknad.api.gcp")) {
             MottakConfig(URI.create("http://familie-ef-mottak/api"))
         } else {
