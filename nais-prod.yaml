@@ -42,6 +42,8 @@ spec:
     enabled: true
   accessPolicy:
     outbound:
+      rules:
+        - application: familie-ef-mottak
       external:
         - host: unleash.nais.io
         - host: familie-integrasjoner.prod-fss-pub.nais.io
