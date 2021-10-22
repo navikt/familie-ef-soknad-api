@@ -66,7 +66,7 @@ internal class ApplicationConfig {
                      mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
                      consumerIdClientInterceptor: ConsumerIdClientInterceptor): RestOperations {
         return RestTemplateBuilder()
-                .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+                .setConnectTimeout(Duration.of(10, ChronoUnit.SECONDS))
                 .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
                 .interceptors(bearerTokenExchangeClientInterceptor,
                               mdcValuesPropagatingClientInterceptor,
