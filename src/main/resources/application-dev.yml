@@ -3,6 +3,9 @@ familie:
     mottak:
       uri: https://familie-ef-mottak.dev-fss-pub.nais.io/api
       audience: dev-fss:teamfamilie:familie-ef-mottak
+    mottakGcp:
+      uri: http://familie-ef-mottak/api
+      audience: dev-gcp:teamfamilie:familie-ef-mottak
   integrasjoner:
     uri:  https://familie-integrasjoner.dev-fss-pub.nais.io/api
 

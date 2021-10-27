@@ -14,6 +14,9 @@ familie:
     mottak:
       uri: https://familie-ef-mottak.prod-fss-pub.nais.io/api
       audience: prod-fss:teamfamilie:familie-ef-mottak
+    mottakGcp:
+      uri: http://familie-ef-mottak/api
+      audience: prod-gcp:teamfamilie:familie-ef-mottak
   integrasjoner:
     uri:  https://familie-integrasjoner.prod-fss-pub.nais.io/api
 
@@ -69,6 +72,16 @@ no.nav.security.jwt:
       grant-type: urn:ietf:params:oauth:grant-type:token-exchange
       token-exchange:
         audience: ${familie.ef.mottak.audience}
+      authentication:
+        client-id: ${TOKEN_X_CLIENT_ID}
+        client-auth-method: private_key_jwt
+        client-jwk: ${TOKEN_X_PRIVATE_JWK}
+    mottak-gcp:
+      resource-url: ${familie.ef.mottakGcp.uri}
+      well-known-url: ${TOKEN_X_WELL_KNOWN_URL}
+      grant-type: urn:ietf:params:oauth:grant-type:token-exchange
+      token-exchange:
+        audience: ${familie.ef.mottakGcp.audience}
       authentication:
         client-id: ${TOKEN_X_CLIENT_ID}
         client-auth-method: private_key_jwt
