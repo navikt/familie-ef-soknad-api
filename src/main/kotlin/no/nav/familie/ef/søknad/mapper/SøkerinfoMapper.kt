@@ -14,8 +14,6 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.MatrikkelId
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
-import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
-import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
 import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
 import no.nav.familie.ef.søknad.service.KodeverkService
@@ -132,13 +130,11 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
-        val sivilstand: Sivilstand = sivilstand.firstOrNull() ?: Sivilstand(type = Sivilstandstype.UOPPGITT)
-
         return Person(fnr = EksternBrukerUtils.hentFnrFraToken(),
                       forkortetNavn = navn.first().visningsnavn(),
                       adresse = adresse,
-                      egenansatt = false, // TODO denne er vel i beste fall unødvendig?
-                      sivilstand = sivilstand.type.toString(),
+                      egenansatt = false,
+                      sivilstand = sivilstand.first().type.toString(),
                       statsborgerskap = statsborgerskapListe,
                       harAdressesperre = adressebeskyttelse.harBeskyttetAdresse()
         )
