@@ -1,4 +1,4 @@
-FROM navikt/java:17
+FROM navikt/java:17-appdynamics
 ENV APPLICATION_NAME=familie-ef-soknad-api
 ENV APPD_ENABLED=TRUE
 
