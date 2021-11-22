@@ -8,6 +8,10 @@ registries:
     password: "${{secrets.NAV_READ_PACKAGES}}"
 
 updates:
+  - package-ecosystem: "github-actions"
+      directory: "/"
+      schedule:
+        interval: "daily"
   - package-ecosystem: maven
     directory: "/"
     schedule:
