@@ -19,7 +19,7 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <jvmTarget>11</jvmTarget>
+        <jvmTarget>17</jvmTarget>
         <kotlin.version>1.6.0</kotlin.version>
         <springfox.version>3.0.0</springfox.version>
         <mockk.version>1.12.1</mockk.version>
