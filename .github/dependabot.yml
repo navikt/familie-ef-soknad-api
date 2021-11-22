@@ -8,22 +8,23 @@ registries:
     password: "${{secrets.NAV_READ_PACKAGES}}"
 
 updates:
-  - package-ecosystem: github-actions
-    directory: "/"
-    schedule:
-      interval: weekly
-      day: "sunday"
-      time: "04:00"
   - package-ecosystem: maven
     directory: "/"
     schedule:
       interval: weekly
       day: "sunday"
       time: "04:00"
-    open-pull-requests-limit: 20
+    open-pull-requests-limit: 10
     registries:
       - familie-felles
-    versioning-strategy: increase
     ignore:
-      - dependency-name: "*"
-        update-types: [ "version-update:semver-patch" ]
+      - dependency-name: org.jetbrains.kotlinx:kotlinx-coroutines-core
+        versions:
+          - 1.5.0-native-mt
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: "sunday"
+      time: "04:00"
+
