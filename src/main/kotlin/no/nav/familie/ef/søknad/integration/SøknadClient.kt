@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
+import java.time.LocalDate
+import java.time.Period
 import java.net.URI
 import java.util.UUID
 
@@ -66,9 +68,9 @@ class SøknadClient(private val config: MottakConfig,
     }
 
     fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
-        return postForEntity(config().hentSøknaderMedDokumentasjonsbehovUri,
-                             PersonIdent(personIdent),
-                             HttpHeaders().medContentTypeJsonUTF8())
+        return filtrerVekkEldreDokumentasjonsbehov(postForEntity(config().hentSøknaderMedDokumentasjonsbehovUri,
+                                                                 PersonIdent(personIdent),
+                                                                 HttpHeaders().medContentTypeJsonUTF8()))
     }
 
     fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
@@ -83,4 +85,8 @@ class SøknadClient(private val config: MottakConfig,
         return this
     }
 
+    fun filtrerVekkEldreDokumentasjonsbehov(søknader: List<SøknadMedDokumentasjonsbehovDto>): List<SøknadMedDokumentasjonsbehovDto> {
+        val FIRE_UKER: Long = 4 * 7; /* dager */
+        return søknader.filter { LocalDate.now().toEpochDay() - it.søknadDato.toEpochDay() < FIRE_UKER }
+    }
 }
