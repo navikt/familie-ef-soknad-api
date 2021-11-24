@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
+import no.nav.familie.ef.søknad.integration.SøknadClientUtil.filtrerVekkEldreDokumentasjonsbehov
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
@@ -18,8 +19,6 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
-import java.time.LocalDate
-import java.time.Period
 import java.net.URI
 import java.util.UUID
 
@@ -85,8 +84,4 @@ class SøknadClient(private val config: MottakConfig,
         return this
     }
 
-    fun filtrerVekkEldreDokumentasjonsbehov(søknader: List<SøknadMedDokumentasjonsbehovDto>): List<SøknadMedDokumentasjonsbehovDto> {
-        val FIRE_UKER: Long = 4 * 7; /* dager */
-        return søknader.filter { LocalDate.now().toEpochDay() - it.søknadDato.toEpochDay() < FIRE_UKER }
-    }
 }
