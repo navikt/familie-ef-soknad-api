@@ -20,7 +20,8 @@ fun main(args: Array<String>) {
                       "mock-dokument",
                       "mock-pdl",
                       "mock-pdlApp2AppClient",
-                      "mock-mottak"
+                      "mock-mottak",
+                      "mock-integrasjoner"
             )
             .run(*args)
 }
