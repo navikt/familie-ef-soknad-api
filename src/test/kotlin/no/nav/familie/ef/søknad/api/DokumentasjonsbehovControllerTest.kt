@@ -74,17 +74,17 @@ internal class DokumentasjonsbehovControllerTest {
 
     @Test
     internal fun `dokumentasjonsbehov som er eldre enn 28 dager (4 uker) skal ikke hentes`() {
-        val søknad1: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(fødselsnummer = "0",
+        val eldreSøknad: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(fødselsnummer = "0",
                                                                                        innsendtDato = LocalDate.of(
                                                                                                2021,
                                                                                                10,
                                                                                                5))
-        val søknad2: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(fødselsnummer = "0",
+        val nySøknad: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(fødselsnummer = "0",
                                                                                        innsendtDato = LocalDate.now())
-        val søknader: List<SøknadMedDokumentasjonsbehovDto> = listOf(søknad1, søknad2)
+        val søknader: List<SøknadMedDokumentasjonsbehovDto> = listOf(eldreSøknad, nySøknad)
         val filtrerteSøknader: List<SøknadMedDokumentasjonsbehovDto> = filtrerVekkEldreDokumentasjonsbehov(søknader)
 
-        assertThat(filtrerteSøknader).isEqualTo(listOf(søknad2))
+        assertThat(filtrerteSøknader).isEqualTo(listOf(nySøknad))
     }
 
     private fun lagDokumentasjonsbehov(fødselsnummer: String, innsendtDato: LocalDate): DokumentasjonsbehovDto =

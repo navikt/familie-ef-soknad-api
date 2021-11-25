@@ -67,9 +67,11 @@ class SøknadClient(private val config: MottakConfig,
     }
 
     fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
-        return filtrerVekkEldreDokumentasjonsbehov(postForEntity(config().hentSøknaderMedDokumentasjonsbehovUri,
-                                                                 PersonIdent(personIdent),
-                                                                 HttpHeaders().medContentTypeJsonUTF8()))
+        val søknaderMedDokumentasjonsbehov: List<SøknadMedDokumentasjonsbehovDto> =
+                postForEntity(config().hentSøknaderMedDokumentasjonsbehovUri,
+                              PersonIdent(personIdent),
+                              HttpHeaders().medContentTypeJsonUTF8())
+        return filtrerVekkEldreDokumentasjonsbehov(søknaderMedDokumentasjonsbehov)
     }
 
     fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {

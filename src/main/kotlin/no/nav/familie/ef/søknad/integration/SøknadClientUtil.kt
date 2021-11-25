@@ -6,7 +6,6 @@ import java.time.LocalDate
 object SøknadClientUtil {
 
     fun filtrerVekkEldreDokumentasjonsbehov(søknader: List<SøknadMedDokumentasjonsbehovDto>): List<SøknadMedDokumentasjonsbehovDto> {
-        val fireUker: Long = 4 * 7; /* dager */
-        return søknader.filter { LocalDate.now().toEpochDay() - it.søknadDato.toEpochDay() < fireUker }
+        return søknader.filter { it.søknadDato.plusWeeks(4).isAfter(LocalDate.now()) }
     }
 }
