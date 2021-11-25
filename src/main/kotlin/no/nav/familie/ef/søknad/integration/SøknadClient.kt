@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.MottakConfig
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
+import no.nav.familie.ef.søknad.integration.SøknadClientUtil.filtrerVekkEldreDokumentasjonsbehov
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
@@ -66,9 +67,11 @@ class SøknadClient(private val config: MottakConfig,
     }
 
     fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
-        return postForEntity(config().hentSøknaderMedDokumentasjonsbehovUri,
-                             PersonIdent(personIdent),
-                             HttpHeaders().medContentTypeJsonUTF8())
+        val søknaderMedDokumentasjonsbehov: List<SøknadMedDokumentasjonsbehovDto> =
+                postForEntity(config().hentSøknaderMedDokumentasjonsbehovUri,
+                              PersonIdent(personIdent),
+                              HttpHeaders().medContentTypeJsonUTF8())
+        return filtrerVekkEldreDokumentasjonsbehov(søknaderMedDokumentasjonsbehov)
     }
 
     fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
