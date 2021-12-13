@@ -29,7 +29,7 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.PdlAnnenForelder
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBarn
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
 import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
-import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
+import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype.UOPPGITT
 import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
 import no.nav.familie.ef.søknad.integration.dto.pdl.visningsnavn
 import no.nav.familie.ef.søknad.service.KodeverkService
@@ -44,6 +44,9 @@ internal class SøkerinfoMapperTest {
 
     private val kodeverkService = mockk<KodeverkService>(relaxed = true)
     private val søkerinfoMapper = SøkerinfoMapper(kodeverkService)
+
+    private val barn = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+                                   navn = listOf(Navn("fornavn", "", "Etternavn")))
 
     @BeforeEach
     internal fun setUp() {
@@ -83,9 +86,9 @@ internal class SøkerinfoMapperTest {
         val navn = Navn("Roy", "", "Toy")
         val annenForelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
         val annenForelderStrengtFortrolig =
-            PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG)), listOf(), listOf(navn))
+                PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG)), listOf(), listOf(navn))
         val annenForelderStrengtFortroligUtland =
-            PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)), listOf(), listOf(navn))
+                PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)), listOf(), listOf(navn))
         //
         val ident = FnrGenerator.generer(år = 1999)
         val annenForelder = annenForelderFortrolig.tilDto(ident)
@@ -121,7 +124,7 @@ internal class SøkerinfoMapperTest {
                                 listOf(),
                                 listOf(),
                                 navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
-                                sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
+                                sivilstand = listOf(Sivilstand(UOPPGITT)),
                                 listOf())
 
 
@@ -129,7 +132,8 @@ internal class SøkerinfoMapperTest {
         val relatertPersonsIdent = FnrGenerator.generer()
         val barn = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
                                navn = listOf(Navn("Boy", "", "Moy")),
-                               forelderBarnRelasjon = listOf(ForelderBarnRelasjon(relatertPersonsIdent, Familierelasjonsrolle.FAR)))
+                               forelderBarnRelasjon = listOf(ForelderBarnRelasjon(relatertPersonsIdent,
+                                                                                  Familierelasjonsrolle.FAR)))
         val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
         val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
         val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
@@ -145,7 +149,7 @@ internal class SøkerinfoMapperTest {
                                 listOf(),
                                 listOf(),
                                 navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
-                                sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
+                                sivilstand = listOf(Sivilstand(UOPPGITT)),
                                 listOf())
 
 
@@ -153,7 +157,8 @@ internal class SøkerinfoMapperTest {
         val relatertPersonsIdent = FnrGenerator.generer()
         val barn = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
                                navn = listOf(Navn("Boy", "", "Moy")),
-                               forelderBarnRelasjon = listOf(ForelderBarnRelasjon(relatertPersonsIdent, Familierelasjonsrolle.FAR)))
+                               forelderBarnRelasjon = listOf(ForelderBarnRelasjon(relatertPersonsIdent,
+                                                                                  Familierelasjonsrolle.FAR)))
         val barn2 = barn().copy(fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
                                 navn = listOf(Navn("Boy", "", "Moy")),
                                 forelderBarnRelasjon = listOf())
@@ -171,6 +176,22 @@ internal class SøkerinfoMapperTest {
 
     }
 
+    @Test
+    fun `sivilstand er tom liste skal mappes til UOPPGITT`() {
+
+        // Gitt
+        val pdlSøker = PdlSøker(listOf(),
+                                listOf(),
+                                listOf(),
+                                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
+                                sivilstand = listOf(),
+                                listOf())
+        // når
+        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), mapOf())
+        // da skal
+        assertThat(person.søker.sivilstand).isEqualTo(UOPPGITT.toString())
+
+    }
 
     @Test
     internal fun `ikke feile når henting av poststed feiler`() {
