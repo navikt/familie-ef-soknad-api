@@ -9,6 +9,11 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
+springdoc:
+  packagesToScan: no.nav.familie.ef.søknad
+  pathsToMatch: /v3/api-docs,/api/**
+  swagger-ui.disable-swagger-default-url: true
+
 familie:
   ef:
     mottak:

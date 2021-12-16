@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Import
 
 @SpringBootApplication(scanBasePackages = ["no.nav.familie.ef.søknad"], exclude = [ErrorMvcAutoConfiguration::class])
 @Import(ApplicationConfig::class, TokenGeneratorConfiguration::class)
-@EnableJwtTokenValidation(ignore = ["org.springframework", "springfox.documentation.swagger"])
+@EnableJwtTokenValidation(ignore = ["org.springframework", "org.springdoc"])
 class ApplicationLocalLauncher
 
 fun main(args: Array<String>) {
