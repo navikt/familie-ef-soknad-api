@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 
 @ConfigurationPropertiesScan
 @SpringBootApplication(scanBasePackages = ["no.nav.familie.ef.søknad"])
-@EnableJwtTokenValidation(ignore = ["org.springframework", "springfox"])
+@EnableJwtTokenValidation(ignore = ["org.springframework", "org.springdoc"])
 class Application
 
 fun main(args: Array<String>) {
