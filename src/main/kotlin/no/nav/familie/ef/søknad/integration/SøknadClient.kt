@@ -25,57 +25,45 @@ import java.util.UUID
 
 @Service
 class SøknadClient(private val config: MottakConfig,
-                   private val featureToggleService: FeatureToggleService,
                    @Qualifier("tokenExchange") operations: RestOperations)
     : AbstractPingableRestClient(operations, "søknad.innsending") {
 
     override val pingUri: URI = config.pingUri
 
-    fun config(): MottakConfig {
-        if (featureToggleService.isEnabled("familie.ef.soknad.api.disabled")) {
-            throw Exception("Familie-ef-soknad-api er disabled i forbindelse med migrering")
-        }
-        return if (featureToggleService.isEnabled("familie.ef.soknad.api.gcp")) {
-            MottakConfig(URI.create("http://familie-ef-mottak/api"))
-        } else {
-            config
-        }
-    }
-
     fun sendInn(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto {
-        return postForEntity(config().sendInnOvergangsstønadUri, søknadMedVedlegg)
+        return postForEntity(config.sendInnOvergangsstønadUri, søknadMedVedlegg)
     }
 
     fun sendInnBarnetilsynsøknad(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto {
-        return postForEntity(config().sendInnBarnetilsynUri, søknadMedVedlegg)
+        return postForEntity(config.sendInnBarnetilsynUri, søknadMedVedlegg)
     }
 
     fun sendInnSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto {
-        return postForEntity(config().sendInnSkolepengerUri, søknadMedVedlegg)
+        return postForEntity(config.sendInnSkolepengerUri, søknadMedVedlegg)
     }
 
     fun sendInnEttersending(ettersending: Map<StønadType, EttersendelseDto>): KvitteringDto {
-        return postForEntity(config().sendInnEttersendingUri, ettersending)
+        return postForEntity(config.sendInnEttersendingUri, ettersending)
     }
 
     fun sendInnArbeidsRegistreringsskjema(skjema: SkjemaForArbeidssøker): KvitteringDto {
-        return postForEntity(config().sendInnSkjemaArbeidUri, skjema)
+        return postForEntity(config.sendInnSkjemaArbeidUri, skjema)
     }
 
     fun hentDokumentasjonsbehovForSøknad(søknadId: UUID): DokumentasjonsbehovDto {
-        return getForEntity(config().byggUriForDokumentasjonsbehov(søknadId))
+        return getForEntity(config.byggUriForDokumentasjonsbehov(søknadId))
     }
 
     fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
         val søknaderMedDokumentasjonsbehov: List<SøknadMedDokumentasjonsbehovDto> =
-                postForEntity(config().hentSøknaderMedDokumentasjonsbehovUri,
+                postForEntity(config.hentSøknaderMedDokumentasjonsbehovUri,
                               PersonIdent(personIdent),
                               HttpHeaders().medContentTypeJsonUTF8())
         return filtrerVekkEldreDokumentasjonsbehov(søknaderMedDokumentasjonsbehov)
     }
 
     fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
-        return postForEntity(config().hentEttersendingForPersonUri,
+        return postForEntity(config.hentEttersendingForPersonUri,
                              PersonIdent(personIdent),
                              HttpHeaders().medContentTypeJsonUTF8())
     }

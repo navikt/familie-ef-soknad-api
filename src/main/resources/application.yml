@@ -18,9 +18,6 @@ springdoc:
 familie:
   ef:
     mottak:
-      uri: https://familie-ef-mottak.prod-fss-pub.nais.io/api
-      audience: prod-fss:teamfamilie:familie-ef-mottak
-    mottakGcp:
       uri: http://familie-ef-mottak/api
       audience: prod-gcp:teamfamilie:familie-ef-mottak
   integrasjoner:
