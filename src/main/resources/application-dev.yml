@@ -1,13 +1,11 @@
 familie:
   ef:
     mottak:
-      uri: https://familie-ef-mottak.dev-fss-pub.nais.io/api
-      audience: dev-fss:teamfamilie:familie-ef-mottak
-    mottakGcp:
       uri: http://familie-ef-mottak/api
       audience: dev-gcp:teamfamilie:familie-ef-mottak
   integrasjoner:
-    uri:  https://familie-integrasjoner.dev-fss-pub.nais.io/api
+    uri:  https://familie-integrasjoner-q1.dev-fss-pub.nais.io/api
+    scope: api://dev-fss.teamfamilie.familie-integrasjoner-q1/.default
 
 cors:
   allowed_origins:
@@ -16,6 +14,6 @@ cors:
     - "https://familie.dev.nav.no/familie/alene-med-barn/soknad"
     - "https://ensligmorellerfar.dev.nav.no"
 
-PDL_URL: https://pdl-api.dev-fss-pub.nais.io
-PDL_AUDIENCE: dev-fss:pdl:pdl-api
-PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
+PDL_URL: https://pdl-api-q1.dev-fss-pub.nais.io
+PDL_AUDIENCE: dev-fss:pdl:pdl-api-q1
+PDL_SCOPE: api://dev-fss.pdl.pdl-api-q1/.default
