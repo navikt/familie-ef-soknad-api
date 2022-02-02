@@ -16,11 +16,7 @@ import no.nav.familie.ef.søknad.mapper.Språktekster.Søker as SpråkTeksterSø
 
 object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
 
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
-
     override fun mapDto(søker: Søker): Personalia {
-
-        secureLogger.info("Mottatt søknad om overgangsstønad fra ${søker.fnr}")
 
         return Personalia(fødselsnummer = Søknadsfelt(FødselsnummerTekst.hentTekst(), Fødselsnummer(søker.fnr)),
                           navn = Søknadsfelt(Navn.hentTekst(), søker.forkortetNavn),

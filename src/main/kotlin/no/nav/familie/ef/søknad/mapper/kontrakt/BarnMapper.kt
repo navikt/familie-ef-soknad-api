@@ -14,8 +14,6 @@ import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
 
 object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) {
     val manglerAnnenForelderTeller: Counter = Metrics.counter("alene.med.barn.soknad.manglerMedforelder")
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
-    private val logger = LoggerFactory.getLogger(javaClass)
 
     init {
         manglerAnnenForelderTeller.count() // For å initialisere telleren til 0 ved første søknad etter oppstart
@@ -23,18 +21,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
 
     override fun mapDto(data: List<Barn>, vedlegg: Map<String, DokumentasjonWrapper>): List<Kontraktbarn> {
         return data.map { barn ->
-                loggManglendeMedforelder(barn)
                 tilKontraktBarn(barn, vedlegg)
-        }
-    }
-
-    private fun loggManglendeMedforelder(barn: Barn) {
-        if (barn.forelder == null) {
-            manglerAnnenForelderTeller.increment()
-            if (barn.ident?.verdi == null || barn.ident.verdi.isBlank()) {
-                logger.error("Et barn uten fødselsnummer har ingen opplysninger om medforelder. Sjekk securelogs")
-            }
-            secureLogger.warn("Barn til søker mangler medforelder. BarnIdent=${barn.ident?.verdi}, BarnFødt=${barn.fødselsdato?.verdi}")
         }
     }
 

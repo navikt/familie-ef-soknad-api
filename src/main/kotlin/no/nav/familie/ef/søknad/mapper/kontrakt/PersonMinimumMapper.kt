@@ -3,35 +3,25 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SamboerDetaljer
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
-import no.nav.familie.ef.søknad.mapper.Språktekster.*
+import no.nav.familie.ef.søknad.mapper.Språktekster.AnnenForelderNavn
+import no.nav.familie.ef.søknad.mapper.Språktekster.IkkeOppgitt
+import no.nav.familie.ef.søknad.mapper.Språktekster.OmSamboer
+import no.nav.familie.ef.søknad.mapper.Språktekster.Persondata
 import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
-import org.slf4j.LoggerFactory
 
 object PersonMinimumMapper {
 
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
-
     fun map(samboerDetaljer: SamboerDetaljer): Søknadsfelt<PersonMinimum> {
-        try {
-            return Søknadsfelt(OmSamboer.hentTekst(), personMinimum(samboerDetaljer))
-        } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av samboerdetaljer: $samboerDetaljer")
-            throw e
-        }
+        return Søknadsfelt(OmSamboer.hentTekst(), personMinimum(samboerDetaljer))
     }
 
     fun map(annenForelder: AnnenForelder): Søknadsfelt<PersonMinimum> {
-        try {
-            return Søknadsfelt(Persondata.hentTekst(), personMinimum(annenForelder))
-        } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av annen forelder: $annenForelder")
-            throw e
-        }
+        return Søknadsfelt(Persondata.hentTekst(), personMinimum(annenForelder))
     }
 
     private fun personMinimum(annenForelder: AnnenForelder): PersonMinimum {

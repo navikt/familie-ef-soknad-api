@@ -4,14 +4,13 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import org.slf4j.LoggerFactory
 
 abstract class Mapper<T, R>(private val rootLabel: Språktekster) {
-
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun map(data: T): Søknadsfelt<R> {
         try {
             return Søknadsfelt(rootLabel.hentTekst(), mapDto(data))
         } catch (e: Exception) {
-            secureLogger.error("Feil ved mapping av ${javaClass.simpleName}: $data")
+            logger.error("Feil ved mapping av ${javaClass.simpleName}")
             throw e
         }
     }
