@@ -2,11 +2,8 @@ package no.nav.familie.ef.søknad.api
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
-import no.nav.familie.ef.søknad.featuretoggle.enabledEllersHttp403
 import no.nav.familie.ef.søknad.service.EttersendingService
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
-import no.nav.familie.kontrakter.ef.ettersending.EttersendingDto
-import no.nav.familie.kontrakter.ef.ettersending.EttersendingResponseData
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.HttpStatus
@@ -28,15 +25,12 @@ class EttersendingController(
 
     @PostMapping
     fun postEttersending(@RequestBody ettersending: EttersendelseDto): Kvittering {
-        return featureToggleService.enabledEllersHttp403("familie.ef.soknad.api.ettersending") {
-            if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.personIdent)) {
-                throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
-            }
-            val innsendingMottatt = LocalDateTime.now()
-            ettersendingService.sendInn(ettersending, innsendingMottatt)
-            Kvittering("ok", mottattDato = innsendingMottatt)
-
+        if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.personIdent)) {
+            throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
+        val innsendingMottatt = LocalDateTime.now()
+        ettersendingService.sendInn(ettersending, innsendingMottatt)
+        return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 
     @GetMapping
