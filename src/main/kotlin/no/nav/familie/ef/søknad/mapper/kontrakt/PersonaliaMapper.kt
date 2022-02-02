@@ -2,13 +2,15 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker
 import no.nav.familie.ef.søknad.mapper.Mapper
-import no.nav.familie.ef.søknad.mapper.Språktekster.*
+import no.nav.familie.ef.søknad.mapper.Språktekster.Navn
+import no.nav.familie.ef.søknad.mapper.Språktekster.Sivilstatus
+import no.nav.familie.ef.søknad.mapper.Språktekster.Statsborgerskap
+import no.nav.familie.ef.søknad.mapper.Språktekster.Telefonnummer
 import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.kontrakter.ef.søknad.Adresse
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.Personalia
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
-import org.slf4j.LoggerFactory
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Adresse as AdresseDto
 import no.nav.familie.ef.søknad.mapper.Språktekster.Adresse as AdresseTekst
 import no.nav.familie.ef.søknad.mapper.Språktekster.Fødselsnummer as FødselsnummerTekst

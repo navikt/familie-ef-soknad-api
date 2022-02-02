@@ -3,12 +3,19 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import io.micrometer.core.instrument.Counter
 import io.micrometer.core.instrument.Metrics
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barn
-import no.nav.familie.ef.søknad.mapper.*
+import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
+import no.nav.familie.ef.søknad.mapper.MapperMedVedlegg
+import no.nav.familie.ef.søknad.mapper.Språktekster
 import no.nav.familie.ef.søknad.mapper.Språktekster.BarnaDine
-import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.*
+import no.nav.familie.ef.søknad.mapper.hentTekst
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.BARN_BOR_HOS_SØKER
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.DELT_BOSTED
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.SAMVÆRSAVTALE
+import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.TERMINBEKREFTELSE
+import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
+import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.*
-import org.slf4j.LoggerFactory
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
 import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
 
