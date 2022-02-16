@@ -50,13 +50,12 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.4.0
-      #      - name: Deploy til dev-sbs
-      #        uses: nais/deploy/actions/deploy@v1
-      #        env:
-      #          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-      #          CLUSTER: dev-sbs
-      #          RESOURCE: nais-dev.yaml
+      - name: Deploy til dev-gcp
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais-dev.yaml
       - name: Deploy til prod-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
