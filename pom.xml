@@ -24,7 +24,7 @@
         <mockk.version>1.12.3</mockk.version>
         <token-validation-spring.version>1.3.19</token-validation-spring.version>
         <fasterxml.version>2.13.1</fasterxml.version>
-        <felles.version>1.20220218080704_52586f3</felles.version>
+        <felles.version>1.20220221162703_957e034</felles.version>
         <kontrakter.version>2.0_20220222213922_64795e8</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
