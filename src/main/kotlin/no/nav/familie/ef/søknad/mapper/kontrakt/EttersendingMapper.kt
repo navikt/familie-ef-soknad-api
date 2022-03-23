@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
-import no.nav.familie.kontrakter.ef.felles.StønadType
+import no.nav.familie.kontrakter.felles.ef.StønadType
 import java.time.LocalDateTime
 
 object EttersendingMapper {
