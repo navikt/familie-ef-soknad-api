@@ -5,8 +5,7 @@ import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.EttersendingMapper
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
-import no.nav.familie.kontrakter.ef.ettersending.EttersendingResponseData
-import no.nav.familie.kontrakter.ef.felles.StønadType
+import no.nav.familie.kontrakter.felles.ef.StønadType
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
@@ -22,7 +21,7 @@ class EttersendingService(private val søknadClient: SøknadClient) {
 
 
     fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
-        return søknadClient.hentEttersendingForPerson(personIdent);
+        return søknadClient.hentEttersendingForPerson(personIdent)
     }
 
 }
