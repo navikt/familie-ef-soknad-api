@@ -8,7 +8,6 @@ fun personalia(): Personalia {
                       Søknadsfelt("Navn", "Kari Nordmann"),
                       Søknadsfelt("Statsborgerskap", "NOR"),
                       adresseSøknadsfelt(),
-                      Søknadsfelt("Telefonnummer", "99988877"),
                       Søknadsfelt("Sivilstatus", "UGIF"))
 }
 

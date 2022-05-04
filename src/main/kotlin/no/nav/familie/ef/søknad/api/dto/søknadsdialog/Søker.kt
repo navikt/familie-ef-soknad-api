@@ -5,5 +5,4 @@ data class Søker(val adresse: Adresse,
                  val fnr: String,
                  val forkortetNavn: String,
                  val sivilstand: String,
-                 val statsborgerskap: String,
-                 val kontakttelefon: String? = null)
+                 val statsborgerskap: String)

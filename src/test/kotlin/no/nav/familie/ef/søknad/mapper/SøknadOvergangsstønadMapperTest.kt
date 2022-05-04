@@ -53,18 +53,6 @@ internal class SøknadOvergangsstønadMapperTest {
     }
 
     @Test
-    fun `mapTilIntern skal fungere med telefonnummer som er null`() {
-        // Given
-        val søknadDto = søknadDto.copy(person = Person(søker = søkerMedDefaultVerdier(telefonnummer = null),
-                                                       barn = søknadDto.person.barn))
-        // When
-        val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad
-        // Then
-        val telefonnummer = søknad.personalia.verdi.telefonnummer
-        assertThat(telefonnummer).isEqualTo(null)
-    }
-
-    @Test
     fun `mapTilIntern returnerer dto med riktig sivilstatus fra frontend`() {
         // Given
         val forventetSivilstatus = "Gift"
