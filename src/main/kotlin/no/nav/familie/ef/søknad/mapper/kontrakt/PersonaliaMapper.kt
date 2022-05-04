@@ -24,7 +24,6 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
                           navn = Søknadsfelt(Navn.hentTekst(), søker.forkortetNavn),
                           adresse = lagAdresseSøknadsFelt(søker.adresse),
                           statsborgerskap = Søknadsfelt(Statsborgerskap.hentTekst(), søker.statsborgerskap),
-                          telefonnummer = lagTelefonnummerSøknadsfelt(søker.kontakttelefon),
                           sivilstatus = Søknadsfelt(Sivilstatus.hentTekst(), søker.sivilstand))
     }
 
