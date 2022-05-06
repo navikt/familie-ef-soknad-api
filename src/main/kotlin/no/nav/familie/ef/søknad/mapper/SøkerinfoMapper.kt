@@ -61,23 +61,24 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                                  søkersAdresse: Bostedsadresse?,
                                  andreForeldre: Map<String, PdlAnnenForelder>,
                                  søkerPersonIdent: String): List<Barn> {
-        return pdlBarn.entries.map {
-            val navn = it.value.navn.firstOrNull()?.visningsnavn() ?: ""
-            val fødselsdato = it.value.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
+        return pdlBarn.entries.map { (personIdent, pdlBarn) ->
+            val navn = pdlBarn.navn.firstOrNull()?.visningsnavn() ?: ""
+            val fødselsdato = pdlBarn.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
-            val harSammeAdresse = harSammeAdresse(søkersAdresse, it.value)
+            val harSammeAdresse = harSammeAdresse(søkersAdresse, pdlBarn)
 
-            val medforelderRelasjon = it.value.forelderBarnRelasjon.find { erMedForelderRelasjon(it, søkerPersonIdent) }
-            val medforelder =
-                    medforelderRelasjon?.let { andreForeldre[it.relatertPersonsIdent]?.tilDto(it.relatertPersonsIdent) }
-            Barn(it.key,
+            val medforelderRelasjon = pdlBarn.forelderBarnRelasjon.find { erMedForelderRelasjon(it, søkerPersonIdent) }
+            val medforelder = medforelderRelasjon
+                    ?.relatertPersonsIdent
+                    ?.let { relatertPersonsIdent -> andreForeldre[relatertPersonsIdent]?.tilDto(relatertPersonsIdent) }
+            Barn(personIdent,
                  navn,
                  alder,
                  fødselsdato,
                  harSammeAdresse,
                  medforelder,
-                 it.value.adressebeskyttelse.harBeskyttetAdresse())
+                 pdlBarn.adressebeskyttelse.harBeskyttetAdresse())
         }
     }
 

@@ -33,7 +33,7 @@ internal class OppslagServiceServiceImpl(
         val pdlSøker = pdlClient.hentSøker(søkersPersonIdent)
         val barnIdentifikatorer = pdlSøker.forelderBarnRelasjon
                 .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
-                .map { it.relatertPersonsIdent }
+                .mapNotNull { it.relatertPersonsIdent }
         val pdlBarn = pdlApp2AppClient.hentBarn(barnIdentifikatorer)
         val aktuelleBarn = pdlBarn
                 .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
@@ -86,7 +86,7 @@ internal class OppslagServiceServiceImpl(
         return aktuelleBarn.map { it.value.forelderBarnRelasjon }
                 .flatten()
                 .filter { it.relatertPersonsIdent != søkersPersonIdent && it.relatertPersonsRolle != Familierelasjonsrolle.BARN }
-                .map { it.relatertPersonsIdent }
+                .mapNotNull { it.relatertPersonsIdent }
                 .distinct()
                 .let { pdlApp2AppClient.hentAndreForeldre(it) }
     }

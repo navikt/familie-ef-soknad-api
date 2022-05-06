@@ -4,30 +4,15 @@ schema {
     query: Query
 }
 
-type Adresse {
-    adressenavn: String
-    bydelsnavn: String
-    bydelsnummer: String
-    fylkesnavn: String
-    fylkesnummer: String
-    husbokstav: String
-    husnummer: Int
-    kommunenavn: String
-    kommunenummer: String
-    matrikkelId: String
-    postnummer: String
-    poststed: String
-    tilleggsnavn: String
-}
-
 type AdresseCompletionResult {
-    addressFound: Adresse
+    addressFound: CompletionAdresse
     suggestions: [String!]!
 }
 
 type AdresseSearchHit {
+    matrikkeladresse: MatrikkeladresseResult
     score: Float
-    vegadresse: Adresse
+    vegadresse: VegadresseResult
 }
 
 type AdresseSearchResult {
@@ -54,6 +39,11 @@ type Bostedsadresse {
     ukjentBosted: UkjentBosted
     utenlandskAdresse: UtenlandskAdresse
     vegadresse: Vegadresse
+}
+
+type CompletionAdresse {
+    matrikkeladresse: MatrikkeladresseResult
+    vegadresse: VegadresseResult
 }
 
 type DeltBosted {
@@ -114,14 +104,6 @@ type FalskIdentitetIdentifiserendeInformasjon {
     statsborgerskap: [String!]!
 }
 
-" todo: DEPRCATED & FOR REMOVAL: Familierelasjoner vil bli fjernet fra PDL 1. september 2021: Opplysningen Familierelasjon har byttet navn til ForelderBarnRelasjon. Mer informasjon i dokumentasjonen."
-type Familierelasjon {
-    folkeregistermetadata: Folkeregistermetadata
-    metadata: Metadata!
-    relatertPersonsIdent: String!
-    relatertPersonsRolle: Familierelasjonsrolle!
-}
-
 type Foedsel {
     foedekommune: String
     foedeland: String
@@ -159,15 +141,17 @@ type Folkeregisterpersonstatus {
 type ForelderBarnRelasjon {
     folkeregistermetadata: Folkeregistermetadata
     metadata: Metadata!
-    minRolleForPerson: Familierelasjonsrolle
-    relatertPersonsIdent: String!
-    relatertPersonsRolle: Familierelasjonsrolle!
+    minRolleForPerson: ForelderBarnRelasjonRolle
+    relatertPersonUtenFolkeregisteridentifikator: RelatertBiPerson
+    relatertPersonsIdent: String
+    relatertPersonsRolle: ForelderBarnRelasjonRolle!
 }
 
 type Foreldreansvar {
     ansvar: String
     ansvarlig: String
     ansvarligUtenIdentifikator: RelatertBiPerson
+    ansvarssubjekt: String
     folkeregistermetadata: Folkeregistermetadata
     metadata: Metadata!
 }
@@ -222,6 +206,84 @@ type InnflyttingTilNorge {
     fraflyttingsland: String
     fraflyttingsstedIUtlandet: String
     metadata: Metadata!
+}
+
+type KartverketAdresse {
+    id: Long!
+    matrikkeladresse: KartverketMatrikkeladresse
+    vegadresse: KartverketVegadresse
+}
+
+type KartverketBydel {
+    bydelsnavn: String
+    bydelsnummer: String
+}
+
+type KartverketFylke {
+    navn: String
+    nummer: String
+}
+
+type KartverketGrunnkrets {
+    grunnkretsnavn: String
+    grunnkretsnummer: String
+}
+
+type KartverketKommune {
+    fylke: KartverketFylke
+    navn: String
+    nummer: String
+}
+
+type KartverketMatrikkeladresse {
+    adressetilleggsnavn: String
+    bydel: KartverketBydel
+    grunnkrets: KartverketGrunnkrets
+    kortnavn: String
+    matrikkelnummer: KartverketMatrikkelnummer
+    postnummeromraade: KartverketPostnummeromraade
+    representasjonspunkt: KartverketRepresentasjonspunkt
+    undernummer: Int
+}
+
+type KartverketMatrikkelnummer {
+    bruksnummer: Int
+    festenummer: Int
+    gaardsnummer: Int
+    kommunenummer: String
+    seksjonsnummer: Int
+}
+
+type KartverketPostnummeromraade {
+    postnummer: String
+    poststed: String
+}
+
+type KartverketRepresentasjonspunkt {
+    posisjonskvalitet: Int
+    x: Float
+    y: Float
+    z: Float
+}
+
+type KartverketVeg {
+    adressekode: Int
+    adressenavn: String
+    kommune: KartverketKommune
+    kortnavn: String
+    stedsnummer: String
+}
+
+type KartverketVegadresse {
+    adressetilleggsnavn: String
+    bokstav: String
+    bydel: KartverketBydel
+    grunnkrets: KartverketGrunnkrets
+    kortnavn: String
+    nummer: Int
+    postnummeromraade: KartverketPostnummeromraade
+    representasjonspunkt: KartverketRepresentasjonspunkt
+    veg: KartverketVeg
 }
 
 type Kjoenn {
@@ -297,6 +359,16 @@ type Matrikkeladresse {
     tilleggsnavn: String
 }
 
+type MatrikkeladresseResult {
+    bruksnummer: String
+    gaardsnummer: String
+    kommunenummer: String
+    matrikkelId: String
+    postnummer: String
+    poststed: String
+    tilleggsnavn: String
+}
+
 type Metadata {
     """
 
@@ -367,7 +439,6 @@ type Person {
     doedfoedtBarn: [DoedfoedtBarn!]!
     doedsfall: [Doedsfall!]!
     falskIdentitet: FalskIdentitet
-    familierelasjoner: [Familierelasjon!]! @deprecated(reason : "Opplysningen Familierelasjon har byttet navn til ForelderBarnRelasjon. Mer informasjon i dokumentasjonen. Familierelasjoner vil bli fjernet fra PDL 1. september 2021.")
     foedsel: [Foedsel!]!
     folkeregisteridentifikator(historikk: Boolean = false): [Folkeregisteridentifikator!]!
     folkeregisterpersonstatus(historikk: Boolean = false): [Folkeregisterpersonstatus!]!
@@ -458,7 +529,9 @@ type Postboksadresse {
 
 type Query {
     forslagAdresse(parameters: CompletionParameters): AdresseCompletionResult
+    hentAdresse(matrikkelId: ID!): KartverketAdresse
     hentGeografiskTilknytning(ident: ID!): GeografiskTilknytning
+    hentGeografiskTilknytningBolk(identer: [ID!]!): [hentGeografiskTilknytningBolkResult!]!
     hentIdenter(grupper: [IdentGruppe!], historikk: Boolean = false, ident: ID!): Identliste
     hentIdenterBolk(grupper: [IdentGruppe!], historikk: Boolean = false, identer: [ID!]!): [HentIdenterBolkResult!]!
     hentPerson(ident: ID!): Person
@@ -583,6 +656,23 @@ type Vegadresse {
     tilleggsnavn: String
 }
 
+type VegadresseResult {
+    adressekode: String
+    adressenavn: String
+    bydelsnavn: String
+    bydelsnummer: String
+    fylkesnavn: String
+    fylkesnummer: String
+    husbokstav: String
+    husnummer: Int
+    kommunenavn: String
+    kommunenummer: String
+    matrikkelId: String
+    postnummer: String
+    poststed: String
+    tilleggsnavn: String
+}
+
 type VergeEllerFullmektig {
     motpartsPersonident: String
     navn: Personnavn
@@ -596,6 +686,12 @@ type VergemaalEllerFremtidsfullmakt {
     metadata: Metadata!
     type: String
     vergeEllerFullmektig: VergeEllerFullmektig!
+}
+
+type hentGeografiskTilknytningBolkResult {
+    code: String!
+    geografiskTilknytning: GeografiskTilknytning
+    ident: String!
 }
 
 enum AdressebeskyttelseGradering {
@@ -617,6 +713,13 @@ enum Endringstype {
 }
 
 enum Familierelasjonsrolle {
+    BARN
+    FAR
+    MEDMOR
+    MOR
+}
+
+enum ForelderBarnRelasjonRolle {
     BARN
     FAR
     MEDMOR
@@ -681,6 +784,15 @@ enum Sivilstandstype {
     UGIFT
     UOPPGITT
 }
+
+"Format: YYYY-MM-DD (ISO-8601), example: 2017-11-24"
+scalar Date
+
+"Format: YYYY-MM-DDTHH:mm:SS (ISO-8601), example: 2011-12-03T10:15:30"
+scalar DateTime
+
+"Long type"
+scalar Long
 
 input CompletionFieldValue {
     fieldName: String!
@@ -757,6 +869,8 @@ input SearchRule {
     lessThan: String
     " Filtrerer bort treff hvor felt inneholder input verdi"
     notEquals: String
+    " Søk som gir tilfeldig poengsum til hvert treff (kun ment til generering av testdata)"
+    random: String
     " Regex søk for spesielle situasjoner (Dette er en treg opprasjon og bør ikke brukes)"
     regex: String
     " Gir treff når opgitt feltstarter med opgitt verdi."
@@ -782,13 +896,3 @@ input SearchSorting {
     " Feltnavn ikludert sti til ønsket felt (eksepmel: person.navn.fornavn)"
     fieldName: String!
 }
-
-
-"Format: YYYY-MM-DD (ISO-8601), example: 2017-11-24"
-scalar Date
-
-"Format: YYYY-MM-DDTHH:mm:SS (ISO-8601), example: 2011-12-03T10:15:30"
-scalar DateTime
-
-"Long type"
-scalar Long
