@@ -5,6 +5,7 @@ import no.nav.familie.ef.søknad.mock.søknadDto
 import no.nav.familie.kontrakter.ef.søknad.Aksjeselskap
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
 
 internal class AktivitetsMapperTest {
@@ -17,11 +18,12 @@ internal class AktivitetsMapperTest {
 
 
     @Test
-    fun `Skal mappe blank verdi til tallet 0 `() {
+    fun `Skal kaste feil ved blank verdi på arbeidsmengde `() {
         val arbeidsmengdeUtenVerdi = aktivitet.arbeidsforhold?.first()?.arbeidsmengde?.copy(verdi = "")
         val arbeidsforhold = aktivitet.arbeidsforhold?.first()?.copy(arbeidsmengde = arbeidsmengdeUtenVerdi)
-        val mapArbeidsforhold = AktivitetsMapper.mapArbeidsforhold(listOf(arbeidsforhold!!))
-        Assertions.assertThat(mapArbeidsforhold.first().arbeidsmengde?.verdi).isEqualTo(0)
+        assertThrows<NumberFormatException> {
+            AktivitetsMapper.mapArbeidsforhold(listOf(arbeidsforhold!!))
+        }
     }
 
 
