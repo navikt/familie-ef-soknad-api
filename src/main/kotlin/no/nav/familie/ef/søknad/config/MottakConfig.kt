@@ -24,7 +24,8 @@ data class MottakConfig(val uri: URI) {
     private fun byggUri(path: String) = UriComponentsBuilder.fromUri(uri).path(path).build().toUri()
 
     fun byggUriForDokumentasjonsbehov(søknadId: UUID) = UriComponentsBuilder.fromUri(uri).path(
-            "$PATH_HENT_DOKUMENTASJONSBEHOV/$søknadId").build().toUri()
+        "$PATH_HENT_DOKUMENTASJONSBEHOV/$søknadId"
+    ).build().toUri()
 
     companion object {
 
@@ -38,5 +39,4 @@ data class MottakConfig(val uri: URI) {
         private const val PATH_HENT_ETTERSENDING_FOR_PERSON = "/ettersending/person"
         private const val PATH_PING = "/ping"
     }
-
 }

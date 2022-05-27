@@ -23,10 +23,9 @@ class PdlDtoTest {
         val dtoFelter = PdlTestUtil.finnFeltStruktur(PdlTestdata.pdlBarnData)!!
 
         val writerWithDefaultPrettyPrinter = objectMapper
-                .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
-                .writerWithDefaultPrettyPrinter()
+            .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
+            .writerWithDefaultPrettyPrinter()
         assertThat(writerWithDefaultPrettyPrinter.writeValueAsString(dtoFelter))
-                .isEqualTo(writerWithDefaultPrettyPrinter.writeValueAsString(spørringsfelter["data"]))
+            .isEqualTo(writerWithDefaultPrettyPrinter.writeValueAsString(spørringsfelter["data"]))
     }
-
 }

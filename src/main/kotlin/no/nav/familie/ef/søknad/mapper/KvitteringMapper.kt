@@ -6,9 +6,10 @@ import java.time.LocalDateTime
 
 object KvitteringMapper {
 
-    fun mapTilEkstern(kvitteringDto: KvitteringDto?,
-                      innsendingMottatt: LocalDateTime?): Kvittering {
+    fun mapTilEkstern(
+        kvitteringDto: KvitteringDto?,
+        innsendingMottatt: LocalDateTime?
+    ): Kvittering {
         return Kvittering(kvitteringDto?.text ?: "", innsendingMottatt)
     }
-
 }

@@ -58,23 +58,22 @@ internal class BarnMapperTest {
     fun `Forelder til folkeregistrert barn må ha samvær`() {
         val samvær = folkeregistrerteBarn.samvær!!.verdi
         assertThat(samvær.spørsmålAvtaleOmDeltBosted?.verdi).isFalse()
-        //assertThat(samvær.avtaleOmDeltBosted?.verdi).isFalse() //TODO vedlegg
+        // assertThat(samvær.avtaleOmDeltBosted?.verdi).isFalse() //TODO vedlegg
         assertThat(samvær.skalAnnenForelderHaSamvær?.verdi).isEqualTo("Nei")
         assertThat(samvær.harDereSkriftligAvtaleOmSamvær?.verdi).isEqualTo("Nei")
-        //assertThat(samvær.samværsavtale?.verdi).isFalse() //TODO vedlegg
+        // assertThat(samvær.samværsavtale?.verdi).isFalse() //TODO vedlegg
         assertThat(samvær.hvordanPraktiseresSamværet?.verdi).isEqualTo("Praktiseres ikke")
         assertThat(samvær.borAnnenForelderISammeHus?.verdi).isEqualTo("Nei")
         assertThat(samvær.harDereTidligereBoddSammen?.verdi).isFalse()
         assertThat(samvær.nårFlyttetDereFraHverandre?.verdi).isEqualTo("2000-04-22")
-        //assertThat(samvær.erklæringOmSamlivsbrudd?.verdi).isFalse() // TODO vedlegg
+        // assertThat(samvær.erklæringOmSamlivsbrudd?.verdi).isFalse() // TODO vedlegg
         assertThat(samvær.hvorMyeErDuSammenMedAnnenForelder?.verdi).isEqualTo("Vi møtes ikke")
         assertThat(samvær.beskrivSamværUtenBarn?.verdi)
-                .isEqualTo("Vi møtes nå og da, gjerne for en tur i skogen eller et glass vin, hyggelig det.")
+            .isEqualTo("Vi møtes nå og da, gjerne for en tur i skogen eller et glass vin, hyggelig det.")
     }
 
     @Test
     fun `SærligeTilsynsbehov må ha verdi`() {
         assertThat(folkeregistrerteBarn.særligeTilsynsbehov?.verdi).isEqualTo("Har jo fort litt særlige tilsynsbehov da!")
     }
-
 }

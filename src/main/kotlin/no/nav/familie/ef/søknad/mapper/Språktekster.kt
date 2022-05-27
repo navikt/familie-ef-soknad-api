@@ -44,15 +44,18 @@ enum class Språktekster(val norsk: String, val engelsk: String) {
     NårSkalDuVæreElevStudent("Når skal du være elev/student?", "When are you going to start school / studying?"),
     NårVarDuElevStudent("Når var du elev/student?", "When did you go to school / study?"),
     TidligereUtdanning("Tidligere Utdanning", "Previous education"),
-    EnsligMorEllerFarSomErArbeidssøker("Enslig mor og far som er arbeidssøker",
-                                       "Enslig mor og far som er arbeidssøker [English TBA]"),
+    EnsligMorEllerFarSomErArbeidssøker(
+        "Enslig mor og far som er arbeidssøker",
+        "Enslig mor og far som er arbeidssøker [English TBA]"
+    ),
     OppholdINorge("Opphold i Norge", "Opphold i Norge [English TBA]"),
     Barnepassordninger("Barnepassordninger", "About the child minding arrangements"),
-    SendtInnTidligere("Jeg har sendt inn denne dokumentasjonen til NAV tidligere",
-                      "I have already submitted this documentation to NAV in the past"),
-    ArbeidUtanningOgAndreAktiviteter("Arbeid, utdanning og andre aktiviteter",
-                                     "Arbeid, utdanning og andre aktiviteter [English TBA]");
-
-
+    SendtInnTidligere(
+        "Jeg har sendt inn denne dokumentasjonen til NAV tidligere",
+        "I have already submitted this documentation to NAV in the past"
+    ),
+    ArbeidUtanningOgAndreAktiviteter(
+        "Arbeid, utdanning og andre aktiviteter",
+        "Arbeid, utdanning og andre aktiviteter [English TBA]"
+    );
 }
-

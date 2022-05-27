@@ -31,5 +31,4 @@ class KodeverkService(private val cachedKodeverkService: CachedKodeverkService) 
     fun hentPoststed(postnummer: String): String? {
         return cachedKodeverkService.hentPoststed().hentGjeldende(postnummer, LocalDate.now())
     }
-
 }

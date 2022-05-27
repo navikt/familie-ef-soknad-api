@@ -11,5 +11,4 @@ abstract class MapperMedVedlegg<T, R>(private val rootLabel: Språktekster) {
     }
 
     protected abstract fun mapDto(data: T, vedlegg: Map<String, DokumentasjonWrapper>): R
-
 }

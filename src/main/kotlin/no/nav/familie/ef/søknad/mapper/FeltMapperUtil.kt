@@ -27,21 +27,27 @@ fun TekstFelt.tilSøknadsfelt(): Søknadsfelt<String> = Søknadsfelt(label = thi
 fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsfelt(label = this.label, verdi = t.invoke(this.verdi))
 
 fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<MånedÅrPeriode> =
-        Søknadsfelt(this.label ?: error("Savner label"),
-                    MånedÅrPeriode(this.fra.tilLocalDate().month,
-                                   this.fra.tilLocalDate().year,
-                                   this.til.tilLocalDate().month,
-                                   this.til.tilLocalDate().year))
+    Søknadsfelt(
+        this.label ?: error("Savner label"),
+        MånedÅrPeriode(
+            this.fra.tilLocalDate().month,
+            this.fra.tilLocalDate().year,
+            this.til.tilLocalDate().month,
+            this.til.tilLocalDate().year
+        )
+    )
 
 fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi, this.alternativer, this.svarid)
 
 fun List<Dokumentasjonsbehov>.tilKontrakt(): List<DokumentasjonsbehovKontrakt> =
-        this.map {
-            DokumentasjonsbehovKontrakt(it.label,
-                                        it.id,
-                                        it.harSendtInn,
-                                        it.opplastedeVedlegg.map { vedlegg -> Dokument(vedlegg.dokumentId, vedlegg.navn) })
-        }
+    this.map {
+        DokumentasjonsbehovKontrakt(
+            it.label,
+            it.id,
+            it.harSendtInn,
+            it.opplastedeVedlegg.map { vedlegg -> Dokument(vedlegg.dokumentId, vedlegg.navn) }
+        )
+    }
 
 fun String.tilDesimaltall(): Double = this.replace(",", ".").toDouble()
 fun String.tilHeltall(): Int = this.tilDesimaltall().toInt()
@@ -50,7 +56,6 @@ fun String.tilHeltallEllerTalletNull(): Int = when (this.isNotBlank()) {
     true -> this.tilDesimaltall().toInt()
     false -> 0
 }
-
 
 fun DatoFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? {
     return if (this.verdi.isNotBlank()) {
@@ -95,12 +100,13 @@ fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map
     return dokumentasjonsbehov.associate {
         // it.id er dokumenttype/tittel, eks "Gift i utlandet"
         val vedlegg = it.opplastedeVedlegg.map { dokumentFelt ->
-            Vedlegg(id = dokumentFelt.dokumentId,
-                    navn = dokumentFelt.navn,
-                    tittel = it.label)
+            Vedlegg(
+                id = dokumentFelt.dokumentId,
+                navn = dokumentFelt.navn,
+                tittel = it.label
+            )
         }
         val harSendtInn = Søknadsfelt(Språktekster.SendtInnTidligere.hentTekst(), it.harSendtInn)
         it.id to DokumentasjonWrapper(it.label, harSendtInn, vedlegg)
     }
 }
-

@@ -64,6 +64,4 @@ internal class ArbeidsforholdMapperTest {
     fun `Map arbeidsforhold sluttdato verdi `() {
         Assertions.assertThat(arbeidsforhold?.sluttdato?.verdi).isEqualTo(LocalDate.of(2020, 3, 31))
     }
-
-
 }

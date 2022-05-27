@@ -16,30 +16,34 @@ import java.time.LocalDateTime
 @Component
 class SøknadOvergangsstønadMapper {
 
-    fun mapTilIntern(dto: SøknadOvergangsstønadDto,
-                     innsendingMottatt: LocalDateTime,
-                     skalHenteVedlegg: Boolean = true): SøknadMedVedlegg<SøknadOvergangsstønad> {
+    fun mapTilIntern(
+        dto: SøknadOvergangsstønadDto,
+        innsendingMottatt: LocalDateTime,
+        skalHenteVedlegg: Boolean = true
+    ): SøknadMedVedlegg<SøknadOvergangsstønad> {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
 
         val søknad = SøknadOvergangsstønad(
-                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
-                personalia = PersonaliaMapper.map(dto.person.søker),
-                sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
-                medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
-                bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
-                sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
-                barn = dto.person.barn.tilSøknadsfelt(vedlegg),
-                aktivitet = AktivitetsMapper.map(dto.aktivitet, vedlegg),
-                situasjon = SituasjonsMapper.map(dto, vedlegg),
-                stønadsstart = mapStønadsstart(dto.merOmDinSituasjon.søknadsdato, dto.merOmDinSituasjon.søkerFraBestemtMåned))
+            innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
+            personalia = PersonaliaMapper.map(dto.person.søker),
+            sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
+            medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
+            bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
+            sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
+            barn = dto.person.barn.tilSøknadsfelt(vedlegg),
+            aktivitet = AktivitetsMapper.map(dto.aktivitet, vedlegg),
+            situasjon = SituasjonsMapper.map(dto, vedlegg),
+            stønadsstart = mapStønadsstart(dto.merOmDinSituasjon.søknadsdato, dto.merOmDinSituasjon.søkerFraBestemtMåned)
+        )
 
         OvergangsstønadValidering.validate(søknad)
 
-        return SøknadMedVedlegg(søknad,
-                                vedlegg.values.flatMap { it.vedlegg },
-                                dto.dokumentasjonsbehov.tilKontrakt(),
-                                dto.skalBehandlesINySaksbehandling)
+        return SøknadMedVedlegg(
+            søknad,
+            vedlegg.values.flatMap { it.vedlegg },
+            dto.dokumentasjonsbehov.tilKontrakt(),
+            dto.skalBehandlesINySaksbehandling
+        )
     }
-
 }

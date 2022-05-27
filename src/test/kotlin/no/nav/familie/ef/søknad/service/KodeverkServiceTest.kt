@@ -35,9 +35,17 @@ class KodeverkTestConfig {
     }
 
     private fun kodeverk(kode: String, verdi: String): KodeverkDto {
-        return KodeverkDto(mapOf(kode to listOf(BetydningDto(LocalDate.MIN,
-                                                             LocalDate.MAX,
-                                                             mapOf("nb" to BeskrivelseDto(verdi, verdi))))))
+        return KodeverkDto(
+            mapOf(
+                kode to listOf(
+                    BetydningDto(
+                        LocalDate.MIN,
+                        LocalDate.MAX,
+                        mapOf("nb" to BeskrivelseDto(verdi, verdi))
+                    )
+                )
+            )
+        )
     }
 }
 

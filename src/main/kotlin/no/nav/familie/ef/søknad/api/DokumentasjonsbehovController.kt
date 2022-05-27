@@ -37,5 +37,4 @@ class DokumentasjonsbehovController(private val søknadClient: SøknadClient) {
         }
         return ResponseEntity.ok(søknadClient.hentSøknaderMedDokumentasjonsbehov(ident))
     }
-
 }

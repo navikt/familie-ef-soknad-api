@@ -9,9 +9,10 @@ import no.nav.familie.kontrakter.ef.søknad.Sivilstandsplaner
 object SivilstandsplanerMapper : Mapper<Bosituasjon, Sivilstandsplaner>(Fremtidsplaner) {
 
     override fun mapDto(bosituasjon: Bosituasjon): Sivilstandsplaner {
-        return Sivilstandsplaner(harPlaner = bosituasjon.skalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
-                                 fraDato = bosituasjon.datoSkalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
-                                 vordendeSamboerEktefelle =  bosituasjon.vordendeSamboerEktefelle?.let(PersonMinimumMapper::map))
+        return Sivilstandsplaner(
+            harPlaner = bosituasjon.skalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
+            fraDato = bosituasjon.datoSkalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
+            vordendeSamboerEktefelle = bosituasjon.vordendeSamboerEktefelle?.let(PersonMinimumMapper::map)
+        )
     }
-
 }

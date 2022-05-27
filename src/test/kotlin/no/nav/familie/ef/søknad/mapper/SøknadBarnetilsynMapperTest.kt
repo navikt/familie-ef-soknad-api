@@ -16,11 +16,12 @@ internal class SøknadBarnetilsynMapperTest {
 
     @Test
     fun `Barnetilsyn skal mappes `() {
-        val søknad = objectMapper.readValue(File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
-                                            SøknadBarnetilsynDto::class.java)
+        val søknad = objectMapper.readValue(
+            File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
+            SøknadBarnetilsynDto::class.java
+        )
         val mapped = mapper.mapTilIntern(søknad, innsendingMottatt)
 
         assertNotNull(mapped.søknad.barn.verdi.first().navn?.verdi)
     }
-
 }

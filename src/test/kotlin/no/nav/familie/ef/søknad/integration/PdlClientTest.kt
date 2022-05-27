@@ -36,8 +36,10 @@ class PdlClientTest {
 
     @Test
     fun `pdlClient håndterer response for søker-query mot pdl-tjenesten riktig`() {
-        wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                                       .willReturn(okJson(readFile("søker.json"))))
+        wireMockServer.stubFor(
+            post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
+                .willReturn(okJson(readFile("søker.json")))
+        )
 
         val response = pdlClient.hentSøker("")
 
@@ -46,20 +48,24 @@ class PdlClientTest {
 
     @Test
     fun `pdlClient håndterer response for søker-query mot pdl-tjenesten der person i data er null`() {
-        wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                                       .willReturn(okJson("{\"data\": {}}")))
+        wireMockServer.stubFor(
+            post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
+                .willReturn(okJson("{\"data\": {}}"))
+        )
         assertThat(catchThrowable { pdlClient.hentSøker("") })
-                .hasMessageStartingWith("Manglende ")
-                .isInstanceOf(PdlRequestException::class.java)
+            .hasMessageStartingWith("Manglende ")
+            .isInstanceOf(PdlRequestException::class.java)
     }
 
     @Test
     fun `pdlClient håndterer response for søker-query mot pdl-tjenesten der data er null og har errors`() {
-        wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                                       .willReturn(okJson(readFile("pdlErrorResponse.json"))))
+        wireMockServer.stubFor(
+            post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
+                .willReturn(okJson(readFile("pdlErrorResponse.json")))
+        )
         assertThat(catchThrowable { pdlClient.hentSøker("") })
-                .hasMessageStartingWith("Feil ved henting av")
-                .isInstanceOf(PdlRequestException::class.java)
+            .hasMessageStartingWith("Feil ved henting av")
+            .isInstanceOf(PdlRequestException::class.java)
     }
 
     private fun readFile(filnavn: String): String {

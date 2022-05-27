@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
 
 data class PdlResponse<T>(
-        val data: T,
-        val errors: List<PdlError>?,
+    val data: T,
+    val errors: List<PdlError>?,
 ) {
 
     fun harFeil(): Boolean {
@@ -17,8 +17,10 @@ data class PdlResponse<T>(
     }
 }
 
-data class PdlError(val message: String,
-                    val extensions: PdlExtensions?)
+data class PdlError(
+    val message: String,
+    val extensions: PdlExtensions?
+)
 
 data class PdlExtensions(val code: String?) {
 
@@ -36,25 +38,29 @@ data class PdlBolkResponse<T>(val data: PersonBolk<T>?, val errors: List<PdlErro
     }
 }
 
-data class PdlSøker(val adressebeskyttelse: List<Adressebeskyttelse>,
-                    val bostedsadresse: List<Bostedsadresse>,
-                    val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
-                    val navn: List<Navn>,
-                    val sivilstand: List<Sivilstand>,
-                    val statsborgerskap: List<Statsborgerskap>)
-
-data class PdlBarn(val adressebeskyttelse: List<Adressebeskyttelse>,
-                   val bostedsadresse: List<BostedsadresseBarn>,
-                   val deltBosted: List<DeltBosted>,
-                   val navn: List<Navn>,
-                   @JsonProperty("foedsel") val fødsel: List<Fødsel>,
-                   @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
-                   val forelderBarnRelasjon: List<ForelderBarnRelasjon>
+data class PdlSøker(
+    val adressebeskyttelse: List<Adressebeskyttelse>,
+    val bostedsadresse: List<Bostedsadresse>,
+    val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
+    val navn: List<Navn>,
+    val sivilstand: List<Sivilstand>,
+    val statsborgerskap: List<Statsborgerskap>
 )
 
-data class PdlAnnenForelder(val adressebeskyttelse: List<Adressebeskyttelse>,
-                            @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
-                            val navn: List<Navn>
+data class PdlBarn(
+    val adressebeskyttelse: List<Adressebeskyttelse>,
+    val bostedsadresse: List<BostedsadresseBarn>,
+    val deltBosted: List<DeltBosted>,
+    val navn: List<Navn>,
+    @JsonProperty("foedsel") val fødsel: List<Fødsel>,
+    @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
+    val forelderBarnRelasjon: List<ForelderBarnRelasjon>
+)
+
+data class PdlAnnenForelder(
+    val adressebeskyttelse: List<Adressebeskyttelse>,
+    @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
+    val navn: List<Navn>
 )
 
 data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
@@ -81,12 +87,13 @@ data class Bostedsadresse(val vegadresse: Vegadresse?, val matrikkeladresse: Mat
 
 data class BostedsadresseBarn(val vegadresse: Vegadresse?, val matrikkeladresse: MatrikkeladresseBarn?)
 
-data class Vegadresse(val husnummer: String?,
-                      val husbokstav: String?,
-                      val bruksenhetsnummer: String?,
-                      val adressenavn: String?,
-                      val postnummer: String?,
-                      val matrikkelId: Long?
+data class Vegadresse(
+    val husnummer: String?,
+    val husbokstav: String?,
+    val bruksenhetsnummer: String?,
+    val adressenavn: String?,
+    val postnummer: String?,
+    val matrikkelId: Long?
 )
 
 interface MatrikkelId {
@@ -98,13 +105,17 @@ data class Matrikkeladresse(override val matrikkelId: Long?, val tilleggsnavn: S
 
 data class MatrikkeladresseBarn(override val matrikkelId: Long?) : MatrikkelId
 
-data class Fødsel(@JsonProperty("foedselsaar") val fødselsår: Int?,
-                  @JsonProperty("foedselsdato") val fødselsdato: LocalDate?)
+data class Fødsel(
+    @JsonProperty("foedselsaar") val fødselsår: Int?,
+    @JsonProperty("foedselsdato") val fødselsdato: LocalDate?
+)
 
 data class Dødsfall(@JsonProperty("doedsdato") val dødsdato: LocalDate?)
 
-data class ForelderBarnRelasjon(val relatertPersonsIdent: String?,
-                                val relatertPersonsRolle: Familierelasjonsrolle)
+data class ForelderBarnRelasjon(
+    val relatertPersonsIdent: String?,
+    val relatertPersonsRolle: Familierelasjonsrolle
+)
 
 enum class Familierelasjonsrolle {
     BARN,

@@ -91,7 +91,4 @@ internal class UnderUtdanningMapperTest {
         Assertions.assertThat(underUtdanning?.eksamensgebyr?.verdi).isEqualTo(2000.0)
         Assertions.assertThat(underUtdanning?.studieavgift).isNull()
     }
-
-
-
 }

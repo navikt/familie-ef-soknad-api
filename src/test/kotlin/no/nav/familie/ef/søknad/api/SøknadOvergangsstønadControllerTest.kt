@@ -30,7 +30,6 @@ import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.client.Entity
 import javax.ws.rs.core.MediaType
 
-
 @Profile("overgangsstonad-controller-test")
 @Configuration
 class SøknadOvergangsstønadControllerTestConfiguration {
@@ -66,14 +65,14 @@ internal class SøknadOvergangsstønadControllerTest {
         every { søknadService.sendInn(søknad, any()) } returns Kvittering("Mottatt søknad: $søknad", LocalDateTime.now())
         every { featureToggleService.isEnabled(any()) } returns true
         val response = webTarget().path("/soknad/overgangsstonad/")
-                .request(MediaType.APPLICATION_JSON)
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .post(Entity.json(søknad))
+            .request(MediaType.APPLICATION_JSON)
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .post(Entity.json(søknad))
         assertThat(response.status).isEqualTo(200)
     }
 
     private fun søknadOvergangsstønadDto(fnr: String) = søknadDto()
-            .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = fnr), barn = listOf()))
+        .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = fnr), barn = listOf()))
 
     @Test
     fun `sendInn returnerer 403 ved ulik fnr i token og søknad`() {
@@ -81,12 +80,10 @@ internal class SøknadOvergangsstønadControllerTest {
         fun webTarget() = client().target("http://localhost:$port$contextPath")
         val søknad = søknadDto()
         val response = webTarget().path("/soknad/overgangsstonad/")
-                .request(MediaType.APPLICATION_JSON)
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .post(Entity.json(søknad))
+            .request(MediaType.APPLICATION_JSON)
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .post(Entity.json(søknad))
         assertThat(response.status).isEqualTo(403)
         verify(exactly = 0) { søknadService.sendInn(søknad, any()) }
     }
-
 }
-

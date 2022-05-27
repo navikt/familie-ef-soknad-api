@@ -10,7 +10,6 @@ internal class MedlemskapDtoMapperTest {
 
     private val medlemskap = søknadDto().medlemskap
 
-
     @Test
     fun `mapPersonalia mapper dto mapper bosatt til false`() {
         // When

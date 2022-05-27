@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad.integrationTest
 
-
 import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.security.token.support.core.JwtTokenConstants
 import no.nav.security.token.support.core.api.Unprotected
@@ -45,43 +44,43 @@ class ApiFeilIntegrationTest {
     @Test
     fun `skal få 200 når autentisert og vi bruker get`() {
         val response = webTarget().path("/innlogget")
-                .request()
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .get()
+            .request()
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .get()
         assertEquals(Response.Status.OK.statusCode, response.status)
     }
 
     @Test
     fun `skal få 400 når man sender inn feil type objekt, liste i stedet for objekt`() {
         val response = webTarget().path("/soknad")
-                .request()
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .post(Entity.json("[]"))
+            .request()
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .post(Entity.json("[]"))
         assertEquals(Response.Status.BAD_REQUEST.statusCode, response.status)
     }
 
     @Test
     fun `skal få 401 når ikke autentisert `() {
         val response = webTarget().path("/innlogget")
-                .request()
-                .get()
+            .request()
+            .get()
         assertEquals(Response.Status.UNAUTHORIZED.statusCode, response.status)
     }
 
     @Test
     fun `skal få 404 når endepunkt ikke eksisterer`() {
         val response = webTarget().path("/eksistererIkke")
-                .request()
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .get()
+            .request()
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .get()
         assertEquals(Response.Status.NOT_FOUND.statusCode, response.status)
     }
 
     @Test
     fun `skal få 500 når endepunkt kaster feil`() {
         val response = webTarget().path("/feil")
-                .request()
-                .get()
+            .request()
+            .get()
         assertEquals(Response.Status.INTERNAL_SERVER_ERROR.statusCode, response.status)
     }
 
@@ -90,6 +89,4 @@ class ApiFeilIntegrationTest {
     private fun client() = ClientBuilder.newClient().register(LoggingFeature::class.java)
 
     private fun serializedJWTToken() = JwtTokenGenerator.createSignedJWT(tokenSubject).serialize()
-
 }
-

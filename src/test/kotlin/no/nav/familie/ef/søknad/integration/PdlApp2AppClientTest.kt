@@ -36,8 +36,10 @@ class PdlApp2AppClientTest {
 
     @Test
     fun `pdlClient håndterer response for barn-query mot pdl-tjenesten riktig`() {
-        wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                                       .willReturn(okJson(readFile("barn.json"))))
+        wireMockServer.stubFor(
+            post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
+                .willReturn(okJson(readFile("barn.json")))
+        )
 
         val response = pdlApp2AppClient.hentBarn(listOf("11111122222"))
 
@@ -46,20 +48,24 @@ class PdlApp2AppClientTest {
 
     @Test
     fun `pdlClient håndterer response for bolk-query mot pdl-tjenesten der person er null og har errors`() {
-        wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                                       .willReturn(okJson(readFile("pdlBolkErrorResponse.json"))))
+        wireMockServer.stubFor(
+            post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
+                .willReturn(okJson(readFile("pdlBolkErrorResponse.json")))
+        )
         assertThat(catchThrowable { pdlApp2AppClient.hentBarn(listOf("")) })
-                .hasMessageStartingWith("Feil ved henting av")
-                .isInstanceOf(PdlRequestException::class.java)
+            .hasMessageStartingWith("Feil ved henting av")
+            .isInstanceOf(PdlRequestException::class.java)
     }
 
     @Test
     fun `pdlClient håndterer response for bolk-query mot pdl-tjenesten der data er null og har errors`() {
-        wireMockServer.stubFor(post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                                       .willReturn(okJson(readFile("pdlBolkErrorResponse_nullData.json"))))
+        wireMockServer.stubFor(
+            post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
+                .willReturn(okJson(readFile("pdlBolkErrorResponse_nullData.json")))
+        )
         assertThat(catchThrowable { pdlApp2AppClient.hentBarn(listOf("")) })
-                .hasMessageStartingWith("Data er null fra PDL")
-                .isInstanceOf(PdlRequestException::class.java)
+            .hasMessageStartingWith("Data er null fra PDL")
+            .isInstanceOf(PdlRequestException::class.java)
     }
 
     private fun readFile(filnavn: String): String {

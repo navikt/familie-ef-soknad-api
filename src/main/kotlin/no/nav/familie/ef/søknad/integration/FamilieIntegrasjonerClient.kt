@@ -10,9 +10,11 @@ import org.springframework.web.client.RestOperations
 import java.net.URI
 
 @Component
-class FamilieIntegrasjonerClient(private val config: FamilieIntegrasjonerConfig,
-                                 @Qualifier("utenAuth") restTemplate: RestOperations)
-    : AbstractPingableRestClient(restTemplate, "familie.integrasjoner") {
+class FamilieIntegrasjonerClient(
+    private val config: FamilieIntegrasjonerConfig,
+    @Qualifier("utenAuth") restTemplate: RestOperations
+) :
+    AbstractPingableRestClient(restTemplate, "familie.integrasjoner") {
 
     override val pingUri: URI = config.pingUri
 
@@ -23,5 +25,4 @@ class FamilieIntegrasjonerClient(private val config: FamilieIntegrasjonerConfig,
     fun hentKodeverkPoststed(): KodeverkDto {
         return getForEntity<Ressurs<KodeverkDto>>(config.kodeverkPoststedUri).data!!
     }
-
 }

@@ -20,13 +20,14 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
 
     override fun mapDto(søker: Søker): Personalia {
 
-        return Personalia(fødselsnummer = Søknadsfelt(FødselsnummerTekst.hentTekst(), Fødselsnummer(søker.fnr)),
-                          navn = Søknadsfelt(Navn.hentTekst(), søker.forkortetNavn),
-                          adresse = lagAdresseSøknadsFelt(søker.adresse),
-                          statsborgerskap = Søknadsfelt(Statsborgerskap.hentTekst(), søker.statsborgerskap),
-                          sivilstatus = Søknadsfelt(Sivilstatus.hentTekst(), søker.sivilstand))
+        return Personalia(
+            fødselsnummer = Søknadsfelt(FødselsnummerTekst.hentTekst(), Fødselsnummer(søker.fnr)),
+            navn = Søknadsfelt(Navn.hentTekst(), søker.forkortetNavn),
+            adresse = lagAdresseSøknadsFelt(søker.adresse),
+            statsborgerskap = Søknadsfelt(Statsborgerskap.hentTekst(), søker.statsborgerskap),
+            sivilstatus = Søknadsfelt(Sivilstatus.hentTekst(), søker.sivilstand)
+        )
     }
-
 
     private fun lagTelefonnummerSøknadsfelt(telefonnummer: String?): Søknadsfelt<String>? {
         return telefonnummer?.let {
@@ -35,10 +36,14 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
     }
 
     private fun lagAdresseSøknadsFelt(frontendAdresse: AdresseDto): Søknadsfelt<Adresse> {
-        return Søknadsfelt(AdresseTekst.hentTekst(),
-                           Adresse(adresse = frontendAdresse.adresse,
-                                   postnummer = frontendAdresse.postnummer,
-                                   poststedsnavn = frontendAdresse.poststed ?: "",
-                                   land = ""))
+        return Søknadsfelt(
+            AdresseTekst.hentTekst(),
+            Adresse(
+                adresse = frontendAdresse.adresse,
+                postnummer = frontendAdresse.postnummer,
+                poststedsnavn = frontendAdresse.poststed ?: "",
+                land = ""
+            )
+        )
     }
 }

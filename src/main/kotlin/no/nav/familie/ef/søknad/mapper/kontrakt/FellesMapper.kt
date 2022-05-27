@@ -10,6 +10,8 @@ import no.nav.familie.ef.søknad.mapper.Språktekster.Innsendingsdetaljer as Inn
 object FellesMapper {
 
     fun mapInnsendingsdetaljer(innsendingMottatt: LocalDateTime): Søknadsfelt<Innsendingsdetaljer> =
-            Søknadsfelt(InnsendingsdetaljerTekst.hentTekst(),
-                        Innsendingsdetaljer(Søknadsfelt(DatoMottatt.hentTekst(), innsendingMottatt)))
+        Søknadsfelt(
+            InnsendingsdetaljerTekst.hentTekst(),
+            Innsendingsdetaljer(Søknadsfelt(DatoMottatt.hentTekst(), innsendingMottatt))
+        )
 }

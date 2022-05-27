@@ -5,7 +5,6 @@ import no.nav.familie.ef.søknad.mock.søknadDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-
 internal class PersonaliaMapperTest {
 
     @Test

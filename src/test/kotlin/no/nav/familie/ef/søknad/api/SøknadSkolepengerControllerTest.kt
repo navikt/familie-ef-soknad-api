@@ -32,7 +32,6 @@ import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.client.Entity
 import javax.ws.rs.core.MediaType
 
-
 @Profile("overgangsstonad-controller-test")
 @Configuration
 class SøknadSkolepengerControllerTestConfiguration {
@@ -60,8 +59,10 @@ internal class SøknadSkolepengerControllerTest {
     val contextPath = "/api"
     val tokenSubject = "12345678911"
 
-    fun søknadSkolepenger() = objectMapper.readValue(File("src/test/resources/skolepenger/skolepenger.json"),
-                                                     SøknadSkolepengerDto::class.java)
+    fun søknadSkolepenger() = objectMapper.readValue(
+        File("src/test/resources/skolepenger/skolepenger.json"),
+        SøknadSkolepengerDto::class.java
+    )
 
     fun client() = ClientBuilder.newClient().register(LoggingFeature::class.java)
     fun webTarget() = client().target("http://localhost:$port$contextPath")
@@ -70,16 +71,20 @@ internal class SøknadSkolepengerControllerTest {
     fun `sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
 
         val søknad = søknadSkolepenger()
-                .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject),
-                                      barn = listOf()))
+            .copy(
+                person = Person(
+                    søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject),
+                    barn = listOf()
+                )
+            )
 
         every { søknadService.sendInn(søknad, any()) } returns Kvittering("Mottatt søknad: $søknad", LocalDateTime.now())
         every { featureToggleService.isEnabled(any()) } returns true
 
         val response = webTarget().path("/soknad/skolepenger/")
-                .request(MediaType.APPLICATION_JSON)
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .post(Entity.json(søknad))
+            .request(MediaType.APPLICATION_JSON)
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .post(Entity.json(søknad))
 
         assertThat(response.status).isEqualTo(200)
     }
@@ -88,11 +93,10 @@ internal class SøknadSkolepengerControllerTest {
     fun `sendInn returnerer 403 ved ulik fnr i token og søknad`() {
         val søknadSkolepengerDto = søknadSkolepenger()
         val response = webTarget().path("/soknad/skolepenger/")
-                .request(MediaType.APPLICATION_JSON)
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .post(Entity.json(søknadSkolepengerDto))
+            .request(MediaType.APPLICATION_JSON)
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .post(Entity.json(søknadSkolepengerDto))
         assertThat(response.status).isEqualTo(403)
         verify(exactly = 0) { søknadService.sendInn(søknadSkolepengerDto, any()) }
     }
 }
-
