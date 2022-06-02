@@ -52,11 +52,6 @@ fun List<Dokumentasjonsbehov>.tilKontrakt(): List<DokumentasjonsbehovKontrakt> =
 fun String.tilDesimaltall(): Double = this.replace(",", ".").toDouble()
 fun String.tilHeltall(): Int = this.tilDesimaltall().toInt()
 
-fun String.tilHeltallEllerTalletNull(): Int = when (this.isNotBlank()) {
-    true -> this.tilDesimaltall().toInt()
-    false -> 0
-}
-
 fun DatoFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? {
     return if (this.verdi.isNotBlank()) {
         Søknadsfelt(this.label, fraStrengTilLocalDate(verdi))

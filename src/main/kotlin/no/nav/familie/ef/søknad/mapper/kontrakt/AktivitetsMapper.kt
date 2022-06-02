@@ -15,7 +15,6 @@ import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.ETABLERER_VIRKSOMHET
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.IKKE_VILLIG_TIL_ARBEID
 import no.nav.familie.ef.søknad.mapper.tilHeltall
-import no.nav.familie.ef.søknad.mapper.tilHeltallEllerTalletNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Aksjeselskap
 import no.nav.familie.kontrakter.ef.søknad.Aktivitet
@@ -112,7 +111,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
         return arbeidsforhold.map { arbeid ->
             Arbeidsgiver(
                 arbeidsgivernavn = arbeid.navn.tilSøknadsfelt(),
-                arbeidsmengde = arbeid.arbeidsmengde?.tilSøknadsfelt(String::tilHeltallEllerTalletNull),
+                arbeidsmengde = arbeid.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
                 fastEllerMidlertidig = arbeid.ansettelsesforhold.tilSøknadsfelt(),
                 harSluttdato = arbeid.harSluttDato?.tilSøknadsfelt(),
                 sluttdato = arbeid.sluttdato?.tilSøknadsfelt()
