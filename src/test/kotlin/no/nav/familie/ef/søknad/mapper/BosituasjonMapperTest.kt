@@ -17,7 +17,6 @@ internal class BosituasjonMapperTest {
     private val bosituasjonGifteplaner = getBosituasjon("sivilstandsplaner.json")
     private val dokumenter = emptyMap<String, DokumentasjonWrapper>()
 
-
     @Test
     fun `Vi mapper bossituasjon verdi`() {
         // When
@@ -98,6 +97,8 @@ internal class BosituasjonMapperTest {
         assertThat(samboerdetaljer?.verdi?.fødselsdato?.verdi).isEqualTo(LocalDate.parse("1976-07-26"))
     }
 
-    private fun getBosituasjon(fileName: String) = objectMapper.readValue(File("src/test/resources/$fileName"),
-                                                                          Bosituasjon::class.java)
+    private fun getBosituasjon(fileName: String) = objectMapper.readValue(
+        File("src/test/resources/$fileName"),
+        Bosituasjon::class.java
+    )
 }

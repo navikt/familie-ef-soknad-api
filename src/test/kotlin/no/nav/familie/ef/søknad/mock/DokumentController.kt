@@ -19,15 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
-import java.util.*
+import java.util.UUID
 
 @Profile("mock-dokument")
-@Suppress("SpringJavaInjectionPointsAutowiringInspection") //dokumentlager er definiert i DokumentConfiguration
+@Suppress("SpringJavaInjectionPointsAutowiringInspection") // dokumentlager er definiert i DokumentConfiguration
 @RestController
 @RequestMapping(path = ["/dokumentmock/"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @Unprotected
-class DokumentController(@Qualifier("dokumentlager") private val dokumenter: MutableMap<String, ByteArray>,
-                         private val contextHolder: TokenValidationContextHolder) {
+class DokumentController(
+    @Qualifier("dokumentlager") private val dokumenter: MutableMap<String, ByteArray>,
+    private val contextHolder: TokenValidationContextHolder
+) {
 
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
@@ -37,11 +39,15 @@ class DokumentController(@Qualifier("dokumentlager") private val dokumenter: Mut
         return this.tokenValidationContext.getJwtToken("selvbetjening").subject
     }
 
-    @PostMapping(path = ["dokument/{bucket}"],
-                 consumes = [MediaType.MULTIPART_FORM_DATA_VALUE],
-                 produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun addAttachment(@PathVariable("bucket") bucket: String,
-                      @RequestParam("file") multipartFile: MultipartFile): ResponseEntity<Map<String, String>> {
+    @PostMapping(
+        path = ["dokument/{bucket}"],
+        consumes = [MediaType.MULTIPART_FORM_DATA_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
+    fun addAttachment(
+        @PathVariable("bucket") bucket: String,
+        @RequestParam("file") multipartFile: MultipartFile
+    ): ResponseEntity<Map<String, String>> {
         if (multipartFile.isEmpty) {
             return ResponseEntity.ok(emptyMap())
         }
@@ -60,9 +66,11 @@ class DokumentController(@Qualifier("dokumentlager") private val dokumenter: Mut
         }
     }
 
-    @PostMapping("mellomlager",
-                 consumes = [MediaType.APPLICATION_JSON_VALUE],
-                 produces = [MediaType.APPLICATION_JSON_VALUE])
+    @PostMapping(
+        "mellomlager",
+        consumes = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
+    )
     fun mellomlagreSøknad(@RequestBody(required = true) søknad: String): ResponseEntity<Unit> {
         log.info("Mellomlagrer søknad om overgangsstønad")
 
@@ -105,7 +113,7 @@ class DokumentController(@Qualifier("dokumentlager") private val dokumenter: Mut
 
     private fun validerGyldigJson(verdi: String) {
         try {
-            objectMapper.readTree(verdi);
+            objectMapper.readTree(verdi)
         } catch (e: Exception) {
             error("Forsøker å mellomlagre søknad som ikke er gyldig json-verdi")
         }

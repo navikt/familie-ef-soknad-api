@@ -19,5 +19,4 @@ class IntegrasjonerMock {
         justRun { søknadClient.ping() }
         return søknadClient
     }
-
 }

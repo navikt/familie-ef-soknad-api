@@ -16,11 +16,12 @@ internal class MerOmDinSituasjonMedAlternativerTest {
     private val situasjon = SituasjonsMapper.map(søknad, mapOf())
 
     private val forventet = listOf(
-            "Jeg er syk",
-            "Barnet mitt er sykt",
-            "Jeg har søkt om barnepass, men ikke fått plass enda",
-            "Jeg har barn som trenger særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
-            "Nei")
+        "Jeg er syk",
+        "Barnet mitt er sykt",
+        "Jeg har søkt om barnepass, men ikke fått plass enda",
+        "Jeg har barn som trenger særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
+        "Nei"
+    )
 
     @Test
     fun `Situasjon - gjelder dette deg har alternativer`() {
@@ -41,7 +42,7 @@ internal class MerOmDinSituasjonMedAlternativerTest {
     fun `Situasjon - endrede alternativer mappes`() {
         val nyListe = listOf("Nja", "Tja")
         val søknadMedNyeAlternativer =
-                copySøknad(nyListe)
+            copySøknad(nyListe)
         val nySituasjon = SituasjonsMapper.map(søknadMedNyeAlternativer, mapOf())
         assertThat(nySituasjon.verdi.gjelderDetteDeg.alternativer).isEqualTo(nyListe)
     }
@@ -55,6 +56,6 @@ internal class MerOmDinSituasjonMedAlternativerTest {
     }
 
     private fun copyGjelderDetteDeg(nyListe: List<String>) = søknad.merOmDinSituasjon.gjelderDetteDeg.copy(
-            alternativer = nyListe)
-
+        alternativer = nyListe
+    )
 }

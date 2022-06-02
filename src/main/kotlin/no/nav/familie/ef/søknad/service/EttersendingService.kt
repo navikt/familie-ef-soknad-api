@@ -9,7 +9,6 @@ import no.nav.familie.kontrakter.felles.ef.StønadType
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
-
 @Service
 class EttersendingService(private val søknadClient: SøknadClient) {
 
@@ -19,9 +18,7 @@ class EttersendingService(private val søknadClient: SøknadClient) {
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-
     fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
         return søknadClient.hentEttersendingForPerson(personIdent)
     }
-
 }

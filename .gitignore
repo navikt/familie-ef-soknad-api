@@ -1,5 +1,6 @@
 .idea/
 target
+ktlint
 *.iml
 # Compiled class file
 *.class

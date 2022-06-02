@@ -27,20 +27,26 @@ object PersonMinimumMapper {
     private fun personMinimum(annenForelder: AnnenForelder): PersonMinimum {
         val søknadsfeltFødselsnummer = mapFødselsnummer(annenForelder.ident)
         val søknadsfeltFødselsdato = annenForelder.fødselsdato?.tilSøknadsDatoFeltEllerNull()
-        return PersonMinimum(annenForelder.navn?.tilSøknadsfelt() ?: Søknadsfelt(AnnenForelderNavn.hentTekst(),
-                                                                                 IkkeOppgitt.hentTekst()),
-                             søknadsfeltFødselsnummer,
-                             søknadsfeltFødselsdato,
-                             null)
+        return PersonMinimum(
+            annenForelder.navn?.tilSøknadsfelt() ?: Søknadsfelt(
+                AnnenForelderNavn.hentTekst(),
+                IkkeOppgitt.hentTekst()
+            ),
+            søknadsfeltFødselsnummer,
+            søknadsfeltFødselsdato,
+            null
+        )
     }
 
     fun personMinimum(samboerDetaljer: SamboerDetaljer): PersonMinimum {
         val søknadsfeltFødselsnummer = mapFødselsnummer(samboerDetaljer.ident)
         val søknadsfeltFødselsdato = samboerDetaljer.fødselsdato?.tilSøknadsDatoFeltEllerNull()
-        return PersonMinimum(samboerDetaljer.navn.tilSøknadsfelt(),
-                             søknadsfeltFødselsnummer,
-                             søknadsfeltFødselsdato,
-                             null)
+        return PersonMinimum(
+            samboerDetaljer.navn.tilSøknadsfelt(),
+            søknadsfeltFødselsnummer,
+            søknadsfeltFødselsdato,
+            null
+        )
     }
 
     private fun mapFødselsnummer(ident: TekstFelt?): Søknadsfelt<Fødselsnummer>? {

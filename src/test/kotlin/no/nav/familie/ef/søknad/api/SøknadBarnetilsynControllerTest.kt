@@ -32,7 +32,6 @@ import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.client.Entity
 import javax.ws.rs.core.MediaType
 
-
 @Profile("overgangsstonad-controller-test")
 @Configuration
 class SøknadBarnetilsynControllerTestConfiguration {
@@ -51,7 +50,6 @@ class SøknadBarnetilsynControllerTestConfiguration {
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 internal class SøknadBarnetilsynControllerTest {
 
-
     private fun serializedJWTToken() = JwtTokenGenerator.createSignedJWT(tokenSubject).serialize()
     @Autowired lateinit var søknadService: SøknadService
     @Autowired lateinit var featureToggleService: FeatureToggleService
@@ -62,8 +60,10 @@ internal class SøknadBarnetilsynControllerTest {
     val tokenSubject = "12345678911"
 
     fun søknadBarnetilsynDto(): SøknadBarnetilsynDto = objectMapper
-            .readValue(File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
-                       SøknadBarnetilsynDto::class.java)
+        .readValue(
+            File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
+            SøknadBarnetilsynDto::class.java
+        )
 
     fun client() = ClientBuilder.newClient().register(LoggingFeature::class.java)
     fun webTarget() = client().target("http://localhost:$port$contextPath")
@@ -72,15 +72,15 @@ internal class SøknadBarnetilsynControllerTest {
     fun `sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
 
         val søknad = søknadBarnetilsynDto()
-                .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf()))
+            .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf()))
 
         every { søknadService.sendInn(søknad, any()) } returns Kvittering("Mottatt søknad: $søknad", LocalDateTime.now())
         every { featureToggleService.isEnabled(any()) } returns true
 
         val response = webTarget().path("/soknad/barnetilsyn/")
-                .request(MediaType.APPLICATION_JSON)
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .post(Entity.json(søknad))
+            .request(MediaType.APPLICATION_JSON)
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .post(Entity.json(søknad))
 
         assertThat(response.status).isEqualTo(200)
     }
@@ -89,13 +89,10 @@ internal class SøknadBarnetilsynControllerTest {
     fun `sendInn returnerer 403 ved ulik fnr i token og søknad`() {
         val søknadBarnetilsynDto = søknadBarnetilsynDto()
         val response = webTarget().path("/soknad/barnetilsyn/")
-                .request(MediaType.APPLICATION_JSON)
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .post(Entity.json(søknadBarnetilsynDto))
+            .request(MediaType.APPLICATION_JSON)
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .post(Entity.json(søknadBarnetilsynDto))
         assertThat(response.status).isEqualTo(403)
         verify(exactly = 0) { søknadService.sendInn(søknadBarnetilsynDto, any()) }
-
     }
-
 }
-

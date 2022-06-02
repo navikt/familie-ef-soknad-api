@@ -8,7 +8,6 @@ import java.time.LocalDateTime
 
 internal class KvitteringDtoMapperTest {
 
-
     private val innsendingMottatt = LocalDateTime.now()
 
     @Test
@@ -37,5 +36,4 @@ internal class KvitteringDtoMapperTest {
         assertThat(kvitteringDto.mottattDato).isNull()
         assertThat(kvitteringDto.text).isEmpty()
     }
-
 }

@@ -7,13 +7,12 @@ import java.time.LocalDateTime
 object EttersendingMapper {
 
     fun groupByStønad(
-            dto: EttersendelseDto,
-            innsendingMottatt: LocalDateTime
+        dto: EttersendelseDto,
+        innsendingMottatt: LocalDateTime
     ): Map<StønadType, EttersendelseDto> {
         return dto.dokumentasjonsbehov
-                .map { it.copy(innsendingstidspunkt = innsendingMottatt) }
-                .groupBy { it.stønadType }
-                .mapValues { entry -> EttersendelseDto(personIdent = dto.personIdent, dokumentasjonsbehov = entry.value) }
+            .map { it.copy(innsendingstidspunkt = innsendingMottatt) }
+            .groupBy { it.stønadType }
+            .mapValues { entry -> EttersendelseDto(personIdent = dto.personIdent, dokumentasjonsbehov = entry.value) }
     }
-
 }

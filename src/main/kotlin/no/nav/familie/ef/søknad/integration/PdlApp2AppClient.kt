@@ -13,29 +13,38 @@ import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
 
-
 @Component
-class PdlApp2AppClient(val pdlConfig: PdlConfig,
-                       @Qualifier("clientCredential") restOperations: RestOperations)
-    : AbstractRestClient(restOperations, "pdl.personinfo") {
+class PdlApp2AppClient(
+    val pdlConfig: PdlConfig,
+    @Qualifier("clientCredential") restOperations: RestOperations
+) :
+    AbstractRestClient(restOperations, "pdl.personinfo") {
 
     fun hentBarn(personIdenter: List<String>): Map<String, PdlBarn> {
         if (personIdenter.isEmpty()) return emptyMap()
-        val pdlPersonRequest = PdlPersonBolkRequest(variables = PdlPersonBolkRequestVariables(personIdenter),
-                                                    query = PdlConfig.barnQuery)
-        val pdlResponse: PdlBolkResponse<PdlBarn> = postForEntity(pdlConfig.pdlUri,
-                                                                  pdlPersonRequest,
-                                                                  httpHeaders())
+        val pdlPersonRequest = PdlPersonBolkRequest(
+            variables = PdlPersonBolkRequestVariables(personIdenter),
+            query = PdlConfig.barnQuery
+        )
+        val pdlResponse: PdlBolkResponse<PdlBarn> = postForEntity(
+            pdlConfig.pdlUri,
+            pdlPersonRequest,
+            httpHeaders()
+        )
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
     fun hentAndreForeldre(personIdenter: List<String>): Map<String, PdlAnnenForelder> {
         if (personIdenter.isEmpty()) return emptyMap()
-        val pdlPersonRequest = PdlPersonBolkRequest(variables = PdlPersonBolkRequestVariables(personIdenter),
-                                                    query = PdlConfig.annenForelderQuery)
-        val pdlResponse: PdlBolkResponse<PdlAnnenForelder> = postForEntity(pdlConfig.pdlUri,
-                                                                           pdlPersonRequest,
-                                                                           httpHeaders())
+        val pdlPersonRequest = PdlPersonBolkRequest(
+            variables = PdlPersonBolkRequestVariables(personIdenter),
+            query = PdlConfig.annenForelderQuery
+        )
+        val pdlResponse: PdlBolkResponse<PdlAnnenForelder> = postForEntity(
+            pdlConfig.pdlUri,
+            pdlPersonRequest,
+            httpHeaders()
+        )
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
@@ -58,6 +67,4 @@ class PdlApp2AppClient(val pdlConfig: PdlConfig,
         }
         return pdlResponse.data.personBolk.associateBy({ it.ident }, { it.person!! })
     }
-
-
 }

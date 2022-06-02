@@ -25,5 +25,4 @@ class SøknadsControllerMock(val featureToggleService: FeatureToggleService) {
         // val readValue : SøknadDto= objectMapper.readValue(valueAsString)
         return Kvittering("Kontakt med api, søknad ikke sendt inn. Du forsøkte å sende inn:  $valueAsString", innsendingMottatt)
     }
-
 }

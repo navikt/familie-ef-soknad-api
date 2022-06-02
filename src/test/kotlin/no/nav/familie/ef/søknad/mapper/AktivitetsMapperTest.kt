@@ -16,7 +16,6 @@ internal class AktivitetsMapperTest {
     // Når
     private val aktivitetMapped = AktivitetsMapper.map(aktivitet, mapOf()).verdi
 
-
     @Test
     fun `Skal kaste feil ved blank verdi på arbeidsmengde `() {
         val arbeidsmengdeUtenVerdi = aktivitet.arbeidsforhold?.first()?.arbeidsmengde?.copy(verdi = "")
@@ -25,7 +24,6 @@ internal class AktivitetsMapperTest {
             AktivitetsMapper.mapArbeidsforhold(listOf(arbeidsforhold!!))
         }
     }
-
 
     @Test
     fun `Map hvordanErArbeidssituasjonen label `() {
@@ -97,13 +95,13 @@ internal class AktivitetsMapperTest {
     @Test
     fun `Map etablererEgenVirksomhet label `() {
         Assertions.assertThat((aktivitetMapped.virksomhet?.verdi?.virksomhetsbeskrivelse?.label))
-                .isEqualTo("Hva er din arbeidsituasjon?")
+            .isEqualTo("Hva er din arbeidsituasjon?")
     }
 
     @Test
     fun `Map etablererEgenVirksomhet verdi `() {
         Assertions.assertThat(aktivitetMapped.virksomhet?.verdi?.virksomhetsbeskrivelse?.verdi)
-                .isEqualTo("Dette er en spennende gründerbedrift")
+            .isEqualTo("Dette er en spennende gründerbedrift")
     }
 
     @Test

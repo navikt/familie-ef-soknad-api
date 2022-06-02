@@ -4,10 +4,12 @@ import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import java.time.LocalDate
 import java.time.Period
 
-data class Medforelder(private val _navn: String,
-                       val harAdressesperre: Boolean,
-                       val død: Boolean = false,
-                       val ident: String) {
+data class Medforelder(
+    private val _navn: String,
+    val harAdressesperre: Boolean,
+    val død: Boolean = false,
+    val ident: String
+) {
 
     val navn: String
     val alder: Int

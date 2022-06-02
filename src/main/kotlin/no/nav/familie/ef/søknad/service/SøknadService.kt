@@ -13,13 +13,17 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class SøknadService(private val søknadClient: SøknadClient,
-                    private val overgangsstønadMapper: SøknadOvergangsstønadMapper,
-                    private val barnetilsynMapper: SøknadBarnetilsynMapper,
-                    private val skolepengerMapper: SøknadSkolepengerMapper) {
+class SøknadService(
+    private val søknadClient: SøknadClient,
+    private val overgangsstønadMapper: SøknadOvergangsstønadMapper,
+    private val barnetilsynMapper: SøknadBarnetilsynMapper,
+    private val skolepengerMapper: SøknadSkolepengerMapper
+) {
 
-    fun sendInn(søknad: SøknadOvergangsstønadDto,
-                innsendingMottatt: LocalDateTime): Kvittering {
+    fun sendInn(
+        søknad: SøknadOvergangsstønadDto,
+        innsendingMottatt: LocalDateTime
+    ): Kvittering {
         val søknadRequestData = overgangsstønadMapper.mapTilIntern(søknad, innsendingMottatt)
         val kvittering = søknadClient.sendInn(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
@@ -36,5 +40,4 @@ class SøknadService(private val søknadClient: SøknadClient,
         val kvittering = søknadClient.sendInnSkolepenger(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
-
 }

@@ -16,29 +16,32 @@ import java.time.LocalDateTime
 @Component
 class SøknadSkolepengerMapper {
 
-    fun mapTilIntern(dto: SøknadSkolepengerDto,
-                     innsendingMottatt: LocalDateTime,
-                     skalHenteVedlegg: Boolean = true): SøknadMedVedlegg<SøknadSkolepenger> {
+    fun mapTilIntern(
+        dto: SøknadSkolepengerDto,
+        innsendingMottatt: LocalDateTime,
+        skalHenteVedlegg: Boolean = true
+    ): SøknadMedVedlegg<SøknadSkolepenger> {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
         val søknadSkolepenger = SøknadSkolepenger(
-                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
-                personalia = PersonaliaMapper.map(dto.person.søker),
-                barn = dto.person.barn.tilSøknadsfelt(vedlegg),
-                sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
-                medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
-                bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
-                sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
-                utdanning = UtdanningMapper.map(dto.utdanning),
-                dokumentasjon = SkolepengerDokumentasjon(
-                        utdanningsutgifter = dokumentfelt(DokumentIdentifikator.UTGIFTER_UTDANNING, vedlegg)
-                )
+            innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
+            personalia = PersonaliaMapper.map(dto.person.søker),
+            barn = dto.person.barn.tilSøknadsfelt(vedlegg),
+            sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
+            medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
+            bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
+            sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
+            utdanning = UtdanningMapper.map(dto.utdanning),
+            dokumentasjon = SkolepengerDokumentasjon(
+                utdanningsutgifter = dokumentfelt(DokumentIdentifikator.UTGIFTER_UTDANNING, vedlegg)
+            )
         )
 
-        return SøknadMedVedlegg(søknadSkolepenger,
-                                vedlegg.values.flatMap { it.vedlegg },
-                                dto.dokumentasjonsbehov.tilKontrakt(),
-                                dto.skalBehandlesINySaksbehandling)
+        return SøknadMedVedlegg(
+            søknadSkolepenger,
+            vedlegg.values.flatMap { it.vedlegg },
+            dto.dokumentasjonsbehov.tilKontrakt(),
+            dto.skalBehandlesINySaksbehandling
+        )
     }
-
 }

@@ -24,49 +24,64 @@ import java.time.LocalDate
 @Profile("mock-pdlApp2AppClient")
 class PdlApp2AppClientConfig {
 
-
     @Bean
     @Primary
     fun pdlApp2AppClient(): PdlApp2AppClient {
         val pdlApp2AppClient: PdlApp2AppClient = mockk()
         val medforelderFnr = FnrGenerator.generer(år = 1999)
         every { pdlApp2AppClient.hentBarn(any()) } returns
-                mapOf("28021078036" to PdlBarn(
-                        adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
-                        bostedsadresse = bostedsadresseBarn(),
-                        deltBosted = listOf(),
-                        navn = lagNavn("Hei", "På", "Deg"),
-                        fødsel = listOf(Fødsel(2000, LocalDate.now().minusMonths(6))),
-                        dødsfall = listOf(),
-                        forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR))
-                ))
+            mapOf(
+                "28021078036" to PdlBarn(
+                    adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
+                    bostedsadresse = bostedsadresseBarn(),
+                    deltBosted = listOf(),
+                    navn = lagNavn("Hei", "På", "Deg"),
+                    fødsel = listOf(Fødsel(2000, LocalDate.now().minusMonths(6))),
+                    dødsfall = listOf(),
+                    forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR))
+                )
+            )
 
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns
-                mapOf(medforelderFnr to PdlAnnenForelder(
-                        adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
-                        navn = lagNavn("Bjørn", "Borg", "Borgersen"),
-                        dødsfall = listOf(),
-                ))
+            mapOf(
+                medforelderFnr to PdlAnnenForelder(
+                    adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
+                    navn = lagNavn("Bjørn", "Borg", "Borgersen"),
+                    dødsfall = listOf(),
+                )
+            )
 
         return pdlApp2AppClient
     }
 
-    private fun lagNavn(fornavn: String = "Fornavn",
-                        mellomnavn: String? = "mellomnavn",
-                        etternavn: String = "Etternavn"): List<Navn> =
-            listOf(Navn(fornavn,
-                        mellomnavn,
-                        etternavn))
+    private fun lagNavn(
+        fornavn: String = "Fornavn",
+        mellomnavn: String? = "mellomnavn",
+        etternavn: String = "Etternavn"
+    ): List<Navn> =
+        listOf(
+            Navn(
+                fornavn,
+                mellomnavn,
+                etternavn
+            )
+        )
 
     private fun bostedsadresseBarn(): List<BostedsadresseBarn> =
-            listOf(BostedsadresseBarn(vegadresse = vegadresse(),
-                                      matrikkeladresse = null))
+        listOf(
+            BostedsadresseBarn(
+                vegadresse = vegadresse(),
+                matrikkeladresse = null
+            )
+        )
 
     private fun vegadresse(): Vegadresse =
-            Vegadresse(husnummer = "13",
-                       husbokstav = "b",
-                       adressenavn = "Charlies vei",
-                       postnummer = "0575",
-                       bruksenhetsnummer = "",
-                       matrikkelId = 1L)
+        Vegadresse(
+            husnummer = "13",
+            husbokstav = "b",
+            adressenavn = "Charlies vei",
+            postnummer = "0575",
+            bruksenhetsnummer = "",
+            matrikkelId = 1L
+        )
 }

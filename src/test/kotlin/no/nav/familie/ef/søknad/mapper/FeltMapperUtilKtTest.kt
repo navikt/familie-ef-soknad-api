@@ -1,11 +1,13 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.*
-import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ListFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.PeriodeFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
-import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
@@ -17,7 +19,6 @@ import java.time.Month
 import java.time.format.DateTimeParseException
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNull
-
 
 internal class FeltMapperUtilKtTest {
 
@@ -33,8 +34,6 @@ internal class FeltMapperUtilKtTest {
         val felt = TekstFelt("label", "08031499039").tilSøknadsfelt(::Fødselsnummer)
         assertEquals(Søknadsfelt("label", Fødselsnummer("08031499039")), felt)
     }
-
-
 
     @Test
     internal fun `BooleanFelt`() {
@@ -56,9 +55,11 @@ internal class FeltMapperUtilKtTest {
 
     @Test
     internal fun `PeriodeFelt`() {
-        var felt = PeriodeFelt("label",
-                               DatoFelt("fra", "2020-01-01"),
-                               DatoFelt("til", "2021-12-30")).tilSøknadsfelt()
+        var felt = PeriodeFelt(
+            "label",
+            DatoFelt("fra", "2020-01-01"),
+            DatoFelt("til", "2021-12-30")
+        ).tilSøknadsfelt()
         assertEquals(Søknadsfelt("label", MånedÅrPeriode(Month.JANUARY, 2020, Month.DECEMBER, 2021)), felt)
     }
 
@@ -111,7 +112,6 @@ internal class FeltMapperUtilKtTest {
         assertEquals(felt?.verdi, LocalDate.of(2020, 3, 4))
     }
 
-
     /* Spesielle tilfeller */
 
     // Her er jeg usikker på hva som kan ha skjedd - UI feil?
@@ -120,7 +120,6 @@ internal class FeltMapperUtilKtTest {
         val felt = DatoFelt("label", "2020-03-03T22:00:00.000Z").tilSøknadsDatoFeltEllerNull()
         assertEquals(felt?.verdi, LocalDate.of(2020, 3, 3))
     }
-
 
     // Skal egentlig ikke skje - skulle vi kastet exception?
     @Test

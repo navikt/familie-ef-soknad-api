@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad.api
 
-
 import no.nav.familie.ef.søknad.api.dto.PersonMinimumDto
 import no.nav.familie.ef.søknad.api.dto.Søkerinfo
 import no.nav.familie.ef.søknad.service.KodeverkService
@@ -19,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = [OppslagController.OPPSLAG], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 @Validated
-class OppslagController(private val oppslagService: OppslagService,
-                        private val kodeverkService: KodeverkService) {
+class OppslagController(
+    private val oppslagService: OppslagService,
+    private val kodeverkService: KodeverkService
+) {
 
     @GetMapping("/sokerinfo")
     fun søkerinfo(): Søkerinfo {
@@ -52,4 +53,3 @@ class OppslagController(private val oppslagService: OppslagService,
         return PersonMinimumDto(EksternBrukerUtils.hentFnrFraToken(), this)
     }
 }
-

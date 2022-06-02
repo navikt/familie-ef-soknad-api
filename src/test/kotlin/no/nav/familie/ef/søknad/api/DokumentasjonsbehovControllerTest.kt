@@ -53,9 +53,9 @@ internal class DokumentasjonsbehovControllerTest {
         every { søknadClient.hentDokumentasjonsbehovForSøknad(any()) } returns lagDokumentasjonsbehov(tokenSubject, LocalDate.now())
 
         val response = webTarget().path("/dokumentasjonsbehov/${UUID.randomUUID()}")
-                .request()
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .get()
+            .request()
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .get()
 
         assertThat(response.status).isEqualTo(200)
     }
@@ -65,22 +65,27 @@ internal class DokumentasjonsbehovControllerTest {
         every { søknadClient.hentDokumentasjonsbehovForSøknad(any()) } returns lagDokumentasjonsbehov("0", LocalDate.now())
 
         val response = webTarget().path("/dokumentasjonsbehov/${UUID.randomUUID()}")
-                .request()
-                .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-                .get()
+            .request()
+            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
+            .get()
 
         assertThat(response.status).isEqualTo(403)
     }
 
     @Test
     internal fun `dokumentasjonsbehov som er eldre enn 28 dager (4 uker) skal ikke hentes`() {
-        val eldreSøknad: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(fødselsnummer = "0",
-                                                                                       innsendtDato = LocalDate.of(
-                                                                                               2021,
-                                                                                               10,
-                                                                                               5))
-        val nySøknad: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(fødselsnummer = "0",
-                                                                                       innsendtDato = LocalDate.now())
+        val eldreSøknad: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(
+            fødselsnummer = "0",
+            innsendtDato = LocalDate.of(
+                2021,
+                10,
+                5
+            )
+        )
+        val nySøknad: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(
+            fødselsnummer = "0",
+            innsendtDato = LocalDate.now()
+        )
         val søknader: List<SøknadMedDokumentasjonsbehovDto> = listOf(eldreSøknad, nySøknad)
         val filtrerteSøknader: List<SøknadMedDokumentasjonsbehovDto> = filtrerVekkEldreDokumentasjonsbehov(søknader)
 
@@ -88,18 +93,24 @@ internal class DokumentasjonsbehovControllerTest {
     }
 
     private fun lagDokumentasjonsbehov(fødselsnummer: String, innsendtDato: LocalDate): DokumentasjonsbehovDto =
-            DokumentasjonsbehovDto(emptyList(),
-                                   innsendtDato.atTime(0, 0),
-                                   SøknadType.OVERGANGSSTØNAD,
-                                   fødselsnummer)
+        DokumentasjonsbehovDto(
+            emptyList(),
+            innsendtDato.atTime(0, 0),
+            SøknadType.OVERGANGSSTØNAD,
+            fødselsnummer
+        )
 
-    private fun lagSøknadMedDokumentasjonsbehov(søknadId: String = UUID.randomUUID().toString(),
-                                                fødselsnummer: String,
-                                                innsendtDato: LocalDate): SøknadMedDokumentasjonsbehovDto =
-            SøknadMedDokumentasjonsbehovDto(søknadId,
-                                            StønadType.OVERGANGSSTØNAD,
-                                            innsendtDato,
-                                            lagDokumentasjonsbehov(fødselsnummer, innsendtDato))
+    private fun lagSøknadMedDokumentasjonsbehov(
+        søknadId: String = UUID.randomUUID().toString(),
+        fødselsnummer: String,
+        innsendtDato: LocalDate
+    ): SøknadMedDokumentasjonsbehovDto =
+        SøknadMedDokumentasjonsbehovDto(
+            søknadId,
+            StønadType.OVERGANGSSTØNAD,
+            innsendtDato,
+            lagDokumentasjonsbehov(fødselsnummer, innsendtDato)
+        )
 
     private fun webTarget() = client().target("http://localhost:$port$contextPath")
 

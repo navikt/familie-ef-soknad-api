@@ -20,29 +20,27 @@ import java.time.Period
 
 @Service
 internal class OppslagServiceServiceImpl(
-        private val pdlClient: PdlClient,
-        private val pdlApp2AppClient: PdlApp2AppClient,
-        private val regelverkConfig: RegelverkConfig,
-        private val søkerinfoMapper: SøkerinfoMapper,
+    private val pdlClient: PdlClient,
+    private val pdlApp2AppClient: PdlApp2AppClient,
+    private val regelverkConfig: RegelverkConfig,
+    private val søkerinfoMapper: SøkerinfoMapper,
 ) : OppslagService {
-
 
     override fun hentSøkerinfo(): Søkerinfo {
 
         val søkersPersonIdent = EksternBrukerUtils.hentFnrFraToken()
         val pdlSøker = pdlClient.hentSøker(søkersPersonIdent)
         val barnIdentifikatorer = pdlSøker.forelderBarnRelasjon
-                .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
-                .mapNotNull { it.relatertPersonsIdent }
+            .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
+            .mapNotNull { it.relatertPersonsIdent }
         val pdlBarn = pdlApp2AppClient.hentBarn(barnIdentifikatorer)
         val aktuelleBarn = pdlBarn
-                .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
-                .filter { erILive(it.value) }
+            .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
+            .filter { erILive(it.value) }
 
         val andreForeldre = hentAndreForeldre(aktuelleBarn, søkersPersonIdent)
         validerAdressesperrePåSøkerMedRelasjoner(pdlSøker, aktuelleBarn, andreForeldre)
         return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn, andreForeldre)
-
     }
 
     private fun throwException() {
@@ -50,14 +48,14 @@ internal class OppslagServiceServiceImpl(
     }
 
     private fun validerAdressesperrePåSøkerMedRelasjoner(
-            pdlSøker: PdlSøker,
-            aktuelleBarn: Map<String, PdlBarn>,
-            andreForeldre: Map<String, PdlAnnenForelder>
+        pdlSøker: PdlSøker,
+        aktuelleBarn: Map<String, PdlBarn>,
+        andreForeldre: Map<String, PdlAnnenForelder>
     ) {
         val søkernivå = adresseNivå(pdlSøker.adressebeskyttelse.firstOrNull()?.gradering)
         val barnNivå = aktuelleBarn.values.maxOfOrNull { adresseNivå(it.adressebeskyttelse.firstOrNull()?.gradering) } ?: 0
         val andreForeldreNivå =
-                andreForeldre.values.maxOfOrNull { adresseNivå(it.adressebeskyttelse.firstOrNull()?.gradering) } ?: 0
+            andreForeldre.values.maxOfOrNull { adresseNivå(it.adressebeskyttelse.firstOrNull()?.gradering) } ?: 0
         if (andreForeldreNivå > søkernivå || barnNivå > søkernivå) {
             throwException()
         }
@@ -80,20 +78,19 @@ internal class OppslagServiceServiceImpl(
     }
 
     private fun hentAndreForeldre(
-            aktuelleBarn: Map<String, PdlBarn>,
-            søkersPersonIdent: String
+        aktuelleBarn: Map<String, PdlBarn>,
+        søkersPersonIdent: String
     ): Map<String, PdlAnnenForelder> {
         return aktuelleBarn.map { it.value.forelderBarnRelasjon }
-                .flatten()
-                .filter { it.relatertPersonsIdent != søkersPersonIdent && it.relatertPersonsRolle != Familierelasjonsrolle.BARN }
-                .mapNotNull { it.relatertPersonsIdent }
-                .distinct()
-                .let { pdlApp2AppClient.hentAndreForeldre(it) }
+            .flatten()
+            .filter { it.relatertPersonsIdent != søkersPersonIdent && it.relatertPersonsRolle != Familierelasjonsrolle.BARN }
+            .mapNotNull { it.relatertPersonsIdent }
+            .distinct()
+            .let { pdlApp2AppClient.hentAndreForeldre(it) }
     }
 
     fun erILive(pdlBarn: PdlBarn) =
-            pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
-
+        pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
 
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {
         if (fødselsdato == null) {
@@ -104,8 +101,4 @@ internal class OppslagServiceServiceImpl(
         val alderIÅr = alder.years
         return alderIÅr <= regelverkConfig.alder.maks
     }
-
 }
-
-
-

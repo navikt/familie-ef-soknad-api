@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 
 internal class OversetterTest {
 
-
     @Test
     fun `Skal mappe kunne sette, hente og mappe en enum`() {
         val språk = språk()
@@ -37,5 +36,4 @@ internal class OversetterTest {
     fun clear() {
         kontekst.remove()
     }
-
 }

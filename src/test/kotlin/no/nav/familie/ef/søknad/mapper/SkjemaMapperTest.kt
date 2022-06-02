@@ -10,19 +10,20 @@ import kotlin.test.assertFailsWith
 
 internal class SkjemaMapperTest {
 
-
     val hvorØnskerSøkerArbeid: TekstFelt = TekstFelt("label", "Hvorsomhelst", "hvasomhelst")
     val kanBegynneInnenEnUke: BooleanFelt = BooleanFelt("label", false)
     val kanSkaffeBarnepassInnenEnUke: BooleanFelt = BooleanFelt("label", false)
     val registrertSomArbeidssøkerNav: BooleanFelt = BooleanFelt("label", false)
     val villigTilÅTaImotTilbudOmArbeid: BooleanFelt = BooleanFelt("label", false)
     val ønskerSøker50ProsentStilling: BooleanFelt = BooleanFelt("label", false)
-    val arbeidssøker = Arbeidssøker(hvorØnskerSøkerArbeid,
-                                    kanBegynneInnenEnUke,
-                                    kanSkaffeBarnepassInnenEnUke,
-                                    registrertSomArbeidssøkerNav,
-                                    villigTilÅTaImotTilbudOmArbeid,
-                                    ønskerSøker50ProsentStilling)
+    val arbeidssøker = Arbeidssøker(
+        hvorØnskerSøkerArbeid,
+        kanBegynneInnenEnUke,
+        kanSkaffeBarnepassInnenEnUke,
+        registrertSomArbeidssøkerNav,
+        villigTilÅTaImotTilbudOmArbeid,
+        ønskerSøker50ProsentStilling
+    )
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
@@ -52,7 +53,7 @@ internal class SkjemaMapperTest {
     fun `Map til kontrakt mapper riktig verdi - hvorØnskerSøkerArbeid`() {
         val kontrakt = SkjemaMapper.mapTilKontrakt(arbeidssøker, "14108921464", "Innsenders navn", innsendingMottatt)
         Assertions.assertThat(kontrakt.arbeidssøker.verdi.hvorØnskerDuArbeid.verdi)
-                .isEqualTo(arbeidssøker.hvorØnskerSøkerArbeid.verdi)
+            .isEqualTo(arbeidssøker.hvorØnskerSøkerArbeid.verdi)
     }
 
     @Test
@@ -75,7 +76,6 @@ internal class SkjemaMapperTest {
         Assertions.assertThat(kontrakt.arbeidssøker.verdi.kanDuBegynneInnenEnUke.label).isEqualTo("kanSkaffeBarnepassInnenEnUke")
     }
 
-
     @Test
     fun `Map til kontrakt mapper riktig verdi - registrertSomArbeidssøkerNav`() {
         val copy = arbeidssøker.copy(kanBegynneInnenEnUke = BooleanFelt("registrertSomArbeidssøkerNav", true))
@@ -94,7 +94,7 @@ internal class SkjemaMapperTest {
         // Then
         Assertions.assertThat(kontrakt.arbeidssøker.verdi.kanDuBegynneInnenEnUke.verdi).isEqualTo(true)
         Assertions.assertThat(kontrakt.arbeidssøker.verdi.kanDuBegynneInnenEnUke.label)
-                .isEqualTo("villigTilÅTaImotTilbudOmArbeid")
+            .isEqualTo("villigTilÅTaImotTilbudOmArbeid")
     }
 
     @Test
@@ -106,5 +106,4 @@ internal class SkjemaMapperTest {
         Assertions.assertThat(kontrakt.arbeidssøker.verdi.kanDuBegynneInnenEnUke.verdi).isEqualTo(true)
         Assertions.assertThat(kontrakt.arbeidssøker.verdi.kanDuBegynneInnenEnUke.label).isEqualTo("ønskerSøker50ProsentStilling")
     }
-
 }

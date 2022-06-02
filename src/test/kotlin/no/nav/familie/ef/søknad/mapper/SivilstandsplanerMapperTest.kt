@@ -1,10 +1,8 @@
 package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
-import no.nav.familie.ef.søknad.mapper.kontrakt.BosituasjonMapper
 import no.nav.familie.ef.søknad.mapper.kontrakt.SivilstandsplanerMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
-import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -41,7 +39,6 @@ internal class SivilstandsplanerMapperTest {
         assertThat(sivilstandsplaner.harPlaner?.label).isEqualTo("Har du konkrete planer om å gifte deg eller bli samboer?")
     }
 
-
     @Test
     fun `Vi mapper dato for sambo- gifteplaner `() {
         // When
@@ -58,6 +55,8 @@ internal class SivilstandsplanerMapperTest {
         assertThat(sivilstandsplaner.fraDato?.label).isEqualTo("Når skal dette skje?")
     }
 
-    private fun getBosituasjon(fileName: String) = objectMapper.readValue(File("src/test/resources/$fileName"),
-                                                                          Bosituasjon::class.java)
+    private fun getBosituasjon(fileName: String) = objectMapper.readValue(
+        File("src/test/resources/$fileName"),
+        Bosituasjon::class.java
+    )
 }

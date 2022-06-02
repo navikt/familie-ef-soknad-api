@@ -22,5 +22,4 @@ class KodeverkServiceMock {
             return "Oslo"
         }
     }
-
 }

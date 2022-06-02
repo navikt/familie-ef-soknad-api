@@ -5,7 +5,6 @@ import no.nav.familie.ef.søknad.mock.søknadDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-
 internal class SivilstandsdetaljerMapperTest {
 
     @Test
@@ -33,7 +32,6 @@ internal class SivilstandsdetaljerMapperTest {
 
         assertThat(kontrakt.endringSamværsordningDato?.label).isEqualTo(sivilstatus.datoEndretSamvær?.label)
         assertThat(kontrakt.endringSamværsordningDato?.verdi).isEqualTo(sivilstatus.datoEndretSamvær?.verdi)
-
 
         assertThat(kontrakt.erUformeltSeparertEllerSkilt?.label).isEqualTo(sivilstatus.erUformeltSeparertEllerSkilt?.label)
         assertThat(kontrakt.erUformeltSeparertEllerSkilt?.verdi).isEqualTo(sivilstatus.erUformeltSeparertEllerSkilt?.verdi)

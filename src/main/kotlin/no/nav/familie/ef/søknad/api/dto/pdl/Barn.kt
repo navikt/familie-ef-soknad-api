@@ -2,13 +2,14 @@ package no.nav.familie.ef.søknad.api.dto.pdl
 
 import java.time.LocalDate
 
-data class Barn(val fnr: String,
-                private val _navn: String,
-                val alder: Int,
-                val fødselsdato: LocalDate,
-                val harSammeAdresse: Boolean,
-                val medforelder: Medforelder?,
-                val harAdressesperre: Boolean
+data class Barn(
+    val fnr: String,
+    private val _navn: String,
+    val alder: Int,
+    val fødselsdato: LocalDate,
+    val harSammeAdresse: Boolean,
+    val medforelder: Medforelder?,
+    val harAdressesperre: Boolean
 ) {
 
     val navn: String
@@ -23,8 +24,4 @@ data class Barn(val fnr: String,
     override fun toString(): String {
         return "Barn(alder=$alder, fødselsdato=$fødselsdato, annenForelder=$medforelder, harAdressesperre=$harAdressesperre)"
     }
-
-
 }
-
-

@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad.integration
 
 import no.nav.familie.ef.søknad.config.MottakConfig
-import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.integration.SøknadClientUtil.filtrerVekkEldreDokumentasjonsbehov
 import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
 import no.nav.familie.http.client.AbstractPingableRestClient
@@ -22,11 +21,12 @@ import org.springframework.web.client.RestOperations
 import java.net.URI
 import java.util.UUID
 
-
 @Service
-class SøknadClient(private val config: MottakConfig,
-                   @Qualifier("tokenExchange") operations: RestOperations)
-    : AbstractPingableRestClient(operations, "søknad.innsending") {
+class SøknadClient(
+    private val config: MottakConfig,
+    @Qualifier("tokenExchange") operations: RestOperations
+) :
+    AbstractPingableRestClient(operations, "søknad.innsending") {
 
     override val pingUri: URI = config.pingUri
 
@@ -56,16 +56,20 @@ class SøknadClient(private val config: MottakConfig,
 
     fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
         val søknaderMedDokumentasjonsbehov: List<SøknadMedDokumentasjonsbehovDto> =
-                postForEntity(config.hentSøknaderMedDokumentasjonsbehovUri,
-                              PersonIdent(personIdent),
-                              HttpHeaders().medContentTypeJsonUTF8())
+            postForEntity(
+                config.hentSøknaderMedDokumentasjonsbehovUri,
+                PersonIdent(personIdent),
+                HttpHeaders().medContentTypeJsonUTF8()
+            )
         return filtrerVekkEldreDokumentasjonsbehov(søknaderMedDokumentasjonsbehov)
     }
 
     fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
-        return postForEntity(config.hentEttersendingForPersonUri,
-                             PersonIdent(personIdent),
-                             HttpHeaders().medContentTypeJsonUTF8())
+        return postForEntity(
+            config.hentEttersendingForPersonUri,
+            PersonIdent(personIdent),
+            HttpHeaders().medContentTypeJsonUTF8()
+        )
     }
 
     private fun HttpHeaders.medContentTypeJsonUTF8(): HttpHeaders {
@@ -73,5 +77,4 @@ class SøknadClient(private val config: MottakConfig,
         this.acceptCharset = listOf(Charsets.UTF_8)
         return this
     }
-
 }

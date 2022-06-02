@@ -10,26 +10,31 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.test.Ignore
 
-@Ignore("Krever at unleash kjører lokalt på port 4242, og at en funksjonsbryter " +
-        "'test' er satt opp med byEnvironmentStrategy og miljø=local")
+@Ignore(
+    "Krever at unleash kjører lokalt på port 4242, og at en funksjonsbryter " +
+        "'test' er satt opp med byEnvironmentStrategy og miljø=local"
+)
 internal class FeatureToggleControllerIntegrationTest {
 
     val unleashUrl = "http://localhost:4242/api"
 
     private val unleashContextProvider = UnleashContextProvider {
         UnleashContext.builder()
-                .environment("local")
-                .appName("app")
-                .build()
+            .environment("local")
+            .appName("app")
+            .build()
     }
 
     private val unleashService = object : FeatureToggleService {
 
-        val unleash = DefaultUnleash(UnleashConfig.builder()
-                                             .appName("app")
-                                             .unleashAPI(unleashUrl)
-                                             .unleashContextProvider(unleashContextProvider)
-                                             .build(), ByEnvironmentStrategy())
+        val unleash = DefaultUnleash(
+            UnleashConfig.builder()
+                .appName("app")
+                .unleashAPI(unleashUrl)
+                .unleashContextProvider(unleashContextProvider)
+                .build(),
+            ByEnvironmentStrategy()
+        )
 
         override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
             return unleash.isEnabled(toggleId, defaultValue)
@@ -49,5 +54,4 @@ internal class FeatureToggleControllerIntegrationTest {
 
         Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("Ukjent", true)).isTrue()
     }
-
 }
