@@ -32,7 +32,7 @@ logging:
 
 no.nav.security.jwt:
   issuer.selvbetjening:
-    discoveryurl: http://metadata
+    discoveryurl: http://localhost:${mock-oauth2-server.port}/azuread/.well-known/openid-configuration
     accepted_audience: aud-localhost
     cookie_name: localhost-idtoken
     proxyurl:

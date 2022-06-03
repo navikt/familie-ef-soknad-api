@@ -22,7 +22,9 @@
         <kotlin.version>1.6.21</kotlin.version>
         <springdoc.version>1.6.8</springdoc.version>
         <mockk.version>1.12.4</mockk.version>
-        <token-validation-spring.version>1.3.19</token-validation-spring.version>
+        <token-validation-spring.version>2.0.21</token-validation-spring.version>
+        <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
+
         <fasterxml.version>2.13.3</fasterxml.version>
         <felles.version>1.20220503150007_21cbfef</felles.version>
         <kontrakter.version>2.0_20220531163525_b066cb4</kontrakter.version>
@@ -144,7 +146,8 @@
         <!-- Test -->
         <dependency>
             <groupId>no.nav.security</groupId>
-            <artifactId>token-validation-test-support</artifactId>
+<!--            <artifactId>token-validation-test-support</artifactId>-->
+            <artifactId>token-validation-spring-test</artifactId>
             <version>${token-validation-spring.version}</version>
             <scope>test</scope>
         </dependency>
