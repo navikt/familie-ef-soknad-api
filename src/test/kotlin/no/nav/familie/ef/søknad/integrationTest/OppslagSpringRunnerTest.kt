@@ -39,16 +39,10 @@ abstract class OppslagSpringRunnerTest {
     protected val restTemplate = TestRestTemplate()
     protected val headers = HttpHeaders()
 
-
     @Suppress("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired private lateinit var mockOAuth2Server: MockOAuth2Server
 
-    // @Autowired private lateinit var jdbcAggregateOperations: JdbcAggregateOperations
     @Autowired private lateinit var applicationContext: ApplicationContext
-   // @Autowired private lateinit var cacheManager: CacheManager
-  //  @Autowired @Qualifier("kodeverkCache") private lateinit var cacheManagerKodeverk: CacheManager
-   // @Autowired private lateinit var rolleConfig: RolleConfig
-
 
     @Autowired private lateinit var validationContext: TokenValidationContextHolder
 
@@ -59,22 +53,12 @@ abstract class OppslagSpringRunnerTest {
     fun reset() {
         headers.clear()
         loggingEvents.clear()
-//        clearCaches()
         resetWiremockServers()
     }
 
     private fun resetWiremockServers() {
         applicationContext.getBeansOfType(WireMockServer::class.java).values.forEach(WireMockServer::resetRequests)
     }
-
-//    private fun clearCaches() {
-//        listOf(cacheManagerKodeverk, cacheManager).forEach {
-//            it.cacheNames.mapNotNull { cacheName -> it.getCache(cacheName) }
-//                    .forEach { cache -> cache.clear() }
-//        }
-//    }
-
-
 
     protected fun getPort(): String {
         return port.toString()
@@ -86,7 +70,6 @@ abstract class OppslagSpringRunnerTest {
 
     fun jwt(fnr: String) = mockOAuth2Server.token(subject = fnr)
 
-
     fun MockOAuth2Server.token(
             subject: String,
             issuerId: String = "selvbetjening",
@@ -97,24 +80,16 @@ abstract class OppslagSpringRunnerTest {
             ): String {
         return this.issueToken(
                 issuerId,
-                clientId
-//                DefaultOAuth2TokenCallback(
-//                        issuerId = issuerId,
-//                        subject = subject,
-//                        audience = listOf(audience),
-//                        claims = claims,
-//                        expiry = 3600
-//                )
+                clientId,
+                DefaultOAuth2TokenCallback(
+                        issuerId = issuerId,
+                        subject = subject,
+                        audience = listOf(audience),
+                        claims = claims,
+                        expiry = 3600
+                )
         ).serialize()
     }
-
-    protected fun onBehalfOfToken(): String {
-        return TokenUtil.onBehalfOfToken(mockOAuth2Server,  "sdf", "wfe")
-    }
-
-//    protected fun clientToken(clientId: String = "1", accessAsApplication: Boolean = false): String {
-//        return TokenUtil.clientToken(mockOAuth2Server, clientId, accessAsApplication)
-//    }
 
     protected fun søkerBearerToken(personident: String = FnrGenerator.generer()): String {
         return jwt(personident)

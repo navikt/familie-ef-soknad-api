@@ -1,13 +1,10 @@
 package no.nav.familie.ef.søknad.integrationTest
 
-import io.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND
 import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.security.token.support.core.api.Unprotected
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.exchange
 import org.springframework.context.annotation.Profile
@@ -16,7 +13,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -31,11 +27,8 @@ class FeilController {
     fun feil(): Unit = throw RuntimeException("Feil")
 }
 
-@ActiveProfiles("local", "feil-controller")
-@ExtendWith(SpringExtension::class)
+@ActiveProfiles("feil-controller")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
-
-
 class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
 
     @BeforeEach
@@ -63,9 +56,9 @@ class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
 
     @Test
     fun `skal få 500 når endepunkt kaster feil`() {
-    val exchange: ResponseEntity<String> = restTemplate.exchange(localhost("/api/feil"),
-                                                                 org.springframework.http.HttpMethod.GET,
-                                                                 HttpEntity<Any>(headers))
+        val exchange: ResponseEntity<String> = restTemplate.exchange(localhost("/api/feil"),
+                                                                     org.springframework.http.HttpMethod.GET,
+                                                                     HttpEntity<Any>(headers))
         assertThat(exchange.statusCode).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)
     }
 

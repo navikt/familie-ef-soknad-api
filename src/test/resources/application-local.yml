@@ -31,7 +31,7 @@ logging:
   config: classpath:logback-test.xml
 no.nav.security.jwt:
   issuer.selvbetjening:
-    discoveryurl: http://localhost:${mock-oauth2-server.port}/azuread/.well-known/openid-configuration
+    discoveryurl: http://localhost:${mock-oauth2-server.port}/selvbetjening/.well-known/openid-configuration
     accepted_audience: aud-localhost
     cookie_name: localhost-idtoken
     proxyurl:
