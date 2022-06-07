@@ -5,19 +5,17 @@ import io.mockk.mockk
 import io.mockk.verify
 import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.familie.ef.søknad.integration.FamilieIntegrasjonerClient
+import no.nav.familie.ef.søknad.integrationTest.OppslagSpringRunnerTest
 import no.nav.familie.kontrakter.felles.kodeverk.BeskrivelseDto
 import no.nav.familie.kontrakter.felles.kodeverk.BetydningDto
 import no.nav.familie.kontrakter.felles.kodeverk.KodeverkDto
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.time.LocalDate
 
 @Profile("kodeverk-cache-test")
@@ -36,37 +34,36 @@ class KodeverkTestConfig {
 
     private fun kodeverk(kode: String, verdi: String): KodeverkDto {
         return KodeverkDto(
-            mapOf(
-                kode to listOf(
-                    BetydningDto(
-                        LocalDate.MIN,
-                        LocalDate.MAX,
-                        mapOf("nb" to BeskrivelseDto(verdi, verdi))
-                    )
+                mapOf(
+                        kode to listOf(
+                                BetydningDto(
+                                        LocalDate.MIN,
+                                        LocalDate.MAX,
+                                        mapOf("nb" to BeskrivelseDto(verdi, verdi))
+                                )
+                        )
                 )
-            )
         )
     }
 }
 
-@ActiveProfiles("local", "kodeverk-cache-test")
-@ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
-class KodeverkServiceTest {
+class KodeverkServiceTest : OppslagSpringRunnerTest() {
 
     @Autowired lateinit var familieIntegrasjonerClient: FamilieIntegrasjonerClient
-    @Autowired lateinit var kodeverkService: KodeverkService
+    @Autowired lateinit var cachedKodeServ: KodeverkService.CachedKodeverkService
 
     @Test
     fun `skal cache henting av poststed mot familieIntegrasjonerClient`() {
+        val kodeverkService = KodeverkService(cachedKodeverkService = cachedKodeServ)
         kodeverkService.hentPoststed("0575")
         kodeverkService.hentPoststed("0575")
-
         verify(exactly = 1) { familieIntegrasjonerClient.hentKodeverkPoststed() }
     }
 
     @Test
     fun `skal cache henting av land mot familieIntegrasjonerClient`() {
+        val kodeverkService = KodeverkService(cachedKodeverkService = cachedKodeServ)
         kodeverkService.hentLand("NOR")
         kodeverkService.hentLand("SWE")
         verify(exactly = 1) { familieIntegrasjonerClient.hentKodeverkLandkoder() }
