@@ -29,7 +29,6 @@ cors:
 
 logging:
   config: classpath:logback-test.xml
-
 no.nav.security.jwt:
   issuer.selvbetjening:
     discoveryurl: http://localhost:${mock-oauth2-server.port}/azuread/.well-known/openid-configuration
