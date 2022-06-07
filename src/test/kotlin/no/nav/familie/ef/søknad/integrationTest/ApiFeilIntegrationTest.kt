@@ -28,7 +28,6 @@ class FeilController {
 }
 
 @ActiveProfiles("feil-controller")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
 
     @BeforeEach

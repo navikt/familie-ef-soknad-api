@@ -42,7 +42,6 @@ class SøknadBarnetilsynControllerTestConfiguration {
 }
 
 @ActiveProfiles("overgangsstonad-controller-test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
 
     @Autowired lateinit var søknadService: SøknadService

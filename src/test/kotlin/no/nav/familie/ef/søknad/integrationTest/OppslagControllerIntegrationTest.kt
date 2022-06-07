@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.exchange
 import org.springframework.http.HttpEntity
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
 
     val tokenSubject = "12345678911"

@@ -1,4 +1,5 @@
 package no.nav.familie.ef.søknad.integrationTest
+
 import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.read.ListAppender
 import com.github.tomakehurst.wiremock.WireMockServer
@@ -6,7 +7,6 @@ import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.familie.util.FnrGenerator
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
-import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.extension.ExtendWith
@@ -20,9 +20,8 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.util.UUID
 
-
 @ExtendWith(SpringExtension::class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK, classes = [ApplicationLocalLauncher::class])
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 @ActiveProfiles("local",
                 "mock-kodeverk",
                 "mock-dokument",
@@ -30,7 +29,7 @@ import java.util.UUID
                 "mock-pdlApp2AppClient",
                 "mock-mottak",
                 "kodeverk-cache-test")
-@EnableMockOAuth2Server()
+@EnableMockOAuth2Server
 abstract class OppslagSpringRunnerTest {
 
     protected val listAppender = initLoggingEventListAppender()
@@ -40,10 +39,7 @@ abstract class OppslagSpringRunnerTest {
 
     @Suppress("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired private lateinit var mockOAuth2Server: MockOAuth2Server
-
     @Autowired private lateinit var applicationContext: ApplicationContext
-
-    @Autowired private lateinit var validationContext: TokenValidationContextHolder
 
     @LocalServerPort
     private var port: Int? = 0
@@ -67,9 +63,13 @@ abstract class OppslagSpringRunnerTest {
         return LOCALHOST + getPort() + uri
     }
 
-    fun jwt(fnr: String) = mockOAuth2Server.token(subject = fnr)
+    protected fun søkerBearerToken(personident: String = FnrGenerator.generer()): String {
+        return jwt(personident)
+    }
 
-    fun MockOAuth2Server.token(
+    private fun jwt(fnr: String) = mockOAuth2Server.token(subject = fnr)
+
+    private fun MockOAuth2Server.token(
             subject: String,
             issuerId: String = "selvbetjening",
             clientId: String = UUID.randomUUID().toString(),
@@ -88,10 +88,6 @@ abstract class OppslagSpringRunnerTest {
                         expiry = 3600
                 )
         ).serialize()
-    }
-
-    protected fun søkerBearerToken(personident: String = FnrGenerator.generer()): String {
-        return jwt(personident)
     }
 
     companion object {

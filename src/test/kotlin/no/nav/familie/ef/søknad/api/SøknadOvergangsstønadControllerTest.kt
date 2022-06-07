@@ -41,7 +41,6 @@ class SøknadOvergangsstønadControllerTestConfiguration {
 }
 
 @ActiveProfiles("overgangsstonad-controller-test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest() {
 
     @BeforeEach

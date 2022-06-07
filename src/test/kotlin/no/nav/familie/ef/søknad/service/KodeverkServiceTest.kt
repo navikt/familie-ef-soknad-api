@@ -47,7 +47,7 @@ class KodeverkTestConfig {
     }
 }
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
+
 class KodeverkServiceTest : OppslagSpringRunnerTest() {
 
     @Autowired lateinit var familieIntegrasjonerClient: FamilieIntegrasjonerClient

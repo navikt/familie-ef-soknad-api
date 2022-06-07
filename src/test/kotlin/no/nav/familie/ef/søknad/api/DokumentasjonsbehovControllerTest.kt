@@ -36,7 +36,6 @@ class DokumentasjonsbehovControllerTestConfiguration {
 }
 
 @ActiveProfiles("dokumentasjonsbehov-test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
 internal class DokumentasjonsbehovControllerTest : OppslagSpringRunnerTest() {
 
 
