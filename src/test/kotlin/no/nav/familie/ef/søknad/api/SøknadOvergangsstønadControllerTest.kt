@@ -40,17 +40,17 @@ class SøknadOvergangsstønadControllerTestConfiguration {
 @ActiveProfiles("overgangsstonad-controller-test")
 internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest() {
 
-    @BeforeEach
-    fun førAlle() {
-        headers.setBearerAuth(søkerBearerToken(tokenSubject))
-    }
-
     @Autowired
     lateinit var søknadService: SøknadService
     @Autowired
     lateinit var featureToggleService: FeatureToggleService
 
     val tokenSubject = "12345678911"
+
+    @BeforeEach
+    fun førAlle() {
+        headers.setBearerAuth(søkerBearerToken(tokenSubject))
+    }
 
     @Test
     fun `sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
