@@ -3,11 +3,9 @@ package no.nav.familie.ef.søknad
 import no.nav.familie.ef.søknad.integrationTest.ApplicationLocalTestLauncher
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.context.annotation.Import
 
-@Import(ApplicationLocalTestLauncher::class)
 @EnableMockOAuth2Server
-class ApplicationLocalLauncher
+class ApplicationLocalLauncher : ApplicationLocalTestLauncher()
 
 fun main(args: Array<String>) {
     SpringApplicationBuilder(ApplicationLocalLauncher::class.java)
