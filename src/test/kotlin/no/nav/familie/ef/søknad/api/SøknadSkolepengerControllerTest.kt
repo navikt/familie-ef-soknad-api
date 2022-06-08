@@ -3,34 +3,28 @@ package no.nav.familie.ef.søknad.api
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadSkolepengerDto
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
+import no.nav.familie.ef.søknad.integrationTest.OppslagSpringRunnerTest
 import no.nav.familie.ef.søknad.mock.søkerMedDefaultVerdier
 import no.nav.familie.ef.søknad.service.SøknadService
 import no.nav.familie.kontrakter.felles.objectMapper
-import no.nav.security.token.support.core.JwtTokenConstants
-import no.nav.security.token.support.test.JwtTokenGenerator
 import org.assertj.core.api.Assertions.assertThat
-import org.glassfish.jersey.logging.LoggingFeature
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.client.exchange
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpMethod.POST
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.io.File
 import java.time.LocalDateTime
-import javax.ws.rs.client.ClientBuilder
-import javax.ws.rs.client.Entity
-import javax.ws.rs.core.MediaType
 
 @Profile("overgangsstonad-controller-test")
 @Configuration
@@ -45,27 +39,26 @@ class SøknadSkolepengerControllerTestConfiguration {
     fun featureToggleService(): FeatureToggleService = mockk()
 }
 
-@ActiveProfiles("local", "overgangsstonad-controller-test")
-@ExtendWith(SpringExtension::class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalLauncher::class])
-internal class SøknadSkolepengerControllerTest {
+@ActiveProfiles("overgangsstonad-controller-test")
+internal class SøknadSkolepengerControllerTest : OppslagSpringRunnerTest() {
 
-    private fun serializedJWTToken() = JwtTokenGenerator.createSignedJWT(tokenSubject).serialize()
-    @Autowired lateinit var søknadService: SøknadService
-    @Autowired lateinit var featureToggleService: FeatureToggleService
+    @Autowired
+    lateinit var søknadService: SøknadService
 
-    @Value("\${local.server.port}")
-    val port: Int = 0
-    val contextPath = "/api"
+    @Autowired
+    lateinit var featureToggleService: FeatureToggleService
+
     val tokenSubject = "12345678911"
+
+    @BeforeEach
+    fun førAlle() {
+        headers.setBearerAuth(søkerBearerToken(tokenSubject))
+    }
 
     fun søknadSkolepenger() = objectMapper.readValue(
         File("src/test/resources/skolepenger/skolepenger.json"),
         SøknadSkolepengerDto::class.java
     )
-
-    fun client() = ClientBuilder.newClient().register(LoggingFeature::class.java)
-    fun webTarget() = client().target("http://localhost:$port$contextPath")
 
     @Test
     fun `sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
@@ -78,25 +71,35 @@ internal class SøknadSkolepengerControllerTest {
                 )
             )
 
-        every { søknadService.sendInn(søknad, any()) } returns Kvittering("Mottatt søknad: $søknad", LocalDateTime.now())
+        every { søknadService.sendInn(søknad, any()) } returns Kvittering(
+            "Mottatt søknad: $søknad",
+            LocalDateTime.now()
+        )
         every { featureToggleService.isEnabled(any()) } returns true
 
-        val response = webTarget().path("/soknad/skolepenger/")
-            .request(MediaType.APPLICATION_JSON)
-            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-            .post(Entity.json(søknad))
+        val response = restTemplate.exchange<Kvittering>(
+            localhost("/api/soknad/skolepenger/"),
+            POST,
+            HttpEntity(søknad, headers)
+        )
 
-        assertThat(response.status).isEqualTo(200)
+        assertThat(response.statusCodeValue).isEqualTo(200)
+        assertThat(response.body.text).isEqualTo("ok")
     }
 
     @Test
     fun `sendInn returnerer 403 ved ulik fnr i token og søknad`() {
         val søknadSkolepengerDto = søknadSkolepenger()
-        val response = webTarget().path("/soknad/skolepenger/")
-            .request(MediaType.APPLICATION_JSON)
-            .header(JwtTokenConstants.AUTHORIZATION_HEADER, "Bearer ${serializedJWTToken()}")
-            .post(Entity.json(søknadSkolepengerDto))
-        assertThat(response.status).isEqualTo(403)
+        // guard
+        assertThat(søknadSkolepengerDto.person.søker.fnr).isNotEqualTo(tokenSubject)
+
+        val response = restTemplate.exchange<Any>(
+            localhost("/api/soknad/skolepenger/"),
+            POST,
+            HttpEntity(søknadSkolepengerDto, headers)
+        )
+
+        assertThat(response.statusCodeValue).isEqualTo(403)
         verify(exactly = 0) { søknadService.sendInn(søknadSkolepengerDto, any()) }
     }
 }
