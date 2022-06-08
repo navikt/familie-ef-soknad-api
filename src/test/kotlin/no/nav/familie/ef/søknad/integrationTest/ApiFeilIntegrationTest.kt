@@ -1,11 +1,9 @@
 package no.nav.familie.ef.søknad.integrationTest
 
-import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.security.token.support.core.api.Unprotected
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.exchange
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpEntity
@@ -38,27 +36,32 @@ class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
     @Test
     fun `skal få 200 når autentisert og vi bruker get`() {
 
-        val exchange: ResponseEntity<String> = restTemplate.exchange(localhost("/api/innlogget"),
-                                                                     org.springframework.http.HttpMethod.GET,
-                                                                     HttpEntity<Any>(headers))
+        val exchange: ResponseEntity<String> = restTemplate.exchange(
+            localhost("/api/innlogget"),
+            org.springframework.http.HttpMethod.GET,
+            HttpEntity<Any>(headers)
+        )
         assertThat(exchange.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(exchange.body).isEqualTo("Autentisert kall")
     }
 
     @Test
     fun `skal få 404 når endepunkt ikke eksisterer`() {
-        val exchange: ResponseEntity<String> = restTemplate.exchange(localhost("/api/finnesIkke"),
-                                                                     org.springframework.http.HttpMethod.GET,
-                                                                     HttpEntity<Any>(headers))
+        val exchange: ResponseEntity<String> = restTemplate.exchange(
+            localhost("/api/finnesIkke"),
+            org.springframework.http.HttpMethod.GET,
+            HttpEntity<Any>(headers)
+        )
         assertThat(exchange.statusCode).isEqualTo(HttpStatus.NOT_FOUND)
     }
 
     @Test
     fun `skal få 500 når endepunkt kaster feil`() {
-        val exchange: ResponseEntity<String> = restTemplate.exchange(localhost("/api/feil"),
-                                                                     org.springframework.http.HttpMethod.GET,
-                                                                     HttpEntity<Any>(headers))
+        val exchange: ResponseEntity<String> = restTemplate.exchange(
+            localhost("/api/feil"),
+            org.springframework.http.HttpMethod.GET,
+            HttpEntity<Any>(headers)
+        )
         assertThat(exchange.statusCode).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)
     }
-
 }

@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.service
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.familie.ef.søknad.integration.FamilieIntegrasjonerClient
 import no.nav.familie.ef.søknad.integrationTest.OppslagSpringRunnerTest
 import no.nav.familie.kontrakter.felles.kodeverk.BeskrivelseDto
@@ -11,7 +10,6 @@ import no.nav.familie.kontrakter.felles.kodeverk.BetydningDto
 import no.nav.familie.kontrakter.felles.kodeverk.KodeverkDto
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -34,24 +32,25 @@ class KodeverkTestConfig {
 
     private fun kodeverk(kode: String, verdi: String): KodeverkDto {
         return KodeverkDto(
-                mapOf(
-                        kode to listOf(
-                                BetydningDto(
-                                        LocalDate.MIN,
-                                        LocalDate.MAX,
-                                        mapOf("nb" to BeskrivelseDto(verdi, verdi))
-                                )
-                        )
+            mapOf(
+                kode to listOf(
+                    BetydningDto(
+                        LocalDate.MIN,
+                        LocalDate.MAX,
+                        mapOf("nb" to BeskrivelseDto(verdi, verdi))
+                    )
                 )
+            )
         )
     }
 }
 
-
 class KodeverkServiceTest : OppslagSpringRunnerTest() {
 
-    @Autowired lateinit var familieIntegrasjonerClient: FamilieIntegrasjonerClient
-    @Autowired lateinit var cachedKodeServ: KodeverkService.CachedKodeverkService
+    @Autowired
+    lateinit var familieIntegrasjonerClient: FamilieIntegrasjonerClient
+    @Autowired
+    lateinit var cachedKodeServ: KodeverkService.CachedKodeverkService
 
     @Test
     fun `skal cache henting av poststed mot familieIntegrasjonerClient`() {

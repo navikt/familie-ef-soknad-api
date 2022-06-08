@@ -99,8 +99,6 @@ internal class SøknadSkolepengerControllerTest : OppslagSpringRunnerTest() {
             HttpEntity(søknadSkolepengerDto, headers)
         )
 
-
-
         assertThat(response.statusCodeValue).isEqualTo(403)
         verify(exactly = 0) { søknadService.sendInn(søknadSkolepengerDto, any()) }
     }

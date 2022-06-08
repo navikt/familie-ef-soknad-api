@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.api
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.ApplicationLocalLauncher
 import no.nav.familie.ef.søknad.integration.SøknadClient
 import no.nav.familie.ef.søknad.integration.SøknadClientUtil.filtrerVekkEldreDokumentasjonsbehov
 import no.nav.familie.ef.søknad.integrationTest.OppslagSpringRunnerTest
@@ -14,7 +13,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.exchange
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -38,10 +36,11 @@ class DokumentasjonsbehovControllerTestConfiguration {
 @ActiveProfiles("dokumentasjonsbehov-test")
 internal class DokumentasjonsbehovControllerTest : OppslagSpringRunnerTest() {
 
-
-    @Autowired lateinit var søknadClient: SøknadClient
+    @Autowired
+    lateinit var søknadClient: SøknadClient
 
     val tokenSubject = "12345678911"
+
     @BeforeEach
     fun førAlle() {
         headers.setBearerAuth(søkerBearerToken(tokenSubject))
@@ -52,9 +51,11 @@ internal class DokumentasjonsbehovControllerTest : OppslagSpringRunnerTest() {
         val dokumentasjonsbehov = lagDokumentasjonsbehov(tokenSubject, LocalDate.now())
         every { søknadClient.hentDokumentasjonsbehovForSøknad(any()) } returns dokumentasjonsbehov
 
-        val response = restTemplate.exchange<DokumentasjonsbehovDto>(localhost("/api/dokumentasjonsbehov/${UUID.randomUUID()}"),
-                                                                                          HttpMethod.GET,
-                                                                                          HttpEntity<String>(headers))
+        val response = restTemplate.exchange<DokumentasjonsbehovDto>(
+            localhost("/api/dokumentasjonsbehov/${UUID.randomUUID()}"),
+            HttpMethod.GET,
+            HttpEntity<String>(headers)
+        )
 
         assertThat(response.statusCodeValue).isEqualTo(200)
         assertThat(response.body).isEqualTo(dokumentasjonsbehov)
@@ -62,11 +63,16 @@ internal class DokumentasjonsbehovControllerTest : OppslagSpringRunnerTest() {
 
     @Test
     internal fun `fnr i token er ikke lik fnr i søknaden`() {
-        every { søknadClient.hentDokumentasjonsbehovForSøknad(any()) } returns lagDokumentasjonsbehov("0", LocalDate.now())
+        every { søknadClient.hentDokumentasjonsbehovForSøknad(any()) } returns lagDokumentasjonsbehov(
+            "0",
+            LocalDate.now()
+        )
 
-        val response = restTemplate.exchange<Any>(localhost("/api/dokumentasjonsbehov/${UUID.randomUUID()}"),
-                                                         HttpMethod.GET,
-                                                         HttpEntity<String>(headers))
+        val response = restTemplate.exchange<Any>(
+            localhost("/api/dokumentasjonsbehov/${UUID.randomUUID()}"),
+            HttpMethod.GET,
+            HttpEntity<String>(headers)
+        )
 
         assertThat(response.statusCodeValue).isEqualTo(403)
     }
@@ -110,5 +116,4 @@ internal class DokumentasjonsbehovControllerTest : OppslagSpringRunnerTest() {
             innsendtDato,
             lagDokumentasjonsbehov(fødselsnummer, innsendtDato)
         )
-
 }
