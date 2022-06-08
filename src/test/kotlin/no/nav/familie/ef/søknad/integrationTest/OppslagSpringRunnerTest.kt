@@ -21,13 +21,14 @@ import java.util.UUID
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalTestLauncher::class])
-@ActiveProfiles("local",
-                "mock-kodeverk",
-                "mock-dokument",
-                "mock-pdl",
-                "mock-pdlApp2AppClient",
-                "mock-mottak",
-                "kodeverk-cache-test"
+@ActiveProfiles(
+    "local",
+    "mock-kodeverk",
+    "mock-dokument",
+    "mock-pdl",
+    "mock-pdlApp2AppClient",
+    "mock-mottak",
+    "kodeverk-cache-test"
 )
 @EnableMockOAuth2Server
 abstract class OppslagSpringRunnerTest {
@@ -70,23 +71,23 @@ abstract class OppslagSpringRunnerTest {
     private fun jwt(fnr: String) = mockOAuth2Server.token(subject = fnr)
 
     private fun MockOAuth2Server.token(
-            subject: String,
-            issuerId: String = "selvbetjening",
-            clientId: String = UUID.randomUUID().toString(),
-            audience: String = "aud-localhost",
-            claims: Map<String, Any> = mapOf("acr" to "Level4"),
+        subject: String,
+        issuerId: String = "selvbetjening",
+        clientId: String = UUID.randomUUID().toString(),
+        audience: String = "aud-localhost",
+        claims: Map<String, Any> = mapOf("acr" to "Level4"),
 
-            ): String {
+    ): String {
         return this.issueToken(
-                issuerId,
-                clientId,
-                DefaultOAuth2TokenCallback(
-                        issuerId = issuerId,
-                        subject = subject,
-                        audience = listOf(audience),
-                        claims = claims,
-                        expiry = 3600
-                )
+            issuerId,
+            clientId,
+            DefaultOAuth2TokenCallback(
+                issuerId = issuerId,
+                subject = subject,
+                audience = listOf(audience),
+                claims = claims,
+                expiry = 3600
+            )
         ).serialize()
     }
 
