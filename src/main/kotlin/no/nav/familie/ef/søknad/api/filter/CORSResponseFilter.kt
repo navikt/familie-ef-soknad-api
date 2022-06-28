@@ -43,5 +43,5 @@ internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
         return allowedOrigins.contains(request.getHeader("Origin"))
     }
 
-    private fun erOptionRequest(request: HttpServletRequest) = "OPTIONS" == request.method.toUpperCase() && erCorsOk(request)
+    private fun erOptionRequest(request: HttpServletRequest) = "OPTIONS" == request.method.uppercase() && erCorsOk(request)
 }
