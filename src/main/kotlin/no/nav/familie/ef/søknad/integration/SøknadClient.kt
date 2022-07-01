@@ -11,7 +11,6 @@ import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
 import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
 import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
 import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
-import no.nav.familie.kontrakter.ef.søknad.dokumentasjonsbehov.DokumentasjonsbehovDto
 import no.nav.familie.kontrakter.felles.PersonIdent
 import no.nav.familie.kontrakter.felles.ef.StønadType
 import org.springframework.beans.factory.annotation.Qualifier
@@ -19,7 +18,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
 import java.net.URI
-import java.util.UUID
 
 @Service
 class SøknadClient(
@@ -48,10 +46,6 @@ class SøknadClient(
 
     fun sendInnArbeidsRegistreringsskjema(skjema: SkjemaForArbeidssøker): KvitteringDto {
         return postForEntity(config.sendInnSkjemaArbeidUri, skjema)
-    }
-
-    fun hentDokumentasjonsbehovForSøknad(søknadId: UUID): DokumentasjonsbehovDto {
-        return getForEntity(config.byggUriForDokumentasjonsbehov(søknadId))
     }
 
     fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
