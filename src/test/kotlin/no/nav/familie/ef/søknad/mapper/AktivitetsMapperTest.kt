@@ -40,7 +40,7 @@ internal class AktivitetsMapperTest {
         Assertions.assertThat(aktivitetMapped.arbeidsforhold).isNotNull
     }
 
-    private val firma = aktivitetMapped.selvstendig?.verdi
+    private val firma = aktivitetMapped.firmaer?.verdi?.first()
 
     @Test
     fun `Map firmanavn label `() {

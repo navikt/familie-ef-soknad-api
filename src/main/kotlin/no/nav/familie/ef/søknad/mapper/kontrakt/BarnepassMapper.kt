@@ -15,12 +15,12 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barnepass as BarnepassDt
 
 object BarnepassMapper : Mapper<BarnepassDto, Barnepass>(OmBarnepassordning) {
 
-    override fun mapDto(barnepass: BarnepassDto): Barnepass {
+    override fun mapDto(data: BarnepassDto): Barnepass {
         return Barnepass(
-            årsakBarnepass = barnepass.årsakBarnepass?.tilSøknadsfelt(),
+            årsakBarnepass = data.årsakBarnepass?.tilSøknadsfelt(),
             barnepassordninger = Søknadsfelt(
                 Barnepassordninger.hentTekst(),
-                barnepass.barnepassordninger.map {
+                data.barnepassordninger.map {
                     BarnepassOrdning(
                         hvaSlagsBarnepassOrdning = it.hvaSlagsBarnepassOrdning.tilSøknadsfelt(),
                         navn = it.navn.tilSøknadsfelt(),

@@ -19,8 +19,8 @@ import no.nav.familie.kontrakter.ef.søknad.Situasjon
 
 object SituasjonsMapper : MapperMedVedlegg<SøknadOvergangsstønadDto, Situasjon>(MerOmSituasjonenDin) {
 
-    override fun mapDto(frontendDto: SøknadOvergangsstønadDto, vedlegg: Map<String, DokumentasjonWrapper>): Situasjon {
-        val merOmDinSituasjon = frontendDto.merOmDinSituasjon
+    override fun mapDto(data: SøknadOvergangsstønadDto, vedlegg: Map<String, DokumentasjonWrapper>): Situasjon {
+        val merOmDinSituasjon = data.merOmDinSituasjon
         return Situasjon(
             gjelderDetteDeg = merOmDinSituasjon.gjelderDetteDeg.tilSøknadsfelt(),
             sykdom = dokumentfelt(SYKDOM, vedlegg),
@@ -28,7 +28,7 @@ object SituasjonsMapper : MapperMedVedlegg<SøknadOvergangsstønadDto, Situasjon
             manglendeBarnepass = dokumentfelt(BARNEPASS, vedlegg),
             barnMedSærligeBehov = dokumentfelt(BARNETILSYN_BEHOV, vedlegg),
             utdanningstilbud = dokumentfelt(UTDANNING, vedlegg),
-            oppstartNyJobb = frontendDto.aktivitet.datoOppstartJobb?.tilSøknadsfelt(),
+            oppstartNyJobb = data.aktivitet.datoOppstartJobb?.tilSøknadsfelt(),
             arbeidskontrakt = dokumentfelt(ARBEIDSKONTRAKT, vedlegg),
             sagtOppEllerRedusertStilling = merOmDinSituasjon.sagtOppEllerRedusertStilling?.tilSøknadsfelt(),
             oppsigelseReduksjonÅrsak =

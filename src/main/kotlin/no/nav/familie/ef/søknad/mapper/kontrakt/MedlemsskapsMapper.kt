@@ -12,13 +12,13 @@ import no.nav.familie.kontrakter.ef.søknad.Utenlandsopphold as KontraksUtenland
 
 object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekster.OppholdINorge) {
 
-    override fun mapDto(medlemskap: Medlemskap): Medlemskapsdetaljer {
+    override fun mapDto(data: Medlemskap): Medlemskapsdetaljer {
         return Medlemskapsdetaljer(
-            medlemskap.søkerOppholderSegINorge.tilSøknadsfelt(),
-            medlemskap.søkerBosattINorgeSisteTreÅr.tilSøknadsfelt(),
+            data.søkerOppholderSegINorge.tilSøknadsfelt(),
+            data.søkerBosattINorgeSisteTreÅr.tilSøknadsfelt(),
             Søknadsfelt(
                 Språktekster.Utenlandsopphold.hentTekst(),
-                mapUtenlansopphold(medlemskap.perioderBoddIUtlandet)
+                mapUtenlansopphold(data.perioderBoddIUtlandet)
             )
         )
     }

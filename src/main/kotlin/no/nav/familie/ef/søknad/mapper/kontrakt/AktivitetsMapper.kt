@@ -37,7 +37,6 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
             arbeidsforhold = data.arbeidsforhold?.let {
                 Søknadsfelt(OmArbeidsforholdet.hentTekst(), mapArbeidsforhold(it))
             },
-            selvstendig = data.firma?.let { Søknadsfelt(OmFirmaDuDriver.hentTekst(), mapOmFirma(it)) },
             firmaer = data.firmaer?.let { Søknadsfelt(OmFirmaDuDriver.hentTekst(), mapOmFirmaer(it)) },
             virksomhet = data.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it, vedlegg) },
             arbeidssøker = data.arbeidssøker?.let { mapArbeidssøker(it, vedlegg) },

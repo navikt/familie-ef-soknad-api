@@ -18,24 +18,24 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdetaljer>(ÅrsakTilAleneMedBarn) {
 
     override fun mapDto(
-        sivilstatus: Sivilstatus,
+        data: Sivilstatus,
         vedlegg: Map<String, DokumentasjonWrapper>,
     ): Sivilstandsdetaljer {
         return Sivilstandsdetaljer(
             samlivsbruddsdokumentasjon = dokumentfelt(SAMLIVSBRUDD, vedlegg),
-            samlivsbruddsdato = sivilstatus.datoForSamlivsbrudd?.tilSøknadsfelt(),
-            endringSamværsordningDato = sivilstatus.datoEndretSamvær?.tilSøknadsfelt(),
-            fraflytningsdato = sivilstatus.datoFlyttetFraHverandre?.tilSøknadsfelt(),
-            erUformeltGift = sivilstatus.erUformeltGift?.tilSøknadsfelt(),
+            samlivsbruddsdato = data.datoForSamlivsbrudd?.tilSøknadsfelt(),
+            endringSamværsordningDato = data.datoEndretSamvær?.tilSøknadsfelt(),
+            fraflytningsdato = data.datoFlyttetFraHverandre?.tilSøknadsfelt(),
+            erUformeltGift = data.erUformeltGift?.tilSøknadsfelt(),
             erUformeltGiftDokumentasjon = dokumentfelt(INNGÅTT_EKTESKAP, vedlegg),
             separasjonsbekreftelse = dokumentfelt(SEPARASJON_ELLER_SKILSMISSE, vedlegg),
-            erUformeltSeparertEllerSkilt = sivilstatus.erUformeltSeparertEllerSkilt?.tilSøknadsfelt(),
+            erUformeltSeparertEllerSkilt = data.erUformeltSeparertEllerSkilt?.tilSøknadsfelt(),
             erUformeltSeparertEllerSkiltDokumentasjon =
             dokumentfelt(UFORMELL_SEPARASJON_ELLER_SKILSMISSE, vedlegg),
-            datoSøktSeparasjon = sivilstatus.datoSøktSeparasjon?.tilSøknadsfelt(),
-            søktOmSkilsmisseSeparasjon = sivilstatus.harSøktSeparasjon?.tilSøknadsfelt(),
-            årsakEnslig = sivilstatus.årsakEnslig?.tilSøknadsfelt(),
-            tidligereSamboerdetaljer = sivilstatus.tidligereSamboerDetaljer?.let {
+            datoSøktSeparasjon = data.datoSøktSeparasjon?.tilSøknadsfelt(),
+            søktOmSkilsmisseSeparasjon = data.harSøktSeparasjon?.tilSøknadsfelt(),
+            årsakEnslig = data.årsakEnslig?.tilSøknadsfelt(),
+            tidligereSamboerdetaljer = data.tidligereSamboerDetaljer?.let {
                 Søknadsfelt(
                     OmDenTidligereSamboeren.hentTekst(),
                     PersonMinimumMapper.personMinimum(it)

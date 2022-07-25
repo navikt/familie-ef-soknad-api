@@ -18,14 +18,14 @@ import no.nav.familie.ef.søknad.mapper.Språktekster.Søker as SpråkTeksterSø
 
 object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
 
-    override fun mapDto(søker: Søker): Personalia {
+    override fun mapDto(data: Søker): Personalia {
 
         return Personalia(
-            fødselsnummer = Søknadsfelt(FødselsnummerTekst.hentTekst(), Fødselsnummer(søker.fnr)),
-            navn = Søknadsfelt(Navn.hentTekst(), søker.forkortetNavn),
-            adresse = lagAdresseSøknadsFelt(søker.adresse),
-            statsborgerskap = Søknadsfelt(Statsborgerskap.hentTekst(), søker.statsborgerskap),
-            sivilstatus = Søknadsfelt(Sivilstatus.hentTekst(), søker.sivilstand)
+            fødselsnummer = Søknadsfelt(FødselsnummerTekst.hentTekst(), Fødselsnummer(data.fnr)),
+            navn = Søknadsfelt(Navn.hentTekst(), data.forkortetNavn),
+            adresse = lagAdresseSøknadsFelt(data.adresse),
+            statsborgerskap = Søknadsfelt(Statsborgerskap.hentTekst(), data.statsborgerskap),
+            sivilstatus = Søknadsfelt(Sivilstatus.hentTekst(), data.sivilstand)
         )
     }
 
