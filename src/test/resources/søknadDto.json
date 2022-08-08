@@ -456,28 +456,30 @@
         }
       }
     ],
-    "firma": {
-      "etableringsdato": {
-        "label": "Etableringsdato",
-        "verdi": "2020-03-27T13:52:42.742Z"
-      },
-      "navn": {
-        "label": "Navn på arbeidsgiver",
-        "verdi": "Boller og brus"
-      },
-      "organisasjonsnummer": {
-        "label": "Organisasjonsnummer",
-        "verdi": "123"
-      },
-      "arbeidsmengde": {
-        "label": "Arbeidsmengde",
-        "verdi": "34"
-      },
-      "arbeidsuke": {
-        "label": "Arbeidsukebeskrivelse",
-        "verdi": "Jobber mandager"
+    "firmaer": [
+      {
+        "etableringsdato": {
+          "label": "Etableringsdato",
+          "verdi": "2020-03-27T13:52:42.742Z"
+        },
+        "navn": {
+          "label": "Navn på arbeidsgiver",
+          "verdi": "Boller og brus"
+        },
+        "organisasjonsnummer": {
+          "label": "Organisasjonsnummer",
+          "verdi": "123"
+        },
+        "arbeidsmengde": {
+          "label": "Arbeidsmengde",
+          "verdi": "34"
+        },
+        "arbeidsuke": {
+          "label": "Arbeidsukebeskrivelse",
+          "verdi": "Jobber mandager"
+        }
       }
-    },
+    ],
     "etablererEgenVirksomhet": {
       "label": "Hva er din arbeidsituasjon?",
       "verdi": "Dette er en spennende gründerbedrift"

@@ -23,33 +23,32 @@ import no.nav.familie.kontrakter.ef.søknad.UnderUtdanning as UnderUtdanningKont
 
 object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(UtdanningenDuSkalTa) {
 
-    override fun mapDto(underUtdanning: UnderUtdanning): UnderUtdanningKontrakt {
+    override fun mapDto(data: UnderUtdanning): UnderUtdanningKontrakt {
         return UnderUtdanningKontrakt(
-            skoleUtdanningssted = underUtdanning.skoleUtdanningssted.tilSøknadsfelt(),
+            skoleUtdanningssted = data.skoleUtdanningssted.tilSøknadsfelt(),
             utdanning = null,
-            gjeldendeUtdanning =
-            Søknadsfelt(
+            gjeldendeUtdanning = Søknadsfelt(
                 Utdanning.hentTekst(),
                 GjeldendeUtdanning(
-                    underUtdanning.linjeKursGrad.tilSøknadsfelt(),
+                    data.linjeKursGrad.tilSøknadsfelt(),
                     Søknadsfelt(
                         NårSkalDuVæreElevStudent.hentTekst(),
                         Datoperiode(
-                            underUtdanning.periode.fra.tilLocalDate(),
-                            underUtdanning.periode.til.tilLocalDate()
+                            data.periode.fra.tilLocalDate(),
+                            data.periode.til.tilLocalDate()
                         )
                     )
                 )
             ),
-            offentligEllerPrivat = underUtdanning.offentligEllerPrivat.tilSøknadsfelt(),
-            hvorMyeSkalDuStudere = underUtdanning.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
-            heltidEllerDeltid = underUtdanning.heltidEllerDeltid.tilSøknadsfelt(),
-            hvaErMåletMedUtdanningen = underUtdanning.målMedUtdanning?.tilSøknadsfelt(),
-            utdanningEtterGrunnskolen = underUtdanning.harTattUtdanningEtterGrunnskolen.tilSøknadsfelt(),
-            tidligereUtdanninger = underUtdanning.tidligereUtdanning?.let { mapTidligereUtdanning(it) },
-            semesteravgift = mapUtgifterTilUtdanning(underUtdanning.semesteravgift),
-            studieavgift = mapUtgifterTilUtdanning(underUtdanning.studieavgift),
-            eksamensgebyr = mapUtgifterTilUtdanning(underUtdanning.eksamensgebyr)
+            offentligEllerPrivat = data.offentligEllerPrivat.tilSøknadsfelt(),
+            hvorMyeSkalDuStudere = data.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
+            heltidEllerDeltid = data.heltidEllerDeltid.tilSøknadsfelt(),
+            hvaErMåletMedUtdanningen = data.målMedUtdanning?.tilSøknadsfelt(),
+            utdanningEtterGrunnskolen = data.harTattUtdanningEtterGrunnskolen.tilSøknadsfelt(),
+            tidligereUtdanninger = data.tidligereUtdanning?.let { mapTidligereUtdanning(it) },
+            semesteravgift = mapUtgifterTilUtdanning(data.semesteravgift),
+            studieavgift = mapUtgifterTilUtdanning(data.studieavgift),
+            eksamensgebyr = mapUtgifterTilUtdanning(data.eksamensgebyr)
         )
     }
 

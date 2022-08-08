@@ -84,7 +84,7 @@ internal class SøknadSkolepengerControllerTest : OppslagSpringRunnerTest() {
         )
 
         assertThat(response.statusCodeValue).isEqualTo(200)
-        assertThat(response.body.text).isEqualTo("ok")
+        assertThat(response.body?.text).isEqualTo("ok")
     }
 
     @Test

@@ -13,13 +13,13 @@ import no.nav.familie.kontrakter.ef.søknad.Bosituasjon as KontraktBosituasjon
 
 object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>(Språktekster.Bosituasjon) {
 
-    override fun mapDto(bosituasjon: Bosituasjon, vedlegg: Map<String, DokumentasjonWrapper>): KontraktBosituasjon {
+    override fun mapDto(data: Bosituasjon, vedlegg: Map<String, DokumentasjonWrapper>): KontraktBosituasjon {
         return KontraktBosituasjon(
-            delerDuBolig = mapSøkerDelerBoligMedAndre(bosituasjon),
-            samboerdetaljer = mapSamboer(bosituasjon),
-            sammenflyttingsdato = bosituasjon.datoFlyttetSammenMedSamboer?.tilSøknadsfelt(),
+            delerDuBolig = mapSøkerDelerBoligMedAndre(data),
+            samboerdetaljer = mapSamboer(data),
+            sammenflyttingsdato = data.datoFlyttetSammenMedSamboer?.tilSøknadsfelt(),
             tidligereSamboerFortsattRegistrertPåAdresse = dokumentfelt(BOR_PÅ_ULIKE_ADRESSER, vedlegg),
-            datoFlyttetFraHverandre = bosituasjon.datoFlyttetFraHverandre?.tilSøknadsfelt()
+            datoFlyttetFraHverandre = data.datoFlyttetFraHverandre?.tilSøknadsfelt()
         )
     }
 
