@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.api.dto.pdl
 
-import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
+import no.nav.familie.kontrakter.felles.Fødselsnummer
 import java.time.LocalDate
 import java.time.Period
 

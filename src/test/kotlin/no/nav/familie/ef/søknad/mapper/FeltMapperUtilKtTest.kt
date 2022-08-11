@@ -5,9 +5,9 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ListFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.PeriodeFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
-import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import no.nav.familie.kontrakter.felles.Fødselsnummer
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
