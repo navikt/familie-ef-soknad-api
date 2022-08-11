@@ -1,10 +1,10 @@
 package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.kontrakter.ef.søknad.Adresse
-import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
 import no.nav.familie.kontrakter.ef.søknad.Personalia
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
+import no.nav.familie.kontrakter.felles.Fødselsnummer
 
 fun personalia(): Personalia {
     return Personalia(

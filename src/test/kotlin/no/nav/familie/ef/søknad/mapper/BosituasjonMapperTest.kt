@@ -3,7 +3,7 @@ package no.nav.familie.ef.søknad.mapper
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
 import no.nav.familie.ef.søknad.mapper.kontrakt.BosituasjonMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
-import no.nav.familie.kontrakter.ef.søknad.Fødselsnummer
+import no.nav.familie.kontrakter.felles.Fødselsnummer
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
