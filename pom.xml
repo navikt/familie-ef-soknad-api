@@ -27,7 +27,7 @@
 
         <fasterxml.version>2.13.4</fasterxml.version>
         <felles.version>1.20221006150009_46021ed</felles.version>
-        <kontrakter.version>2.0_20221012140422_b9336ff</kontrakter.version>
+        <kontrakter.version>2.0_20221110141047_2049c86</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
