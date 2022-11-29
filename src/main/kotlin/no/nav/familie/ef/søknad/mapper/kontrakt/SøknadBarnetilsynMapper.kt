@@ -33,6 +33,12 @@ class SøknadBarnetilsynMapper() {
         val barnetilsynSøknad = SøknadBarnetilsyn(
             innsendingsdetaljer = mapInnsendingsdetaljer(innsendingMottatt),
             personalia = PersonaliaMapper.map(dto.person.søker),
+            opplysningerOmAdresse = OpplysningerOmAdresseMapper.map(
+                OpplysningerOmAdresseData(
+                    dto.søkerBorPåRegistrertAdresse,
+                    dto.opplysningerOmAdresse
+                ), vedlegg
+            ),
             sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
             medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
             bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),

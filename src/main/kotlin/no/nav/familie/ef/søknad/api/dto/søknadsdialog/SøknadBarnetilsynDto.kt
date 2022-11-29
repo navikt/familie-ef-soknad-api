@@ -6,6 +6,7 @@ data class SøknadBarnetilsynDto(
     val person: Person,
     val sivilstatus: Sivilstatus,
     val søkerBorPåRegistrertAdresse: BooleanFelt?,
+    val opplysningerOmAdresse: OpplysningerOmAdresse?,
     val aktivitet: Aktivitet,
     val søkerFraBestemtMåned: BooleanFelt,
     val søknadsdato: DatoFelt?,
