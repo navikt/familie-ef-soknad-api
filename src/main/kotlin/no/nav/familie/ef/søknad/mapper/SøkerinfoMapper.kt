@@ -152,9 +152,9 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             forkortetNavn = navn.first().visningsnavn(),
             adresse = adresse,
             egenansatt = false, // TODO denne er vel i beste fall unødvendig?
-            sivilstand = sivilstand.type.toString(),
+            sivilstand = sivilstand.type.name,
             statsborgerskap = statsborgerskapListe,
-            harAdressesperre = adressebeskyttelse.harBeskyttetAdresse()
+            erStrengtFortrolig = adressebeskyttelse.erStrengtFortrolig()
         )
     }
 
@@ -208,6 +208,10 @@ fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
 }
 
 fun List<Adressebeskyttelse>.harBeskyttetAdresse(): Boolean = kreverAdressebeskyttelse.contains(this.firstOrNull()?.gradering)
+fun List<Adressebeskyttelse>.erStrengtFortrolig(): Boolean = this.firstOrNull()?.gradering?.let {
+    AdressebeskyttelseGradering.STRENGT_FORTROLIG == it ||
+    AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND == it
+} ?: false
 
 private val kreverAdressebeskyttelse = listOf(
     AdressebeskyttelseGradering.FORTROLIG,

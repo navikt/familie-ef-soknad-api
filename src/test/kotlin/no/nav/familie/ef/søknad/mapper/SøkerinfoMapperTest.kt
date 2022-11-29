@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
 import no.nav.familie.ef.søknad.api.dto.pdl.Person
 import no.nav.familie.ef.søknad.integration.dto.AdresseinfoDto
@@ -12,6 +13,7 @@ import no.nav.familie.ef.søknad.integration.dto.KodeMedDatoOgKildeDto
 import no.nav.familie.ef.søknad.integration.dto.NavnDto
 import no.nav.familie.ef.søknad.integration.dto.PersoninfoDto
 import no.nav.familie.ef.søknad.integration.dto.pdl.Adressebeskyttelse
+import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.FORTROLIG
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG
 import no.nav.familie.ef.søknad.integration.dto.pdl.AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
@@ -36,6 +38,7 @@ import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -56,6 +59,25 @@ internal class SøkerinfoMapperTest {
         every { kodeverkService.hentLand(any()) } returns "NORGE"
         mockkObject(EksternBrukerUtils)
         every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
+    }
+
+    @AfterEach
+    internal fun tearDown() {
+        unmockkObject(EksternBrukerUtils)
+    }
+
+    @Test
+    fun `skal mappe strengt fortrolig`() {
+        listOf(
+            Pair(pdlSøker(), false),
+            Pair(pdlSøker(UGRADERT), false),
+            Pair(pdlSøker(FORTROLIG), false),
+            Pair(pdlSøker(STRENGT_FORTROLIG), true),
+            Pair(pdlSøker(STRENGT_FORTROLIG_UTLAND), true),
+        ).forEach {
+            val søkerinfo = søkerinfoMapper.mapTilSøkerinfo(it.first, emptyMap(), emptyMap())
+            assertThat(søkerinfo.søker.erStrengtFortrolig).isEqualTo(it.second)
+        }
     }
 
     @Test
@@ -357,6 +379,20 @@ internal class SøkerinfoMapperTest {
         )
             .withFailMessage("Har delt bosted med sluttdato null")
             .isTrue
+    }
+
+    private fun pdlSøker(
+        adressebeskyttelse: AdressebeskyttelseGradering? = null,
+        navn: Navn = Navn("Roy", "", "Toy")
+    ): PdlSøker {
+        return PdlSøker(
+            adressebeskyttelse = adressebeskyttelse?.let { listOf(Adressebeskyttelse(it)) } ?: emptyList(),
+            bostedsadresse = listOf(),
+            forelderBarnRelasjon = listOf(),
+            navn = listOf(navn),
+            sivilstand = listOf(),
+            statsborgerskap = listOf()
+        )
     }
 
     private fun vegadresse(matrikkelId: Long? = null, adressenavn: String? = null) =
