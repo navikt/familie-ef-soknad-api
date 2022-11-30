@@ -27,10 +27,10 @@ class SøknadOvergangsstønadMapper {
         val søknad = SøknadOvergangsstønad(
             innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
             personalia = PersonaliaMapper.map(dto.person.søker),
-            opplysningerOmAdresse = OpplysningerOmAdresseMapper.map(
-                OpplysningerOmAdresseData(
+            adresseopplysninger = AdresseopplysningerMapper.map(
+                AdresseopplysningerData(
                     dto.søkerBorPåRegistrertAdresse,
-                    dto.opplysningerOmAdresse
+                    dto.adresseopplysninger
                 ), vedlegg
             ),
             sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),

@@ -301,7 +301,7 @@
       }
     ]
   },
-  "opplysningerOmAdresse": {
+  "adresseopplysninger": {
     "harMeldtFlytteendring": {
       "label": "Har du meldt adresseendring til folkeregisteret?",
       "verdi": true

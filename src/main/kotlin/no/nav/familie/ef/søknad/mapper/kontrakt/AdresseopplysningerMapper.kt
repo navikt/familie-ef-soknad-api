@@ -1,29 +1,29 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Adresseopplysninger
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.OpplysningerOmAdresse
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil
 import no.nav.familie.ef.søknad.mapper.MapperMedVedlegg
 import no.nav.familie.ef.søknad.mapper.Språktekster
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
-import no.nav.familie.kontrakter.ef.søknad.OpplysningerOmAdresse as KontraktOpplysningerOmAdresse
+import no.nav.familie.kontrakter.ef.søknad.Adresseopplysninger as KontraktAdresseopplysninger
 
-data class OpplysningerOmAdresseData(
+data class AdresseopplysningerData(
     val søkerBorPåRegistrertAdresse: BooleanFelt?,
-    val opplysningerOmAdresse: OpplysningerOmAdresse?
+    val adresseopplysninger: Adresseopplysninger?
 )
 
-object OpplysningerOmAdresseMapper :
-    MapperMedVedlegg<OpplysningerOmAdresseData, KontraktOpplysningerOmAdresse>(Språktekster.Bosituasjon) {
+object AdresseopplysningerMapper :
+    MapperMedVedlegg<AdresseopplysningerData, KontraktAdresseopplysninger>(Språktekster.Bosituasjon) {
 
     override fun mapDto(
-        data: OpplysningerOmAdresseData,
+        data: AdresseopplysningerData,
         vedlegg: Map<String, DokumentasjonWrapper>
-    ): KontraktOpplysningerOmAdresse {
-        return KontraktOpplysningerOmAdresse(
+    ): KontraktAdresseopplysninger {
+        return KontraktAdresseopplysninger(
             søkerBorPåRegistrertAdresse = data.søkerBorPåRegistrertAdresse?.tilSøknadsfelt(),
-            harMeldtFlytteendring = data.opplysningerOmAdresse?.harMeldtFlytteendring?.tilSøknadsfelt(),
+            harMeldtFlytteendring = data.adresseopplysninger?.harMeldtFlytteendring?.tilSøknadsfelt(),
             DokumentfeltUtil.dokumentfelt(DokumentIdentifikator.MELDT_FLYTTEENDRING, vedlegg)
         )
     }

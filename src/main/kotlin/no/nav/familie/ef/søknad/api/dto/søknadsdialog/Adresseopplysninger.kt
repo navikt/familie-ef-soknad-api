@@ -1,5 +1,5 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
-data class OpplysningerOmAdresse(
+data class Adresseopplysninger(
     val harMeldtFlytteendring: BooleanFelt?,
 )

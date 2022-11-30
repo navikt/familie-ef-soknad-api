@@ -1,22 +1,22 @@
 package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
-import no.nav.familie.ef.søknad.mapper.kontrakt.OpplysningerOmAdresseData
-import no.nav.familie.ef.søknad.mapper.kontrakt.OpplysningerOmAdresseMapper
+import no.nav.familie.ef.søknad.mapper.kontrakt.AdresseopplysningerData
+import no.nav.familie.ef.søknad.mapper.kontrakt.AdresseopplysningerMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class OpplysningerOmAdresseMapperTest {
+internal class AdresseopplysningerMapperTest {
 
     private val søknadDto = søknadDto()
-    private val opplysningerOmAdresseData =
-        OpplysningerOmAdresseData(søknadDto.søkerBorPåRegistrertAdresse, søknadDto.opplysningerOmAdresse)
+    private val adresseopplysningerData =
+        AdresseopplysningerData(søknadDto.søkerBorPåRegistrertAdresse, søknadDto.adresseopplysninger)
     private val dokumenter = mapOf<String, DokumentasjonWrapper>()
 
     @Test
     fun `mapper verdier for adresse`() {
-        val bosituasjonMapped = OpplysningerOmAdresseMapper.map(opplysningerOmAdresseData, dokumenter).verdi
+        val bosituasjonMapped = AdresseopplysningerMapper.map(adresseopplysningerData, dokumenter).verdi
 
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.label).isEqualTo("Bor du på denne adressen?")
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.verdi).isEqualTo(false)
@@ -27,11 +27,11 @@ internal class OpplysningerOmAdresseMapperTest {
 
     @Test
     fun `mapper verdier for adresse - personen bor på registrert adresse`() {
-        val data = opplysningerOmAdresseData.copy(
+        val data = adresseopplysningerData.copy(
             søkerBorPåRegistrertAdresse = BooleanFelt("Spørsmål 1", true),
-            opplysningerOmAdresse = null
+            adresseopplysninger = null
         )
-        val bosituasjonMapped = OpplysningerOmAdresseMapper.map(data, dokumenter).verdi
+        val bosituasjonMapped = AdresseopplysningerMapper.map(data, dokumenter).verdi
 
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.label).isEqualTo("Spørsmål 1")
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.verdi).isEqualTo(true)
