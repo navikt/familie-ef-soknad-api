@@ -21,8 +21,8 @@ internal class AdresseopplysningerMapperTest {
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.label).isEqualTo("Bor du på denne adressen?")
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.verdi).isEqualTo(false)
 
-        assertThat(bosituasjonMapped.harMeldtFlytteendring?.label).isEqualTo("Har du meldt adresseendring til folkeregisteret?")
-        assertThat(bosituasjonMapped.harMeldtFlytteendring?.verdi).isEqualTo(true)
+        assertThat(bosituasjonMapped.harMeldtAdresseendring?.label).isEqualTo("Har du meldt adresseendring til folkeregisteret?")
+        assertThat(bosituasjonMapped.harMeldtAdresseendring?.verdi).isEqualTo(true)
     }
 
     @Test
@@ -36,7 +36,7 @@ internal class AdresseopplysningerMapperTest {
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.label).isEqualTo("Spørsmål 1")
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.verdi).isEqualTo(true)
 
-        assertThat(bosituasjonMapped.harMeldtFlytteendring).isNull()
+        assertThat(bosituasjonMapped.harMeldtAdresseendring).isNull()
     }
 
 }

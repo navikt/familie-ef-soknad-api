@@ -23,8 +23,8 @@ object AdresseopplysningerMapper :
     ): KontraktAdresseopplysninger {
         return KontraktAdresseopplysninger(
             søkerBorPåRegistrertAdresse = data.søkerBorPåRegistrertAdresse?.tilSøknadsfelt(),
-            harMeldtFlytteendring = data.adresseopplysninger?.harMeldtFlytteendring?.tilSøknadsfelt(),
-            DokumentfeltUtil.dokumentfelt(DokumentIdentifikator.MELDT_FLYTTEENDRING, vedlegg)
+            harMeldtAdresseendring = data.adresseopplysninger?.harMeldtAdresseendring?.tilSøknadsfelt(),
+            dokumentasjonAdresseendring = DokumentfeltUtil.dokumentfelt(DokumentIdentifikator.MELDT_ADRESSEENDRING, vedlegg)
         )
     }
 

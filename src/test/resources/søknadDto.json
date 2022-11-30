@@ -302,7 +302,7 @@
     ]
   },
   "adresseopplysninger": {
-    "harMeldtFlytteendring": {
+    "harMeldtAdresseendring": {
       "label": "Har du meldt adresseendring til folkeregisteret?",
       "verdi": true
     }
