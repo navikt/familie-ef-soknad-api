@@ -18,6 +18,7 @@ enum class Språktekster(val norsk: String, val engelsk: String) {
     BarnaDine("Barna dine", "Your children"),
     DenAndreForelderenSamvær("Den andre forelderen og samvær", "The other parent and access"),
     Samvær("Samvær", "Access/Contact"),
+    Adresseopplysninger("Opplysninger om adresse", "Information about address"),
     Bosituasjon("Bosituasjonen din", "Your living situation"),
     Innsendingsdetaljer("Innsendingsdetaljer", "Innsendingsdetaljer"),
     DatoMottatt("Dato mottatt", "Date received"),

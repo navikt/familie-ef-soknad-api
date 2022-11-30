@@ -16,8 +16,10 @@ internal class AdresseopplysningerMapperTest {
 
     @Test
     fun `mapper verdier for adresse`() {
-        val bosituasjonMapped = AdresseopplysningerMapper.map(adresseopplysningerData, dokumenter).verdi
+        val dto = AdresseopplysningerMapper.map(adresseopplysningerData, dokumenter)
+        val bosituasjonMapped = dto.verdi
 
+        assertThat(dto.label).isEqualTo("Opplysninger om adresse")
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.label).isEqualTo("Bor du på denne adressen?")
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.verdi).isEqualTo(false)
 

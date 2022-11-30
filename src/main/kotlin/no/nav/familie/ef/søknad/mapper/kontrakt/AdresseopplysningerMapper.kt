@@ -15,7 +15,7 @@ data class AdresseopplysningerData(
 )
 
 object AdresseopplysningerMapper :
-    MapperMedVedlegg<AdresseopplysningerData, KontraktAdresseopplysninger>(Språktekster.Bosituasjon) {
+    MapperMedVedlegg<AdresseopplysningerData, KontraktAdresseopplysninger>(Språktekster.Adresseopplysninger) {
 
     override fun mapDto(
         data: AdresseopplysningerData,
