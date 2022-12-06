@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 enum class DokumentIdentifikator {
+    MELDT_ADRESSEENDRING,
     TERMINBEKREFTELSE,
     DELT_BOSTED,
     SAMVÆRSAVTALE,

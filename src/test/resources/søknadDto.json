@@ -1,4 +1,8 @@
 {
+  "søkerBorPåRegistrertAdresse": {
+    "label": "Bor du på denne adressen?",
+    "verdi": false
+  },
   "person": {
     "søker": {
       "fnr": "19128449828",
@@ -296,6 +300,12 @@
         }
       }
     ]
+  },
+  "adresseopplysninger": {
+    "harMeldtAdresseendring": {
+      "label": "Har du meldt adresseendring til folkeregisteret?",
+      "verdi": true
+    }
   },
   "bosituasjon": {
     "delerBoligMedAndreVoksne": {

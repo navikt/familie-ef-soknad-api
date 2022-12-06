@@ -6,6 +6,7 @@ data class SøknadOvergangsstønadDto(
     val person: Person,
     val sivilstatus: Sivilstatus,
     val søkerBorPåRegistrertAdresse: BooleanFelt? = null,
+    val adresseopplysninger: Adresseopplysninger?,
     val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
     val aktivitet: Aktivitet,
     val merOmDinSituasjon: Situasjon,

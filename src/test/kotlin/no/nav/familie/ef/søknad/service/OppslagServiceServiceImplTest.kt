@@ -4,6 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.spyk
+import io.mockk.unmockkObject
 import no.nav.familie.ef.søknad.api.ApiFeil
 import no.nav.familie.ef.søknad.api.dto.pdl.Adresse
 import no.nav.familie.ef.søknad.api.dto.pdl.Person
@@ -32,6 +33,7 @@ import no.nav.familie.ef.søknad.mapper.SøkerinfoMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -60,6 +62,11 @@ internal class OppslagServiceServiceImplTest {
         mockPdlHentBarn()
         mockHentPersonPdlClient()
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns (mapOf())
+    }
+
+    @AfterEach
+    internal fun tearDown() {
+        unmockkObject(EksternBrukerUtils)
     }
 
     @Test
