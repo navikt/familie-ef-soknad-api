@@ -27,5 +27,4 @@ object AdresseopplysningerMapper :
             dokumentasjonAdresseendring = DokumentfeltUtil.dokumentfelt(DokumentIdentifikator.MELDT_ADRESSEENDRING, vedlegg)
         )
     }
-
 }

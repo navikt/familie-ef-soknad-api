@@ -40,5 +40,4 @@ internal class AdresseopplysningerMapperTest {
 
         assertThat(bosituasjonMapped.harMeldtAdresseendring).isNull()
     }
-
 }

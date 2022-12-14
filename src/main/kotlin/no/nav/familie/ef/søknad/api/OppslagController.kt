@@ -38,8 +38,11 @@ class OppslagController(
     fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
         require(gyldigPostnummer(postnummer))
         val poststed = kodeverkService.hentPoststed(postnummer)
-        return if (!poststed.isNullOrBlank()) ResponseEntity.ok().body(poststed)
-        else ResponseEntity.noContent().build()
+        return if (!poststed.isNullOrBlank()) {
+            ResponseEntity.ok().body(poststed)
+        } else {
+            ResponseEntity.noContent().build()
+        }
     }
 
     private fun gyldigPostnummer(postnummer: String) = Regex("""^[0-9]{4}$""").matches(postnummer)

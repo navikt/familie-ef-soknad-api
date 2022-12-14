@@ -39,7 +39,9 @@ abstract class OppslagSpringRunnerTest {
     protected val headers = HttpHeaders()
 
     @Suppress("SpringJavaInjectionPointsAutowiringInspection")
-    @Autowired private lateinit var mockOAuth2Server: MockOAuth2Server
+    @Autowired
+    private lateinit var mockOAuth2Server: MockOAuth2Server
+
     @Autowired private lateinit var applicationContext: ApplicationContext
 
     @LocalServerPort
@@ -75,7 +77,7 @@ abstract class OppslagSpringRunnerTest {
         issuerId: String = "selvbetjening",
         clientId: String = UUID.randomUUID().toString(),
         audience: String = "aud-localhost",
-        claims: Map<String, Any> = mapOf("acr" to "Level4"),
+        claims: Map<String, Any> = mapOf("acr" to "Level4")
 
     ): String {
         return this.issueToken(

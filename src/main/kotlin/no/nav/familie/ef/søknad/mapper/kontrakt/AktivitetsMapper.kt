@@ -30,7 +30,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
 
     override fun mapDto(
         data: AktivitetDto,
-        vedlegg: Map<String, DokumentasjonWrapper>,
+        vedlegg: Map<String, DokumentasjonWrapper>
     ): Aktivitet {
         return Aktivitet(
             hvordanErArbeidssituasjonen = data.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
@@ -106,7 +106,6 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
     }
 
     fun mapArbeidsforhold(arbeidsforhold: List<ArbeidsgiverDto>): List<Arbeidsgiver> {
-
         return arbeidsforhold.map { arbeid ->
             Arbeidsgiver(
                 arbeidsgivernavn = arbeid.navn.tilSøknadsfelt(),

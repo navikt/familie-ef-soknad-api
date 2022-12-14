@@ -5,7 +5,7 @@ import java.time.LocalDate
 
 data class PdlResponse<T>(
     val data: T,
-    val errors: List<PdlError>?,
+    val errors: List<PdlError>?
 ) {
 
     fun harFeil(): Boolean {

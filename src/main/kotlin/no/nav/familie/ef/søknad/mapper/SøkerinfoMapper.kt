@@ -192,7 +192,9 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         val filterNotNull = args.filterNotNull().filterNot(String::isEmpty)
         return if (filterNotNull.isEmpty()) {
             null
-        } else filterNotNull.joinToString(separator)
+        } else {
+            filterNotNull.joinToString(separator)
+        }
     }
 
     private fun space(vararg args: String?): String? = join(*args, separator = " ")
@@ -203,14 +205,16 @@ fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
 
     return Medforelder(
         annenForelderNavn.visningsnavn(),
-        this.adressebeskyttelse.harBeskyttetAdresse(), this.dødsfall.any(), annenForelderPersonsIdent
+        this.adressebeskyttelse.harBeskyttetAdresse(),
+        this.dødsfall.any(),
+        annenForelderPersonsIdent
     )
 }
 
 fun List<Adressebeskyttelse>.harBeskyttetAdresse(): Boolean = kreverAdressebeskyttelse.contains(this.firstOrNull()?.gradering)
 fun List<Adressebeskyttelse>.erStrengtFortrolig(): Boolean = this.firstOrNull()?.gradering?.let {
     AdressebeskyttelseGradering.STRENGT_FORTROLIG == it ||
-    AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND == it
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND == it
 } ?: false
 
 private val kreverAdressebeskyttelse = listOf(

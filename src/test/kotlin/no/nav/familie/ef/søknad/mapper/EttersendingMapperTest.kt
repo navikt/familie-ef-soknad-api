@@ -14,7 +14,6 @@ internal class EttersendingMapperTest {
 
     @Test
     internal fun `skal mappe en liste med innsendinger per stønadstype`() {
-
         val skolepengedokumentasjon = lagDokumentasjonsbehov(stønadType = StønadType.SKOLEPENGER)
         val barnetilsynDokumentasjon = lagDokumentasjonsbehov(stønadType = StønadType.BARNETILSYN)
         val overgangsstønadDokumentasjon1 = lagDokumentasjonsbehov(stønadType = StønadType.OVERGANGSSTØNAD)

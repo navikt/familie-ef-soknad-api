@@ -35,7 +35,6 @@ class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
 
     @Test
     fun `skal få 200 når autentisert og vi bruker get`() {
-
         val exchange: ResponseEntity<String> = restTemplate.exchange(
             localhost("/api/innlogget"),
             org.springframework.http.HttpMethod.GET,

@@ -52,7 +52,9 @@ internal class OppslagServiceServiceImplTest {
 
     private val oppslagServiceService = OppslagServiceServiceImpl(
         pdlClient,
-        pdlApp2AppClient, regelverkConfig, søkerinfoMapper
+        pdlApp2AppClient,
+        regelverkConfig,
+        søkerinfoMapper
     )
 
     @BeforeEach
@@ -232,11 +234,12 @@ internal class OppslagServiceServiceImplTest {
 
     @Test
     fun `Skal filtrere bort døde barn`() {
-
         val mapper = SøkerinfoMapper(kodeverkService = mockk())
         val oppslagServiceServiceMedMapper = OppslagServiceServiceImpl(
             pdlClient,
-            pdlApp2AppClient, regelverkConfig, mapper
+            pdlApp2AppClient,
+            regelverkConfig,
+            mapper
         )
 
         every { pdlApp2AppClient.hentBarn(any()) } returns mapOf(pdlBarn(dødsfall = Dødsfall(LocalDate.MIN)))
@@ -251,7 +254,9 @@ internal class OppslagServiceServiceImplTest {
         val mapper = SøkerinfoMapper(kodeverkService = mockk())
         val oppslagServiceServiceMedMapper = OppslagServiceServiceImpl(
             pdlClient,
-            pdlApp2AppClient, regelverkConfig, mapper
+            pdlApp2AppClient,
+            regelverkConfig,
+            mapper
         )
         every { pdlApp2AppClient.hentBarn(any()) } returns mapOf(pdlBarn())
         mockHentPersonPdlClient()
@@ -319,7 +324,6 @@ internal class OppslagServiceServiceImplTest {
         etternavn: String = "TestNavn",
         adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT
     ) {
-
         every { pdlClient.hentSøker(any()) } returns (
             PdlSøker(
                 listOf(Adressebeskyttelse(adressebeskyttelseGradering)),

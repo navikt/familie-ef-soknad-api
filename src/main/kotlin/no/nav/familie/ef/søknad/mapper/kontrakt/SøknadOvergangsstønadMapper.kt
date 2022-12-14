@@ -31,7 +31,8 @@ class SøknadOvergangsstønadMapper {
                 AdresseopplysningerData(
                     dto.søkerBorPåRegistrertAdresse,
                     dto.adresseopplysninger
-                ), vedlegg
+                ),
+                vedlegg
             ),
             sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
             medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),

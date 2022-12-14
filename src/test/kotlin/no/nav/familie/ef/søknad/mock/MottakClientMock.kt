@@ -83,7 +83,7 @@ class MottakClientMock {
                     "DOKUMENTASJON_BARNEPASS_MANGEL",
                     false,
                     emptyList()
-                ),
+                )
             ),
             LocalDateTime.now(),
             SøknadType.OVERGANGSSTØNAD,
@@ -103,7 +103,7 @@ class MottakClientMock {
             StønadType.BARNETILSYN,
             LocalDate.now(),
             dokumentasjonsbehovDto2
-        ),
+        )
     )
 
     private val ettersendingUtenSøknad = no.nav.familie.kontrakter.ef.ettersending.Dokumentasjonsbehov(
@@ -137,7 +137,8 @@ class MottakClientMock {
         vedlegg = listOf(
             Vedlegg(
                 "e2943989-932a-40fc-a1f0-db912ea8ccce",
-                "dokuemnt_tidliger_ettersending.pdf", "Et kult dokument"
+                "dokuemnt_tidliger_ettersending.pdf",
+                "Et kult dokument"
             )
         )
     )

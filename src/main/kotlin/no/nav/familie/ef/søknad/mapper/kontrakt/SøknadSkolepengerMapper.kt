@@ -30,7 +30,8 @@ class SøknadSkolepengerMapper {
                 AdresseopplysningerData(
                     dto.søkerBorPåRegistrertAdresse,
                     dto.adresseopplysninger
-                ), vedlegg
+                ),
+                vedlegg
             ),
             barn = dto.person.barn.tilSøknadsfelt(vedlegg),
             sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),

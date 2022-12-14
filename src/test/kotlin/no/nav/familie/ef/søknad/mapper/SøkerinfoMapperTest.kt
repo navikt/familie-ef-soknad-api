@@ -73,7 +73,7 @@ internal class SøkerinfoMapperTest {
             Pair(pdlSøker(UGRADERT), false),
             Pair(pdlSøker(FORTROLIG), false),
             Pair(pdlSøker(STRENGT_FORTROLIG), true),
-            Pair(pdlSøker(STRENGT_FORTROLIG_UTLAND), true),
+            Pair(pdlSøker(STRENGT_FORTROLIG_UTLAND), true)
         ).forEach {
             val søkerinfo = søkerinfoMapper.mapTilSøkerinfo(it.first, emptyMap(), emptyMap())
             assertThat(søkerinfo.søker.erStrengtFortrolig).isEqualTo(it.second)
@@ -216,7 +216,6 @@ internal class SøkerinfoMapperTest {
 
     @Test
     fun `sivilstand er tom liste skal mappes til UOPPGITT`() {
-
         // Gitt
         val pdlSøker = PdlSøker(
             listOf(),
@@ -295,7 +294,6 @@ internal class SøkerinfoMapperTest {
 
     @Test
     internal fun `har ikke samme bostedadresse, men har delt bosted`() {
-
         val datoEtterIdag = LocalDate.now().plusDays(1)
         val datoFørIdag = LocalDate.now().minusDays(1)
         val barnAdresse = bostedsadresseBarn(vegadresse(matrikkelId = 1))
