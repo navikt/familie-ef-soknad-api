@@ -31,7 +31,6 @@ internal class KvitteringDtoMapperTest {
 
     @Test
     fun `mapTilEkstern returnerer kvittering med null hvis innsendingMottatt er null`() {
-
         val kvitteringDto = KvitteringMapper.mapTilEkstern(null, null)
         assertThat(kvitteringDto.mottattDato).isNull()
         assertThat(kvitteringDto.text).isEmpty()

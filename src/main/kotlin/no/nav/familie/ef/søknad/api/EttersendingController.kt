@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
 class EttersendingController(
     val ettersendingService: EttersendingService,
-    val featureToggleService: FeatureToggleService,
+    val featureToggleService: FeatureToggleService
 ) {
 
     @PostMapping

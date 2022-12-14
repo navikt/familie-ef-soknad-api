@@ -45,13 +45,11 @@ internal class FeatureToggleControllerIntegrationTest {
 
     @Test
     fun `skal funksjonsbryte på miljø`() {
-
         Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("test")).isTrue()
     }
 
     @Test
     fun `skal funksjonsbryte på miljø for ikke-definert bryter`() {
-
         Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("Ukjent", true)).isTrue()
     }
 }

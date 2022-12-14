@@ -80,7 +80,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
 
     private fun mapSamvær(
         forelder: AnnenForelderDto,
-        dokumentMap: Map<String, DokumentasjonWrapper>,
+        dokumentMap: Map<String, DokumentasjonWrapper>
     ): Søknadsfelt<Samvær> = Søknadsfelt(
         Språktekster.Samvær.hentTekst(),
         Samvær(

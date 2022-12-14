@@ -7,7 +7,7 @@ data class Bosituasjon(
     val datoSkalGifteSegEllerBliSamboer: DatoFelt? = null,
     val skalGifteSegEllerBliSamboer: BooleanFelt?,
     val datoFlyttetFraHverandre: DatoFelt?,
-    val vordendeSamboerEktefelle: SamboerDetaljer?,
+    val vordendeSamboerEktefelle: SamboerDetaljer?
 )
 
 data class SamboerDetaljer(

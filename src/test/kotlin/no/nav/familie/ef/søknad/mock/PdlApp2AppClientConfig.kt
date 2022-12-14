@@ -47,7 +47,7 @@ class PdlApp2AppClientConfig {
                 medforelderFnr to PdlAnnenForelder(
                     adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
                     navn = lagNavn("Bjørn", "Borg", "Borgersen"),
-                    dødsfall = listOf(),
+                    dødsfall = listOf()
                 )
             )
 

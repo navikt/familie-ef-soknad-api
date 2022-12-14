@@ -42,6 +42,7 @@ internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest()
 
     @Autowired
     lateinit var søknadService: SøknadService
+
     @Autowired
     lateinit var featureToggleService: FeatureToggleService
 
@@ -54,7 +55,6 @@ internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest()
 
     @Test
     fun `sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
-
         val søknad = søknadOvergangsstønadDto(tokenSubject)
         every { søknadService.sendInn(søknad, any()) } returns Kvittering(
             "Mottatt søknad: $søknad",
@@ -77,7 +77,6 @@ internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest()
 
     @Test
     fun `sendInn returnerer 403 ved ulik fnr i token og søknad`() {
-
         val søknad = søknadDto()
 
         val response = restTemplate.exchange<Any>(

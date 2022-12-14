@@ -33,5 +33,5 @@ data class AnnenForelder(
     val flyttetFra: DatoFelt?,
     val hvorMyeSammen: TekstFelt?,
     val beskrivSamværUtenBarn: TekstFelt?,
-    val skalBarnetBoHosSøker: TekstFelt?,
+    val skalBarnetBoHosSøker: TekstFelt?
 )

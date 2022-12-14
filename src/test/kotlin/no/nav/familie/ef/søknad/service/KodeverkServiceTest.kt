@@ -49,6 +49,7 @@ class KodeverkServiceTest : OppslagSpringRunnerTest() {
 
     @Autowired
     lateinit var familieIntegrasjonerClient: FamilieIntegrasjonerClient
+
     @Autowired
     lateinit var cachedKodeServ: KodeverkService.CachedKodeverkService
 

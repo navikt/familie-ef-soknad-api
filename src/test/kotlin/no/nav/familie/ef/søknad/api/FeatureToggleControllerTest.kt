@@ -18,7 +18,6 @@ internal class FeatureToggleControllerTest {
 
     @Test
     fun `skal svare true for påskrudde funksjonsbrytere`() {
-
         fakeUnleash.enable("bryter1")
 
         Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter1", null)).isTrue()
@@ -27,7 +26,6 @@ internal class FeatureToggleControllerTest {
 
     @Test
     fun `skal gi standardverdi for manglende funksjonsbrytere`() {
-
         fakeUnleash.enable("bryter1")
 
         Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter1", false)).isTrue()
@@ -36,7 +34,6 @@ internal class FeatureToggleControllerTest {
 
     @Test
     fun `skal funksjonsbryte på miljø`() {
-
         fakeUnleash.enable("bryter1")
 
         Assertions.assertThat(featureToggleController.sjekkFunksjonsbryter("bryter1", false)).isTrue()

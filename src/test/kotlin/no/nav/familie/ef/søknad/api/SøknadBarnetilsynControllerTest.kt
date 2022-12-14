@@ -63,7 +63,6 @@ internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
 
     @Test
     fun `sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
-
         val søknad = søknadBarnetilsynDto()
             .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf()))
 

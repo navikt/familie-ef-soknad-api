@@ -23,11 +23,10 @@ internal class OppslagServiceServiceImpl(
     private val pdlClient: PdlClient,
     private val pdlApp2AppClient: PdlApp2AppClient,
     private val regelverkConfig: RegelverkConfig,
-    private val søkerinfoMapper: SøkerinfoMapper,
+    private val søkerinfoMapper: SøkerinfoMapper
 ) : OppslagService {
 
     override fun hentSøkerinfo(): Søkerinfo {
-
         val søkersPersonIdent = EksternBrukerUtils.hentFnrFraToken()
         val pdlSøker = pdlClient.hentSøker(søkersPersonIdent)
         val barnIdentifikatorer = pdlSøker.forelderBarnRelasjon
