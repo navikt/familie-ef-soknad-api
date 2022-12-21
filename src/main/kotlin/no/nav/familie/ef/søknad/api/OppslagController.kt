@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(path = [OppslagController.OPPSLAG], produces = [APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
+@ProtectedWithClaims(issuer = "idporten", claimMap = ["acr=Level4"])
 @Validated
 class OppslagController(
     private val oppslagService: OppslagService,

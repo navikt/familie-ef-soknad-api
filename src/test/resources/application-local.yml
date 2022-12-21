@@ -38,7 +38,8 @@ no.nav.security.jwt:
       proxyurl:
     idporten:
       discovery-url: http://localhost:${mock-oauth2-server.port}/idporten/.well-known/openid-configuration
-      accepted-audience: someaudience
+      accepted-audience: aud-idporten
+      cookie_name: localhost-idporten-token
   client.registration:
     mottak:
       token-endpoint-url: http://metadata

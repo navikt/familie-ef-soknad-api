@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping(path = ["/api/soknad", "/api/soknad/overgangsstonad"], produces = [APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
+@ProtectedWithClaims(issuer = "idporten", claimMap = ["acr=Level4"])
 @Validated
 class SøknadOvergangsstønadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
