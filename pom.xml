@@ -19,8 +19,8 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <kotlin.version>1.7.10</kotlin.version>
-        <springdoc.version>1.6.13</springdoc.version>
+        <kotlin.version>1.7.22</kotlin.version>
+        <springdoc.version>1.6.14</springdoc.version>
         <mockk.version>1.12.5</mockk.version>
         <token-validation-spring.version>2.1.8</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
@@ -188,7 +188,7 @@
         <dependency>
             <groupId>dev.akkinoc.spring.boot</groupId>
             <artifactId>logback-access-spring-boot-starter</artifactId>
-            <version>3.4.1</version>
+            <version>3.4.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
