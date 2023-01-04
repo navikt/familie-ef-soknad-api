@@ -2,18 +2,25 @@ package no.nav.familie.ef.søknad.api
 
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.security.token.support.core.api.Unprotected
+import org.slf4j.LoggerFactory
+import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(path = ["/api"], produces = [MediaType.TEXT_PLAIN_VALUE])
-@Protected
+@Unprotected
 class AutentiseringController {
 
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+
     @GetMapping("/innlogget")
-    fun verifiserAutentisering(): String {
+    fun verifiserAutentisering(@RequestHeader(HttpHeaders.AUTHORIZATION) auth: String): String {
+        secureLogger.info("Auth-header: $auth")
         return "Autentisert kall"
     }
 }
