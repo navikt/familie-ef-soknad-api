@@ -13,14 +13,11 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(path = ["/api"], produces = [MediaType.TEXT_PLAIN_VALUE])
-@Unprotected
+@ProtectedWithClaims(issuer = "idporten", claimMap = ["acr=Level4"])
 class AutentiseringController {
 
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
-
     @GetMapping("/innlogget")
-    fun verifiserAutentisering(@RequestHeader(HttpHeaders.AUTHORIZATION) auth: String): String {
-        secureLogger.info("Auth-header: $auth")
+    fun verifiserAutentisering(): String {
         return "Autentisert kall"
     }
 }
