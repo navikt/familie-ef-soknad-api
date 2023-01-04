@@ -73,6 +73,7 @@ no.nav.security.jwt:
     idporten:
       discovery-url: ${TOKEN_X_WELL_KNOWN_URL}
       accepted-audience: ${TOKEN_X_CLIENT_ID}
+      cookie_name: idporten-token
   client.registration:
     mottak:
       resource-url: ${familie.ef.mottak.uri}
