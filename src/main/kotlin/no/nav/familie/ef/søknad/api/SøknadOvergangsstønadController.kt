@@ -6,6 +6,7 @@ import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.service.SøknadService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.security.token.support.core.api.RequiredIssuers
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.validation.annotation.Validated
@@ -17,7 +18,10 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping(path = ["/api/soknad", "/api/soknad/overgangsstonad"], produces = [APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = "idporten", claimMap = ["acr=Level4"])
+@RequiredIssuers(
+    ProtectedWithClaims(issuer = "idporten", claimMap = ["acr=Level4"]),
+    ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+)
 @Validated
 class SøknadOvergangsstønadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 

@@ -6,6 +6,7 @@ import no.nav.familie.ef.søknad.service.KodeverkService
 import no.nav.familie.ef.søknad.service.OppslagService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.security.token.support.core.api.RequiredIssuers
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping(path = [OppslagController.OPPSLAG], produces = [APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = "idporten", claimMap = ["acr=Level4"])
+@RequiredIssuers(
+    ProtectedWithClaims(issuer = "idporten", claimMap = ["acr=Level4"]),
+    ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+)
 @Validated
 class OppslagController(
     private val oppslagService: OppslagService,

@@ -6,6 +6,7 @@ import no.nav.familie.ef.søknad.service.EttersendingService
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import no.nav.security.token.support.core.api.RequiredIssuers
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,7 +18,10 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping(path = ["/api/ettersending"])
-@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
+@RequiredIssuers(
+    ProtectedWithClaims(issuer = "idporten", claimMap = ["acr=Level4"]),
+    ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+)
 class EttersendingController(
     val ettersendingService: EttersendingService,
     val featureToggleService: FeatureToggleService
