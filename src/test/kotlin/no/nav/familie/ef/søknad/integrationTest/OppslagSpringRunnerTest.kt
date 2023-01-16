@@ -74,7 +74,7 @@ abstract class OppslagSpringRunnerTest {
 
     private fun MockOAuth2Server.token(
         subject: String,
-        issuerId: String = "idporten",
+        issuerId: String = "tokenx",
         clientId: String = UUID.randomUUID().toString(),
         audience: String = "familie-app",
         claims: Map<String, Any> = mapOf("acr" to "Level4")

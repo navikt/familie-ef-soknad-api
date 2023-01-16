@@ -70,10 +70,10 @@ no.nav.security.jwt:
       discoveryurl: ${LOGINSERVICE_IDPORTEN_DISCOVERY_URL}
       accepted_audience: ${LOGINSERVICE_IDPORTEN_AUDIENCE}
       cookie_name: selvbetjening-idtoken
-    idporten:
+    tokenx:
       discovery-url: ${TOKEN_X_WELL_KNOWN_URL}
       accepted-audience: ${TOKEN_X_CLIENT_ID}
-      cookie_name: idporten-token
+      cookie_name: tokenx-token
   client.registration:
     mottak:
       resource-url: ${familie.ef.mottak.uri}

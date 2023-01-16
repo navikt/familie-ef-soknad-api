@@ -19,7 +19,7 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping(path = ["/api/ettersending"])
 @RequiredIssuers(
-    ProtectedWithClaims(issuer = "idporten", claimMap = ["acr=Level4"]),
+    ProtectedWithClaims(issuer = "tokenx", claimMap = ["acr=Level4"]),
     ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
 )
 class EttersendingController(

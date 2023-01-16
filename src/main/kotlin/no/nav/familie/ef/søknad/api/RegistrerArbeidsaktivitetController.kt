@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping(path = ["/api/registrerarbeid"], produces = [APPLICATION_JSON_VALUE])
 @RequiredIssuers(
-    ProtectedWithClaims(issuer = "idporten", claimMap = ["acr=Level4"]),
+    ProtectedWithClaims(issuer = "tokenx", claimMap = ["acr=Level4"]),
     ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
 )
 class RegistrerArbeidsaktivitetController(

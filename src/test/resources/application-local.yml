@@ -36,8 +36,8 @@ no.nav.security.jwt:
       accepted_audience: aud-localhost
       cookie_name: localhost-idtoken
       proxyurl:
-    idporten:
-      discovery-url: http://localhost:${mock-oauth2-server.port}/idporten/.well-known/openid-configuration
+    tokenx:
+      discovery-url: http://localhost:${mock-oauth2-server.port}/tokenx/.well-known/openid-configuration
       accepted-audience: familie-app
   client.registration:
     mottak:
