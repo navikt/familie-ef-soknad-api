@@ -26,7 +26,7 @@
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
         <fasterxml.version>2.14.1</fasterxml.version>
-        <felles.version>1.0-SNAPSHOT</felles.version>
+        <felles.version>1.20221202080911_bcf8f33</felles.version>
         <kontrakter.version>2.0_20221130105458_c1bd5bb</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
