@@ -30,11 +30,15 @@ cors:
 logging:
   config: classpath:logback-test.xml
 no.nav.security.jwt:
-  issuer.selvbetjening:
-    discoveryurl: http://localhost:${mock-oauth2-server.port}/selvbetjening/.well-known/openid-configuration
-    accepted_audience: aud-localhost
-    cookie_name: localhost-idtoken
-    proxyurl:
+  issuer:
+    selvbetjening:
+      discoveryurl: http://localhost:${mock-oauth2-server.port}/selvbetjening/.well-known/openid-configuration
+      accepted_audience: aud-localhost
+      proxyurl:
+    tokenx:
+      discovery-url: http://localhost:${mock-oauth2-server.port}/tokenx/.well-known/openid-configuration
+      accepted-audience: familie-app
+      cookie_name: localhost-idtoken
   client.registration:
     mottak:
       token-endpoint-url: http://metadata
