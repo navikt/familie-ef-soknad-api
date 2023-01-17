@@ -19,8 +19,8 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping(path = ["/api/soknadbarnetilsyn", "/api/soknad/barnetilsyn"], produces = [APPLICATION_JSON_VALUE])
 @RequiredIssuers(
-    ProtectedWithClaims(issuer = "tokenx", claimMap = ["acr=Level4"]),
-    ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"]),
+    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_SELVBETJENING, claimMap = ["acr=Level4"])
 )
 @Validated
 class SøknadBarnetilsynController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {

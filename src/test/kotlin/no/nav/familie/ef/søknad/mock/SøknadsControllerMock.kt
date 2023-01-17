@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping(path = ["/api/soknad/test"], produces = [MediaType.APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER, claimMap = ["acr=Level4"])
+@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 class SøknadsControllerMock(val featureToggleService: FeatureToggleService) {
 
     private val innsendingMottatt = LocalDateTime.now()

@@ -19,8 +19,8 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping(path = ["/api/ettersending"])
 @RequiredIssuers(
-    ProtectedWithClaims(issuer = "tokenx", claimMap = ["acr=Level4"]),
-    ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"]),
+    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_SELVBETJENING, claimMap = ["acr=Level4"])
 )
 class EttersendingController(
     val ettersendingService: EttersendingService,
