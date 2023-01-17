@@ -41,6 +41,9 @@ spec:
   tokenx:
     enabled: true
   accessPolicy:
+    inbound:
+      rules:
+        - application: familie-ef-soknad
     outbound:
       rules:
         - application: familie-ef-mottak
@@ -49,9 +52,6 @@ spec:
         - host: familie-integrasjoner.dev-fss-pub.nais.io
         - host: pdl-api.dev-fss-pub.nais.io
         - host: familie-ef-mottak.dev-fss-pub.nais.io
-    inbound:
-      rules:
-        - application: familie-ef-soknad
   envFrom:
     - configmap: loginservice-idporten
     - secret: familie

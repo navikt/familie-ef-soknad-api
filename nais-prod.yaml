@@ -41,6 +41,9 @@ spec:
   tokenx:
     enabled: true
   accessPolicy:
+    inbound:
+      rules:
+        - application: familie-ef-soknad
     outbound:
       rules:
         - application: familie-ef-mottak
