@@ -44,6 +44,7 @@ spec:
     inbound:
       rules:
         - application: familie-ef-soknad
+        - application: familie-ef-ettersending
     outbound:
       rules:
         - application: familie-ef-mottak
