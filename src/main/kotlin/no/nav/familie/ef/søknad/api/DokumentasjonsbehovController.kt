@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/dokumentasjonsbehov"])
 @RequiredIssuers(
-    ProtectedWithClaims(issuer = "tokenx", claimMap = ["acr=Level4"]),
-    ProtectedWithClaims(issuer = "selvbetjening", claimMap = ["acr=Level4"])
+    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"]),
+    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_SELVBETJENING, claimMap = ["acr=Level4"])
 )
 class DokumentasjonsbehovController(private val søknadClient: SøknadClient) {
 
