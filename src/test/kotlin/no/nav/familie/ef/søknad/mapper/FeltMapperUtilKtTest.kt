@@ -58,7 +58,7 @@ internal class FeltMapperUtilKtTest {
         var felt = PeriodeFelt(
             "label",
             DatoFelt("fra", "2020-01-01"),
-            DatoFelt("til", "2021-12-30")
+            DatoFelt("til", "2021-12-30"),
         ).tilSøknadsfelt()
         assertEquals(Søknadsfelt("label", MånedÅrPeriode(Month.JANUARY, 2020, Month.DECEMBER, 2021)), felt)
     }

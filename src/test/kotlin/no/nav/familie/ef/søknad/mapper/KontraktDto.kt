@@ -12,7 +12,7 @@ fun personalia(): Personalia {
         Søknadsfelt("Navn", "Kari Nordmann"),
         Søknadsfelt("Statsborgerskap", "NOR"),
         adresseSøknadsfelt(),
-        Søknadsfelt("Sivilstatus", "UGIF")
+        Søknadsfelt("Sivilstatus", "UGIF"),
     )
 }
 
@@ -23,8 +23,8 @@ fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
             "Jerpefaret 5C",
             "1440",
             "",
-            ""
-        )
+            "",
+        ),
     )
 }
 

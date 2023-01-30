@@ -20,7 +20,7 @@ class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
         val response = restTemplate.exchange<String>(
             localhost("/api/oppslag/sokerinfo"),
             org.springframework.http.HttpMethod.GET,
-            HttpEntity<String>(headers)
+            HttpEntity<String>(headers),
         )
         assertThat(response.body).contains(tokenSubject) // guard
         assertThat(response.body).doesNotContain("_navn")

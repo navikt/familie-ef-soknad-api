@@ -37,7 +37,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
 
     private fun tilKontraktBarn(
         barn: Barn,
-        vedlegg: Map<String, DokumentasjonWrapper>
+        vedlegg: Map<String, DokumentasjonWrapper>,
     ) =
         Kontraktbarn(
             navn = barn.navn?.tilSøknadsfelt(),
@@ -54,7 +54,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
             særligeTilsynsbehov = barn.særligeTilsynsbehov?.tilSøknadsfelt(),
             barnepass = barn.barnepass?.let { BarnepassMapper.map(it) },
             lagtTilManuelt = barn.lagtTil,
-            skalBarnetBoHosSøker = barn.forelder?.skalBarnetBoHosSøker?.tilSøknadsfelt()
+            skalBarnetBoHosSøker = barn.forelder?.skalBarnetBoHosSøker?.tilSøknadsfelt(),
         )
 
     private fun mapFødselsnummer(barn: Barn): Søknadsfelt<Fødselsnummer>? {
@@ -74,26 +74,26 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                 ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.tilSøknadsfelt(),
                 bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                 land = forelder.land?.tilSøknadsfelt(),
-                person = PersonMinimumMapper.map(forelder)
-            )
+                person = PersonMinimumMapper.map(forelder),
+            ),
         )
 
     private fun mapSamvær(
         forelder: AnnenForelderDto,
-        dokumentMap: Map<String, DokumentasjonWrapper>
+        dokumentMap: Map<String, DokumentasjonWrapper>,
     ): Søknadsfelt<Samvær> = Søknadsfelt(
         Språktekster.Samvær.hentTekst(),
         Samvær(
             spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted?.tilSøknadsfelt(),
             avtaleOmDeltBosted = dokumentfelt(
                 DELT_BOSTED,
-                dokumentMap
+                dokumentMap,
             ),
             skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
             harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
             samværsavtale = dokumentfelt(
                 SAMVÆRSAVTALE,
-                dokumentMap
+                dokumentMap,
             ),
             borAnnenForelderISammeHus = forelder.borAnnenForelderISammeHus?.tilSøknadsfelt(),
             borAnnenForelderISammeHusBeskrivelse = forelder.borAnnenForelderISammeHusBeskrivelse?.tilSøknadsfelt(),
@@ -106,8 +106,8 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
             beskrivSamværUtenBarn = forelder.beskrivSamværUtenBarn?.tilSøknadsfelt(),
             skalBarnetBoHosSøkerMenAnnenForelderSamarbeiderIkke = dokumentfelt(
                 BARN_BOR_HOS_SØKER,
-                dokumentMap
-            )
-        )
+                dokumentMap,
+            ),
+        ),
     )
 }

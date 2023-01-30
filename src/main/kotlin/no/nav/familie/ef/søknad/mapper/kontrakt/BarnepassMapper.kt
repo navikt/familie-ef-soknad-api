@@ -29,13 +29,13 @@ object BarnepassMapper : Mapper<BarnepassDto, Barnepass>(OmBarnepassordning) {
                                 ?: error("Savner label"),
                             Datoperiode(
                                 it.periode.fra.tilLocalDate(),
-                                it.periode.til.tilLocalDate()
-                            )
+                                it.periode.til.tilLocalDate(),
+                            ),
                         ),
-                        belop = it.belop.tilSøknadsfelt(String::tilDesimaltall)
+                        belop = it.belop.tilSøknadsfelt(String::tilDesimaltall),
                     )
-                }
-            )
+                },
+            ),
         )
     }
 }

@@ -14,7 +14,7 @@ class SkjemaService(val søknadClient: SøknadClient) {
         arbeidssøker: Arbeidssøker,
         fnr: String,
         navn: String,
-        innsendingMottatt: LocalDateTime
+        innsendingMottatt: LocalDateTime,
     ): KvitteringDto {
         val søknadDto = SkjemaMapper.mapTilKontrakt(arbeidssøker, fnr, navn, innsendingMottatt)
         return søknadClient.sendInnArbeidsRegistreringsskjema(søknadDto)

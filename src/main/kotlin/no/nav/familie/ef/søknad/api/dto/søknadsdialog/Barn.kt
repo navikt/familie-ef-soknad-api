@@ -13,7 +13,7 @@ data class Barn(
     val forelder: AnnenForelder? = null, // Dersom annen forelder er død så skal denne være null
     val skalHaBarnepass: BooleanFelt?,
     val særligeTilsynsbehov: TekstFelt?,
-    val barnepass: Barnepass?
+    val barnepass: Barnepass?,
 )
 
 data class AnnenForelder(
@@ -33,5 +33,5 @@ data class AnnenForelder(
     val flyttetFra: DatoFelt?,
     val hvorMyeSammen: TekstFelt?,
     val beskrivSamværUtenBarn: TekstFelt?,
-    val skalBarnetBoHosSøker: TekstFelt?
+    val skalBarnetBoHosSøker: TekstFelt?,
 )

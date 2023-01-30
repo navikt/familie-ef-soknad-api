@@ -30,7 +30,7 @@ data class Foo(
     val a: Søknadsfelt<Boolean>,
     val b: List<Søknadsfelt<String>>,
     val c: Søknadsfelt<List<String>>,
-    val d: Søknadsfelt<Bar>? = null
+    val d: Søknadsfelt<Bar>? = null,
 )
 
 data class Bar(val aa: Søknadsfelt<String>? = null)
@@ -97,7 +97,7 @@ internal class SøknadOvergangsstønadMapperTest {
                 checkAllMethodsCalled(
                     collection.firstOrNull()
                         ?: throw IllegalStateException("Finner ikke første element på liste: $depthString"),
-                    newDepth
+                    newDepth,
                 )
             } else if (!it.returnType.toString().startsWith("kotlin.") &&
                 !it.returnType.toString().startsWith("java.")
@@ -105,7 +105,7 @@ internal class SøknadOvergangsstønadMapperTest {
             ) {
                 checkAllMethodsCalled(
                     it.call(k) ?: throw IllegalStateException("Finner ikke noe data på element:${it.name}"),
-                    newDepth
+                    newDepth,
                 )
             }
         }
@@ -200,8 +200,8 @@ internal class SøknadOvergangsstønadMapperTest {
                         listOf(
                             Error(
                                 "${it.name} - verdi",
-                                newDepth
-                            )
+                                newDepth,
+                            ),
                         )
                     } else {
                         if (isJavaClass(verdi)) {
@@ -219,8 +219,8 @@ internal class SøknadOvergangsstønadMapperTest {
                         listOf(
                             Error(
                                 "${it.name} - collection empty",
-                                newDepth
-                            )
+                                newDepth,
+                            ),
                         )
                     } else {
                         findErrors(v.first()!!, newDepth)

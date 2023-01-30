@@ -10,7 +10,7 @@ object DokumentfeltUtil {
 
     fun dokumentfelt(
         dokumentIdentifikator: DokumentIdentifikator,
-        vedleggMap: Map<String, DokumentasjonWrapper>
+        vedleggMap: Map<String, DokumentasjonWrapper>,
     ): Søknadsfelt<Dokumentasjon>? {
         val dokumentasjon = vedleggMap[dokumentIdentifikator.name]
         return dokumentasjon?.let {

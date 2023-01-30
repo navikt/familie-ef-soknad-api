@@ -57,7 +57,7 @@ internal class SøknadSkolepengerControllerTest : OppslagSpringRunnerTest() {
 
     fun søknadSkolepenger() = objectMapper.readValue(
         File("src/test/resources/skolepenger/skolepenger.json"),
-        SøknadSkolepengerDto::class.java
+        SøknadSkolepengerDto::class.java,
     )
 
     @Test
@@ -66,20 +66,20 @@ internal class SøknadSkolepengerControllerTest : OppslagSpringRunnerTest() {
             .copy(
                 person = Person(
                     søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject),
-                    barn = listOf()
-                )
+                    barn = listOf(),
+                ),
             )
 
         every { søknadService.sendInn(søknad, any()) } returns Kvittering(
             "Mottatt søknad: $søknad",
-            LocalDateTime.now()
+            LocalDateTime.now(),
         )
         every { featureToggleService.isEnabled(any()) } returns true
 
         val response = restTemplate.exchange<Kvittering>(
             localhost("/api/soknad/skolepenger/"),
             POST,
-            HttpEntity(søknad, headers)
+            HttpEntity(søknad, headers),
         )
 
         assertThat(response.statusCodeValue).isEqualTo(200)
@@ -95,7 +95,7 @@ internal class SøknadSkolepengerControllerTest : OppslagSpringRunnerTest() {
         val response = restTemplate.exchange<Any>(
             localhost("/api/soknad/skolepenger/"),
             POST,
-            HttpEntity(søknadSkolepengerDto, headers)
+            HttpEntity(søknadSkolepengerDto, headers),
         )
 
         assertThat(response.statusCodeValue).isEqualTo(403)

@@ -38,7 +38,7 @@ class PdlClientTest {
     fun `pdlClient håndterer response for søker-query mot pdl-tjenesten riktig`() {
         wireMockServer.stubFor(
             post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                .willReturn(okJson(readFile("søker.json")))
+                .willReturn(okJson(readFile("søker.json"))),
         )
 
         val response = pdlClient.hentSøker("")
@@ -50,7 +50,7 @@ class PdlClientTest {
     fun `pdlClient håndterer response for søker-query mot pdl-tjenesten der person i data er null`() {
         wireMockServer.stubFor(
             post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                .willReturn(okJson("{\"data\": {}}"))
+                .willReturn(okJson("{\"data\": {}}")),
         )
         assertThat(catchThrowable { pdlClient.hentSøker("") })
             .hasMessageStartingWith("Manglende ")
@@ -61,7 +61,7 @@ class PdlClientTest {
     fun `pdlClient håndterer response for søker-query mot pdl-tjenesten der data er null og har errors`() {
         wireMockServer.stubFor(
             post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                .willReturn(okJson(readFile("pdlErrorResponse.json")))
+                .willReturn(okJson(readFile("pdlErrorResponse.json"))),
         )
         assertThat(catchThrowable { pdlClient.hentSøker("") })
             .hasMessageStartingWith("Feil ved henting av")

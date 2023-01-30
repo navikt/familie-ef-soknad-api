@@ -15,21 +15,21 @@ object StønadsstartMapper {
 
     fun mapStønadsstart(
         søknadsdato: DatoFelt?,
-        søkerFraBestemtMåned: BooleanFelt
+        søkerFraBestemtMåned: BooleanFelt,
     ): Søknadsfelt<Stønadsstart> {
         return Søknadsfelt(NårSøkerDuFra.hentTekst(), map(søknadsdato, søkerFraBestemtMåned))
     }
 
     private fun map(
         søknadsdato: DatoFelt?,
-        søkerFraBestemtMåned: BooleanFelt
+        søkerFraBestemtMåned: BooleanFelt,
     ): Stønadsstart {
         val month = søknadsdato?.tilLocalDateEllerNull()?.month
         val year = søknadsdato?.tilLocalDateEllerNull()?.year
         return Stønadsstart(
             month?.let { Søknadsfelt(FraMåned.hentTekst(), month) },
             year?.let { Søknadsfelt(FraÅr.hentTekst(), year) },
-            søkerFraBestemtMåned.tilSøknadsfelt()
+            søkerFraBestemtMåned.tilSøknadsfelt(),
         )
     }
 }

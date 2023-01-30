@@ -18,7 +18,7 @@ internal class SøknadBarnetilsynMapperTest {
     fun `Barnetilsyn skal mappes `() {
         val søknad = objectMapper.readValue(
             File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
-            SøknadBarnetilsynDto::class.java
+            SøknadBarnetilsynDto::class.java,
         )
         val mapped = mapper.mapTilIntern(søknad, innsendingMottatt)
 

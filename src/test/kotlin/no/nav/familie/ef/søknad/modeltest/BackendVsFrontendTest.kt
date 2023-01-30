@@ -57,7 +57,7 @@ internal class BackendVsFrontendTest {
         "LocaleString",
         "Språk",
         "IMellomlagretOvergangsstønad",
-        "IDokumentasjon" // ?
+        "IDokumentasjon", // ?
     )
 
     val interfaceMappings: Map<String, KClass<out Any>> = mapOf(
@@ -88,7 +88,7 @@ internal class BackendVsFrontendTest {
         "ITekstFelt" to TekstFelt::class,
         "IBooleanFelt" to BooleanFelt::class,
         "IDatoFelt" to DatoFelt::class,
-        "ITekstListeFelt" to ListFelt::class
+        "ITekstListeFelt" to ListFelt::class,
     )
 
     fun listFiles(dir: String): List<Path> = Files.list(Paths.get(dir))
@@ -119,7 +119,7 @@ internal class BackendVsFrontendTest {
     enum class ResultType {
         OK,
         SAVNER_FELT,
-        INGEN_MAPPING
+        INGEN_MAPPING,
     }
 
     data class Result(val name: String, val type: ResultType, val str: List<String> = emptyList())
@@ -161,21 +161,21 @@ internal class BackendVsFrontendTest {
                 "jsValues",
                 ResultType.SAVNER_FELT,
                 jsValues.filterNot { it in enumValues }
-                    .toList()
+                    .toList(),
             ),
             Result(
                 "enumValuesValues",
                 ResultType.SAVNER_FELT,
                 enumValues.filterNot { it in jsValues }
-                    .toList()
-            )
+                    .toList(),
+            ),
         )
     }
 
     private fun handleFiles(
         filePath: Path,
         interfaceMappings: Map<String, KClass<out Any>>,
-        medNullCheck: Boolean = true
+        medNullCheck: Boolean = true,
     ): List<Result> {
         val fileContent = Files.readString(filePath)
 
@@ -204,21 +204,21 @@ internal class BackendVsFrontendTest {
                 if (jsFieldsDiff.isEmpty() && classFieldsDiff.isEmpty()) {
                     return@map Result(
                         interfaceName,
-                        ResultType.OK
+                        ResultType.OK,
                     )
                 } else {
                     val tekster = jsFieldsDiff.map { " jsFelt $it" } + classFieldsDiff.map { " kotlin felt $it" }
                     return@map Result(
                         interfaceName,
                         ResultType.SAVNER_FELT,
-                        tekster
+                        tekster,
                     )
                 }
             } else {
                 return@map Result(
                     interfaceName,
                     ResultType.INGEN_MAPPING,
-                    listOf("~~Finner ikke mapping for $interfaceName")
+                    listOf("~~Finner ikke mapping for $interfaceName"),
                 )
             }
         }.toList()

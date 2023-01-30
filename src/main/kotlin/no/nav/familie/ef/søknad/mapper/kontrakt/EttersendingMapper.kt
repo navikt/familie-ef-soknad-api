@@ -8,7 +8,7 @@ object EttersendingMapper {
 
     fun groupByStønad(
         dto: EttersendelseDto,
-        innsendingMottatt: LocalDateTime
+        innsendingMottatt: LocalDateTime,
     ): Map<StønadType, EttersendelseDto> {
         return dto.dokumentasjonsbehov
             .map { it.copy(innsendingstidspunkt = innsendingMottatt) }

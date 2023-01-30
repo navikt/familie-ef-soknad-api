@@ -11,9 +11,7 @@ enum class Språk(val språk: String) {
     NB("nb"),
 
     @JsonProperty("en")
-    EN("en")
-
-    ;
+    EN("en"), ;
 
     companion object {
         private val map = values().associateBy(Språk::språk)

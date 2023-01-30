@@ -30,11 +30,11 @@ object PersonMinimumMapper {
         return PersonMinimum(
             annenForelder.navn?.tilSøknadsfelt() ?: Søknadsfelt(
                 AnnenForelderNavn.hentTekst(),
-                IkkeOppgitt.hentTekst()
+                IkkeOppgitt.hentTekst(),
             ),
             søknadsfeltFødselsnummer,
             søknadsfeltFødselsdato,
-            null
+            null,
         )
     }
 
@@ -45,7 +45,7 @@ object PersonMinimumMapper {
             samboerDetaljer.navn.tilSøknadsfelt(),
             søknadsfeltFødselsnummer,
             søknadsfeltFødselsdato,
-            null
+            null,
         )
     }
 

@@ -27,7 +27,7 @@ import java.time.temporal.ChronoUnit
     MdcValuesPropagatingClientInterceptor::class,
     ConsumerIdClientInterceptor::class,
     BearerTokenExchangeClientInterceptor::class,
-    BearerTokenClientCredentialsClientInterceptor::class
+    BearerTokenClientCredentialsClientInterceptor::class,
 )
 internal class ApplicationConfig {
 
@@ -67,7 +67,7 @@ internal class ApplicationConfig {
     fun restTemplate(
         bearerTokenExchangeClientInterceptor: BearerTokenExchangeClientInterceptor,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-        consumerIdClientInterceptor: ConsumerIdClientInterceptor
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
     ): RestOperations {
         return RestTemplateBuilder()
             .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
@@ -75,7 +75,7 @@ internal class ApplicationConfig {
             .interceptors(
                 bearerTokenExchangeClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
-                consumerIdClientInterceptor
+                consumerIdClientInterceptor,
             )
             .build()
     }
@@ -84,7 +84,7 @@ internal class ApplicationConfig {
     fun clientCredentialRestTemplateMedApiKey(
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         bearerTokenClientCredentialsClientInterceptor: BearerTokenClientCredentialsClientInterceptor,
-        mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor
+        mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
     ): RestOperations {
         return RestTemplateBuilder()
             .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
@@ -92,7 +92,7 @@ internal class ApplicationConfig {
             .interceptors(
                 consumerIdClientInterceptor,
                 bearerTokenClientCredentialsClientInterceptor,
-                mdcValuesPropagatingClientInterceptor
+                mdcValuesPropagatingClientInterceptor,
             )
             .build()
     }
@@ -100,14 +100,14 @@ internal class ApplicationConfig {
     @Bean("utenAuth")
     fun restTemplate(
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-        mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor
+        mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
     ): RestOperations {
         return RestTemplateBuilder()
             .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
             .additionalInterceptors(
                 consumerIdClientInterceptor,
-                mdcValuesPropagatingClientInterceptor
+                mdcValuesPropagatingClientInterceptor,
             ).build()
     }
 
@@ -117,7 +117,7 @@ internal class ApplicationConfig {
         return RetryOAuth2HttpClient(
             RestTemplateBuilder()
                 .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-                .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS))
+                .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)),
         )
     }
 }

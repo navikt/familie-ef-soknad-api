@@ -30,5 +30,5 @@ enum class DokumentIdentifikator {
     TRENGER_MER_PASS_ENN_JEVNALDREDE,
     FOR_SYK_TIL_Å_JOBBE,
 
-    UTGIFTER_UTDANNING
+    UTGIFTER_UTDANNING,
 }

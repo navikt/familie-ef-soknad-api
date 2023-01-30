@@ -51,7 +51,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     fun mapTilSøkerinfo(
         pdlSøker: PdlSøker,
         pdlBarn: Map<String, PdlBarn>,
-        andreForeldre: Map<String, PdlAnnenForelder>
+        andreForeldre: Map<String, PdlAnnenForelder>,
     ): Søkerinfo {
         val søker: Person = pdlSøker.tilPersonDto()
         val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.firstOrNull(), andreForeldre, søker.fnr)
@@ -62,7 +62,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         pdlBarn: Map<String, PdlBarn>,
         søkersAdresse: Bostedsadresse?,
         andreForeldre: Map<String, PdlAnnenForelder>,
-        søkerPersonIdent: String
+        søkerPersonIdent: String,
     ): List<Barn> {
         return pdlBarn.entries.map { (personIdent, pdlBarn) ->
             val navn = pdlBarn.navn.firstOrNull()?.visningsnavn() ?: ""
@@ -82,14 +82,14 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                 fødselsdato,
                 harSammeAdresse,
                 medforelder,
-                pdlBarn.adressebeskyttelse.harBeskyttetAdresse()
+                pdlBarn.adressebeskyttelse.harBeskyttetAdresse(),
             )
         }
     }
 
     private fun erMedForelderRelasjon(
         forelderBarnRelasjon: ForelderBarnRelasjon,
-        søkersPersonIdent: String
+        søkersPersonIdent: String,
     ) =
         forelderBarnRelasjon.relatertPersonsIdent != søkersPersonIdent &&
             forelderBarnRelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
@@ -140,7 +140,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         val adresse = Adresse(
             adresse = formatertAdresse,
             poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
-            postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " "
+            postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ",
         )
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
@@ -154,7 +154,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             egenansatt = false, // TODO denne er vel i beste fall unødvendig?
             sivilstand = sivilstand.type.name,
             statsborgerskap = statsborgerskapListe,
-            erStrengtFortrolig = adressebeskyttelse.erStrengtFortrolig()
+            erStrengtFortrolig = adressebeskyttelse.erStrengtFortrolig(),
         )
     }
 
@@ -184,8 +184,8 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                 vegadresse.adressenavn ?: "",
                 vegadresse.husnummer ?: "",
                 vegadresse.husbokstav ?: "",
-                vegadresse.bruksenhetsnummer ?: ""
-            )
+                vegadresse.bruksenhetsnummer ?: "",
+            ),
         ) ?: ""
 
     private fun join(vararg args: String?, separator: String = ", "): String? {
@@ -207,7 +207,7 @@ fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
         annenForelderNavn.visningsnavn(),
         this.adressebeskyttelse.harBeskyttetAdresse(),
         this.dødsfall.any(),
-        annenForelderPersonsIdent
+        annenForelderPersonsIdent,
     )
 }
 
@@ -220,5 +220,5 @@ fun List<Adressebeskyttelse>.erStrengtFortrolig(): Boolean = this.firstOrNull()?
 private val kreverAdressebeskyttelse = listOf(
     AdressebeskyttelseGradering.FORTROLIG,
     AdressebeskyttelseGradering.STRENGT_FORTROLIG,
-    AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
+    AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND,
 )

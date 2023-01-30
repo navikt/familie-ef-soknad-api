@@ -28,7 +28,7 @@ import java.util.UUID
 @Unprotected
 class DokumentController(
     @Qualifier("dokumentlager") private val dokumenter: MutableMap<String, ByteArray>,
-    private val contextHolder: TokenValidationContextHolder
+    private val contextHolder: TokenValidationContextHolder,
 ) {
 
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
@@ -42,11 +42,11 @@ class DokumentController(
     @PostMapping(
         path = ["dokument/{bucket}"],
         consumes = [MediaType.MULTIPART_FORM_DATA_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE]
+        produces = [MediaType.APPLICATION_JSON_VALUE],
     )
     fun addAttachment(
         @PathVariable("bucket") bucket: String,
-        @RequestParam("file") multipartFile: MultipartFile
+        @RequestParam("file") multipartFile: MultipartFile,
     ): ResponseEntity<Map<String, String>> {
         if (multipartFile.isEmpty) {
             return ResponseEntity.ok(emptyMap())
@@ -69,7 +69,7 @@ class DokumentController(
     @PostMapping(
         "mellomlager",
         consumes = [MediaType.APPLICATION_JSON_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE]
+        produces = [MediaType.APPLICATION_JSON_VALUE],
     )
     fun mellomlagreSøknad(@RequestBody(required = true) søknad: String): ResponseEntity<Unit> {
         log.info("Mellomlagrer søknad om overgangsstønad")

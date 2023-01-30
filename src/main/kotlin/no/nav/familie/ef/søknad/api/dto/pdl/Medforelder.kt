@@ -8,7 +8,7 @@ data class Medforelder(
     private val _navn: String,
     val harAdressesperre: Boolean,
     val død: Boolean = false,
-    val ident: String
+    val ident: String,
 ) {
 
     val navn: String

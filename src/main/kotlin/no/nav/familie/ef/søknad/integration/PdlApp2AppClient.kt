@@ -16,7 +16,7 @@ import org.springframework.web.client.RestOperations
 @Component
 class PdlApp2AppClient(
     val pdlConfig: PdlConfig,
-    @Qualifier("clientCredential") restOperations: RestOperations
+    @Qualifier("clientCredential") restOperations: RestOperations,
 ) :
     AbstractRestClient(restOperations, "pdl.personinfo") {
 
@@ -24,12 +24,12 @@ class PdlApp2AppClient(
         if (personIdenter.isEmpty()) return emptyMap()
         val pdlPersonRequest = PdlPersonBolkRequest(
             variables = PdlPersonBolkRequestVariables(personIdenter),
-            query = PdlConfig.barnQuery
+            query = PdlConfig.barnQuery,
         )
         val pdlResponse: PdlBolkResponse<PdlBarn> = postForEntity(
             pdlConfig.pdlUri,
             pdlPersonRequest,
-            httpHeaders()
+            httpHeaders(),
         )
         return feilsjekkOgReturnerData(pdlResponse)
     }
@@ -38,12 +38,12 @@ class PdlApp2AppClient(
         if (personIdenter.isEmpty()) return emptyMap()
         val pdlPersonRequest = PdlPersonBolkRequest(
             variables = PdlPersonBolkRequestVariables(personIdenter),
-            query = PdlConfig.annenForelderQuery
+            query = PdlConfig.annenForelderQuery,
         )
         val pdlResponse: PdlBolkResponse<PdlAnnenForelder> = postForEntity(
             pdlConfig.pdlUri,
             pdlPersonRequest,
-            httpHeaders()
+            httpHeaders(),
         )
         return feilsjekkOgReturnerData(pdlResponse)
     }

@@ -6,5 +6,5 @@ data class Situasjon(
     val datoSagtOppEllerRedusertStilling: DatoFelt? = null,
     val begrunnelseSagtOppEllerRedusertStilling: TekstFelt? = null,
     val søknadsdato: DatoFelt?,
-    val søkerFraBestemtMåned: BooleanFelt
+    val søkerFraBestemtMåned: BooleanFelt,
 )

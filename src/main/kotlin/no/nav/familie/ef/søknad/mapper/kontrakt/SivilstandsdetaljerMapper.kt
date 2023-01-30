@@ -19,7 +19,7 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
 
     override fun mapDto(
         data: Sivilstatus,
-        vedlegg: Map<String, DokumentasjonWrapper>
+        vedlegg: Map<String, DokumentasjonWrapper>,
     ): Sivilstandsdetaljer {
         return Sivilstandsdetaljer(
             samlivsbruddsdokumentasjon = dokumentfelt(SAMLIVSBRUDD, vedlegg),
@@ -38,9 +38,9 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
             tidligereSamboerdetaljer = data.tidligereSamboerDetaljer?.let {
                 Søknadsfelt(
                     OmDenTidligereSamboeren.hentTekst(),
-                    PersonMinimumMapper.personMinimum(it)
+                    PersonMinimumMapper.personMinimum(it),
                 )
-            }
+            },
         )
     }
 }

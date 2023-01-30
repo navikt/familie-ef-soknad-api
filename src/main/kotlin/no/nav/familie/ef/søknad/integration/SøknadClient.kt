@@ -22,7 +22,7 @@ import java.net.URI
 @Service
 class SøknadClient(
     private val config: MottakConfig,
-    @Qualifier("tokenExchange") operations: RestOperations
+    @Qualifier("tokenExchange") operations: RestOperations,
 ) :
     AbstractPingableRestClient(operations, "søknad.innsending") {
 
@@ -53,7 +53,7 @@ class SøknadClient(
             postForEntity(
                 config.hentSøknaderMedDokumentasjonsbehovUri,
                 PersonIdent(personIdent),
-                HttpHeaders().medContentTypeJsonUTF8()
+                HttpHeaders().medContentTypeJsonUTF8(),
             )
         return filtrerVekkEldreDokumentasjonsbehov(søknaderMedDokumentasjonsbehov)
     }
@@ -62,7 +62,7 @@ class SøknadClient(
         return postForEntity(
             config.hentEttersendingForPersonUri,
             PersonIdent(personIdent),
-            HttpHeaders().medContentTypeJsonUTF8()
+            HttpHeaders().medContentTypeJsonUTF8(),
         )
     }
 

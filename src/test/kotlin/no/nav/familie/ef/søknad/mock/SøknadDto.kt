@@ -13,13 +13,13 @@ fun søkerMedDefaultVerdier(
     forkortetNavn: String = "Kari Nordmann",
     adresse: Adresse = Adresse("Jerpefaret 5C", "1440", ""),
     statsborgerskap: String = "Norsk",
-    sivilstatus: String = "Ugift"
+    sivilstatus: String = "Ugift",
 ) = Søker(
     fnr = forventetFnr,
     forkortetNavn = forkortetNavn,
     adresse = adresse,
     statsborgerskap = statsborgerskap,
     sivilstand = sivilstatus,
-    egenansatt = false
+    egenansatt = false,
 
 )

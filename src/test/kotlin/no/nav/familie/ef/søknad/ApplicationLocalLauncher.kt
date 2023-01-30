@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
             "mock-pdl",
             "mock-pdlApp2AppClient",
             "mock-mottak",
-            "mock-integrasjoner"
+            "mock-integrasjoner",
         )
         .properties(mapOf("mock-oauth2-server.port" to mockOauth2ServerPort))
         .run(*args)

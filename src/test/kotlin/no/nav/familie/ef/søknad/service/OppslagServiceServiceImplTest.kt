@@ -54,7 +54,7 @@ internal class OppslagServiceServiceImplTest {
         pdlClient,
         pdlApp2AppClient,
         regelverkConfig,
-        søkerinfoMapper
+        søkerinfoMapper,
     )
 
     @BeforeEach
@@ -173,7 +173,7 @@ internal class OppslagServiceServiceImplTest {
         val generer = FnrGenerator.generer()
         val copy = pdlBarn.second.copy(
             forelderBarnRelasjon = listOf(ForelderBarnRelasjon(generer, Familierelasjonsrolle.FAR)),
-            navn = listOf(Navn("navn", "navn", "navn"))
+            navn = listOf(Navn("navn", "navn", "navn")),
         )
         every { pdlApp2AppClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns mapOf(
@@ -184,10 +184,10 @@ internal class OppslagServiceServiceImplTest {
                     Navn(
                         "forelder",
                         "forelder",
-                        "forelder"
-                    )
-                )
-            )
+                        "forelder",
+                    ),
+                ),
+            ),
         )
 
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
@@ -211,23 +211,23 @@ internal class OppslagServiceServiceImplTest {
         assertThat(
             oppslagServiceService.erIAktuellAlder(
                 fødselsdato = LocalDate.now()
-                    .minusYears(18)
-            )
+                    .minusYears(18),
+            ),
         ).isTrue
 
         assertThat(
             oppslagServiceService.erIAktuellAlder(
                 fødselsdato = LocalDate.now()
-                    .minusYears(19).plusDays(1)
-            )
+                    .minusYears(19).plusDays(1),
+            ),
         )
             .withFailMessage("Personen har ikke fylt 19 ennå")
             .isTrue
         assertThat(
             oppslagServiceService.erIAktuellAlder(
                 fødselsdato = LocalDate.now()
-                    .minusYears(19).minusDays(2)
-            )
+                    .minusYears(19).minusDays(2),
+            ),
         )
             .isFalse
     }
@@ -239,7 +239,7 @@ internal class OppslagServiceServiceImplTest {
             pdlClient,
             pdlApp2AppClient,
             regelverkConfig,
-            mapper
+            mapper,
         )
 
         every { pdlApp2AppClient.hentBarn(any()) } returns mapOf(pdlBarn(dødsfall = Dødsfall(LocalDate.MIN)))
@@ -256,7 +256,7 @@ internal class OppslagServiceServiceImplTest {
             pdlClient,
             pdlApp2AppClient,
             regelverkConfig,
-            mapper
+            mapper,
         )
         every { pdlApp2AppClient.hentBarn(any()) } returns mapOf(pdlBarn())
         mockHentPersonPdlClient()
@@ -283,7 +283,7 @@ internal class OppslagServiceServiceImplTest {
         adressebeskyttelse: Adressebeskyttelse? = null,
         dødsfall: Dødsfall? = null,
         fødselsdato: LocalDate = LocalDate.now().minusMonths(6),
-        forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf()
+        forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf(),
     ): Pair<String, PdlBarn> {
         val fødsel = Fødsel(fødselsdato.year, fødselsdato)
         return Pair(
@@ -295,15 +295,15 @@ internal class OppslagServiceServiceImplTest {
                 fødsel = listOf(fødsel),
                 navn = emptyList(),
                 dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList(),
-                forelderBarnRelasjon = forelderBarnRelasjon
-            )
+                forelderBarnRelasjon = forelderBarnRelasjon,
+            ),
         )
     }
 
     private fun mockPdlHentBarn(
         navn: String = "Ola",
         adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT,
-        forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf()
+        forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf(),
 
     ) {
         val pdlBarn = pdlBarn(Adressebeskyttelse(adressebeskyttelseGradering), forelderBarnRelasjon = forelderBarnRelasjon)
@@ -322,7 +322,7 @@ internal class OppslagServiceServiceImplTest {
         fornavn: String = "TestNavn",
         mellomnavn: String = "TestNavn",
         etternavn: String = "TestNavn",
-        adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT
+        adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT,
     ) {
         every { pdlClient.hentSøker(any()) } returns (
             PdlSøker(
@@ -331,7 +331,7 @@ internal class OppslagServiceServiceImplTest {
                 listOf(),
                 navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
                 sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
-                listOf()
+                listOf(),
             )
             )
     }
@@ -344,7 +344,7 @@ internal class OppslagServiceServiceImplTest {
             personinfoDto.egenansatt?.isErEgenansatt ?: false,
             personinfoDto.sivilstand?.kode?.verdi ?: "",
             søkerinfoMapper.hentLand(personinfoDto.statsborgerskap?.kode?.verdi),
-            false
+            false,
         )
     }
 
@@ -354,7 +354,7 @@ internal class OppslagServiceServiceImplTest {
             adresse = adresseinfoDto?.bostedsadresse?.adresse
                 ?: "",
             postnummer = postnummer ?: "",
-            poststed = søkerinfoMapper.hentPoststed(postnummer)
+            poststed = søkerinfoMapper.hentPoststed(postnummer),
         )
     }
 }

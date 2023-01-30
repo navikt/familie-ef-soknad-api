@@ -20,7 +20,7 @@ internal class MerOmDinSituasjonMedAlternativerTest {
         "Barnet mitt er sykt",
         "Jeg har søkt om barnepass, men ikke fått plass enda",
         "Jeg har barn som trenger særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
-        "Nei"
+        "Nei",
     )
 
     @Test
@@ -56,6 +56,6 @@ internal class MerOmDinSituasjonMedAlternativerTest {
     }
 
     private fun copyGjelderDetteDeg(nyListe: List<String>) = søknad.merOmDinSituasjon.gjelderDetteDeg.copy(
-        alternativer = nyListe
+        alternativer = nyListe,
     )
 }

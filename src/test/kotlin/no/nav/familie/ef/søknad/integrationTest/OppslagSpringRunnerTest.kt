@@ -28,7 +28,7 @@ import java.util.UUID
     "mock-pdl",
     "mock-pdlApp2AppClient",
     "mock-mottak",
-    "kodeverk-cache-test"
+    "kodeverk-cache-test",
 )
 @EnableMockOAuth2Server
 abstract class OppslagSpringRunnerTest {
@@ -77,7 +77,7 @@ abstract class OppslagSpringRunnerTest {
         issuerId: String = "tokenx",
         clientId: String = UUID.randomUUID().toString(),
         audience: String = "familie-app",
-        claims: Map<String, Any> = mapOf("acr" to "Level4")
+        claims: Map<String, Any> = mapOf("acr" to "Level4"),
 
     ): String {
         return this.issueToken(
@@ -88,8 +88,8 @@ abstract class OppslagSpringRunnerTest {
                 subject = subject,
                 audience = listOf(audience),
                 claims = claims,
-                expiry = 3600
-            )
+                expiry = 3600,
+            ),
         ).serialize()
     }
 

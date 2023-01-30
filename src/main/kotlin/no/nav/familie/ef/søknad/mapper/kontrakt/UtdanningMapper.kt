@@ -35,10 +35,10 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
                         NårSkalDuVæreElevStudent.hentTekst(),
                         Datoperiode(
                             data.periode.fra.tilLocalDate(),
-                            data.periode.til.tilLocalDate()
-                        )
-                    )
-                )
+                            data.periode.til.tilLocalDate(),
+                        ),
+                    ),
+                ),
             ),
             offentligEllerPrivat = data.offentligEllerPrivat.tilSøknadsfelt(),
             hvorMyeSkalDuStudere = data.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
@@ -48,7 +48,7 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
             tidligereUtdanninger = data.tidligereUtdanning?.let { mapTidligereUtdanning(it) },
             semesteravgift = mapUtgifterTilUtdanning(data.semesteravgift),
             studieavgift = mapUtgifterTilUtdanning(data.studieavgift),
-            eksamensgebyr = mapUtgifterTilUtdanning(data.eksamensgebyr)
+            eksamensgebyr = mapUtgifterTilUtdanning(data.eksamensgebyr),
         )
     }
 
@@ -62,9 +62,9 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
                         it.periode.fra.tilLocalDate().month,
                         it.periode.fra.tilLocalDate().year,
                         it.periode.til.tilLocalDate().month,
-                        it.periode.til.tilLocalDate().year
-                    )
-                )
+                        it.periode.til.tilLocalDate().year,
+                    ),
+                ),
             )
         }
         return Søknadsfelt(SpråkTeksterTidligereUtdanning.hentTekst(), tidligereUtdanningList)

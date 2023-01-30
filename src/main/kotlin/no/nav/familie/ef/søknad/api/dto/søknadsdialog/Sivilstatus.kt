@@ -9,5 +9,5 @@ data class Sivilstatus(
     val datoForSamlivsbrudd: DatoFelt? = null,
     val datoFlyttetFraHverandre: DatoFelt? = null,
     val datoEndretSamvær: DatoFelt? = null,
-    val tidligereSamboerDetaljer: SamboerDetaljer? = null
+    val tidligereSamboerDetaljer: SamboerDetaljer? = null,
 )
