@@ -18,8 +18,8 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
             data.søkerBosattINorgeSisteTreÅr.tilSøknadsfelt(),
             Søknadsfelt(
                 Språktekster.Utenlandsopphold.hentTekst(),
-                mapUtenlansopphold(data.perioderBoddIUtlandet)
-            )
+                mapUtenlansopphold(data.perioderBoddIUtlandet),
+            ),
         )
     }
 
@@ -28,7 +28,7 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
             KontraksUtenlandsopphold(
                 it.periode.fra.tilSøknadsfelt(),
                 it.periode.til.tilSøknadsfelt(),
-                it.begrunnelse.tilSøknadsfelt()
+                it.begrunnelse.tilSøknadsfelt(),
             )
         } ?: listOf()
     }

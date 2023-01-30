@@ -12,7 +12,7 @@ import kotlin.test.Ignore
 
 @Ignore(
     "Krever at unleash kjører lokalt på port 4242, og at en funksjonsbryter " +
-        "'test' er satt opp med byEnvironmentStrategy og miljø=local"
+        "'test' er satt opp med byEnvironmentStrategy og miljø=local",
 )
 internal class FeatureToggleControllerIntegrationTest {
 
@@ -33,7 +33,7 @@ internal class FeatureToggleControllerIntegrationTest {
                 .unleashAPI(unleashUrl)
                 .unleashContextProvider(unleashContextProvider)
                 .build(),
-            ByEnvironmentStrategy()
+            ByEnvironmentStrategy(),
         )
 
         override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {

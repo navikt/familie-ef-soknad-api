@@ -30,7 +30,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
 
     override fun mapDto(
         data: AktivitetDto,
-        vedlegg: Map<String, DokumentasjonWrapper>
+        vedlegg: Map<String, DokumentasjonWrapper>,
     ): Aktivitet {
         return Aktivitet(
             hvordanErArbeidssituasjonen = data.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
@@ -47,19 +47,19 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                     it.map { aksjeselskap ->
                         Aksjeselskap(
                             navn = aksjeselskap.navn.tilSøknadsfelt(),
-                            arbeidsmengde = aksjeselskap.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall)
+                            arbeidsmengde = aksjeselskap.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
                         )
-                    }
+                    },
                 )
             },
             erIArbeid = data.erIArbeid?.tilSøknadsfelt(),
-            erIArbeidDokumentasjon = dokumentfelt(DokumentIdentifikator.FOR_SYK_TIL_Å_JOBBE, vedlegg)
+            erIArbeidDokumentasjon = dokumentfelt(DokumentIdentifikator.FOR_SYK_TIL_Å_JOBBE, vedlegg),
         )
     }
 
     private fun mapArbeidssøker(
         arbeidssøker: no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker,
-        vedlegg: Map<String, DokumentasjonWrapper>
+        vedlegg: Map<String, DokumentasjonWrapper>,
     ): Søknadsfelt<Arbeidssøker> {
         return Søknadsfelt(
             NårDuErArbeidssøker.hentTekst(),
@@ -72,22 +72,22 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                 ønskerDuMinst50ProsentStilling = arbeidssøker.ønskerSøker50ProsentStilling.tilSøknadsfelt(),
                 ikkeVilligTilÅTaImotTilbudOmArbeidDokumentasjon = dokumentfelt(
                     IKKE_VILLIG_TIL_ARBEID,
-                    vedlegg
-                )
-            )
+                    vedlegg,
+                ),
+            ),
         )
     }
 
     private fun mapEtablererVirksomhet(
         it: TekstFelt,
-        vedlegg: Map<String, DokumentasjonWrapper>
+        vedlegg: Map<String, DokumentasjonWrapper>,
     ): Søknadsfelt<Virksomhet> {
         return Søknadsfelt(
             OmVirksomhetenDuEtablerer.hentTekst(),
             Virksomhet(
                 it.tilSøknadsfelt(),
-                dokumentfelt(ETABLERER_VIRKSOMHET, vedlegg)
-            )
+                dokumentfelt(ETABLERER_VIRKSOMHET, vedlegg),
+            ),
         )
     }
 
@@ -101,7 +101,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
             organisasjonsnummer = firma.organisasjonsnummer.tilSøknadsfelt(),
             etableringsdato = firma.etableringsdato.tilSøknadsfelt(),
             arbeidsmengde = firma.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
-            hvordanSerArbeidsukenUt = firma.arbeidsuke.tilSøknadsfelt()
+            hvordanSerArbeidsukenUt = firma.arbeidsuke.tilSøknadsfelt(),
         )
     }
 
@@ -112,7 +112,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                 arbeidsmengde = arbeid.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
                 fastEllerMidlertidig = arbeid.ansettelsesforhold.tilSøknadsfelt(),
                 harSluttdato = arbeid.harSluttDato?.tilSøknadsfelt(),
-                sluttdato = arbeid.sluttdato?.tilSøknadsfelt()
+                sluttdato = arbeid.sluttdato?.tilSøknadsfelt(),
             )
         }
     }

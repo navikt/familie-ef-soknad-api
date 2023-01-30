@@ -49,12 +49,12 @@ internal class DokumentasjonsbehovControllerTest : OppslagSpringRunnerTest() {
             innsendtDato = LocalDate.of(
                 2021,
                 10,
-                5
-            )
+                5,
+            ),
         )
         val nySøknad: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(
             fødselsnummer = "0",
-            innsendtDato = LocalDate.now()
+            innsendtDato = LocalDate.now(),
         )
         val søknader: List<SøknadMedDokumentasjonsbehovDto> = listOf(eldreSøknad, nySøknad)
         val filtrerteSøknader: List<SøknadMedDokumentasjonsbehovDto> = filtrerVekkEldreDokumentasjonsbehov(søknader)
@@ -67,18 +67,18 @@ internal class DokumentasjonsbehovControllerTest : OppslagSpringRunnerTest() {
             emptyList(),
             innsendtDato.atTime(0, 0),
             SøknadType.OVERGANGSSTØNAD,
-            fødselsnummer
+            fødselsnummer,
         )
 
     private fun lagSøknadMedDokumentasjonsbehov(
         søknadId: String = UUID.randomUUID().toString(),
         fødselsnummer: String,
-        innsendtDato: LocalDate
+        innsendtDato: LocalDate,
     ): SøknadMedDokumentasjonsbehovDto =
         SøknadMedDokumentasjonsbehovDto(
             søknadId,
             StønadType.OVERGANGSSTØNAD,
             innsendtDato,
-            lagDokumentasjonsbehov(fødselsnummer, innsendtDato)
+            lagDokumentasjonsbehov(fødselsnummer, innsendtDato),
         )
 }

@@ -22,7 +22,7 @@ internal class SkjemaMapperTest {
         kanSkaffeBarnepassInnenEnUke,
         registrertSomArbeidssøkerNav,
         villigTilÅTaImotTilbudOmArbeid,
-        ønskerSøker50ProsentStilling
+        ønskerSøker50ProsentStilling,
     )
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()

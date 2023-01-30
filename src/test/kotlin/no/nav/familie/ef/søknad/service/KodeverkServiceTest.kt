@@ -37,10 +37,10 @@ class KodeverkTestConfig {
                     BetydningDto(
                         LocalDate.MIN,
                         LocalDate.MAX,
-                        mapOf("nb" to BeskrivelseDto(verdi, verdi))
-                    )
-                )
-            )
+                        mapOf("nb" to BeskrivelseDto(verdi, verdi)),
+                    ),
+                ),
+            ),
         )
     }
 }

@@ -58,7 +58,7 @@ internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
     fun søknadBarnetilsynDto(): SøknadBarnetilsynDto = objectMapper
         .readValue(
             File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
-            SøknadBarnetilsynDto::class.java
+            SøknadBarnetilsynDto::class.java,
         )
 
     @Test
@@ -68,14 +68,14 @@ internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
 
         every { søknadService.sendInn(søknad, any()) } returns Kvittering(
             "Mottatt søknad: $søknad",
-            LocalDateTime.now()
+            LocalDateTime.now(),
         )
         every { featureToggleService.isEnabled(any()) } returns true
 
         val response = restTemplate.exchange<Kvittering>(
             localhost("/api/soknad/barnetilsyn/"),
             HttpMethod.POST,
-            HttpEntity(søknad, headers)
+            HttpEntity(søknad, headers),
         )
 
         assertThat(response.statusCodeValue).isEqualTo(200)
@@ -89,7 +89,7 @@ internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
         val response = restTemplate.exchange<Any>(
             localhost("/api/soknad/barnetilsyn/"),
             HttpMethod.POST,
-            HttpEntity(søknadBarnetilsynDto, headers)
+            HttpEntity(søknadBarnetilsynDto, headers),
         )
 
         assertThat(response.statusCodeValue).isEqualTo(403)

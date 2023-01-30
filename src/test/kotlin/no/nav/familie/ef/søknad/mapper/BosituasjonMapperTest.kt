@@ -99,6 +99,6 @@ internal class BosituasjonMapperTest {
 
     private fun getBosituasjon(fileName: String) = objectMapper.readValue(
         File("src/test/resources/$fileName"),
-        Bosituasjon::class.java
+        Bosituasjon::class.java,
     )
 }

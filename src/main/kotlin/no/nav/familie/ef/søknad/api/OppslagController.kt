@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = [OppslagController.OPPSLAG], produces = [APPLICATION_JSON_VALUE])
 @RequiredIssuers(
     ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"]),
-    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_SELVBETJENING, claimMap = ["acr=Level4"])
+    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_SELVBETJENING, claimMap = ["acr=Level4"]),
 )
 @Validated
 class OppslagController(
     private val oppslagService: OppslagService,
-    private val kodeverkService: KodeverkService
+    private val kodeverkService: KodeverkService,
 ) {
 
     @GetMapping("/sokerinfo")

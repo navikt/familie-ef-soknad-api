@@ -32,7 +32,7 @@ object PdlTestdata {
         "",
         "",
         "",
-        0L
+        0L,
     )
 
     private val navn = listOf(Navn("", "", ""))
@@ -43,15 +43,15 @@ object PdlTestdata {
     private val bostedsadresse = listOf(
         Bostedsadresse(
             vegadresse,
-            matrikkeladresse
-        )
+            matrikkeladresse,
+        ),
     )
 
     private val bostedsadresseBarn = listOf(
         BostedsadresseBarn(
             vegadresse,
-            matrikkeladresseBarn
-        )
+            matrikkeladresseBarn,
+        ),
     )
 
     private val forelderBarnRelasjon = listOf(ForelderBarnRelasjon("", BARN))
@@ -67,8 +67,8 @@ object PdlTestdata {
                 forelderBarnRelasjon,
                 navn,
                 listOf(Sivilstand(Sivilstandstype.GIFT)),
-                statsborgerskap
-            )
+                statsborgerskap,
+            ),
         )
 
     val pdlBarnData =
@@ -83,15 +83,15 @@ object PdlTestdata {
                         deltBosted = listOf(
                             DeltBosted(
                                 LocalDate.now(),
-                                LocalDate.now()
-                            )
+                                LocalDate.now(),
+                            ),
                         ),
                         navn = navn,
                         fødsel = listOf(Fødsel(1, LocalDate.now())),
                         dødsfall = listOf(Dødsfall(LocalDate.now())),
-                        forelderBarnRelasjon = barnsRelasjoner
-                    )
-                )
-            )
+                        forelderBarnRelasjon = barnsRelasjoner,
+                    ),
+                ),
+            ),
         )
 }

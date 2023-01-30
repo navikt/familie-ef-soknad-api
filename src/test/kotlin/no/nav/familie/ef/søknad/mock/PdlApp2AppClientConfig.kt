@@ -38,8 +38,8 @@ class PdlApp2AppClientConfig {
                     navn = lagNavn("Hei", "På", "Deg"),
                     fødsel = listOf(Fødsel(2000, LocalDate.now().minusMonths(6))),
                     dødsfall = listOf(),
-                    forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR))
-                )
+                    forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR)),
+                ),
             )
 
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns
@@ -47,8 +47,8 @@ class PdlApp2AppClientConfig {
                 medforelderFnr to PdlAnnenForelder(
                     adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
                     navn = lagNavn("Bjørn", "Borg", "Borgersen"),
-                    dødsfall = listOf()
-                )
+                    dødsfall = listOf(),
+                ),
             )
 
         return pdlApp2AppClient
@@ -57,22 +57,22 @@ class PdlApp2AppClientConfig {
     private fun lagNavn(
         fornavn: String = "Fornavn",
         mellomnavn: String? = "mellomnavn",
-        etternavn: String = "Etternavn"
+        etternavn: String = "Etternavn",
     ): List<Navn> =
         listOf(
             Navn(
                 fornavn,
                 mellomnavn,
-                etternavn
-            )
+                etternavn,
+            ),
         )
 
     private fun bostedsadresseBarn(): List<BostedsadresseBarn> =
         listOf(
             BostedsadresseBarn(
                 vegadresse = vegadresse(),
-                matrikkeladresse = null
-            )
+                matrikkeladresse = null,
+            ),
         )
 
     private fun vegadresse(): Vegadresse =
@@ -82,6 +82,6 @@ class PdlApp2AppClientConfig {
             adressenavn = "Charlies vei",
             postnummer = "0575",
             bruksenhetsnummer = "",
-            matrikkelId = 1L
+            matrikkelId = 1L,
         )
 }

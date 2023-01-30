@@ -36,7 +36,7 @@ object SituasjonsMapper : MapperMedVedlegg<SøknadOvergangsstønadDto, Situasjon
             oppsigelseReduksjonTidspunkt = merOmDinSituasjon.datoSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
             reduksjonAvArbeidsforholdDokumentasjon = dokumentfelt(ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID, vedlegg),
             oppsigelseDokumentasjon = dokumentfelt(ARBEIDSFORHOLD_OPPSIGELSE, vedlegg),
-            lærlingkontrakt = dokumentfelt(LÆRLING, vedlegg)
+            lærlingkontrakt = dokumentfelt(LÆRLING, vedlegg),
         )
     }
 }

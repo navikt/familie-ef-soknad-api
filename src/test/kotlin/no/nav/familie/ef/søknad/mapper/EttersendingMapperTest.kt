@@ -30,11 +30,11 @@ internal class EttersendingMapperTest {
                         barnetilsynDokumentasjon,
                         overgangsstønadDokumentasjon1,
                         overgangsstønadDokumentasjon2,
-                        overgangsstønadDokumentasjon3
+                        overgangsstønadDokumentasjon3,
                     ),
-                    personIdent = personIdent
+                    personIdent = personIdent,
                 ),
-                innsendingMottatt = innsendingMottatt
+                innsendingMottatt = innsendingMottatt,
             )
         assertThat(nyttMap).containsKey(StønadType.OVERGANGSSTØNAD)
         assertThat(nyttMap).containsKey(StønadType.BARNETILSYN)
@@ -62,8 +62,8 @@ internal class EttersendingMapperTest {
             Vedlegg(
                 id = "1",
                 navn = "Vedlegg 1",
-                tittel = "Dokumentasjon på sykdom"
-            )
-        )
+                tittel = "Dokumentasjon på sykdom",
+            ),
+        ),
     )
 }

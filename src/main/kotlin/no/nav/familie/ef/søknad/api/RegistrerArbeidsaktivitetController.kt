@@ -21,12 +21,12 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/registrerarbeid"], produces = [APPLICATION_JSON_VALUE])
 @RequiredIssuers(
     ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"]),
-    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_SELVBETJENING, claimMap = ["acr=Level4"])
+    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_SELVBETJENING, claimMap = ["acr=Level4"]),
 )
 class RegistrerArbeidsaktivitetController(
     val skjemaService: SkjemaService,
     val featureToggleService: FeatureToggleService,
-    private val oppslagService: OppslagService
+    private val oppslagService: OppslagService,
 ) {
 
     @PostMapping

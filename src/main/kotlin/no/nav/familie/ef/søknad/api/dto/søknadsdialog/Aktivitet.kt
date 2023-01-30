@@ -10,12 +10,12 @@ data class Aktivitet(
     val etablererEgenVirksomhet: TekstFelt? = null,
     val egetAS: List<Aksjeselskap>?,
     val datoOppstartJobb: DatoFelt? = null,
-    val erIArbeid: TekstFelt?
+    val erIArbeid: TekstFelt?,
 )
 
 data class Aksjeselskap(
     val navn: TekstFelt,
-    val arbeidsmengde: TekstFelt?
+    val arbeidsmengde: TekstFelt?,
 )
 
 data class Arbeidsgiver(
@@ -24,7 +24,7 @@ data class Arbeidsgiver(
     val id: String,
     val navn: TekstFelt,
     val harSluttDato: BooleanFelt?,
-    val sluttdato: DatoFelt?
+    val sluttdato: DatoFelt?,
 )
 
 data class Arbeidssøker(
@@ -34,7 +34,7 @@ data class Arbeidssøker(
     val registrertSomArbeidssøkerNav: BooleanFelt,
     val villigTilÅTaImotTilbudOmArbeid: BooleanFelt,
     val ønskerSøker50ProsentStilling: BooleanFelt,
-    val locale: String = "nb"
+    val locale: String = "nb",
 )
 
 data class Firma(
@@ -42,7 +42,7 @@ data class Firma(
     val arbeidsuke: TekstFelt,
     val etableringsdato: DatoFelt,
     val navn: TekstFelt,
-    val organisasjonsnummer: TekstFelt
+    val organisasjonsnummer: TekstFelt,
 )
 
 data class UnderUtdanning(
@@ -57,10 +57,10 @@ data class UnderUtdanning(
     val tidligereUtdanning: List<TidligereUtdanning>? = null,
     val semesteravgift: TekstFelt? = null, // Skolepenger
     val studieavgift: TekstFelt? = null, // Skolepenger
-    val eksamensgebyr: TekstFelt? = null // Skolepenger
+    val eksamensgebyr: TekstFelt? = null, // Skolepenger
 )
 
 data class TidligereUtdanning(
     val linjeKursGrad: TekstFelt,
-    val periode: PeriodeFelt
+    val periode: PeriodeFelt,
 )

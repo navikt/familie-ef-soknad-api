@@ -12,7 +12,7 @@ import java.net.URI
 @Component
 class FamilieIntegrasjonerClient(
     private val config: FamilieIntegrasjonerConfig,
-    @Qualifier("utenAuth") restTemplate: RestOperations
+    @Qualifier("utenAuth") restTemplate: RestOperations,
 ) :
     AbstractPingableRestClient(restTemplate, "familie.integrasjoner") {
 

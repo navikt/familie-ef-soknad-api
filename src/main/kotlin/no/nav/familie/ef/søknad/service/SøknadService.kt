@@ -17,12 +17,12 @@ class SøknadService(
     private val søknadClient: SøknadClient,
     private val overgangsstønadMapper: SøknadOvergangsstønadMapper,
     private val barnetilsynMapper: SøknadBarnetilsynMapper,
-    private val skolepengerMapper: SøknadSkolepengerMapper
+    private val skolepengerMapper: SøknadSkolepengerMapper,
 ) {
 
     fun sendInn(
         søknad: SøknadOvergangsstønadDto,
-        innsendingMottatt: LocalDateTime
+        innsendingMottatt: LocalDateTime,
     ): Kvittering {
         val søknadRequestData = overgangsstønadMapper.mapTilIntern(søknad, innsendingMottatt)
         val kvittering = søknadClient.sendInn(søknadRequestData)

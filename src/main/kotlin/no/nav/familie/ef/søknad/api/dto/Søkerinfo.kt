@@ -5,7 +5,7 @@ import no.nav.familie.ef.søknad.api.dto.pdl.Person
 
 data class Søkerinfo(
     val søker: Person,
-    val barn: List<Barn>
+    val barn: List<Barn>,
 ) {
 
     val hash: String = this.hashCode().toString()

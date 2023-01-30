@@ -16,7 +16,7 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
 
     val funksjonsbrytere = listOf(
         "familie.ef.soknad.feilsituasjon",
-        "familie.ef.soknad.nynorsk"
+        "familie.ef.soknad.nynorsk",
     )
 
     @GetMapping
@@ -27,7 +27,7 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
     @GetMapping("/{toggleId}")
     fun sjekkFunksjonsbryter(
         @PathVariable toggleId: String,
-        @RequestParam("defaultverdi") defaultVerdi: Boolean? = false
+        @RequestParam("defaultverdi") defaultVerdi: Boolean? = false,
     ): Boolean {
         return featureToggleService.isEnabled(toggleId, defaultVerdi ?: false)
     }

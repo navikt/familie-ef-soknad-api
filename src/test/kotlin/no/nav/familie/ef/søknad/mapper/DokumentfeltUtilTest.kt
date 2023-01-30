@@ -16,8 +16,8 @@ internal class DokumentfeltUtilTest {
             Søknadsfelt("Har sendt inn tidligere", false),
             listOf(
                 Vedlegg("id1", "dok1.pdf", "Tittel på dok"),
-                Vedlegg("id2", "dok2.pdf", "Annen tittel på dok")
-            )
+                Vedlegg("id2", "dok2.pdf", "Annen tittel på dok"),
+            ),
         )
         val vedleggMap = mapOf(DokumentIdentifikator.SYKDOM.name to dokumentasjonWrapper)
 
@@ -37,7 +37,7 @@ internal class DokumentfeltUtilTest {
         val dokumentasjonWrapper = DokumentasjonWrapper(
             "label",
             Søknadsfelt("Har sendt inn tidligere", true),
-            listOf()
+            listOf(),
         )
         val vedleggMap = mapOf(DokumentIdentifikator.SYKDOM.name to dokumentasjonWrapper)
 

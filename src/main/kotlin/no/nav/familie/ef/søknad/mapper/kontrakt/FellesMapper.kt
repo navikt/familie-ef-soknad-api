@@ -12,6 +12,6 @@ object FellesMapper {
     fun mapInnsendingsdetaljer(innsendingMottatt: LocalDateTime): Søknadsfelt<Innsendingsdetaljer> =
         Søknadsfelt(
             InnsendingsdetaljerTekst.hentTekst(),
-            Innsendingsdetaljer(Søknadsfelt(DatoMottatt.hentTekst(), innsendingMottatt))
+            Innsendingsdetaljer(Søknadsfelt(DatoMottatt.hentTekst(), innsendingMottatt)),
         )
 }

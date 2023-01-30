@@ -4,5 +4,5 @@ data class Dokumentasjonsbehov(
     val label: String,
     val id: String,
     val harSendtInn: Boolean,
-    val opplastedeVedlegg: List<DokumentFelt> = emptyList()
+    val opplastedeVedlegg: List<DokumentFelt> = emptyList(),
 )

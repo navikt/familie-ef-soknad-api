@@ -38,7 +38,7 @@ class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
         val exchange: ResponseEntity<String> = restTemplate.exchange(
             localhost("/api/innlogget"),
             org.springframework.http.HttpMethod.GET,
-            HttpEntity<Any>(headers)
+            HttpEntity<Any>(headers),
         )
         assertThat(exchange.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(exchange.body).isEqualTo("Autentisert kall")
@@ -49,7 +49,7 @@ class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
         val exchange: ResponseEntity<String> = restTemplate.exchange(
             localhost("/api/finnesIkke"),
             org.springframework.http.HttpMethod.GET,
-            HttpEntity<Any>(headers)
+            HttpEntity<Any>(headers),
         )
         assertThat(exchange.statusCode).isEqualTo(HttpStatus.NOT_FOUND)
     }
@@ -59,7 +59,7 @@ class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
         val exchange: ResponseEntity<String> = restTemplate.exchange(
             localhost("/api/feil"),
             org.springframework.http.HttpMethod.GET,
-            HttpEntity<Any>(headers)
+            HttpEntity<Any>(headers),
         )
         assertThat(exchange.statusCode).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)
     }

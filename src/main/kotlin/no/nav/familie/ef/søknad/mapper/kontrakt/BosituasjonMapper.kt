@@ -19,7 +19,7 @@ object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>(Sp
             samboerdetaljer = mapSamboer(data),
             sammenflyttingsdato = data.datoFlyttetSammenMedSamboer?.tilSøknadsfelt(),
             tidligereSamboerFortsattRegistrertPåAdresse = dokumentfelt(BOR_PÅ_ULIKE_ADRESSER, vedlegg),
-            datoFlyttetFraHverandre = data.datoFlyttetFraHverandre?.tilSøknadsfelt()
+            datoFlyttetFraHverandre = data.datoFlyttetFraHverandre?.tilSøknadsfelt(),
         )
     }
 

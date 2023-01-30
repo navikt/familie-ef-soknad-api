@@ -20,13 +20,13 @@ object PdlTestUtil {
         // Det går ike å hente elementene i en liste med reflection, så vi traverserer den som vanlig.
         if (entitet is List<*>) {
             return finnFeltStruktur(
-                entitet.first()
+                entitet.first(),
             )
         }
 
         val map =
             konstruktørparametere(
-                entitet
+                entitet,
             )
                 .map {
                     val annotation = it.annotations.firstOrNull()
@@ -38,15 +38,15 @@ object PdlTestUtil {
                             ?.call(annotation) as String?
                     (annotationValue ?: it.name) to finnSøknadsfelt(
                         entitet,
-                        it
+                        it,
                     )
                 }
                 .associateBy({ it.first!! }, {
                     finnFeltStruktur(
                         getFeltverdi(
                             it.second,
-                            entitet
-                        )
+                            entitet,
+                        ),
                     )
                 })
 
@@ -60,11 +60,11 @@ object PdlTestUtil {
                 it.trim().endsWith("{") -> {
                     map[
                         parseToLabel(
-                            it
-                        )
+                            it,
+                        ),
                     ] =
                         toMap(
-                            stringLines
+                            stringLines,
                         )
                 }
                 it.trim().endsWith("}") -> {
@@ -73,8 +73,8 @@ object PdlTestUtil {
                 else -> {
                     map[
                         parseToLabel(
-                            it
-                        )
+                            it,
+                        ),
                     ] = null
                 }
             }

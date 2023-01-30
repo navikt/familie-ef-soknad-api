@@ -24,7 +24,7 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
             navn = Søknadsfelt(Navn.hentTekst(), data.forkortetNavn),
             adresse = lagAdresseSøknadsFelt(data.adresse),
             statsborgerskap = Søknadsfelt(Statsborgerskap.hentTekst(), data.statsborgerskap),
-            sivilstatus = Søknadsfelt(Sivilstatus.hentTekst(), data.sivilstand)
+            sivilstatus = Søknadsfelt(Sivilstatus.hentTekst(), data.sivilstand),
         )
     }
 
@@ -41,8 +41,8 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
                 adresse = frontendAdresse.adresse,
                 postnummer = frontendAdresse.postnummer,
                 poststedsnavn = frontendAdresse.poststed ?: "",
-                land = ""
-            )
+                land = "",
+            ),
         )
     }
 }

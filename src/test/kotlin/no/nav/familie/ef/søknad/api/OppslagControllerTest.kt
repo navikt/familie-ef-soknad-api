@@ -14,7 +14,7 @@ internal class OppslagControllerTest {
     private val kodeverkService: KodeverkService = mockk()
     private val oppslagsController = OppslagController(
         oppslagService = oppslagService,
-        kodeverkService = kodeverkService
+        kodeverkService = kodeverkService,
     )
 
     @Test

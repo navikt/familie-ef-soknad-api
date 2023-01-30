@@ -38,7 +38,7 @@ class PdlApp2AppClientTest {
     fun `pdlClient håndterer response for barn-query mot pdl-tjenesten riktig`() {
         wireMockServer.stubFor(
             post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                .willReturn(okJson(readFile("barn.json")))
+                .willReturn(okJson(readFile("barn.json"))),
         )
 
         val response = pdlApp2AppClient.hentBarn(listOf("11111122222"))
@@ -50,7 +50,7 @@ class PdlApp2AppClientTest {
     fun `pdlClient håndterer response for bolk-query mot pdl-tjenesten der person er null og har errors`() {
         wireMockServer.stubFor(
             post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                .willReturn(okJson(readFile("pdlBolkErrorResponse.json")))
+                .willReturn(okJson(readFile("pdlBolkErrorResponse.json"))),
         )
         assertThat(catchThrowable { pdlApp2AppClient.hentBarn(listOf("")) })
             .hasMessageStartingWith("Feil ved henting av")
@@ -61,7 +61,7 @@ class PdlApp2AppClientTest {
     fun `pdlClient håndterer response for bolk-query mot pdl-tjenesten der data er null og har errors`() {
         wireMockServer.stubFor(
             post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
-                .willReturn(okJson(readFile("pdlBolkErrorResponse_nullData.json")))
+                .willReturn(okJson(readFile("pdlBolkErrorResponse_nullData.json"))),
         )
         assertThat(catchThrowable { pdlApp2AppClient.hentBarn(listOf("")) })
             .hasMessageStartingWith("Data er null fra PDL")

@@ -25,7 +25,7 @@ class SøknadBarnetilsynMapper() {
     fun mapTilIntern(
         dto: SøknadBarnetilsynDto,
         innsendingMottatt: LocalDateTime,
-        skalHenteVedlegg: Boolean = true
+        skalHenteVedlegg: Boolean = true,
     ): SøknadMedVedlegg<SøknadBarnetilsyn> {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
@@ -36,9 +36,9 @@ class SøknadBarnetilsynMapper() {
             adresseopplysninger = AdresseopplysningerMapper.map(
                 AdresseopplysningerData(
                     dto.søkerBorPåRegistrertAdresse,
-                    dto.adresseopplysninger
+                    dto.adresseopplysninger,
                 ),
-                vedlegg
+                vedlegg,
             ),
             sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
             medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
@@ -48,22 +48,22 @@ class SøknadBarnetilsynMapper() {
             aktivitet = AktivitetsMapper.map(dto.aktivitet, vedlegg),
             stønadsstart = StønadsstartMapper.mapStønadsstart(
                 dto.søknadsdato,
-                dto.søkerFraBestemtMåned
+                dto.søkerFraBestemtMåned,
             ),
             dokumentasjon = BarnetilsynDokumentasjon(
                 barnepassordningFaktura = dokumentfelt(FAKTURA_BARNEPASSORDNING, vedlegg),
                 avtaleBarnepasser = dokumentfelt(AVTALE_BARNEPASSER, vedlegg),
                 arbeidstid = dokumentfelt(ARBEIDSTID, vedlegg),
                 roterendeArbeidstid = dokumentfelt(ROTERENDE_ARBEIDSTID, vedlegg),
-                spesielleBehov = dokumentfelt(TRENGER_MER_PASS_ENN_JEVNALDREDE, vedlegg)
-            )
+                spesielleBehov = dokumentfelt(TRENGER_MER_PASS_ENN_JEVNALDREDE, vedlegg),
+            ),
         )
 
         return SøknadMedVedlegg(
             barnetilsynSøknad,
             vedlegg.values.flatMap { it.vedlegg },
             dto.dokumentasjonsbehov.tilKontrakt(),
-            dto.skalBehandlesINySaksbehandling
+            dto.skalBehandlesINySaksbehandling,
         )
     }
 }

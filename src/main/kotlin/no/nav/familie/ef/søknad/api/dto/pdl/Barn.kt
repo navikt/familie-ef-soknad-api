@@ -9,7 +9,7 @@ data class Barn(
     val fødselsdato: LocalDate,
     val harSammeAdresse: Boolean,
     val medforelder: Medforelder?,
-    val harAdressesperre: Boolean
+    val harAdressesperre: Boolean,
 ) {
 
     val navn: String

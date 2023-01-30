@@ -10,14 +10,14 @@ internal class ByEnvironmentStrategyTest {
     @Test
     fun `skal svare true for riktig miljø`() {
         Assertions.assertThat(
-            ByEnvironmentStrategy().isEnabled(map, UnleashContext.builder().environment("p").build())
+            ByEnvironmentStrategy().isEnabled(map, UnleashContext.builder().environment("p").build()),
         ).isTrue()
     }
 
     @Test
     fun `skal svare false for påskrudde funksjonsbrytere`() {
         Assertions.assertThat(
-            ByEnvironmentStrategy().isEnabled(map, UnleashContext.builder().environment("l").build())
+            ByEnvironmentStrategy().isEnabled(map, UnleashContext.builder().environment("l").build()),
         ).isFalse()
     }
 }
