@@ -25,7 +25,7 @@
         <token-validation-spring.version>2.1.9</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <fasterxml.version>2.14.1</fasterxml.version>
+        <fasterxml.version>2.14.2</fasterxml.version>
         <felles.version>1.20230117091843_19b020f</felles.version>
         <kontrakter.version>2.0_20221130105458_c1bd5bb</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
