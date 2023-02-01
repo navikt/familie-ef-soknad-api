@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.api
 
-import no.finn.unleash.FakeUnleash
+import io.getunleash.FakeUnleash
 import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test

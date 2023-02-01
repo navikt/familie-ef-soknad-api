@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.featuretoggle
 
-import no.finn.unleash.UnleashContext
+import io.getunleash.UnleashContext
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
