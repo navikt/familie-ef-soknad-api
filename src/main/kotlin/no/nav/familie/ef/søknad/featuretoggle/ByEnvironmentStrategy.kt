@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.featuretoggle
 
-import no.finn.unleash.UnleashContext
-import no.finn.unleash.strategy.Strategy
+import io.getunleash.UnleashContext
+import io.getunleash.strategy.Strategy
 
 class ByEnvironmentStrategy : Strategy {
 
