@@ -5,9 +5,9 @@ bruk Launcher : ApplicationLocalLauncher
 
 ## Hvordan logge inn på localhost:
 Eksempel:
-http://localhost:8091/local/cookie?issuerId=selvbetjening&audience=aud-localhost
+http://localhost:8091/local/cookie?issuerId=tokenx&audience=familie-app&redirect=
 Med redirect:
-http://localhost:8091/local/cookie?redirect=http://localhost:3000/familie/alene-med-barn/soknad&issuerId=selvbetjening&audience=aud-localhost
+http://localhost:8091/local/cookie?redirect=http://localhost:3000/familie/alene-med-barn/soknad&issuerId=tokenx&audience=familie-app&redirect=
 
 PS. Mapping av fødselsnummer til kontrakt krever gyldig fødselsnummer: Logg f.eks. inn med et fnr fra dolly.
 http://localhost:8091/local/cookie?subject=[gyldigFødselsnummer] dersom du skal teste noe som krever at mapping skal fungere.   
