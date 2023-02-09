@@ -9,7 +9,6 @@ import no.nav.familie.ef.søknad.service.SkjemaService
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.Protected
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import no.nav.security.token.support.core.api.RequiredIssuers
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -19,10 +18,7 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping(path = ["/api/registrerarbeid"], produces = [APPLICATION_JSON_VALUE])
-@RequiredIssuers(
-    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"]),
-    ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_SELVBETJENING, claimMap = ["acr=Level4"]),
-)
+@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 class RegistrerArbeidsaktivitetController(
     val skjemaService: SkjemaService,
     val featureToggleService: FeatureToggleService,
