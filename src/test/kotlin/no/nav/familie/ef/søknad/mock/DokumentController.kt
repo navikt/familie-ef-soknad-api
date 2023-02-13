@@ -36,7 +36,7 @@ class DokumentController(
     private val mellomlager = mutableMapOf<String, String>()
 
     fun TokenValidationContextHolder.hentFnr(): String {
-        return this.tokenValidationContext.getJwtToken("selvbetjening").subject
+        return this.tokenValidationContext.getJwtToken("tokenx").subject
     }
 
     @PostMapping(
