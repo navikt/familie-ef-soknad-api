@@ -33,8 +33,6 @@
     <logger name="no.nav" level="WARN"/>
     <logger name="no.nav.familie" level="INFO"/>
     <logger name="org.apache" level="INFO"/>
-    <logger name="org.apache.cxf" level="ERROR"/>
-    <logger name="org.apache.http.client.protocol.ResponseProcessCookies" level="ERROR"/>
-    <logger name="org.apache.wss4j.common.crypto.CryptoBase" level="ERROR"/>
+    <logger name="org.apache.hc.client5.http.protocol.ResponseProcessCookies" level="ERROR"/>
 
 </configuration>
