@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
 import java.time.LocalDateTime
 
@@ -63,12 +64,12 @@ internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest()
         every { featureToggleService.isEnabled(any()) } returns true
 
         val response = restTemplate.exchange<Kvittering>(
-            localhost("/api/soknad/overgangsstonad/"),
+            localhost("/api/soknad/overgangsstonad"),
             HttpMethod.POST,
             HttpEntity(søknad, headers),
         )
 
-        assertThat(response.statusCodeValue).isEqualTo(200)
+        assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body?.text).isEqualTo("ok")
     }
 
@@ -80,12 +81,12 @@ internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest()
         val søknad = søknadDto()
 
         val response = restTemplate.exchange<Any>(
-            localhost("/api/soknad/overgangsstonad/"),
+            localhost("/api/soknad/overgangsstonad"),
             HttpMethod.POST,
             HttpEntity(søknad, headers),
         )
 
-        assertThat(response.statusCodeValue).isEqualTo(403)
+        assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
         verify(exactly = 0) { søknadService.sendInn(søknad, any()) }
     }
 }
