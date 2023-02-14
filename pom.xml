@@ -21,7 +21,7 @@
         <changelist>-SNAPSHOT</changelist>
         <kotlin.version>1.8.10</kotlin.version>
         <springdoc.version>1.6.14</springdoc.version>
-        <mockk.version>1.12.5</mockk.version>
+        <mockk.version>1.13.4</mockk.version>
         <token-validation-spring.version>3.0.2</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
@@ -157,7 +157,7 @@
         </dependency>
         <dependency>
             <groupId>io.mockk</groupId>
-            <artifactId>mockk</artifactId>
+            <artifactId>mockk-jvm</artifactId>
             <version>${mockk.version}</version>
             <scope>test</scope>
         </dependency>
