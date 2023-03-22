@@ -1,12 +1,10 @@
 package no.nav.familie.ef.søknad.config
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.context.properties.ConstructorBinding
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @ConfigurationProperties("familie.integrasjoner")
-@ConstructorBinding
 data class FamilieIntegrasjonerConfig(val uri: URI) {
 
     val kodeverkLandkoderUri: URI =

@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
 import java.io.File
 import java.time.LocalDateTime
@@ -73,12 +74,12 @@ internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
         every { featureToggleService.isEnabled(any()) } returns true
 
         val response = restTemplate.exchange<Kvittering>(
-            localhost("/api/soknad/barnetilsyn/"),
+            localhost("/api/soknad/barnetilsyn"),
             HttpMethod.POST,
             HttpEntity(søknad, headers),
         )
 
-        assertThat(response.statusCodeValue).isEqualTo(200)
+        assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body?.text).isEqualTo("ok")
     }
 
@@ -87,12 +88,12 @@ internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
         val søknadBarnetilsynDto = søknadBarnetilsynDto()
 
         val response = restTemplate.exchange<Any>(
-            localhost("/api/soknad/barnetilsyn/"),
+            localhost("/api/soknad/barnetilsyn"),
             HttpMethod.POST,
             HttpEntity(søknadBarnetilsynDto, headers),
         )
 
-        assertThat(response.statusCodeValue).isEqualTo(403)
+        assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
         verify(exactly = 0) { søknadService.sendInn(søknadBarnetilsynDto, any()) }
     }
 }

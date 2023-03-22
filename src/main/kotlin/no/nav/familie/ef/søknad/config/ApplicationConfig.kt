@@ -98,7 +98,7 @@ internal class ApplicationConfig {
     }
 
     @Bean("utenAuth")
-    fun restTemplate(
+    fun restTemplateUtenAuth(
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
     ): RestOperations {
