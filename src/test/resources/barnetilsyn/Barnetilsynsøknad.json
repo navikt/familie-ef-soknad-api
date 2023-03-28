@@ -118,7 +118,7 @@
         },
         "skalHaBarnepass": {
           "label": "Skal barnet være med i søknaden?",
-          "verdi": false
+          "verdi": true
         }
       },
       {

@@ -44,7 +44,7 @@ class SøknadBarnetilsynMapper() {
             medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
             bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
             sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
-            barn = dto.person.barn.tilSøknadsfelt(vedlegg),
+            barn = dto.person.barn.filter { it.skalHaBarnepass?.verdi == true }.tilSøknadsfelt(vedlegg),
             aktivitet = AktivitetsMapper.map(dto.aktivitet, vedlegg),
             stønadsstart = StønadsstartMapper.mapStønadsstart(
                 dto.søknadsdato,
