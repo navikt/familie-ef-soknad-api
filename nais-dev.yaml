@@ -34,7 +34,7 @@ spec:
   secureLogs:
     enabled: true
   ingresses:
-    - https://familie.dev.nav.no/familie/alene-med-barn/soknad-api
+    - https://familie-ef-soknad-api.intern.dev.nav.no
   azure:
     application:
       enabled: true
