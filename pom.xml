@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.4</version>
+        <version>3.0.5</version>
     </parent>
 
 
@@ -20,9 +20,9 @@
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
         <kotlin.version>1.8.10</kotlin.version>
-        <springdoc.version>2.0.4</springdoc.version>
+        <springdoc.version>2.1.0</springdoc.version>
         <mockk.version>1.13.5</mockk.version>
-        <token-validation-spring.version>3.0.8</token-validation-spring.version>
+        <token-validation-spring.version>3.0.10</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
         <fasterxml.version>2.14.2</fasterxml.version>
@@ -114,7 +114,7 @@
         <dependency>
             <groupId>io.getunleash</groupId>
             <artifactId>unleash-client-java</artifactId>
-            <version>7.1.0</version>
+            <version>8.0.0</version>
         </dependency>
 
         <!-- Interne avhengigheter -->
@@ -189,7 +189,7 @@
         <dependency>
             <groupId>dev.akkinoc.spring.boot</groupId>
             <artifactId>logback-access-spring-boot-starter</artifactId>
-            <version>3.4.4</version>
+            <version>3.4.5</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -297,7 +297,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.4.2</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <id>make-assembly</id>
