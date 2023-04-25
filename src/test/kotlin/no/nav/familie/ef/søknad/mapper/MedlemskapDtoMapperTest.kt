@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.mapper
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.mapper.kontrakt.MedlemsskapsMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
 import org.assertj.core.api.Assertions.assertThat
@@ -31,10 +32,32 @@ internal class MedlemskapDtoMapperTest {
     }
 
     @Test
+    fun `mapPersonalia mapper dto mapper oppholdsland til null`() {
+        // When
+        val medlemsskapDetaljer = MedlemsskapsMapper.map(medlemskap).verdi
+        // Then
+        assertThat(medlemsskapDetaljer.oppholdsland).isEqualTo(null)
+    }
+
+    @Test
+    fun `mapPersonalia mapper dto mapper oppholdsland til riktige verdier`() {
+        // Given
+        val label = "I hvilket land opphold du og barna dere?"
+        val medlemskap = medlemskap.copy(oppholdsland = TekstFelt(label = label, verdi = "Sverige", svarid = "SWE"))
+        // When
+        val medlemsskapDetaljer = MedlemsskapsMapper.map(medlemskap).verdi
+        // Then
+        assertThat(medlemsskapDetaljer.oppholdsland?.verdi).isEqualTo("Sverige")
+        assertThat(medlemsskapDetaljer.oppholdsland?.svarId).isEqualTo("SWE")
+        assertThat(medlemsskapDetaljer.oppholdsland?.label).isEqualTo(label)
+    }
+
+    @Test
     fun `mapPersonalia mapper perioder bodd i utland`() {
         // When
         val medlemsskapDetaljer = MedlemsskapsMapper.map(medlemskap).verdi
         // Then
         assertThat(medlemsskapDetaljer.utenlandsopphold?.verdi).hasSize(2)
+        assertThat(medlemsskapDetaljer.utenlandsopphold?.verdi?.get(0)?.land?.svarId).isEqualTo("SWE")
     }
 }

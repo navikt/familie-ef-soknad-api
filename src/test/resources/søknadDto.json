@@ -277,6 +277,12 @@
             "verdi": "2019-10-01T08:02:03.000Z"
           }
         },
+        "land": {
+          "spørsmålid": "utenlandsoppholdLand",
+          "svarid": "SWE",
+          "label": "I hvilket land oppholdt du deg?",
+          "verdi": "Sverige"
+        },
         "begrunnelse": {
           "label": "Hvorfor bodde du i utlandet?",
           "verdi": "Jobbet litt"
@@ -293,6 +299,12 @@
             "label": "Til",
             "verdi": "2020-02-01T09:02:03.000Z"
           }
+        },
+        "land": {
+          "spørsmålid": "utenlandsoppholdLand",
+          "svarid": "POL",
+          "label": "I hvilket land oppholdt du deg?",
+          "verdi": "Polen"
         },
         "begrunnelse": {
           "label": "Hvorfor bodde du i utlandet?",
