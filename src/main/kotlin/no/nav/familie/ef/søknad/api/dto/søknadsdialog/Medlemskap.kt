@@ -10,5 +10,5 @@ data class Medlemskap(
 data class PerioderBoddIUtlandet(
     val begrunnelse: TekstFelt,
     val periode: PeriodeFelt,
-    val land: TekstFelt?,
+    val land: TekstFelt? = null,
 )
