@@ -14,9 +14,10 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
 
     override fun mapDto(data: Medlemskap): Medlemskapsdetaljer {
         return Medlemskapsdetaljer(
-            data.søkerOppholderSegINorge.tilSøknadsfelt(),
-            data.søkerBosattINorgeSisteTreÅr.tilSøknadsfelt(),
-            Søknadsfelt(
+            oppholderDuDegINorge = data.søkerOppholderSegINorge.tilSøknadsfelt(),
+            oppholdsland = data.oppholdsland?.tilSøknadsfelt(),
+            bosattNorgeSisteÅrene = data.søkerBosattINorgeSisteTreÅr.tilSøknadsfelt(),
+            utenlandsopphold = Søknadsfelt(
                 Språktekster.Utenlandsopphold.hentTekst(),
                 mapUtenlansopphold(data.perioderBoddIUtlandet),
             ),
@@ -26,9 +27,10 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
     private fun mapUtenlansopphold(perioderBoddIUtlandet: List<PerioderBoddIUtlandet>?): List<KontraksUtenlandsopphold> {
         return perioderBoddIUtlandet?.map { it ->
             KontraksUtenlandsopphold(
-                it.periode.fra.tilSøknadsfelt(),
-                it.periode.til.tilSøknadsfelt(),
-                it.begrunnelse.tilSøknadsfelt(),
+                fradato = it.periode.fra.tilSøknadsfelt(),
+                tildato = it.periode.til.tilSøknadsfelt(),
+                land = it.land?.tilSøknadsfelt(),
+                årsakUtenlandsopphold = it.begrunnelse.tilSøknadsfelt(),
             )
         } ?: listOf()
     }
