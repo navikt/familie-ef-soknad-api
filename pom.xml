@@ -19,13 +19,13 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <kotlin.version>1.8.20</kotlin.version>
+        <kotlin.version>1.8.21</kotlin.version>
         <springdoc.version>2.1.0</springdoc.version>
         <mockk.version>1.13.5</mockk.version>
         <token-validation-spring.version>3.0.10</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <fasterxml.version>2.14.2</fasterxml.version>
+        <fasterxml.version>2.15.0</fasterxml.version>
         <felles.version>2.20230210162649_a258d57-SPRING_BOOT_3</felles.version>
         <kontrakter.version>3.0_20230428084827_0b6a892-JAKARTA</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
