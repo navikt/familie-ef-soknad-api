@@ -22,7 +22,7 @@
         <kotlin.version>1.8.21</kotlin.version>
         <springdoc.version>2.1.0</springdoc.version>
         <mockk.version>1.13.5</mockk.version>
-        <token-validation-spring.version>3.0.10</token-validation-spring.version>
+        <token-validation-spring.version>3.0.12</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
         <fasterxml.version>2.15.0</fasterxml.version>
@@ -189,7 +189,7 @@
         <dependency>
             <groupId>dev.akkinoc.spring.boot</groupId>
             <artifactId>logback-access-spring-boot-starter</artifactId>
-            <version>3.4.6</version>
+            <version>4.0.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -242,7 +242,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.9</version>
+                    <version>0.8.10</version>
                 </plugin>
             </plugins>
         </pluginManagement>
