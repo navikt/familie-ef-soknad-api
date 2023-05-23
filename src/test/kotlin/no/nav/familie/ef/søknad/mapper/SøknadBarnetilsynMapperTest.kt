@@ -45,10 +45,11 @@ internal class SøknadBarnetilsynMapperTest {
                     barn = listOf(
                         lagBarn(FnrGenerator.generer(LocalDate.now().minusDays(1)), false),
                         lagBarn(identForBarnMedBarnepass, true),
-                        lagBarn(FnrGenerator.generer(LocalDate.now().plusDays(1)), null)
-                    )
-                )
-            ), innsendingMottatt
+                        lagBarn(FnrGenerator.generer(LocalDate.now().plusDays(1)), null),
+                    ),
+                ),
+            ),
+            innsendingMottatt,
         )
         val mappedBarn = mapped.søknad.barn.verdi
         assertThat(mappedBarn).hasSize(1)

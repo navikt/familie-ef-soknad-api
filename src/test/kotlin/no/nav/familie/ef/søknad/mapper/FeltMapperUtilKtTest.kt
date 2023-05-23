@@ -92,7 +92,7 @@ internal class FeltMapperUtilKtTest {
         assertEquals(123, "123,99".tilHeltall())
     }
 
-    /* TekstFelt -> Dato */
+    // TekstFelt -> Dato
 
     @Test
     internal fun `Tekst til dato -skal tåle tom streng og returnere null`() {
@@ -112,7 +112,7 @@ internal class FeltMapperUtilKtTest {
         assertEquals(felt?.verdi, LocalDate.of(2020, 3, 4))
     }
 
-    /* Spesielle tilfeller */
+    // Spesielle tilfeller
 
     // Her er jeg usikker på hva som kan ha skjedd - UI feil?
     @Test
