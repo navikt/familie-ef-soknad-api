@@ -8,6 +8,7 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBolkResponse
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequest
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequestVariables
 import no.nav.familie.http.client.AbstractRestClient
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
@@ -19,6 +20,8 @@ class PdlApp2AppClient(
     @Qualifier("clientCredential") restOperations: RestOperations,
 ) :
     AbstractRestClient(restOperations, "pdl.personinfo") {
+
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentBarn(personIdenter: List<String>): Map<String, PdlBarn> {
         if (personIdenter.isEmpty()) return emptyMap()
@@ -64,6 +67,10 @@ class PdlApp2AppClient(
         if (feil.isNotEmpty()) {
             secureLogger.error("Feil ved henting av ${T::class} fra PDL: $feil")
             throw PdlRequestException("Feil ved henting av ${T::class} fra PDL. Se secure logg for detaljer.")
+        }
+        if (pdlResponse.harAdvarsel()) {
+            logger.warn("Advarsel ved henting av ${T::class} fra PDL. Se securelogs for detaljer.")
+            secureLogger.warn("Advarsel ved henting av ${T::class} fra PDL: ${pdlResponse.extensions?.warnings}")
         }
         return pdlResponse.data.personBolk.associateBy({ it.ident }, { it.person!! })
     }

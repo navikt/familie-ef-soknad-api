@@ -8,6 +8,8 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.PdlResponse
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøkerData
 import no.nav.familie.http.client.AbstractPingableRestClient
+import no.nav.familie.kontrakter.felles.Tema
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Component
@@ -20,6 +22,8 @@ class PdlClient(
     @Qualifier("tokenExchange") restOperations: RestOperations,
 ) :
     AbstractPingableRestClient(restOperations, "pdl.personinfo") {
+
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentSøker(personIdent: String): PdlSøker {
         val pdlPersonRequest = PdlPersonRequest(
@@ -46,7 +50,10 @@ class PdlClient(
             secureLogger.error("Feil ved henting av ${T::class} fra PDL: ${pdlResponse.errorMessages()}")
             throw PdlRequestException("Feil ved henting av ${T::class} fra PDL. Se secure logg for detaljer.")
         }
-
+        if (pdlResponse.harAdvarsel()) {
+            logger.warn("Advarsel ved henting av ${T::class} fra PDL. Se securelogs for detaljer.")
+            secureLogger.warn("Advarsel ved henting av ${T::class} fra PDL: ${pdlResponse.extensions?.warnings}")
+        }
         val data = dataMapper.invoke(pdlResponse.data)
         if (data == null) {
             secureLogger.error(
@@ -61,6 +68,7 @@ class PdlClient(
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
             add("Tema", "ENF")
+            add("behandlingsnummer", Tema.ENF.behandlingsnummer)
         }
     }
 
