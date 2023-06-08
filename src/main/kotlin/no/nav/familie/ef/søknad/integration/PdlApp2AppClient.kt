@@ -8,6 +8,7 @@ import no.nav.familie.ef.søknad.integration.dto.pdl.PdlBolkResponse
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequest
 import no.nav.familie.ef.søknad.integration.dto.pdl.PdlPersonBolkRequestVariables
 import no.nav.familie.http.client.AbstractRestClient
+import no.nav.familie.kontrakter.felles.Tema
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
@@ -54,6 +55,7 @@ class PdlApp2AppClient(
     private fun httpHeaders(): HttpHeaders {
         return HttpHeaders().apply {
             add("Tema", "ENF")
+            add("behandlingsnummer", Tema.ENF.behandlingsnummer)
         }
     }
 
