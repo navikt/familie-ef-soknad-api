@@ -12,6 +12,7 @@ import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
 import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
 import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
 import no.nav.familie.kontrakter.felles.PersonIdent
+import no.nav.familie.kontrakter.felles.Tema
 import no.nav.familie.kontrakter.felles.ef.StønadType
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
@@ -68,6 +69,7 @@ class SøknadClient(
 
     private fun HttpHeaders.medContentTypeJsonUTF8(): HttpHeaders {
         this.add("Content-Type", "application/json;charset=UTF-8")
+        this.add("behandlingsnummer", Tema.ENF.behandlingsnummer)
         this.acceptCharset = listOf(Charsets.UTF_8)
         return this
     }
