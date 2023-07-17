@@ -8,12 +8,8 @@ import jakarta.servlet.ServletResponse
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import no.nav.familie.ef.søknad.config.CorsProperties
-import org.springframework.core.annotation.Order
-import org.springframework.stereotype.Component
 import java.io.IOException
 
-@Component
-@Order(0)
 internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
 
     @Throws(IOException::class, ServletException::class)

@@ -25,4 +25,19 @@ class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
         assertThat(response.body).contains(tokenSubject) // guard
         assertThat(response.body).doesNotContain("_navn")
     }
+
+    @Test
+    fun `Skal bare ha en av hver CORS-header etter et kall`() {
+        headers.origin = "http://localhost:3000"
+        val response = restTemplate.exchange<String>(
+            localhost("/api/oppslag/sokerinfo"),
+            org.springframework.http.HttpMethod.GET,
+            HttpEntity<String>(headers),
+        )
+
+        assertThat(response.headers["Access-Control-Allow-Origin"]).hasSize(1)
+        assertThat(response.headers["Access-Control-Allow-Headers"]).hasSize(1)
+        assertThat(response.headers["Access-Control-Allow-Credentials"]).hasSize(1)
+        assertThat(response.headers["Access-Control-Allow-Methods"]).hasSize(1)
+    }
 }
