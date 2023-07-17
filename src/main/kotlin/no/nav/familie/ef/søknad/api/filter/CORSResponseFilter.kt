@@ -8,12 +8,8 @@ import jakarta.servlet.ServletResponse
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import no.nav.familie.ef.søknad.config.CorsProperties
-import org.springframework.core.annotation.Order
-import org.springframework.stereotype.Component
 import java.io.IOException
 
-@Component
-@Order(0)
 internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
 
     @Throws(IOException::class, ServletException::class)
@@ -32,10 +28,10 @@ internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
     }
 
     private fun setCorsHeaders(response: HttpServletResponse, request: HttpServletRequest) {
-        response.addHeader("Access-Control-Allow-Origin", request.getHeader("Origin"))
-        response.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, nav-consumer-id")
-        response.addHeader("Access-Control-Allow-Credentials", "true")
-        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"))
+        response.setHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, nav-consumer-id")
+        response.setHeader("Access-Control-Allow-Credentials", "true")
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
     }
 
     private fun erCorsOk(request: HttpServletRequest): Boolean {
