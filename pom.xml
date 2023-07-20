@@ -19,7 +19,7 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <kotlin.version>1.8.22</kotlin.version>
+        <kotlin.version>1.9.0</kotlin.version>
         <springdoc.version>2.1.0</springdoc.version>
         <mockk.version>1.13.5</mockk.version>
         <token-validation-spring.version>3.1.0</token-validation-spring.version>
@@ -114,7 +114,7 @@
         <dependency>
             <groupId>io.getunleash</groupId>
             <artifactId>unleash-client-java</artifactId>
-            <version>8.1.0</version>
+            <version>8.2.0</version>
         </dependency>
 
         <!-- Interne avhengigheter -->
@@ -365,7 +365,7 @@
                     <dependency>
                         <groupId>com.pinterest</groupId>
                         <artifactId>ktlint</artifactId>
-                        <version>0.49.1</version>
+                        <version>0.50.0</version>
                     </dependency>
                     <!-- additional 3rd party ruleset(s) can be specified here -->
                 </dependencies>
