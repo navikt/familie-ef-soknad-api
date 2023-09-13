@@ -15,7 +15,6 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: .deploy/unleash-apitoken-preprod.yaml
-          PRINT_PAYLOAD: true
   deploy-prod:
     runs-on: ubuntu-latest
     steps:
@@ -27,4 +26,3 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: .deploy/unleash-apitoken-prod.yaml
-          PRINT_PAYLOAD: true
