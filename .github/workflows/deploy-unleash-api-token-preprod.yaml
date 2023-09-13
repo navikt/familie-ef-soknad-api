@@ -1,0 +1,18 @@
+name: Deploy unleash api-token for dev
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: deploy unleash api-token
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: .deploy/unleash-apitoken-preprod.yaml
+          PRINT_PAYLOAD: true
