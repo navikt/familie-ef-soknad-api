@@ -1,81 +1,26 @@
 package no.nav.familie.ef.søknad.config
 
-import io.getunleash.DefaultUnleash
-import io.getunleash.UnleashContext
-import io.getunleash.UnleashContextProvider
-import io.getunleash.util.UnleashConfig
+import io.getunleash.strategy.Strategy
 import no.nav.familie.ef.søknad.featuretoggle.ByEnvironmentStrategy
-import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import org.springframework.boot.context.properties.ConfigurationProperties
+import no.nav.familie.unleash.DefaultUnleashService
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
-import java.net.URI
+import org.springframework.context.annotation.Configuration
 
-@ConfigurationProperties("funksjonsbrytere")
+@Configuration
 class FeatureToggleConfig(
-    private val enabled: Boolean,
-    val unleash: Unleash,
+    @Value("\${UNLEASH_SERVER_API_URL}") private val apiUrl: String,
+    @Value("\${UNLEASH_SERVER_API_TOKEN}") private val apiToken: String,
+    @Value("\${NAIS_APP_NAME}") private val appName: String,
 ) {
 
-    data class Unleash(
-        val uri: URI,
-        val environment: String,
-        val applicationName: String,
-    )
-
-    private val log: Logger = LoggerFactory.getLogger(this::class.java)
+    @Bean
+    fun strategies(): List<Strategy> {
+        return listOf(ByEnvironmentStrategy())
+    }
 
     @Bean
-    fun featureToggle(): FeatureToggleService =
-        if (enabled) {
-            lagUnleashFeatureToggleService()
-        } else {
-            log.warn(
-                "Funksjonsbryter-funksjonalitet er skrudd AV. " +
-                    "Gir standardoppførsel for alle funksjonsbrytere, dvs 'false'",
-            )
-            lagDummyFeatureToggleService()
-        }
-
-    private fun lagUnleashFeatureToggleService(): FeatureToggleService {
-        val unleash = DefaultUnleash(
-            UnleashConfig.builder()
-                .appName(unleash.applicationName)
-                .unleashAPI(unleash.uri)
-                .unleashContextProvider(lagUnleashContextProvider())
-                .build(),
-            ByEnvironmentStrategy(),
-        )
-
-        return object : FeatureToggleService {
-            override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-                return unleash.isEnabled(toggleId, defaultValue)
-            }
-        }
-    }
-
-    private fun lagUnleashContextProvider(): UnleashContextProvider {
-        return UnleashContextProvider {
-            UnleashContext.builder()
-                // .userId("a user") // Må legges til en gang i fremtiden
-                .environment(unleash.environment)
-                .appName(unleash.applicationName)
-                .build()
-        }
-    }
-
-    private fun lagDummyFeatureToggleService(): FeatureToggleService {
-        return object : FeatureToggleService {
-            override fun isEnabled(toggleId: String, defaultValue: Boolean): Boolean {
-                if (unleash.environment == "local") {
-                    return when (toggleId) {
-                        "familie.ef.soknad.feilsituasjon" -> false
-                        else -> true
-                    }
-                }
-                return defaultValue
-            }
-        }
+    fun defaultUnleashService(strategies: List<Strategy>): DefaultUnleashService {
+        return DefaultUnleashService(apiUrl, apiToken, appName, strategies)
     }
 }

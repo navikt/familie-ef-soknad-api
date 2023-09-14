@@ -31,12 +31,8 @@ health:
   indicator:
     detailed: true
 
-funksjonsbrytere:
+unleash:
   enabled: true
-  unleash:
-    uri: https://unleash.nais.io/api/
-    environment: ${NAIS_CLUSTER_NAME:}
-    applicationName: ${NAIS_APP_NAME:}
 
 management:
   endpoint:
