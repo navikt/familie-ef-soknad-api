@@ -14,13 +14,6 @@ familie:
     mottak:
       uri: http://localhost:8092/api
 
-funksjonsbrytere:
-  enabled: false
-  unleash:
-    uri: http://localhost:4242/api
-    environment: local
-    applicationName: familie-ef-soknad-api
-
 cors:
   allowed_origins:
     - "http://localhost:3000"
@@ -51,3 +44,7 @@ TOKEN_X_PRIVATE_JWK: '{
     "kid" : "mock-oauth2-server-key",
     "n" : ""
   }'
+
+UNLEASH_SERVER_API_URL: http://localhost:4242/api
+UNLEASH_SERVER_API_TOKEN: token
+NAIS_APP_NAME: familie-ef-mottak

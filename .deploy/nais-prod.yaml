@@ -47,7 +47,6 @@ spec:
       rules:
         - application: familie-ef-mottak
       external:
-        - host: unleash.nais.io
         - host: familie-integrasjoner.prod-fss-pub.nais.io
         - host: pdl-api.prod-fss-pub.nais.io
         - host: familie-ef-mottak.prod-fss-pub.nais.io

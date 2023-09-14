@@ -26,7 +26,7 @@
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
         <fasterxml.version>2.15.2</fasterxml.version>
-        <felles.version>2.20230210162649_a258d57-SPRING_BOOT_3</felles.version>
+        <felles.version>2.20230905101454_06fa3d7</felles.version>
         <kontrakter.version>3.0_20230509152247_36d24db</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
@@ -111,11 +111,6 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.getunleash</groupId>
-            <artifactId>unleash-client-java</artifactId>
-            <version>8.3.0</version>
-        </dependency>
 
         <!-- Interne avhengigheter -->
         <dependency>
@@ -126,6 +121,11 @@
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>http-client</artifactId>
+            <version>${felles.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>unleash</artifactId>
             <version>${felles.version}</version>
         </dependency>
         <dependency>
