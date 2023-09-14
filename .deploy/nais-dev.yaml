@@ -50,6 +50,7 @@ spec:
         - host: familie-integrasjoner.dev-fss-pub.nais.io
         - host: pdl-api.dev-fss-pub.nais.io
         - host: familie-ef-mottak.dev-fss-pub.nais.io
+        - host: teamfamilie-unleash-api.nav.cloud.nais.io
   envFrom:
     - secret: familie
     - secret: ef-soknad-api
