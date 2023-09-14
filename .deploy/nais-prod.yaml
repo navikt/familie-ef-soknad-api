@@ -53,6 +53,7 @@ spec:
   envFrom:
     - secret: familie
     - secret: ef-soknad-api
+    - secret: familie-ef-soknad-api-unleash-api-token
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: prod
