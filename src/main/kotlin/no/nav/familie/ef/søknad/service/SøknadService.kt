@@ -40,4 +40,8 @@ class SøknadService(
         val kvittering = søknadClient.sendInnSkolepenger(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
+
+    fun hentDataTilGjenbruk(personIdent: String): String {
+        return søknadClient.hentDataTilGjenbrukBarnetilsyn(personIdent)
+    }
 }
