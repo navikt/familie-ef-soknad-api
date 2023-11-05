@@ -19,7 +19,7 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <kotlin.version>1.9.10</kotlin.version>
+        <kotlin.version>1.9.20</kotlin.version>
         <springdoc.version>2.2.0</springdoc.version>
         <mockk.version>1.13.8</mockk.version>
         <token-validation-spring.version>3.1.7</token-validation-spring.version>
@@ -27,7 +27,7 @@
 
         <fasterxml.version>2.15.3</fasterxml.version>
         <felles.version>2.20231023162434_fa320ce</felles.version>
-        <kontrakter.version>3.0_20231026154353_1ccdbb1</kontrakter.version>
+        <kontrakter.version>3.0_20231101161029_4d64011</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
