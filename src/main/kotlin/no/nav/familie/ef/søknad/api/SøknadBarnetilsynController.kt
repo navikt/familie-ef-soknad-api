@@ -33,7 +33,7 @@ class SøknadBarnetilsynController(val søknadService: SøknadService, val featu
     }
 
     @PostMapping("hent")
-    fun hentDataTilGjenbruk(@RequestBody personIdent: String): Ressurs<String> {
-        return Ressurs.success(søknadService.hentDataTilGjenbruk(personIdent))
+    fun hentDataTilGjenbruk(@RequestBody personIdent: String): String {
+        return søknadService.hentDataTilGjenbruk(personIdent)
     }
 }
