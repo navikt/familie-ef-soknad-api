@@ -1,6 +1,10 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SamboerDetaljer
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Sivilstatus
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.MapperMedVedlegg
@@ -14,6 +18,7 @@ import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.UFORMELL_
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import java.time.LocalDate
 
 object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdetaljer>(ÅrsakTilAleneMedBarn) {
 
@@ -43,4 +48,22 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
             },
         )
     }
+
+    fun mapTilDto(sivilstandsdetaljer: Sivilstandsdetaljer): Sivilstatus {
+        return Sivilstatus(
+            harSøktSeparasjon = sivilstandsdetaljer.søktOmSkilsmisseSeparasjon.tilBooleanFelt(),
+            erUformeltGift = sivilstandsdetaljer.erUformeltGift.tilBooleanFelt(),
+            datoSøktSeparasjon = sivilstandsdetaljer.datoSøktSeparasjon.tilDatoFelt(),
+            erUformeltSeparertEllerSkilt = sivilstandsdetaljer.erUformeltSeparertEllerSkilt.tilBooleanFelt(),
+            årsakEnslig = sivilstandsdetaljer.årsakEnslig?.let { TekstFelt(it.label, it.verdi) },
+            datoForSamlivsbrudd = sivilstandsdetaljer.samlivsbruddsdato.tilDatoFelt(),
+            datoFlyttetFraHverandre = sivilstandsdetaljer.fraflytningsdato.tilDatoFelt(),
+            datoEndretSamvær = sivilstandsdetaljer.endringSamværsordningDato.tilDatoFelt(),
+            tidligereSamboerDetaljer = sivilstandsdetaljer.tidligereSamboerdetaljer?.let { PersonMinimumMapper.mapTilDto(it.verdi) },
+        )
+    }
 }
+
+fun Søknadsfelt<LocalDate>?.tilDatoFelt() = this?.let { DatoFelt(it.label, it.verdi.toString()) }
+fun Søknadsfelt<Boolean>?.tilBooleanFelt() = this?.let { BooleanFelt(it.label, it.verdi) }
+fun Søknadsfelt<String>?.tilTekstFelt() = this?.let { TekstFelt(it.label, it.verdi) }

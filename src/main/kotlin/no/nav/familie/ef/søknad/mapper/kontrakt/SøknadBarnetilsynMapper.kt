@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.mapper.Språk
@@ -64,6 +65,13 @@ class SøknadBarnetilsynMapper() {
             vedlegg.values.flatMap { it.vedlegg },
             dto.dokumentasjonsbehov.tilKontrakt(),
             dto.skalBehandlesINySaksbehandling,
+        )
+    }
+
+    fun mapTilDto(søknadBarnetilsyn: SøknadBarnetilsyn): SøknadBarnetilsynGjenbrukDto {
+        return SøknadBarnetilsynGjenbrukDto(
+            sivilstatus = SivilstandsdetaljerMapper.mapTilDto(søknadBarnetilsyn.sivilstandsdetaljer.verdi),
+            medlemskap = MedlemsskapsMapper.map(dto.medlemskap),
         )
     }
 }
