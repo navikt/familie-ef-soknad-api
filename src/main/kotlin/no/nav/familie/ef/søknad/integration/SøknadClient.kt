@@ -67,7 +67,7 @@ class SøknadClient(
         )
     }
 
-    fun hentDataTilGjenbrukBarnetilsyn(personIdent: String): String {
+    fun hentDataTilGjenbrukBarnetilsyn(personIdent: String): SøknadBarnetilsyn {
         return postForEntity(
             config.hentBarnetilsynSøknadUri,
             PersonIdent(personIdent),

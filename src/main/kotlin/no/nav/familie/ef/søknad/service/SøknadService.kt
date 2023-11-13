@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadSkolepengerDto
 import no.nav.familie.ef.søknad.integration.SøknadClient
@@ -41,7 +42,7 @@ class SøknadService(
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-    fun hentDataTilGjenbruk(personIdent: String): String {
-        return søknadClient.hentDataTilGjenbrukBarnetilsyn(personIdent)
+    fun hentDataTilGjenbruk(personIdent: String): SøknadBarnetilsynGjenbrukDto {
+        return SøknadBarnetilsynMapper().mapTilDto(søknadClient.hentDataTilGjenbrukBarnetilsyn(personIdent))
     }
 }
