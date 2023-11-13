@@ -49,11 +49,11 @@ object PersonMinimumMapper {
         )
     }
 
-    fun mapTilDto(personMinimum: PersonMinimum) : SamboerDetaljer {
+    fun mapTilDto(personMinimum: PersonMinimum): SamboerDetaljer {
         return SamboerDetaljer(
             fødselsdato = personMinimum.fødselsdato.tilDatoFelt(),
             navn = TekstFelt(personMinimum.navn.label, personMinimum.navn.verdi),
-            ident = personMinimum.fødselsnummer.tilTekstFelt()
+            ident = personMinimum.fødselsnummer.tilTekstFelt(),
         )
     }
 
@@ -68,5 +68,4 @@ object PersonMinimumMapper {
     }
 
     fun Søknadsfelt<Fødselsnummer>?.tilTekstFelt(): TekstFelt? = this?.let { TekstFelt(it.label, it.verdi.verdi) }
-
 }
