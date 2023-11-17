@@ -67,10 +67,9 @@ class SøknadClient(
         )
     }
 
-    fun hentDataTilGjenbrukBarnetilsyn(personIdent: String): SøknadBarnetilsyn {
-        return postForEntity(
+    fun hentDataTilGjenbrukBarnetilsyn(): SøknadBarnetilsyn {
+        return getForEntity(
             config.hentBarnetilsynSøknadUri,
-            PersonIdent(personIdent),
             HttpHeaders().medContentTypeJsonUTF8(),
         )
     }

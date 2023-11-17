@@ -10,6 +10,7 @@ import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -32,8 +33,8 @@ class SøknadBarnetilsynController(val søknadService: SøknadService, val featu
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 
-    @PostMapping("hent")
-    fun hentDataTilGjenbruk(@RequestBody personIdent: String): SøknadBarnetilsynGjenbrukDto {
-        return søknadService.hentDataTilGjenbruk(personIdent)
+    @GetMapping("hent")
+    fun hentDataTilGjenbruk(): SøknadBarnetilsynGjenbrukDto {
+        return søknadService.hentDataTilGjenbruk()
     }
 }
