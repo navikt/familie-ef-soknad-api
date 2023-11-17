@@ -54,7 +54,7 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
             erUformeltGift = sivilstandsdetaljer.erUformeltGift.tilBooleanFelt(),
             datoSøktSeparasjon = sivilstandsdetaljer.datoSøktSeparasjon.tilDatoFelt(),
             erUformeltSeparertEllerSkilt = sivilstandsdetaljer.erUformeltSeparertEllerSkilt.tilBooleanFelt(),
-            årsakEnslig = sivilstandsdetaljer.årsakEnslig?.let { TekstFelt(it.label, it.verdi) },
+            årsakEnslig = sivilstandsdetaljer.årsakEnslig?.let { TekstFelt(it.label, it.verdi, it.svarId) },
             datoForSamlivsbrudd = sivilstandsdetaljer.samlivsbruddsdato.tilDatoFelt(),
             datoFlyttetFraHverandre = sivilstandsdetaljer.fraflytningsdato.tilDatoFelt(),
             datoEndretSamvær = sivilstandsdetaljer.endringSamværsordningDato.tilDatoFelt(),

@@ -67,5 +67,5 @@ object PersonMinimumMapper {
         }
     }
 
-    fun Søknadsfelt<Fødselsnummer>?.tilTekstFelt(): TekstFelt? = this?.let { TekstFelt(it.label, it.verdi.verdi) }
+    fun Søknadsfelt<Fødselsnummer>?.tilTekstFelt(): TekstFelt? = this?.let { TekstFelt(it.label, it.verdi.verdi, it.svarId?.verdi) }
 }
