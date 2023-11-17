@@ -30,7 +30,6 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
             samlivsbruddsdato = data.datoForSamlivsbrudd?.tilSøknadsfelt(),
             endringSamværsordningDato = data.datoEndretSamvær?.tilSøknadsfelt(),
             fraflytningsdato = data.datoFlyttetFraHverandre?.tilSøknadsfelt(),
-            erUformeltGift = data.erUformeltGift?.tilSøknadsfelt(),
             erUformeltGiftDokumentasjon = dokumentfelt(INNGÅTT_EKTESKAP, vedlegg),
             separasjonsbekreftelse = dokumentfelt(SEPARASJON_ELLER_SKILSMISSE, vedlegg),
             erUformeltSeparertEllerSkilt = data.erUformeltSeparertEllerSkilt?.tilSøknadsfelt(),
@@ -51,7 +50,6 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
     fun mapTilDto(sivilstandsdetaljer: Sivilstandsdetaljer): Sivilstatus {
         return Sivilstatus(
             harSøktSeparasjon = sivilstandsdetaljer.søktOmSkilsmisseSeparasjon.tilBooleanFelt(),
-            erUformeltGift = sivilstandsdetaljer.erUformeltGift.tilBooleanFelt(),
             datoSøktSeparasjon = sivilstandsdetaljer.datoSøktSeparasjon.tilDatoFelt(),
             erUformeltSeparertEllerSkilt = sivilstandsdetaljer.erUformeltSeparertEllerSkilt.tilBooleanFelt(),
             årsakEnslig = sivilstandsdetaljer.årsakEnslig?.let { TekstFelt(it.label, it.verdi, it.svarId) },
