@@ -15,3 +15,7 @@ http://localhost:8091/local/cookie?subject=[gyldigFødselsnummer] dersom du skal
 ### Swagger api kall med autentisering: 
 http://localhost:8091/swagger-ui.html
 https://familie-ef-soknad-api.intern.dev.nav.no/swagger-ui.html
+
+## Kode generert av GitHub Copilot
+
+Dette repoet bruker GitHub Copilot til å generere kode.
