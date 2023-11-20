@@ -68,7 +68,8 @@ class SøknadBarnetilsynMapper() {
         )
     }
 
-    fun mapTilDto(søknadBarnetilsyn: SøknadBarnetilsyn): SøknadBarnetilsynGjenbrukDto {
+    fun mapTilDto(søknadBarnetilsyn: SøknadBarnetilsyn?): SøknadBarnetilsynGjenbrukDto? {
+        if (søknadBarnetilsyn == null) return null
         return SøknadBarnetilsynGjenbrukDto(
             sivilstatus = SivilstandsdetaljerMapper.mapTilDto(søknadBarnetilsyn.sivilstandsdetaljer.verdi),
             medlemskap = MedlemsskapsMapper.mapTilDto(søknadBarnetilsyn.medlemskapsdetaljer.verdi),

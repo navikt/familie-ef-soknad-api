@@ -34,7 +34,7 @@ class SøknadBarnetilsynController(val søknadService: SøknadService, val featu
     }
 
     @GetMapping("hent")
-    fun hentDataTilGjenbruk(): SøknadBarnetilsynGjenbrukDto {
+    fun hentDataTilGjenbruk(): SøknadBarnetilsynGjenbrukDto? {
         return søknadService.hentDataTilGjenbruk()
     }
 }
