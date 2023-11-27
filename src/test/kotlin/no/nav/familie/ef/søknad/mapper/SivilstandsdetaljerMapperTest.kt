@@ -15,12 +15,6 @@ internal class SivilstandsdetaljerMapperTest {
         val kontrakt = SivilstandsdetaljerMapper.map(sivilstatus, dokumentMap()).verdi
         // Then
 
-        assertThat(kontrakt.søktOmSkilsmisseSeparasjon?.label).isEqualTo(sivilstatus.harSøktSeparasjon?.label)
-        assertThat(kontrakt.søktOmSkilsmisseSeparasjon?.verdi).isEqualTo(sivilstatus.harSøktSeparasjon?.verdi)
-
-        assertThat(kontrakt.datoSøktSeparasjon?.label).isEqualTo(sivilstatus.datoSøktSeparasjon?.label)
-        assertThat(kontrakt.datoSøktSeparasjon?.verdi).isEqualTo(sivilstatus.datoSøktSeparasjon?.verdi)
-
         assertThat(kontrakt.årsakEnslig?.label).isEqualTo(sivilstatus.årsakEnslig?.label)
         assertThat(kontrakt.årsakEnslig?.verdi).isEqualTo(sivilstatus.årsakEnslig?.verdi)
 
@@ -29,9 +23,6 @@ internal class SivilstandsdetaljerMapperTest {
 
         assertThat(kontrakt.endringSamværsordningDato?.label).isEqualTo(sivilstatus.datoEndretSamvær?.label)
         assertThat(kontrakt.endringSamværsordningDato?.verdi).isEqualTo(sivilstatus.datoEndretSamvær?.verdi)
-
-        assertThat(kontrakt.erUformeltSeparertEllerSkilt?.label).isEqualTo(sivilstatus.erUformeltSeparertEllerSkilt?.label)
-        assertThat(kontrakt.erUformeltSeparertEllerSkilt?.verdi).isEqualTo(sivilstatus.erUformeltSeparertEllerSkilt?.verdi)
 
         assertThat(kontrakt.samlivsbruddsdato?.label).isEqualTo(sivilstatus.datoForSamlivsbrudd?.label)
         assertThat(kontrakt.samlivsbruddsdato?.verdi).isEqualTo(sivilstatus.datoForSamlivsbrudd?.verdi)

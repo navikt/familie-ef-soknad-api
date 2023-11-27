@@ -32,11 +32,8 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
             fraflytningsdato = data.datoFlyttetFraHverandre?.tilSøknadsfelt(),
             erUformeltGiftDokumentasjon = dokumentfelt(INNGÅTT_EKTESKAP, vedlegg),
             separasjonsbekreftelse = dokumentfelt(SEPARASJON_ELLER_SKILSMISSE, vedlegg),
-            erUformeltSeparertEllerSkilt = data.erUformeltSeparertEllerSkilt?.tilSøknadsfelt(),
             erUformeltSeparertEllerSkiltDokumentasjon =
             dokumentfelt(UFORMELL_SEPARASJON_ELLER_SKILSMISSE, vedlegg),
-            datoSøktSeparasjon = data.datoSøktSeparasjon?.tilSøknadsfelt(),
-            søktOmSkilsmisseSeparasjon = data.harSøktSeparasjon?.tilSøknadsfelt(),
             årsakEnslig = data.årsakEnslig?.tilSøknadsfelt(),
             tidligereSamboerdetaljer = data.tidligereSamboerDetaljer?.let {
                 Søknadsfelt(
@@ -49,9 +46,6 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
 
     fun mapTilDto(sivilstandsdetaljer: Sivilstandsdetaljer): Sivilstatus {
         return Sivilstatus(
-            harSøktSeparasjon = sivilstandsdetaljer.søktOmSkilsmisseSeparasjon.tilBooleanFelt(),
-            datoSøktSeparasjon = sivilstandsdetaljer.datoSøktSeparasjon.tilDatoFelt(),
-            erUformeltSeparertEllerSkilt = sivilstandsdetaljer.erUformeltSeparertEllerSkilt.tilBooleanFelt(),
             årsakEnslig = sivilstandsdetaljer.årsakEnslig?.let { TekstFelt(it.label, it.verdi, it.svarId) },
             datoForSamlivsbrudd = sivilstandsdetaljer.samlivsbruddsdato.tilDatoFelt(),
             datoFlyttetFraHverandre = sivilstandsdetaljer.fraflytningsdato.tilDatoFelt(),
