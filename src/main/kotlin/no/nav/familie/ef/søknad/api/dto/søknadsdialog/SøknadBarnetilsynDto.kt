@@ -16,6 +16,6 @@ data class SøknadBarnetilsynDto(
 )
 
 data class SøknadBarnetilsynGjenbrukDto(
-    val sivilstatus: Sivilstatus,
+    val sivilstatus: SivilstatusTilGjenbruk,
     val medlemskap: Medlemskap,
 )

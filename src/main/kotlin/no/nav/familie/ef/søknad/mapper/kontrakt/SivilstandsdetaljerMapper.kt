@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Sivilstatus
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SivilstatusTilGjenbruk
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
@@ -30,10 +31,14 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
             samlivsbruddsdato = data.datoForSamlivsbrudd?.tilSøknadsfelt(),
             endringSamværsordningDato = data.datoEndretSamvær?.tilSøknadsfelt(),
             fraflytningsdato = data.datoFlyttetFraHverandre?.tilSøknadsfelt(),
+            erUformeltGift = data.erUformeltGift?.tilSøknadsfelt(),
             erUformeltGiftDokumentasjon = dokumentfelt(INNGÅTT_EKTESKAP, vedlegg),
             separasjonsbekreftelse = dokumentfelt(SEPARASJON_ELLER_SKILSMISSE, vedlegg),
+            erUformeltSeparertEllerSkilt = data.erUformeltSeparertEllerSkilt?.tilSøknadsfelt(),
             erUformeltSeparertEllerSkiltDokumentasjon =
             dokumentfelt(UFORMELL_SEPARASJON_ELLER_SKILSMISSE, vedlegg),
+            datoSøktSeparasjon = data.datoSøktSeparasjon?.tilSøknadsfelt(),
+            søktOmSkilsmisseSeparasjon = data.harSøktSeparasjon?.tilSøknadsfelt(),
             årsakEnslig = data.årsakEnslig?.tilSøknadsfelt(),
             tidligereSamboerdetaljer = data.tidligereSamboerDetaljer?.let {
                 Søknadsfelt(
@@ -44,8 +49,8 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
         )
     }
 
-    fun mapTilDto(sivilstandsdetaljer: Sivilstandsdetaljer): Sivilstatus {
-        return Sivilstatus(
+    fun mapTilDto(sivilstandsdetaljer: Sivilstandsdetaljer): SivilstatusTilGjenbruk {
+        return SivilstatusTilGjenbruk(
             årsakEnslig = sivilstandsdetaljer.årsakEnslig?.let { TekstFelt(it.label, it.verdi, it.svarId) },
             datoForSamlivsbrudd = sivilstandsdetaljer.samlivsbruddsdato.tilDatoFelt(),
             datoFlyttetFraHverandre = sivilstandsdetaljer.fraflytningsdato.tilDatoFelt(),
