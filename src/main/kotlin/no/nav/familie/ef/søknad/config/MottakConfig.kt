@@ -15,7 +15,7 @@ data class MottakConfig(val uri: URI) {
     internal val hentSøknaderMedDokumentasjonsbehovUri = byggUri(PATH_HENT_SØKNADER)
     internal val sendInnEttersendingUri = byggUri(PATH_SEND_INN_ETTERSENDING)
     internal val hentEttersendingForPersonUri = byggUri(PATH_HENT_ETTERSENDING_FOR_PERSON)
-    internal val hentBarnetilsynSøknadUri = byggUri(PATH_HENT_BARNETILSYNSØKNAD)
+    internal val hentForrigeBarnetilsynSøknadUri = byggUri(PATH_HENT_FORRIGE_BARNETILSYNSØKNAD)
 
     internal val pingUri = byggUri(PATH_PING)
 
@@ -30,7 +30,7 @@ data class MottakConfig(val uri: URI) {
         private const val PATH_HENT_SØKNADER = "/person/soknader"
         private const val PATH_SEND_INN_ETTERSENDING = "/ettersending"
         private const val PATH_HENT_ETTERSENDING_FOR_PERSON = "/ettersending/person"
-        private const val PATH_HENT_BARNETILSYNSØKNAD = "/soknad/barnetilsyn/hent"
+        private const val PATH_HENT_FORRIGE_BARNETILSYNSØKNAD = "/soknad/barnetilsyn/forrige"
         private const val PATH_PING = "/ping"
     }
 }

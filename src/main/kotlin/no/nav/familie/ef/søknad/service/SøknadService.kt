@@ -42,7 +42,7 @@ class SøknadService(
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-    fun hentDataTilGjenbruk(): SøknadBarnetilsynGjenbrukDto? {
-        return SøknadBarnetilsynMapper().mapTilDto(søknadClient.hentDataTilGjenbrukBarnetilsyn())
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
+        return SøknadBarnetilsynMapper().mapTilDto(søknadClient.hentForrigeBarnetilsynSøknad())
     }
 }

@@ -33,8 +33,8 @@ class SøknadBarnetilsynController(val søknadService: SøknadService, val featu
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 
-    @GetMapping("hent")
-    fun hentDataTilGjenbruk(): SøknadBarnetilsynGjenbrukDto? {
-        return søknadService.hentDataTilGjenbruk()
+    @GetMapping("forrige")
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
+        return søknadService.hentForrigeBarnetilsynSøknad()
     }
 }
