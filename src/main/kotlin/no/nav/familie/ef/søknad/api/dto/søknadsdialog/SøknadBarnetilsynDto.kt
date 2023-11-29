@@ -14,3 +14,8 @@ data class SøknadBarnetilsynDto(
     val locale: String = "nb",
     val skalBehandlesINySaksbehandling: Boolean = false,
 )
+
+data class SøknadBarnetilsynGjenbrukDto(
+    val sivilstatus: SivilstatusTilGjenbruk,
+    val medlemskap: Medlemskap,
+)

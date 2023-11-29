@@ -11,3 +11,11 @@ data class Sivilstatus(
     val datoEndretSamvær: DatoFelt? = null,
     val tidligereSamboerDetaljer: SamboerDetaljer? = null,
 )
+
+data class SivilstatusTilGjenbruk(
+    val årsakEnslig: TekstFelt? = null,
+    val datoForSamlivsbrudd: DatoFelt? = null,
+    val datoFlyttetFraHverandre: DatoFelt? = null,
+    val datoEndretSamvær: DatoFelt? = null,
+    val tidligereSamboerDetaljer: SamboerDetaljer? = null,
+)

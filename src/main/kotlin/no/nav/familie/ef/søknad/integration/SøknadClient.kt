@@ -67,6 +67,13 @@ class SøknadClient(
         )
     }
 
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsyn? {
+        return getForEntity(
+            config.hentForrigeBarnetilsynSøknadUri,
+            HttpHeaders().medContentTypeJsonUTF8(),
+        )
+    }
+
     private fun HttpHeaders.medContentTypeJsonUTF8(): HttpHeaders {
         this.add("Content-Type", "application/json;charset=UTF-8")
         this.add("behandlingsnummer", Tema.ENF.behandlingsnummer)

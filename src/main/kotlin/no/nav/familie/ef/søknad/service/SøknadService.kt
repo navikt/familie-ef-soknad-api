@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.service
 
 import no.nav.familie.ef.søknad.api.dto.Kvittering
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadSkolepengerDto
 import no.nav.familie.ef.søknad.integration.SøknadClient
@@ -39,5 +40,9 @@ class SøknadService(
         val søknadRequestData = skolepengerMapper.mapTilIntern(søknad, innsendingMottatt)
         val kvittering = søknadClient.sendInnSkolepenger(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
+    }
+
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
+        return SøknadBarnetilsynMapper().mapTilDto(søknadClient.hentForrigeBarnetilsynSøknad())
     }
 }
