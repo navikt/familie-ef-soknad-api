@@ -38,7 +38,7 @@ object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>(Sp
             delerBoligMedAndreVoksne = bosituasjon.delerDuBolig.tilTekstFelt() ?: TekstFelt("", ""),
             datoFlyttetSammenMedSamboer = bosituasjon.sammenflyttingsdato.tilDatoFelt(),
             samboerDetaljer = PersonMinimumMapper.mapTilDto(bosituasjon.samboerdetaljer?.verdi),
-            datoSkalGifteSegEllerBliSamboer = bosituasjon.sammenflyttingsdato.tilDatoFelt(),
+            datoSkalGifteSegEllerBliSamboer = sivilstandsplaner?.fraDato.tilDatoFelt(),
             skalGifteSegEllerBliSamboer = sivilstandsplaner?.harPlaner.tilBooleanFelt(),
             datoFlyttetFraHverandre = bosituasjon.datoFlyttetFraHverandre.tilDatoFelt(),
             vordendeSamboerEktefelle = PersonMinimumMapper.mapTilDto(sivilstandsplaner?.vordendeSamboerEktefelle?.verdi),
