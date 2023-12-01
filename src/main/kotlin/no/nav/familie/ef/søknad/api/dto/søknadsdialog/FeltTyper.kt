@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 data class BooleanFelt(
     val label: String,
     val verdi: Boolean,
+    val svarid: String? = null,
 )
 
 data class TekstFelt(
