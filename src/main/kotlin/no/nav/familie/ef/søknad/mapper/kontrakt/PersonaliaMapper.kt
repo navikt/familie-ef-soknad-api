@@ -5,7 +5,6 @@ import no.nav.familie.ef.søknad.mapper.Mapper
 import no.nav.familie.ef.søknad.mapper.Språktekster.Navn
 import no.nav.familie.ef.søknad.mapper.Språktekster.Sivilstatus
 import no.nav.familie.ef.søknad.mapper.Språktekster.Statsborgerskap
-import no.nav.familie.ef.søknad.mapper.Språktekster.Telefonnummer
 import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.kontrakter.ef.søknad.Adresse
 import no.nav.familie.kontrakter.ef.søknad.Personalia
@@ -28,10 +27,15 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
         )
     }
 
-    private fun lagTelefonnummerSøknadsfelt(telefonnummer: String?): Søknadsfelt<String>? {
-        return telefonnummer?.let {
-            Søknadsfelt(Telefonnummer.hentTekst(), it)
-        }
+    fun mapTilDto(personalia: Personalia): Søker {
+        return Søker(
+            adresse = mapAdresseTilDto(personalia.adresse.verdi),
+            egenansatt = false, // TODO brukes denne til noe?
+            fnr = personalia.fødselsnummer.verdi.verdi,
+            forkortetNavn = personalia.navn.verdi,
+            sivilstand = personalia.sivilstatus.verdi,
+            statsborgerskap = personalia.statsborgerskap.verdi,
+        )
     }
 
     private fun lagAdresseSøknadsFelt(frontendAdresse: AdresseDto): Søknadsfelt<Adresse> {
@@ -43,6 +47,14 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
                 poststedsnavn = frontendAdresse.poststed ?: "",
                 land = "",
             ),
+        )
+    }
+
+    private fun mapAdresseTilDto(adresse: Adresse): AdresseDto {
+        return AdresseDto(
+            adresse = adresse.adresse ?: "",
+            postnummer = adresse.postnummer,
+            poststed = adresse.poststedsnavn,
         )
     }
 }

@@ -1,7 +1,5 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Sivilstatus
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SivilstatusTilGjenbruk
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
@@ -15,10 +13,10 @@ import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.INNGÅTT_
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.SAMLIVSBRUDD
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.SEPARASJON_ELLER_SKILSMISSE
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.UFORMELL_SEPARASJON_ELLER_SKILSMISSE
+import no.nav.familie.ef.søknad.mapper.tilDatoFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
-import java.time.LocalDate
 
 object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdetaljer>(ÅrsakTilAleneMedBarn) {
 
@@ -59,7 +57,3 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
         )
     }
 }
-
-fun Søknadsfelt<LocalDate>?.tilDatoFelt() = this?.let { DatoFelt(it.label, it.verdi.toString()) }
-fun Søknadsfelt<Boolean>?.tilBooleanFelt() = this?.let { BooleanFelt(it.label, it.verdi) }
-fun Søknadsfelt<String>?.tilTekstFelt() = this?.let { TekstFelt(it.label, it.verdi, it.svarId) }
