@@ -14,4 +14,5 @@ data class SamboerDetaljer(
     val fødselsdato: DatoFelt?,
     val navn: TekstFelt,
     val ident: TekstFelt? = null,
+    val kjennerIkkeIdent: String? = null,
 )
