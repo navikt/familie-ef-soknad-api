@@ -9,8 +9,8 @@ import no.nav.familie.ef.søknad.mapper.Språktekster.OmBarnepassordning
 import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.tilDesimaltall
 import no.nav.familie.ef.søknad.mapper.tilLocalDate
+import no.nav.familie.ef.søknad.mapper.tilNullableTekstFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
-import no.nav.familie.ef.søknad.mapper.tilTekstFelt
 import no.nav.familie.kontrakter.ef.søknad.Barnepass
 import no.nav.familie.kontrakter.ef.søknad.BarnepassOrdning
 import no.nav.familie.kontrakter.ef.søknad.Datoperiode
@@ -45,7 +45,7 @@ object BarnepassMapper : Mapper<BarnepassDto, Barnepass>(OmBarnepassordning) {
 
     fun mapTilDto(barnepass: Barnepass?): BarnepassDto {
         return BarnepassDto(
-            årsakBarnepass = barnepass?.årsakBarnepass.tilTekstFelt(),
+            årsakBarnepass = barnepass?.årsakBarnepass.tilNullableTekstFelt(),
             barnepassordninger = mapBarnepassordningerTilDto(barnepass?.barnepassordninger?.verdi ?: emptyList()),
         )
     }

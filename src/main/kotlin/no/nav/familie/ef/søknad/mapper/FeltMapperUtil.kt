@@ -29,10 +29,15 @@ fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsf
 
 fun Søknadsfelt<Fødselsnummer>?.fødselsnummerTilTekstFelt(): TekstFelt? = this?.let { TekstFelt(it.label, it.verdi.verdi, it.svarId?.verdi) }
 
-fun Søknadsfelt<LocalDate>?.tilDatoFelt() = this?.let { DatoFelt(it.label, it.verdi.toString()) }
+fun <T> Søknadsfelt<T>?.tilNullableDatoFelt() = this?.let { DatoFelt(it.label, it.verdi.toString()) }
+fun <T>Søknadsfelt<T>.tilDatoFelt() = DatoFelt(this.label, this.verdi.toString())
+fun Søknadsfelt<Boolean>?.tilNullableBooleanFelt() = this?.let { BooleanFelt(it.label, it.verdi) }
+fun Søknadsfelt<Boolean>.tilBooleanFelt() = BooleanFelt(this.label, this.verdi, this.svarId.toString())
+fun <T> Søknadsfelt<T>?.tilNullableTekstFelt() = this?.let { TekstFelt(it.label, it.verdi.toString(), it.svarId.toString()) }
 
-fun Søknadsfelt<Boolean>?.tilBooleanFelt() = this?.let { BooleanFelt(it.label, it.verdi) }
-fun Søknadsfelt<String>?.tilTekstFelt() = this?.let { TekstFelt(it.label, it.verdi, it.svarId) }
+fun <T> Søknadsfelt<T>.tilTekstFelt() = TekstFelt(this.label, this.verdi.toString(), this.svarId.toString())
+
+fun Søknadsfelt<List<String>>.tilListFelt() = ListFelt(label, verdi.map { it }, alternativer, svarId)
 fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<MånedÅrPeriode> =
     Søknadsfelt(
         this.label ?: error("Savner label"),

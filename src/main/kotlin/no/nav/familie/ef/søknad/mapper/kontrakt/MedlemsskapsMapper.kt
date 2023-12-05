@@ -9,8 +9,8 @@ import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.mapper.Mapper
 import no.nav.familie.ef.søknad.mapper.Språktekster
 import no.nav.familie.ef.søknad.mapper.hentTekst
+import no.nav.familie.ef.søknad.mapper.tilNullableTekstFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
-import no.nav.familie.ef.søknad.mapper.tilTekstFelt
 import no.nav.familie.kontrakter.ef.søknad.Medlemskapsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Utenlandsopphold as KontraksUtenlandsopphold
@@ -50,14 +50,14 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                         til = DatoFelt(it.tildato.label, it.tildato.verdi.toString()),
                         label = null,
                     ),
-                    land = it.land.tilTekstFelt(),
+                    land = it.land.tilNullableTekstFelt(),
                 )
             },
             søkerBosattINorgeSisteTreÅr = BooleanFelt(
                 medlemskapsdetaljer.bosattNorgeSisteÅrene.label,
                 medlemskapsdetaljer.bosattNorgeSisteÅrene.verdi,
             ),
-            oppholdsland = medlemskapsdetaljer.oppholdsland.tilTekstFelt(),
+            oppholdsland = medlemskapsdetaljer.oppholdsland.tilNullableTekstFelt(),
             søkerOppholderSegINorge = BooleanFelt(
                 medlemskapsdetaljer.oppholderDuDegINorge.label,
                 medlemskapsdetaljer.oppholderDuDegINorge.verdi,

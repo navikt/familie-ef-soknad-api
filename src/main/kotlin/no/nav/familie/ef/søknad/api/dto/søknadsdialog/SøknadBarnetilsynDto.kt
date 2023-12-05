@@ -20,4 +20,5 @@ data class SøknadBarnetilsynGjenbrukDto(
     val medlemskap: Medlemskap,
     val bosituasjon: Bosituasjon,
     val person: Person,
+    val aktivitet: Aktivitet,
 )

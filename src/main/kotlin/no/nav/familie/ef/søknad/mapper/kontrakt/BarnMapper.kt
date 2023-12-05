@@ -16,11 +16,11 @@ import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.BARN_BOR_
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.DELT_BOSTED
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.SAMVÆRSAVTALE
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.TERMINBEKREFTELSE
-import no.nav.familie.ef.søknad.mapper.tilBooleanFelt
-import no.nav.familie.ef.søknad.mapper.tilDatoFelt
+import no.nav.familie.ef.søknad.mapper.tilNullableBooleanFelt
+import no.nav.familie.ef.søknad.mapper.tilNullableDatoFelt
+import no.nav.familie.ef.søknad.mapper.tilNullableTekstFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
-import no.nav.familie.ef.søknad.mapper.tilTekstFelt
 import no.nav.familie.kontrakter.ef.søknad.AnnenForelder
 import no.nav.familie.kontrakter.ef.søknad.Samvær
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
@@ -47,16 +47,16 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
             Barn(
                 alder = null,
                 ident = TekstFelt(FødselsnummerTekst.hentTekst(), it.fødselsnummer?.verdi?.verdi ?: ""),
-                fødselsdato = it.fødselTermindato.tilDatoFelt(),
+                fødselsdato = it.fødselTermindato.tilNullableDatoFelt(),
                 harSammeAdresse = BooleanFelt(it.harSkalHaSammeAdresse.label, it.harSkalHaSammeAdresse.verdi),
-                ikkeRegistrertPåSøkersAdresseBeskrivelse = it.ikkeRegistrertPåSøkersAdresseBeskrivelse.tilTekstFelt(),
+                ikkeRegistrertPåSøkersAdresseBeskrivelse = it.ikkeRegistrertPåSøkersAdresseBeskrivelse.tilNullableTekstFelt(),
                 id = null,
                 lagtTil = it.lagtTilManuelt,
-                navn = it.navn.tilTekstFelt(),
+                navn = it.navn.tilNullableTekstFelt(),
                 født = BooleanFelt(it.erBarnetFødt.label, it.erBarnetFødt.verdi),
                 forelder = mapAnnenForelderOgSamværTilDto(it.annenForelder?.verdi, it.samvær?.verdi, it.skalBarnetBoHosSøker),
-                skalHaBarnepass = it.skalHaBarnepass.tilBooleanFelt(),
-                særligeTilsynsbehov = it.særligeTilsynsbehov.tilTekstFelt(),
+                skalHaBarnepass = it.skalHaBarnepass.tilNullableBooleanFelt(),
+                særligeTilsynsbehov = it.særligeTilsynsbehov.tilNullableTekstFelt(),
                 barnepass = BarnepassMapper.mapTilDto(it.barnepass?.verdi),
             )
         }
@@ -108,23 +108,23 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
     private fun mapAnnenForelderOgSamværTilDto(annenForelder: AnnenForelder?, samvær: Samvær?, skalBarnetBoHosSøker: Søknadsfelt<String>?): AnnenForelderDto? {
         if (annenForelder == null) return null
         return AnnenForelderDto(
-            ikkeOppgittAnnenForelderBegrunnelse = annenForelder.ikkeOppgittAnnenForelderBegrunnelse.tilTekstFelt(),
-            navn = annenForelder.person?.verdi?.navn.tilTekstFelt(),
-            fødselsdato = annenForelder.person?.verdi?.fødselsdato.tilDatoFelt(),
+            ikkeOppgittAnnenForelderBegrunnelse = annenForelder.ikkeOppgittAnnenForelderBegrunnelse.tilNullableTekstFelt(),
+            navn = annenForelder.person?.verdi?.navn.tilNullableTekstFelt(),
+            fødselsdato = annenForelder.person?.verdi?.fødselsdato.tilNullableDatoFelt(),
             ident = annenForelder.person?.verdi?.fødselsnummer.fødselsnummerTilTekstFelt(),
-            borINorge = annenForelder.bosattNorge.tilBooleanFelt(),
-            land = annenForelder.land.tilTekstFelt(),
-            avtaleOmDeltBosted = samvær?.spørsmålAvtaleOmDeltBosted.tilBooleanFelt(),
-            harAnnenForelderSamværMedBarn = samvær?.skalAnnenForelderHaSamvær.tilTekstFelt(),
-            harDereSkriftligSamværsavtale = samvær?.harDereSkriftligAvtaleOmSamvær.tilTekstFelt(),
-            hvordanPraktiseresSamværet = samvær?.hvordanPraktiseresSamværet.tilTekstFelt(),
-            borAnnenForelderISammeHus = samvær?.borAnnenForelderISammeHus.tilTekstFelt(),
-            borAnnenForelderISammeHusBeskrivelse = samvær?.borAnnenForelderISammeHusBeskrivelse.tilTekstFelt(),
-            boddSammenFør = samvær?.harDereTidligereBoddSammen.tilBooleanFelt(),
-            flyttetFra = samvær?.nårFlyttetDereFraHverandre.tilDatoFelt(),
-            hvorMyeSammen = samvær?.hvorMyeErDuSammenMedAnnenForelder.tilTekstFelt(),
-            beskrivSamværUtenBarn = samvær?.beskrivSamværUtenBarn.tilTekstFelt(),
-            skalBarnetBoHosSøker = skalBarnetBoHosSøker.tilTekstFelt(),
+            borINorge = annenForelder.bosattNorge.tilNullableBooleanFelt(),
+            land = annenForelder.land.tilNullableTekstFelt(),
+            avtaleOmDeltBosted = samvær?.spørsmålAvtaleOmDeltBosted.tilNullableBooleanFelt(),
+            harAnnenForelderSamværMedBarn = samvær?.skalAnnenForelderHaSamvær.tilNullableTekstFelt(),
+            harDereSkriftligSamværsavtale = samvær?.harDereSkriftligAvtaleOmSamvær.tilNullableTekstFelt(),
+            hvordanPraktiseresSamværet = samvær?.hvordanPraktiseresSamværet.tilNullableTekstFelt(),
+            borAnnenForelderISammeHus = samvær?.borAnnenForelderISammeHus.tilNullableTekstFelt(),
+            borAnnenForelderISammeHusBeskrivelse = samvær?.borAnnenForelderISammeHusBeskrivelse.tilNullableTekstFelt(),
+            boddSammenFør = samvær?.harDereTidligereBoddSammen.tilNullableBooleanFelt(),
+            flyttetFra = samvær?.nårFlyttetDereFraHverandre.tilNullableDatoFelt(),
+            hvorMyeSammen = samvær?.hvorMyeErDuSammenMedAnnenForelder.tilNullableTekstFelt(),
+            beskrivSamværUtenBarn = samvær?.beskrivSamværUtenBarn.tilNullableTekstFelt(),
+            skalBarnetBoHosSøker = skalBarnetBoHosSøker.tilNullableTekstFelt(),
         )
     }
 
