@@ -31,7 +31,7 @@ fun Søknadsfelt<Fødselsnummer>?.fødselsnummerTilTekstFelt(): TekstFelt? = thi
 
 fun <T> Søknadsfelt<T>?.tilNullableDatoFelt() = this?.let { DatoFelt(it.label, it.verdi.toString()) }
 fun <T>Søknadsfelt<T>.tilDatoFelt() = DatoFelt(this.label, this.verdi.toString())
-fun Søknadsfelt<Boolean>?.tilNullableBooleanFelt() = this?.let { BooleanFelt(it.label, it.verdi) }
+fun Søknadsfelt<Boolean>?.tilNullableBooleanFelt() = this?.let { BooleanFelt(it.label, it.verdi, it.svarId.toString()) }
 fun Søknadsfelt<Boolean>.tilBooleanFelt() = BooleanFelt(this.label, this.verdi, this.svarId.toString())
 fun <T> Søknadsfelt<T>?.tilNullableTekstFelt() = this?.let { TekstFelt(it.label, it.verdi.toString(), it.svarId.toString()) }
 
