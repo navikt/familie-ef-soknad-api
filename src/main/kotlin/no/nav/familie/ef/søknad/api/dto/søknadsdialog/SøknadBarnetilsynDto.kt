@@ -1,5 +1,7 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
+import java.time.LocalDate
+
 data class SøknadBarnetilsynDto(
     val bosituasjon: Bosituasjon,
     val medlemskap: Medlemskap,
@@ -13,6 +15,7 @@ data class SøknadBarnetilsynDto(
     val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
     val locale: String = "nb",
     val skalBehandlesINySaksbehandling: Boolean = false,
+    val datoPåbegyntSøknad: LocalDate? = null
 )
 
 data class SøknadBarnetilsynGjenbrukDto(

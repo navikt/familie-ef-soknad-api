@@ -24,7 +24,7 @@ class SøknadSkolepengerMapper {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
         val søknadSkolepenger = SøknadSkolepenger(
-            innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt),
+            innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
             personalia = PersonaliaMapper.map(dto.person.søker),
             adresseopplysninger = AdresseopplysningerMapper.map(
                 AdresseopplysningerData(
