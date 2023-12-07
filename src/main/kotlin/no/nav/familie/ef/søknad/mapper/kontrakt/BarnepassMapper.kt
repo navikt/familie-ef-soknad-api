@@ -43,25 +43,4 @@ object BarnepassMapper : Mapper<BarnepassDto, Barnepass>(OmBarnepassordning) {
         )
     }
 
-    fun mapTilDto(barnepass: Barnepass?): BarnepassDto {
-        return BarnepassDto(
-            årsakBarnepass = barnepass?.årsakBarnepass.tilTekstFelt(),
-            barnepassordninger = mapBarnepassordningerTilDto(barnepass?.barnepassordninger?.verdi ?: emptyList()),
-        )
-    }
-
-    fun mapBarnepassordningerTilDto(barnepassOrdning: List<BarnepassOrdning>): List<BarnepassOrdningDto> {
-        return barnepassOrdning.map {
-            BarnepassOrdningDto(
-                hvaSlagsBarnepassOrdning = TekstFelt(it.hvaSlagsBarnepassOrdning.label, it.hvaSlagsBarnepassOrdning.verdi, it.hvaSlagsBarnepassOrdning.svarId),
-                navn = TekstFelt(it.navn.label, it.navn.verdi, it.navn.svarId),
-                periode = PeriodeFelt(
-                    it.datoperiode?.label,
-                    DatoFelt(it.datoperiode?.label ?: "Startdato", it.datoperiode?.verdi?.fra.toString()),
-                    DatoFelt(it.datoperiode?.label ?: "Sluttdato", it.datoperiode?.verdi?.til.toString()),
-                ),
-                belop = TekstFelt(it.belop.label, it.belop.verdi.toString(), it.belop.svarId.toString()),
-            )
-        }
-    }
 }

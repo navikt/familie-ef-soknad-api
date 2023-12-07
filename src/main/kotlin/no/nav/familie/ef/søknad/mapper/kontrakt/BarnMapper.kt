@@ -55,9 +55,9 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                 navn = it.navn.tilTekstFelt(),
                 født = BooleanFelt(it.erBarnetFødt.label, it.erBarnetFødt.verdi),
                 forelder = mapAnnenForelderOgSamværTilDto(it.annenForelder?.verdi, it.samvær?.verdi, it.skalBarnetBoHosSøker),
-                skalHaBarnepass = it.skalHaBarnepass.tilBooleanFelt(),
+                skalHaBarnepass = null,
                 særligeTilsynsbehov = it.særligeTilsynsbehov.tilTekstFelt(),
-                barnepass = BarnepassMapper.mapTilDto(it.barnepass?.verdi),
+                barnepass = null,
             )
         }
     }
