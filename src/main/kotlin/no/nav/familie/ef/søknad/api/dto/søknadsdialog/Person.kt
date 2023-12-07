@@ -7,5 +7,4 @@ data class Person(
 
 data class PersonTilGjenbruk(
     val barn: List<Barn>,
-    val søker: SøkerTilGjenbruk,
 )

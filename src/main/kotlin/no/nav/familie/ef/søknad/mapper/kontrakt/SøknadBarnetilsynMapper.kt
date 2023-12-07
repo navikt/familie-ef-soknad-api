@@ -75,7 +75,7 @@ class SøknadBarnetilsynMapper() {
             sivilstatus = SivilstandsdetaljerMapper.mapTilDto(søknadBarnetilsyn.sivilstandsdetaljer.verdi),
             medlemskap = MedlemsskapsMapper.mapTilDto(søknadBarnetilsyn.medlemskapsdetaljer.verdi),
             bosituasjon = BosituasjonMapper.mapTilDto(søknadBarnetilsyn.bosituasjon.verdi, søknadBarnetilsyn.sivilstandsplaner?.verdi),
-            person = PersonTilGjenbruk(BarnMapper.mapTilDto(søknadBarnetilsyn.barn.verdi), PersonaliaMapper.mapTilDto(søknadBarnetilsyn.personalia.verdi)),
+            person = PersonTilGjenbruk(BarnMapper.mapTilDto(søknadBarnetilsyn.barn.verdi)),
         )
     }
 }

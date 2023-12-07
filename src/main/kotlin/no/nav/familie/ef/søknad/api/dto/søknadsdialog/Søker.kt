@@ -8,11 +8,3 @@ data class Søker(
     val sivilstand: String,
     val statsborgerskap: String,
 )
-
-data class SøkerTilGjenbruk(
-    val adresse: Adresse,
-    val egenansatt: Boolean,
-    val fnr: String,
-    val forkortetNavn: String,
-    val statsborgerskap: String,
-)
