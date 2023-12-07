@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøkerTilGjenbruk
 import no.nav.familie.ef.søknad.mapper.Mapper
 import no.nav.familie.ef.søknad.mapper.Språktekster.Navn
 import no.nav.familie.ef.søknad.mapper.Språktekster.Sivilstatus
@@ -27,13 +28,12 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
         )
     }
 
-    fun mapTilDto(personalia: Personalia): Søker {
-        return Søker(
+    fun mapTilDto(personalia: Personalia): SøkerTilGjenbruk {
+        return SøkerTilGjenbruk(
             adresse = mapAdresseTilDto(personalia.adresse.verdi),
             egenansatt = false, // TODO brukes denne til noe?
             fnr = personalia.fødselsnummer.verdi.verdi,
             forkortetNavn = personalia.navn.verdi,
-            sivilstand = personalia.sivilstatus.verdi,
             statsborgerskap = personalia.statsborgerskap.verdi,
         )
     }
