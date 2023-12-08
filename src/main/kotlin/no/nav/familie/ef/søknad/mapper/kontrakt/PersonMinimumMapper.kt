@@ -49,11 +49,13 @@ object PersonMinimumMapper {
         )
     }
 
-    fun mapTilDto(personMinimum: PersonMinimum): SamboerDetaljer {
+    fun mapTilDto(personMinimum: PersonMinimum?): SamboerDetaljer? {
+        if (personMinimum == null) return null
         return SamboerDetaljer(
             fødselsdato = personMinimum.fødselsdato.tilDatoFelt(),
             navn = TekstFelt(personMinimum.navn.label, personMinimum.navn.verdi),
             ident = personMinimum.fødselsnummer.tilTekstFelt(),
+            kjennerIkkeIdent = personMinimum.fødselsnummer?.verdi?.verdi == null || personMinimum.fødselsnummer?.verdi?.verdi?.isBlank() == true,
         )
     }
 
