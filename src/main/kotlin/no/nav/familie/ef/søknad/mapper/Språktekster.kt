@@ -59,4 +59,5 @@ enum class Språktekster(val norsk: String, val engelsk: String) {
         "Arbeid, utdanning og andre aktiviteter",
         "Arbeid, utdanning og andre aktiviteter [English TBA]",
     ),
+    Alder("Alder", "Age")
 }
