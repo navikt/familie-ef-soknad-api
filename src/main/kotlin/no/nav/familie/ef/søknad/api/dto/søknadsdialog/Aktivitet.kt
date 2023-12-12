@@ -43,6 +43,7 @@ data class Firma(
     val etableringsdato: DatoFelt,
     val navn: TekstFelt,
     val organisasjonsnummer: TekstFelt,
+    val overskudd: TekstFelt?,
 )
 
 data class UnderUtdanning(

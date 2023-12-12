@@ -1,5 +1,7 @@
 package no.nav.familie.ef.søknad.api.dto.søknadsdialog
 
+import java.time.LocalDate
+
 data class SøknadOvergangsstønadDto(
     val bosituasjon: Bosituasjon,
     val medlemskap: Medlemskap,
@@ -12,4 +14,5 @@ data class SøknadOvergangsstønadDto(
     val merOmDinSituasjon: Situasjon,
     val locale: String = "nb",
     val skalBehandlesINySaksbehandling: Boolean = false,
+    val datoPåbegyntSøknad: LocalDate? = null
 )
