@@ -14,5 +14,5 @@ data class SøknadOvergangsstønadDto(
     val merOmDinSituasjon: Situasjon,
     val locale: String = "nb",
     val skalBehandlesINySaksbehandling: Boolean = false,
-    val datoPåbegyntSøknad: LocalDate? = null
+    val datoPåbegyntSøknad: LocalDate? = null,
 )

@@ -29,8 +29,8 @@ import java.time.LocalDate
 import java.time.Period
 import java.util.UUID
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
-import no.nav.familie.ef.søknad.mapper.Språktekster.Fødselsnummer as FødselsnummerTekst
 import no.nav.familie.ef.søknad.mapper.Språktekster.Alder as AlderTekst
+import no.nav.familie.ef.søknad.mapper.Språktekster.Fødselsnummer as FødselsnummerTekst
 import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
 
 object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) {
@@ -51,7 +51,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
             Barn(
                 alder = TekstFelt(
                     AlderTekst.hentTekst(),
-                    Period.between(it.fødselsnummer?.verdi?.fødselsdato, LocalDate.now()).years.toString()
+                    Period.between(it.fødselsnummer?.verdi?.fødselsdato, LocalDate.now()).years.toString(),
                 ),
                 ident = TekstFelt(FødselsnummerTekst.hentTekst(), it.fødselsnummer?.verdi?.verdi ?: ""),
                 fødselsdato = it.fødselTermindato.tilDatoFelt(),
@@ -64,7 +64,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                 forelder = mapAnnenForelderOgSamværTilDto(
                     it.annenForelder?.verdi,
                     it.samvær?.verdi,
-                    it.skalBarnetBoHosSøker
+                    it.skalBarnetBoHosSøker,
                 ),
                 skalHaBarnepass = null,
                 særligeTilsynsbehov = it.særligeTilsynsbehov.tilTekstFelt(),
@@ -119,21 +119,21 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
     private fun mapAnnenForelderOgSamværTilDto(
         annenForelder: AnnenForelder?,
         samvær: Samvær?,
-        skalBarnetBoHosSøker: Søknadsfelt<String>?
+        skalBarnetBoHosSøker: Søknadsfelt<String>?,
     ): AnnenForelderDto? {
         if (annenForelder == null) return null
         return AnnenForelderDto(
             kanIkkeOppgiAnnenForelderFar = BooleanFelt(
                 "Jeg kan ikke oppgi den andre forelderen?",
-                annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi.erIkkeBlankEllerNull()
+                annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi.erIkkeBlankEllerNull(),
             ),
             hvorforIkkeOppgi = hvorforIkkeOppgiTilTekstfeltEllerNullBasertPåBegrunnelse(
-                annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi
+                annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi,
             ),
             ikkeOppgittAnnenForelderBegrunnelse = annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.let {
                 TekstFelt(
                     "Hvorfor kan du ikke oppgi den andre forelderen?",
-                    it.verdi
+                    it.verdi,
                 )
             },
             navn = annenForelder.person?.verdi?.navn.tilTekstFelt(),
