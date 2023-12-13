@@ -33,7 +33,7 @@ class SøknadBarnetilsynMapper() {
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
 
         val barnetilsynSøknad = SøknadBarnetilsyn(
-            innsendingsdetaljer = mapInnsendingsdetaljer(innsendingMottatt),
+            innsendingsdetaljer = mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
             personalia = PersonaliaMapper.map(dto.person.søker),
             adresseopplysninger = AdresseopplysningerMapper.map(
                 AdresseopplysningerData(

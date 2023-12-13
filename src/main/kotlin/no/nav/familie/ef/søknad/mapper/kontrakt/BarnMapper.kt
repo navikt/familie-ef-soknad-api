@@ -27,6 +27,7 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.felles.Fødselsnummer
 import java.time.LocalDate
 import java.time.Period
+import java.util.UUID
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
 import no.nav.familie.ef.søknad.mapper.Språktekster.Fødselsnummer as FødselsnummerTekst
 import no.nav.familie.ef.søknad.mapper.Språktekster.Alder as AlderTekst
@@ -56,7 +57,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                 fødselsdato = it.fødselTermindato.tilDatoFelt(),
                 harSammeAdresse = BooleanFelt(it.harSkalHaSammeAdresse.label, it.harSkalHaSammeAdresse.verdi),
                 ikkeRegistrertPåSøkersAdresseBeskrivelse = it.ikkeRegistrertPåSøkersAdresseBeskrivelse.tilTekstFelt(),
-                id = null,
+                id = UUID.randomUUID().toString(),
                 lagtTil = it.lagtTilManuelt,
                 navn = it.navn.tilTekstFelt(),
                 født = BooleanFelt(it.erBarnetFødt.label, it.erBarnetFødt.verdi),
