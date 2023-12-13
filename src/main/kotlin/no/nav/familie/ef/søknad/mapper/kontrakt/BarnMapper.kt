@@ -48,7 +48,10 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
     fun mapTilDto(barn: List<Kontraktbarn>): List<Barn> {
         return barn.map {
             Barn(
-                alder = TekstFelt(AlderTekst.hentTekst(), Period.between(it.fødselsnummer?.verdi?.fødselsdato, LocalDate.now()).years.toString()),
+                alder = TekstFelt(
+                    AlderTekst.hentTekst(),
+                    Period.between(it.fødselsnummer?.verdi?.fødselsdato, LocalDate.now()).years.toString()
+                ),
                 ident = TekstFelt(FødselsnummerTekst.hentTekst(), it.fødselsnummer?.verdi?.verdi ?: ""),
                 fødselsdato = it.fødselTermindato.tilDatoFelt(),
                 harSammeAdresse = BooleanFelt(it.harSkalHaSammeAdresse.label, it.harSkalHaSammeAdresse.verdi),
@@ -57,7 +60,11 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                 lagtTil = it.lagtTilManuelt,
                 navn = it.navn.tilTekstFelt(),
                 født = BooleanFelt(it.erBarnetFødt.label, it.erBarnetFødt.verdi),
-                forelder = mapAnnenForelderOgSamværTilDto(it.annenForelder?.verdi, it.samvær?.verdi, it.skalBarnetBoHosSøker),
+                forelder = mapAnnenForelderOgSamværTilDto(
+                    it.annenForelder?.verdi,
+                    it.samvær?.verdi,
+                    it.skalBarnetBoHosSøker
+                ),
                 skalHaBarnepass = null,
                 særligeTilsynsbehov = it.særligeTilsynsbehov.tilTekstFelt(),
                 barnepass = null,
@@ -108,10 +115,26 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
             ),
         )
 
-    private fun mapAnnenForelderOgSamværTilDto(annenForelder: AnnenForelder?, samvær: Samvær?, skalBarnetBoHosSøker: Søknadsfelt<String>?): AnnenForelderDto? {
+    private fun mapAnnenForelderOgSamværTilDto(
+        annenForelder: AnnenForelder?,
+        samvær: Samvær?,
+        skalBarnetBoHosSøker: Søknadsfelt<String>?
+    ): AnnenForelderDto? {
         if (annenForelder == null) return null
         return AnnenForelderDto(
-            ikkeOppgittAnnenForelderBegrunnelse = annenForelder.ikkeOppgittAnnenForelderBegrunnelse.tilTekstFelt(),
+            kanIkkeOppgiAnnenForelderFar = BooleanFelt(
+                "Jeg kan ikke oppgi den andre forelderen?",
+                annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi.erIkkeBlankEllerNull()
+            ),
+            hvorforIkkeOppgi = hvorforIkkeOppgiTilTekstfeltEllerNullBasertPåBegrunnelse(
+                annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi
+            ),
+            ikkeOppgittAnnenForelderBegrunnelse = annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.let {
+                TekstFelt(
+                    "Hvorfor kan du ikke oppgi den andre forelderen?",
+                    it.verdi
+                )
+            },
             navn = annenForelder.person?.verdi?.navn.tilTekstFelt(),
             fødselsdato = annenForelder.person?.verdi?.fødselsdato.tilDatoFelt(),
             ident = annenForelder.person?.verdi?.fødselsnummer.fødselsnummerTilTekstFelt(),
@@ -129,6 +152,24 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
             beskrivSamværUtenBarn = samvær?.beskrivSamværUtenBarn.tilTekstFelt(),
             skalBarnetBoHosSøker = skalBarnetBoHosSøker.tilTekstFelt(),
         )
+    }
+
+    private fun hvorforIkkeOppgiBasertPåBegrunnelse(begrunnelse: String?): String? {
+        return when {
+            begrunnelse == "Donor" -> "Donor"
+            begrunnelse.erIkkeBlankEllerNull() -> "Annet"
+            else -> null
+        }
+    }
+
+    private fun String?.erIkkeBlankEllerNull() = !this.isNullOrBlank()
+
+    private fun hvorforIkkeOppgiTilTekstfeltEllerNullBasertPåBegrunnelse(begrunnelse: String?): TekstFelt? {
+        val hvorforIkkeOppgi = hvorforIkkeOppgiBasertPåBegrunnelse(begrunnelse)
+        if (hvorforIkkeOppgi != null) {
+            return TekstFelt("Hvorfor kan du ikke oppgi den andre forelderen?", hvorforIkkeOppgi)
+        }
+        return null
     }
 
     private fun mapSamvær(
