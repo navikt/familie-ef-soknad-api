@@ -11,7 +11,6 @@ import no.nav.familie.ef.søknad.mapper.Språktekster
 import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.tilNullableTekstFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
-import no.nav.familie.ef.søknad.mapper.tilTekstFelt
 import no.nav.familie.kontrakter.ef.søknad.Medlemskapsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Utenlandsopphold as KontraksUtenlandsopphold

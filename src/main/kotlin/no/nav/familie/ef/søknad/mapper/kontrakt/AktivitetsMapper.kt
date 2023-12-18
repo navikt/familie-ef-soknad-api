@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
@@ -15,10 +16,10 @@ import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.ETABLERER_VIRKSOMHET
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.IKKE_VILLIG_TIL_ARBEID
 import no.nav.familie.ef.søknad.mapper.tilBooleanFelt
-import no.nav.familie.ef.søknad.mapper.tilDatoFelt
 import no.nav.familie.ef.søknad.mapper.tilHeltall
 import no.nav.familie.ef.søknad.mapper.tilListFelt
 import no.nav.familie.ef.søknad.mapper.tilNullableBooleanFelt
+import no.nav.familie.ef.søknad.mapper.tilNullableDatoFelt
 import no.nav.familie.ef.søknad.mapper.tilNullableTekstFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.ef.søknad.mapper.tilTekstFelt
@@ -104,7 +105,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
     ): ArbeidssøkerDto? {
         if (arbeidssøker == null) return null
         return ArbeidssøkerDto(
-            hvorØnskerSøkerArbeid = arbeidssøker.hvorØnskerDuArbeid.tilTekstFelt(),
+            hvorØnskerSøkerArbeid = TekstFelt(arbeidssøker.hvorØnskerDuArbeid.label, arbeidssøker.hvorØnskerDuArbeid.verdi, arbeidssøker.hvorØnskerDuArbeid.svarId),
             kanBegynneInnenEnUke = arbeidssøker.kanDuBegynneInnenEnUke.tilBooleanFelt(),
             kanSkaffeBarnepassInnenEnUke = arbeidssøker.kanDuSkaffeBarnepassInnenEnUke.tilNullableBooleanFelt(),
             registrertSomArbeidssøkerNav = arbeidssøker.registrertSomArbeidssøkerNav.tilBooleanFelt(),
@@ -146,9 +147,10 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
             Firma(
                 navn = it.firmanavn.tilTekstFelt(),
                 organisasjonsnummer = it.organisasjonsnummer.tilTekstFelt(),
-                etableringsdato = it.etableringsdato.tilDatoFelt(),
+                etableringsdato = DatoFelt(it.etableringsdato.label, it.etableringsdato.verdi.toString()),
                 arbeidsmengde = it.arbeidsmengde.tilNullableTekstFelt(),
                 arbeidsuke = it.hvordanSerArbeidsukenUt.tilTekstFelt(),
+                overskudd = it.overskudd.tilNullableTekstFelt(),
             )
         } ?: emptyList()
     }
@@ -169,7 +171,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
         return arbeidsforhold.map { arbeid ->
             ArbeidsgiverDto(
                 arbeidsmengde = arbeid.arbeidsmengde?.tilTekstFelt(),
-                sluttdato = arbeid.sluttdato?.tilDatoFelt(),
+                sluttdato = arbeid.sluttdato?.tilNullableDatoFelt(),
                 ansettelsesforhold = TekstFelt(arbeid.fastEllerMidlertidig.label, arbeid.fastEllerMidlertidig.verdi, arbeid.fastEllerMidlertidig.svarId),
                 harSluttDato = arbeid.harSluttdato.tilNullableBooleanFelt(),
                 id = "dummy",
