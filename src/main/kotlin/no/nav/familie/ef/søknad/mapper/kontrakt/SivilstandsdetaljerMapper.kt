@@ -13,7 +13,7 @@ import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.INNGÅTT_
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.SAMLIVSBRUDD
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.SEPARASJON_ELLER_SKILSMISSE
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.UFORMELL_SEPARASJON_ELLER_SKILSMISSE
-import no.nav.familie.ef.søknad.mapper.tilNullableDatoFelt
+import no.nav.familie.ef.søknad.mapper.tilDatoFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
@@ -50,9 +50,9 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
     fun mapTilDto(sivilstandsdetaljer: Sivilstandsdetaljer): SivilstatusTilGjenbruk {
         return SivilstatusTilGjenbruk(
             årsakEnslig = sivilstandsdetaljer.årsakEnslig?.let { TekstFelt(it.label, it.verdi, it.svarId) },
-            datoForSamlivsbrudd = sivilstandsdetaljer.samlivsbruddsdato.tilNullableDatoFelt(),
-            datoFlyttetFraHverandre = sivilstandsdetaljer.fraflytningsdato.tilNullableDatoFelt(),
-            datoEndretSamvær = sivilstandsdetaljer.endringSamværsordningDato.tilNullableDatoFelt(),
+            datoForSamlivsbrudd = sivilstandsdetaljer.samlivsbruddsdato.tilDatoFelt(),
+            datoFlyttetFraHverandre = sivilstandsdetaljer.fraflytningsdato.tilDatoFelt(),
+            datoEndretSamvær = sivilstandsdetaljer.endringSamværsordningDato.tilDatoFelt(),
             tidligereSamboerDetaljer = sivilstandsdetaljer.tidligereSamboerdetaljer?.let { PersonMinimumMapper.mapTilDto(it.verdi) },
         )
     }

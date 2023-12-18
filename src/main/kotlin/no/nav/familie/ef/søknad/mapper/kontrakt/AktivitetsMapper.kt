@@ -137,6 +137,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
             etableringsdato = firma.etableringsdato.tilSøknadsfelt(),
             arbeidsmengde = firma.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
             hvordanSerArbeidsukenUt = firma.arbeidsuke.tilSøknadsfelt(),
+            overskudd = firma.overskudd?.tilSøknadsfelt(String::tilHeltall),
         )
     }
 

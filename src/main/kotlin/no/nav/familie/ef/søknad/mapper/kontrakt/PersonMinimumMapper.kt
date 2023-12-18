@@ -9,7 +9,7 @@ import no.nav.familie.ef.søknad.mapper.Språktekster.OmSamboer
 import no.nav.familie.ef.søknad.mapper.Språktekster.Persondata
 import no.nav.familie.ef.søknad.mapper.fødselsnummerTilTekstFelt
 import no.nav.familie.ef.søknad.mapper.hentTekst
-import no.nav.familie.ef.søknad.mapper.tilNullableDatoFelt
+import no.nav.familie.ef.søknad.mapper.tilDatoFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
@@ -54,7 +54,7 @@ object PersonMinimumMapper {
     fun mapTilDto(personMinimum: PersonMinimum?): SamboerDetaljer? {
         if (personMinimum == null) return null
         return SamboerDetaljer(
-            fødselsdato = personMinimum.fødselsdato.tilNullableDatoFelt(),
+            fødselsdato = personMinimum.fødselsdato.tilDatoFelt(),
             navn = TekstFelt(personMinimum.navn.label, personMinimum.navn.verdi),
             ident = personMinimum.fødselsnummer.fødselsnummerTilTekstFelt(),
             kjennerIkkeIdent = personMinimum.fødselsnummer?.verdi?.verdi == null || personMinimum.fødselsnummer?.verdi?.verdi?.isBlank() == true,

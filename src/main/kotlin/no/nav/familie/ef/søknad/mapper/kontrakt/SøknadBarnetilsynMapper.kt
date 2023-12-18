@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.PersonTilGjenbruk
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
@@ -33,7 +33,7 @@ class SøknadBarnetilsynMapper() {
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
 
         val barnetilsynSøknad = SøknadBarnetilsyn(
-            innsendingsdetaljer = mapInnsendingsdetaljer(innsendingMottatt),
+            innsendingsdetaljer = mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
             personalia = PersonaliaMapper.map(dto.person.søker),
             adresseopplysninger = AdresseopplysningerMapper.map(
                 AdresseopplysningerData(
@@ -75,7 +75,7 @@ class SøknadBarnetilsynMapper() {
             sivilstatus = SivilstandsdetaljerMapper.mapTilDto(søknadBarnetilsyn.sivilstandsdetaljer.verdi),
             medlemskap = MedlemsskapsMapper.mapTilDto(søknadBarnetilsyn.medlemskapsdetaljer.verdi),
             bosituasjon = BosituasjonMapper.mapTilDto(søknadBarnetilsyn.bosituasjon.verdi, søknadBarnetilsyn.sivilstandsplaner?.verdi),
-            person = Person(BarnMapper.mapTilDto(søknadBarnetilsyn.barn.verdi), PersonaliaMapper.mapTilDto(søknadBarnetilsyn.personalia.verdi)),
+            person = PersonTilGjenbruk(BarnMapper.mapTilDto(søknadBarnetilsyn.barn.verdi)),
             aktivitet = AktivitetsMapper.mapTilDto(søknadBarnetilsyn.aktivitet.verdi),
         )
     }

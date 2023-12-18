@@ -27,17 +27,6 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
         )
     }
 
-    fun mapTilDto(personalia: Personalia): Søker {
-        return Søker(
-            adresse = mapAdresseTilDto(personalia.adresse.verdi),
-            egenansatt = false, // TODO brukes denne til noe?
-            fnr = personalia.fødselsnummer.verdi.verdi,
-            forkortetNavn = personalia.navn.verdi,
-            sivilstand = personalia.sivilstatus.verdi,
-            statsborgerskap = personalia.statsborgerskap.verdi,
-        )
-    }
-
     private fun lagAdresseSøknadsFelt(frontendAdresse: AdresseDto): Søknadsfelt<Adresse> {
         return Søknadsfelt(
             AdresseTekst.hentTekst(),

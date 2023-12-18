@@ -16,16 +16,20 @@ import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.BARN_BOR_
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.DELT_BOSTED
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.SAMVÆRSAVTALE
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.TERMINBEKREFTELSE
-import no.nav.familie.ef.søknad.mapper.tilNullableBooleanFelt
-import no.nav.familie.ef.søknad.mapper.tilNullableDatoFelt
-import no.nav.familie.ef.søknad.mapper.tilNullableTekstFelt
+import no.nav.familie.ef.søknad.mapper.tilBooleanFelt
+import no.nav.familie.ef.søknad.mapper.tilDatoFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
+import no.nav.familie.ef.søknad.mapper.tilTekstFelt
 import no.nav.familie.kontrakter.ef.søknad.AnnenForelder
 import no.nav.familie.kontrakter.ef.søknad.Samvær
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.felles.Fødselsnummer
+import java.time.LocalDate
+import java.time.Period
+import java.util.UUID
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.AnnenForelder as AnnenForelderDto
+import no.nav.familie.ef.søknad.mapper.Språktekster.Alder as AlderTekst
 import no.nav.familie.ef.søknad.mapper.Språktekster.Fødselsnummer as FødselsnummerTekst
 import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
 
@@ -45,19 +49,26 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
     fun mapTilDto(barn: List<Kontraktbarn>): List<Barn> {
         return barn.map {
             Barn(
-                alder = null,
+                alder = TekstFelt(
+                    AlderTekst.hentTekst(),
+                    Period.between(it.fødselsnummer?.verdi?.fødselsdato, LocalDate.now()).years.toString(),
+                ),
                 ident = TekstFelt(FødselsnummerTekst.hentTekst(), it.fødselsnummer?.verdi?.verdi ?: ""),
-                fødselsdato = it.fødselTermindato.tilNullableDatoFelt(),
+                fødselsdato = it.fødselTermindato.tilDatoFelt(),
                 harSammeAdresse = BooleanFelt(it.harSkalHaSammeAdresse.label, it.harSkalHaSammeAdresse.verdi),
-                ikkeRegistrertPåSøkersAdresseBeskrivelse = it.ikkeRegistrertPåSøkersAdresseBeskrivelse.tilNullableTekstFelt(),
-                id = null,
+                ikkeRegistrertPåSøkersAdresseBeskrivelse = it.ikkeRegistrertPåSøkersAdresseBeskrivelse.tilTekstFelt(),
+                id = UUID.randomUUID().toString(),
                 lagtTil = it.lagtTilManuelt,
-                navn = it.navn.tilNullableTekstFelt(),
+                navn = it.navn.tilTekstFelt(),
                 født = BooleanFelt(it.erBarnetFødt.label, it.erBarnetFødt.verdi),
-                forelder = mapAnnenForelderOgSamværTilDto(it.annenForelder?.verdi, it.samvær?.verdi, it.skalBarnetBoHosSøker),
-                skalHaBarnepass = it.skalHaBarnepass.tilNullableBooleanFelt(),
-                særligeTilsynsbehov = it.særligeTilsynsbehov.tilNullableTekstFelt(),
-                barnepass = BarnepassMapper.mapTilDto(it.barnepass?.verdi),
+                forelder = mapAnnenForelderOgSamværTilDto(
+                    it.annenForelder?.verdi,
+                    it.samvær?.verdi,
+                    it.skalBarnetBoHosSøker,
+                ),
+                skalHaBarnepass = null,
+                særligeTilsynsbehov = it.særligeTilsynsbehov.tilTekstFelt(),
+                barnepass = null,
             )
         }
     }
@@ -105,27 +116,61 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
             ),
         )
 
-    private fun mapAnnenForelderOgSamværTilDto(annenForelder: AnnenForelder?, samvær: Samvær?, skalBarnetBoHosSøker: Søknadsfelt<String>?): AnnenForelderDto? {
+    private fun mapAnnenForelderOgSamværTilDto(
+        annenForelder: AnnenForelder?,
+        samvær: Samvær?,
+        skalBarnetBoHosSøker: Søknadsfelt<String>?,
+    ): AnnenForelderDto? {
         if (annenForelder == null) return null
         return AnnenForelderDto(
-            ikkeOppgittAnnenForelderBegrunnelse = annenForelder.ikkeOppgittAnnenForelderBegrunnelse.tilNullableTekstFelt(),
-            navn = annenForelder.person?.verdi?.navn.tilNullableTekstFelt(),
-            fødselsdato = annenForelder.person?.verdi?.fødselsdato.tilNullableDatoFelt(),
+            kanIkkeOppgiAnnenForelderFar = BooleanFelt(
+                "Jeg kan ikke oppgi den andre forelderen?",
+                annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi.erIkkeBlankEllerNull(),
+            ),
+            hvorforIkkeOppgi = hvorforIkkeOppgiTilTekstfeltEllerNullBasertPåBegrunnelse(
+                annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi,
+            ),
+            ikkeOppgittAnnenForelderBegrunnelse = annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.let {
+                TekstFelt(
+                    "Hvorfor kan du ikke oppgi den andre forelderen?",
+                    it.verdi,
+                )
+            },
+            navn = annenForelder.person?.verdi?.navn.tilTekstFelt(),
+            fødselsdato = annenForelder.person?.verdi?.fødselsdato.tilDatoFelt(),
             ident = annenForelder.person?.verdi?.fødselsnummer.fødselsnummerTilTekstFelt(),
-            borINorge = annenForelder.bosattNorge.tilNullableBooleanFelt(),
-            land = annenForelder.land.tilNullableTekstFelt(),
-            avtaleOmDeltBosted = samvær?.spørsmålAvtaleOmDeltBosted.tilNullableBooleanFelt(),
-            harAnnenForelderSamværMedBarn = samvær?.skalAnnenForelderHaSamvær.tilNullableTekstFelt(),
-            harDereSkriftligSamværsavtale = samvær?.harDereSkriftligAvtaleOmSamvær.tilNullableTekstFelt(),
-            hvordanPraktiseresSamværet = samvær?.hvordanPraktiseresSamværet.tilNullableTekstFelt(),
-            borAnnenForelderISammeHus = samvær?.borAnnenForelderISammeHus.tilNullableTekstFelt(),
-            borAnnenForelderISammeHusBeskrivelse = samvær?.borAnnenForelderISammeHusBeskrivelse.tilNullableTekstFelt(),
-            boddSammenFør = samvær?.harDereTidligereBoddSammen.tilNullableBooleanFelt(),
-            flyttetFra = samvær?.nårFlyttetDereFraHverandre.tilNullableDatoFelt(),
-            hvorMyeSammen = samvær?.hvorMyeErDuSammenMedAnnenForelder.tilNullableTekstFelt(),
-            beskrivSamværUtenBarn = samvær?.beskrivSamværUtenBarn.tilNullableTekstFelt(),
-            skalBarnetBoHosSøker = skalBarnetBoHosSøker.tilNullableTekstFelt(),
+            borINorge = annenForelder.bosattNorge.tilBooleanFelt(),
+            land = annenForelder.land.tilTekstFelt(),
+            avtaleOmDeltBosted = samvær?.spørsmålAvtaleOmDeltBosted.tilBooleanFelt(),
+            harAnnenForelderSamværMedBarn = samvær?.skalAnnenForelderHaSamvær.tilTekstFelt(),
+            harDereSkriftligSamværsavtale = samvær?.harDereSkriftligAvtaleOmSamvær.tilTekstFelt(),
+            hvordanPraktiseresSamværet = samvær?.hvordanPraktiseresSamværet.tilTekstFelt(),
+            borAnnenForelderISammeHus = samvær?.borAnnenForelderISammeHus.tilTekstFelt(),
+            borAnnenForelderISammeHusBeskrivelse = samvær?.borAnnenForelderISammeHusBeskrivelse.tilTekstFelt(),
+            boddSammenFør = samvær?.harDereTidligereBoddSammen.tilBooleanFelt(),
+            flyttetFra = samvær?.nårFlyttetDereFraHverandre.tilDatoFelt(),
+            hvorMyeSammen = samvær?.hvorMyeErDuSammenMedAnnenForelder.tilTekstFelt(),
+            beskrivSamværUtenBarn = samvær?.beskrivSamværUtenBarn.tilTekstFelt(),
+            skalBarnetBoHosSøker = skalBarnetBoHosSøker.tilTekstFelt(),
         )
+    }
+
+    private fun hvorforIkkeOppgiBasertPåBegrunnelse(begrunnelse: String?): String? {
+        return when {
+            begrunnelse == "Donor" -> "Donor"
+            begrunnelse.erIkkeBlankEllerNull() -> "Annet"
+            else -> null
+        }
+    }
+
+    private fun String?.erIkkeBlankEllerNull() = !this.isNullOrBlank()
+
+    private fun hvorforIkkeOppgiTilTekstfeltEllerNullBasertPåBegrunnelse(begrunnelse: String?): TekstFelt? {
+        val hvorforIkkeOppgi = hvorforIkkeOppgiBasertPåBegrunnelse(begrunnelse)
+        if (hvorforIkkeOppgi != null) {
+            return TekstFelt("Hvorfor kan du ikke oppgi den andre forelderen?", hvorforIkkeOppgi)
+        }
+        return null
     }
 
     private fun mapSamvær(

@@ -17,6 +17,7 @@ import no.nav.familie.kontrakter.ef.søknad.Datoperiode
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Barnepass as BarnepassDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BarnepassOrdning as BarnepassOrdningDto
+
 object BarnepassMapper : Mapper<BarnepassDto, Barnepass>(OmBarnepassordning) {
 
     override fun mapDto(data: BarnepassDto): Barnepass {

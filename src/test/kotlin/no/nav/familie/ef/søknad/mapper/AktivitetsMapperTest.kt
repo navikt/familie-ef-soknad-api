@@ -63,6 +63,16 @@ internal class AktivitetsMapperTest {
     }
 
     @Test
+    fun `Map overskudd label `() {
+        Assertions.assertThat(firma?.overskudd?.label).isEqualTo("Overskudd")
+    }
+
+    @Test
+    fun `Map overskudd verdi `() {
+        Assertions.assertThat(firma?.overskudd?.verdi).isEqualTo(100000)
+    }
+
+    @Test
     fun `Map etableringsdato label `() {
         Assertions.assertThat(firma?.etableringsdato?.label).isEqualTo("Etableringsdato")
     }

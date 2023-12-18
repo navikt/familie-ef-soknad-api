@@ -18,6 +18,8 @@ data class Barn(
 
 data class AnnenForelder(
     val ikkeOppgittAnnenForelderBegrunnelse: TekstFelt?, // Dekker både Donorbarn og Annet-begrunnelse
+    val kanIkkeOppgiAnnenForelderFar: BooleanFelt?,
+    val hvorforIkkeOppgi: TekstFelt?,
     val navn: TekstFelt?,
     val fødselsdato: DatoFelt?,
     val ident: TekstFelt? = null,
