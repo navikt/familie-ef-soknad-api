@@ -11,6 +11,7 @@ import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
+import no.nav.familie.kontrakter.felles.Fødselsnummer
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -26,6 +27,12 @@ fun HeltallFelt.tilSøknadsfelt(): Søknadsfelt<Int> = Søknadsfelt(this.label, 
 fun TekstFelt.tilSøknadsfelt(): Søknadsfelt<String> = Søknadsfelt(label = this.label, verdi = this.verdi, svarId = this.svarid)
 fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsfelt(label = this.label, verdi = t.invoke(this.verdi))
 
+fun Søknadsfelt<Fødselsnummer>?.fødselsnummerTilTekstFelt(): TekstFelt? = this?.let { TekstFelt(it.label, it.verdi.verdi, it.svarId?.verdi) }
+
+fun Søknadsfelt<LocalDate>?.tilDatoFelt() = this?.let { DatoFelt(it.label, it.verdi.toString()) }
+
+fun Søknadsfelt<Boolean>?.tilBooleanFelt() = this?.let { BooleanFelt(it.label, it.verdi, it.svarId.toString()) }
+fun Søknadsfelt<String>?.tilTekstFelt() = this?.let { TekstFelt(it.label, it.verdi, it.svarId) }
 fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<MånedÅrPeriode> =
     Søknadsfelt(
         this.label ?: error("Savner label"),

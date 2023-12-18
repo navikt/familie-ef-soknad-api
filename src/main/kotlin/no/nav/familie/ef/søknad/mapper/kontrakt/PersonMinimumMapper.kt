@@ -7,7 +7,9 @@ import no.nav.familie.ef.søknad.mapper.Språktekster.AnnenForelderNavn
 import no.nav.familie.ef.søknad.mapper.Språktekster.IkkeOppgitt
 import no.nav.familie.ef.søknad.mapper.Språktekster.OmSamboer
 import no.nav.familie.ef.søknad.mapper.Språktekster.Persondata
+import no.nav.familie.ef.søknad.mapper.fødselsnummerTilTekstFelt
 import no.nav.familie.ef.søknad.mapper.hentTekst
+import no.nav.familie.ef.søknad.mapper.tilDatoFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsDatoFeltEllerNull
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.PersonMinimum
@@ -54,7 +56,7 @@ object PersonMinimumMapper {
         return SamboerDetaljer(
             fødselsdato = personMinimum.fødselsdato.tilDatoFelt(),
             navn = TekstFelt(personMinimum.navn.label, personMinimum.navn.verdi),
-            ident = personMinimum.fødselsnummer.tilTekstFelt(),
+            ident = personMinimum.fødselsnummer.fødselsnummerTilTekstFelt(),
             kjennerIkkeIdent = personMinimum.fødselsnummer?.verdi?.verdi == null || personMinimum.fødselsnummer?.verdi?.verdi?.isBlank() == true,
         )
     }
@@ -68,6 +70,4 @@ object PersonMinimumMapper {
             }
         }
     }
-
-    fun Søknadsfelt<Fødselsnummer>?.tilTekstFelt(): TekstFelt? = this?.let { TekstFelt(it.label, it.verdi.verdi, it.svarId?.verdi) }
 }
