@@ -68,7 +68,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
 
     fun mapTilDto(aktivitet: Aktivitet): AktivitetDto {
         return AktivitetDto(
-            arbeidsforhold = mapTilArbeidsgiverDto(aktivitet.arbeidsforhold?.verdi ?: emptyList()),
+            arbeidsforhold = mapTilArbeidsgiverDto(aktivitet.arbeidsforhold?.verdi),
             arbeidssøker = mapTilArbeidssøkerDto(aktivitet.arbeidssøker?.verdi),
             firmaer = mapTilFirmaerDto(aktivitet.firmaer?.verdi),
             hvaErDinArbeidssituasjon = aktivitet.hvordanErArbeidssituasjonen.tilListFelt(),
@@ -167,8 +167,8 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
         }
     }
 
-    fun mapTilArbeidsgiverDto(arbeidsforhold: List<Arbeidsgiver>): List<ArbeidsgiverDto> {
-        return arbeidsforhold.map { arbeid ->
+    fun mapTilArbeidsgiverDto(arbeidsforhold: List<Arbeidsgiver>?): List<ArbeidsgiverDto> {
+        return arbeidsforhold?.map { arbeid ->
             ArbeidsgiverDto(
                 arbeidsmengde = arbeid.arbeidsmengde?.tilTekstFelt(),
                 sluttdato = arbeid.sluttdato?.tilNullableDatoFelt(),
@@ -177,7 +177,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                 id = "dummy",
                 navn = TekstFelt(arbeid.arbeidsgivernavn.label, arbeid.arbeidsgivernavn.verdi, arbeid.arbeidsgivernavn.svarId),
             )
-        }
+        } ?: emptyList()
     }
 
     private fun mapTilAksjeselskapDto(aksjeselskap: List<Aksjeselskap>?): List<AksjeselskapDto> {
