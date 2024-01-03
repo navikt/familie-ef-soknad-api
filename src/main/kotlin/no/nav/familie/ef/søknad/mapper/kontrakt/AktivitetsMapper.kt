@@ -73,7 +73,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
             firmaer = mapTilFirmaerDto(aktivitet.firmaer?.verdi),
             hvaErDinArbeidssituasjon = aktivitet.hvordanErArbeidssituasjonen.tilListFelt(),
             underUtdanning = UtdanningMapper.mapTilDto(aktivitet.underUtdanning?.verdi),
-            etablererEgenVirksomhet = aktivitet.virksomhet.tilNullableTekstFelt(),
+            etablererEgenVirksomhet = aktivitet.virksomhet?.verdi?.virksomhetsbeskrivelse.tilNullableTekstFelt(),
             egetAS = mapTilAksjeselskapDto(aktivitet.aksjeselskap?.verdi),
             erIArbeid = aktivitet.erIArbeid.tilNullableTekstFelt(),
         )
