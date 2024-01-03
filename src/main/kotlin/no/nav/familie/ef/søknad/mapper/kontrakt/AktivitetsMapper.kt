@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.mapper.kontrakt
 
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Firma
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
 import no.nav.familie.ef.søknad.mapper.DokumentasjonWrapper
@@ -14,8 +15,14 @@ import no.nav.familie.ef.søknad.mapper.Språktekster.OmVirksomhetenDuEtablerer
 import no.nav.familie.ef.søknad.mapper.hentTekst
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.ETABLERER_VIRKSOMHET
 import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator.IKKE_VILLIG_TIL_ARBEID
+import no.nav.familie.ef.søknad.mapper.tilBooleanFelt
 import no.nav.familie.ef.søknad.mapper.tilHeltall
+import no.nav.familie.ef.søknad.mapper.tilListFelt
+import no.nav.familie.ef.søknad.mapper.tilNullableBooleanFelt
+import no.nav.familie.ef.søknad.mapper.tilNullableDatoFelt
+import no.nav.familie.ef.søknad.mapper.tilNullableTekstFelt
 import no.nav.familie.ef.søknad.mapper.tilSøknadsfelt
+import no.nav.familie.ef.søknad.mapper.tilTekstFelt
 import no.nav.familie.kontrakter.ef.søknad.Aksjeselskap
 import no.nav.familie.kontrakter.ef.søknad.Aktivitet
 import no.nav.familie.kontrakter.ef.søknad.Arbeidsgiver
@@ -23,8 +30,10 @@ import no.nav.familie.kontrakter.ef.søknad.Arbeidssøker
 import no.nav.familie.kontrakter.ef.søknad.Selvstendig
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Virksomhet
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Aksjeselskap as AksjeselskapDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Aktivitet as AktivitetDto
 import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidsgiver as ArbeidsgiverDto
+import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker as ArbeidssøkerDto
 
 object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanningOgAndreAktiviteter) {
 
@@ -57,8 +66,21 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
         )
     }
 
+    fun mapTilDto(aktivitet: Aktivitet): AktivitetDto {
+        return AktivitetDto(
+            arbeidsforhold = mapTilArbeidsgiverDto(aktivitet.arbeidsforhold?.verdi),
+            arbeidssøker = mapTilArbeidssøkerDto(aktivitet.arbeidssøker?.verdi),
+            firmaer = mapTilFirmaerDto(aktivitet.firmaer?.verdi),
+            hvaErDinArbeidssituasjon = aktivitet.hvordanErArbeidssituasjonen.tilListFelt(),
+            underUtdanning = UtdanningMapper.mapTilDto(aktivitet.underUtdanning?.verdi),
+            etablererEgenVirksomhet = aktivitet.virksomhet?.verdi?.virksomhetsbeskrivelse.tilNullableTekstFelt(),
+            egetAS = mapTilAksjeselskapDto(aktivitet.aksjeselskap?.verdi),
+            erIArbeid = aktivitet.erIArbeid.tilNullableTekstFelt(),
+        )
+    }
+
     private fun mapArbeidssøker(
-        arbeidssøker: no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker,
+        arbeidssøker: ArbeidssøkerDto,
         vedlegg: Map<String, DokumentasjonWrapper>,
     ): Søknadsfelt<Arbeidssøker> {
         return Søknadsfelt(
@@ -75,6 +97,20 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                     vedlegg,
                 ),
             ),
+        )
+    }
+
+    private fun mapTilArbeidssøkerDto(
+        arbeidssøker: Arbeidssøker?,
+    ): ArbeidssøkerDto? {
+        if (arbeidssøker == null) return null
+        return ArbeidssøkerDto(
+            hvorØnskerSøkerArbeid = TekstFelt(arbeidssøker.hvorØnskerDuArbeid.label, arbeidssøker.hvorØnskerDuArbeid.verdi, arbeidssøker.hvorØnskerDuArbeid.svarId),
+            kanBegynneInnenEnUke = arbeidssøker.kanDuBegynneInnenEnUke.tilBooleanFelt(),
+            kanSkaffeBarnepassInnenEnUke = arbeidssøker.kanDuSkaffeBarnepassInnenEnUke.tilNullableBooleanFelt(),
+            registrertSomArbeidssøkerNav = arbeidssøker.registrertSomArbeidssøkerNav.tilBooleanFelt(),
+            villigTilÅTaImotTilbudOmArbeid = arbeidssøker.villigTilÅTaImotTilbudOmArbeid.tilBooleanFelt(),
+            ønskerSøker50ProsentStilling = arbeidssøker.ønskerDuMinst50ProsentStilling.tilBooleanFelt(),
         )
     }
 
@@ -106,6 +142,19 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
         )
     }
 
+    private fun mapTilFirmaerDto(firmaer: List<Selvstendig>?): List<Firma> {
+        return firmaer?.map {
+            Firma(
+                navn = it.firmanavn.tilTekstFelt(),
+                organisasjonsnummer = it.organisasjonsnummer.tilTekstFelt(),
+                etableringsdato = DatoFelt(it.etableringsdato.label, it.etableringsdato.verdi.toString()),
+                arbeidsmengde = it.arbeidsmengde.tilNullableTekstFelt(),
+                arbeidsuke = it.hvordanSerArbeidsukenUt.tilTekstFelt(),
+                overskudd = it.overskudd.tilNullableTekstFelt(),
+            )
+        } ?: emptyList()
+    }
+
     fun mapArbeidsforhold(arbeidsforhold: List<ArbeidsgiverDto>): List<Arbeidsgiver> {
         return arbeidsforhold.map { arbeid ->
             Arbeidsgiver(
@@ -116,5 +165,27 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                 sluttdato = arbeid.sluttdato?.tilSøknadsfelt(),
             )
         }
+    }
+
+    fun mapTilArbeidsgiverDto(arbeidsforhold: List<Arbeidsgiver>?): List<ArbeidsgiverDto> {
+        return arbeidsforhold?.map { arbeid ->
+            ArbeidsgiverDto(
+                arbeidsmengde = arbeid.arbeidsmengde?.tilTekstFelt(),
+                sluttdato = arbeid.sluttdato?.tilNullableDatoFelt(),
+                ansettelsesforhold = TekstFelt(arbeid.fastEllerMidlertidig.label, arbeid.fastEllerMidlertidig.verdi, arbeid.fastEllerMidlertidig.svarId),
+                harSluttDato = arbeid.harSluttdato.tilNullableBooleanFelt(),
+                id = "dummy",
+                navn = TekstFelt(arbeid.arbeidsgivernavn.label, arbeid.arbeidsgivernavn.verdi, arbeid.arbeidsgivernavn.svarId),
+            )
+        } ?: emptyList()
+    }
+
+    private fun mapTilAksjeselskapDto(aksjeselskap: List<Aksjeselskap>?): List<AksjeselskapDto> {
+        return aksjeselskap?.map {
+            AksjeselskapDto(
+                navn = it.navn.tilTekstFelt(),
+                arbeidsmengde = it.arbeidsmengde?.tilTekstFelt(),
+            )
+        } ?: emptyList()
     }
 }
