@@ -43,6 +43,7 @@ spec:
       rules:
         - application: familie-ef-soknad
         - application: familie-ef-ettersending
+        - application: familie-ef-minside
     outbound:
       rules:
         - application: familie-ef-mottak
