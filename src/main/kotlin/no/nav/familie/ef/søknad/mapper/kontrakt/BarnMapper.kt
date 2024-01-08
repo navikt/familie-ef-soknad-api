@@ -66,7 +66,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                     it.samvær?.verdi,
                     it.skalBarnetBoHosSøker,
                 ),
-                skalHaBarnepass = null,
+                skalHaBarnepass = it.skalHaBarnepass.tilNullableBooleanFelt(),
                 særligeTilsynsbehov = it.særligeTilsynsbehov.tilNullableTekstFelt(),
                 barnepass = null,
             )
