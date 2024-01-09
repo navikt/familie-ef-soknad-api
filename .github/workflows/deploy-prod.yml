@@ -3,7 +3,7 @@ name: Deploy PROD
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
 
 env:
   IMAGE: ghcr.io/navikt/familie-ef-soknad-api:${{ github.sha }}
