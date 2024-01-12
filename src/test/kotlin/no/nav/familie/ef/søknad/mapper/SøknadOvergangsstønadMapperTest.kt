@@ -1,10 +1,10 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Person
-import no.nav.familie.ef.søknad.mapper.kontrakt.PersonaliaMapper
-import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadOvergangsstønadMapper
 import no.nav.familie.ef.søknad.mock.søkerMedDefaultVerdier
 import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.søknad.domain.Person
+import no.nav.familie.ef.søknad.søknad.mapper.PersonaliaMapper
+import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
 import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

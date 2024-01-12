@@ -5,8 +5,9 @@ import com.github.tomakehurst.wiremock.client.WireMock.okJson
 import com.github.tomakehurst.wiremock.client.WireMock.post
 import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
-import no.nav.familie.ef.søknad.config.PdlConfig
-import no.nav.familie.ef.søknad.exception.PdlRequestException
+import no.nav.familie.ef.søknad.infrastruktur.config.PdlConfig
+import no.nav.familie.ef.søknad.infrastruktur.exception.PdlRequestException
+import no.nav.familie.ef.søknad.person.PdlClient
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.AfterEach

@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.integrationTest
 
-import no.nav.familie.ef.søknad.config.ApplicationConfig
+import no.nav.familie.ef.søknad.infrastruktur.config.ApplicationConfig
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration

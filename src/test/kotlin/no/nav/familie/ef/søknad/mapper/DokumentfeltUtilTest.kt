@@ -1,7 +1,8 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.mapper.DokumentfeltUtil.dokumentfelt
-import no.nav.familie.ef.søknad.mapper.kontrakt.DokumentIdentifikator
+import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator
+import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
+import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import org.assertj.core.api.Assertions.assertThat

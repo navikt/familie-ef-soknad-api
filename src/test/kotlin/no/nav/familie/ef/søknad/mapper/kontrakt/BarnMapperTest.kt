@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.mapper.kontrakt
 
 import no.nav.familie.ef.søknad.mapper.dokumentMap
 import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.søknad.mapper.BarnMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

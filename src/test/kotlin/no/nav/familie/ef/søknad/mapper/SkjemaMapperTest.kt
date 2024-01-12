@@ -1,8 +1,9 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Arbeidssøker
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.ef.søknad.søknad.domain.Arbeidssøker
+import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
+import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
+import no.nav.familie.ef.søknad.søknad.mapper.SkjemaMapper
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime

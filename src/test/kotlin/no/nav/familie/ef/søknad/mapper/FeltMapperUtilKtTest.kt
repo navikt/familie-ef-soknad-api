@@ -1,10 +1,14 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.DatoFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.ListFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.PeriodeFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
+import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
+import no.nav.familie.ef.søknad.søknad.domain.DatoFelt
+import no.nav.familie.ef.søknad.søknad.domain.ListFelt
+import no.nav.familie.ef.søknad.søknad.domain.PeriodeFelt
+import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
+import no.nav.familie.ef.søknad.utils.tilDesimaltall
+import no.nav.familie.ef.søknad.utils.tilHeltall
+import no.nav.familie.ef.søknad.utils.tilSøknadsDatoFeltEllerNull
+import no.nav.familie.ef.søknad.utils.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.felles.Fødselsnummer

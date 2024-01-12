@@ -1,8 +1,8 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Bosituasjon
-import no.nav.familie.ef.søknad.mapper.kontrakt.SivilstandsplanerMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.søknad.domain.Bosituasjon
+import no.nav.familie.ef.søknad.søknad.mapper.SivilstandsplanerMapper
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

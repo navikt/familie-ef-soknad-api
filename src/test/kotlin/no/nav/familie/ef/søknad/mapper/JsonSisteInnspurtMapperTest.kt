@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadOvergangsstønadDto
-import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadOvergangsstønadMapper
+import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
+import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

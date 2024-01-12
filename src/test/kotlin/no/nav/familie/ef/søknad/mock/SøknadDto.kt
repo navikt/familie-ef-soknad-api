@@ -1,8 +1,8 @@
 package no.nav.familie.ef.søknad.mock
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Adresse
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Søker
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadOvergangsstønadDto
+import no.nav.familie.ef.søknad.søknad.domain.Adresse
+import no.nav.familie.ef.søknad.søknad.domain.Søker
+import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.kontrakter.felles.objectMapper
 import java.io.File
 

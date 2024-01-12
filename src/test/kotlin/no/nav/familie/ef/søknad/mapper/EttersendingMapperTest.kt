@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.mapper.kontrakt.EttersendingMapper
+import no.nav.familie.ef.søknad.ettersending.mapper.EttersendingMapper
 import no.nav.familie.kontrakter.ef.ettersending.Dokumentasjonsbehov
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg

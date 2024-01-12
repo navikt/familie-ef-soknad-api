@@ -1,9 +1,9 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
-import no.nav.familie.ef.søknad.mapper.kontrakt.MedlemsskapsMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
+import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
+import no.nav.familie.ef.søknad.søknad.mapper.MedlemsskapsMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

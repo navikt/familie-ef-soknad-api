@@ -1,9 +1,9 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.BooleanFelt
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadBarnetilsynDto
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.TekstFelt
-import no.nav.familie.ef.søknad.mapper.kontrakt.SøknadBarnetilsynMapper
+import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
+import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
+import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
+import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat

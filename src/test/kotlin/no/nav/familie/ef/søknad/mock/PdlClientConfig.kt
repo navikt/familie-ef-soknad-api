@@ -2,16 +2,16 @@ package no.nav.familie.ef.søknad.mock
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.integration.PdlClient
-import no.nav.familie.ef.søknad.integration.dto.pdl.Bostedsadresse
-import no.nav.familie.ef.søknad.integration.dto.pdl.Familierelasjonsrolle
-import no.nav.familie.ef.søknad.integration.dto.pdl.ForelderBarnRelasjon
-import no.nav.familie.ef.søknad.integration.dto.pdl.Navn
-import no.nav.familie.ef.søknad.integration.dto.pdl.PdlSøker
-import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstand
-import no.nav.familie.ef.søknad.integration.dto.pdl.Sivilstandstype
-import no.nav.familie.ef.søknad.integration.dto.pdl.Statsborgerskap
-import no.nav.familie.ef.søknad.integration.dto.pdl.Vegadresse
+import no.nav.familie.ef.søknad.person.PdlClient
+import no.nav.familie.ef.søknad.person.dto.Bostedsadresse
+import no.nav.familie.ef.søknad.person.dto.Familierelasjonsrolle
+import no.nav.familie.ef.søknad.person.dto.ForelderBarnRelasjon
+import no.nav.familie.ef.søknad.person.dto.Navn
+import no.nav.familie.ef.søknad.person.dto.PdlSøker
+import no.nav.familie.ef.søknad.person.dto.Sivilstand
+import no.nav.familie.ef.søknad.person.dto.Sivilstandstype
+import no.nav.familie.ef.søknad.person.dto.Statsborgerskap
+import no.nav.familie.ef.søknad.person.dto.Vegadresse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary

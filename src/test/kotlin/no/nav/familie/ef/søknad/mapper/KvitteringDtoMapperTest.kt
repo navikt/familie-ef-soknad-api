@@ -1,7 +1,8 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
+import no.nav.familie.ef.søknad.søknad.domain.Kvittering
+import no.nav.familie.ef.søknad.søknad.dto.KvitteringDto
+import no.nav.familie.ef.søknad.søknad.mapper.KvitteringMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime

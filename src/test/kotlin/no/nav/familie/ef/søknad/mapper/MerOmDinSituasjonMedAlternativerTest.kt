@@ -1,9 +1,9 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.Situasjon
-import no.nav.familie.ef.søknad.api.dto.søknadsdialog.SøknadOvergangsstønadDto
-import no.nav.familie.ef.søknad.mapper.kontrakt.SituasjonsMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.søknad.domain.Situasjon
+import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
+import no.nav.familie.ef.søknad.søknad.mapper.SituasjonsMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

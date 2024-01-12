@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.mapper.kontrakt.AktivitetsMapper
 import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.søknad.mapper.AktivitetsMapper
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 

@@ -1,9 +1,9 @@
 package no.nav.familie.ef.søknad.api
 
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.integration.SøknadClient
-import no.nav.familie.ef.søknad.integration.SøknadClientUtil.filtrerVekkEldreDokumentasjonsbehov
 import no.nav.familie.ef.søknad.integrationTest.OppslagSpringRunnerTest
+import no.nav.familie.ef.søknad.søknad.SøknadClient
+import no.nav.familie.ef.søknad.søknad.SøknadClientUtil.filtrerVekkEldreDokumentasjonsbehov
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
 import no.nav.familie.kontrakter.ef.søknad.SøknadType
 import no.nav.familie.kontrakter.ef.søknad.dokumentasjonsbehov.DokumentasjonsbehovDto
