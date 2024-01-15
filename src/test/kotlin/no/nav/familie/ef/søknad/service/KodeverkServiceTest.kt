@@ -3,9 +3,9 @@ package no.nav.familie.ef.søknad.service
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import no.nav.familie.ef.søknad.infrastruktur.kodeverk.FamilieIntegrasjonerClient
-import no.nav.familie.ef.søknad.infrastruktur.kodeverk.KodeverkService
-import no.nav.familie.ef.søknad.integrationTest.OppslagSpringRunnerTest
+import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
+import no.nav.familie.ef.søknad.kodeverk.FamilieIntegrasjonerClient
+import no.nav.familie.ef.søknad.kodeverk.KodeverkService
 import no.nav.familie.kontrakter.felles.kodeverk.BeskrivelseDto
 import no.nav.familie.kontrakter.felles.kodeverk.BetydningDto
 import no.nav.familie.kontrakter.felles.kodeverk.KodeverkDto
