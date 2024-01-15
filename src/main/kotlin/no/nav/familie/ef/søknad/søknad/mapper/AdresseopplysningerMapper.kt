@@ -1,8 +1,8 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator
 import no.nav.familie.ef.søknad.søknad.domain.Adresseopplysninger
 import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.DokumentfeltUtil
 import no.nav.familie.ef.søknad.utils.Språktekster

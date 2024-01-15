@@ -1,8 +1,8 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
 import no.nav.familie.ef.søknad.person.mapper.PersonMinimumMapper
-import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.BOR_PÅ_ULIKE_ADRESSER
 import no.nav.familie.ef.søknad.søknad.domain.Bosituasjon
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.BOR_PÅ_ULIKE_ADRESSER
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt

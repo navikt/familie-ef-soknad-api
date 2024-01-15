@@ -1,6 +1,10 @@
 package no.nav.familie.ef.søknad.mapper
 
-import no.nav.familie.ef.søknad.utils.*
+import no.nav.familie.ef.søknad.utils.Språk
+import no.nav.familie.ef.søknad.utils.Språktekster
+import no.nav.familie.ef.søknad.utils.hentTekst
+import no.nav.familie.ef.søknad.utils.kontekst
+import no.nav.familie.ef.søknad.utils.språk
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test

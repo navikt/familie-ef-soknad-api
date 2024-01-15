@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad.modeltest
 
-import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator
 import no.nav.familie.ef.søknad.søknad.domain.Adresse
 import no.nav.familie.ef.søknad.søknad.domain.Aksjeselskap
 import no.nav.familie.ef.søknad.søknad.domain.Aktivitet
@@ -12,6 +11,7 @@ import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.Bosituasjon
 import no.nav.familie.ef.søknad.søknad.domain.DatoFelt
 import no.nav.familie.ef.søknad.søknad.domain.DokumentFelt
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator
 import no.nav.familie.ef.søknad.søknad.domain.Firma
 import no.nav.familie.ef.søknad.søknad.domain.ListFelt
 import no.nav.familie.ef.søknad.søknad.domain.Medlemskap

@@ -3,12 +3,12 @@ package no.nav.familie.ef.søknad.søknad.mapper
 import io.micrometer.core.instrument.Counter
 import io.micrometer.core.instrument.Metrics
 import no.nav.familie.ef.søknad.person.mapper.PersonMinimumMapper
+import no.nav.familie.ef.søknad.søknad.domain.Barn
+import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.BARN_BOR_HOS_SØKER
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.DELT_BOSTED
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.SAMVÆRSAVTALE
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.TERMINBEKREFTELSE
-import no.nav.familie.ef.søknad.søknad.domain.Barn
-import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt
