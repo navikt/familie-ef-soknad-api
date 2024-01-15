@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.søknad
+package no.nav.familie.ef.søknad.søknad.domain
 
 enum class DokumentIdentifikator {
     MELDT_ADRESSEENDRING,

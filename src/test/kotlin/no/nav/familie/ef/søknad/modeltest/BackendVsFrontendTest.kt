@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.modeltest
 
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator
 import no.nav.familie.ef.søknad.søknad.domain.Adresse
 import no.nav.familie.ef.søknad.søknad.domain.Aksjeselskap
 import no.nav.familie.ef.søknad.søknad.domain.Aktivitet

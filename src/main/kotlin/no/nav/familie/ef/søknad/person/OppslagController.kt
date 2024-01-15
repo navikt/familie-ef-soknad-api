@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.person
 
+import no.nav.familie.ef.søknad.infrastruktur.kodeverk.KodeverkService
 import no.nav.familie.ef.søknad.person.domain.Søkerinfo
 import no.nav.familie.ef.søknad.person.dto.PersonMinimumDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils

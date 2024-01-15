@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.api
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.person.KodeverkService
+import no.nav.familie.ef.søknad.infrastruktur.kodeverk.KodeverkService
 import no.nav.familie.ef.søknad.person.OppslagController
 import no.nav.familie.ef.søknad.person.OppslagService
 import org.junit.jupiter.api.Test

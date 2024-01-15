@@ -1,6 +1,5 @@
-package no.nav.familie.ef.søknad.søknad
+package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.søknad.mapper.BarnMapper
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.kontrakter.ef.søknad.Barn
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt

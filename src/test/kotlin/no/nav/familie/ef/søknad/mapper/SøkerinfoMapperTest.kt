@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.unmockkObject
-import no.nav.familie.ef.søknad.person.KodeverkService
+import no.nav.familie.ef.søknad.infrastruktur.kodeverk.KodeverkService
 import no.nav.familie.ef.søknad.person.domain.Adresse
 import no.nav.familie.ef.søknad.person.domain.Person
 import no.nav.familie.ef.søknad.person.dto.Adressebeskyttelse

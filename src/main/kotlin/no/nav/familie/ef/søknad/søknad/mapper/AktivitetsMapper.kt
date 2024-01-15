@@ -1,8 +1,8 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.ETABLERER_VIRKSOMHET
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.IKKE_VILLIG_TIL_ARBEID
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.ETABLERER_VIRKSOMHET
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.IKKE_VILLIG_TIL_ARBEID
 import no.nav.familie.ef.søknad.søknad.domain.DatoFelt
 import no.nav.familie.ef.søknad.søknad.domain.Firma
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt

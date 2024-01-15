@@ -1,10 +1,10 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
 import no.nav.familie.ef.søknad.person.mapper.PersonMinimumMapper
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.INNGÅTT_EKTESKAP
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.SAMLIVSBRUDD
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.SEPARASJON_ELLER_SKILSMISSE
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.UFORMELL_SEPARASJON_ELLER_SKILSMISSE
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.INNGÅTT_EKTESKAP
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.SAMLIVSBRUDD
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.SEPARASJON_ELLER_SKILSMISSE
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.UFORMELL_SEPARASJON_ELLER_SKILSMISSE
 import no.nav.familie.ef.søknad.søknad.domain.Sivilstatus
 import no.nav.familie.ef.søknad.søknad.domain.SivilstatusTilGjenbruk
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt

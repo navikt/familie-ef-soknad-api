@@ -1,8 +1,7 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
-import no.nav.familie.ef.søknad.søknad.tilSøknadsfelt
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.utils.Språk

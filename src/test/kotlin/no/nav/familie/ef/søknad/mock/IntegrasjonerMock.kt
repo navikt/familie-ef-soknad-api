@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.mock
 
 import io.mockk.justRun
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.person.FamilieIntegrasjonerClient
+import no.nav.familie.ef.søknad.infrastruktur.kodeverk.FamilieIntegrasjonerClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary

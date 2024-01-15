@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.person.mapper
 
-import no.nav.familie.ef.søknad.person.KodeverkService
+import no.nav.familie.ef.søknad.infrastruktur.kodeverk.KodeverkService
 import no.nav.familie.ef.søknad.person.domain.Adresse
 import no.nav.familie.ef.søknad.person.domain.Barn
 import no.nav.familie.ef.søknad.person.domain.Medforelder

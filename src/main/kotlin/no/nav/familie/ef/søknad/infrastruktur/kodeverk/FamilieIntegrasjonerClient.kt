@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.person
+package no.nav.familie.ef.søknad.infrastruktur.kodeverk
 
 import no.nav.familie.ef.søknad.infrastruktur.config.FamilieIntegrasjonerConfig
 import no.nav.familie.http.client.AbstractPingableRestClient

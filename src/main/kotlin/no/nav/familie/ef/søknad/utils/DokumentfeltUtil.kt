@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.utils
 
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.Dokumentasjon
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt

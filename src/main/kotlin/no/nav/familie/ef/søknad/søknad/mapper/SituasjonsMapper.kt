@@ -1,14 +1,14 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.ARBEIDSFORHOLD_OPPSIGELSE
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.ARBEIDSKONTRAKT
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.BARNEPASS
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.BARNETILSYN_BEHOV
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.LÆRLING
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.SYKDOM
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.SYKT_BARN
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.UTDANNING
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.ARBEIDSFORHOLD_OPPSIGELSE
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.ARBEIDSKONTRAKT
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.BARNEPASS
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.BARNETILSYN_BEHOV
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.LÆRLING
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.SYKDOM
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.SYKT_BARN
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.UTDANNING
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt

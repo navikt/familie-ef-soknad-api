@@ -1,4 +1,4 @@
-package no.nav.familie.ef.søknad.person
+package no.nav.familie.ef.søknad.infrastruktur.kodeverk
 
 import no.nav.familie.kontrakter.felles.kodeverk.KodeverkDto
 import no.nav.familie.kontrakter.felles.kodeverk.hentGjeldende

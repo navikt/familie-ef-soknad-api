@@ -1,15 +1,14 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.ARBEIDSTID
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.AVTALE_BARNEPASSER
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.FAKTURA_BARNEPASSORDNING
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.ROTERENDE_ARBEIDSTID
-import no.nav.familie.ef.søknad.søknad.DokumentIdentifikator.TRENGER_MER_PASS_ENN_JEVNALDREDE
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.ARBEIDSTID
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.AVTALE_BARNEPASSER
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.FAKTURA_BARNEPASSORDNING
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.ROTERENDE_ARBEIDSTID
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.TRENGER_MER_PASS_ENN_JEVNALDREDE
 import no.nav.familie.ef.søknad.søknad.domain.PersonTilGjenbruk
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.søknad.mapper.FellesMapper.mapInnsendingsdetaljer
-import no.nav.familie.ef.søknad.søknad.tilSøknadsfelt
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.utils.Språk
