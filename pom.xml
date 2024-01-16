@@ -22,7 +22,7 @@
         <kotlin.version>1.9.22</kotlin.version>
         <springdoc.version>2.3.0</springdoc.version>
         <mockk.version>1.13.9</mockk.version>
-        <token-validation-spring.version>3.1.7</token-validation-spring.version>
+        <token-validation-spring.version>3.2.0</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
         <fasterxml.version>2.16.1</fasterxml.version>
@@ -130,6 +130,16 @@
         </dependency>
         <dependency>
             <groupId>no.nav.security</groupId>
+            <artifactId>token-client-spring</artifactId>
+            <version>${token-validation-spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>token-client-core</artifactId>
+            <version>${token-validation-spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.security</groupId>
             <artifactId>token-validation-spring</artifactId>
             <version>${token-validation-spring.version}</version>
         </dependency>
@@ -184,12 +194,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.akkinoc.spring.boot</groupId>
-            <artifactId>logback-access-spring-boot-starter</artifactId>
-            <version>4.1.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
