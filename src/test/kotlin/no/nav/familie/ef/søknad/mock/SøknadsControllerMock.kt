@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.mock
 
-import no.nav.familie.ef.søknad.api.dto.Kvittering
-import no.nav.familie.ef.søknad.featuretoggle.FeatureToggleService
+import no.nav.familie.ef.søknad.infrastruktur.featuretoggle.FeatureToggleService
+import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims

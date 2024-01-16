@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad
 
-import no.nav.familie.ef.søknad.integrationTest.ApplicationLocalTestLauncher
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import org.springframework.boot.builder.SpringApplicationBuilder
 

@@ -2,8 +2,8 @@ package no.nav.familie.ef.søknad.mock
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.integration.SøknadClient
-import no.nav.familie.ef.søknad.integration.dto.KvitteringDto
+import no.nav.familie.ef.søknad.søknad.SøknadClient
+import no.nav.familie.ef.søknad.søknad.dto.KvitteringDto
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMetadata
