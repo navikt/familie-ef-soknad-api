@@ -17,3 +17,5 @@ cors:
 PDL_URL: https://pdl-api.dev-fss-pub.nais.io
 PDL_AUDIENCE: dev-fss:pdl:pdl-api
 PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
+
+SAF_URL: https://safselvbetjening.dev-fss-pub.nais.io

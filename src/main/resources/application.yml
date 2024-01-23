@@ -95,3 +95,5 @@ no.nav.security.jwt:
 PDL_URL: https://pdl-api.prod-fss-pub.nais.io
 PDL_AUDIENCE: prod-fss:pdl:pdl-api
 PDL_SCOPE: api://prod-fss.pdl.pdl-api/.default
+
+SAF_URL: https://safselvbetjening.prod-fss-pub.nais.io
