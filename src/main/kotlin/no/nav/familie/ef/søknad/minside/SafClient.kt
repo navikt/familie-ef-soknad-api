@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
 import java.net.URI
+import no.nav.familie.ef.søknad.minside.domain.DokumentoversiktSelvbetjeningResponse
 
 @Component
 class SafClient(
@@ -24,13 +25,13 @@ class SafClient(
             query = SafConfig.safQuery,
         )
 
-        val safDokumentResponse: SafDokumentOversiktResponse<DokumentoversiktSelvbetjening> =
+        val safDokumentResponse: SafDokumentOversiktResponse<DokumentoversiktSelvbetjeningResponse> =
             postForEntity(safConfig.safUri, safDokumentRequest)
 
         return feilsjekkOgReturnerData(
             personIdent,
             safDokumentResponse,
-        ) { it.tema.find { tema -> tema.kode == "ENF" }?.journalposter ?: emptyList() }
+        ) { it.dokumentoversiktSelvbetjening.tema.find { tema -> tema.kode == "ENF" }?.journalposter ?: emptyList() }
     }
 
     private inline fun <reified DATA : Any, reified T : Any> feilsjekkOgReturnerData(

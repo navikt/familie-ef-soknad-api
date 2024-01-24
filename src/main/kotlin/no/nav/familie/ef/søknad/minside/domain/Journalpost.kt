@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.minside.domain
 import no.nav.familie.kontrakter.felles.journalpost.Journalposttype
 import no.nav.familie.kontrakter.felles.journalpost.RelevantDato
 
+data class DokumentoversiktSelvbetjeningResponse(val dokumentoversiktSelvbetjening: DokumentoversiktSelvbetjening)
 data class DokumentoversiktSelvbetjening(val tema: List<Tema>)
 
 data class Tema(
