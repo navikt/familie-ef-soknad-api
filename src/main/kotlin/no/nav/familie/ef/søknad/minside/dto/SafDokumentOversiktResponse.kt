@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.minside.dto
 
 data class SafDokumentOversiktResponse<T>(
     val data: T,
-    val errors: List<SafError> ?= null,
+    val errors: List<SafError>? = null,
 ) {
 
     fun harFeil(): Boolean {
@@ -24,6 +24,7 @@ data class SafExtension(
     val classification: String,
 )
 
+@Suppress("EnumEntryName")
 enum class SafErrorCode {
     forbidden,
     not_found,

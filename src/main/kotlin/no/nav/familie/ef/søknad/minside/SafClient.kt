@@ -15,7 +15,7 @@ import java.net.URI
 @Component
 class SafClient(
     val safConfig: SafConfig,
-    @Qualifier("tokenExchange") restOperations: RestOperations
+    @Qualifier("tokenExchange") restOperations: RestOperations,
 ) : AbstractPingableRestClient(restOperations, "saf.dokument") {
 
     fun hentJournalposterForBruker(personIdent: String): List<Journalpost> {
@@ -29,7 +29,7 @@ class SafClient(
 
         return feilsjekkOgReturnerData(
             personIdent,
-            safDokumentResponse
+            safDokumentResponse,
         ) { it.tema.find { tema -> tema.kode == "ENF" }?.journalposter ?: emptyList() }
     }
 

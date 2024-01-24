@@ -8,7 +8,7 @@ data class DokumentoversiktSelvbetjening(val tema: List<Tema>)
 data class Tema(
     val navn: String,
     val kode: String,
-    val journalposter: List<Journalpost>
+    val journalposter: List<Journalpost>,
 )
 
 data class Journalpost(
@@ -35,4 +35,3 @@ enum class Variantformat {
     ARKIV,
     SLADDET,
 }
-
