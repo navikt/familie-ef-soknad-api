@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.minside
 
 import no.nav.familie.ef.søknad.infrastruktur.config.SafConfig
-import no.nav.familie.ef.søknad.minside.domain.DokumentoversiktSelvbetjening
+import no.nav.familie.ef.søknad.minside.domain.DokumentoversiktSelvbetjeningResponse
 import no.nav.familie.ef.søknad.minside.domain.Journalpost
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentOversiktRequest
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentOversiktResponse
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
 import java.net.URI
-import no.nav.familie.ef.søknad.minside.domain.DokumentoversiktSelvbetjeningResponse
 
 @Component
 class SafClient(

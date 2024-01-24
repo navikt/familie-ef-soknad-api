@@ -19,7 +19,7 @@ class SafClientConfig {
         every { safClient.ping() } returns Unit
 
         every { safClient.hentJournalposterForBruker(any()) } returns
-                emptyList()
+            emptyList()
 
         return safClient
     }
