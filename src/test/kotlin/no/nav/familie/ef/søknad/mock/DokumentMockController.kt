@@ -26,7 +26,7 @@ import java.util.UUID
 @RestController
 @RequestMapping(path = ["/dokumentmock/"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @Unprotected
-class DokumentController(
+class DokumentMockController(
     @Qualifier("dokumentlager") private val dokumenter: MutableMap<String, ByteArray>,
     private val contextHolder: TokenValidationContextHolder,
 ) {
