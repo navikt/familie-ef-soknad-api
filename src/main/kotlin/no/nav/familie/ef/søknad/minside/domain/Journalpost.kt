@@ -15,7 +15,7 @@ data class Tema(
 data class Journalpost(
     val journalpostId: String,
     val tittel: String,
-    val journalpostType: Journalposttype,
+    val journalposttype: Journalposttype,
     val relevanteDatoer: List<RelevantDato>,
     val dokumenter: List<DokumentInfo>,
 )
