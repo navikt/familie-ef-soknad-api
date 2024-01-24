@@ -23,7 +23,7 @@ data class Journalpost(
 data class DokumentInfo(
     val tittel: String,
     val dokumentInfoId: String,
-    val dokumentVarianter: List<DokumentVariant>,
+    val dokumentvarianter: List<DokumentVariant>,
 )
 
 data class DokumentVariant(
