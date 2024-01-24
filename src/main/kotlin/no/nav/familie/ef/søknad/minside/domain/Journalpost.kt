@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.minside.domain
 
 import no.nav.familie.kontrakter.felles.journalpost.Journalposttype
+import no.nav.familie.kontrakter.felles.journalpost.Journalstatus
 import no.nav.familie.kontrakter.felles.journalpost.RelevantDato
 
 data class DokumentoversiktSelvbetjeningResponse(val dokumentoversiktSelvbetjening: DokumentoversiktSelvbetjening)
@@ -16,6 +17,7 @@ data class Journalpost(
     val journalpostId: String,
     val tittel: String,
     val journalposttype: Journalposttype,
+    val journalstatus: Journalstatus,
     val relevanteDatoer: List<RelevantDato>,
     val dokumenter: List<DokumentInfo>,
 )

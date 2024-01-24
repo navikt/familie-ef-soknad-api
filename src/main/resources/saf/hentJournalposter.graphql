@@ -7,6 +7,7 @@ query($ident : String!) {
                 tittel
                 journalpostId
                 journalposttype
+                journalstatus
                 avsender {
                     id
                     type
