@@ -44,6 +44,12 @@ spec:
         - application: familie-ef-soknad
         - application: familie-ef-ettersending
         - application: familie-ef-minside
+        - application: tokenx-token-generator
+          namespace: aura
+          cluster: dev-gcp
+        - application: wonderwalled-idporten
+          namespace: aura
+          cluster: dev-gcp
     outbound:
       rules:
         - application: familie-ef-mottak
