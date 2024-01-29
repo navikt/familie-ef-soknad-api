@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.minside
 
 import no.nav.familie.ef.søknad.infrastruktur.config.SafConfig
 import no.nav.familie.ef.søknad.minside.domain.DokumentoversiktSelvbetjeningResponse
-import no.nav.familie.ef.søknad.minside.domain.Journalpost
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentOversiktRequest
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentOversiktResponse
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentVariables
@@ -18,7 +17,7 @@ class SafClient(
     @Qualifier("tokenExchange") restOperations: RestOperations,
 ) : AbstractPingableRestClient(restOperations, "saf.dokument") {
 
-    fun hentJournalposterForBruker(personIdent: String): List<Journalpost> {
+    fun hentJournalposterForBruker(personIdent: String): DokumentoversiktSelvbetjeningResponse {
         val safDokumentRequest = SafDokumentOversiktRequest(
             variables = SafDokumentVariables(personIdent),
             query = SafConfig.safQuery,
@@ -30,7 +29,7 @@ class SafClient(
         return feilsjekkOgReturnerData(
             personIdent,
             safDokumentResponse,
-        ) { it.dokumentoversiktSelvbetjening.tema.find { tema -> tema.kode == "ENF" }?.journalposter ?: emptyList() }
+        ) { it }
     }
 
     private inline fun <reified DATA : Any, reified T : Any> feilsjekkOgReturnerData(

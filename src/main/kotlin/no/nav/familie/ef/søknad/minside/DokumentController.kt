@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.minside
 
-import no.nav.familie.ef.søknad.minside.domain.Journalpost
+import no.nav.familie.ef.søknad.minside.dto.JournalpostDto
+import no.nav.familie.ef.søknad.minside.dto.tilDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.validation.annotation.Validated
@@ -17,7 +18,7 @@ class DokumentController(
 ) {
 
     @GetMapping("/journalposter")
-    fun hentJournalposter(): List<Journalpost> {
-        return dokumentService.hentJournalposterForBruker()
+    fun hentJournalposter(): List<JournalpostDto> {
+        return dokumentService.hentJournalposterForBruker().map { it.tilDto() }
     }
 }

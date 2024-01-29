@@ -8,5 +8,6 @@ import org.springframework.stereotype.Service
 class DokumentService(private val safClient: SafClient) {
     fun hentJournalposterForBruker(): List<Journalpost> {
         return safClient.hentJournalposterForBruker(EksternBrukerUtils.hentFnrFraToken())
+            .dokumentoversiktSelvbetjening.tema.find { tema -> tema.kode == "ENF" }?.journalposter ?: emptyList()
     }
 }

@@ -5,6 +5,7 @@ import no.nav.familie.kontrakter.felles.journalpost.Journalstatus
 import no.nav.familie.kontrakter.felles.journalpost.RelevantDato
 
 data class DokumentoversiktSelvbetjeningResponse(val dokumentoversiktSelvbetjening: DokumentoversiktSelvbetjening)
+
 data class DokumentoversiktSelvbetjening(val tema: List<Tema>)
 
 data class Tema(
@@ -23,8 +24,8 @@ data class Journalpost(
 )
 
 data class DokumentInfo(
-    val tittel: String,
     val dokumentInfoId: String,
+    val tittel: String,
     val dokumentvarianter: List<DokumentVariant>,
 )
 
