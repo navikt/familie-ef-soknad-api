@@ -19,6 +19,7 @@ import no.nav.familie.ef.søknad.person.dto.Sivilstand
 import no.nav.familie.ef.søknad.person.dto.Sivilstandstype
 import no.nav.familie.ef.søknad.person.dto.Vegadresse
 import no.nav.familie.ef.søknad.person.dto.visningsnavn
+import no.nav.familie.kontrakter.felles.Fødselsnummer
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -201,17 +202,22 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 }
 
 fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
-    val annenForelderNavn = this.navn.first()
-    val ident = if (this.adressebeskyttelse.harBeskyttetAdresse()) {
-        ""
-    } else {
-        annenForelderPersonsIdent
+    val fødselsdato = Fødselsnummer(annenForelderPersonsIdent).fødselsdato
+    val alder = Period.between(fødselsdato, LocalDate.now()).years
+
+    if (this.adressebeskyttelse.harBeskyttetAdresse()) {
+        return Medforelder(
+            harAdressesperre = true,
+            alder = alder,
+        )
     }
+    val annenForelderNavn = this.navn.first()
     return Medforelder(
         annenForelderNavn.visningsnavn(),
         this.adressebeskyttelse.harBeskyttetAdresse(),
         this.dødsfall.any(),
-        ident,
+        annenForelderPersonsIdent,
+        alder,
     )
 }
 
