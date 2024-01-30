@@ -66,7 +66,15 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         søkerPersonIdent: String,
     ): List<Barn> {
         return pdlBarn.entries.map { (personIdent, pdlBarn) ->
-            val navn = pdlBarn.navn.firstOrNull()?.visningsnavn() ?: ""
+            val barnNavnOgIdent = if (pdlBarn.adressebeskyttelse.harBeskyttetAdresse()) {
+                BarnNavnOgIdent()
+            } else {
+                BarnNavnOgIdent(
+                    personIdent,
+                    pdlBarn.navn.firstOrNull()?.visningsnavn() ?: "",
+                )
+            }
+
             val fødselsdato = pdlBarn.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
@@ -76,9 +84,10 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             val medforelder = medforelderRelasjon
                 ?.relatertPersonsIdent
                 ?.let { relatertPersonsIdent -> andreForeldre[relatertPersonsIdent]?.tilDto(relatertPersonsIdent) }
+
             Barn(
-                personIdent,
-                navn,
+                barnNavnOgIdent.ident,
+                barnNavnOgIdent.navn,
                 alder,
                 fødselsdato,
                 harSammeAdresse,
@@ -231,4 +240,9 @@ private val kreverAdressebeskyttelse = listOf(
     AdressebeskyttelseGradering.FORTROLIG,
     AdressebeskyttelseGradering.STRENGT_FORTROLIG,
     AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND,
+)
+
+data class BarnNavnOgIdent(
+    val ident: String = "",
+    val navn: String = "",
 )
