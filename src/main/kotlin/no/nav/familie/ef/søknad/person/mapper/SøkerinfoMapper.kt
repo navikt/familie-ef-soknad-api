@@ -202,12 +202,16 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
 fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
     val annenForelderNavn = this.navn.first()
-
+    val ident = if (this.adressebeskyttelse.harBeskyttetAdresse()) {
+        ""
+    } else {
+        annenForelderPersonsIdent
+    }
     return Medforelder(
         annenForelderNavn.visningsnavn(),
         this.adressebeskyttelse.harBeskyttetAdresse(),
         this.dødsfall.any(),
-        annenForelderPersonsIdent,
+        ident,
     )
 }
 
