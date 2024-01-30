@@ -4,7 +4,10 @@ import no.nav.familie.kontrakter.felles.journalpost.Journalposttype
 import no.nav.familie.kontrakter.felles.journalpost.Journalstatus
 import no.nav.familie.kontrakter.felles.journalpost.RelevantDato
 
-data class DokumentoversiktSelvbetjeningResponse(val dokumentoversiktSelvbetjening: DokumentoversiktSelvbetjening)
+data class DokumentoversiktSelvbetjeningResponse(val dokumentoversiktSelvbetjening: DokumentoversiktSelvbetjening) {
+    fun efJournalposter(): List<Journalpost> =
+        this.dokumentoversiktSelvbetjening.tema.find { tema -> tema.kode == "ENF" }?.journalposter ?: emptyList()
+}
 
 data class DokumentoversiktSelvbetjening(val tema: List<Tema>)
 
@@ -21,13 +24,26 @@ data class Journalpost(
     val journalstatus: Journalstatus,
     val relevanteDatoer: List<RelevantDato>,
     val dokumenter: List<DokumentInfo>,
-)
+) {
+    fun relevanteDokumenter(): List<DokumentInfo> =
+        this.dokumenter.filter { dokument -> dokument.mestRelevantVariantFormat()?.brukerHarTilgang ?: false }
+
+    fun harRelevanteDokumenter(): Boolean = this.relevanteDokumenter().isNotEmpty()
+}
 
 data class DokumentInfo(
     val dokumentInfoId: String,
     val tittel: String,
     val dokumentvarianter: List<DokumentVariant>,
-)
+) {
+    fun mestRelevantVariantFormat(): DokumentVariant? {
+        return if (dokumentvarianter.any { it.variantformat == Variantformat.SLADDET }) {
+            dokumentvarianter.find { it.variantformat == Variantformat.SLADDET }
+        } else {
+            dokumentvarianter.find { it.variantformat == Variantformat.ARKIV }
+        }
+    }
+}
 
 data class DokumentVariant(
     val variantformat: Variantformat,

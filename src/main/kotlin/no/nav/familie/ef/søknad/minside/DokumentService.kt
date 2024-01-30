@@ -1,13 +1,31 @@
 package no.nav.familie.ef.søknad.minside
 
 import no.nav.familie.ef.søknad.minside.domain.Journalpost
+import no.nav.familie.ef.søknad.minside.dto.JournalpostDto
+import no.nav.familie.ef.søknad.minside.dto.erInngåendeEllerUtgåendeJournalpost
+import no.nav.familie.ef.søknad.minside.dto.tilDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class DokumentService(private val safClient: SafClient) {
-    fun hentJournalposterForBruker(): List<Journalpost> {
-        return safClient.hentJournalposterForBruker(EksternBrukerUtils.hentFnrFraToken())
-            .dokumentoversiktSelvbetjening.tema.find { tema -> tema.kode == "ENF" }?.journalposter ?: emptyList()
+
+    private val logger = LoggerFactory.getLogger(javaClass)
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+
+    fun hentJournalposterForBruker(): List<JournalpostDto> =
+        safClient.hentJournalposterForBruker(EksternBrukerUtils.hentFnrFraToken())
+            .efJournalposter()
+            .filter { it.harRelevanteDokumenter() && harRelevantJournalposttype(it) }
+            .map { it.tilDto() }
+
+    fun harRelevantJournalposttype(it: Journalpost) = when {
+        it.erInngåendeEllerUtgåendeJournalpost() -> true
+        else -> {
+            logger.warn("Filtrert vekk journalposttype N")
+            secureLogger.warn("Filtrert vekk journalposttype N for journalpost=${it.journalpostId}")
+            false
+        }
     }
 }

@@ -10,8 +10,8 @@ object JournalpostDatoUtil {
     }
 
     private fun datoTyperSortert(datoType: String) = when (datoType) {
-        "DATO_JOURNALFOERT" -> 4
-        "DATO_REGISTRERT" -> 3
+        "DATO_REGISTRERT" -> 4
+        "DATO_JOURNALFOERT" -> 3
         "DATO_DOKUMENT" -> 2
         "DATO_OPPRETTET" -> 1
         else -> 0

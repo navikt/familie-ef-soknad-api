@@ -19,6 +19,6 @@ class DokumentController(
 
     @GetMapping("/journalposter")
     fun hentJournalposter(): List<JournalpostDto> {
-        return dokumentService.hentJournalposterForBruker().map { it.tilDto() }
+        return dokumentService.hentJournalposterForBruker()
     }
 }

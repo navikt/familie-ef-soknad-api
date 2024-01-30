@@ -1,0 +1,280 @@
+{
+  "dokumentoversiktSelvbetjening": {
+    "tema": [
+      {
+        "navn": "Enslig mor eller far",
+        "kode": "ENF",
+        "journalposter": [
+          {
+            "tittel": "Ettersending til søknad om OVERGANGSSTØNAD",
+            "journalpostId": "453858394",
+            "journalposttype": "I",
+            "journalstatus": "MOTTATT",
+            "avsender": {
+              "id": "08909298858",
+              "type": "FNR"
+            },
+            "mottaker": null,
+            "relevanteDatoer": [
+              {
+                "dato": "2024-01-21T12:34:19",
+                "datotype": "DATO_OPPRETTET"
+              },
+              {
+                "dato": "2024-01-26T12:34:19",
+                "datotype": "DATO_DOKUMENT"
+              },
+              {
+                "dato": "2024-01-24T12:34:19",
+                "datotype": "DATO_REGISTRERT"
+              }
+            ],
+            "dokumenter": [
+              {
+                "tittel": "Ettersending overgangsstønad - enslig mor eller far",
+                "dokumentInfoId": "454251341",
+                "dokumentvarianter": [
+                  {
+                    "variantformat": "ARKIV",
+                    "brukerHarTilgang": true,
+                    "code": [
+                      "ok"
+                    ],
+                    "filtype": "PDF"
+                  }
+                ]
+              },
+              {
+                "tittel": "Lærlingkontrakt",
+                "dokumentInfoId": "454251342",
+                "dokumentvarianter": [
+                  {
+                    "variantformat": "ARKIV",
+                    "brukerHarTilgang": true,
+                    "code": [
+                      "ok"
+                    ],
+                    "filtype": "PDF"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tittel": "Søknad om overgangsstønad",
+            "journalpostId": "453856260",
+            "journalposttype": "I",
+            "journalstatus": "MOTTATT",
+            "avsender": {
+              "id": "08909298858",
+              "type": "FNR"
+            },
+            "mottaker": null,
+            "relevanteDatoer": [
+              {
+                "dato": "2024-01-04T13:34:15",
+                "datotype": "DATO_OPPRETTET"
+              },
+              {
+                "dato": "2024-01-04T13:34:15",
+                "datotype": "DATO_DOKUMENT"
+              },
+              {
+                "dato": "2024-01-04T13:34:15",
+                "datotype": "DATO_REGISTRERT"
+              }
+            ],
+            "dokumenter": [
+              {
+                "tittel": "Søknad om overgangsstønad - enslig mor eller far",
+                "dokumentInfoId": "454248906",
+                "dokumentvarianter": [
+                  {
+                    "variantformat": "ARKIV",
+                    "brukerHarTilgang": true,
+                    "code": [
+                      "ok"
+                    ],
+                    "filtype": "PDF"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tittel": "Vedtak om innvilget overgangstønad",
+            "journalpostId": "453853070",
+            "journalposttype": "U",
+            "journalstatus": "FERDIGSTILT",
+            "avsender": null,
+            "mottaker": {
+              "id": "08909298858",
+              "type": "FNR"
+            },
+            "relevanteDatoer": [
+              {
+                "dato": "2023-11-21T14:24:23",
+                "datotype": "DATO_OPPRETTET"
+              },
+              {
+                "dato": "2023-11-30T14:24:23",
+                "datotype": "DATO_DOKUMENT"
+              },
+              {
+                "dato": "2023-11-28T14:24:23",
+                "datotype": "DATO_JOURNALFOERT"
+              }
+            ],
+            "dokumenter": [
+              {
+                "tittel": "Vedtak om innvilget overgangstønad",
+                "dokumentInfoId": "454244684",
+                "dokumentvarianter": [
+                  {
+                    "variantformat": "ARKIV",
+                    "brukerHarTilgang": true,
+                    "code": [
+                      "ok"
+                    ],
+                    "filtype": "PDF"
+                  },
+                  {
+                    "variantformat": "SLADDET",
+                    "brukerHarTilgang": true,
+                    "code": [
+                      "ok"
+                    ],
+                    "filtype": "PDF"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tittel": "Blankett et eller annet",
+            "journalpostId": "453853069",
+            "journalposttype": "N",
+            "journalstatus": "FERDIGSTILT",
+            "avsender": null,
+            "mottaker": {
+              "id": "08909298858",
+              "type": "FNR"
+            },
+            "relevanteDatoer": [
+              {
+                "dato": "2023-11-27T14:24:07",
+                "datotype": "DATO_OPPRETTET"
+              },
+              {
+                "dato": "2023-11-27T14:24:07",
+                "datotype": "DATO_DOKUMENT"
+              },
+              {
+                "dato": "2023-11-27T14:24:07",
+                "datotype": "DATO_JOURNALFOERT"
+              }
+            ],
+            "dokumenter": [
+              {
+                "tittel": "Blankett Blankettos",
+                "dokumentInfoId": "454244683",
+                "dokumentvarianter": [
+                  {
+                    "variantformat": "ARKIV",
+                    "brukerHarTilgang": true,
+                    "code": [
+                      "ok"
+                    ],
+                    "filtype": "PDF"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tittel": "Brev om oversendelse til NAV Klageinstans - overgangsstønad",
+            "journalpostId": "453852877",
+            "journalposttype": "U",
+            "journalstatus": "FERDIGSTILT",
+            "avsender": null,
+            "mottaker": {
+              "id": "08909298858",
+              "type": "FNR"
+            },
+            "relevanteDatoer": [
+              {
+                "dato": "2023-11-24T08:35:59",
+                "datotype": "DATO_OPPRETTET"
+              },
+              {
+                "dato": "2023-11-24T08:35:59",
+                "datotype": "DATO_DOKUMENT"
+              },
+              {
+                "dato": "2023-11-24T08:35:59",
+                "datotype": "DATO_JOURNALFOERT"
+              }
+            ],
+            "dokumenter": [
+              {
+                "tittel": "Brev om oversendelse til NAV Klageinstans - overgangsstønad",
+                "dokumentInfoId": "454244469",
+                "dokumentvarianter": [
+                  {
+                    "variantformat": "ARKIV",
+                    "brukerHarTilgang": true,
+                    "code": [
+                      "ok"
+                    ],
+                    "filtype": "PDF"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "tittel": "Brev om oversendelse til NAV Klageinstans - overgangsstønad",
+            "journalpostId": "453852878",
+            "journalposttype": "U",
+            "journalstatus": "FERDIGSTILT",
+            "avsender": null,
+            "mottaker": {
+              "id": "811035149",
+              "type": "ORGNR"
+            },
+            "relevanteDatoer": [
+              {
+                "dato": "2023-11-24T08:35:59",
+                "datotype": "DATO_OPPRETTET"
+              },
+              {
+                "dato": "2023-11-24T08:35:59",
+                "datotype": "DATO_DOKUMENT"
+              },
+              {
+                "dato": "2023-11-24T08:35:59",
+                "datotype": "DATO_JOURNALFOERT"
+              }
+            ],
+            "dokumenter": [
+              {
+                "tittel": "Brev om oversendelse til NAV Klageinstans - overgangsstønad",
+                "dokumentInfoId": "454244470",
+                "dokumentvarianter": [
+                  {
+                    "variantformat": "ARKIV",
+                    "brukerHarTilgang": false,
+                    "code": [
+                      "ingen_partsinnsyn"
+                    ],
+                    "filtype": "PDF"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
