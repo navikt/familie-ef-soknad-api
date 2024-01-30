@@ -19,12 +19,14 @@ class SafClientConfig {
     fun safClient(): SafClient {
         val dummyJournalposter =
             objectMapper.readValue<DokumentoversiktSelvbetjeningResponse>(readFile("dummy-journalposter.json"))
+        val dummyPdf = this::class.java.classLoader.getResource("minside/pdf_dummy.pdf").readBytes()
         val safClient: SafClient = mockk()
 
         every { safClient.ping() } returns Unit
 
         every { safClient.hentJournalposterForBruker(any()) } returns
                 dummyJournalposter
+        every { safClient.hentDokument(any(), any(), any()) } returns dummyPdf
 
         return safClient
     }

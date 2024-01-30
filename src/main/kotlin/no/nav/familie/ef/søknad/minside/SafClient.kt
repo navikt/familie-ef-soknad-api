@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.minside
 
 import no.nav.familie.ef.søknad.infrastruktur.config.SafConfig
 import no.nav.familie.ef.søknad.minside.domain.DokumentoversiktSelvbetjeningResponse
+import no.nav.familie.ef.søknad.minside.domain.Variantformat
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentOversiktRequest
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentOversiktResponse
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentVariables
@@ -9,6 +10,7 @@ import no.nav.familie.http.client.AbstractPingableRestClient
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
+import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Component
@@ -17,6 +19,12 @@ class SafClient(
     @Qualifier("tokenExchange") restOperations: RestOperations,
 ) : AbstractPingableRestClient(restOperations, "saf.dokument") {
 
+    fun hentDokument(journalpostId: String, dokumentInfoId: String, dokumentVariantformat: Variantformat): ByteArray =
+        getForEntity<ByteArray>(
+            UriComponentsBuilder.fromUriString("${safConfig.safRestUri}/hentdokument/" + "$journalpostId/$dokumentInfoId/$dokumentVariantformat")
+                .build().toUri()
+        )
+
     fun hentJournalposterForBruker(personIdent: String): DokumentoversiktSelvbetjeningResponse {
         val safDokumentRequest = SafDokumentOversiktRequest(
             variables = SafDokumentVariables(personIdent),
@@ -24,7 +32,7 @@ class SafClient(
         )
 
         val safDokumentResponse: SafDokumentOversiktResponse<DokumentoversiktSelvbetjeningResponse> =
-            postForEntity(safConfig.safUri, safDokumentRequest)
+            postForEntity(safConfig.safGraphQLUri, safDokumentRequest)
 
         return feilsjekkOgReturnerData(
             personIdent,
@@ -52,7 +60,7 @@ class SafClient(
     }
 
     override val pingUri: URI
-        get() = safConfig.safUri
+        get() = safConfig.safGraphQLUri
 
     override fun ping() {
         operations.optionsForAllow(pingUri)

@@ -4,6 +4,7 @@ import no.nav.familie.ef.søknad.minside.domain.Journalpost
 import no.nav.familie.ef.søknad.minside.dto.JournalpostDto
 import no.nav.familie.ef.søknad.minside.dto.erInngåendeEllerUtgåendeJournalpost
 import no.nav.familie.ef.søknad.minside.dto.tilDto
+import no.nav.familie.ef.søknad.minside.domain.Variantformat
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -28,4 +29,11 @@ class DokumentService(private val safClient: SafClient) {
             false
         }
     }
+
+    fun hentPdfDokument(
+        journalpostId: String,
+        dokumentInfoId: String,
+        dokumentVariantformat: Variantformat,
+    ): ByteArray = safClient.hentDokument(journalpostId, dokumentInfoId, dokumentVariantformat)
+
 }

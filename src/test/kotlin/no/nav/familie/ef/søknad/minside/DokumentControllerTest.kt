@@ -22,7 +22,7 @@ internal class DokumentControllerTest : OppslagSpringRunnerTest() {
     }
 
     @Test
-    fun `skal hente dokumenter for privatperson`() {
+    fun `skal hente journalposter for privatperson`() {
         val response = restTemplate.exchange<List<JournalpostDto>>(
             localhost("/api/dokument/journalposter"),
             HttpMethod.GET,
@@ -48,5 +48,17 @@ internal class DokumentControllerTest : OppslagSpringRunnerTest() {
         assertThat(journalpostMedFlereDokumenter?.hovedDokument?.tittel).isEqualTo("Ettersending overgangsstønad - enslig mor eller far")
         assertThat(journalpostMedFlereDokumenter?.vedlegg).hasSize(1)
         assertThat(journalpostMedFlereDokumenter?.vedlegg?.first()?.dokumentId).isEqualTo("454251342")
+    }
+
+    @Test
+    fun `skal hente dokument for privatperson`() {
+        val response = restTemplate.exchange<ByteArray>(
+            localhost("/api/dokument/journalpost/1234/dokument-pdf/8/variantformat/ARKIV"),
+            HttpMethod.GET,
+            HttpEntity<String>(headers),
+        )
+
+        assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
+        assertThat(response.body).isNotNull
     }
 }
