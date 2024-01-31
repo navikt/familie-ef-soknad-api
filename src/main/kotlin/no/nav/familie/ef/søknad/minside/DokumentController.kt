@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.minside
 
 import no.nav.familie.ef.søknad.minside.domain.Variantformat
 import no.nav.familie.ef.søknad.minside.dto.JournalpostDto
-import no.nav.familie.ef.søknad.minside.dto.tilDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.MediaType
@@ -27,12 +26,12 @@ class DokumentController(
 
     @GetMapping(
         "/journalpost/{journalpostId}/dokument-pdf/{dokumentInfoId}/variantformat/{dokumentVariantFormat}",
-        produces = [MediaType.APPLICATION_PDF_VALUE]
+        produces = [MediaType.APPLICATION_PDF_VALUE],
     )
     fun hentPdfDokument(
         @PathVariable journalpostId: String,
         @PathVariable dokumentInfoId: String,
-        @PathVariable dokumentVariantFormat: Variantformat
+        @PathVariable dokumentVariantFormat: Variantformat,
     ): ByteArray {
         return dokumentService.hentPdfDokument(journalpostId, dokumentInfoId, dokumentVariantFormat)
     }

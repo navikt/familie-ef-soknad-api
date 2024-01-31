@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad.minside.domain
 
 import java.time.LocalDateTime
-import no.nav.familie.ef.søknad.minside.domain.Journalpost
 
 object JournalpostDatoUtil {
 

@@ -25,7 +25,7 @@ class SafClientConfig {
         every { safClient.ping() } returns Unit
 
         every { safClient.hentJournalposterForBruker(any()) } returns
-                dummyJournalposter
+            dummyJournalposter
         every { safClient.hentDokument(any(), any(), any()) } returns dummyPdf
 
         return safClient
@@ -34,5 +34,4 @@ class SafClientConfig {
     private fun readFile(filnavn: String): String {
         return this::class.java.getResource("/minside/$filnavn")!!.readText()
     }
-
 }
