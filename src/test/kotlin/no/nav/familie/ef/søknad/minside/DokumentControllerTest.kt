@@ -38,7 +38,7 @@ internal class DokumentControllerTest : OppslagSpringRunnerTest() {
         assertThat(response.body?.size).isEqualTo(4)
 
         val journalpostMedSladdetVariantformat = response.body?.find { it.journalpostId == "453853070" }
-        assertThat(journalpostMedSladdetVariantformat?.hovedDokument?.variant?.variantformat).isEqualTo(Variantformat.SLADDET)
+        assertThat(journalpostMedSladdetVariantformat?.hovedDokument?.variantformat).isEqualTo(Variantformat.SLADDET)
 
         val journalpostMedForskjelligeDatoer = response.body?.first { it.journalpostId == "453858394" }
         assertThat(journalpostMedForskjelligeDatoer?.dato?.toLocalDate()).isEqualTo(LocalDate.of(2024, 1, 24))

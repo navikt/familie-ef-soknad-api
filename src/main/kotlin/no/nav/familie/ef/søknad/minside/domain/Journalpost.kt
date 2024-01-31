@@ -26,7 +26,7 @@ data class Journalpost(
     val dokumenter: List<DokumentInfo>,
 ) {
     fun relevanteDokumenter(): List<DokumentInfo> =
-        this.dokumenter.filter { dokument -> dokument.mestRelevantVariantFormat()?.brukerHarTilgang ?: false }
+        this.dokumenter.filter { dokument -> dokument.mestRelevantDokumentVariant()?.brukerHarTilgang ?: false }
 
     fun harRelevanteDokumenter(): Boolean = this.relevanteDokumenter().isNotEmpty()
 }
@@ -36,7 +36,7 @@ data class DokumentInfo(
     val tittel: String,
     val dokumentvarianter: List<DokumentVariant>,
 ) {
-    fun mestRelevantVariantFormat(): DokumentVariant? {
+    fun mestRelevantDokumentVariant(): DokumentVariant? {
         return if (dokumentvarianter.any { it.variantformat == Variantformat.SLADDET }) {
             dokumentvarianter.find { it.variantformat == Variantformat.SLADDET }
         } else {

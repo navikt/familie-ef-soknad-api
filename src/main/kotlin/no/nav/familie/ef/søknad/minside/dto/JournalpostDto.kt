@@ -19,10 +19,6 @@ data class JournalpostDto(
 data class DokumentInfoDto(
     val dokumentId: String,
     val tittel: String,
-    val variant: DokumentVariantDto
-)
-
-data class DokumentVariantDto(
     val variantformat: Variantformat,
     val filtype: String
 )
@@ -46,13 +42,13 @@ fun Journalpost.erInngåendeEllerUtgåendeJournalpost(): Boolean =
     this.journalposttype == Journalposttype.I || this.journalposttype == Journalposttype.U
 
 
-fun DokumentInfo.tilDto() = DokumentInfoDto(
-    dokumentId = this.dokumentInfoId,
-    tittel = this.tittel,
-    variant  = this.mestRelevantVariantFormat()?.tilDto() ?: throw IllegalStateException("Dokumentet mangler variantformat - det skal filtereres vekk før den kommer så langt som dette")
-)
-
-fun DokumentVariant.tilDto() = DokumentVariantDto(
-    variantformat = this.variantformat,
-    filtype = this.filtype
-)
+fun DokumentInfo.tilDto(): DokumentInfoDto {
+    val dokumentvariant = this.mestRelevantDokumentVariant()
+        ?: throw IllegalStateException("Dokumentet mangler variantformat - det skal filtereres vekk før den kommer så langt som dette")
+    return DokumentInfoDto(
+        dokumentId = this.dokumentInfoId,
+        tittel = this.tittel,
+        variantformat = dokumentvariant.variantformat,
+        filtype = dokumentvariant.filtype,
+    )
+}
