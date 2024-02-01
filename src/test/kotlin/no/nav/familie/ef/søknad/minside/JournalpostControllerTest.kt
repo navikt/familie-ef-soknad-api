@@ -12,7 +12,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import java.time.LocalDate
 
-internal class DokumentControllerTest : OppslagSpringRunnerTest() {
+internal class JournalpostControllerTest : OppslagSpringRunnerTest() {
 
     val tokenSubject = "12345678911"
 

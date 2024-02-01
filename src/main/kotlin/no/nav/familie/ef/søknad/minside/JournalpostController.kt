@@ -12,20 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/dokument")
+@RequestMapping("/api/journalpost")
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
-class DokumentController(
-    private val dokumentService: DokumentService,
-) {
+class JournalpostController(private val journalpostService: JournalpostService) {
 
-    @GetMapping("/journalposter")
+    @GetMapping("/")
     fun hentJournalposter(): List<JournalpostDto> {
-        return dokumentService.hentJournalposterForBruker()
+        return journalpostService.hentJournalposterForBruker()
     }
 
     @GetMapping(
-        "/journalpost/{journalpostId}/dokument-pdf/{dokumentInfoId}/variantformat/{dokumentVariantFormat}",
+        "/{journalpostId}/dokument-pdf/{dokumentInfoId}/variantformat/{dokumentVariantFormat}",
         produces = [MediaType.APPLICATION_PDF_VALUE],
     )
     fun hentPdfDokument(
@@ -33,6 +31,6 @@ class DokumentController(
         @PathVariable dokumentInfoId: String,
         @PathVariable dokumentVariantFormat: Variantformat,
     ): ByteArray {
-        return dokumentService.hentPdfDokument(journalpostId, dokumentInfoId, dokumentVariantFormat)
+        return journalpostService.hentPdfDokument(journalpostId, dokumentInfoId, dokumentVariantFormat)
     }
 }

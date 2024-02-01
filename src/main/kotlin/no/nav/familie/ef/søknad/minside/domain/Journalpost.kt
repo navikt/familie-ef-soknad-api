@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.minside.domain
 import no.nav.familie.kontrakter.felles.journalpost.Journalposttype
 import no.nav.familie.kontrakter.felles.journalpost.Journalstatus
 import no.nav.familie.kontrakter.felles.journalpost.RelevantDato
+import java.time.LocalDateTime
 
 data class DokumentoversiktSelvbetjeningResponse(val dokumentoversiktSelvbetjening: DokumentoversiktSelvbetjening) {
     fun efJournalposter(): List<Journalpost> =
@@ -29,6 +30,9 @@ data class Journalpost(
         this.dokumenter.filter { dokument -> dokument.mestRelevantDokumentVariant()?.brukerHarTilgang ?: false }
 
     fun harRelevanteDokumenter(): Boolean = this.relevanteDokumenter().isNotEmpty()
+    fun mestRelevanteDato(journalpost: Journalpost): LocalDateTime? {
+        return journalpost.relevanteDatoer.maxByOrNull { datoTyperSortert(it.datotype) }?.dato
+    }
 }
 
 data class DokumentInfo(
@@ -54,4 +58,12 @@ data class DokumentVariant(
 enum class Variantformat {
     ARKIV,
     SLADDET,
+}
+
+private fun datoTyperSortert(datoType: String) = when (datoType) {
+    "DATO_REGISTRERT" -> 4
+    "DATO_JOURNALFOERT" -> 3
+    "DATO_DOKUMENT" -> 2
+    "DATO_OPPRETTET" -> 1
+    else -> 0
 }

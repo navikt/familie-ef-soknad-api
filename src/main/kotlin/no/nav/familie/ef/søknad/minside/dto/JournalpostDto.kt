@@ -2,7 +2,6 @@ package no.nav.familie.ef.søknad.minside.dto
 
 import no.nav.familie.ef.søknad.minside.domain.DokumentInfo
 import no.nav.familie.ef.søknad.minside.domain.Journalpost
-import no.nav.familie.ef.søknad.minside.domain.JournalpostDatoUtil.mestRelevanteDato
 import no.nav.familie.ef.søknad.minside.domain.Variantformat
 import no.nav.familie.kontrakter.felles.journalpost.Journalposttype
 import java.time.LocalDateTime
