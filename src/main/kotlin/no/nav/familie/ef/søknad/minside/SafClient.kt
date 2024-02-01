@@ -47,7 +47,7 @@ class SafClient(
     ): T {
         if (safResponse.harFeil()) {
             secureLogger.error("Feil ved henting av ${T::class} fra SAF: ${safResponse.errorMessages()}")
-            throw IllegalStateException("Feil ved henting av ${T::class} fra PDL. Se secure logg for detaljer.")
+            throw IllegalStateException("Feil ved henting av ${T::class} fra SAF. Se secure logg for detaljer.")
         }
         val data = dataMapper.invoke(safResponse.data)
         if (data == null) {
