@@ -24,7 +24,7 @@ internal class JournalpostControllerTest : OppslagSpringRunnerTest() {
     @Test
     fun `skal hente journalposter for privatperson`() {
         val response = restTemplate.exchange<List<JournalpostDto>>(
-            localhost("/api/dokument/journalposter"),
+            localhost("/api/journalpost"),
             HttpMethod.GET,
             HttpEntity<String>(headers),
         )
@@ -53,7 +53,7 @@ internal class JournalpostControllerTest : OppslagSpringRunnerTest() {
     @Test
     fun `skal hente dokument for privatperson`() {
         val response = restTemplate.exchange<ByteArray>(
-            localhost("/api/dokument/journalpost/1234/dokument-pdf/8/variantformat/ARKIV"),
+            localhost("/api/journalpost/1234/dokument-pdf/8/variantformat/ARKIV"),
             HttpMethod.GET,
             HttpEntity<String>(headers),
         )

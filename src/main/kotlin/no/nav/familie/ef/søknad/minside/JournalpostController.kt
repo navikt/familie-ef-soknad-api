@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 class JournalpostController(private val journalpostService: JournalpostService) {
 
-    @GetMapping("/")
+    @GetMapping
     fun hentJournalposter(): List<JournalpostDto> {
         return journalpostService.hentJournalposterForBruker()
     }
