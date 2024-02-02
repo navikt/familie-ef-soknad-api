@@ -10,7 +10,7 @@ data class Barn(
     val lagtTil: Boolean? = false,
     val navn: TekstFelt?, // optional på nye barn
     val født: BooleanFelt,
-    val forelder: AnnenForelder? = null, // Dersom annen forelder er død så skal denne være null
+    val forelder: AnnenForelder? = null,
     val skalHaBarnepass: BooleanFelt?,
     val særligeTilsynsbehov: TekstFelt?,
     val barnepass: Barnepass?,
