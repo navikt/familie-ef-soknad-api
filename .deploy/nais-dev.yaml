@@ -22,13 +22,13 @@ spec:
     path: /familie/alene-med-barn/soknad-api/internal/prometheus
   replicas:
     min: 2
-    max: 4
+    max: 2
   resources:
     limits:
       memory: 2Gi
     requests:
-      memory: 1Gi
-      cpu: 500m
+      memory: 256Mi
+      cpu: 100m
   secureLogs:
     enabled: true
   ingresses:
