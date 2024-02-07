@@ -13,6 +13,8 @@ familie:
   ef:
     mottak:
       uri: http://localhost:8092/api
+    saksbehandling:
+      uri: http://localhost:8093/api
 
 cors:
   allowed_origins:
