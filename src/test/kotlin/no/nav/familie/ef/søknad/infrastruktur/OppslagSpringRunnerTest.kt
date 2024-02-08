@@ -30,6 +30,7 @@ import java.util.UUID
     "mock-pdlApp2AppClient",
     "mock-mottak",
     "kodeverk-cache-test",
+    "mock-saf",
 )
 @EnableMockOAuth2Server
 abstract class OppslagSpringRunnerTest {

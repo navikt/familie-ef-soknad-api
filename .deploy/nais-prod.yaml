@@ -47,6 +47,9 @@ spec:
     outbound:
       rules:
         - application: familie-ef-mottak
+        - application: "safselvbetjening"
+          namespace: "teamdokumenthandtering"
+          cluster: "prod-fss"
       external:
         - host: familie-integrasjoner.prod-fss-pub.nais.io
         - host: pdl-api.prod-fss-pub.nais.io

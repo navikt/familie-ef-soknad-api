@@ -19,6 +19,7 @@ import no.nav.familie.ef.søknad.person.dto.Sivilstand
 import no.nav.familie.ef.søknad.person.dto.Sivilstandstype
 import no.nav.familie.ef.søknad.person.dto.Vegadresse
 import no.nav.familie.ef.søknad.person.dto.visningsnavn
+import no.nav.familie.kontrakter.felles.Fødselsnummer
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -65,7 +66,15 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         søkerPersonIdent: String,
     ): List<Barn> {
         return pdlBarn.entries.map { (personIdent, pdlBarn) ->
-            val navn = pdlBarn.navn.firstOrNull()?.visningsnavn() ?: ""
+            val barnNavnOgIdent = if (pdlBarn.adressebeskyttelse.harBeskyttetAdresse()) {
+                BarnNavnOgIdent()
+            } else {
+                BarnNavnOgIdent(
+                    personIdent,
+                    pdlBarn.navn.firstOrNull()?.visningsnavn() ?: "",
+                )
+            }
+
             val fødselsdato = pdlBarn.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
@@ -75,9 +84,10 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             val medforelder = medforelderRelasjon
                 ?.relatertPersonsIdent
                 ?.let { relatertPersonsIdent -> andreForeldre[relatertPersonsIdent]?.tilDto(relatertPersonsIdent) }
+
             Barn(
-                personIdent,
-                navn,
+                barnNavnOgIdent.ident,
+                barnNavnOgIdent.navn,
                 alder,
                 fødselsdato,
                 harSammeAdresse,
@@ -201,13 +211,22 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 }
 
 fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
-    val annenForelderNavn = this.navn.first()
+    val fødselsdato = Fødselsnummer(annenForelderPersonsIdent).fødselsdato
+    val alder = Period.between(fødselsdato, LocalDate.now()).years
 
+    if (this.adressebeskyttelse.harBeskyttetAdresse()) {
+        return Medforelder(
+            harAdressesperre = true,
+            alder = alder,
+        )
+    }
+    val annenForelderNavn = this.navn.first()
     return Medforelder(
         annenForelderNavn.visningsnavn(),
         this.adressebeskyttelse.harBeskyttetAdresse(),
         this.dødsfall.any(),
         annenForelderPersonsIdent,
+        alder,
     )
 }
 
@@ -221,4 +240,9 @@ private val kreverAdressebeskyttelse = listOf(
     AdressebeskyttelseGradering.FORTROLIG,
     AdressebeskyttelseGradering.STRENGT_FORTROLIG,
     AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND,
+)
+
+data class BarnNavnOgIdent(
+    val ident: String = "",
+    val navn: String = "",
 )

@@ -114,6 +114,14 @@ internal class OppslagServiceServiceImplTest {
     }
 
     @Test
+    fun `Søker med strengt fortrolig skal ikke kunne hente fnr når medforelder har strengt fortrolig adresse`() {
+        mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = STRENGT_FORTROLIG)
+        mockPdlHentAnnenForelder(adressebeskyttelseGradering = STRENGT_FORTROLIG)
+        val søkerInfo = oppslagServiceService.hentSøkerinfo()
+        assertThat(søkerInfo.barn.first().medforelder?.ident).isNull()
+    }
+
+    @Test
     fun `Søker med fortrolig adresse skal ikke kunne hente info når relatert person har strengt fortrolig adresse`() {
         mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = FORTROLIG)
         mockPdlHentBarn(adressebeskyttelseGradering = STRENGT_FORTROLIG)
