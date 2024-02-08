@@ -33,6 +33,8 @@ no.nav.security.jwt:
   client.registration:
     mottak:
       token-endpoint-url: http://metadata
+    saksbehandling:
+      token-endpoint-url: http://metadata
     pdl:
       token-endpoint-url: http://metadata
     pdl-clientcredentials:

@@ -1,8 +1,7 @@
-package no.nav.familie.ef.søknad.mock
+package no.nav.familie.ef.søknad.minside
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.minside.SaksbehandlingClient
 import no.nav.familie.ef.søknad.minside.dto.MineStønaderDto
 import no.nav.familie.ef.søknad.minside.dto.StønadsperiodeDto
 import org.springframework.context.annotation.Bean
@@ -17,8 +16,9 @@ class SaksbehandlingClientMock {
 
     @Bean
     @Primary
-    fun søknadClient(): SaksbehandlingClient {
+    fun saksbehandlingClient(): SaksbehandlingClient {
         val saksbehandlingCLient: SaksbehandlingClient = mockk()
+
         val mineStønaderDto = MineStønaderDto(
             overgangsstønad = stønadsperioderOvergangsstønad,
             barnetilsyn = stønadsperioderBarnetilsyn,

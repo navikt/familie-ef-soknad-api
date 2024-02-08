@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class StønadService(private val saksbehandlingClient: SaksbehandlingClient) {
+class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClient) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
