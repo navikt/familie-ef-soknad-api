@@ -142,7 +142,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
         )
     }
 
-    private fun mapTilFirmaerDto(firmaer: List<Selvstendig>?): List<Firma> {
+    private fun mapTilFirmaerDto(firmaer: List<Selvstendig>?): List<Firma>? {
         return firmaer?.map {
             Firma(
                 navn = it.firmanavn.tilTekstFelt(),
@@ -152,7 +152,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                 arbeidsuke = it.hvordanSerArbeidsukenUt.tilTekstFelt(),
                 overskudd = it.overskudd.tilNullableTekstFelt(),
             )
-        } ?: emptyList()
+        }
     }
 
     fun mapArbeidsforhold(arbeidsforhold: List<ArbeidsgiverDto>): List<Arbeidsgiver> {
@@ -180,12 +180,12 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
         } ?: emptyList()
     }
 
-    private fun mapTilAksjeselskapDto(aksjeselskap: List<Aksjeselskap>?): List<AksjeselskapDto> {
+    private fun mapTilAksjeselskapDto(aksjeselskap: List<Aksjeselskap>?): List<AksjeselskapDto>? {
         return aksjeselskap?.map {
             AksjeselskapDto(
                 navn = it.navn.tilTekstFelt(),
                 arbeidsmengde = it.arbeidsmengde?.tilTekstFelt(),
             )
-        } ?: emptyList()
+        }
     }
 }
