@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 class SaksbehandlingController(private val saksbehandlingService: SaksbehandlingService) {
 
-    @GetMapping("/stønadsperioder")
+    @GetMapping("/stonadsperioder")
     fun hentStønadsperioderForBruker() = saksbehandlingService.hentStønadsperioderForBruker()
 }

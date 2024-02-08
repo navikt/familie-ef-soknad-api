@@ -22,7 +22,7 @@ internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
     @Test
     fun `skal hente utbetalingsperioder for privatperson`() {
         val response = restTemplate.exchange<MineStønaderDto>(
-            localhost("/api/saksbehandling/stønadsperioder"),
+            localhost("/api/saksbehandling/stonadsperioder"),
             HttpMethod.GET,
             HttpEntity<String>(headers),
         )
