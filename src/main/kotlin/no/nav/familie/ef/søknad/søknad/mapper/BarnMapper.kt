@@ -51,7 +51,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
             Barn(
                 alder = TekstFelt(
                     AlderTekst.hentTekst(),
-                    Period.between(it.fødselsnummer?.verdi?.fødselsdato, LocalDate.now()).years.toString(),
+                    Period.between(it.fødselsnummer?.verdi?.fødselsdato ?: it.fødselTermindato?.verdi, LocalDate.now()).years.toString(),
                 ),
                 ident = TekstFelt(FødselsnummerTekst.hentTekst(), it.fødselsnummer?.verdi?.verdi ?: ""),
                 fødselsdato = it.fødselTermindato.tilNullableDatoFelt(),
