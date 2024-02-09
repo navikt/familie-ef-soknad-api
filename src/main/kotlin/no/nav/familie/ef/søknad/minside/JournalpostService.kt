@@ -18,17 +18,8 @@ class JournalpostService(private val safClient: SafClient) {
     fun hentJournalposterForBruker(): List<JournalpostDto> =
         safClient.hentJournalposterForBruker(EksternBrukerUtils.hentFnrFraToken())
             .efJournalposter()
-            .filter { it.harRelevanteDokumenter() && harRelevantJournalposttype(it) }
+            .filter { it.harRelevanteDokumenter()}
             .map { it.tilDto() }
-
-    fun harRelevantJournalposttype(it: Journalpost) = when {
-        it.erInngåendeEllerUtgåendeJournalpost() -> true
-        else -> {
-            logger.warn("Filtrert vekk journalposttype N")
-            secureLogger.warn("Filtrert vekk journalposttype N for journalpost=${it.journalpostId}")
-            false
-        }
-    }
 
     fun hentPdfDokument(
         journalpostId: String,

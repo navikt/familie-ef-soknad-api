@@ -33,9 +33,9 @@ internal class JournalpostControllerTest : OppslagSpringRunnerTest() {
         assertThat(response.body?.isNotEmpty())
         /**
          * Totalt 6 journalposter - én blankett (N) og én som går til advokat (ikke tilgang)
-         * Disse to skal filtreres vekk
+         * Siste skal filtreres vekk
          */
-        assertThat(response.body?.size).isEqualTo(4)
+        assertThat(response.body?.size).isEqualTo(5)
 
         val journalpostMedSladdetVariantformat = response.body?.find { it.journalpostId == "453853070" }
         assertThat(journalpostMedSladdetVariantformat?.hovedDokument?.variantformat).isEqualTo(Variantformat.SLADDET)
