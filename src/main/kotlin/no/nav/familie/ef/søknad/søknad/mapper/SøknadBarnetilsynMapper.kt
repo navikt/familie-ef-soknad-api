@@ -12,6 +12,7 @@ import no.nav.familie.ef.søknad.søknad.mapper.FellesMapper.mapInnsendingsdetal
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.utils.Språk
+import no.nav.familie.ef.søknad.utils.Språktekster
 import no.nav.familie.ef.søknad.utils.kontekst
 import no.nav.familie.ef.søknad.utils.lagDokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.tilKontrakt
@@ -80,6 +81,14 @@ class SøknadBarnetilsynMapper() {
             ),
             person = PersonTilGjenbruk(BarnMapper.mapTilDto(søknadBarnetilsyn.barn.verdi)),
             aktivitet = AktivitetsMapper.mapTilDto(søknadBarnetilsyn.aktivitet.verdi),
+            locale = mapSpråkBasertPåFødselsnummerLabel(søknadBarnetilsyn)
         )
     }
+
+    private fun mapSpråkBasertPåFødselsnummerLabel(søknadBarnetilsyn: SøknadBarnetilsyn) =
+        if (søknadBarnetilsyn.personalia.verdi.fødselsnummer.label == Språktekster.Fødselsnummer.engelsk) {
+            "en"
+        } else {
+            "nb"
+        }
 }

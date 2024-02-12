@@ -35,4 +35,5 @@ data class SøknadBarnetilsynGjenbrukDto(
     val bosituasjon: Bosituasjon,
     val person: PersonTilGjenbruk,
     val aktivitet: Aktivitet,
+    val locale: String,
 )
