@@ -1,6 +1,8 @@
 package no.nav.familie.ef.søknad.minside
 
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
+import no.nav.familie.ef.søknad.minside.dto.MineStønaderDto
+import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus
 import no.nav.familie.ef.søknad.minside.dto.StønadsperioderDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -9,6 +11,7 @@ import org.springframework.boot.test.web.client.exchange
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
+import java.time.LocalDate
 
 internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
 
@@ -20,16 +23,28 @@ internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
     }
 
     @Test
-    fun `skal hente utbetalingsperioder for privatperson`() {
-        val response = restTemplate.exchange<StønadsperioderDto>(
+    fun `skal hente korrekt mappede utbetalingsperioder for bruker`() {
+        val response = restTemplate.exchange<MineStønaderDto>(
             localhost("/api/saksbehandling/stonadsperioder"),
             HttpMethod.GET,
             HttpEntity<String>(headers),
         )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
-        assertThat(response.body.overgangsstønad.isNotEmpty())
-        assertThat(response.body.barnetilsyn.isNotEmpty())
-        assertThat(response.body.skolepenger.isNotEmpty())
+
+        assertThat(response.body.overgangsstønad.periodeStatus).isEqualTo(PeriodeStatus.LØPENDE_UTEN_OPPHOLD)
+        assertThat(response.body.overgangsstønad.startDato).isNull()
+        assertThat(response.body.overgangsstønad.sluttDato).isEqualTo(LocalDate.of(2025, 9, 30))
+        assertThat(response.body.overgangsstønad.perioder.size).isEqualTo(3)
+
+        assertThat(response.body.barnetilsyn.periodeStatus).isEqualTo(PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD)
+        assertThat(response.body.barnetilsyn.startDato).isNull()
+        assertThat(response.body.barnetilsyn.sluttDato).isNull()
+        assertThat(response.body.barnetilsyn.perioder.size).isEqualTo(3)
+
+        assertThat(response.body.skolepenger.periodeStatus).isEqualTo(PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD)
+        assertThat(response.body.skolepenger.startDato).isEqualTo(LocalDate.of(2024, 3, 1))
+        assertThat(response.body.skolepenger.sluttDato).isEqualTo(LocalDate.of(2027, 1, 31))
+        assertThat(response.body.skolepenger.perioder.size).isEqualTo(1)
     }
 }
