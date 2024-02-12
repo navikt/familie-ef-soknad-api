@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.minside
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
 import no.nav.familie.ef.søknad.minside.dto.MineStønaderDto
 import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus
-import no.nav.familie.ef.søknad.minside.dto.StønadsperioderDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

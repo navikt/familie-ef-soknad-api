@@ -23,7 +23,7 @@ class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClie
             MineStønaderDto(
                 overgangsstønad = utledStønad(stønadsperioder.overgangsstønad, dagensDato),
                 barnetilsyn = utledStønad(stønadsperioder.barnetilsyn, dagensDato),
-                skolepenger = utledStønad(stønadsperioder.skolepenger, dagensDato)
+                skolepenger = utledStønad(stønadsperioder.skolepenger, dagensDato),
             )
 
         return mineStønaderDto
@@ -42,19 +42,19 @@ class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClie
             periodeStatus = periodeStatus,
             startDato = startDato,
             sluttDato = sluttDato,
-            perioder = perioderSortertPåDato
+            perioder = perioderSortertPåDato,
         )
     }
 
     private fun utledTilDato(
         periodeStatus: PeriodeStatus,
-        relevantePerioder: List<StønadsperiodeDto>
+        relevantePerioder: List<StønadsperiodeDto>,
     ) =
         if (periodeStatus === PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD || periodeStatus === PeriodeStatus.LØPENDE_UTEN_OPPHOLD) relevantePerioder.last().tilDato else null
 
     private fun utledStartDato(
         periodeStatus: PeriodeStatus,
-        relevantePerioder: List<StønadsperiodeDto>
+        relevantePerioder: List<StønadsperiodeDto>,
     ) = if (periodeStatus === PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD) relevantePerioder.first().fraDato else null
 
     private fun utledPeriodeStatus(
