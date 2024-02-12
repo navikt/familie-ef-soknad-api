@@ -5,7 +5,9 @@ import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/api/saksbehandling")
@@ -14,5 +16,6 @@ import org.springframework.web.bind.annotation.RestController
 class SaksbehandlingController(private val saksbehandlingService: SaksbehandlingService) {
 
     @GetMapping("/stonadsperioder")
-    fun hentStønadsperioderForBruker() = saksbehandlingService.hentStønadsperioderForBruker()
+    fun hentStønadsperioderForBruker(@RequestParam dagensDato: LocalDate = LocalDate.now()) =
+        saksbehandlingService.hentStønadsperioderForBruker(dagensDato)
 }

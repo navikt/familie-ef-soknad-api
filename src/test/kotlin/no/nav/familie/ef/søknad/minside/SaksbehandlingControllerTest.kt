@@ -14,7 +14,10 @@ import java.time.LocalDate
 
 internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
 
-    val tokenSubject = "12345678911"
+    private val tokenSubject = "12345678911"
+
+    // Ønsker ikke å bruke LocalDate.now() i tester -> tar utgangspunkt i 12. feb 2024 som dagens dato
+    private val dagensDato = LocalDate.of(2024, 2, 12)
 
     @BeforeEach
     fun setUp() {
@@ -26,7 +29,7 @@ internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
         val response = restTemplate.exchange<MineStønaderDto>(
             localhost("/api/saksbehandling/stonadsperioder"),
             HttpMethod.GET,
-            HttpEntity<String>(headers),
+            HttpEntity(dagensDato, headers),
         )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
