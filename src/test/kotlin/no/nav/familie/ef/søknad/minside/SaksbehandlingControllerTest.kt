@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.minside
 
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
-import no.nav.familie.ef.søknad.minside.dto.MineStønaderDto
+import no.nav.familie.ef.søknad.minside.dto.StønadsperioderDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -21,7 +21,7 @@ internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
 
     @Test
     fun `skal hente utbetalingsperioder for privatperson`() {
-        val response = restTemplate.exchange<MineStønaderDto>(
+        val response = restTemplate.exchange<StønadsperioderDto>(
             localhost("/api/saksbehandling/stonadsperioder"),
             HttpMethod.GET,
             HttpEntity<String>(headers),

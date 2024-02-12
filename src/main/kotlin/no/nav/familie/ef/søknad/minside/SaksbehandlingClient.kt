@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.minside
 
 import no.nav.familie.ef.søknad.infrastruktur.config.SaksbehandlingConfig
-import no.nav.familie.ef.søknad.minside.dto.MineStønaderDto
+import no.nav.familie.ef.søknad.minside.dto.StønadsperioderDto
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.kontrakter.felles.Ressurs
 import org.springframework.beans.factory.annotation.Qualifier
@@ -19,7 +19,7 @@ class SaksbehandlingClient(
 
     override val pingUri: URI = config.pingUri
 
-    fun hentStønadsperioderForBruker() = getForEntity<Ressurs<MineStønaderDto>>(
+    fun hentStønadsperioderForBruker() = getForEntity<Ressurs<StønadsperioderDto>>(
         UriComponentsBuilder.fromUriString("${config.hentStønadsperioderUri}").build().toUri(),
     ).data!!
 }
