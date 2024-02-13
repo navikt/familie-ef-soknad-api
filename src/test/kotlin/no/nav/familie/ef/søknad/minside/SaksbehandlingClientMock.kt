@@ -38,7 +38,7 @@ class SaksbehandlingClientMock {
         ),
         StønadsperiodeDto(
             fraDato = LocalDate.of(2023, 12, 1),
-            tilDato = LocalDate.of(2022, 12, 31),
+            tilDato = LocalDate.of(2023, 12, 31),
             beløp = 4215,
         ),
         StønadsperiodeDto(
