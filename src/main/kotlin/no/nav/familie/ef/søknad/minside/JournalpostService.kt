@@ -1,9 +1,7 @@
 package no.nav.familie.ef.søknad.minside
 
-import no.nav.familie.ef.søknad.minside.domain.Journalpost
 import no.nav.familie.ef.søknad.minside.domain.Variantformat
 import no.nav.familie.ef.søknad.minside.dto.JournalpostDto
-import no.nav.familie.ef.søknad.minside.dto.erInngåendeEllerUtgåendeJournalpost
 import no.nav.familie.ef.søknad.minside.dto.tilDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
@@ -18,7 +16,7 @@ class JournalpostService(private val safClient: SafClient) {
     fun hentJournalposterForBruker(): List<JournalpostDto> =
         safClient.hentJournalposterForBruker(EksternBrukerUtils.hentFnrFraToken())
             .efJournalposter()
-            .filter { it.harRelevanteDokumenter()}
+            .filter { it.harRelevanteDokumenter() }
             .map { it.tilDto() }
 
     fun hentPdfDokument(

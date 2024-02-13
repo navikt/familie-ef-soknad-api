@@ -39,11 +39,11 @@ class SøknadBarnetilsynController(val søknadService: SøknadService, val featu
 
     @GetMapping("forrige")
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
-        val hentForrigeBarnetilsynSøknad = søknadService.hentForrigeBarnetilsynSøknad()
+        val forrigeBarnetilsynSøknad = søknadService.hentForrigeBarnetilsynSøknad()
         val personIdent = EksternBrukerUtils.hentFnrFraToken()
-        if (hentForrigeBarnetilsynSøknad != null) {
-            secureLogger.info("forrige barnetilsynsøknad for $personIdent : " + objectMapper.writeValueAsString(hentForrigeBarnetilsynSøknad) )
+        if (forrigeBarnetilsynSøknad != null) {
+            secureLogger.info("forrige barnetilsynsøknad for $personIdent : " + objectMapper.writeValueAsString(forrigeBarnetilsynSøknad))
         }
-        return hentForrigeBarnetilsynSøknad
+        return forrigeBarnetilsynSøknad
     }
 }
