@@ -19,7 +19,7 @@ class SafClient(
     @Qualifier("tokenExchange") restOperations: RestOperations,
 ) : AbstractPingableRestClient(restOperations, "saf.dokument") {
 
-    fun hentDokument(journalpostId: String, dokumentInfoId: String, dokumentVariantformat: Variantformat): ByteArray =
+    fun hentDokument(journalpostId: String, dokumentInfoId: String, dokumentVariantformat: Variantformat) =
         getForEntity<ByteArray>(
             UriComponentsBuilder.fromUriString("${safConfig.safRestUri}/hentdokument/" + "$journalpostId/$dokumentInfoId/$dokumentVariantformat")
                 .build().toUri(),

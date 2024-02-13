@@ -53,6 +53,7 @@ spec:
     outbound:
       rules:
         - application: familie-ef-mottak
+        - application: familie-ef-sak
         - application: "safselvbetjening-q2"
           namespace: "teamdokumenthandtering"
           cluster: "dev-fss"
