@@ -8,7 +8,11 @@ import no.nav.familie.kontrakter.felles.Datoperiode
 import no.nav.familie.kontrakter.felles.erSammenhengende
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import java.time.LocalDate
+import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD
+import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus.INGEN
+import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus.LØPENDE_UTEN_OPPHOLD
+import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD
+import no.nav.familie.ef.søknad.utils.DatoUtil.dagensDato
 
 @Service
 class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClient) {
@@ -16,27 +20,24 @@ class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClie
     private val logger = LoggerFactory.getLogger(javaClass)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    fun hentStønadsperioderForBruker(dagensDato: LocalDate = LocalDate.now()): MineStønaderDto {
+    fun hentStønadsperioderForBruker(): MineStønaderDto {
         val stønadsperioder = saksbehandlingClient.hentStønadsperioderForBruker()
 
-        val mineStønaderDto =
-            MineStønaderDto(
-                overgangsstønad = utledStønad(stønadsperioder.overgangsstønad, dagensDato),
-                barnetilsyn = utledStønad(stønadsperioder.barnetilsyn, dagensDato),
-                skolepenger = utledStønad(stønadsperioder.skolepenger, dagensDato),
-            )
+        val mineStønaderDto = MineStønaderDto(
+            overgangsstønad = utledStønad(stønadsperioder.overgangsstønad),
+            barnetilsyn = utledStønad(stønadsperioder.barnetilsyn),
+            skolepenger = utledStønad(stønadsperioder.skolepenger),
+        )
 
         return mineStønaderDto
     }
 
-    private fun utledStønad(stønader: List<StønadsperiodeDto>, dagensDato: LocalDate): Stønad {
+    private fun utledStønad(stønader: List<StønadsperiodeDto>): Stønad {
         val perioderSortertPåDato = stønader.sortedBy { it.fraDato }
 
-        val (periodeStatus, relevantePerioder) = utledPeriodeStatus(perioderSortertPåDato, dagensDato)
-        val startDato =
-            utledStartDato(periodeStatus, relevantePerioder)
-        val sluttDato =
-            utledTilDato(periodeStatus, relevantePerioder)
+        val (periodeStatus, relevantePerioder) = utledPeriodeStatusMedPerioder(perioderSortertPåDato)
+        val startDato = utledStartDato(periodeStatus, relevantePerioder)
+        val sluttDato = utledTilDato(periodeStatus, relevantePerioder)
 
         return Stønad(
             periodeStatus = periodeStatus,
@@ -50,39 +51,40 @@ class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClie
         periodeStatus: PeriodeStatus,
         relevantePerioder: List<StønadsperiodeDto>,
     ) =
-        if (periodeStatus === PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD || periodeStatus === PeriodeStatus.LØPENDE_UTEN_OPPHOLD) relevantePerioder.last().tilDato else null
+        if (periodeStatus === FREMTIDIG_UTEN_OPPHOLD || periodeStatus === LØPENDE_UTEN_OPPHOLD) relevantePerioder.last().tilDato else null
 
     private fun utledStartDato(
         periodeStatus: PeriodeStatus,
         relevantePerioder: List<StønadsperiodeDto>,
-    ) = if (periodeStatus === PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD) relevantePerioder.first().fraDato else null
+    ) = if (periodeStatus === FREMTIDIG_UTEN_OPPHOLD) relevantePerioder.first().fraDato else null
 
-    private fun utledPeriodeStatus(
-        perioder: List<StønadsperiodeDto>,
-        dagensDato: LocalDate,
-    ): Pair<PeriodeStatus, List<StønadsperiodeDto>> {
+    private fun utledPeriodeStatusMedPerioder(perioder: List<StønadsperiodeDto>): Pair<PeriodeStatus, List<StønadsperiodeDto>> {
         if (perioder.isEmpty()) {
-            return Pair(PeriodeStatus.INGEN, emptyList())
+            return Pair(INGEN, emptyList())
         }
 
-        val perioderMedFremtidigSluttdato =
-            perioder.filter { it.tilDato >= dagensDato }
+        val perioderMedFremtidigSluttdato = perioder.filter { it.tilDato >= dagensDato() }
         val datoPerioderMedFremtidigSluttdato =
             perioderMedFremtidigSluttdato.map { Datoperiode(fom = it.fraDato, tom = it.tilDato) }
 
-        val erSammenhengende =
+        val periodeStatus = utledPeriodeStatus(datoPerioderMedFremtidigSluttdato)
+
+        return when (periodeStatus) {
+            INGEN, TIDLIGERE_ELLER_OPPHOLD -> Pair(periodeStatus, emptyList())
+            LØPENDE_UTEN_OPPHOLD, FREMTIDIG_UTEN_OPPHOLD -> Pair(periodeStatus, perioderMedFremtidigSluttdato)
+        }
+    }
+
+    private fun utledPeriodeStatus(datoPerioderMedFremtidigSluttdato: List<Datoperiode>): PeriodeStatus {
+        val harFremtidigePerioderOgErSammenhengende =
             datoPerioderMedFremtidigSluttdato.erSammenhengende() && datoPerioderMedFremtidigSluttdato.isNotEmpty()
-
-        return if (erSammenhengende) {
-            val inneholderDagensDato = datoPerioderMedFremtidigSluttdato.any { it.inneholder(dagensDato) }
-
-            return if (inneholderDagensDato) {
-                Pair(PeriodeStatus.LØPENDE_UTEN_OPPHOLD, perioder)
-            } else {
-                Pair(PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD, perioderMedFremtidigSluttdato)
-            }
+        val inneholderDagensDato = datoPerioderMedFremtidigSluttdato.any { it.inneholder(dagensDato()) }
+        return if (harFremtidigePerioderOgErSammenhengende && inneholderDagensDato) {
+            LØPENDE_UTEN_OPPHOLD
+        } else if (harFremtidigePerioderOgErSammenhengende) {
+            FREMTIDIG_UTEN_OPPHOLD
         } else {
-            Pair(PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD, emptyList())
+            TIDLIGERE_ELLER_OPPHOLD
         }
     }
 }

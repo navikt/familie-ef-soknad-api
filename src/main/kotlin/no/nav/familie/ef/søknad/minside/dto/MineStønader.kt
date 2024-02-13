@@ -21,8 +21,8 @@ data class MineStønaderDto(
 
 data class Stønad(
     val periodeStatus: PeriodeStatus,
-    val startDato: LocalDate?,
-    val sluttDato: LocalDate?,
+    val startDato: LocalDate?, // Startdato settes der hvor vi har fremtidige perioder uten opphold
+    val sluttDato: LocalDate?, // Sluttdato settes der hvor vi har fremtidige eller løpende perioder uten opphold
     val perioder: List<StønadsperiodeDto>,
 )
 

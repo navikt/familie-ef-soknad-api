@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
+import no.nav.familie.kontrakter.felles.getDataOrThrow
 
 @Service
 class SaksbehandlingClient(
@@ -21,5 +22,5 @@ class SaksbehandlingClient(
 
     fun hentStønadsperioderForBruker() = getForEntity<Ressurs<StønadsperioderDto>>(
         UriComponentsBuilder.fromUriString("${config.hentStønadsperioderUri}").build().toUri(),
-    ).data!!
+    ).getDataOrThrow()
 }

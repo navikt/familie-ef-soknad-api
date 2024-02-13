@@ -12,10 +12,8 @@ import java.time.LocalDate
 @RestController
 @RequestMapping("/api/saksbehandling")
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
-@Validated
 class SaksbehandlingController(private val saksbehandlingService: SaksbehandlingService) {
 
     @GetMapping("/stonadsperioder")
-    fun hentStønadsperioderForBruker(@RequestParam dagensDato: LocalDate = LocalDate.now()) =
-        saksbehandlingService.hentStønadsperioderForBruker(dagensDato)
+    fun hentStønadsperioderForBruker() = saksbehandlingService.hentStønadsperioderForBruker()
 }

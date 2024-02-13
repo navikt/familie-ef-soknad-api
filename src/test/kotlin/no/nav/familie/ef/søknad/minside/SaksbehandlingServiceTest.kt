@@ -2,6 +2,8 @@ package no.nav.familie.ef.søknad.minside
 
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus
 import no.nav.familie.ef.søknad.minside.dto.Stønad
 import no.nav.familie.ef.søknad.minside.dto.StønadsperiodeDto
@@ -9,6 +11,9 @@ import no.nav.familie.ef.søknad.minside.dto.StønadsperioderDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
+import no.nav.familie.ef.søknad.utils.DatoUtil
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 
 class SaksbehandlingServiceTest {
 
@@ -17,6 +22,17 @@ class SaksbehandlingServiceTest {
 
     // Ønsker ikke å bruke LocalDate.now() i tester -> tar utgangspunkt i 12. feb 2024 som dagens dato
     private val dagensDato = LocalDate.of(2024, 2, 12)
+
+    @BeforeEach
+    fun setUp() {
+        mockkObject(DatoUtil)
+        every { DatoUtil.dagensDato() } returns dagensDato
+    }
+
+    @AfterEach
+    fun tearDown() {
+        unmockkObject(DatoUtil)
+    }
 
     @Test
     internal fun `ingen stønadsperioder skal returnere periodestatus INGEN og tomme perioder`() {
@@ -43,7 +59,7 @@ class SaksbehandlingServiceTest {
 
         every { saksbehandlingClient.hentStønadsperioderForBruker() } returns stønadsperioderDto
 
-        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker(dagensDato)
+        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker()
 
         assertThat(stønadsperioderForBruker.overgangsstønad.periodeStatus).isEqualTo(PeriodeStatus.LØPENDE_UTEN_OPPHOLD)
         assertThat(stønadsperioderForBruker.overgangsstønad.startDato).isNull()
@@ -64,7 +80,7 @@ class SaksbehandlingServiceTest {
 
         every { saksbehandlingClient.hentStønadsperioderForBruker() } returns stønadsperioderDto
 
-        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker(dagensDato)
+        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker()
 
         assertThat(stønadsperioderForBruker.barnetilsyn.periodeStatus).isEqualTo(PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD)
         assertThat(stønadsperioderForBruker.barnetilsyn.startDato).isEqualTo(startDatoRelevantePerioder)
@@ -84,7 +100,7 @@ class SaksbehandlingServiceTest {
 
         every { saksbehandlingClient.hentStønadsperioderForBruker() } returns stønadsperioderDto
 
-        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker(dagensDato)
+        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker()
 
         assertThat(stønadsperioderForBruker.skolepenger.periodeStatus).isEqualTo(PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD)
         assertThat(stønadsperioderForBruker.skolepenger.startDato).isNull()
@@ -106,7 +122,7 @@ class SaksbehandlingServiceTest {
 
         every { saksbehandlingClient.hentStønadsperioderForBruker() } returns stønadsperioderDto
 
-        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker(dagensDato)
+        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker()
 
         assertThat(stønadsperioderForBruker.barnetilsyn.periodeStatus).isEqualTo(PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD)
         assertThat(stønadsperioderForBruker.barnetilsyn.startDato).isEqualTo(startDatoRelevantePerioder)
@@ -127,7 +143,7 @@ class SaksbehandlingServiceTest {
 
         every { saksbehandlingClient.hentStønadsperioderForBruker() } returns stønadsperioderDto
 
-        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker(dagensDato)
+        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker()
 
         assertThat(stønadsperioderForBruker.skolepenger.periodeStatus).isEqualTo(PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD)
         assertThat(stønadsperioderForBruker.skolepenger.startDato).isNull()
@@ -147,7 +163,7 @@ class SaksbehandlingServiceTest {
 
         every { saksbehandlingClient.hentStønadsperioderForBruker() } returns stønadsperioderDto
 
-        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker(dagensDato)
+        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker()
 
         assertThat(stønadsperioderForBruker.skolepenger.periodeStatus).isEqualTo(PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD)
         assertThat(stønadsperioderForBruker.skolepenger.startDato).isNull()
@@ -167,7 +183,7 @@ class SaksbehandlingServiceTest {
 
         every { saksbehandlingClient.hentStønadsperioderForBruker() } returns stønadsperioderDto
 
-        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker(dagensDato)
+        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker()
 
         assertThat(stønadsperioderForBruker.overgangsstønad.periodeStatus).isEqualTo(PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD)
         assertThat(stønadsperioderForBruker.overgangsstønad.startDato).isNull()
