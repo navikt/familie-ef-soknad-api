@@ -1,5 +1,6 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.ARBEIDSTID
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.AVTALE_BARNEPASSER
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.FAKTURA_BARNEPASSORDNING
@@ -19,12 +20,15 @@ import no.nav.familie.ef.søknad.utils.tilKontrakt
 import no.nav.familie.kontrakter.ef.søknad.BarnetilsynDokumentasjon
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
 import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
+import no.nav.familie.kontrakter.felles.objectMapper
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 
 @Component
 class SøknadBarnetilsynMapper() {
 
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
     fun mapTilIntern(
         dto: SøknadBarnetilsynDto,
         innsendingMottatt: LocalDateTime,
@@ -61,7 +65,7 @@ class SøknadBarnetilsynMapper() {
                 spesielleBehov = dokumentfelt(TRENGER_MER_PASS_ENN_JEVNALDREDE, vedlegg),
             ),
         )
-
+        secureLogger.info("BarnetilsynSøknad: " + objectMapper.writeValueAsString(barnetilsynSøknad))
         return SøknadMedVedlegg(
             barnetilsynSøknad,
             vedlegg.values.flatMap { it.vedlegg },
