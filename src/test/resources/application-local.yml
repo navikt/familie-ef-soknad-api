@@ -13,6 +13,8 @@ familie:
   ef:
     mottak:
       uri: http://localhost:8092/api
+    saksbehandling:
+      uri: http://localhost:8093/api
 
 cors:
   allowed_origins:
@@ -30,6 +32,8 @@ no.nav.security.jwt:
       cookie_name: localhost-idtoken
   client.registration:
     mottak:
+      token-endpoint-url: http://metadata
+    saksbehandling:
       token-endpoint-url: http://metadata
     pdl:
       token-endpoint-url: http://metadata

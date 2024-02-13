@@ -3,6 +3,9 @@ familie:
     mottak:
       uri: http://familie-ef-mottak/api
       audience: dev-gcp:teamfamilie:familie-ef-mottak
+    saksbehandling:
+      uri: http://familie-ef-sak/api
+      audience: dev-gcp:teamfamilie:familie-ef-sak
   integrasjoner:
     uri:  https://familie-integrasjoner.dev-fss-pub.nais.io/api
     scope: api://dev-fss.teamfamilie.familie-integrasjoner/.default
