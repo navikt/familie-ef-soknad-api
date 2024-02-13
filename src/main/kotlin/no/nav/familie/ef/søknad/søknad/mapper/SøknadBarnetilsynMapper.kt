@@ -76,7 +76,8 @@ class SøknadBarnetilsynMapper() {
 
     fun mapTilDto(søknadBarnetilsyn: SøknadBarnetilsyn?): SøknadBarnetilsynGjenbrukDto? {
         if (søknadBarnetilsyn == null) return null
-        return SøknadBarnetilsynGjenbrukDto(
+
+        val søknadBarnetilsynGjenbrukDto = SøknadBarnetilsynGjenbrukDto(
             sivilstatus = SivilstandsdetaljerMapper.mapTilDto(søknadBarnetilsyn.sivilstandsdetaljer.verdi),
             medlemskap = MedlemsskapsMapper.mapTilDto(søknadBarnetilsyn.medlemskapsdetaljer.verdi),
             bosituasjon = BosituasjonMapper.mapTilDto(
@@ -87,6 +88,8 @@ class SøknadBarnetilsynMapper() {
             aktivitet = AktivitetsMapper.mapTilDto(søknadBarnetilsyn.aktivitet.verdi),
             locale = mapSpråkBasertPåFødselsnummerLabel(søknadBarnetilsyn)
         )
+        secureLogger.info("BarnetilsynSøknadGjenbrukDto: " + objectMapper.writeValueAsString(søknadBarnetilsynGjenbrukDto))
+        return søknadBarnetilsynGjenbrukDto
     }
 
     private fun mapSpråkBasertPåFødselsnummerLabel(søknadBarnetilsyn: SøknadBarnetilsyn) =
