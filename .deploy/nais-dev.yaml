@@ -22,13 +22,13 @@ spec:
     path: /familie/alene-med-barn/soknad-api/internal/prometheus
   replicas:
     min: 2
-    max: 4
+    max: 2
   resources:
     limits:
       memory: 2Gi
     requests:
-      memory: 1Gi
-      cpu: 500m
+      memory: 256Mi
+      cpu: 100m
   secureLogs:
     enabled: true
   ingresses:
@@ -43,9 +43,20 @@ spec:
       rules:
         - application: familie-ef-soknad
         - application: familie-ef-ettersending
+        - application: familie-ef-minside
+        - application: tokenx-token-generator
+          namespace: aura
+          cluster: dev-gcp
+        - application: wonderwalled-idporten
+          namespace: aura
+          cluster: dev-gcp
     outbound:
       rules:
         - application: familie-ef-mottak
+        - application: familie-ef-sak
+        - application: "safselvbetjening-q2"
+          namespace: "teamdokumenthandtering"
+          cluster: "dev-fss"
       external:
         - host: familie-integrasjoner.dev-fss-pub.nais.io
         - host: pdl-api.dev-fss-pub.nais.io

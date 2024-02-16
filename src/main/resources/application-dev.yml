@@ -3,6 +3,9 @@ familie:
     mottak:
       uri: http://familie-ef-mottak/api
       audience: dev-gcp:teamfamilie:familie-ef-mottak
+    saksbehandling:
+      uri: http://familie-ef-sak/api
+      audience: dev-gcp:teamfamilie:familie-ef-sak
   integrasjoner:
     uri:  https://familie-integrasjoner.dev-fss-pub.nais.io/api
     scope: api://dev-fss.teamfamilie.familie-integrasjoner/.default
@@ -17,3 +20,6 @@ cors:
 PDL_URL: https://pdl-api.dev-fss-pub.nais.io
 PDL_AUDIENCE: dev-fss:pdl:pdl-api
 PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
+
+SAF_URL: https://safselvbetjening.dev-fss-pub.nais.io
+SAF_AUDIENCE: dev-fss:teamdokumenthandtering:safselvbetjening

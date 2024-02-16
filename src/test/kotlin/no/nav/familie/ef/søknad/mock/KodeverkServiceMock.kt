@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.mock
 
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.service.KodeverkService
+import no.nav.familie.ef.søknad.kodeverk.KodeverkService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary

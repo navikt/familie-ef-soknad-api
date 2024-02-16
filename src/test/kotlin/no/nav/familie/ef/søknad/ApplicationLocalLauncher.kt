@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad
 
-import no.nav.familie.ef.søknad.integrationTest.ApplicationLocalTestLauncher
 import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import org.springframework.boot.builder.SpringApplicationBuilder
 
@@ -22,6 +21,8 @@ fun main(args: Array<String>) {
             "mock-pdlApp2AppClient",
             "mock-mottak",
             "mock-integrasjoner",
+            "mock-saf",
+            "mock-saksbehandling",
         )
         .properties(mapOf("mock-oauth2-server.port" to mockOauth2ServerPort))
         .run(*args)

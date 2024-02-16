@@ -499,6 +499,10 @@
         "arbeidsuke": {
           "label": "Arbeidsukebeskrivelse",
           "verdi": "Jobber mandager"
+        },
+        "overskudd": {
+          "label": "Overskudd",
+          "verdi": "100000"
         }
       }
     ],
