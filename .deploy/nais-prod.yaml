@@ -44,6 +44,8 @@ spec:
         - application: familie-ef-soknad
         - application: familie-ef-ettersending
         - application: familie-ef-minside
+        - application: statuspoll
+          namespace: navdig
     outbound:
       rules:
         - application: familie-ef-mottak
@@ -54,7 +56,6 @@ spec:
       external:
         - host: familie-integrasjoner.prod-fss-pub.nais.io
         - host: pdl-api.prod-fss-pub.nais.io
-        - host: familie-ef-mottak.prod-fss-pub.nais.io
         - host: teamfamilie-unleash-api.nav.cloud.nais.io
   envFrom:
     - secret: familie

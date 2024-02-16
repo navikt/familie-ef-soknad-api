@@ -50,6 +50,8 @@ spec:
         - application: wonderwalled-idporten
           namespace: aura
           cluster: dev-gcp
+        - application: statuspoll
+          namespace: navdig
     outbound:
       rules:
         - application: familie-ef-mottak
@@ -60,7 +62,6 @@ spec:
       external:
         - host: familie-integrasjoner.dev-fss-pub.nais.io
         - host: pdl-api.dev-fss-pub.nais.io
-        - host: familie-ef-mottak.dev-fss-pub.nais.io
         - host: teamfamilie-unleash-api.nav.cloud.nais.io
   envFrom:
     - secret: familie
