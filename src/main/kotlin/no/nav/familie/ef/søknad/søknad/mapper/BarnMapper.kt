@@ -183,7 +183,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
     }
 
     private fun søknadsfeltTilNullEllerNullableTekstFelt(søknadsFelt: Søknadsfelt<String>?): TekstFelt? {
-        return if (!søknadsFelt?.verdi.isNullOrBlank()) {
+        return if (søknadsFelt?.verdi.isNullOrBlank() || søknadsFelt?.verdi == Språktekster.IkkeOppgitt.hentTekst()) {
             null
         } else {
             søknadsFelt.tilNullableTekstFelt()
