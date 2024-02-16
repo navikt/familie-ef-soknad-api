@@ -165,7 +165,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
 
     private fun hvorforIkkeOppgiSvarIdBasertPåBegrunnelse(begrunnelse: String?): String? {
         return when {
-            begrunnelse == "Donor" -> "donorBarn"
+            begrunnelse == "Donor" -> "donorbarn"
             begrunnelse.erIkkeBlankEllerNull() -> "annet"
             else -> null
         }
