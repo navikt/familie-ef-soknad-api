@@ -136,7 +136,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                     it.verdi,
                 )
             },
-            navn = søknadsfeltTilNullEllerNullableTekstFelt(annenForelder.person?.verdi?.navn),
+            navn = lagNullableTekstfeltAvNavnHvisHvorforIkkeOppgiManglerVerdi(annenForelder),
             fødselsdato = annenForelder.person?.verdi?.fødselsdato.tilNullableDatoFelt(),
             ident = annenForelder.person?.verdi?.fødselsnummer.fødselsnummerTilTekstFelt(),
             borINorge = annenForelder.bosattNorge.tilNullableBooleanFelt(),
@@ -182,11 +182,11 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
         return null
     }
 
-    private fun søknadsfeltTilNullEllerNullableTekstFelt(søknadsFelt: Søknadsfelt<String>?): TekstFelt? {
-        return if (søknadsFelt?.verdi.isNullOrBlank() || søknadsFelt?.verdi == Språktekster.IkkeOppgitt.hentTekst()) {
+    private fun lagNullableTekstfeltAvNavnHvisHvorforIkkeOppgiManglerVerdi(annenForelder: AnnenForelder?): TekstFelt? {
+        return if (annenForelder?.ikkeOppgittAnnenForelderBegrunnelse?.verdi != null) {
             null
         } else {
-            søknadsFelt.tilNullableTekstFelt()
+            annenForelder?.person?.verdi?.navn.tilNullableTekstFelt()
         }
     }
 
