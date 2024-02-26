@@ -29,7 +29,6 @@ no.nav.security.jwt:
     tokenx:
       discovery-url: http://localhost:${mock-oauth2-server.port}/tokenx/.well-known/openid-configuration
       accepted-audience: familie-app
-      cookie_name: localhost-idtoken
   client.registration:
     mottak:
       token-endpoint-url: http://metadata

@@ -9,6 +9,7 @@ import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
+import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
@@ -17,6 +18,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
+import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestOperations
 import java.time.Duration
 import java.time.temporal.ChronoUnit
@@ -113,11 +115,13 @@ internal class ApplicationConfig {
 
     @Primary
     @Bean
-    fun oAuth2HttpClient(): RetryOAuth2HttpClient {
+    fun oAuth2HttpClient(): OAuth2HttpClient {
         return RetryOAuth2HttpClient(
-            RestTemplateBuilder()
-                .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-                .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)),
+            RestClient.create(
+                RestTemplateBuilder()
+                    .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
+                    .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)).build(),
+            ),
         )
     }
 }
