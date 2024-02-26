@@ -8,12 +8,12 @@ import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus
 import no.nav.familie.ef.søknad.minside.dto.Stønad
 import no.nav.familie.ef.søknad.minside.dto.StønadsperiodeDto
 import no.nav.familie.ef.søknad.minside.dto.StønadsperioderDto
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
-import java.time.LocalDate
 import no.nav.familie.ef.søknad.utils.DatoUtil
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import java.time.LocalDate
 
 class SaksbehandlingServiceTest {
 
