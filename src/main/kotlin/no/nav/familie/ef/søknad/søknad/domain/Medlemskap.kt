@@ -11,4 +11,6 @@ data class PerioderBoddIUtlandet(
     val begrunnelse: TekstFelt,
     val periode: PeriodeFelt,
     val land: TekstFelt? = null,
+    val personidentUtland: String? = null,
+    val tidligereadresseUtland: String? = null,
 )
