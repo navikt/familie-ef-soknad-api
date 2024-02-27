@@ -2,17 +2,17 @@ package no.nav.familie.ef.søknad.minside
 
 import no.nav.familie.ef.søknad.minside.dto.MineStønaderDto
 import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus
-import no.nav.familie.ef.søknad.minside.dto.Stønad
-import no.nav.familie.ef.søknad.minside.dto.StønadsperiodeDto
-import no.nav.familie.kontrakter.felles.Datoperiode
-import no.nav.familie.kontrakter.felles.erSammenhengende
-import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Service
 import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD
 import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus.INGEN
 import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus.LØPENDE_UTEN_OPPHOLD
 import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD
+import no.nav.familie.ef.søknad.minside.dto.Stønad
+import no.nav.familie.ef.søknad.minside.dto.StønadsperiodeDto
 import no.nav.familie.ef.søknad.utils.DatoUtil.dagensDato
+import no.nav.familie.kontrakter.felles.Datoperiode
+import no.nav.familie.kontrakter.felles.erSammenhengende
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Service
 
 @Service
 class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClient) {
@@ -76,7 +76,7 @@ class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClie
 
     private fun utledPeriodeStatus(
         stønadsperioderMedFremtidigSluttDato: List<StønadsperiodeDto>,
-        harPerioderSiste6mnd: Boolean
+        harPerioderSiste6mnd: Boolean,
     ): PeriodeStatus {
         val datoPerioderMedFremtidigSluttdato =
             stønadsperioderMedFremtidigSluttDato.map { Datoperiode(fom = it.fraDato, tom = it.tilDato) }
