@@ -76,7 +76,7 @@ class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClie
 
     private fun utledPeriodeStatus(
         stønadsperioderMedFremtidigSluttDato: List<StønadsperiodeDto>,
-        harPerioderSiste6mnd: Boolean
+        harPerioderSiste6mnd: Boolean,
     ): PeriodeStatus {
         val datoPerioderMedFremtidigSluttdato =
             stønadsperioderMedFremtidigSluttDato.map { Datoperiode(fom = it.fraDato, tom = it.tilDato) }
