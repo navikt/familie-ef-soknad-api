@@ -136,7 +136,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                     it.verdi,
                 )
             },
-            navn = annenForelder.person?.verdi?.navn.tilNullableTekstFelt(),
+            navn = lagNullableTekstfeltAvNavnHvisHvorforIkkeOppgiManglerVerdi(annenForelder),
             fødselsdato = annenForelder.person?.verdi?.fødselsdato.tilNullableDatoFelt(),
             ident = annenForelder.person?.verdi?.fødselsnummer.fødselsnummerTilTekstFelt(),
             borINorge = annenForelder.bosattNorge.tilNullableBooleanFelt(),
@@ -163,14 +163,31 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
         }
     }
 
+    private fun hvorforIkkeOppgiSvarIdBasertPåBegrunnelse(begrunnelse: String?): String? {
+        return when {
+            begrunnelse == "Donor" -> "donorbarn"
+            begrunnelse.erIkkeBlankEllerNull() -> "annet"
+            else -> null
+        }
+    }
+
     private fun String?.erIkkeBlankEllerNull() = !this.isNullOrBlank()
 
     private fun hvorforIkkeOppgiTilTekstfeltEllerNullBasertPåBegrunnelse(begrunnelse: String?): TekstFelt? {
         val hvorforIkkeOppgi = hvorforIkkeOppgiBasertPåBegrunnelse(begrunnelse)
-        if (hvorforIkkeOppgi != null) {
-            return TekstFelt("Hvorfor kan du ikke oppgi den andre forelderen?", hvorforIkkeOppgi)
+        val svarId = hvorforIkkeOppgiSvarIdBasertPåBegrunnelse(begrunnelse)
+        if (hvorforIkkeOppgi != null && svarId != null) {
+            return TekstFelt("Hvorfor kan du ikke oppgi den andre forelderen?", hvorforIkkeOppgi, svarId)
         }
         return null
+    }
+
+    private fun lagNullableTekstfeltAvNavnHvisHvorforIkkeOppgiManglerVerdi(annenForelder: AnnenForelder?): TekstFelt? {
+        return if (annenForelder?.ikkeOppgittAnnenForelderBegrunnelse?.verdi != null) {
+            null
+        } else {
+            annenForelder?.person?.verdi?.navn.tilNullableTekstFelt()
+        }
     }
 
     private fun mapSamvær(

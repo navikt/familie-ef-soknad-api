@@ -63,11 +63,10 @@ class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClie
             return Pair(INGEN, emptyList())
         }
 
+        val harPerioderSiste6mnd =
+            perioder.filter { it.tilDato < dagensDato() && it.tilDato > dagensDato().minusMonths(6) }.isNotEmpty()
         val perioderMedFremtidigSluttdato = perioder.filter { it.tilDato >= dagensDato() }
-        val datoPerioderMedFremtidigSluttdato =
-            perioderMedFremtidigSluttdato.map { Datoperiode(fom = it.fraDato, tom = it.tilDato) }
-
-        val periodeStatus = utledPeriodeStatus(datoPerioderMedFremtidigSluttdato)
+        val periodeStatus = utledPeriodeStatus(perioderMedFremtidigSluttdato, harPerioderSiste6mnd)
 
         return when (periodeStatus) {
             INGEN, TIDLIGERE_ELLER_OPPHOLD -> Pair(periodeStatus, emptyList())
@@ -75,13 +74,18 @@ class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClie
         }
     }
 
-    private fun utledPeriodeStatus(datoPerioderMedFremtidigSluttdato: List<Datoperiode>): PeriodeStatus {
+    private fun utledPeriodeStatus(
+        stønadsperioderMedFremtidigSluttDato: List<StønadsperiodeDto>,
+        harPerioderSiste6mnd: Boolean
+    ): PeriodeStatus {
+        val datoPerioderMedFremtidigSluttdato =
+            stønadsperioderMedFremtidigSluttDato.map { Datoperiode(fom = it.fraDato, tom = it.tilDato) }
         val harFremtidigePerioderOgErSammenhengende =
             datoPerioderMedFremtidigSluttdato.erSammenhengende() && datoPerioderMedFremtidigSluttdato.isNotEmpty()
         val inneholderDagensDato = datoPerioderMedFremtidigSluttdato.any { it.inneholder(dagensDato()) }
         return if (harFremtidigePerioderOgErSammenhengende && inneholderDagensDato) {
             LØPENDE_UTEN_OPPHOLD
-        } else if (harFremtidigePerioderOgErSammenhengende) {
+        } else if (harFremtidigePerioderOgErSammenhengende && !harPerioderSiste6mnd) {
             FREMTIDIG_UTEN_OPPHOLD
         } else {
             TIDLIGERE_ELLER_OPPHOLD

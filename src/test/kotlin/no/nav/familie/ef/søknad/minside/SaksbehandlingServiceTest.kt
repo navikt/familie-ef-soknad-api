@@ -111,10 +111,10 @@ class SaksbehandlingServiceTest {
     }
 
     @Test
-    internal fun `perioder tidligere, ingen perioder nå men perioder fremover uten opphold skal mappes til FREMTIDIG_UTEN_OPPHOLD`() {
+    internal fun `perioder tidligere som er eldre enn 6mnd, ingen perioder nå men perioder fremover uten opphold skal mappes til FREMTIDIG_UTEN_OPPHOLD`() {
         val startDatoRelevantePerioder = LocalDate.of(2024, 3, 1)
         val sluttDatoRelevantePerioder = LocalDate.of(2025, 1, 31)
-        val tidligerePeriode = StønadsperiodeDto(LocalDate.of(2023, 3, 1), LocalDate.of(2024, 1, 31), 12000)
+        val tidligerePeriode = StønadsperiodeDto(LocalDate.of(2023, 3, 1), LocalDate.of(2023, 7, 31), 12000)
         val fremtidigPeriode = StønadsperiodeDto(startDatoRelevantePerioder, sluttDatoRelevantePerioder, 19065)
 
         val stønadsperioder = listOf(tidligerePeriode, fremtidigPeriode)
@@ -127,6 +127,28 @@ class SaksbehandlingServiceTest {
         assertThat(stønadsperioderForBruker.barnetilsyn.periodeStatus).isEqualTo(PeriodeStatus.FREMTIDIG_UTEN_OPPHOLD)
         assertThat(stønadsperioderForBruker.barnetilsyn.startDato).isEqualTo(startDatoRelevantePerioder)
         assertThat(stønadsperioderForBruker.barnetilsyn.sluttDato).isEqualTo(sluttDatoRelevantePerioder)
+        assertThat(stønadsperioderForBruker.barnetilsyn.perioder).isEqualTo(stønadsperioder)
+        assertTommePerioder(stønadsperioderForBruker.overgangsstønad)
+        assertTommePerioder(stønadsperioderForBruker.skolepenger)
+    }
+
+    @Test
+    internal fun `perioder tidligere innen de siste 6mnd, ingen perioder nå men perioder fremover uten opphold skal mappes til TIDLIGERE_ELLER_OPPHOLD`() {
+        val startDatoRelevantePerioder = LocalDate.of(2024, 3, 1)
+        val sluttDatoRelevantePerioder = LocalDate.of(2025, 1, 31)
+        val tidligerePeriode = StønadsperiodeDto(LocalDate.of(2023, 3, 1), LocalDate.of(2024, 1, 31), 12000)
+        val fremtidigPeriode = StønadsperiodeDto(startDatoRelevantePerioder, sluttDatoRelevantePerioder, 19065)
+
+        val stønadsperioder = listOf(tidligerePeriode, fremtidigPeriode)
+        val stønadsperioderDto = StønadsperioderDto(emptyList(), stønadsperioder, emptyList())
+
+        every { saksbehandlingClient.hentStønadsperioderForBruker() } returns stønadsperioderDto
+
+        val stønadsperioderForBruker = saksbehandlingService.hentStønadsperioderForBruker()
+
+        assertThat(stønadsperioderForBruker.barnetilsyn.periodeStatus).isEqualTo(PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD)
+        assertThat(stønadsperioderForBruker.barnetilsyn.startDato).isNull()
+        assertThat(stønadsperioderForBruker.barnetilsyn.sluttDato).isNull()
         assertThat(stønadsperioderForBruker.barnetilsyn.perioder).isEqualTo(stønadsperioder)
         assertTommePerioder(stønadsperioderForBruker.overgangsstønad)
         assertTommePerioder(stønadsperioderForBruker.skolepenger)
