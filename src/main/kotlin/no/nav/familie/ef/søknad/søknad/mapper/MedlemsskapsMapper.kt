@@ -50,8 +50,8 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                         label = null,
                     ),
                     land = it.land.tilNullableTekstFelt(),
-                    personidentUtland = it.personidentUtland,
-                    adresseUtland = it.adresseUtland,
+                    personidentUtland = it.personidentUtland.tilNullableTekstFelt(),
+                    adresseUtland = it.adresseUtland.tilNullableTekstFelt(),
                 )
             },
             søkerBosattINorgeSisteTreÅr = BooleanFelt(
