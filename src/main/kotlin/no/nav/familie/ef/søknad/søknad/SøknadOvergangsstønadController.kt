@@ -31,7 +31,7 @@ class SøknadOvergangsstønadController(val søknadService: SøknadService, val 
         }
         val innsendingMottatt = LocalDateTime.now()
         søknadService.sendInn(søknad, innsendingMottatt)
-        val periode = søknad.medlemskap.perioderBoddIUtlandet?.first()
+        val periode = søknad.medlemskap.perioderBoddIUtlandet?.firstOrNull()
         logger.info("Debug: Personident : " + periode?.personidentUtland + ", adresse utland: " + periode?.adresseUtland)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
