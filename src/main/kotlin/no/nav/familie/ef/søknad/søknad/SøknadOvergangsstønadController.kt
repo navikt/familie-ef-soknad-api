@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad.søknad
 
-import no.nav.familie.ef.søknad.infrastruktur.config.ApplicationConfig
 import no.nav.familie.ef.søknad.infrastruktur.exception.ApiFeil
 import no.nav.familie.ef.søknad.infrastruktur.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
@@ -23,7 +22,7 @@ import java.time.LocalDateTime
 @Validated
 class SøknadOvergangsstønadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
-    private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
+    private val logger = LoggerFactory.getLogger(javaClass)
 
     @PostMapping
     fun sendInn(@RequestBody søknad: SøknadOvergangsstønadDto): Kvittering {
@@ -32,6 +31,8 @@ class SøknadOvergangsstønadController(val søknadService: SøknadService, val 
         }
         val innsendingMottatt = LocalDateTime.now()
         søknadService.sendInn(søknad, innsendingMottatt)
+        val periode = søknad.medlemskap.perioderBoddIUtlandet?.first()
+        logger.info("Debug: Personident : " + periode?.personidentUtland + ", adresse utland: " + periode?.adresseUtland)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 }
