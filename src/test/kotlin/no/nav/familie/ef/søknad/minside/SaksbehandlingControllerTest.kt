@@ -6,7 +6,9 @@ import io.mockk.unmockkObject
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
 import no.nav.familie.ef.søknad.minside.dto.MineStønaderDto
 import no.nav.familie.ef.søknad.minside.dto.PeriodeStatus
+import no.nav.familie.ef.søknad.utils.DatoUtil
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.exchange
@@ -14,8 +16,6 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import java.time.LocalDate
-import no.nav.familie.ef.søknad.utils.DatoUtil
-import org.junit.jupiter.api.AfterEach
 
 internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
 
