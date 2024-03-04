@@ -35,6 +35,8 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                 tildato = it.periode.til.tilSøknadsfelt(),
                 land = it.land?.tilSøknadsfelt(),
                 årsakUtenlandsopphold = it.begrunnelse.tilSøknadsfelt(),
+                personidentUtland = it.personidentUtland?.tilSøknadsfelt(),
+                adresseUtland = it.adresseUtland?.tilSøknadsfelt(),
             )
         } ?: listOf()
     }
