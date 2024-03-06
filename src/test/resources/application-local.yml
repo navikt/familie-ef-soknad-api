@@ -27,8 +27,8 @@ logging:
 no.nav.security.jwt:
   issuer:
     tokenx:
-      discovery-url: http://localhost:${mock-oauth2-server.port}/tokenx/.well-known/openid-configuration
-      accepted-audience: familie-app
+      discovery-url: https://fakedings.intern.dev.nav.no/fake/.well-known/openid-configuration
+      accepted-audience: dev-gcp:teamfamilie:familie-ef-soknad-api
   client.registration:
     mottak:
       token-endpoint-url: http://metadata
@@ -41,7 +41,7 @@ no.nav.security.jwt:
     saf:
       token-endpoint-url: http://metadata
 
-TOKEN_X_WELL_KNOWN_URL: http://localhost
+TOKEN_X_WELL_KNOWN_URL: https://fakedings.intern.dev.nav.no/fake/.well-known/openid-configuration
 TOKEN_X_PRIVATE_JWK: '{
     "kty" : "RSA",
     "e" : "AQAB",
@@ -52,4 +52,4 @@ TOKEN_X_PRIVATE_JWK: '{
 
 UNLEASH_SERVER_API_URL: http://localhost:4242/api
 UNLEASH_SERVER_API_TOKEN: token
-NAIS_APP_NAME: familie-ef-mottak
+NAIS_APP_NAME: familie-ef-soknad-api
