@@ -11,14 +11,10 @@ import no.nav.familie.ef.søknad.minside.dto.StønadsperiodeDto
 import no.nav.familie.ef.søknad.utils.DatoUtil.dagensDato
 import no.nav.familie.kontrakter.felles.Datoperiode
 import no.nav.familie.kontrakter.felles.erSammenhengende
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClient) {
-
-    private val logger = LoggerFactory.getLogger(javaClass)
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     fun hentStønadsperioderForBruker(): MineStønaderDto {
         val stønadsperioder = saksbehandlingClient.hentStønadsperioderForBruker()
