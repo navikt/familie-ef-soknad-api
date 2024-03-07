@@ -17,7 +17,6 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
         "familie.ef.soknad.feilsituasjon",
         "familie.ef.soknad.nynorsk",
         "familie.ef.soknad.validerbosituasjon",
-        "familie.ef.soknad.hent-barnetilsyn-soknad-til-gjenbruk",
     )
 
     @GetMapping
