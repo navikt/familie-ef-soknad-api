@@ -1,0 +1,49 @@
+server:
+  port: 9091
+  servlet:
+    context-path:
+
+familie:
+  integrasjoner:
+    uri: http://localhost:8085/api
+  ef:
+    mottak:
+      uri: http://localhost:8092/api
+    saksbehandling:
+      uri: http://localhost:8093/api
+
+cors:
+  allowed_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8080"
+    - "http://localhost:8000"
+
+no.nav.security.jwt:
+  issuer:
+    tokenx:
+      discovery-url: http://localhost:${mock-oauth2-server.port}/tokenx/.well-known/openid-configuration
+      accepted-audience: familie-app
+  client.registration:
+    mottak:
+      token-endpoint-url: http://metadata
+    saksbehandling:
+      token-endpoint-url: http://metadata
+    pdl:
+      token-endpoint-url: http://metadata
+    pdl-clientcredentials:
+      token-endpoint-url: http://metadata
+    saf:
+      token-endpoint-url: http://metadata
+
+TOKEN_X_WELL_KNOWN_URL: http://localhost
+TOKEN_X_PRIVATE_JWK: '{
+    "kty" : "RSA",
+    "e" : "AQAB",
+    "use" : "sig",
+    "kid" : "mock-oauth2-server-key",
+    "n" : ""
+  }'
+
+UNLEASH_SERVER_API_URL: http://localhost:4242/api
+UNLEASH_SERVER_API_TOKEN: token
+NAIS_APP_NAME: familie-ef-soknad-api
