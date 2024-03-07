@@ -6,7 +6,6 @@ import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.validation.annotation.Validated
@@ -22,8 +21,6 @@ import java.time.LocalDateTime
 @Validated
 class SøknadOvergangsstønadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
 
-    private val logger = LoggerFactory.getLogger(javaClass)
-
     @PostMapping
     fun sendInn(@RequestBody søknad: SøknadOvergangsstønadDto): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
@@ -31,8 +28,6 @@ class SøknadOvergangsstønadController(val søknadService: SøknadService, val 
         }
         val innsendingMottatt = LocalDateTime.now()
         søknadService.sendInn(søknad, innsendingMottatt)
-        val periode = søknad.medlemskap.perioderBoddIUtlandet?.firstOrNull()
-        logger.info("Debug: Personident : " + periode?.personidentUtland + ", adresse utland: " + periode?.adresseUtland)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 }
