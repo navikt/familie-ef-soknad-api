@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.3</version>
     </parent>
 
 
@@ -19,15 +19,15 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <kotlin.version>1.9.22</kotlin.version>
+        <kotlin.version>1.9.23</kotlin.version>
         <springdoc.version>2.3.0</springdoc.version>
-        <mockk.version>1.13.9</mockk.version>
+        <mockk.version>1.13.10</mockk.version>
         <token-validation-spring.version>3.2.0</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <fasterxml.version>2.16.1</fasterxml.version>
-        <felles.version>2.20240123084817_35f03aa</felles.version>
-        <kontrakter.version>3.0_20240215101759_cea211f</kontrakter.version>
+        <fasterxml.version>2.16.2</fasterxml.version>
+        <felles.version>3.20240227112134_a79201c</felles.version>
+        <kontrakter.version>3.0_20240307134842_b6c7d85</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
@@ -164,7 +164,7 @@
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>util</artifactId>
-            <version>2.20240123084817_35f03aa</version>
+            <version>3.20240227112134_a79201c</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -199,7 +199,7 @@
         <dependency>
             <groupId>com.github.tomakehurst</groupId>
             <artifactId>wiremock-jre8-standalone</artifactId>
-            <version>2.35.1</version>
+            <version>2.35.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
