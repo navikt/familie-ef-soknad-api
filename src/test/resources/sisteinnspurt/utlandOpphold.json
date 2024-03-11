@@ -70,7 +70,7 @@
       "label": "Har du bodd i Norge de siste tre årene?",
       "verdi": false
     },
-    "perioderBoddIUtlandet": [
+    "utenlandsperiode": [
       {
         "id": "00fc66bc-53d8-4032-be12-9e50550d6752",
         "periode": {

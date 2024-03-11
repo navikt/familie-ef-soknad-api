@@ -225,7 +225,7 @@
       "label": "Har du bodd i Norge de siste tre årene?",
       "verdi": false
     },
-    "perioderBoddIUtlandet": [
+    "utenlandsperiode": [
       {
         "id": "b2064f23-46c9-43d1-b84b-3163adab1a52",
         "periode": {
