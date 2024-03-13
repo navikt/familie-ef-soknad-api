@@ -4,10 +4,11 @@ import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.DatoFelt
 import no.nav.familie.ef.søknad.søknad.domain.Medlemskap
 import no.nav.familie.ef.søknad.søknad.domain.PeriodeFelt
-import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
 import no.nav.familie.ef.søknad.søknad.domain.Utenlandsperiode
+import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
 import no.nav.familie.ef.søknad.utils.Språktekster
 import no.nav.familie.ef.søknad.utils.hentTekst
+import no.nav.familie.ef.søknad.utils.tilNullableBooleanFelt
 import no.nav.familie.ef.søknad.utils.tilNullableTekstFelt
 import no.nav.familie.ef.søknad.utils.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Medlemskapsdetaljer
@@ -23,27 +24,27 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
             bosattNorgeSisteÅrene = data.søkerBosattINorgeSisteTreÅr.tilSøknadsfelt(),
             utenlandsopphold = Søknadsfelt(
                 Språktekster.Utenlandsopphold.hentTekst(),
-                mapUtenlansopphold(data.utenlandsperiode),
+                mapUtenlansopphold(data.perioderBoddIUtlandet),
             ),
         )
     }
 
-    private fun mapUtenlansopphold(utenlandsperiode: List<Utenlandsperiode>?): List<KontraksUtenlandsopphold> {
-        return utenlandsperiode?.map { it ->
+    private fun mapUtenlansopphold(perioderBoddIUtlandet: List<Utenlandsperiode>?): List<KontraksUtenlandsopphold> {
+        return perioderBoddIUtlandet?.map { it ->
             KontraksUtenlandsopphold(
                 fradato = it.periode.fra.tilSøknadsfelt(),
                 tildato = it.periode.til.tilSøknadsfelt(),
                 land = it.land?.tilSøknadsfelt(),
                 årsakUtenlandsopphold = it.begrunnelse.tilSøknadsfelt(),
-                personidentUtland = it.personident?.tilSøknadsfelt(),
-                adresseUtland = it.adresse?.tilSøknadsfelt(),
+                personidentEøsLand = it.personidentEøsLand?.tilSøknadsfelt(),
+                adresseEøsLand = it.adresseEøsLand?.tilSøknadsfelt(),
             )
         } ?: listOf()
     }
 
     fun mapTilDto(medlemskapsdetaljer: Medlemskapsdetaljer): Medlemskap {
         return Medlemskap(
-            utenlandsperiode = medlemskapsdetaljer.utenlandsopphold?.verdi?.map {
+            perioderBoddIUtlandet = medlemskapsdetaljer.utenlandsopphold?.verdi?.map {
                 Utenlandsperiode(
                     begrunnelse = TekstFelt(it.årsakUtenlandsopphold.label, it.årsakUtenlandsopphold.verdi),
                     periode = PeriodeFelt(
@@ -52,8 +53,10 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                         label = null,
                     ),
                     land = it.land.tilNullableTekstFelt(),
-                    personident = it.personidentUtland.tilNullableTekstFelt(),
-                    adresse = it.adresseUtland.tilNullableTekstFelt(),
+                    personidentEøsLand = it.personidentEøsLand.tilNullableTekstFelt(),
+                    adresseEøsLand = it.adresseEøsLand.tilNullableTekstFelt(),
+                    erEøsLand = it.erEøsLand.tilNullableBooleanFelt(),
+                    kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident.tilNullableBooleanFelt(),
                 )
             },
             søkerBosattINorgeSisteTreÅr = BooleanFelt(
