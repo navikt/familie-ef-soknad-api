@@ -264,7 +264,7 @@
       "label": "Har du vært bosatt i Norge de siste tre årene?",
       "verdi": false
     },
-    "utenlandsperiode": [
+    "perioderBoddIUtlandet": [
       {
         "react_key": "83637c0a-faca-40c3-85db-f7898662e7f0",
         "periode": {

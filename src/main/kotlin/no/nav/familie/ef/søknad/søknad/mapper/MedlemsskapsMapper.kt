@@ -4,8 +4,8 @@ import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.DatoFelt
 import no.nav.familie.ef.søknad.søknad.domain.Medlemskap
 import no.nav.familie.ef.søknad.søknad.domain.PeriodeFelt
-import no.nav.familie.ef.søknad.søknad.domain.Utenlandsperiode
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
+import no.nav.familie.ef.søknad.søknad.domain.Utenlandsperiode
 import no.nav.familie.ef.søknad.utils.Språktekster
 import no.nav.familie.ef.søknad.utils.hentTekst
 import no.nav.familie.ef.søknad.utils.tilNullableBooleanFelt
