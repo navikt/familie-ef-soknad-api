@@ -13,6 +13,6 @@ data class Utenlandsperiode(
     val land: TekstFelt? = null,
     val personidentEøsLand: TekstFelt? = null,
     val adresseEøsLand: TekstFelt? = null,
-    val erEøsLand: BooleanFelt? = null,
+    val erEøsLand: Boolean? = null,
     val kanIkkeOppgiPersonident: BooleanFelt? = null,
 )

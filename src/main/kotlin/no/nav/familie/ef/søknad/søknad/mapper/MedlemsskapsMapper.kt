@@ -55,7 +55,7 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                     land = it.land.tilNullableTekstFelt(),
                     personidentEøsLand = it.personidentEøsLand.tilNullableTekstFelt(),
                     adresseEøsLand = it.adresseEøsLand.tilNullableTekstFelt(),
-                    erEøsLand = it.erEøsLand.tilNullableBooleanFelt(),
+                    erEøsLand = it.erEøsLand,
                     kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident.tilNullableBooleanFelt(),
                 )
             },
