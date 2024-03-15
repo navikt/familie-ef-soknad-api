@@ -8,7 +8,6 @@ import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
 import no.nav.familie.ef.søknad.søknad.domain.Utenlandsperiode
 import no.nav.familie.ef.søknad.utils.Språktekster
 import no.nav.familie.ef.søknad.utils.hentTekst
-import no.nav.familie.ef.søknad.utils.tilNullableBooleanFelt
 import no.nav.familie.ef.søknad.utils.tilNullableTekstFelt
 import no.nav.familie.ef.søknad.utils.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Medlemskapsdetaljer
@@ -56,7 +55,7 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                     personidentEøsLand = it.personidentEøsLand.tilNullableTekstFelt(),
                     adresseEøsLand = it.adresseEøsLand.tilNullableTekstFelt(),
                     erEøsLand = it.erEøsLand,
-                    kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident.tilNullableBooleanFelt(),
+                    kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident,
                 )
             },
             søkerBosattINorgeSisteTreÅr = BooleanFelt(
