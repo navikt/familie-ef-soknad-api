@@ -37,6 +37,8 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                 årsakUtenlandsopphold = it.begrunnelse.tilSøknadsfelt(),
                 personidentEøsLand = it.personidentEøsLand?.tilSøknadsfelt(),
                 adresseEøsLand = it.adresseEøsLand?.tilSøknadsfelt(),
+                erEøsLand = it.erEøsLand,
+                kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident
             )
         } ?: listOf()
     }
