@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.mock
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.security.token.support.core.api.Unprotected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
+import no.nav.security.token.support.core.exceptions.JwtTokenValidatorException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -36,7 +37,7 @@ class DokumentMockController(
     private val mellomlager = mutableMapOf<String, String>()
 
     fun TokenValidationContextHolder.hentFnr(): String {
-        return this.tokenValidationContext.getJwtToken("tokenx").subject
+        return this.getTokenValidationContext().getJwtToken("tokenx")?.subject ?: throw JwtTokenValidatorException("Klarte ikke hente fnr tokenx-token")
     }
 
     @PostMapping(

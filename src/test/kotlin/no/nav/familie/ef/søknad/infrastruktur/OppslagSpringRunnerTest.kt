@@ -23,7 +23,7 @@ import java.util.UUID
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = [ApplicationLocalTestLauncher::class])
 @ActiveProfiles(
-    "local",
+    "integrationtest",
     "mock-kodeverk",
     "mock-dokument",
     "mock-pdl",

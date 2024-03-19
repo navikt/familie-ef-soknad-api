@@ -13,7 +13,7 @@ import java.time.LocalDate
 internal class BosituasjonMapperTest {
 
     private val bosituasjon = søknadDto().bosituasjon
-    private val bositiasjonSamboer = getBosituasjon("bositiasjonSamboer.json")
+    private val bosituasjonSamboer = getBosituasjon("bosituasjonSamboer.json")
     private val bosituasjonGifteplaner = getBosituasjon("sivilstandsplaner.json")
     private val dokumenter = emptyMap<String, DokumentasjonWrapper>()
 
@@ -36,7 +36,7 @@ internal class BosituasjonMapperTest {
     @Test
     fun `Vi mapper bossituasjon med samboer deler bolig verdi`() {
         // When
-        val bosituasjonMapped = BosituasjonMapper.map(bositiasjonSamboer, dokumenter).verdi
+        val bosituasjonMapped = BosituasjonMapper.map(bosituasjonSamboer, dokumenter).verdi
         // Then
         assertThat(bosituasjonMapped.delerDuBolig.verdi).isEqualTo("Ja, jeg har samboer og lever i et ekteskapslignende forhold")
     }
@@ -44,7 +44,7 @@ internal class BosituasjonMapperTest {
     @Test
     fun `Vi mapper bossituasjon med samboer deler bolig dato`() {
         // When
-        val bosituasjonMapped = BosituasjonMapper.map(bositiasjonSamboer, dokumenter).verdi
+        val bosituasjonMapped = BosituasjonMapper.map(bosituasjonSamboer, dokumenter).verdi
         // Then
         assertThat(bosituasjonMapped.sammenflyttingsdato?.verdi).isEqualTo(LocalDate.of(2020, 3, 26))
     }
@@ -52,7 +52,7 @@ internal class BosituasjonMapperTest {
     @Test
     fun `Vi mapper bossituasjon med samboer deler bolig samboer`() {
         // When
-        val bosituasjonMapped = BosituasjonMapper.map(bositiasjonSamboer, dokumenter).verdi
+        val bosituasjonMapped = BosituasjonMapper.map(bosituasjonSamboer, dokumenter).verdi
         // Then
         assertThat(bosituasjonMapped.samboerdetaljer?.verdi?.navn?.verdi).isEqualTo("Bob Dyland")
     }
@@ -60,7 +60,7 @@ internal class BosituasjonMapperTest {
     @Test
     fun `Vi mapper bossituasjon med samboer deler bolig samboer har personnummer`() {
         // When
-        val bosituasjonMapped = BosituasjonMapper.map(bositiasjonSamboer, dokumenter).verdi
+        val bosituasjonMapped = BosituasjonMapper.map(bosituasjonSamboer, dokumenter).verdi
         // Then
         assertThat(bosituasjonMapped.samboerdetaljer?.verdi?.fødselsnummer?.verdi).isEqualTo(Fødselsnummer("26077624804"))
     }
@@ -68,7 +68,7 @@ internal class BosituasjonMapperTest {
     @Test
     fun `Vi mapper bossituasjon med samboer deler bolig samboer har fødselsdato`() {
         // When
-        val bosituasjonMapped = BosituasjonMapper.map(bositiasjonSamboer, dokumenter).verdi
+        val bosituasjonMapped = BosituasjonMapper.map(bosituasjonSamboer, dokumenter).verdi
         // Then
         assertThat(bosituasjonMapped.samboerdetaljer?.verdi?.fødselsdato?.verdi).isEqualTo(LocalDate.of(1976, 7, 26))
     }
