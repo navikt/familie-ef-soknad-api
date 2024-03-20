@@ -27,8 +27,8 @@ spec:
     limits:
       memory: 2Gi
     requests:
-      memory: 1Gi
-      cpu: 500m
+      memory: 512Mi
+      cpu: 100m
   secureLogs:
     enabled: true
   ingresses:
