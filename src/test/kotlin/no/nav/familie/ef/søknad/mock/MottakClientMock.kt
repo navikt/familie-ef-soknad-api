@@ -38,6 +38,7 @@ class MottakClientMock {
         every { søknadClient.ping() } returns Unit
         every { søknadClient.hentSøknaderMedDokumentasjonsbehov(any()) } returns søknaderMedDokumentasjonsbehov
         every { søknadClient.hentEttersendingForPerson(any()) } returns listOf(ettersendingResponseData)
+        every { søknadClient.hentForrigeBarnetilsynSøknad() } returns null
 
         return søknadClient
     }

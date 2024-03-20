@@ -1,11 +1,7 @@
 server:
-  port: 8091
+  port: 9091
   servlet:
     context-path:
-
-spring:
-  main:
-    allow-bean-definition-overriding: true
 
 familie:
   integrasjoner:
@@ -22,13 +18,11 @@ cors:
     - "http://localhost:8080"
     - "http://localhost:8000"
 
-logging:
-  config: classpath:logback-test.xml
 no.nav.security.jwt:
   issuer:
     tokenx:
-      discovery-url: https://fakedings.intern.dev.nav.no/fake/.well-known/openid-configuration
-      accepted-audience: dev-gcp:teamfamilie:familie-ef-soknad-api
+      discovery-url: http://localhost:${mock-oauth2-server.port}/tokenx/.well-known/openid-configuration
+      accepted-audience: familie-app
   client.registration:
     mottak:
       token-endpoint-url: http://metadata
@@ -41,7 +35,7 @@ no.nav.security.jwt:
     saf:
       token-endpoint-url: http://metadata
 
-TOKEN_X_WELL_KNOWN_URL: https://fakedings.intern.dev.nav.no/fake/.well-known/openid-configuration
+TOKEN_X_WELL_KNOWN_URL: http://localhost
 TOKEN_X_PRIVATE_JWK: '{
     "kty" : "RSA",
     "e" : "AQAB",
