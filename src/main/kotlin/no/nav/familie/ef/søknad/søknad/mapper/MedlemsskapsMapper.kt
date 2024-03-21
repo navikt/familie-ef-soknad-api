@@ -4,8 +4,8 @@ import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.DatoFelt
 import no.nav.familie.ef.søknad.søknad.domain.Medlemskap
 import no.nav.familie.ef.søknad.søknad.domain.PeriodeFelt
-import no.nav.familie.ef.søknad.søknad.domain.PerioderBoddIUtlandet
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
+import no.nav.familie.ef.søknad.søknad.domain.Utenlandsperiode
 import no.nav.familie.ef.søknad.utils.Språktekster
 import no.nav.familie.ef.søknad.utils.hentTekst
 import no.nav.familie.ef.søknad.utils.tilNullableTekstFelt
@@ -28,13 +28,17 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
         )
     }
 
-    private fun mapUtenlansopphold(perioderBoddIUtlandet: List<PerioderBoddIUtlandet>?): List<KontraksUtenlandsopphold> {
+    private fun mapUtenlansopphold(perioderBoddIUtlandet: List<Utenlandsperiode>?): List<KontraksUtenlandsopphold> {
         return perioderBoddIUtlandet?.map { it ->
             KontraksUtenlandsopphold(
                 fradato = it.periode.fra.tilSøknadsfelt(),
                 tildato = it.periode.til.tilSøknadsfelt(),
                 land = it.land?.tilSøknadsfelt(),
                 årsakUtenlandsopphold = it.begrunnelse.tilSøknadsfelt(),
+                personidentEøsLand = it.personidentEøsLand?.tilSøknadsfelt(),
+                adresseEøsLand = it.adresseEøsLand?.tilSøknadsfelt(),
+                erEøsLand = it.erEøsLand,
+                kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident,
             )
         } ?: listOf()
     }
@@ -42,7 +46,7 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
     fun mapTilDto(medlemskapsdetaljer: Medlemskapsdetaljer): Medlemskap {
         return Medlemskap(
             perioderBoddIUtlandet = medlemskapsdetaljer.utenlandsopphold?.verdi?.map {
-                PerioderBoddIUtlandet(
+                Utenlandsperiode(
                     begrunnelse = TekstFelt(it.årsakUtenlandsopphold.label, it.årsakUtenlandsopphold.verdi),
                     periode = PeriodeFelt(
                         fra = DatoFelt(it.fradato.label, it.fradato.verdi.toString()),
@@ -50,6 +54,10 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                         label = null,
                     ),
                     land = it.land.tilNullableTekstFelt(),
+                    personidentEøsLand = it.personidentEøsLand.tilNullableTekstFelt(),
+                    adresseEøsLand = it.adresseEøsLand.tilNullableTekstFelt(),
+                    erEøsLand = it.erEøsLand,
+                    kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident,
                 )
             },
             søkerBosattINorgeSisteTreÅr = BooleanFelt(
