@@ -15,8 +15,7 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
 
     val funksjonsbrytere = listOf(
         "familie.ef.soknad.feilsituasjon",
-        "familie.ef.soknad.nynorsk",
-        "familie.ef.soknad.validerbosituasjon",
+        "familie.ef.soknad.nynorsk"
     )
 
     @GetMapping
