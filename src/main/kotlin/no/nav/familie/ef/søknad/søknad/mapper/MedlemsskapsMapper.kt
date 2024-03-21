@@ -38,7 +38,7 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                 personidentEøsLand = it.personidentEøsLand?.tilSøknadsfelt(),
                 adresseEøsLand = it.adresseEøsLand?.tilSøknadsfelt(),
                 erEøsLand = it.erEøsLand,
-                kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident
+                kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident,
             )
         } ?: listOf()
     }
