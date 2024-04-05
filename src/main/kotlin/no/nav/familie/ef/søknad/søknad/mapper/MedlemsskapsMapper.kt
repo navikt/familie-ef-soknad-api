@@ -12,9 +12,11 @@ import no.nav.familie.ef.søknad.utils.tilNullableTekstFelt
 import no.nav.familie.ef.søknad.utils.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Medlemskapsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
+import org.slf4j.LoggerFactory
 import no.nav.familie.kontrakter.ef.søknad.Utenlandsopphold as KontraksUtenlandsopphold
 
 object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekster.OppholdINorge) {
+    private val logger = LoggerFactory.getLogger(this::class.java)
 
     override fun mapDto(data: Medlemskap): Medlemskapsdetaljer {
         return Medlemskapsdetaljer(
@@ -30,6 +32,10 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
 
     private fun mapUtenlansopphold(perioderBoddIUtlandet: List<Utenlandsperiode>?): List<KontraksUtenlandsopphold> {
         return perioderBoddIUtlandet?.map { it ->
+            logger.info("personidenteøsland: " + it.personidentEøsLand)
+            logger.info("erEøsLand: " + it.erEøsLand)
+            logger.info("adresseEøsLand: " + it.adresseEøsLand)
+
             KontraksUtenlandsopphold(
                 fradato = it.periode.fra.tilSøknadsfelt(),
                 tildato = it.periode.til.tilSøknadsfelt(),
