@@ -29,7 +29,6 @@ class SøknadBarnetilsynController(val søknadService: SøknadService, val featu
 
     @PostMapping
     fun sendInn(@RequestBody søknad: SøknadBarnetilsynDto): Kvittering {
-        secureLogger.info("Søknad mottatt fra frontend: " + objectMapper.writeValueAsString(søknad))
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }

@@ -9,8 +9,6 @@ import no.nav.familie.ef.søknad.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
-import no.nav.familie.kontrakter.felles.objectMapper
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
@@ -21,7 +19,7 @@ class SøknadService(
     private val barnetilsynMapper: SøknadBarnetilsynMapper,
     private val skolepengerMapper: SøknadSkolepengerMapper,
 ) {
-    private val logger = LoggerFactory.getLogger(javaClass)
+
     fun sendInn(
         søknad: SøknadOvergangsstønadDto,
         innsendingMottatt: LocalDateTime,
@@ -33,7 +31,6 @@ class SøknadService(
 
     fun sendInn(søknad: SøknadBarnetilsynDto, innsendingMottatt: LocalDateTime): Kvittering {
         val søknadRequestData = barnetilsynMapper.mapTilIntern(søknad, innsendingMottatt)
-        logger.info("SøknadBarnetilsynDto før den sendes til mottak: " + objectMapper.writeValueAsString(søknadRequestData))
         val kvittering = søknadClient.sendInnBarnetilsynsøknad(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
