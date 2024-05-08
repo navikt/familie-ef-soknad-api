@@ -50,8 +50,8 @@ class SaksbehandlingServiceTest {
     @Test
     internal fun `perioder tidligere, nå og fremover uten opphold skal mappes til LØPENDE_UTEN_OPPHOLD`() {
         val sluttDatoRelevantePerioder = LocalDate.of(2025, 9, 30)
-        val periode1 = StønadsperiodeDto(LocalDate.of(2023, 11, 1), LocalDate.of(2023, 11, 30), 13665, 0, 0)
-        val periode2 = StønadsperiodeDto(LocalDate.of(2023, 12, 1), LocalDate.of(2023, 12, 31), 4215, 0, 0)
+        val periode1 = StønadsperiodeDto(LocalDate.of(2023, 11, 1), LocalDate.of(2023, 11, 30), 13665, 0, 4000)
+        val periode2 = StønadsperiodeDto(LocalDate.of(2023, 12, 1), LocalDate.of(2023, 12, 31), 4215, 400000, 0)
         val periode3 = StønadsperiodeDto(LocalDate.of(2024, 1, 1), LocalDate.of(2025, 9, 30), 19065, 0, 0)
 
         val stønadsperioder = listOf(periode1, periode2, periode3)

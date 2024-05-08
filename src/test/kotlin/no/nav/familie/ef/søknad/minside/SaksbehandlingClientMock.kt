@@ -35,8 +35,8 @@ class SaksbehandlingClientMock {
             fraDato = LocalDate.of(2024, 1, 1),
             tilDato = LocalDate.of(2025, 9, 30),
             beløp = 19065,
-            inntektsgrunnlag = 0,
-            samordningsfradrag = 0,
+            inntektsgrunnlag = 152000,
+            samordningsfradrag = 300,
         ),
         StønadsperiodeDto(
             fraDato = LocalDate.of(2023, 12, 1),
