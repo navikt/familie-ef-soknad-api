@@ -50,9 +50,9 @@ class SaksbehandlingServiceTest {
     @Test
     internal fun `perioder tidligere, nå og fremover uten opphold skal mappes til LØPENDE_UTEN_OPPHOLD`() {
         val sluttDatoRelevantePerioder = LocalDate.of(2025, 9, 30)
-        val periode1 = StønadsperiodeDto(LocalDate.of(2023, 11, 1), LocalDate.of(2023, 11, 30), 13665)
-        val periode2 = StønadsperiodeDto(LocalDate.of(2023, 12, 1), LocalDate.of(2023, 12, 31), 4215)
-        val periode3 = StønadsperiodeDto(LocalDate.of(2024, 1, 1), LocalDate.of(2025, 9, 30), 19065)
+        val periode1 = StønadsperiodeDto(LocalDate.of(2023, 11, 1), LocalDate.of(2023, 11, 30), 13665, 0, 4000)
+        val periode2 = StønadsperiodeDto(LocalDate.of(2023, 12, 1), LocalDate.of(2023, 12, 31), 4215, 400000, 0)
+        val periode3 = StønadsperiodeDto(LocalDate.of(2024, 1, 1), LocalDate.of(2025, 9, 30), 19065, 0, 0)
 
         val stønadsperioder = listOf(periode1, periode2, periode3)
         val stønadsperioderDto = StønadsperioderDto(stønadsperioder, emptyList(), emptyList())
@@ -73,7 +73,7 @@ class SaksbehandlingServiceTest {
     internal fun `perioder fremover uten opphold skal mappes til FREMTIDIG_UTEN_OPPHOLD`() {
         val startDatoRelevantePerioder = LocalDate.of(2024, 3, 1)
         val sluttDatoRelevantePerioder = LocalDate.of(2027, 1, 31)
-        val fremtidigPeriode = StønadsperiodeDto(startDatoRelevantePerioder, sluttDatoRelevantePerioder, 19065)
+        val fremtidigPeriode = StønadsperiodeDto(startDatoRelevantePerioder, sluttDatoRelevantePerioder, 19065, 0, 0)
 
         val stønadsperioder = listOf(fremtidigPeriode)
         val stønadsperioderDto = StønadsperioderDto(emptyList(), stønadsperioder, emptyList())
@@ -92,8 +92,8 @@ class SaksbehandlingServiceTest {
 
     @Test
     internal fun `perioder fremover med opphold skal mappes til TIDLIGERE_ELLER_OPPHOLD`() {
-        val fremtidigPeriode1 = StønadsperiodeDto(LocalDate.of(2024, 4, 1), LocalDate.of(2025, 3, 31), 19065)
-        val fremtidigPeriode2 = StønadsperiodeDto(LocalDate.of(2025, 5, 31), LocalDate.of(2026, 11, 30), 19065)
+        val fremtidigPeriode1 = StønadsperiodeDto(LocalDate.of(2024, 4, 1), LocalDate.of(2025, 3, 31), 19065, 0, 0)
+        val fremtidigPeriode2 = StønadsperiodeDto(LocalDate.of(2025, 5, 31), LocalDate.of(2026, 11, 30), 19065, 0, 0)
 
         val stønadsperioder = listOf(fremtidigPeriode1, fremtidigPeriode2)
         val stønadsperioderDto = StønadsperioderDto(emptyList(), emptyList(), stønadsperioder)
@@ -114,8 +114,8 @@ class SaksbehandlingServiceTest {
     internal fun `perioder tidligere som er eldre enn 6mnd, ingen perioder nå men perioder fremover uten opphold skal mappes til FREMTIDIG_UTEN_OPPHOLD`() {
         val startDatoRelevantePerioder = LocalDate.of(2024, 3, 1)
         val sluttDatoRelevantePerioder = LocalDate.of(2025, 1, 31)
-        val tidligerePeriode = StønadsperiodeDto(LocalDate.of(2023, 3, 1), LocalDate.of(2023, 7, 31), 12000)
-        val fremtidigPeriode = StønadsperiodeDto(startDatoRelevantePerioder, sluttDatoRelevantePerioder, 19065)
+        val tidligerePeriode = StønadsperiodeDto(LocalDate.of(2023, 3, 1), LocalDate.of(2023, 7, 31), 12000, 0, 0)
+        val fremtidigPeriode = StønadsperiodeDto(startDatoRelevantePerioder, sluttDatoRelevantePerioder, 19065, 0, 0)
 
         val stønadsperioder = listOf(tidligerePeriode, fremtidigPeriode)
         val stønadsperioderDto = StønadsperioderDto(emptyList(), stønadsperioder, emptyList())
@@ -136,8 +136,8 @@ class SaksbehandlingServiceTest {
     internal fun `perioder tidligere innen de siste 6mnd, ingen perioder nå men perioder fremover uten opphold skal mappes til TIDLIGERE_ELLER_OPPHOLD`() {
         val startDatoRelevantePerioder = LocalDate.of(2024, 3, 1)
         val sluttDatoRelevantePerioder = LocalDate.of(2025, 1, 31)
-        val tidligerePeriode = StønadsperiodeDto(LocalDate.of(2023, 3, 1), LocalDate.of(2024, 1, 31), 12000)
-        val fremtidigPeriode = StønadsperiodeDto(startDatoRelevantePerioder, sluttDatoRelevantePerioder, 19065)
+        val tidligerePeriode = StønadsperiodeDto(LocalDate.of(2023, 3, 1), LocalDate.of(2024, 1, 31), 12000, 0, 0)
+        val fremtidigPeriode = StønadsperiodeDto(startDatoRelevantePerioder, sluttDatoRelevantePerioder, 19065, 0, 0)
 
         val stønadsperioder = listOf(tidligerePeriode, fremtidigPeriode)
         val stønadsperioderDto = StønadsperioderDto(emptyList(), stønadsperioder, emptyList())
@@ -156,9 +156,9 @@ class SaksbehandlingServiceTest {
 
     @Test
     internal fun `tidligere perioder skal mappes til TIDLIGERE_ELLER_OPPHOLD`() {
-        val periode1 = StønadsperiodeDto(LocalDate.of(2021, 11, 1), LocalDate.of(2020, 11, 30), 13665)
-        val periode2 = StønadsperiodeDto(LocalDate.of(2021, 12, 1), LocalDate.of(2020, 12, 31), 4215)
-        val periode3 = StønadsperiodeDto(LocalDate.of(2022, 1, 1), LocalDate.of(2023, 9, 30), 19065)
+        val periode1 = StønadsperiodeDto(LocalDate.of(2021, 11, 1), LocalDate.of(2020, 11, 30), 13665, 0, 0)
+        val periode2 = StønadsperiodeDto(LocalDate.of(2021, 12, 1), LocalDate.of(2020, 12, 31), 4215, 0, 0)
+        val periode3 = StønadsperiodeDto(LocalDate.of(2022, 1, 1), LocalDate.of(2023, 9, 30), 19065, 0, 0)
 
         val stønadsperioder = listOf(periode1, periode2, periode3)
         val stønadsperioderDto = StønadsperioderDto(emptyList(), emptyList(), stønadsperioder)
@@ -177,8 +177,8 @@ class SaksbehandlingServiceTest {
 
     @Test
     internal fun `tidligere perioder med opphold skal mappes til TIDLIGERE_ELLER_OPPHOLD`() {
-        val periode1 = StønadsperiodeDto(LocalDate.of(2021, 11, 1), LocalDate.of(2020, 11, 30), 13665)
-        val periode3 = StønadsperiodeDto(LocalDate.of(2022, 1, 1), LocalDate.of(2023, 9, 30), 19065)
+        val periode1 = StønadsperiodeDto(LocalDate.of(2021, 11, 1), LocalDate.of(2020, 11, 30), 13665, 0, 0)
+        val periode3 = StønadsperiodeDto(LocalDate.of(2022, 1, 1), LocalDate.of(2023, 9, 30), 19065, 0, 0)
 
         val stønadsperioder = listOf(periode1, periode3)
         val stønadsperioderDto = StønadsperioderDto(emptyList(), emptyList(), stønadsperioder)
@@ -197,8 +197,8 @@ class SaksbehandlingServiceTest {
 
     @Test
     internal fun `perioder tidligere, nå og fremover med opphold skal mappes til TIDLIGERE_ELLER_OPPHOLD`() {
-        val periode1 = StønadsperiodeDto(LocalDate.of(2023, 11, 1), LocalDate.of(2024, 2, 29), 4215)
-        val periode2 = StønadsperiodeDto(LocalDate.of(2024, 4, 1), LocalDate.of(2025, 9, 30), 19065)
+        val periode1 = StønadsperiodeDto(LocalDate.of(2023, 11, 1), LocalDate.of(2024, 2, 29), 4215, 0, 0)
+        val periode2 = StønadsperiodeDto(LocalDate.of(2024, 4, 1), LocalDate.of(2025, 9, 30), 19065, 0, 0)
 
         val stønadsperioder = listOf(periode1, periode2)
         val stønadsperioderDto = StønadsperioderDto(stønadsperioder, emptyList(), emptyList())
