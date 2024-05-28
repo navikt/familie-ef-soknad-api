@@ -12,7 +12,6 @@ import no.nav.familie.kontrakter.ef.søknad.Stønadsstart
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 
 object StønadsstartMapper {
-
     fun mapStønadsstart(
         søknadsdato: DatoFelt?,
         søkerFraBestemtMåned: BooleanFelt,

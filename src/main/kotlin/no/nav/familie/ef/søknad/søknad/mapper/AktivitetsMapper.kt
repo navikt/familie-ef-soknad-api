@@ -36,31 +36,32 @@ import no.nav.familie.ef.søknad.søknad.domain.Arbeidsgiver as ArbeidsgiverDto
 import no.nav.familie.ef.søknad.søknad.domain.Arbeidssøker as ArbeidssøkerDto
 
 object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanningOgAndreAktiviteter) {
-
     override fun mapDto(
         data: AktivitetDto,
         vedlegg: Map<String, DokumentasjonWrapper>,
     ): Aktivitet {
         return Aktivitet(
             hvordanErArbeidssituasjonen = data.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
-            arbeidsforhold = data.arbeidsforhold?.let {
-                Søknadsfelt(OmArbeidsforholdet.hentTekst(), mapArbeidsforhold(it))
-            },
+            arbeidsforhold =
+                data.arbeidsforhold?.let {
+                    Søknadsfelt(OmArbeidsforholdet.hentTekst(), mapArbeidsforhold(it))
+                },
             firmaer = data.firmaer?.let { Søknadsfelt(OmFirmaDuDriver.hentTekst(), mapOmFirmaer(it)) },
             virksomhet = data.etablererEgenVirksomhet?.let { mapEtablererVirksomhet(it, vedlegg) },
             arbeidssøker = data.arbeidssøker?.let { mapArbeidssøker(it, vedlegg) },
             underUtdanning = data.underUtdanning?.let { UtdanningMapper.map(it) },
-            aksjeselskap = data.egetAS?.let {
-                Søknadsfelt(
-                    OmAksjeselskapetDitt.hentTekst(),
-                    it.map { aksjeselskap ->
-                        Aksjeselskap(
-                            navn = aksjeselskap.navn.tilSøknadsfelt(),
-                            arbeidsmengde = aksjeselskap.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
-                        )
-                    },
-                )
-            },
+            aksjeselskap =
+                data.egetAS?.let {
+                    Søknadsfelt(
+                        OmAksjeselskapetDitt.hentTekst(),
+                        it.map { aksjeselskap ->
+                            Aksjeselskap(
+                                navn = aksjeselskap.navn.tilSøknadsfelt(),
+                                arbeidsmengde = aksjeselskap.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
+                            )
+                        },
+                    )
+                },
             erIArbeid = data.erIArbeid?.tilSøknadsfelt(),
             erIArbeidDokumentasjon = dokumentfelt(DokumentIdentifikator.FOR_SYK_TIL_Å_JOBBE, vedlegg),
         )
@@ -92,20 +93,24 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                 kanDuSkaffeBarnepassInnenEnUke = arbeidssøker.kanSkaffeBarnepassInnenEnUke?.tilSøknadsfelt(),
                 hvorØnskerDuArbeid = arbeidssøker.hvorØnskerSøkerArbeid.tilSøknadsfelt(),
                 ønskerDuMinst50ProsentStilling = arbeidssøker.ønskerSøker50ProsentStilling.tilSøknadsfelt(),
-                ikkeVilligTilÅTaImotTilbudOmArbeidDokumentasjon = dokumentfelt(
-                    IKKE_VILLIG_TIL_ARBEID,
-                    vedlegg,
-                ),
+                ikkeVilligTilÅTaImotTilbudOmArbeidDokumentasjon =
+                    dokumentfelt(
+                        IKKE_VILLIG_TIL_ARBEID,
+                        vedlegg,
+                    ),
             ),
         )
     }
 
-    private fun mapTilArbeidssøkerDto(
-        arbeidssøker: Arbeidssøker?,
-    ): ArbeidssøkerDto? {
+    private fun mapTilArbeidssøkerDto(arbeidssøker: Arbeidssøker?): ArbeidssøkerDto? {
         if (arbeidssøker == null) return null
         return ArbeidssøkerDto(
-            hvorØnskerSøkerArbeid = TekstFelt(arbeidssøker.hvorØnskerDuArbeid.label, arbeidssøker.hvorØnskerDuArbeid.verdi, arbeidssøker.hvorØnskerDuArbeid.svarId),
+            hvorØnskerSøkerArbeid =
+                TekstFelt(
+                    arbeidssøker.hvorØnskerDuArbeid.label,
+                    arbeidssøker.hvorØnskerDuArbeid.verdi,
+                    arbeidssøker.hvorØnskerDuArbeid.svarId,
+                ),
             kanBegynneInnenEnUke = arbeidssøker.kanDuBegynneInnenEnUke.tilBooleanFelt(),
             kanSkaffeBarnepassInnenEnUke = arbeidssøker.kanDuSkaffeBarnepassInnenEnUke.tilNullableBooleanFelt(),
             registrertSomArbeidssøkerNav = arbeidssøker.registrertSomArbeidssøkerNav.tilBooleanFelt(),
@@ -172,7 +177,12 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
             ArbeidsgiverDto(
                 arbeidsmengde = arbeid.arbeidsmengde?.tilTekstFelt(),
                 sluttdato = arbeid.sluttdato?.tilNullableDatoFelt(),
-                ansettelsesforhold = TekstFelt(arbeid.fastEllerMidlertidig.label, arbeid.fastEllerMidlertidig.verdi, arbeid.fastEllerMidlertidig.svarId),
+                ansettelsesforhold =
+                    TekstFelt(
+                        arbeid.fastEllerMidlertidig.label,
+                        arbeid.fastEllerMidlertidig.verdi,
+                        arbeid.fastEllerMidlertidig.svarId,
+                    ),
                 harSluttDato = arbeid.harSluttdato.tilNullableBooleanFelt(),
                 id = "dummy",
                 navn = TekstFelt(arbeid.arbeidsgivernavn.label, arbeid.arbeidsgivernavn.verdi, arbeid.arbeidsgivernavn.svarId),

@@ -22,9 +22,10 @@ class EttersendingController(
     val ettersendingService: EttersendingService,
     val featureToggleService: FeatureToggleService,
 ) {
-
     @PostMapping
-    fun postEttersending(@RequestBody ettersending: EttersendelseDto): Kvittering {
+    fun postEttersending(
+        @RequestBody ettersending: EttersendelseDto,
+    ): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.personIdent)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }

@@ -15,7 +15,6 @@ import java.time.LocalDateTime
 
 @Component
 class SøknadOvergangsstønadMapper {
-
     fun mapTilIntern(
         dto: SøknadOvergangsstønadDto,
         innsendingMottatt: LocalDateTime,
@@ -24,25 +23,27 @@ class SøknadOvergangsstønadMapper {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
 
-        val søknad = SøknadOvergangsstønad(
-            innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
-            personalia = PersonaliaMapper.map(dto.person.søker),
-            adresseopplysninger = AdresseopplysningerMapper.map(
-                AdresseopplysningerData(
-                    dto.søkerBorPåRegistrertAdresse,
-                    dto.adresseopplysninger,
-                ),
-                vedlegg,
-            ),
-            sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
-            medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
-            bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
-            sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
-            barn = dto.person.barn.tilSøknadsfelt(vedlegg),
-            aktivitet = AktivitetsMapper.map(dto.aktivitet, vedlegg),
-            situasjon = SituasjonsMapper.map(dto, vedlegg),
-            stønadsstart = mapStønadsstart(dto.merOmDinSituasjon.søknadsdato, dto.merOmDinSituasjon.søkerFraBestemtMåned),
-        )
+        val søknad =
+            SøknadOvergangsstønad(
+                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
+                personalia = PersonaliaMapper.map(dto.person.søker),
+                adresseopplysninger =
+                    AdresseopplysningerMapper.map(
+                        AdresseopplysningerData(
+                            dto.søkerBorPåRegistrertAdresse,
+                            dto.adresseopplysninger,
+                        ),
+                        vedlegg,
+                    ),
+                sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
+                medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
+                bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
+                sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
+                barn = dto.person.barn.tilSøknadsfelt(vedlegg),
+                aktivitet = AktivitetsMapper.map(dto.aktivitet, vedlegg),
+                situasjon = SituasjonsMapper.map(dto, vedlegg),
+                stønadsstart = mapStønadsstart(dto.merOmDinSituasjon.søknadsdato, dto.merOmDinSituasjon.søkerFraBestemtMåned),
+            )
 
         OvergangsstønadValidering.validate(søknad)
 

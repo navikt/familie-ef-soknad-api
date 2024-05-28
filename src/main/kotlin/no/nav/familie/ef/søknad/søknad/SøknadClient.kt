@@ -26,7 +26,6 @@ class SøknadClient(
     @Qualifier("tokenExchange") operations: RestOperations,
 ) :
     AbstractPingableRestClient(operations, "søknad.innsending") {
-
     override val pingUri: URI = config.pingUri
 
     fun sendInn(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto {

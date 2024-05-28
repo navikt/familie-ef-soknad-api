@@ -8,7 +8,6 @@ import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
 
 internal class AktivitetsMapperTest {
-
     // Gitt
     private val aktivitet = søknadDto().aktivitet
 

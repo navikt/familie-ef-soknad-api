@@ -15,7 +15,6 @@ import java.time.LocalDateTime
 import no.nav.familie.kontrakter.ef.søknad.Arbeidssøker as ArbeidssøkerKontrakt
 
 object SkjemaMapper {
-
     fun mapTilKontrakt(
         arbeidssøker: Arbeidssøker,
         fnr: String,
@@ -25,29 +24,33 @@ object SkjemaMapper {
         kontekst.set(Språk.fromString(arbeidssøker.locale))
         val arbeidssøkerKontrakt = arbeidssøker.toArbeidssøkerKontrakt()
         return SkjemaForArbeidssøker(
-            innsendingsdetaljer = Søknadsfelt(
-                Språktekster.Innsendingsdetaljer.hentTekst(),
-                Innsendingsdetaljer(
-                    Søknadsfelt(
-                        Språktekster.DatoMottatt.hentTekst(),
-                        innsendingMottatt,
+            innsendingsdetaljer =
+                Søknadsfelt(
+                    Språktekster.Innsendingsdetaljer.hentTekst(),
+                    Innsendingsdetaljer(
+                        Søknadsfelt(
+                            Språktekster.DatoMottatt.hentTekst(),
+                            innsendingMottatt,
+                        ),
                     ),
                 ),
-            ),
             arbeidssøker = arbeidssøkerKontrakt,
-            personaliaArbeidssøker = Søknadsfelt(
-                "NAV 15-08.01",
-                PersonaliaArbeidssøker(
-                    navn = Søknadsfelt(
-                        Språktekster.Navn.hentTekst(),
-                        navn,
-                    ),
-                    fødselsnummer = Søknadsfelt(
-                        Språktekster.Fødselsnummer.hentTekst(),
-                        Fødselsnummer(fnr),
+            personaliaArbeidssøker =
+                Søknadsfelt(
+                    "NAV 15-08.01",
+                    PersonaliaArbeidssøker(
+                        navn =
+                            Søknadsfelt(
+                                Språktekster.Navn.hentTekst(),
+                                navn,
+                            ),
+                        fødselsnummer =
+                            Søknadsfelt(
+                                Språktekster.Fødselsnummer.hentTekst(),
+                                Fødselsnummer(fnr),
+                            ),
                     ),
                 ),
-            ),
         )
     }
 }
@@ -56,27 +59,32 @@ fun Arbeidssøker.toArbeidssøkerKontrakt(): Søknadsfelt<ArbeidssøkerKontrakt>
     return Søknadsfelt(
         Språktekster.EnsligMorEllerFarSomErArbeidssøker.hentTekst(),
         ArbeidssøkerKontrakt(
-            ønskerDuMinst50ProsentStilling = Søknadsfelt(
-                ønskerSøker50ProsentStilling.label,
-                ønskerSøker50ProsentStilling.verdi,
-            ),
-            hvorØnskerDuArbeid = Søknadsfelt(
-                hvorØnskerSøkerArbeid.label,
-                hvorØnskerSøkerArbeid.verdi,
-            ),
+            ønskerDuMinst50ProsentStilling =
+                Søknadsfelt(
+                    ønskerSøker50ProsentStilling.label,
+                    ønskerSøker50ProsentStilling.verdi,
+                ),
+            hvorØnskerDuArbeid =
+                Søknadsfelt(
+                    hvorØnskerSøkerArbeid.label,
+                    hvorØnskerSøkerArbeid.verdi,
+                ),
             kanDuSkaffeBarnepassInnenEnUke = kanSkaffeBarnepassInnenEnUke?.tilSøknadsfelt(),
-            kanDuBegynneInnenEnUke = Søknadsfelt(
-                kanBegynneInnenEnUke.label,
-                kanBegynneInnenEnUke.verdi,
-            ),
-            villigTilÅTaImotTilbudOmArbeid = Søknadsfelt(
-                villigTilÅTaImotTilbudOmArbeid.label,
-                villigTilÅTaImotTilbudOmArbeid.verdi,
-            ),
-            registrertSomArbeidssøkerNav = Søknadsfelt(
-                registrertSomArbeidssøkerNav.label,
-                registrertSomArbeidssøkerNav.verdi,
-            ),
+            kanDuBegynneInnenEnUke =
+                Søknadsfelt(
+                    kanBegynneInnenEnUke.label,
+                    kanBegynneInnenEnUke.verdi,
+                ),
+            villigTilÅTaImotTilbudOmArbeid =
+                Søknadsfelt(
+                    villigTilÅTaImotTilbudOmArbeid.label,
+                    villigTilÅTaImotTilbudOmArbeid.verdi,
+                ),
+            registrertSomArbeidssøkerNav =
+                Søknadsfelt(
+                    registrertSomArbeidssøkerNav.label,
+                    registrertSomArbeidssøkerNav.verdi,
+                ),
         ),
     )
 }

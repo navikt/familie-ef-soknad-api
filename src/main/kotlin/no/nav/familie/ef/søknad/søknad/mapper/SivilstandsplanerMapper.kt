@@ -7,7 +7,6 @@ import no.nav.familie.ef.søknad.utils.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsplaner
 
 object SivilstandsplanerMapper : Mapper<Bosituasjon, Sivilstandsplaner>(Fremtidsplaner) {
-
     override fun mapDto(data: Bosituasjon): Sivilstandsplaner {
         return Sivilstandsplaner(
             harPlaner = data.skalGifteSegEllerBliSamboer?.tilSøknadsfelt(),

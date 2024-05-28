@@ -16,7 +16,6 @@ import java.time.LocalDateTime
 
 @Component
 class SøknadSkolepengerMapper {
-
     fun mapTilIntern(
         dto: SøknadSkolepengerDto,
         innsendingMottatt: LocalDateTime,
@@ -24,26 +23,29 @@ class SøknadSkolepengerMapper {
     ): SøknadMedVedlegg<SøknadSkolepenger> {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
-        val søknadSkolepenger = SøknadSkolepenger(
-            innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
-            personalia = PersonaliaMapper.map(dto.person.søker),
-            adresseopplysninger = AdresseopplysningerMapper.map(
-                AdresseopplysningerData(
-                    dto.søkerBorPåRegistrertAdresse,
-                    dto.adresseopplysninger,
-                ),
-                vedlegg,
-            ),
-            barn = dto.person.barn.tilSøknadsfelt(vedlegg),
-            sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
-            medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
-            bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
-            sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
-            utdanning = UtdanningMapper.map(dto.utdanning),
-            dokumentasjon = SkolepengerDokumentasjon(
-                utdanningsutgifter = dokumentfelt(DokumentIdentifikator.UTGIFTER_UTDANNING, vedlegg),
-            ),
-        )
+        val søknadSkolepenger =
+            SøknadSkolepenger(
+                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
+                personalia = PersonaliaMapper.map(dto.person.søker),
+                adresseopplysninger =
+                    AdresseopplysningerMapper.map(
+                        AdresseopplysningerData(
+                            dto.søkerBorPåRegistrertAdresse,
+                            dto.adresseopplysninger,
+                        ),
+                        vedlegg,
+                    ),
+                barn = dto.person.barn.tilSøknadsfelt(vedlegg),
+                sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
+                medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
+                bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
+                sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
+                utdanning = UtdanningMapper.map(dto.utdanning),
+                dokumentasjon =
+                    SkolepengerDokumentasjon(
+                        utdanningsutgifter = dokumentfelt(DokumentIdentifikator.UTGIFTER_UTDANNING, vedlegg),
+                    ),
+            )
 
         return SøknadMedVedlegg(
             søknadSkolepenger,

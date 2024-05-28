@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test
 class SafClientTest {
     @Test
     fun mapping() {
-        val response = """
+        val response =
+            """
             {
               "data": {
                 "dokumentoversiktSelvbetjening": {
@@ -23,7 +24,7 @@ class SafClientTest {
                 }
               }
             }
-        """.trimIndent()
+            """.trimIndent()
         objectMapper.readValue<SafDokumentOversiktResponse<DokumentoversiktSelvbetjeningResponse>>(response)
     }
 }

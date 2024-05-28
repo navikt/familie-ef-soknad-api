@@ -17,7 +17,6 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.felles.Fødselsnummer
 
 object PersonMinimumMapper {
-
     fun map(samboerDetaljer: SamboerDetaljer): Søknadsfelt<PersonMinimum> {
         return Søknadsfelt(OmSamboer.hentTekst(), personMinimum(samboerDetaljer))
     }

@@ -35,7 +35,6 @@ import java.util.UUID
 )
 @EnableMockOAuth2Server
 abstract class OppslagSpringRunnerTest {
-
     protected val listAppender = initLoggingEventListAppender()
     protected var loggingEvents: MutableList<ILoggingEvent> = listAppender.list
     protected val restTemplate = TestRestTemplate()
@@ -81,7 +80,6 @@ abstract class OppslagSpringRunnerTest {
         clientId: String = UUID.randomUUID().toString(),
         audience: String = "familie-app",
         claims: Map<String, Any> = mapOf("acr" to "Level4"),
-
     ): String {
         return this.issueToken(
             issuerId,
@@ -97,8 +95,8 @@ abstract class OppslagSpringRunnerTest {
     }
 
     companion object {
-
         private const val LOCALHOST = "http://localhost:"
+
         protected fun initLoggingEventListAppender(): ListAppender<ILoggingEvent> {
             val listAppender = ListAppender<ILoggingEvent>()
             listAppender.start()

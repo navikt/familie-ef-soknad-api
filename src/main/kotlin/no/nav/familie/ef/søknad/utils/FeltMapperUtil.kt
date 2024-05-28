@@ -25,19 +25,28 @@ fun BooleanFelt.tilSøknadsfelt(): Søknadsfelt<Boolean> = Søknadsfelt(this.lab
 fun HeltallFelt.tilSøknadsfelt(): Søknadsfelt<Int> = Søknadsfelt(this.label, this.verdi)
 
 fun TekstFelt.tilSøknadsfelt(): Søknadsfelt<String> = Søknadsfelt(label = this.label, verdi = this.verdi, svarId = this.svarid)
+
 fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsfelt(label = this.label, verdi = t.invoke(this.verdi))
 
-fun Søknadsfelt<Fødselsnummer>?.fødselsnummerTilTekstFelt(): TekstFelt? = this?.let { TekstFelt(it.label, it.verdi.verdi, it.svarId?.verdi) }
+fun Søknadsfelt<Fødselsnummer>?.fødselsnummerTilTekstFelt(): TekstFelt? =
+    this?.let {
+        TekstFelt(it.label, it.verdi.verdi, it.svarId?.verdi)
+    }
 
 fun <T> Søknadsfelt<T>?.tilNullableDatoFelt() = this?.let { DatoFelt(it.label, it.verdi.toString()) }
-fun <T>Søknadsfelt<T>.tilDatoFelt() = DatoFelt(this.label, this.verdi.toString())
+
+fun <T> Søknadsfelt<T>.tilDatoFelt() = DatoFelt(this.label, this.verdi.toString())
+
 fun Søknadsfelt<Boolean>?.tilNullableBooleanFelt() = this?.let { BooleanFelt(it.label, it.verdi, it.svarId.toString()) }
+
 fun Søknadsfelt<Boolean>.tilBooleanFelt() = BooleanFelt(this.label, this.verdi, this.svarId.toString())
+
 fun <T> Søknadsfelt<T>?.tilNullableTekstFelt() = this?.let { TekstFelt(it.label, it.verdi.toString(), it.svarId.toString()) }
 
 fun <T> Søknadsfelt<T>.tilTekstFelt() = TekstFelt(this.label, this.verdi.toString(), this.svarId.toString())
 
 fun Søknadsfelt<List<String>>.tilListFelt() = ListFelt(label, verdi.map { it }, alternativer, svarId)
+
 fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<MånedÅrPeriode> =
     Søknadsfelt(
         this.label ?: error("Savner label"),
@@ -62,6 +71,7 @@ fun List<Dokumentasjonsbehov>.tilKontrakt(): List<DokumentasjonsbehovKontrakt> =
     }
 
 fun String.tilDesimaltall(): Double = this.replace(",", ".").toDouble()
+
 fun String.tilHeltall(): Int = this.tilDesimaltall().toInt()
 
 fun DatoFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? {
@@ -106,13 +116,14 @@ private fun fraStrengTilLocalDate(verdi: String): LocalDate {
 fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, DokumentasjonWrapper> {
     return dokumentasjonsbehov.associate {
         // it.id er dokumenttype/tittel, eks "Gift i utlandet"
-        val vedlegg = it.opplastedeVedlegg.map { dokumentFelt ->
-            Vedlegg(
-                id = dokumentFelt.dokumentId,
-                navn = dokumentFelt.navn,
-                tittel = it.label,
-            )
-        }
+        val vedlegg =
+            it.opplastedeVedlegg.map { dokumentFelt ->
+                Vedlegg(
+                    id = dokumentFelt.dokumentId,
+                    navn = dokumentFelt.navn,
+                    tittel = it.label,
+                )
+            }
         val harSendtInn = Søknadsfelt(Språktekster.SendtInnTidligere.hentTekst(), it.harSendtInn)
         it.id to DokumentasjonWrapper(it.label, harSendtInn, vedlegg)
     }

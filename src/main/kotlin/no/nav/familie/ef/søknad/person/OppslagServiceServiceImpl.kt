@@ -23,17 +23,18 @@ internal class OppslagServiceServiceImpl(
     private val regelverkConfig: RegelverkConfig,
     private val søkerinfoMapper: SøkerinfoMapper,
 ) : OppslagService {
-
     override fun hentSøkerinfo(): Søkerinfo {
         val søkersPersonIdent = EksternBrukerUtils.hentFnrFraToken()
         val pdlSøker = pdlClient.hentSøker(søkersPersonIdent)
-        val barnIdentifikatorer = pdlSøker.forelderBarnRelasjon
-            .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
-            .mapNotNull { it.relatertPersonsIdent }
+        val barnIdentifikatorer =
+            pdlSøker.forelderBarnRelasjon
+                .filter { it.relatertPersonsRolle == Familierelasjonsrolle.BARN }
+                .mapNotNull { it.relatertPersonsIdent }
         val pdlBarn = pdlApp2AppClient.hentBarn(barnIdentifikatorer)
-        val aktuelleBarn = pdlBarn
-            .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
-            .filter { erILive(it.value) }
+        val aktuelleBarn =
+            pdlBarn
+                .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
+                .filter { erILive(it.value) }
 
         val andreForeldre = hentAndreForeldre(aktuelleBarn, søkersPersonIdent)
         validerAdressesperrePåSøkerMedRelasjoner(pdlSøker, aktuelleBarn, andreForeldre)
@@ -86,8 +87,7 @@ internal class OppslagServiceServiceImpl(
             .let { pdlApp2AppClient.hentAndreForeldre(it) }
     }
 
-    fun erILive(pdlBarn: PdlBarn) =
-        pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
+    fun erILive(pdlBarn: PdlBarn) = pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
 
     fun erIAktuellAlder(fødselsdato: LocalDate?): Boolean {
         if (fødselsdato == null) {

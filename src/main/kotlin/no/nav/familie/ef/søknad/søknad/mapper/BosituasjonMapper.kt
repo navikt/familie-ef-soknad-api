@@ -17,8 +17,10 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Bosituasjon as KontraktBosituasjon
 
 object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>(Språktekster.Bosituasjon) {
-
-    override fun mapDto(data: Bosituasjon, vedlegg: Map<String, DokumentasjonWrapper>): KontraktBosituasjon {
+    override fun mapDto(
+        data: Bosituasjon,
+        vedlegg: Map<String, DokumentasjonWrapper>,
+    ): KontraktBosituasjon {
         return KontraktBosituasjon(
             delerDuBolig = mapSøkerDelerBoligMedAndre(data),
             samboerdetaljer = mapSamboer(data),
@@ -36,7 +38,10 @@ object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>(Sp
         }
     }
 
-    fun mapTilDto(bosituasjon: KontraktBosituasjon, sivilstandsplaner: Sivilstandsplaner?): Bosituasjon {
+    fun mapTilDto(
+        bosituasjon: KontraktBosituasjon,
+        sivilstandsplaner: Sivilstandsplaner?,
+    ): Bosituasjon {
         return Bosituasjon(
             delerBoligMedAndreVoksne = bosituasjon.delerDuBolig.tilNullableTekstFelt() ?: TekstFelt("", ""),
             datoFlyttetSammenMedSamboer = bosituasjon.sammenflyttingsdato.tilNullableDatoFelt(),

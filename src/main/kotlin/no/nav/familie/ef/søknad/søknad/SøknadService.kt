@@ -19,7 +19,6 @@ class SøknadService(
     private val barnetilsynMapper: SøknadBarnetilsynMapper,
     private val skolepengerMapper: SøknadSkolepengerMapper,
 ) {
-
     fun sendInn(
         søknad: SøknadOvergangsstønadDto,
         innsendingMottatt: LocalDateTime,
@@ -29,13 +28,19 @@ class SøknadService(
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-    fun sendInn(søknad: SøknadBarnetilsynDto, innsendingMottatt: LocalDateTime): Kvittering {
+    fun sendInn(
+        søknad: SøknadBarnetilsynDto,
+        innsendingMottatt: LocalDateTime,
+    ): Kvittering {
         val søknadRequestData = barnetilsynMapper.mapTilIntern(søknad, innsendingMottatt)
         val kvittering = søknadClient.sendInnBarnetilsynsøknad(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-    fun sendInn(søknad: SøknadSkolepengerDto, innsendingMottatt: LocalDateTime): Kvittering {
+    fun sendInn(
+        søknad: SøknadSkolepengerDto,
+        innsendingMottatt: LocalDateTime,
+    ): Kvittering {
         val søknadRequestData = skolepengerMapper.mapTilIntern(søknad, innsendingMottatt)
         val kvittering = søknadClient.sendInnSkolepenger(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)

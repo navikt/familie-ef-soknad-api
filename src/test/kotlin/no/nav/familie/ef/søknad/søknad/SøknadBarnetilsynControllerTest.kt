@@ -29,7 +29,6 @@ import java.time.LocalDateTime
 @Profile("overgangsstonad-controller-test")
 @Configuration
 class SøknadBarnetilsynControllerTestConfiguration {
-
     @Primary
     @Bean
     fun søknadService(): SøknadService = mockk()
@@ -41,7 +40,6 @@ class SøknadBarnetilsynControllerTestConfiguration {
 
 @ActiveProfiles("overgangsstonad-controller-test")
 internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
-
     @Autowired
     lateinit var søknadService: SøknadService
 
@@ -55,28 +53,32 @@ internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
         headers.setBearerAuth(søkerBearerToken(tokenSubject))
     }
 
-    fun søknadBarnetilsynDto(): SøknadBarnetilsynDto = objectMapper
-        .readValue(
-            File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
-            SøknadBarnetilsynDto::class.java,
-        )
+    fun søknadBarnetilsynDto(): SøknadBarnetilsynDto =
+        objectMapper
+            .readValue(
+                File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
+                SøknadBarnetilsynDto::class.java,
+            )
 
     @Test
     fun `sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
-        val søknad = søknadBarnetilsynDto()
-            .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf()))
+        val søknad =
+            søknadBarnetilsynDto()
+                .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf()))
 
-        every { søknadService.sendInn(søknad, any()) } returns Kvittering(
-            "Mottatt søknad: $søknad",
-            LocalDateTime.now(),
-        )
+        every { søknadService.sendInn(søknad, any()) } returns
+            Kvittering(
+                "Mottatt søknad: $søknad",
+                LocalDateTime.now(),
+            )
         every { featureToggleService.isEnabled(any()) } returns true
 
-        val response = restTemplate.exchange<Kvittering>(
-            localhost("/api/soknad/barnetilsyn"),
-            HttpMethod.POST,
-            HttpEntity(søknad, headers),
-        )
+        val response =
+            restTemplate.exchange<Kvittering>(
+                localhost("/api/soknad/barnetilsyn"),
+                HttpMethod.POST,
+                HttpEntity(søknad, headers),
+            )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body?.text).isEqualTo("ok")
@@ -86,11 +88,12 @@ internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
     fun `sendInn returnerer 403 ved ulik fnr i token og søknad`() {
         val søknadBarnetilsynDto = søknadBarnetilsynDto()
 
-        val response = restTemplate.exchange<Any>(
-            localhost("/api/soknad/barnetilsyn"),
-            HttpMethod.POST,
-            HttpEntity(søknadBarnetilsynDto, headers),
-        )
+        val response =
+            restTemplate.exchange<Any>(
+                localhost("/api/soknad/barnetilsyn"),
+                HttpMethod.POST,
+                HttpEntity(søknadBarnetilsynDto, headers),
+            )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
         verify(exactly = 0) { søknadService.sendInn(søknadBarnetilsynDto, any()) }

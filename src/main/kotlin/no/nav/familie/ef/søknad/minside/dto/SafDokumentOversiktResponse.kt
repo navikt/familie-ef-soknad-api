@@ -4,7 +4,6 @@ data class SafDokumentOversiktResponse<T>(
     val data: T,
     val errors: List<SafError>? = null,
 ) {
-
     fun harFeil(): Boolean {
         return !errors.isNullOrEmpty()
     }

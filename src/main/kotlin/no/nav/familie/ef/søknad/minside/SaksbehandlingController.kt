@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/saksbehandling")
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 class SaksbehandlingController(private val saksbehandlingService: SaksbehandlingService) {
-
     @GetMapping("/stonadsperioder")
     fun hentStønadsperioderForBruker() = saksbehandlingService.hentStønadsperioderForBruker()
 }

@@ -7,7 +7,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class AdresseopplysningerMapperTest {
-
     private val søknadDto = søknadDto()
     private val adresseopplysningerData =
         AdresseopplysningerData(søknadDto.søkerBorPåRegistrertAdresse, søknadDto.adresseopplysninger)
@@ -28,10 +27,11 @@ internal class AdresseopplysningerMapperTest {
 
     @Test
     fun `mapper verdier for adresse - personen bor på registrert adresse`() {
-        val data = adresseopplysningerData.copy(
-            søkerBorPåRegistrertAdresse = BooleanFelt("Spørsmål 1", true),
-            adresseopplysninger = null,
-        )
+        val data =
+            adresseopplysningerData.copy(
+                søkerBorPåRegistrertAdresse = BooleanFelt("Spørsmål 1", true),
+                adresseopplysninger = null,
+            )
         val bosituasjonMapped = AdresseopplysningerMapper.map(data, dokumenter).verdi
 
         assertThat(bosituasjonMapped.søkerBorPåRegistrertAdresse?.label).isEqualTo("Spørsmål 1")

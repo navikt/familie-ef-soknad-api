@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
 internal class KvitteringDtoMapperTest {
-
     private val innsendingMottatt = LocalDateTime.now()
 
     @Test

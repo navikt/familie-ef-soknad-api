@@ -32,7 +32,6 @@ import java.time.temporal.ChronoUnit
     BearerTokenClientCredentialsClientInterceptor::class,
 )
 internal class ApplicationConfig {
-
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
 
     @Bean

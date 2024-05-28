@@ -7,12 +7,12 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Configuration
-class PdlConfig(@Value("\${PDL_URL}") pdlUrl: URI) {
-
+class PdlConfig(
+    @Value("\${PDL_URL}") pdlUrl: URI,
+) {
     val pdlUri: URI = UriComponentsBuilder.fromUri(pdlUrl).pathSegment(PATH_GRAPHQL).build().toUri()
 
     companion object {
-
         const val PATH_GRAPHQL = "graphql"
 
         val søkerQuery = graphqlQuery("/pdl/søker.graphql")
@@ -21,9 +21,10 @@ class PdlConfig(@Value("\${PDL_URL}") pdlUrl: URI) {
 
         val annenForelderQuery = graphqlQuery("/pdl/andreForeldre.graphql")
 
-        private fun graphqlQuery(path: String) = PdlConfig::class.java.getResource(path)
-            .readText()
-            .graphqlCompatible()
+        private fun graphqlQuery(path: String) =
+            PdlConfig::class.java.getResource(path)
+                .readText()
+                .graphqlCompatible()
 
         private fun String.graphqlCompatible(): String {
             return StringUtils.normalizeSpace(this.replace("\n", ""))

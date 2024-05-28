@@ -5,7 +5,6 @@ import no.nav.familie.kontrakter.felles.ef.StønadType
 import java.time.LocalDateTime
 
 object EttersendingMapper {
-
     fun groupByStønad(
         dto: EttersendelseDto,
         innsendingMottatt: LocalDateTime,

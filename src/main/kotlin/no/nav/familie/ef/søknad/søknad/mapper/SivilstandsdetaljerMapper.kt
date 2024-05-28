@@ -19,7 +19,6 @@ import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 
 object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdetaljer>(ÅrsakTilAleneMedBarn) {
-
     override fun mapDto(
         data: Sivilstatus,
         vedlegg: Map<String, DokumentasjonWrapper>,
@@ -34,16 +33,17 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
             separasjonsbekreftelse = dokumentfelt(SEPARASJON_ELLER_SKILSMISSE, vedlegg),
             erUformeltSeparertEllerSkilt = data.erUformeltSeparertEllerSkilt?.tilSøknadsfelt(),
             erUformeltSeparertEllerSkiltDokumentasjon =
-            dokumentfelt(UFORMELL_SEPARASJON_ELLER_SKILSMISSE, vedlegg),
+                dokumentfelt(UFORMELL_SEPARASJON_ELLER_SKILSMISSE, vedlegg),
             datoSøktSeparasjon = data.datoSøktSeparasjon?.tilSøknadsfelt(),
             søktOmSkilsmisseSeparasjon = data.harSøktSeparasjon?.tilSøknadsfelt(),
             årsakEnslig = data.årsakEnslig?.tilSøknadsfelt(),
-            tidligereSamboerdetaljer = data.tidligereSamboerDetaljer?.let {
-                Søknadsfelt(
-                    OmDenTidligereSamboeren.hentTekst(),
-                    PersonMinimumMapper.personMinimum(it),
-                )
-            },
+            tidligereSamboerdetaljer =
+                data.tidligereSamboerDetaljer?.let {
+                    Søknadsfelt(
+                        OmDenTidligereSamboeren.hentTekst(),
+                        PersonMinimumMapper.personMinimum(it),
+                    )
+                },
         )
     }
 
@@ -53,11 +53,12 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
             datoForSamlivsbrudd = sivilstandsdetaljer.samlivsbruddsdato.tilNullableDatoFelt(),
             datoFlyttetFraHverandre = sivilstandsdetaljer.fraflytningsdato.tilNullableDatoFelt(),
             datoEndretSamvær = sivilstandsdetaljer.endringSamværsordningDato.tilNullableDatoFelt(),
-            tidligereSamboerDetaljer = sivilstandsdetaljer.tidligereSamboerdetaljer?.let {
-                PersonMinimumMapper.mapTilDto(
-                    it.verdi,
-                )
-            },
+            tidligereSamboerDetaljer =
+                sivilstandsdetaljer.tidligereSamboerdetaljer?.let {
+                    PersonMinimumMapper.mapTilDto(
+                        it.verdi,
+                    )
+                },
         )
     }
 }

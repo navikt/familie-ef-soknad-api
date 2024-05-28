@@ -22,19 +22,20 @@ class PdlClient(
     @Qualifier("tokenExchange") restOperations: RestOperations,
 ) :
     AbstractPingableRestClient(restOperations, "pdl.personinfo") {
-
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentSøker(personIdent: String): PdlSøker {
-        val pdlPersonRequest = PdlPersonRequest(
-            variables = PdlPersonRequestVariables(personIdent),
-            query = PdlConfig.søkerQuery,
-        )
-        val pdlResponse: PdlResponse<PdlSøkerData> = postForEntity(
-            pdlConfig.pdlUri,
-            pdlPersonRequest,
-            httpHeaders(),
-        )
+        val pdlPersonRequest =
+            PdlPersonRequest(
+                variables = PdlPersonRequestVariables(personIdent),
+                query = PdlConfig.søkerQuery,
+            )
+        val pdlResponse: PdlResponse<PdlSøkerData> =
+            postForEntity(
+                pdlConfig.pdlUri,
+                pdlPersonRequest,
+                httpHeaders(),
+            )
         return feilsjekkOgReturnerData(personIdent, pdlResponse) { it.person }
     }
 

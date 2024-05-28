@@ -6,7 +6,6 @@ import java.net.URI
 
 @ConfigurationProperties("familie.ef.mottak")
 data class MottakConfig(val uri: URI) {
-
     internal val sendInnOvergangsstønadUri = byggUri(PATH_SEND_INN_OVERGANGSSTØNAD)
     internal val sendInnSkjemaArbeidUri = byggUri(PATH_SEND_INN_ARBEIDS_SKJEMA)
     internal val sendInnBarnetilsynUri = byggUri(PATH_SEND_INN_BARNETILSYNSØKNAD)
@@ -22,7 +21,6 @@ data class MottakConfig(val uri: URI) {
     private fun byggUri(path: String) = UriComponentsBuilder.fromUri(uri).path(path).build().toUri()
 
     companion object {
-
         private const val PATH_SEND_INN_OVERGANGSSTØNAD = "/soknad/overgangsstonad"
         private const val PATH_SEND_INN_ARBEIDS_SKJEMA = "/skjema"
         private const val PATH_SEND_INN_BARNETILSYNSØKNAD = "/soknad/barnetilsyn"

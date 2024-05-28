@@ -25,34 +25,36 @@ import no.nav.familie.ef.søknad.person.dto.Vegadresse
 import java.time.LocalDate
 
 object PdlTestdata {
-
-    private val vegadresse = Vegadresse(
-        "",
-        "",
-        "",
-        "",
-        "",
-        0L,
-    )
+    private val vegadresse =
+        Vegadresse(
+            "",
+            "",
+            "",
+            "",
+            "",
+            0L,
+        )
 
     private val navn = listOf(Navn("", "", ""))
 
     private val matrikkeladresse = Matrikkeladresse(null, null, null)
     private val matrikkeladresseBarn = MatrikkeladresseBarn(null)
 
-    private val bostedsadresse = listOf(
-        Bostedsadresse(
-            vegadresse,
-            matrikkeladresse,
-        ),
-    )
+    private val bostedsadresse =
+        listOf(
+            Bostedsadresse(
+                vegadresse,
+                matrikkeladresse,
+            ),
+        )
 
-    private val bostedsadresseBarn = listOf(
-        BostedsadresseBarn(
-            vegadresse,
-            matrikkeladresseBarn,
-        ),
-    )
+    private val bostedsadresseBarn =
+        listOf(
+            BostedsadresseBarn(
+                vegadresse,
+                matrikkeladresseBarn,
+            ),
+        )
 
     private val forelderBarnRelasjon = listOf(ForelderBarnRelasjon("", BARN))
     private val barnsRelasjoner = listOf(ForelderBarnRelasjon("", FAR))
@@ -80,12 +82,13 @@ object PdlTestdata {
                     PdlBarn(
                         adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
                         bostedsadresse = bostedsadresseBarn,
-                        deltBosted = listOf(
-                            DeltBosted(
-                                LocalDate.now(),
-                                LocalDate.now(),
+                        deltBosted =
+                            listOf(
+                                DeltBosted(
+                                    LocalDate.now(),
+                                    LocalDate.now(),
+                                ),
                             ),
-                        ),
                         navn = navn,
                         fødsel = listOf(Fødsel(1, LocalDate.now())),
                         dødsfall = listOf(Dødsfall(LocalDate.now())),

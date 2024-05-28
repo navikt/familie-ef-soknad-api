@@ -12,11 +12,12 @@ import java.time.LocalDateTime
 @RestController
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 class EttersendingControllerMock {
-
     private val innsendingMottatt = LocalDateTime.now()
 
     @PostMapping("/api/ettersending/test")
-    fun postEttersending(@RequestBody msgBody: Map<Any, Any>): Kvittering {
+    fun postEttersending(
+        @RequestBody msgBody: Map<Any, Any>,
+    ): Kvittering {
         val valueAsString = objectMapper.writeValueAsString((msgBody))
         return Kvittering("Kontakt med api, ettersending er ikke sendt inn. Du forsøkte å sende inn:  $valueAsString", innsendingMottatt)
     }

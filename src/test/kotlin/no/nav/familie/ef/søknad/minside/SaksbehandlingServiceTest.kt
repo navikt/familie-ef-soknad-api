@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 class SaksbehandlingServiceTest {
-
     private val saksbehandlingClient = mockk<SaksbehandlingClient>()
     private val saksbehandlingService = SaksbehandlingService(saksbehandlingClient)
 

@@ -8,17 +8,17 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class DokumentfeltUtilTest {
-
     @Test
     internal fun `hent dokumentfelt med 2 vedlegg`() {
-        val dokumentasjonWrapper = DokumentasjonWrapper(
-            "label",
-            Søknadsfelt("Har sendt inn tidligere", false),
-            listOf(
-                Vedlegg("id1", "dok1.pdf", "Tittel på dok"),
-                Vedlegg("id2", "dok2.pdf", "Annen tittel på dok"),
-            ),
-        )
+        val dokumentasjonWrapper =
+            DokumentasjonWrapper(
+                "label",
+                Søknadsfelt("Har sendt inn tidligere", false),
+                listOf(
+                    Vedlegg("id1", "dok1.pdf", "Tittel på dok"),
+                    Vedlegg("id2", "dok2.pdf", "Annen tittel på dok"),
+                ),
+            )
         val vedleggMap = mapOf(DokumentIdentifikator.SYKDOM.name to dokumentasjonWrapper)
 
         val dokumenter = dokumentfelt(DokumentIdentifikator.SYKDOM, vedleggMap)!!
@@ -34,11 +34,12 @@ internal class DokumentfeltUtilTest {
 
     @Test
     internal fun `hent dokumentfelt med har sendt inn tidligere`() {
-        val dokumentasjonWrapper = DokumentasjonWrapper(
-            "label",
-            Søknadsfelt("Har sendt inn tidligere", true),
-            listOf(),
-        )
+        val dokumentasjonWrapper =
+            DokumentasjonWrapper(
+                "label",
+                Søknadsfelt("Har sendt inn tidligere", true),
+                listOf(),
+            )
         val vedleggMap = mapOf(DokumentIdentifikator.SYKDOM.name to dokumentasjonWrapper)
 
         val dokumenter = dokumentfelt(DokumentIdentifikator.SYKDOM, vedleggMap)!!

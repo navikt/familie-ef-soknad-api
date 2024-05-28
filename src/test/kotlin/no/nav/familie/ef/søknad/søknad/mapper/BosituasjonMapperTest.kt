@@ -11,7 +11,6 @@ import java.io.File
 import java.time.LocalDate
 
 internal class BosituasjonMapperTest {
-
     private val bosituasjon = søknadDto().bosituasjon
     private val bosituasjonSamboer = getBosituasjon("bosituasjonSamboer.json")
     private val bosituasjonGifteplaner = getBosituasjon("sivilstandsplaner.json")
@@ -97,8 +96,9 @@ internal class BosituasjonMapperTest {
         assertThat(samboerdetaljer?.verdi?.fødselsdato?.verdi).isEqualTo(LocalDate.parse("1976-07-26"))
     }
 
-    private fun getBosituasjon(fileName: String) = objectMapper.readValue(
-        File("src/test/resources/$fileName"),
-        Bosituasjon::class.java,
-    )
+    private fun getBosituasjon(fileName: String) =
+        objectMapper.readValue(
+            File("src/test/resources/$fileName"),
+            Bosituasjon::class.java,
+        )
 }

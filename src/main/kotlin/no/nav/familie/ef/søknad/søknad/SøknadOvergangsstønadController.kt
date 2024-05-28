@@ -20,9 +20,10 @@ import java.time.LocalDateTime
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
 class SøknadOvergangsstønadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
-
     @PostMapping
-    fun sendInn(@RequestBody søknad: SøknadOvergangsstønadDto): Kvittering {
+    fun sendInn(
+        @RequestBody søknad: SøknadOvergangsstønadDto,
+    ): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }

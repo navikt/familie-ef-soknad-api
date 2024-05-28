@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class JournalpostService(private val safClient: SafClient) {
-
     private val logger = LoggerFactory.getLogger(javaClass)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 

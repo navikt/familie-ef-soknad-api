@@ -6,7 +6,8 @@ import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.kontrakter.felles.objectMapper
 import java.io.File
 
-fun søknadDto(): SøknadOvergangsstønadDto = objectMapper.readValue(File("src/test/resources/søknadDto.json"), SøknadOvergangsstønadDto::class.java)
+fun søknadDto(): SøknadOvergangsstønadDto =
+    objectMapper.readValue(File("src/test/resources/søknadDto.json"), SøknadOvergangsstønadDto::class.java)
 
 fun søkerMedDefaultVerdier(
     forventetFnr: String = "19128449828",
@@ -21,5 +22,4 @@ fun søkerMedDefaultVerdier(
     statsborgerskap = statsborgerskap,
     sivilstand = sivilstatus,
     egenansatt = false,
-
 )

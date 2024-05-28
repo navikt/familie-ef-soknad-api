@@ -37,19 +37,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 internal class OppslagServiceServiceImplTest {
-
     val pdlClient: PdlClient = mockk()
     val regelverkConfig: RegelverkConfig = RegelverkConfig(RegelverkConfig.Alder(18))
     val pdlApp2AppClient: PdlApp2AppClient = mockk()
 
     private val søkerinfoMapper = spyk(SøkerinfoMapper(mockk(relaxed = true)))
 
-    private val oppslagServiceService = OppslagServiceServiceImpl(
-        pdlClient,
-        pdlApp2AppClient,
-        regelverkConfig,
-        søkerinfoMapper,
-    )
+    private val oppslagServiceService =
+        OppslagServiceServiceImpl(
+            pdlClient,
+            pdlApp2AppClient,
+            regelverkConfig,
+            søkerinfoMapper,
+        )
 
     @BeforeEach
     fun setUp() {
@@ -173,24 +173,27 @@ internal class OppslagServiceServiceImplTest {
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
         val pdlBarn = pdlBarn()
         val generer = FnrGenerator.generer()
-        val copy = pdlBarn.second.copy(
-            forelderBarnRelasjon = listOf(ForelderBarnRelasjon(generer, Familierelasjonsrolle.FAR)),
-            navn = listOf(Navn("navn", "navn", "navn")),
-        )
+        val copy =
+            pdlBarn.second.copy(
+                forelderBarnRelasjon = listOf(ForelderBarnRelasjon(generer, Familierelasjonsrolle.FAR)),
+                navn = listOf(Navn("navn", "navn", "navn")),
+            )
         every { pdlApp2AppClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
-        every { pdlApp2AppClient.hentAndreForeldre(any()) } returns mapOf(
-            generer to PdlAnnenForelder(
-                listOf(),
-                listOf(),
-                listOf(
-                    Navn(
-                        "forelder",
-                        "forelder",
-                        "forelder",
+        every { pdlApp2AppClient.hentAndreForeldre(any()) } returns
+            mapOf(
+                generer to
+                    PdlAnnenForelder(
+                        listOf(),
+                        listOf(),
+                        listOf(
+                            Navn(
+                                "forelder",
+                                "forelder",
+                                "forelder",
+                            ),
+                        ),
                     ),
-                ),
-            ),
-        )
+            )
 
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
         assertNotEquals(søkerinfo.hash, søkerinfo2.hash)
@@ -212,23 +215,26 @@ internal class OppslagServiceServiceImplTest {
         assertThat(oppslagServiceService.erIAktuellAlder(fødselsdato = LocalDate.now())).isTrue
         assertThat(
             oppslagServiceService.erIAktuellAlder(
-                fødselsdato = LocalDate.now()
-                    .minusYears(18),
+                fødselsdato =
+                    LocalDate.now()
+                        .minusYears(18),
             ),
         ).isTrue
 
         assertThat(
             oppslagServiceService.erIAktuellAlder(
-                fødselsdato = LocalDate.now()
-                    .minusYears(19).plusDays(1),
+                fødselsdato =
+                    LocalDate.now()
+                        .minusYears(19).plusDays(1),
             ),
         )
             .withFailMessage("Personen har ikke fylt 19 ennå")
             .isTrue
         assertThat(
             oppslagServiceService.erIAktuellAlder(
-                fødselsdato = LocalDate.now()
-                    .minusYears(19).minusDays(2),
+                fødselsdato =
+                    LocalDate.now()
+                        .minusYears(19).minusDays(2),
             ),
         )
             .isFalse
@@ -237,12 +243,13 @@ internal class OppslagServiceServiceImplTest {
     @Test
     fun `Skal filtrere bort døde barn`() {
         val mapper = SøkerinfoMapper(kodeverkService = mockk())
-        val oppslagServiceServiceMedMapper = OppslagServiceServiceImpl(
-            pdlClient,
-            pdlApp2AppClient,
-            regelverkConfig,
-            mapper,
-        )
+        val oppslagServiceServiceMedMapper =
+            OppslagServiceServiceImpl(
+                pdlClient,
+                pdlApp2AppClient,
+                regelverkConfig,
+                mapper,
+            )
 
         every { pdlApp2AppClient.hentBarn(any()) } returns mapOf(pdlBarn(dødsfall = Dødsfall(LocalDate.MIN)))
         mockHentPersonPdlClient()
@@ -254,12 +261,13 @@ internal class OppslagServiceServiceImplTest {
     @Test
     fun `Skal ikke filtrere bort levende barn`() {
         val mapper = SøkerinfoMapper(kodeverkService = mockk())
-        val oppslagServiceServiceMedMapper = OppslagServiceServiceImpl(
-            pdlClient,
-            pdlApp2AppClient,
-            regelverkConfig,
-            mapper,
-        )
+        val oppslagServiceServiceMedMapper =
+            OppslagServiceServiceImpl(
+                pdlClient,
+                pdlApp2AppClient,
+                regelverkConfig,
+                mapper,
+            )
         every { pdlApp2AppClient.hentBarn(any()) } returns mapOf(pdlBarn())
         mockHentPersonPdlClient()
         val søkerinfo = oppslagServiceServiceMedMapper.hentSøkerinfo()
@@ -306,7 +314,6 @@ internal class OppslagServiceServiceImplTest {
         navn: String = "Ola",
         adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT,
         forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf(),
-
     ) {
         val pdlBarn = pdlBarn(Adressebeskyttelse(adressebeskyttelseGradering), forelderBarnRelasjon = forelderBarnRelasjon)
         val copy = pdlBarn.second.copy(navn = listOf(Navn(navn, navn, navn)))
@@ -335,6 +342,6 @@ internal class OppslagServiceServiceImplTest {
                 sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
                 listOf(),
             )
-            )
+        )
     }
 }

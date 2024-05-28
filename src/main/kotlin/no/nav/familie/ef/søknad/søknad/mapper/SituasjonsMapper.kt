@@ -17,8 +17,10 @@ import no.nav.familie.ef.søknad.utils.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Situasjon
 
 object SituasjonsMapper : MapperMedVedlegg<SøknadOvergangsstønadDto, Situasjon>(MerOmSituasjonenDin) {
-
-    override fun mapDto(data: SøknadOvergangsstønadDto, vedlegg: Map<String, DokumentasjonWrapper>): Situasjon {
+    override fun mapDto(
+        data: SøknadOvergangsstønadDto,
+        vedlegg: Map<String, DokumentasjonWrapper>,
+    ): Situasjon {
         val merOmDinSituasjon = data.merOmDinSituasjon
         return Situasjon(
             gjelderDetteDeg = merOmDinSituasjon.gjelderDetteDeg.tilSøknadsfelt(),
@@ -31,7 +33,7 @@ object SituasjonsMapper : MapperMedVedlegg<SøknadOvergangsstønadDto, Situasjon
             arbeidskontrakt = dokumentfelt(ARBEIDSKONTRAKT, vedlegg),
             sagtOppEllerRedusertStilling = merOmDinSituasjon.sagtOppEllerRedusertStilling?.tilSøknadsfelt(),
             oppsigelseReduksjonÅrsak =
-            merOmDinSituasjon.begrunnelseSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
+                merOmDinSituasjon.begrunnelseSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
             oppsigelseReduksjonTidspunkt = merOmDinSituasjon.datoSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
             reduksjonAvArbeidsforholdDokumentasjon = dokumentfelt(ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID, vedlegg),
             oppsigelseDokumentasjon = dokumentfelt(ARBEIDSFORHOLD_OPPSIGELSE, vedlegg),

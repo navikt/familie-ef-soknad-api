@@ -7,7 +7,6 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 
 object DokumentfeltUtil {
-
     fun dokumentfelt(
         dokumentIdentifikator: DokumentIdentifikator,
         vedleggMap: Map<String, DokumentasjonWrapper>,

@@ -7,20 +7,20 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class MerOmDinSituasjonMedAlternativerTest {
-
     // Gitt
     private val søknad = søknadDto()
 
     // Når
     private val situasjon = SituasjonsMapper.map(søknad, mapOf())
 
-    private val forventet = listOf(
-        "Jeg er syk",
-        "Barnet mitt er sykt",
-        "Jeg har søkt om barnepass, men ikke fått plass enda",
-        "Jeg har barn som trenger særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
-        "Nei",
-    )
+    private val forventet =
+        listOf(
+            "Jeg er syk",
+            "Barnet mitt er sykt",
+            "Jeg har søkt om barnepass, men ikke fått plass enda",
+            "Jeg har barn som trenger særlig tilsyn på grunn av fysiske, psykiske eller store sosiale problemer",
+            "Nei",
+        )
 
     @Test
     fun `Situasjon - gjelder dette deg har alternativer`() {
@@ -54,7 +54,8 @@ internal class MerOmDinSituasjonMedAlternativerTest {
         return søknad.merOmDinSituasjon.copy(gjelderDetteDeg = copyGjelderDetteDeg(nyListe))
     }
 
-    private fun copyGjelderDetteDeg(nyListe: List<String>) = søknad.merOmDinSituasjon.gjelderDetteDeg.copy(
-        alternativer = nyListe,
-    )
+    private fun copyGjelderDetteDeg(nyListe: List<String>) =
+        søknad.merOmDinSituasjon.gjelderDetteDeg.copy(
+            alternativer = nyListe,
+        )
 }

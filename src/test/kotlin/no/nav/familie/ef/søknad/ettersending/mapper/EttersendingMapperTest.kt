@@ -10,7 +10,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 internal class EttersendingMapperTest {
-
     @Test
     internal fun `skal mappe en liste med innsendinger per stønadstype`() {
         val skolepengedokumentasjon = lagDokumentasjonsbehov(stønadType = StønadType.SKOLEPENGER)
@@ -23,16 +22,18 @@ internal class EttersendingMapperTest {
         val innsendingMottatt = LocalDateTime.now()
         val nyttMap =
             EttersendingMapper.groupByStønad(
-                dto = EttersendelseDto(
-                    dokumentasjonsbehov = listOf(
-                        skolepengedokumentasjon,
-                        barnetilsynDokumentasjon,
-                        overgangsstønadDokumentasjon1,
-                        overgangsstønadDokumentasjon2,
-                        overgangsstønadDokumentasjon3,
+                dto =
+                    EttersendelseDto(
+                        dokumentasjonsbehov =
+                            listOf(
+                                skolepengedokumentasjon,
+                                barnetilsynDokumentasjon,
+                                overgangsstønadDokumentasjon1,
+                                overgangsstønadDokumentasjon2,
+                                overgangsstønadDokumentasjon3,
+                            ),
+                        personIdent = personIdent,
                     ),
-                    personIdent = personIdent,
-                ),
                 innsendingMottatt = innsendingMottatt,
             )
         assertThat(nyttMap).containsKey(StønadType.OVERGANGSSTØNAD)
@@ -49,20 +50,23 @@ internal class EttersendingMapperTest {
         assertThat(nyttMap[StønadType.OVERGANGSSTØNAD]?.dokumentasjonsbehov).allMatch { it.innsendingstidspunkt == innsendingMottatt }
     }
 
-    private fun lagDokumentasjonsbehov(stønadType: StønadType) = Dokumentasjonsbehov(
-        id = UUID.randomUUID().toString(),
-        søknadsdata = null,
-        dokumenttype = "DOKUMENTASJON_PÅ_SYKDOM",
-        beskrivelse = "Dokumentasjon på sykdom",
-        stønadType = stønadType,
-        innsendingstidspunkt = LocalDateTime.now()
-            .minusYears(1),
-        vedlegg = listOf(
-            Vedlegg(
-                id = "1",
-                navn = "Vedlegg 1",
-                tittel = "Dokumentasjon på sykdom",
-            ),
-        ),
-    )
+    private fun lagDokumentasjonsbehov(stønadType: StønadType) =
+        Dokumentasjonsbehov(
+            id = UUID.randomUUID().toString(),
+            søknadsdata = null,
+            dokumenttype = "DOKUMENTASJON_PÅ_SYKDOM",
+            beskrivelse = "Dokumentasjon på sykdom",
+            stønadType = stønadType,
+            innsendingstidspunkt =
+                LocalDateTime.now()
+                    .minusYears(1),
+            vedlegg =
+                listOf(
+                    Vedlegg(
+                        id = "1",
+                        navn = "Vedlegg 1",
+                        tittel = "Dokumentasjon på sykdom",
+                    ),
+                ),
+        )
 }

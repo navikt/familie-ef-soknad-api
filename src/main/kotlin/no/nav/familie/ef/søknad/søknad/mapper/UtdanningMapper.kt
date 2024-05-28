@@ -28,24 +28,24 @@ import no.nav.familie.kontrakter.ef.søknad.TidligereUtdanning as TidligereUtdan
 import no.nav.familie.kontrakter.ef.søknad.UnderUtdanning as UnderUtdanningKontrakt
 
 object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(UtdanningenDuSkalTa) {
-
     override fun mapDto(data: UnderUtdanning): UnderUtdanningKontrakt {
         return UnderUtdanningKontrakt(
             skoleUtdanningssted = data.skoleUtdanningssted.tilSøknadsfelt(),
             utdanning = null,
-            gjeldendeUtdanning = Søknadsfelt(
-                Utdanning.hentTekst(),
-                GjeldendeUtdanning(
-                    data.linjeKursGrad.tilSøknadsfelt(),
-                    Søknadsfelt(
-                        NårSkalDuVæreElevStudent.hentTekst(),
-                        Datoperiode(
-                            data.periode.fra.tilLocalDate(),
-                            data.periode.til.tilLocalDate(),
+            gjeldendeUtdanning =
+                Søknadsfelt(
+                    Utdanning.hentTekst(),
+                    GjeldendeUtdanning(
+                        data.linjeKursGrad.tilSøknadsfelt(),
+                        Søknadsfelt(
+                            NårSkalDuVæreElevStudent.hentTekst(),
+                            Datoperiode(
+                                data.periode.fra.tilLocalDate(),
+                                data.periode.til.tilLocalDate(),
+                            ),
                         ),
                     ),
                 ),
-            ),
             offentligEllerPrivat = data.offentligEllerPrivat.tilSøknadsfelt(),
             hvorMyeSkalDuStudere = data.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
             heltidEllerDeltid = data.heltidEllerDeltid.tilSøknadsfelt(),
@@ -81,20 +81,21 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
     }
 
     private fun mapTidligereUtdanning(tidligereUtdanning: List<TidligereUtdanning>): Søknadsfelt<List<TidligereUtdanningKontrakt>> {
-        val tidligereUtdanningList = tidligereUtdanning.map {
-            TidligereUtdanningKontrakt(
-                it.linjeKursGrad.tilSøknadsfelt(),
-                Søknadsfelt(
-                    NårVarDuElevStudent.hentTekst(),
-                    MånedÅrPeriode(
-                        it.periode.fra.tilLocalDate().month,
-                        it.periode.fra.tilLocalDate().year,
-                        it.periode.til.tilLocalDate().month,
-                        it.periode.til.tilLocalDate().year,
+        val tidligereUtdanningList =
+            tidligereUtdanning.map {
+                TidligereUtdanningKontrakt(
+                    it.linjeKursGrad.tilSøknadsfelt(),
+                    Søknadsfelt(
+                        NårVarDuElevStudent.hentTekst(),
+                        MånedÅrPeriode(
+                            it.periode.fra.tilLocalDate().month,
+                            it.periode.fra.tilLocalDate().year,
+                            it.periode.til.tilLocalDate().month,
+                            it.periode.til.tilLocalDate().year,
+                        ),
                     ),
-                ),
-            )
-        }
+                )
+            }
         return Søknadsfelt(SpråkTeksterTidligereUtdanning.hentTekst(), tidligereUtdanningList)
     }
 

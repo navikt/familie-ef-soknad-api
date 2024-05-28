@@ -23,7 +23,6 @@ import java.util.UUID
 @Profile("dokumentasjonsbehov-test")
 @Configuration
 class DokumentasjonsbehovControllerTestConfiguration {
-
     @Primary
     @Bean
     fun søknadClient(): SøknadClient = mockk()
@@ -31,7 +30,6 @@ class DokumentasjonsbehovControllerTestConfiguration {
 
 @ActiveProfiles("dokumentasjonsbehov-test")
 internal class DokumentasjonsbehovControllerTest : OppslagSpringRunnerTest() {
-
     @Autowired
     lateinit var søknadClient: SøknadClient
 
@@ -44,25 +42,31 @@ internal class DokumentasjonsbehovControllerTest : OppslagSpringRunnerTest() {
 
     @Test
     internal fun `dokumentasjonsbehov som er eldre enn 28 dager (4 uker) skal ikke hentes`() {
-        val eldreSøknad: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(
-            fødselsnummer = "0",
-            innsendtDato = LocalDate.of(
-                2021,
-                10,
-                5,
-            ),
-        )
-        val nySøknad: SøknadMedDokumentasjonsbehovDto = lagSøknadMedDokumentasjonsbehov(
-            fødselsnummer = "0",
-            innsendtDato = LocalDate.now(),
-        )
+        val eldreSøknad: SøknadMedDokumentasjonsbehovDto =
+            lagSøknadMedDokumentasjonsbehov(
+                fødselsnummer = "0",
+                innsendtDato =
+                    LocalDate.of(
+                        2021,
+                        10,
+                        5,
+                    ),
+            )
+        val nySøknad: SøknadMedDokumentasjonsbehovDto =
+            lagSøknadMedDokumentasjonsbehov(
+                fødselsnummer = "0",
+                innsendtDato = LocalDate.now(),
+            )
         val søknader: List<SøknadMedDokumentasjonsbehovDto> = listOf(eldreSøknad, nySøknad)
         val filtrerteSøknader: List<SøknadMedDokumentasjonsbehovDto> = filtrerVekkEldreDokumentasjonsbehov(søknader)
 
         assertThat(filtrerteSøknader).isEqualTo(listOf(nySøknad))
     }
 
-    private fun lagDokumentasjonsbehov(fødselsnummer: String, innsendtDato: LocalDate): DokumentasjonsbehovDto =
+    private fun lagDokumentasjonsbehov(
+        fødselsnummer: String,
+        innsendtDato: LocalDate,
+    ): DokumentasjonsbehovDto =
         DokumentasjonsbehovDto(
             emptyList(),
             innsendtDato.atTime(0, 0),

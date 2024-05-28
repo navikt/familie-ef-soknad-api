@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 val dokumenter = dokumentMap()
 
 internal class BarnMapperTest {
-
     // Gitt
     private val søknadDto = søknadDto()
 

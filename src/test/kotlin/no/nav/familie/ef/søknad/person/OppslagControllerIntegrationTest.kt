@@ -8,7 +8,6 @@ import org.springframework.boot.test.web.client.exchange
 import org.springframework.http.HttpEntity
 
 class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
-
     val tokenSubject = "12345678911"
 
     @BeforeEach
@@ -18,11 +17,12 @@ class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
 
     @Test
     fun `Få response uten _navn fra sokerinfo endepunkt - skal feile hvis noen fjerner private fra _navn`() {
-        val response = restTemplate.exchange<String>(
-            localhost("/api/oppslag/sokerinfo"),
-            org.springframework.http.HttpMethod.GET,
-            HttpEntity<String>(headers),
-        )
+        val response =
+            restTemplate.exchange<String>(
+                localhost("/api/oppslag/sokerinfo"),
+                org.springframework.http.HttpMethod.GET,
+                HttpEntity<String>(headers),
+            )
         assertThat(response.body).contains(tokenSubject) // guard
         assertThat(response.body).doesNotContain("_navn")
     }
@@ -30,11 +30,12 @@ class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
     @Test
     fun `Skal bare ha en av hver CORS-header etter et kall`() {
         headers.origin = "http://localhost:3000"
-        val response = restTemplate.exchange<String>(
-            localhost("/api/oppslag/sokerinfo"),
-            org.springframework.http.HttpMethod.GET,
-            HttpEntity<String>(headers),
-        )
+        val response =
+            restTemplate.exchange<String>(
+                localhost("/api/oppslag/sokerinfo"),
+                org.springframework.http.HttpMethod.GET,
+                HttpEntity<String>(headers),
+            )
 
         assertThat(response.headers["Access-Control-Allow-Origin"]).hasSize(1)
         assertThat(response.headers["Access-Control-Allow-Headers"]).hasSize(1)
