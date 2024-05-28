@@ -8,10 +8,8 @@ import java.time.LocalDate
 
 @Service
 class KodeverkService(private val cachedKodeverkService: CachedKodeverkService) {
-
     @Service
     class CachedKodeverkService(private val integrasjonerClient: FamilieIntegrasjonerClient) {
-
         @Cacheable("kodeverk_landkoder")
         fun hentLandkoder(): KodeverkDto {
             return integrasjonerClient.hentKodeverkLandkoder()

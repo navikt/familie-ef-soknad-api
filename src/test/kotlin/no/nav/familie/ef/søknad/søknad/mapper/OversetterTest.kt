@@ -10,7 +10,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 
 internal class OversetterTest {
-
     @Test
     fun `Skal mappe kunne sette, hente og mappe en enum`() {
         val språk = språk()

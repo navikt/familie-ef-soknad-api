@@ -16,7 +16,6 @@ data class AdresseopplysningerData(
 
 object AdresseopplysningerMapper :
     MapperMedVedlegg<AdresseopplysningerData, KontraktAdresseopplysninger>(Språktekster.Adresseopplysninger) {
-
     override fun mapDto(
         data: AdresseopplysningerData,
         vedlegg: Map<String, DokumentasjonWrapper>,

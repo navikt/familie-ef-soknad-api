@@ -9,21 +9,21 @@ import java.time.LocalDateTime
 import kotlin.test.assertFailsWith
 
 internal class SkjemaMapperTest {
-
     val hvorØnskerSøkerArbeid: TekstFelt = TekstFelt("label", "Hvorsomhelst", "hvasomhelst")
     val kanBegynneInnenEnUke: BooleanFelt = BooleanFelt("label", false)
     val kanSkaffeBarnepassInnenEnUke: BooleanFelt = BooleanFelt("label", false)
     val registrertSomArbeidssøkerNav: BooleanFelt = BooleanFelt("label", false)
     val villigTilÅTaImotTilbudOmArbeid: BooleanFelt = BooleanFelt("label", false)
     val ønskerSøker50ProsentStilling: BooleanFelt = BooleanFelt("label", false)
-    val arbeidssøker = Arbeidssøker(
-        hvorØnskerSøkerArbeid,
-        kanBegynneInnenEnUke,
-        kanSkaffeBarnepassInnenEnUke,
-        registrertSomArbeidssøkerNav,
-        villigTilÅTaImotTilbudOmArbeid,
-        ønskerSøker50ProsentStilling,
-    )
+    val arbeidssøker =
+        Arbeidssøker(
+            hvorØnskerSøkerArbeid,
+            kanBegynneInnenEnUke,
+            kanSkaffeBarnepassInnenEnUke,
+            registrertSomArbeidssøkerNav,
+            villigTilÅTaImotTilbudOmArbeid,
+            ønskerSøker50ProsentStilling,
+        )
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 

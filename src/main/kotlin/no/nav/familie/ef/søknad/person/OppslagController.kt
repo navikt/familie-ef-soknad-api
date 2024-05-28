@@ -21,7 +21,6 @@ class OppslagController(
     private val oppslagService: OppslagService,
     private val kodeverkService: KodeverkService,
 ) {
-
     @GetMapping("/sokerinfo")
     fun søkerinfo(): Søkerinfo {
         return oppslagService.hentSøkerinfo()
@@ -34,7 +33,9 @@ class OppslagController(
     }
 
     @GetMapping("/poststed/{postnummer}")
-    fun postnummer(@PathVariable postnummer: String): ResponseEntity<String> {
+    fun postnummer(
+        @PathVariable postnummer: String,
+    ): ResponseEntity<String> {
         require(gyldigPostnummer(postnummer))
         val poststed = kodeverkService.hentPoststed(postnummer)
         return if (!poststed.isNullOrBlank()) {
@@ -47,7 +48,6 @@ class OppslagController(
     private fun gyldigPostnummer(postnummer: String) = Regex("""^[0-9]{4}$""").matches(postnummer)
 
     companion object {
-
         const val OPPSLAG = "/api/oppslag"
     }
 

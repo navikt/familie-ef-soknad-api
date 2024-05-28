@@ -17,7 +17,6 @@ import org.springframework.web.client.RestOperations
 import java.net.URI
 
 class PdlApp2AppClientTest {
-
     private val wireMockServer = WireMockServer(wireMockConfig().dynamicPort())
     private val restOperations: RestOperations = RestTemplateBuilder().build()
     private lateinit var pdlApp2AppClient: PdlApp2AppClient

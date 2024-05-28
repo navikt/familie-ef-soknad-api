@@ -17,10 +17,10 @@ class SaksbehandlingClient(
     @Qualifier("tokenExchange") operations: RestOperations,
 ) :
     AbstractPingableRestClient(operations, "saksbehandling") {
-
     override val pingUri: URI = config.pingUri
 
-    fun hentStønadsperioderForBruker() = getForEntity<Ressurs<StønadsperioderDto>>(
-        UriComponentsBuilder.fromUriString("${config.hentStønadsperioderUri}").build().toUri(),
-    ).getDataOrThrow()
+    fun hentStønadsperioderForBruker() =
+        getForEntity<Ressurs<StønadsperioderDto>>(
+            UriComponentsBuilder.fromUriString("${config.hentStønadsperioderUri}").build().toUri(),
+        ).getDataOrThrow()
 }

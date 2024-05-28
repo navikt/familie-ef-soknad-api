@@ -23,7 +23,6 @@ import java.time.LocalDateTime
 
 @Component
 class SøknadBarnetilsynMapper() {
-
     fun mapTilIntern(
         dto: SøknadBarnetilsynDto,
         innsendingMottatt: LocalDateTime,
@@ -32,34 +31,38 @@ class SøknadBarnetilsynMapper() {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
 
-        val barnetilsynSøknad = SøknadBarnetilsyn(
-            innsendingsdetaljer = mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
-            personalia = PersonaliaMapper.map(dto.person.søker),
-            adresseopplysninger = AdresseopplysningerMapper.map(
-                AdresseopplysningerData(
-                    dto.søkerBorPåRegistrertAdresse,
-                    dto.adresseopplysninger,
-                ),
-                vedlegg,
-            ),
-            sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
-            medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
-            bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
-            sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
-            barn = dto.person.barn.filter { it.skalHaBarnepass?.verdi == true }.tilSøknadsfelt(vedlegg),
-            aktivitet = AktivitetsMapper.map(dto.aktivitet, vedlegg),
-            stønadsstart = StønadsstartMapper.mapStønadsstart(
-                dto.søknadsdato,
-                dto.søkerFraBestemtMåned,
-            ),
-            dokumentasjon = BarnetilsynDokumentasjon(
-                barnepassordningFaktura = dokumentfelt(FAKTURA_BARNEPASSORDNING, vedlegg),
-                avtaleBarnepasser = dokumentfelt(AVTALE_BARNEPASSER, vedlegg),
-                arbeidstid = dokumentfelt(ARBEIDSTID, vedlegg),
-                roterendeArbeidstid = dokumentfelt(ROTERENDE_ARBEIDSTID, vedlegg),
-                spesielleBehov = dokumentfelt(TRENGER_MER_PASS_ENN_JEVNALDREDE, vedlegg),
-            ),
-        )
+        val barnetilsynSøknad =
+            SøknadBarnetilsyn(
+                innsendingsdetaljer = mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
+                personalia = PersonaliaMapper.map(dto.person.søker),
+                adresseopplysninger =
+                    AdresseopplysningerMapper.map(
+                        AdresseopplysningerData(
+                            dto.søkerBorPåRegistrertAdresse,
+                            dto.adresseopplysninger,
+                        ),
+                        vedlegg,
+                    ),
+                sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
+                medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
+                bosituasjon = BosituasjonMapper.map(dto.bosituasjon, vedlegg),
+                sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
+                barn = dto.person.barn.filter { it.skalHaBarnepass?.verdi == true }.tilSøknadsfelt(vedlegg),
+                aktivitet = AktivitetsMapper.map(dto.aktivitet, vedlegg),
+                stønadsstart =
+                    StønadsstartMapper.mapStønadsstart(
+                        dto.søknadsdato,
+                        dto.søkerFraBestemtMåned,
+                    ),
+                dokumentasjon =
+                    BarnetilsynDokumentasjon(
+                        barnepassordningFaktura = dokumentfelt(FAKTURA_BARNEPASSORDNING, vedlegg),
+                        avtaleBarnepasser = dokumentfelt(AVTALE_BARNEPASSER, vedlegg),
+                        arbeidstid = dokumentfelt(ARBEIDSTID, vedlegg),
+                        roterendeArbeidstid = dokumentfelt(ROTERENDE_ARBEIDSTID, vedlegg),
+                        spesielleBehov = dokumentfelt(TRENGER_MER_PASS_ENN_JEVNALDREDE, vedlegg),
+                    ),
+            )
 
         return SøknadMedVedlegg(
             barnetilsynSøknad,
@@ -74,10 +77,11 @@ class SøknadBarnetilsynMapper() {
         return SøknadBarnetilsynGjenbrukDto(
             sivilstatus = SivilstandsdetaljerMapper.mapTilDto(søknadBarnetilsyn.sivilstandsdetaljer.verdi),
             medlemskap = MedlemsskapsMapper.mapTilDto(søknadBarnetilsyn.medlemskapsdetaljer.verdi),
-            bosituasjon = BosituasjonMapper.mapTilDto(
-                søknadBarnetilsyn.bosituasjon.verdi,
-                søknadBarnetilsyn.sivilstandsplaner?.verdi,
-            ),
+            bosituasjon =
+                BosituasjonMapper.mapTilDto(
+                    søknadBarnetilsyn.bosituasjon.verdi,
+                    søknadBarnetilsyn.sivilstandsplaner?.verdi,
+                ),
             person = PersonTilGjenbruk(BarnMapper.mapTilDto(søknadBarnetilsyn.barn.verdi)),
             aktivitet = AktivitetsMapper.mapTilDto(søknadBarnetilsyn.aktivitet.verdi),
         )

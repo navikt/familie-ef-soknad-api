@@ -15,6 +15,7 @@ enum class Språk(val språk: String) {
 
     companion object {
         private val map = values().associateBy(Språk::språk)
+
         fun fromString(type: String) = map[type]
     }
 }

@@ -22,7 +22,6 @@ import java.time.LocalDate
 @Configuration
 @Profile("mock-pdlApp2AppClient")
 class PdlApp2AppClientConfig {
-
     @Bean
     @Primary
     fun pdlApp2AppClient(): PdlApp2AppClient {
@@ -30,24 +29,26 @@ class PdlApp2AppClientConfig {
         val medforelderFnr = FnrGenerator.generer(år = 1999)
         every { pdlApp2AppClient.hentBarn(any()) } returns
             mapOf(
-                "28021078036" to PdlBarn(
-                    adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
-                    bostedsadresse = bostedsadresseBarn(),
-                    deltBosted = listOf(),
-                    navn = lagNavn("Hei", "På", "Deg"),
-                    fødsel = listOf(Fødsel(2000, LocalDate.now().minusMonths(6))),
-                    dødsfall = listOf(),
-                    forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR)),
-                ),
+                "28021078036" to
+                    PdlBarn(
+                        adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
+                        bostedsadresse = bostedsadresseBarn(),
+                        deltBosted = listOf(),
+                        navn = lagNavn("Hei", "På", "Deg"),
+                        fødsel = listOf(Fødsel(2000, LocalDate.now().minusMonths(6))),
+                        dødsfall = listOf(),
+                        forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR)),
+                    ),
             )
 
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns
             mapOf(
-                medforelderFnr to PdlAnnenForelder(
-                    adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
-                    navn = lagNavn("Bjørn", "Borg", "Borgersen"),
-                    dødsfall = listOf(),
-                ),
+                medforelderFnr to
+                    PdlAnnenForelder(
+                        adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
+                        navn = lagNavn("Bjørn", "Borg", "Borgersen"),
+                        dødsfall = listOf(),
+                    ),
             )
 
         return pdlApp2AppClient

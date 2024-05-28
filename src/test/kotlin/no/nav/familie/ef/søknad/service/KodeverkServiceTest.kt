@@ -21,7 +21,6 @@ import java.time.LocalDate
 @Configuration
 @Primary
 class KodeverkTestConfig {
-
     @Bean
     fun familieIntegrasjonerClient(): FamilieIntegrasjonerClient {
         val mockk = mockk<FamilieIntegrasjonerClient>()
@@ -31,23 +30,26 @@ class KodeverkTestConfig {
         return mockk
     }
 
-    private fun kodeverk(kode: String, verdi: String): KodeverkDto {
+    private fun kodeverk(
+        kode: String,
+        verdi: String,
+    ): KodeverkDto {
         return KodeverkDto(
             mapOf(
-                kode to listOf(
-                    BetydningDto(
-                        LocalDate.MIN,
-                        LocalDate.MAX,
-                        mapOf("nb" to BeskrivelseDto(verdi, verdi)),
+                kode to
+                    listOf(
+                        BetydningDto(
+                            LocalDate.MIN,
+                            LocalDate.MAX,
+                            mapOf("nb" to BeskrivelseDto(verdi, verdi)),
+                        ),
                     ),
-                ),
             ),
         )
     }
 }
 
 class KodeverkServiceTest : OppslagSpringRunnerTest() {
-
     @Autowired
     lateinit var familieIntegrasjonerClient: FamilieIntegrasjonerClient
 

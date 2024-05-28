@@ -15,15 +15,15 @@ import org.springframework.stereotype.Service
 
 @Service
 class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClient) {
-
     fun hentStønadsperioderForBruker(): MineStønaderDto {
         val stønadsperioder = saksbehandlingClient.hentStønadsperioderForBruker()
 
-        val mineStønaderDto = MineStønaderDto(
-            overgangsstønad = utledStønad(stønadsperioder.overgangsstønad),
-            barnetilsyn = utledStønad(stønadsperioder.barnetilsyn),
-            skolepenger = utledStønad(stønadsperioder.skolepenger),
-        )
+        val mineStønaderDto =
+            MineStønaderDto(
+                overgangsstønad = utledStønad(stønadsperioder.overgangsstønad),
+                barnetilsyn = utledStønad(stønadsperioder.barnetilsyn),
+                skolepenger = utledStønad(stønadsperioder.skolepenger),
+            )
 
         return mineStønaderDto
     }
@@ -46,8 +46,7 @@ class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClie
     private fun utledTilDato(
         periodeStatus: PeriodeStatus,
         relevantePerioder: List<StønadsperiodeDto>,
-    ) =
-        if (periodeStatus === FREMTIDIG_UTEN_OPPHOLD || periodeStatus === LØPENDE_UTEN_OPPHOLD) relevantePerioder.last().tilDato else null
+    ) = if (periodeStatus === FREMTIDIG_UTEN_OPPHOLD || periodeStatus === LØPENDE_UTEN_OPPHOLD) relevantePerioder.last().tilDato else null
 
     private fun utledStartDato(
         periodeStatus: PeriodeStatus,

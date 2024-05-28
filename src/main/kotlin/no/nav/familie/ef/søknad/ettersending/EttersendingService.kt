@@ -11,8 +11,10 @@ import java.time.LocalDateTime
 
 @Service
 class EttersendingService(private val søknadClient: SøknadClient) {
-
-    fun sendInn(ettersending: EttersendelseDto, innsendingMottatt: LocalDateTime): Kvittering {
+    fun sendInn(
+        ettersending: EttersendelseDto,
+        innsendingMottatt: LocalDateTime,
+    ): Kvittering {
         val ettersedingRequestData: Map<StønadType, EttersendelseDto> = EttersendingMapper.groupByStønad(ettersending, innsendingMottatt)
         val kvittering = søknadClient.sendInnEttersending(ettersedingRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)

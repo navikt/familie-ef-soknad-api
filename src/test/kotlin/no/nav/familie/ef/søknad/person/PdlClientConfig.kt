@@ -20,7 +20,6 @@ import java.time.LocalDate
 @Configuration
 @Profile("mock-pdl")
 class PdlClientConfig {
-
     private val startdato = LocalDate.of(2020, 1, 1)
     private val sluttdato = LocalDate.of(2021, 1, 1)
 
@@ -78,8 +77,7 @@ class PdlClientConfig {
             ),
         )
 
-    private fun sivilstand(): List<Sivilstand> =
-        listOf(Sivilstand(type = Sivilstandstype.SKILT))
+    private fun sivilstand(): List<Sivilstand> = listOf(Sivilstand(type = Sivilstandstype.SKILT))
 
     private fun bostedsadresse(): List<Bostedsadresse> =
         listOf(

@@ -16,11 +16,12 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/soknad/test"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 class SøknadsControllerMock(val featureToggleService: FeatureToggleService) {
-
     private val innsendingMottatt = LocalDateTime.now()
 
     @PostMapping
-    fun sendInnTest(@RequestBody søknad: Map<Any, Any>): Kvittering {
+    fun sendInnTest(
+        @RequestBody søknad: Map<Any, Any>,
+    ): Kvittering {
         val valueAsString = objectMapper.writeValueAsString(søknad)
         // val readValue : SøknadDto= objectMapper.readValue(valueAsString)
         return Kvittering("Kontakt med api, søknad ikke sendt inn. Du forsøkte å sende inn:  $valueAsString", innsendingMottatt)

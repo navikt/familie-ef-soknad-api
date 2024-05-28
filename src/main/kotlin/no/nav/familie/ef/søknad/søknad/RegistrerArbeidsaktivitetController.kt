@@ -23,10 +23,11 @@ class RegistrerArbeidsaktivitetController(
     val featureToggleService: FeatureToggleService,
     private val oppslagService: OppslagService,
 ) {
-
     @PostMapping
     @Protected
-    fun sendRegistrerArbeidsAktivitet(@RequestBody arbeidssøker: Arbeidssøker): Kvittering {
+    fun sendRegistrerArbeidsAktivitet(
+        @RequestBody arbeidssøker: Arbeidssøker,
+    ): Kvittering {
         val fnrFraToken = EksternBrukerUtils.hentFnrFraToken()
         val forkortetNavn = oppslagService.hentSøkerNavn()
         val innsendingMottatt = LocalDateTime.now()

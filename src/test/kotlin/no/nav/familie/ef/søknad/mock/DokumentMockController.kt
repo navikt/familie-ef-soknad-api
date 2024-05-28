@@ -31,13 +31,14 @@ class DokumentMockController(
     @Qualifier("dokumentlager") private val dokumenter: MutableMap<String, ByteArray>,
     private val contextHolder: TokenValidationContextHolder,
 ) {
-
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
     private val mellomlager = mutableMapOf<String, String>()
 
     fun TokenValidationContextHolder.hentFnr(): String {
-        return this.getTokenValidationContext().getJwtToken("tokenx")?.subject ?: throw JwtTokenValidatorException("Klarte ikke hente fnr tokenx-token")
+        return this.getTokenValidationContext().getJwtToken(
+            "tokenx",
+        )?.subject ?: throw JwtTokenValidatorException("Klarte ikke hente fnr tokenx-token")
     }
 
     @PostMapping(
@@ -72,7 +73,9 @@ class DokumentMockController(
         consumes = [MediaType.APPLICATION_JSON_VALUE],
         produces = [MediaType.APPLICATION_JSON_VALUE],
     )
-    fun mellomlagreSøknad(@RequestBody(required = true) søknad: String): ResponseEntity<Unit> {
+    fun mellomlagreSøknad(
+        @RequestBody(required = true) søknad: String,
+    ): ResponseEntity<Unit> {
         log.info("Mellomlagrer søknad om overgangsstønad")
 
         validerGyldigJson(søknad)

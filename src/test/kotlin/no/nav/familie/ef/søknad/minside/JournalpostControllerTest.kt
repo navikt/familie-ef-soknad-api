@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus
 import java.time.LocalDate
 
 internal class JournalpostControllerTest : OppslagSpringRunnerTest() {
-
     val tokenSubject = "12345678911"
 
     @BeforeEach
@@ -23,11 +22,12 @@ internal class JournalpostControllerTest : OppslagSpringRunnerTest() {
 
     @Test
     fun `skal hente journalposter for privatperson`() {
-        val response = restTemplate.exchange<List<JournalpostDto>>(
-            localhost("/api/journalpost"),
-            HttpMethod.GET,
-            HttpEntity<String>(headers),
-        )
+        val response =
+            restTemplate.exchange<List<JournalpostDto>>(
+                localhost("/api/journalpost"),
+                HttpMethod.GET,
+                HttpEntity<String>(headers),
+            )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body?.isNotEmpty())
@@ -52,11 +52,12 @@ internal class JournalpostControllerTest : OppslagSpringRunnerTest() {
 
     @Test
     fun `skal hente dokument for privatperson`() {
-        val response = restTemplate.exchange<ByteArray>(
-            localhost("/api/journalpost/1234/dokument-pdf/8/variantformat/ARKIV"),
-            HttpMethod.GET,
-            HttpEntity<String>(headers),
-        )
+        val response =
+            restTemplate.exchange<ByteArray>(
+                localhost("/api/journalpost/1234/dokument-pdf/8/variantformat/ARKIV"),
+                HttpMethod.GET,
+                HttpEntity<String>(headers),
+            )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body).isNotNull

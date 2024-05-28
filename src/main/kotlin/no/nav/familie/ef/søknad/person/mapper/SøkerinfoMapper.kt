@@ -28,7 +28,6 @@ import java.time.Period
 
 @Component
 internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
-
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     fun hentPoststed(postnummer: String?): String {
@@ -39,7 +38,11 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         return hentKodeverdi("land", landkode, kodeverkService::hentLand)
     }
 
-    private fun hentKodeverdi(type: String, kode: String?, hentKodeverdiFunction: Function1<String, String?>): String {
+    private fun hentKodeverdi(
+        type: String,
+        kode: String?,
+        hentKodeverdiFunction: Function1<String, String?>,
+    ): String {
         return try {
             kode?.let(hentKodeverdiFunction) ?: kode ?: ""
         } catch (e: Exception) {
@@ -66,14 +69,15 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         søkerPersonIdent: String,
     ): List<Barn> {
         return pdlBarn.entries.map { (personIdent, pdlBarn) ->
-            val barnNavnOgIdent = if (pdlBarn.adressebeskyttelse.harBeskyttetAdresse()) {
-                BarnNavnOgIdent()
-            } else {
-                BarnNavnOgIdent(
-                    personIdent,
-                    pdlBarn.navn.firstOrNull()?.visningsnavn() ?: "",
-                )
-            }
+            val barnNavnOgIdent =
+                if (pdlBarn.adressebeskyttelse.harBeskyttetAdresse()) {
+                    BarnNavnOgIdent()
+                } else {
+                    BarnNavnOgIdent(
+                        personIdent,
+                        pdlBarn.navn.firstOrNull()?.visningsnavn() ?: "",
+                    )
+                }
 
             val fødselsdato = pdlBarn.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
@@ -81,9 +85,10 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             val harSammeAdresse = harSammeAdresse(søkersAdresse, pdlBarn)
 
             val medforelderRelasjon = pdlBarn.forelderBarnRelasjon.find { erMedForelderRelasjon(it, søkerPersonIdent) }
-            val medforelder = medforelderRelasjon
-                ?.relatertPersonsIdent
-                ?.let { relatertPersonsIdent -> andreForeldre[relatertPersonsIdent]?.tilDto(relatertPersonsIdent) }
+            val medforelder =
+                medforelderRelasjon
+                    ?.relatertPersonsIdent
+                    ?.let { relatertPersonsIdent -> andreForeldre[relatertPersonsIdent]?.tilDto(relatertPersonsIdent) }
 
             Barn(
                 barnNavnOgIdent.ident,
@@ -100,11 +105,13 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
     private fun erMedForelderRelasjon(
         forelderBarnRelasjon: ForelderBarnRelasjon,
         søkersPersonIdent: String,
-    ) =
-        forelderBarnRelasjon.relatertPersonsIdent != søkersPersonIdent &&
-            forelderBarnRelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
+    ) = forelderBarnRelasjon.relatertPersonsIdent != søkersPersonIdent &&
+        forelderBarnRelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
 
-    fun harSammeAdresse(søkersAdresse: Bostedsadresse?, pdlBarn: PdlBarn): Boolean {
+    fun harSammeAdresse(
+        søkersAdresse: Bostedsadresse?,
+        pdlBarn: PdlBarn,
+    ): Boolean {
         val barnetsAdresse = pdlBarn.bostedsadresse.firstOrNull()
 
         if (harDeltBosted(pdlBarn)) {
@@ -139,19 +146,23 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                 (it.sluttdatoForKontrakt == null || it.sluttdatoForKontrakt.isAfter(LocalDate.now()))
         }
 
-    private fun harIkkeMatrikkelId(vegadresse: Vegadresse?, matrikkeladresse: MatrikkelId?) =
-        harIkkeMatrikkelId(vegadresse) || harIkkeMatrikkelId(matrikkeladresse)
+    private fun harIkkeMatrikkelId(
+        vegadresse: Vegadresse?,
+        matrikkeladresse: MatrikkelId?,
+    ) = harIkkeMatrikkelId(vegadresse) || harIkkeMatrikkelId(matrikkeladresse)
 
     private fun harIkkeMatrikkelId(adresse: Vegadresse?) = adresse != null && adresse.matrikkelId == null
+
     private fun harIkkeMatrikkelId(adresse: MatrikkelId?) = adresse != null && adresse.matrikkelId == null
 
     private fun PdlSøker.tilPersonDto(): Person {
         val formatertAdresse = formaterAdresse(this)
-        val adresse = Adresse(
-            adresse = formatertAdresse,
-            poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
-            postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ",
-        )
+        val adresse =
+            Adresse(
+                adresse = formatertAdresse,
+                poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
+                postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ",
+            )
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
@@ -198,7 +209,10 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
             ),
         ) ?: ""
 
-    private fun join(vararg args: String?, separator: String = ", "): String? {
+    private fun join(
+        vararg args: String?,
+        separator: String = ", ",
+    ): String? {
         val filterNotNull = args.filterNotNull().filterNot(String::isEmpty)
         return if (filterNotNull.isEmpty()) {
             null
@@ -231,16 +245,19 @@ fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
 }
 
 fun List<Adressebeskyttelse>.harBeskyttetAdresse(): Boolean = kreverAdressebeskyttelse.contains(this.firstOrNull()?.gradering)
-fun List<Adressebeskyttelse>.erStrengtFortrolig(): Boolean = this.firstOrNull()?.gradering?.let {
-    AdressebeskyttelseGradering.STRENGT_FORTROLIG == it ||
-        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND == it
-} ?: false
 
-private val kreverAdressebeskyttelse = listOf(
-    AdressebeskyttelseGradering.FORTROLIG,
-    AdressebeskyttelseGradering.STRENGT_FORTROLIG,
-    AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND,
-)
+fun List<Adressebeskyttelse>.erStrengtFortrolig(): Boolean =
+    this.firstOrNull()?.gradering?.let {
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG == it ||
+            AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND == it
+    } ?: false
+
+private val kreverAdressebeskyttelse =
+    listOf(
+        AdressebeskyttelseGradering.FORTROLIG,
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG,
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND,
+    )
 
 data class BarnNavnOgIdent(
     val ident: String = "",

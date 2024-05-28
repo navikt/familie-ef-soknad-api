@@ -9,10 +9,10 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
 fun SøknadOvergangsstønad.getFødselsnummer(): String = personalia.verdi.fødselsnummer.verdi.verdi
+
 fun SøknadOvergangsstønad.getSøkerNavn() = personalia.verdi.navn.verdi
 
 internal class SøknadOvergangsstønadMapperTest {
-
     private val mapper = SøknadOvergangsstønadMapper()
     private val søknadDto = søknadDto()
 
@@ -30,12 +30,14 @@ internal class SøknadOvergangsstønadMapperTest {
     fun `mapTilIntern returnerer dto med personnummer fra frontend`() {
         // Given
         val forventetFnr = "25058521089" // Syntetisk mocknummer
-        val søknadDto = søknadDto.copy(
-            person = Person(
-                søker = søkerMedDefaultVerdier(forventetFnr = forventetFnr),
-                barn = søknadDto.person.barn,
-            ),
-        )
+        val søknadDto =
+            søknadDto.copy(
+                person =
+                    Person(
+                        søker = søkerMedDefaultVerdier(forventetFnr = forventetFnr),
+                        barn = søknadDto.person.barn,
+                    ),
+            )
         // When
         val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad
         // Then
@@ -46,12 +48,14 @@ internal class SøknadOvergangsstønadMapperTest {
     fun `map fra frontend`() {
         // Given
         val forventetNavn = "Hei Hopp"
-        val søknadDto = søknadDto.copy(
-            person = Person(
-                barn = søknadDto.person.barn,
-                søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn),
-            ),
-        )
+        val søknadDto =
+            søknadDto.copy(
+                person =
+                    Person(
+                        barn = søknadDto.person.barn,
+                        søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn),
+                    ),
+            )
         // When
         val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad
         // Then
@@ -62,12 +66,14 @@ internal class SøknadOvergangsstønadMapperTest {
     fun `mapTilIntern returnerer dto med riktig sivilstatus fra frontend`() {
         // Given
         val forventetSivilstatus = "Gift"
-        val søknadDto = søknadDto.copy(
-            person = Person(
-                søker = søkerMedDefaultVerdier(sivilstatus = forventetSivilstatus),
-                barn = søknadDto.person.barn,
-            ),
-        )
+        val søknadDto =
+            søknadDto.copy(
+                person =
+                    Person(
+                        søker = søkerMedDefaultVerdier(sivilstatus = forventetSivilstatus),
+                        barn = søknadDto.person.barn,
+                    ),
+            )
         // When
         val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad
         // Then

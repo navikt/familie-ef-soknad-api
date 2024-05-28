@@ -8,7 +8,6 @@ import java.time.LocalDateTime
 
 @Service
 class SkjemaService(val søknadClient: SøknadClient) {
-
     fun sendInn(
         arbeidssøker: Arbeidssøker,
         fnr: String,

@@ -11,9 +11,12 @@ import no.nav.familie.ef.søknad.infrastruktur.config.CorsProperties
 import java.io.IOException
 
 internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
-
     @Throws(IOException::class, ServletException::class)
-    override fun doFilter(servletRequest: ServletRequest, servletResponse: ServletResponse, filterChain: FilterChain) {
+    override fun doFilter(
+        servletRequest: ServletRequest,
+        servletResponse: ServletResponse,
+        filterChain: FilterChain,
+    ) {
         val request = servletRequest as HttpServletRequest
         val response = servletResponse as HttpServletResponse
         if (erCorsOk(request)) {
@@ -27,7 +30,10 @@ internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
         }
     }
 
-    private fun setCorsHeaders(response: HttpServletResponse, request: HttpServletRequest) {
+    private fun setCorsHeaders(
+        response: HttpServletResponse,
+        request: HttpServletRequest,
+    ) {
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"))
         response.setHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, nav-consumer-id")
         response.setHeader("Access-Control-Allow-Credentials", "true")

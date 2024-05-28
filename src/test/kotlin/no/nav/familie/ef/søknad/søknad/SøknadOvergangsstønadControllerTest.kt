@@ -27,7 +27,6 @@ import java.time.LocalDateTime
 @Profile("overgangsstonad-controller-test")
 @Configuration
 class SøknadOvergangsstønadControllerTestConfiguration {
-
     @Primary
     @Bean
     fun søknadService(): SøknadService = mockk()
@@ -39,7 +38,6 @@ class SøknadOvergangsstønadControllerTestConfiguration {
 
 @ActiveProfiles("overgangsstonad-controller-test")
 internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest() {
-
     @Autowired
     lateinit var søknadService: SøknadService
 
@@ -56,34 +54,38 @@ internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest()
     @Test
     fun `sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
         val søknad = søknadOvergangsstønadDto(tokenSubject)
-        every { søknadService.sendInn(søknad, any()) } returns Kvittering(
-            "Mottatt søknad: $søknad",
-            LocalDateTime.now(),
-        )
+        every { søknadService.sendInn(søknad, any()) } returns
+            Kvittering(
+                "Mottatt søknad: $søknad",
+                LocalDateTime.now(),
+            )
         every { featureToggleService.isEnabled(any()) } returns true
 
-        val response = restTemplate.exchange<Kvittering>(
-            localhost("/api/soknad/overgangsstonad"),
-            HttpMethod.POST,
-            HttpEntity(søknad, headers),
-        )
+        val response =
+            restTemplate.exchange<Kvittering>(
+                localhost("/api/soknad/overgangsstonad"),
+                HttpMethod.POST,
+                HttpEntity(søknad, headers),
+            )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body?.text).isEqualTo("ok")
     }
 
-    private fun søknadOvergangsstønadDto(fnr: String) = søknadDto()
-        .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = fnr), barn = listOf()))
+    private fun søknadOvergangsstønadDto(fnr: String) =
+        søknadDto()
+            .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = fnr), barn = listOf()))
 
     @Test
     fun `sendInn returnerer 403 ved ulik fnr i token og søknad`() {
         val søknad = søknadDto()
 
-        val response = restTemplate.exchange<Any>(
-            localhost("/api/soknad/overgangsstonad"),
-            HttpMethod.POST,
-            HttpEntity(søknad, headers),
-        )
+        val response =
+            restTemplate.exchange<Any>(
+                localhost("/api/soknad/overgangsstonad"),
+                HttpMethod.POST,
+                HttpEntity(søknad, headers),
+            )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
         verify(exactly = 0) { søknadService.sendInn(søknad, any()) }

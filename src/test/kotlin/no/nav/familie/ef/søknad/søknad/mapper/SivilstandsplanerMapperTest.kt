@@ -9,7 +9,6 @@ import java.io.File
 import java.time.LocalDate
 
 internal class SivilstandsplanerMapperTest {
-
     private val bosituasjonGifteplaner = getBosituasjon("sivilstandsplaner.json")
 
     @Test
@@ -54,8 +53,9 @@ internal class SivilstandsplanerMapperTest {
         assertThat(sivilstandsplaner.fraDato?.label).isEqualTo("Når skal dette skje?")
     }
 
-    private fun getBosituasjon(fileName: String) = objectMapper.readValue(
-        File("src/test/resources/$fileName"),
-        Bosituasjon::class.java,
-    )
+    private fun getBosituasjon(fileName: String) =
+        objectMapper.readValue(
+            File("src/test/resources/$fileName"),
+            Bosituasjon::class.java,
+        )
 }

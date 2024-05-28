@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 internal class ArbeidssøkerMapperTest {
-
     // Gitt
     private val søknadDto = søknadDto()
 
@@ -49,7 +48,9 @@ internal class ArbeidssøkerMapperTest {
     @Test
     fun `Map kanDuSkaffeBarnepassInnenEnUke label `() {
         Assertions.assertThat((arbeidssøker?.kanDuSkaffeBarnepassInnenEnUke?.label))
-            .isEqualTo("Har du eller kan du skaffe barnepass senest innen en uke etter at du har fått tilbud om jobb eller arbeidsmarkedtiltak?")
+            .isEqualTo(
+                "Har du eller kan du skaffe barnepass senest innen en uke etter at du har fått tilbud om jobb eller arbeidsmarkedtiltak?",
+            )
     }
 
     @Test

@@ -13,15 +13,15 @@ import java.time.LocalDateTime
 import kotlin.test.assertNotNull
 
 internal class SøknadBarnetilsynMapperTest {
-
     private val mapper = SøknadBarnetilsynMapper()
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
-    private val søknad: SøknadBarnetilsynDto = objectMapper.readValue(
-        File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
-        SøknadBarnetilsynDto::class.java,
-    )
+    private val søknad: SøknadBarnetilsynDto =
+        objectMapper.readValue(
+            File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
+            SøknadBarnetilsynDto::class.java,
+        )
 
     @Test
     fun `Barnetilsyn skal mappes `() {
@@ -35,21 +35,28 @@ internal class SøknadBarnetilsynMapperTest {
         val identForBarnMedBarnepass = FnrGenerator.generer(LocalDate.now())
         val person = søknad.person
         val barn = person.barn
-        fun lagBarn(ident: String, skalHaBarnepass: Boolean?) = barn[0]
+
+        fun lagBarn(
+            ident: String,
+            skalHaBarnepass: Boolean?,
+        ) = barn[0]
             .copy(id = ident, ident = TekstFelt("", ident), skalHaBarnepass = skalHaBarnepass?.let { BooleanFelt("", it) })
 
-        val mapped = mapper.mapTilIntern(
-            søknad.copy(
-                person = person.copy(
-                    barn = listOf(
-                        lagBarn(FnrGenerator.generer(LocalDate.now().minusDays(1)), false),
-                        lagBarn(identForBarnMedBarnepass, true),
-                        lagBarn(FnrGenerator.generer(LocalDate.now().plusDays(1)), null),
-                    ),
+        val mapped =
+            mapper.mapTilIntern(
+                søknad.copy(
+                    person =
+                        person.copy(
+                            barn =
+                                listOf(
+                                    lagBarn(FnrGenerator.generer(LocalDate.now().minusDays(1)), false),
+                                    lagBarn(identForBarnMedBarnepass, true),
+                                    lagBarn(FnrGenerator.generer(LocalDate.now().plusDays(1)), null),
+                                ),
+                        ),
                 ),
-            ),
-            innsendingMottatt,
-        )
+                innsendingMottatt,
+            )
         val mappedBarn = mapped.søknad.barn.verdi
         assertThat(mappedBarn).hasSize(1)
         assertThat(mappedBarn[0].fødselsnummer?.verdi?.verdi).isEqualTo(identForBarnMedBarnepass)

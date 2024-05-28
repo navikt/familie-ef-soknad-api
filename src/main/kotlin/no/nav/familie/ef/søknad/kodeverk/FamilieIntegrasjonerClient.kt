@@ -15,7 +15,6 @@ class FamilieIntegrasjonerClient(
     @Qualifier("utenAuth") restTemplate: RestOperations,
 ) :
     AbstractPingableRestClient(restTemplate, "familie.integrasjoner") {
-
     override val pingUri: URI = config.pingUri
 
     fun hentKodeverkLandkoder(): KodeverkDto {

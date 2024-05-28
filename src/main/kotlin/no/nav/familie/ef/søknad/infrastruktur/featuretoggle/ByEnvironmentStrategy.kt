@@ -4,12 +4,11 @@ import io.getunleash.UnleashContext
 import io.getunleash.strategy.Strategy
 
 class ByEnvironmentStrategy : Strategy {
-
     companion object {
-        private const val miljøKey = "miljø"
+        private const val MILJØ_KEY = "miljø"
 
         fun lagPropertyMapMedMiljø(vararg strings: String): Map<String, String> {
-            return mapOf(miljøKey to strings.joinToString(","))
+            return mapOf(MILJØ_KEY to strings.joinToString(","))
         }
     }
 
@@ -21,9 +20,12 @@ class ByEnvironmentStrategy : Strategy {
         return isEnabled(map, UnleashContext.builder().build())
     }
 
-    override fun isEnabled(map: Map<String, String>, unleashContext: UnleashContext): Boolean {
+    override fun isEnabled(
+        map: Map<String, String>,
+        unleashContext: UnleashContext,
+    ): Boolean {
         return unleashContext.environment
-            .map { env -> map[miljøKey]?.split(',')?.contains(env) ?: false }
+            .map { env -> map[MILJØ_KEY]?.split(',')?.contains(env) ?: false }
             .orElse(false)
     }
 }

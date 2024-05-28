@@ -21,34 +21,37 @@ class PdlApp2AppClient(
     @Qualifier("clientCredential") restOperations: RestOperations,
 ) :
     AbstractRestClient(restOperations, "pdl.personinfo") {
-
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentBarn(personIdenter: List<String>): Map<String, PdlBarn> {
         if (personIdenter.isEmpty()) return emptyMap()
-        val pdlPersonRequest = PdlPersonBolkRequest(
-            variables = PdlPersonBolkRequestVariables(personIdenter),
-            query = PdlConfig.barnQuery,
-        )
-        val pdlResponse: PdlBolkResponse<PdlBarn> = postForEntity(
-            pdlConfig.pdlUri,
-            pdlPersonRequest,
-            httpHeaders(),
-        )
+        val pdlPersonRequest =
+            PdlPersonBolkRequest(
+                variables = PdlPersonBolkRequestVariables(personIdenter),
+                query = PdlConfig.barnQuery,
+            )
+        val pdlResponse: PdlBolkResponse<PdlBarn> =
+            postForEntity(
+                pdlConfig.pdlUri,
+                pdlPersonRequest,
+                httpHeaders(),
+            )
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
     fun hentAndreForeldre(personIdenter: List<String>): Map<String, PdlAnnenForelder> {
         if (personIdenter.isEmpty()) return emptyMap()
-        val pdlPersonRequest = PdlPersonBolkRequest(
-            variables = PdlPersonBolkRequestVariables(personIdenter),
-            query = PdlConfig.annenForelderQuery,
-        )
-        val pdlResponse: PdlBolkResponse<PdlAnnenForelder> = postForEntity(
-            pdlConfig.pdlUri,
-            pdlPersonRequest,
-            httpHeaders(),
-        )
+        val pdlPersonRequest =
+            PdlPersonBolkRequest(
+                variables = PdlPersonBolkRequestVariables(personIdenter),
+                query = PdlConfig.annenForelderQuery,
+            )
+        val pdlResponse: PdlBolkResponse<PdlAnnenForelder> =
+            postForEntity(
+                pdlConfig.pdlUri,
+                pdlPersonRequest,
+                httpHeaders(),
+            )
         return feilsjekkOgReturnerData(pdlResponse)
     }
 

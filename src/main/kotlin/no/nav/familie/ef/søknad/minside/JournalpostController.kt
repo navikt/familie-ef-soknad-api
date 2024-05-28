@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
 class JournalpostController(private val journalpostService: JournalpostService) {
-
     @GetMapping
     fun hentJournalposter(): List<JournalpostDto> {
         return journalpostService.hentJournalposterForBruker()

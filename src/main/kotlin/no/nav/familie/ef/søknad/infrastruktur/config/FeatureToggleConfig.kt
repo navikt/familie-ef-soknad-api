@@ -13,7 +13,6 @@ class FeatureToggleConfig(
     @Value("\${UNLEASH_SERVER_API_TOKEN}") private val apiToken: String,
     @Value("\${NAIS_APP_NAME}") private val appName: String,
 ) {
-
     @Bean
     fun strategies(): List<Strategy> {
         return listOf(ByEnvironmentStrategy())

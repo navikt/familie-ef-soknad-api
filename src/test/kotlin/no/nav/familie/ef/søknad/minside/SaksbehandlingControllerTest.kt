@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus
 import java.time.LocalDate
 
 internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
-
     private val tokenSubject = "12345678911"
 
     // Ønsker ikke å bruke LocalDate.now() i tester -> tar utgangspunkt i 12. feb 2024 som dagens dato
@@ -38,11 +37,12 @@ internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
 
     @Test
     fun `skal hente korrekt mappede utbetalingsperioder for bruker`() {
-        val response = restTemplate.exchange<MineStønaderDto>(
-            localhost("/api/saksbehandling/stonadsperioder"),
-            HttpMethod.GET,
-            HttpEntity<String>(headers),
-        )
+        val response =
+            restTemplate.exchange<MineStønaderDto>(
+                localhost("/api/saksbehandling/stonadsperioder"),
+                HttpMethod.GET,
+                HttpEntity<String>(headers),
+            )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
 

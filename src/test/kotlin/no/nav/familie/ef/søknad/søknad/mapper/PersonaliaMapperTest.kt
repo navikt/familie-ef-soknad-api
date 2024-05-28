@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class PersonaliaMapperTest {
-
     @Test
     fun `mapPersonalia mapper dto fra frontend til forventet Personalia`() {
         // Given

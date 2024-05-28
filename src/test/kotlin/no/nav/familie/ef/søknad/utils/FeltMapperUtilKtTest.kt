@@ -21,7 +21,6 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNull
 
 internal class FeltMapperUtilKtTest {
-
     @Test
     internal fun `TekstFelt`() {
         val felt = TekstFelt("label", "verdi", "svarid").tilSøknadsfelt()
@@ -55,11 +54,12 @@ internal class FeltMapperUtilKtTest {
 
     @Test
     internal fun `PeriodeFelt`() {
-        var felt = PeriodeFelt(
-            "label",
-            DatoFelt("fra", "2020-01-01"),
-            DatoFelt("til", "2021-12-30"),
-        ).tilSøknadsfelt()
+        var felt =
+            PeriodeFelt(
+                "label",
+                DatoFelt("fra", "2020-01-01"),
+                DatoFelt("til", "2021-12-30"),
+            ).tilSøknadsfelt()
         assertEquals(Søknadsfelt("label", MånedÅrPeriode(Month.JANUARY, 2020, Month.DECEMBER, 2021)), felt)
     }
 

@@ -36,14 +36,14 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 internal class SøkerinfoMapperTest {
-
     private val kodeverkService = mockk<KodeverkService>(relaxed = true)
     private val søkerinfoMapper = SøkerinfoMapper(kodeverkService)
 
-    private val barn = barn().copy(
-        fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
-        navn = listOf(Navn("fornavn", "", "Etternavn")),
-    )
+    private val barn =
+        barn().copy(
+            fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+            navn = listOf(Navn("fornavn", "", "Etternavn")),
+        )
 
     @BeforeEach
     internal fun setUp() {
@@ -136,27 +136,30 @@ internal class SøkerinfoMapperTest {
 
     @Test
     fun `AnnenForelder mappes til barn`() {
-        val pdlSøker = PdlSøker(
-            listOf(),
-            listOf(),
-            listOf(),
-            navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
-            sivilstand = listOf(Sivilstand(UOPPGITT)),
-            listOf(),
-        )
+        val pdlSøker =
+            PdlSøker(
+                listOf(),
+                listOf(),
+                listOf(),
+                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
+                sivilstand = listOf(Sivilstand(UOPPGITT)),
+                listOf(),
+            )
 
         val navn = Navn("Roy", "", "Toy")
         val relatertPersonsIdent = FnrGenerator.generer()
-        val barn = barn().copy(
-            fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
-            navn = listOf(Navn("Boy", "", "Moy")),
-            forelderBarnRelasjon = listOf(
-                ForelderBarnRelasjon(
-                    relatertPersonsIdent,
-                    Familierelasjonsrolle.FAR,
-                ),
-            ),
-        )
+        val barn =
+            barn().copy(
+                fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+                navn = listOf(Navn("Boy", "", "Moy")),
+                forelderBarnRelasjon =
+                    listOf(
+                        ForelderBarnRelasjon(
+                            relatertPersonsIdent,
+                            Familierelasjonsrolle.FAR,
+                        ),
+                    ),
+            )
         val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
         val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
         val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
@@ -167,32 +170,36 @@ internal class SøkerinfoMapperTest {
     @Test
     fun `AnnenForelder en annen forelder, to barn mappes til riktig barn`() {
         // Gitt
-        val pdlSøker = PdlSøker(
-            listOf(),
-            listOf(),
-            listOf(),
-            navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
-            sivilstand = listOf(Sivilstand(UOPPGITT)),
-            listOf(),
-        )
+        val pdlSøker =
+            PdlSøker(
+                listOf(),
+                listOf(),
+                listOf(),
+                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
+                sivilstand = listOf(Sivilstand(UOPPGITT)),
+                listOf(),
+            )
 
         val navn = Navn("Roy", "", "Toy")
         val relatertPersonsIdent = FnrGenerator.generer()
-        val barn = barn().copy(
-            fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
-            navn = listOf(Navn("Boy", "", "Moy")),
-            forelderBarnRelasjon = listOf(
-                ForelderBarnRelasjon(
-                    relatertPersonsIdent,
-                    Familierelasjonsrolle.FAR,
-                ),
-            ),
-        )
-        val barn2 = barn().copy(
-            fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
-            navn = listOf(Navn("Boy", "", "Moy")),
-            forelderBarnRelasjon = listOf(),
-        )
+        val barn =
+            barn().copy(
+                fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+                navn = listOf(Navn("Boy", "", "Moy")),
+                forelderBarnRelasjon =
+                    listOf(
+                        ForelderBarnRelasjon(
+                            relatertPersonsIdent,
+                            Familierelasjonsrolle.FAR,
+                        ),
+                    ),
+            )
+        val barn2 =
+            barn().copy(
+                fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+                navn = listOf(Navn("Boy", "", "Moy")),
+                forelderBarnRelasjon = listOf(),
+            )
 
         val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
         val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
@@ -209,14 +216,15 @@ internal class SøkerinfoMapperTest {
     @Test
     fun `sivilstand er tom liste skal mappes til UOPPGITT`() {
         // Gitt
-        val pdlSøker = PdlSøker(
-            listOf(),
-            listOf(),
-            listOf(),
-            navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
-            sivilstand = listOf(),
-            listOf(),
-        )
+        val pdlSøker =
+            PdlSøker(
+                listOf(),
+                listOf(),
+                listOf(),
+                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
+                sivilstand = listOf(),
+                listOf(),
+            )
         // når
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), mapOf())
         // da skal
@@ -365,34 +373,42 @@ internal class SøkerinfoMapperTest {
         )
     }
 
-    private fun vegadresse(matrikkelId: Long? = null, adressenavn: String? = null) =
-        Vegadresse(
-            null,
-            null,
-            null,
-            adressenavn,
-            null,
-            matrikkelId,
-        )
+    private fun vegadresse(
+        matrikkelId: Long? = null,
+        adressenavn: String? = null,
+    ) = Vegadresse(
+        null,
+        null,
+        null,
+        adressenavn,
+        null,
+        matrikkelId,
+    )
 
-    private fun bostedsadresse(vegadresse: Vegadresse? = null, matrikkeladresse: Matrikkeladresse? = null) =
-        Bostedsadresse(vegadresse, matrikkeladresse)
+    private fun bostedsadresse(
+        vegadresse: Vegadresse? = null,
+        matrikkeladresse: Matrikkeladresse? = null,
+    ) = Bostedsadresse(vegadresse, matrikkeladresse)
 
-    private fun bostedsadresseBarn(vegadresse: Vegadresse? = null, matrikkeladresse: MatrikkeladresseBarn? = null) =
-        BostedsadresseBarn(vegadresse, matrikkeladresse)
+    private fun bostedsadresseBarn(
+        vegadresse: Vegadresse? = null,
+        matrikkeladresse: MatrikkeladresseBarn? = null,
+    ) = BostedsadresseBarn(vegadresse, matrikkeladresse)
 
     private fun matrikkeladresse(matrikkelId: Long?) = Matrikkeladresse(matrikkelId, "", "0572")
 
     private fun matrikkeladresseBarn(matrikkelId: Long?) = MatrikkeladresseBarn(matrikkelId)
 
-    private fun barn(bostedsadresse: BostedsadresseBarn? = null, deltBosted: DeltBosted? = null) =
-        PdlBarn(
-            emptyList(),
-            bostedsadresse?.let { listOf(it) } ?: emptyList(),
-            deltBosted?.let { listOf(it) } ?: emptyList(),
-            emptyList(),
-            emptyList(),
-            emptyList(),
-            emptyList(),
-        )
+    private fun barn(
+        bostedsadresse: BostedsadresseBarn? = null,
+        deltBosted: DeltBosted? = null,
+    ) = PdlBarn(
+        emptyList(),
+        bostedsadresse?.let { listOf(it) } ?: emptyList(),
+        deltBosted?.let { listOf(it) } ?: emptyList(),
+        emptyList(),
+        emptyList(),
+        emptyList(),
+        emptyList(),
+    )
 }

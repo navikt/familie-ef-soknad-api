@@ -15,16 +15,16 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Utenlandsopphold as KontraksUtenlandsopphold
 
 object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekster.OppholdINorge) {
-
     override fun mapDto(data: Medlemskap): Medlemskapsdetaljer {
         return Medlemskapsdetaljer(
             oppholderDuDegINorge = data.søkerOppholderSegINorge.tilSøknadsfelt(),
             oppholdsland = data.oppholdsland?.tilSøknadsfelt(),
             bosattNorgeSisteÅrene = data.søkerBosattINorgeSisteTreÅr.tilSøknadsfelt(),
-            utenlandsopphold = Søknadsfelt(
-                Språktekster.Utenlandsopphold.hentTekst(),
-                mapUtenlansopphold(data.perioderBoddIUtlandet),
-            ),
+            utenlandsopphold =
+                Søknadsfelt(
+                    Språktekster.Utenlandsopphold.hentTekst(),
+                    mapUtenlansopphold(data.perioderBoddIUtlandet),
+                ),
         )
     }
 
@@ -45,30 +45,34 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
 
     fun mapTilDto(medlemskapsdetaljer: Medlemskapsdetaljer): Medlemskap {
         return Medlemskap(
-            perioderBoddIUtlandet = medlemskapsdetaljer.utenlandsopphold?.verdi?.map {
-                Utenlandsperiode(
-                    begrunnelse = TekstFelt(it.årsakUtenlandsopphold.label, it.årsakUtenlandsopphold.verdi),
-                    periode = PeriodeFelt(
-                        fra = DatoFelt(it.fradato.label, it.fradato.verdi.toString()),
-                        til = DatoFelt(it.tildato.label, it.tildato.verdi.toString()),
-                        label = null,
-                    ),
-                    land = it.land.tilNullableTekstFelt(),
-                    personidentEøsLand = it.personidentEøsLand.tilNullableTekstFelt(),
-                    adresseEøsLand = it.adresseEøsLand.tilNullableTekstFelt(),
-                    erEøsLand = it.erEøsLand,
-                    kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident,
-                )
-            },
-            søkerBosattINorgeSisteTreÅr = BooleanFelt(
-                medlemskapsdetaljer.bosattNorgeSisteÅrene.label,
-                medlemskapsdetaljer.bosattNorgeSisteÅrene.verdi,
-            ),
+            perioderBoddIUtlandet =
+                medlemskapsdetaljer.utenlandsopphold?.verdi?.map {
+                    Utenlandsperiode(
+                        begrunnelse = TekstFelt(it.årsakUtenlandsopphold.label, it.årsakUtenlandsopphold.verdi),
+                        periode =
+                            PeriodeFelt(
+                                fra = DatoFelt(it.fradato.label, it.fradato.verdi.toString()),
+                                til = DatoFelt(it.tildato.label, it.tildato.verdi.toString()),
+                                label = null,
+                            ),
+                        land = it.land.tilNullableTekstFelt(),
+                        personidentEøsLand = it.personidentEøsLand.tilNullableTekstFelt(),
+                        adresseEøsLand = it.adresseEøsLand.tilNullableTekstFelt(),
+                        erEøsLand = it.erEøsLand,
+                        kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident,
+                    )
+                },
+            søkerBosattINorgeSisteTreÅr =
+                BooleanFelt(
+                    medlemskapsdetaljer.bosattNorgeSisteÅrene.label,
+                    medlemskapsdetaljer.bosattNorgeSisteÅrene.verdi,
+                ),
             oppholdsland = medlemskapsdetaljer.oppholdsland.tilNullableTekstFelt(),
-            søkerOppholderSegINorge = BooleanFelt(
-                medlemskapsdetaljer.oppholderDuDegINorge.label,
-                medlemskapsdetaljer.oppholderDuDegINorge.verdi,
-            ),
+            søkerOppholderSegINorge =
+                BooleanFelt(
+                    medlemskapsdetaljer.oppholderDuDegINorge.label,
+                    medlemskapsdetaljer.oppholderDuDegINorge.verdi,
+                ),
         )
     }
 }

@@ -18,18 +18,23 @@ class SafClient(
     val safConfig: SafConfig,
     @Qualifier("tokenExchange") restOperations: RestOperations,
 ) : AbstractPingableRestClient(restOperations, "saf.dokument") {
-
-    fun hentDokument(journalpostId: String, dokumentInfoId: String, dokumentVariantformat: Variantformat) =
-        getForEntity<ByteArray>(
-            UriComponentsBuilder.fromUriString("${safConfig.safRestUri}/hentdokument/" + "$journalpostId/$dokumentInfoId/$dokumentVariantformat")
-                .build().toUri(),
+    fun hentDokument(
+        journalpostId: String,
+        dokumentInfoId: String,
+        dokumentVariantformat: Variantformat,
+    ) = getForEntity<ByteArray>(
+        UriComponentsBuilder.fromUriString(
+            "${safConfig.safRestUri}/hentdokument/" + "$journalpostId/$dokumentInfoId/$dokumentVariantformat",
         )
+            .build().toUri(),
+    )
 
     fun hentJournalposterForBruker(personIdent: String): DokumentoversiktSelvbetjeningResponse {
-        val safDokumentRequest = SafDokumentOversiktRequest(
-            variables = SafDokumentVariables(personIdent),
-            query = SafConfig.safQuery,
-        )
+        val safDokumentRequest =
+            SafDokumentOversiktRequest(
+                variables = SafDokumentVariables(personIdent),
+                query = SafConfig.safQuery,
+            )
 
         val safDokumentResponse: SafDokumentOversiktResponse<DokumentoversiktSelvbetjeningResponse> =
             postForEntity(safConfig.safGraphQLUri, safDokumentRequest)

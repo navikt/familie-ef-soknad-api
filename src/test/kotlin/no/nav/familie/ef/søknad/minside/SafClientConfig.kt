@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Profile
 @Configuration
 @Profile("mock-saf")
 class SafClientConfig {
-
     @Bean
     @Primary
     fun safClient(): SafClient {

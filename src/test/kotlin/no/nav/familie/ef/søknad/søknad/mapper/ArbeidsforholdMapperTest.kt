@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 internal class ArbeidsforholdMapperTest {
-
     // Gitt
     private val aktivitet = søknadDto().aktivitet
 

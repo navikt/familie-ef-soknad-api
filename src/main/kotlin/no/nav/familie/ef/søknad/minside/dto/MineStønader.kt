@@ -7,6 +7,7 @@ data class StønadsperioderDto(
     val barnetilsyn: List<StønadsperiodeDto>,
     val skolepenger: List<StønadsperiodeDto>,
 )
+
 data class StønadsperiodeDto(
     val fraDato: LocalDate,
     val tilDato: LocalDate,

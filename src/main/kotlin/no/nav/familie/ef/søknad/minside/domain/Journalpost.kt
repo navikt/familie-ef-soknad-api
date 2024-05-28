@@ -30,6 +30,7 @@ data class Journalpost(
         this.dokumenter.filter { dokument -> dokument.mestRelevantDokumentVariant()?.brukerHarTilgang ?: false }
 
     fun harRelevanteDokumenter(): Boolean = this.relevanteDokumenter().isNotEmpty()
+
     fun mestRelevanteDato(journalpost: Journalpost): LocalDateTime? {
         return journalpost.relevanteDatoer.maxByOrNull { datoTyperSortert(it.datotype) }?.dato
     }
@@ -60,10 +61,11 @@ enum class Variantformat {
     SLADDET,
 }
 
-private fun datoTyperSortert(datoType: String) = when (datoType) {
-    "DATO_REGISTRERT" -> 4
-    "DATO_JOURNALFOERT" -> 3
-    "DATO_DOKUMENT" -> 2
-    "DATO_OPPRETTET" -> 1
-    else -> 0
-}
+private fun datoTyperSortert(datoType: String) =
+    when (datoType) {
+        "DATO_REGISTRERT" -> 4
+        "DATO_JOURNALFOERT" -> 3
+        "DATO_DOKUMENT" -> 2
+        "DATO_OPPRETTET" -> 1
+        else -> 0
+    }

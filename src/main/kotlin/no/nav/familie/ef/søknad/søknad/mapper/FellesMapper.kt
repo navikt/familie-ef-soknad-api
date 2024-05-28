@@ -9,8 +9,10 @@ import java.time.LocalDateTime
 import no.nav.familie.ef.søknad.utils.Språktekster.Innsendingsdetaljer as InnsendingsdetaljerTekst
 
 object FellesMapper {
-
-    fun mapInnsendingsdetaljer(innsendingMottatt: LocalDateTime, datoPåbegyntSøknad: LocalDate? = null): Søknadsfelt<Innsendingsdetaljer> =
+    fun mapInnsendingsdetaljer(
+        innsendingMottatt: LocalDateTime,
+        datoPåbegyntSøknad: LocalDate? = null,
+    ): Søknadsfelt<Innsendingsdetaljer> =
         Søknadsfelt(
             InnsendingsdetaljerTekst.hentTekst(),
             Innsendingsdetaljer(Søknadsfelt(DatoMottatt.hentTekst(), innsendingMottatt), datoPåbegyntSøknad),

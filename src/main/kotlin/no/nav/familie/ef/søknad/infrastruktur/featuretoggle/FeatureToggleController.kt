@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = ["/api/featuretoggle"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @Unprotected
 class FeatureToggleController(private val featureToggleService: FeatureToggleService) {
-
-    val funksjonsbrytere = listOf(
-        "familie.ef.soknad.feilsituasjon",
-        "familie.ef.soknad.nynorsk",
-    )
+    val funksjonsbrytere =
+        listOf(
+            "familie.ef.soknad.feilsituasjon",
+            "familie.ef.soknad.nynorsk",
+        )
 
     @GetMapping
     fun sjekkAlle(): Map<String, Boolean> {

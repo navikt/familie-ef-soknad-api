@@ -15,7 +15,6 @@ import no.nav.familie.ef.søknad.utils.Språktekster.Fødselsnummer as Fødselsn
 import no.nav.familie.ef.søknad.utils.Språktekster.Søker as SpråkTeksterSøker
 
 object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
-
     override fun mapDto(data: Søker): Personalia {
         return Personalia(
             fødselsnummer = Søknadsfelt(FødselsnummerTekst.hentTekst(), Fødselsnummer(data.fnr)),
