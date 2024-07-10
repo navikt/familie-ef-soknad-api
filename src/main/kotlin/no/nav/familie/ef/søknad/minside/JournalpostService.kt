@@ -17,6 +17,7 @@ class JournalpostService(private val safClient: SafClient) {
             .efJournalposter()
             .filter { it.harRelevanteDokumenter() }
             .map { it.tilDto() }
+            .sortedByDescending { it.dato }
 
     fun hentPdfDokument(
         journalpostId: String,
