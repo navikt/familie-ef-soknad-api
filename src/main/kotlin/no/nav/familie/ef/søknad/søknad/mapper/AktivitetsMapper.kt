@@ -39,8 +39,8 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
     override fun mapDto(
         data: AktivitetDto,
         vedlegg: Map<String, DokumentasjonWrapper>,
-    ): Aktivitet {
-        return Aktivitet(
+    ): Aktivitet =
+        Aktivitet(
             hvordanErArbeidssituasjonen = data.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
             arbeidsforhold =
                 data.arbeidsforhold?.let {
@@ -65,26 +65,28 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
             erIArbeid = data.erIArbeid?.tilSøknadsfelt(),
             erIArbeidDokumentasjon = dokumentfelt(DokumentIdentifikator.FOR_SYK_TIL_Å_JOBBE, vedlegg),
         )
-    }
 
-    fun mapTilDto(aktivitet: Aktivitet): AktivitetDto {
-        return AktivitetDto(
+    fun mapTilDto(aktivitet: Aktivitet): AktivitetDto =
+        AktivitetDto(
             arbeidsforhold = mapTilArbeidsgiverDto(aktivitet.arbeidsforhold?.verdi),
             arbeidssøker = mapTilArbeidssøkerDto(aktivitet.arbeidssøker?.verdi),
             firmaer = mapTilFirmaerDto(aktivitet.firmaer?.verdi),
             hvaErDinArbeidssituasjon = aktivitet.hvordanErArbeidssituasjonen.tilListFelt(),
             underUtdanning = UtdanningMapper.mapTilDto(aktivitet.underUtdanning?.verdi),
-            etablererEgenVirksomhet = aktivitet.virksomhet?.verdi?.virksomhetsbeskrivelse.tilNullableTekstFelt(),
+            etablererEgenVirksomhet =
+                aktivitet.virksomhet
+                    ?.verdi
+                    ?.virksomhetsbeskrivelse
+                    .tilNullableTekstFelt(),
             egetAS = mapTilAksjeselskapDto(aktivitet.aksjeselskap?.verdi),
             erIArbeid = aktivitet.erIArbeid.tilNullableTekstFelt(),
         )
-    }
 
     private fun mapArbeidssøker(
         arbeidssøker: ArbeidssøkerDto,
         vedlegg: Map<String, DokumentasjonWrapper>,
-    ): Søknadsfelt<Arbeidssøker> {
-        return Søknadsfelt(
+    ): Søknadsfelt<Arbeidssøker> =
+        Søknadsfelt(
             NårDuErArbeidssøker.hentTekst(),
             Arbeidssøker(
                 registrertSomArbeidssøkerNav = arbeidssøker.registrertSomArbeidssøkerNav.tilSøknadsfelt(),
@@ -100,7 +102,6 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                     ),
             ),
         )
-    }
 
     private fun mapTilArbeidssøkerDto(arbeidssøker: Arbeidssøker?): ArbeidssøkerDto? {
         if (arbeidssøker == null) return null
@@ -122,22 +123,19 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
     private fun mapEtablererVirksomhet(
         it: TekstFelt,
         vedlegg: Map<String, DokumentasjonWrapper>,
-    ): Søknadsfelt<Virksomhet> {
-        return Søknadsfelt(
+    ): Søknadsfelt<Virksomhet> =
+        Søknadsfelt(
             OmVirksomhetenDuEtablerer.hentTekst(),
             Virksomhet(
                 it.tilSøknadsfelt(),
                 dokumentfelt(ETABLERER_VIRKSOMHET, vedlegg),
             ),
         )
-    }
 
-    private fun mapOmFirmaer(firmaer: List<Firma>): List<Selvstendig> {
-        return firmaer.map { firma -> mapOmFirma(firma) }
-    }
+    private fun mapOmFirmaer(firmaer: List<Firma>): List<Selvstendig> = firmaer.map { firma -> mapOmFirma(firma) }
 
-    private fun mapOmFirma(firma: Firma): Selvstendig {
-        return Selvstendig(
+    private fun mapOmFirma(firma: Firma): Selvstendig =
+        Selvstendig(
             firmanavn = firma.navn.tilSøknadsfelt(),
             organisasjonsnummer = firma.organisasjonsnummer.tilSøknadsfelt(),
             etableringsdato = firma.etableringsdato.tilSøknadsfelt(),
@@ -145,10 +143,9 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
             hvordanSerArbeidsukenUt = firma.arbeidsuke.tilSøknadsfelt(),
             overskudd = firma.overskudd?.tilSøknadsfelt(String::tilHeltall),
         )
-    }
 
-    private fun mapTilFirmaerDto(firmaer: List<Selvstendig>?): List<Firma>? {
-        return firmaer?.map {
+    private fun mapTilFirmaerDto(firmaer: List<Selvstendig>?): List<Firma>? =
+        firmaer?.map {
             Firma(
                 navn = it.firmanavn.tilTekstFelt(),
                 organisasjonsnummer = it.organisasjonsnummer.tilTekstFelt(),
@@ -158,10 +155,9 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                 overskudd = it.overskudd.tilNullableTekstFelt(),
             )
         }
-    }
 
-    fun mapArbeidsforhold(arbeidsforhold: List<ArbeidsgiverDto>): List<Arbeidsgiver> {
-        return arbeidsforhold.map { arbeid ->
+    fun mapArbeidsforhold(arbeidsforhold: List<ArbeidsgiverDto>): List<Arbeidsgiver> =
+        arbeidsforhold.map { arbeid ->
             Arbeidsgiver(
                 arbeidsgivernavn = arbeid.navn.tilSøknadsfelt(),
                 arbeidsmengde = arbeid.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
@@ -170,10 +166,9 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                 sluttdato = arbeid.sluttdato?.tilSøknadsfelt(),
             )
         }
-    }
 
-    fun mapTilArbeidsgiverDto(arbeidsforhold: List<Arbeidsgiver>?): List<ArbeidsgiverDto>? {
-        return arbeidsforhold?.map { arbeid ->
+    fun mapTilArbeidsgiverDto(arbeidsforhold: List<Arbeidsgiver>?): List<ArbeidsgiverDto>? =
+        arbeidsforhold?.map { arbeid ->
             ArbeidsgiverDto(
                 arbeidsmengde = arbeid.arbeidsmengde?.tilTekstFelt(),
                 sluttdato = arbeid.sluttdato?.tilNullableDatoFelt(),
@@ -188,14 +183,12 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                 navn = TekstFelt(arbeid.arbeidsgivernavn.label, arbeid.arbeidsgivernavn.verdi, arbeid.arbeidsgivernavn.svarId),
             )
         }
-    }
 
-    private fun mapTilAksjeselskapDto(aksjeselskap: List<Aksjeselskap>?): List<AksjeselskapDto>? {
-        return aksjeselskap?.map {
+    private fun mapTilAksjeselskapDto(aksjeselskap: List<Aksjeselskap>?): List<AksjeselskapDto>? =
+        aksjeselskap?.map {
             AksjeselskapDto(
                 navn = it.navn.tilTekstFelt(),
                 arbeidsmengde = it.arbeidsmengde?.tilTekstFelt(),
             )
         }
-    }
 }

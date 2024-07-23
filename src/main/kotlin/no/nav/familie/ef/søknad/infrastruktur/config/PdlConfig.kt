@@ -10,7 +10,12 @@ import java.net.URI
 class PdlConfig(
     @Value("\${PDL_URL}") pdlUrl: URI,
 ) {
-    val pdlUri: URI = UriComponentsBuilder.fromUri(pdlUrl).pathSegment(PATH_GRAPHQL).build().toUri()
+    val pdlUri: URI =
+        UriComponentsBuilder
+            .fromUri(pdlUrl)
+            .pathSegment(PATH_GRAPHQL)
+            .build()
+            .toUri()
 
     companion object {
         const val PATH_GRAPHQL = "graphql"
@@ -22,12 +27,11 @@ class PdlConfig(
         val annenForelderQuery = graphqlQuery("/pdl/andreForeldre.graphql")
 
         private fun graphqlQuery(path: String) =
-            PdlConfig::class.java.getResource(path)
+            PdlConfig::class.java
+                .getResource(path)
                 .readText()
                 .graphqlCompatible()
 
-        private fun String.graphqlCompatible(): String {
-            return StringUtils.normalizeSpace(this.replace("\n", ""))
-        }
+        private fun String.graphqlCompatible(): String = StringUtils.normalizeSpace(this.replace("\n", ""))
     }
 }

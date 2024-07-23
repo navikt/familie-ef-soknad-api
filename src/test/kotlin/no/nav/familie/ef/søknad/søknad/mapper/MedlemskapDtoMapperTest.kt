@@ -56,6 +56,12 @@ internal class MedlemskapDtoMapperTest {
         val medlemsskapDetaljer = MedlemsskapsMapper.map(medlemskap).verdi
         // Then
         assertThat(medlemsskapDetaljer.utenlandsopphold?.verdi).hasSize(2)
-        assertThat(medlemsskapDetaljer.utenlandsopphold?.verdi?.get(0)?.land?.svarId).isEqualTo("SWE")
+        assertThat(
+            medlemsskapDetaljer.utenlandsopphold
+                ?.verdi
+                ?.get(0)
+                ?.land
+                ?.svarId,
+        ).isEqualTo("SWE")
     }
 }

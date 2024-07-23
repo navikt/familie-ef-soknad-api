@@ -1,13 +1,15 @@
 package no.nav.familie.ef.søknad.utils
 
-fun Språktekster.hentTekst(): String {
-    return when (språk()) {
+fun Språktekster.hentTekst(): String =
+    when (språk()) {
         Språk.EN -> this.engelsk
         Språk.NB -> this.norsk
     }
-}
 
-enum class Språktekster(val norsk: String, val engelsk: String) {
+enum class Språktekster(
+    val norsk: String,
+    val engelsk: String,
+) {
     Fødselsnummer("Fødselsnummer", "National identity number or D number"),
     OmArbeidsforholdet("Om arbeidsforholdet ditt", "About your employment"),
     OmFirmaDuDriver("Om firmaet du driver", "About the company you run"),

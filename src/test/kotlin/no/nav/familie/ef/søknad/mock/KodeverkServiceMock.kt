@@ -14,12 +14,8 @@ class KodeverkServiceMock {
     @Primary
     fun kodeverkService(): KodeverkService =
         object : KodeverkService(mockk()) {
-            override fun hentLand(landkode: String): String? {
-                return "Norge"
-            }
+            override fun hentLand(landkode: String): String? = "Norge"
 
-            override fun hentPoststed(postnummer: String): String? {
-                return "Oslo"
-            }
+            override fun hentPoststed(postnummer: String): String? = "Oslo"
         }
 }

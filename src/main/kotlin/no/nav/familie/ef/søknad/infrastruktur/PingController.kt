@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = ["/api"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class PingController {
     @GetMapping("/ping")
-    fun ping(): PingDto {
-        return PingDto("Ack - vi har kontakt")
-    }
+    fun ping(): PingDto = PingDto("Ack - vi har kontakt")
 }
 
-data class PingDto(val message: String)
+data class PingDto(
+    val message: String,
+)

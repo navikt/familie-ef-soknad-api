@@ -27,7 +27,12 @@ internal class SøknadBarnetilsynMapperTest {
     fun `Barnetilsyn skal mappes `() {
         val mapped = mapper.mapTilIntern(søknad, innsendingMottatt)
 
-        assertNotNull(mapped.søknad.barn.verdi.first().navn?.verdi)
+        assertNotNull(
+            mapped.søknad.barn.verdi
+                .first()
+                .navn
+                ?.verdi,
+        )
     }
 
     @Test

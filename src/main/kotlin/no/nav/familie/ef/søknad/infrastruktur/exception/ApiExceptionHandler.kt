@@ -19,9 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    private fun rootCause(throwable: Throwable): String {
-        return NestedExceptionUtils.getMostSpecificCause(throwable).javaClass.simpleName
-    }
+    private fun rootCause(throwable: Throwable): String = NestedExceptionUtils.getMostSpecificCause(throwable).javaClass.simpleName
 
     override fun handleExceptionInternal(
         ex: Exception,
@@ -45,11 +43,10 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     }
 
     @ExceptionHandler(ApiFeil::class)
-    fun handleThrowable(e: ApiFeil): ResponseEntity<FeilDto> {
-        return ResponseEntity
+    fun handleThrowable(e: ApiFeil): ResponseEntity<FeilDto> =
+        ResponseEntity
             .status(e.httpStatus)
             .body(FeilDto(e.feil))
-    }
 
     private fun uventetFeil(throwable: Throwable): ResponseEntity<String> {
         secureLogger.error("En feil har oppstått", throwable)

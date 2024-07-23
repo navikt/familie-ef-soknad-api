@@ -16,7 +16,11 @@ internal class AktivitetsMapperTest {
 
     @Test
     fun `Skal kaste feil ved blank verdi på arbeidsmengde `() {
-        val arbeidsmengdeUtenVerdi = aktivitet.arbeidsforhold?.first()?.arbeidsmengde?.copy(verdi = "")
+        val arbeidsmengdeUtenVerdi =
+            aktivitet.arbeidsforhold
+                ?.first()
+                ?.arbeidsmengde
+                ?.copy(verdi = "")
         val arbeidsforhold = aktivitet.arbeidsforhold?.first()?.copy(arbeidsmengde = arbeidsmengdeUtenVerdi)
         assertThrows<NumberFormatException> {
             AktivitetsMapper.mapArbeidsforhold(listOf(arbeidsforhold!!))
@@ -102,14 +106,26 @@ internal class AktivitetsMapperTest {
 
     @Test
     fun `Map etablererEgenVirksomhet label `() {
-        Assertions.assertThat((aktivitetMapped.virksomhet?.verdi?.virksomhetsbeskrivelse?.label))
-            .isEqualTo("Hva er din arbeidsituasjon?")
+        Assertions
+            .assertThat(
+                (
+                    aktivitetMapped.virksomhet
+                        ?.verdi
+                        ?.virksomhetsbeskrivelse
+                        ?.label
+                ),
+            ).isEqualTo("Hva er din arbeidsituasjon?")
     }
 
     @Test
     fun `Map etablererEgenVirksomhet verdi `() {
-        Assertions.assertThat(aktivitetMapped.virksomhet?.verdi?.virksomhetsbeskrivelse?.verdi)
-            .isEqualTo("Dette er en spennende gründerbedrift")
+        Assertions
+            .assertThat(
+                aktivitetMapped.virksomhet
+                    ?.verdi
+                    ?.virksomhetsbeskrivelse
+                    ?.verdi,
+            ).isEqualTo("Dette er en spennende gründerbedrift")
     }
 
     @Test

@@ -15,18 +15,17 @@ import no.nav.familie.ef.søknad.utils.Språktekster.Fødselsnummer as Fødselsn
 import no.nav.familie.ef.søknad.utils.Språktekster.Søker as SpråkTeksterSøker
 
 object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
-    override fun mapDto(data: Søker): Personalia {
-        return Personalia(
+    override fun mapDto(data: Søker): Personalia =
+        Personalia(
             fødselsnummer = Søknadsfelt(FødselsnummerTekst.hentTekst(), Fødselsnummer(data.fnr)),
             navn = Søknadsfelt(Navn.hentTekst(), data.forkortetNavn),
             adresse = lagAdresseSøknadsFelt(data.adresse),
             statsborgerskap = Søknadsfelt(Statsborgerskap.hentTekst(), data.statsborgerskap),
             sivilstatus = Søknadsfelt(Sivilstatus.hentTekst(), data.sivilstand),
         )
-    }
 
-    private fun lagAdresseSøknadsFelt(frontendAdresse: AdresseDto): Søknadsfelt<Adresse> {
-        return Søknadsfelt(
+    private fun lagAdresseSøknadsFelt(frontendAdresse: AdresseDto): Søknadsfelt<Adresse> =
+        Søknadsfelt(
             AdresseTekst.hentTekst(),
             Adresse(
                 adresse = frontendAdresse.adresse,
@@ -35,13 +34,11 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
                 land = "",
             ),
         )
-    }
 
-    private fun mapAdresseTilDto(adresse: Adresse): AdresseDto {
-        return AdresseDto(
+    private fun mapAdresseTilDto(adresse: Adresse): AdresseDto =
+        AdresseDto(
             adresse = adresse.adresse ?: "",
             postnummer = adresse.postnummer,
             poststed = adresse.poststedsnavn,
         )
-    }
 }

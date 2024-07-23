@@ -6,7 +6,9 @@ val kontekst = ThreadLocal<Språk>()
 
 fun språk(): Språk = kontekst.get() ?: Språk.NB
 
-enum class Språk(val språk: String) {
+enum class Språk(
+    val språk: String,
+) {
     @JsonProperty("nb")
     NB("nb"),
 

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/dokumentasjonsbehov"])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
-class DokumentasjonsbehovController(private val søknadClient: SøknadClient) {
+class DokumentasjonsbehovController(
+    private val søknadClient: SøknadClient,
+) {
     @GetMapping("/person")
     fun hentDokumentasjonsbehovForPerson(): ResponseEntity<List<SøknadMedDokumentasjonsbehovDto>> {
         val ident = EksternBrukerUtils.hentFnrFraToken()

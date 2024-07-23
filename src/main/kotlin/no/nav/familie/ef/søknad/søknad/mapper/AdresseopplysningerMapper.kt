@@ -19,11 +19,10 @@ object AdresseopplysningerMapper :
     override fun mapDto(
         data: AdresseopplysningerData,
         vedlegg: Map<String, DokumentasjonWrapper>,
-    ): KontraktAdresseopplysninger {
-        return KontraktAdresseopplysninger(
+    ): KontraktAdresseopplysninger =
+        KontraktAdresseopplysninger(
             søkerBorPåRegistrertAdresse = data.søkerBorPåRegistrertAdresse?.tilSøknadsfelt(),
             harMeldtAdresseendring = data.adresseopplysninger?.harMeldtAdresseendring?.tilSøknadsfelt(),
             dokumentasjonAdresseendring = DokumentfeltUtil.dokumentfelt(DokumentIdentifikator.MELDT_ADRESSEENDRING, vedlegg),
         )
-    }
 }

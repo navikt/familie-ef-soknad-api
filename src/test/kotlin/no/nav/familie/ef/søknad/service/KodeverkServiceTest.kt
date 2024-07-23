@@ -33,8 +33,8 @@ class KodeverkTestConfig {
     private fun kodeverk(
         kode: String,
         verdi: String,
-    ): KodeverkDto {
-        return KodeverkDto(
+    ): KodeverkDto =
+        KodeverkDto(
             mapOf(
                 kode to
                     listOf(
@@ -46,7 +46,6 @@ class KodeverkTestConfig {
                     ),
             ),
         )
-    }
 }
 
 class KodeverkServiceTest : OppslagSpringRunnerTest() {

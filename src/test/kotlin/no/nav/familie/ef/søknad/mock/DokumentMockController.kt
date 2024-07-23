@@ -35,11 +35,12 @@ class DokumentMockController(
 
     private val mellomlager = mutableMapOf<String, String>()
 
-    fun TokenValidationContextHolder.hentFnr(): String {
-        return this.getTokenValidationContext().getJwtToken(
-            "tokenx",
-        )?.subject ?: throw JwtTokenValidatorException("Klarte ikke hente fnr tokenx-token")
-    }
+    fun TokenValidationContextHolder.hentFnr(): String =
+        this
+            .getTokenValidationContext()
+            .getJwtToken(
+                "tokenx",
+            )?.subject ?: throw JwtTokenValidatorException("Klarte ikke hente fnr tokenx-token")
 
     @PostMapping(
         path = ["dokument/{bucket}"],

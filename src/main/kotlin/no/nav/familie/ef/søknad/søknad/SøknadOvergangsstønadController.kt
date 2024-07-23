@@ -19,7 +19,10 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/soknad", "/api/soknad/overgangsstonad"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
-class SøknadOvergangsstønadController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
+class SøknadOvergangsstønadController(
+    val søknadService: SøknadService,
+    val featureToggleService: FeatureToggleService,
+) {
     @PostMapping
     fun sendInn(
         @RequestBody søknad: SøknadOvergangsstønadDto,

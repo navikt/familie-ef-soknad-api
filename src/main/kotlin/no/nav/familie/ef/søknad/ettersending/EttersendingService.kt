@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class EttersendingService(private val søknadClient: SøknadClient) {
+class EttersendingService(
+    private val søknadClient: SøknadClient,
+) {
     fun sendInn(
         ettersending: EttersendelseDto,
         innsendingMottatt: LocalDateTime,
@@ -20,7 +22,5 @@ class EttersendingService(private val søknadClient: SøknadClient) {
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-    fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
-        return søknadClient.hentEttersendingForPerson(personIdent)
-    }
+    fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> = søknadClient.hentEttersendingForPerson(personIdent)
 }

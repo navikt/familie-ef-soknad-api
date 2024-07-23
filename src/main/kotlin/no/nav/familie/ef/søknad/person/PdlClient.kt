@@ -20,8 +20,7 @@ import java.net.URI
 class PdlClient(
     val pdlConfig: PdlConfig,
     @Qualifier("tokenExchange") restOperations: RestOperations,
-) :
-    AbstractPingableRestClient(restOperations, "pdl.personinfo") {
+) : AbstractPingableRestClient(restOperations, "pdl.personinfo") {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentSøker(personIdent: String): PdlSøker {
@@ -66,12 +65,11 @@ class PdlClient(
         return data
     }
 
-    private fun httpHeaders(): HttpHeaders {
-        return HttpHeaders().apply {
+    private fun httpHeaders(): HttpHeaders =
+        HttpHeaders().apply {
             add("Tema", "ENF")
             add("behandlingsnummer", Tema.ENF.behandlingsnummer)
         }
-    }
 
     override val pingUri: URI
         get() = pdlConfig.pdlUri

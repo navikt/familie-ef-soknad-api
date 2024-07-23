@@ -43,22 +43,23 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
     override fun mapDto(
         data: List<Barn>,
         vedlegg: Map<String, DokumentasjonWrapper>,
-    ): List<Kontraktbarn> {
-        return data.map { barn ->
+    ): List<Kontraktbarn> =
+        data.map { barn ->
             tilKontraktBarn(barn, vedlegg)
         }
-    }
 
-    fun mapTilDto(barn: List<Kontraktbarn>): List<Barn> {
-        return barn.map {
+    fun mapTilDto(barn: List<Kontraktbarn>): List<Barn> =
+        barn.map {
             Barn(
                 alder =
                     TekstFelt(
                         AlderTekst.hentTekst(),
-                        Period.between(
-                            it.fødselsnummer?.verdi?.fødselsdato ?: it.fødselTermindato?.verdi,
-                            LocalDate.now(),
-                        ).years.toString(),
+                        Period
+                            .between(
+                                it.fødselsnummer?.verdi?.fødselsdato ?: it.fødselTermindato?.verdi,
+                                LocalDate.now(),
+                            ).years
+                            .toString(),
                     ),
                 ident = TekstFelt(FødselsnummerTekst.hentTekst(), it.fødselsnummer?.verdi?.verdi ?: ""),
                 fødselsdato = it.fødselTermindato.tilNullableDatoFelt(),
@@ -79,7 +80,6 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                 barnepass = null,
             )
         }
-    }
 
     private fun tilKontraktBarn(
         barn: Barn,
@@ -148,8 +148,16 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                     )
                 },
             navn = lagNullableTekstfeltAvNavnHvisHvorforIkkeOppgiManglerVerdi(annenForelder),
-            fødselsdato = annenForelder.person?.verdi?.fødselsdato.tilNullableDatoFelt(),
-            ident = annenForelder.person?.verdi?.fødselsnummer.fødselsnummerTilTekstFelt(),
+            fødselsdato =
+                annenForelder.person
+                    ?.verdi
+                    ?.fødselsdato
+                    .tilNullableDatoFelt(),
+            ident =
+                annenForelder.person
+                    ?.verdi
+                    ?.fødselsnummer
+                    .fødselsnummerTilTekstFelt(),
             borINorge = annenForelder.bosattNorge.tilNullableBooleanFelt(),
             land = annenForelder.land.tilNullableTekstFelt(),
             avtaleOmDeltBosted = samvær?.spørsmålAvtaleOmDeltBosted.tilNullableBooleanFelt(),
@@ -166,21 +174,19 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
         )
     }
 
-    private fun hvorforIkkeOppgiBasertPåBegrunnelse(begrunnelse: String?): String? {
-        return when {
+    private fun hvorforIkkeOppgiBasertPåBegrunnelse(begrunnelse: String?): String? =
+        when {
             begrunnelse == "Donor" -> "Donor"
             begrunnelse.erIkkeBlankEllerNull() -> "Annet"
             else -> null
         }
-    }
 
-    private fun hvorforIkkeOppgiSvarIdBasertPåBegrunnelse(begrunnelse: String?): String? {
-        return when {
+    private fun hvorforIkkeOppgiSvarIdBasertPåBegrunnelse(begrunnelse: String?): String? =
+        when {
             begrunnelse == "Donor" -> "donorbarn"
             begrunnelse.erIkkeBlankEllerNull() -> "annet"
             else -> null
         }
-    }
 
     private fun String?.erIkkeBlankEllerNull() = !this.isNullOrBlank()
 
@@ -193,13 +199,16 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
         return null
     }
 
-    private fun lagNullableTekstfeltAvNavnHvisHvorforIkkeOppgiManglerVerdi(annenForelder: AnnenForelder?): TekstFelt? {
-        return if (annenForelder?.ikkeOppgittAnnenForelderBegrunnelse?.verdi != null) {
+    private fun lagNullableTekstfeltAvNavnHvisHvorforIkkeOppgiManglerVerdi(annenForelder: AnnenForelder?): TekstFelt? =
+        if (annenForelder?.ikkeOppgittAnnenForelderBegrunnelse?.verdi != null) {
             null
         } else {
-            annenForelder?.person?.verdi?.navn.tilNullableTekstFelt()
+            annenForelder
+                ?.person
+                ?.verdi
+                ?.navn
+                .tilNullableTekstFelt()
         }
-    }
 
     private fun mapSamvær(
         forelder: AnnenForelderDto,

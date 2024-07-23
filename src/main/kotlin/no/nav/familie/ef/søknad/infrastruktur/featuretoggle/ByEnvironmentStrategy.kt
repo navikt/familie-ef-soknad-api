@@ -7,25 +7,18 @@ class ByEnvironmentStrategy : Strategy {
     companion object {
         private const val MILJØ_KEY = "miljø"
 
-        fun lagPropertyMapMedMiljø(vararg strings: String): Map<String, String> {
-            return mapOf(MILJØ_KEY to strings.joinToString(","))
-        }
+        fun lagPropertyMapMedMiljø(vararg strings: String): Map<String, String> = mapOf(MILJØ_KEY to strings.joinToString(","))
     }
 
-    override fun getName(): String {
-        return "byEnvironment"
-    }
+    override fun getName(): String = "byEnvironment"
 
-    override fun isEnabled(map: Map<String, String>): Boolean {
-        return isEnabled(map, UnleashContext.builder().build())
-    }
+    override fun isEnabled(map: Map<String, String>): Boolean = isEnabled(map, UnleashContext.builder().build())
 
     override fun isEnabled(
         map: Map<String, String>,
         unleashContext: UnleashContext,
-    ): Boolean {
-        return unleashContext.environment
+    ): Boolean =
+        unleashContext.environment
             .map { env -> map[MILJØ_KEY]?.split(',')?.contains(env) ?: false }
             .orElse(false)
-    }
 }

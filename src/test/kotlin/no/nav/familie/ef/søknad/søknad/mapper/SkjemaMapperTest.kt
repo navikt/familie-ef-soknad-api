@@ -52,7 +52,8 @@ internal class SkjemaMapperTest {
     @Test
     fun `Map til kontrakt mapper riktig verdi - hvorØnskerSøkerArbeid`() {
         val kontrakt = SkjemaMapper.mapTilKontrakt(arbeidssøker, "14108921464", "Innsenders navn", innsendingMottatt)
-        Assertions.assertThat(kontrakt.arbeidssøker.verdi.hvorØnskerDuArbeid.verdi)
+        Assertions
+            .assertThat(kontrakt.arbeidssøker.verdi.hvorØnskerDuArbeid.verdi)
             .isEqualTo(arbeidssøker.hvorØnskerSøkerArbeid.verdi)
     }
 
@@ -93,7 +94,8 @@ internal class SkjemaMapperTest {
         val kontrakt = SkjemaMapper.mapTilKontrakt(copy, "14108921464", "Innsenders navn", innsendingMottatt)
         // Then
         Assertions.assertThat(kontrakt.arbeidssøker.verdi.kanDuBegynneInnenEnUke.verdi).isEqualTo(true)
-        Assertions.assertThat(kontrakt.arbeidssøker.verdi.kanDuBegynneInnenEnUke.label)
+        Assertions
+            .assertThat(kontrakt.arbeidssøker.verdi.kanDuBegynneInnenEnUke.label)
             .isEqualTo("villigTilÅTaImotTilbudOmArbeid")
     }
 

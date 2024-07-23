@@ -69,58 +69,53 @@ internal class ApplicationConfig {
         bearerTokenExchangeClientInterceptor: BearerTokenExchangeClientInterceptor,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-    ): RestOperations {
-        return RestTemplateBuilder()
+    ): RestOperations =
+        RestTemplateBuilder()
             .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
             .interceptors(
                 bearerTokenExchangeClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
                 consumerIdClientInterceptor,
-            )
-            .build()
-    }
+            ).build()
 
     @Bean("clientCredential")
     fun clientCredentialRestTemplateMedApiKey(
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         bearerTokenClientCredentialsClientInterceptor: BearerTokenClientCredentialsClientInterceptor,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-    ): RestOperations {
-        return RestTemplateBuilder()
+    ): RestOperations =
+        RestTemplateBuilder()
             .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
             .interceptors(
                 consumerIdClientInterceptor,
                 bearerTokenClientCredentialsClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
-            )
-            .build()
-    }
+            ).build()
 
     @Bean("utenAuth")
     fun restTemplateUtenAuth(
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-    ): RestOperations {
-        return RestTemplateBuilder()
+    ): RestOperations =
+        RestTemplateBuilder()
             .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
             .additionalInterceptors(
                 consumerIdClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
             ).build()
-    }
 
     @Primary
     @Bean
-    fun oAuth2HttpClient(): OAuth2HttpClient {
-        return RetryOAuth2HttpClient(
+    fun oAuth2HttpClient(): OAuth2HttpClient =
+        RetryOAuth2HttpClient(
             RestClient.create(
                 RestTemplateBuilder()
                     .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-                    .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS)).build(),
+                    .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS))
+                    .build(),
             ),
         )
-    }
 }

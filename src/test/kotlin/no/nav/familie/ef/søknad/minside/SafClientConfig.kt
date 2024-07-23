@@ -18,7 +18,10 @@ class SafClientConfig {
     fun safClient(): SafClient {
         val dummyJournalposter =
             objectMapper.readValue<DokumentoversiktSelvbetjeningResponse>(readFile("dummy-journalposter.json"))
-        val dummyPdf = this::class.java.classLoader.getResource("minside/pdf_dummy.pdf").readBytes()
+        val dummyPdf =
+            this::class.java.classLoader
+                .getResource("minside/pdf_dummy.pdf")
+                .readBytes()
         val safClient: SafClient = mockk()
 
         every { safClient.ping() } returns Unit
@@ -30,7 +33,5 @@ class SafClientConfig {
         return safClient
     }
 
-    private fun readFile(filnavn: String): String {
-        return this::class.java.getResource("/minside/$filnavn")!!.readText()
-    }
+    private fun readFile(filnavn: String): String = this::class.java.getResource("/minside/$filnavn")!!.readText()
 }

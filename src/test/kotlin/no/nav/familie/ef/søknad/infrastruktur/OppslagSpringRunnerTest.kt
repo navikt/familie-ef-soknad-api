@@ -60,17 +60,11 @@ abstract class OppslagSpringRunnerTest {
         applicationContext.getBeansOfType(WireMockServer::class.java).values.forEach(WireMockServer::resetRequests)
     }
 
-    protected fun getPort(): String {
-        return port.toString()
-    }
+    protected fun getPort(): String = port.toString()
 
-    protected fun localhost(uri: String): String {
-        return LOCALHOST + getPort() + uri
-    }
+    protected fun localhost(uri: String): String = LOCALHOST + getPort() + uri
 
-    protected fun søkerBearerToken(personident: String = FnrGenerator.generer()): String {
-        return jwt(personident)
-    }
+    protected fun søkerBearerToken(personident: String = FnrGenerator.generer()): String = jwt(personident)
 
     private fun jwt(fnr: String) = mockOAuth2Server.token(subject = fnr)
 
@@ -80,19 +74,19 @@ abstract class OppslagSpringRunnerTest {
         clientId: String = UUID.randomUUID().toString(),
         audience: String = "familie-app",
         claims: Map<String, Any> = mapOf("acr" to "Level4"),
-    ): String {
-        return this.issueToken(
-            issuerId,
-            clientId,
-            DefaultOAuth2TokenCallback(
-                issuerId = issuerId,
-                subject = subject,
-                audience = listOf(audience),
-                claims = claims,
-                expiry = 3600,
-            ),
-        ).serialize()
-    }
+    ): String =
+        this
+            .issueToken(
+                issuerId,
+                clientId,
+                DefaultOAuth2TokenCallback(
+                    issuerId = issuerId,
+                    subject = subject,
+                    audience = listOf(audience),
+                    claims = claims,
+                    expiry = 3600,
+                ),
+            ).serialize()
 
     companion object {
         private const val LOCALHOST = "http://localhost:"

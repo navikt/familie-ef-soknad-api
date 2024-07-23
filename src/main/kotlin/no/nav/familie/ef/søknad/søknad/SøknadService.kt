@@ -46,7 +46,5 @@ class SøknadService(
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
-        return SøknadBarnetilsynMapper().mapTilDto(søknadClient.hentForrigeBarnetilsynSøknad())
-    }
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(søknadClient.hentForrigeBarnetilsynSøknad())
 }

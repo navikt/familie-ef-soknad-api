@@ -10,7 +10,9 @@ import jakarta.servlet.http.HttpServletResponse
 import no.nav.familie.ef.søknad.infrastruktur.config.CorsProperties
 import java.io.IOException
 
-internal class CORSResponseFilter(val corsProperties: CorsProperties) : Filter {
+internal class CORSResponseFilter(
+    val corsProperties: CorsProperties,
+) : Filter {
     @Throws(IOException::class, ServletException::class)
     override fun doFilter(
         servletRequest: ServletRequest,

@@ -67,7 +67,5 @@ class PdlClientTest {
             .isInstanceOf(PdlRequestException::class.java)
     }
 
-    private fun readFile(filnavn: String): String {
-        return this::class.java.getResource("/pdl/$filnavn").readText()
-    }
+    private fun readFile(filnavn: String): String = this::class.java.getResource("/pdl/$filnavn").readText()
 }

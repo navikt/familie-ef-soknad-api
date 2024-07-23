@@ -58,17 +58,29 @@ internal class JsonSisteInnspurtMapperTest {
 
         val søknad = medUtenlandsopphold.søknad
         assertEquals(
-            søknad.medlemskapsdetaljer.verdi.utenlandsopphold?.verdi?.first()?.årsakUtenlandsopphold?.verdi,
+            søknad.medlemskapsdetaljer.verdi.utenlandsopphold
+                ?.verdi
+                ?.first()
+                ?.årsakUtenlandsopphold
+                ?.verdi,
             "Jobbgreie",
         )
 
         assertEquals(
-            søknad.medlemskapsdetaljer.verdi.utenlandsopphold?.verdi?.first()?.fradato?.verdi,
+            søknad.medlemskapsdetaljer.verdi.utenlandsopphold
+                ?.verdi
+                ?.first()
+                ?.fradato
+                ?.verdi,
             LocalDate.of(2020, 5, 1),
         )
 
         assertEquals(
-            søknad.medlemskapsdetaljer.verdi.utenlandsopphold?.verdi?.first()?.tildato?.verdi,
+            søknad.medlemskapsdetaljer.verdi.utenlandsopphold
+                ?.verdi
+                ?.first()
+                ?.tildato
+                ?.verdi,
             LocalDate.of(2020, 5, 31),
         )
     }
@@ -81,7 +93,11 @@ internal class JsonSisteInnspurtMapperTest {
                 SøknadOvergangsstønadDto::class.java,
             )
         val mappetTilBarnUtenFødselsTermindato = mapper.mapTilIntern(mapped, innsendingMottatt)
-        assertNull(mappetTilBarnUtenFødselsTermindato.søknad.barn.verdi.first().fødselTermindato)
+        assertNull(
+            mappetTilBarnUtenFødselsTermindato.søknad.barn.verdi
+                .first()
+                .fødselTermindato,
+        )
     }
 
     @Test
@@ -153,7 +169,15 @@ internal class JsonSisteInnspurtMapperTest {
             )
 
         val mapped = mapper.mapTilIntern(identTest3(), innsendingMottatt)
-        assertNotNull(mapped.søknad.barn.verdi.last().annenForelder?.verdi?.person?.verdi?.fødselsnummer)
+        assertNotNull(
+            mapped.søknad.barn.verdi
+                .last()
+                .annenForelder
+                ?.verdi
+                ?.person
+                ?.verdi
+                ?.fødselsnummer,
+        )
     }
 
     @Test
@@ -216,11 +240,44 @@ internal class JsonSisteInnspurtMapperTest {
 
         val søknadRequestData = mapper.mapTilIntern(søknadFraHilde(), innsendingMottatt)
         val søknad = søknadRequestData.søknad
-        assertEquals(LocalDate.of(1970, 3, 20), søknad.barn.verdi[0].annenForelder?.verdi?.person?.verdi?.fødselsdato?.verdi)
-        assertEquals(LocalDate.of(1970, 3, 20), søknad.barn.verdi[1].annenForelder?.verdi?.person?.verdi?.fødselsdato?.verdi)
-        assertEquals(LocalDate.of(2020, 6, 2), søknad.barn.verdi[0].samvær?.verdi?.nårFlyttetDereFraHverandre?.verdi)
-        assertEquals(LocalDate.of(1970, 3, 20), søknad.sivilstandsdetaljer.verdi.samlivsbruddsdato?.verdi)
-        assertEquals(LocalDate.of(2020, 7, 5), søknad.situasjon.verdi.oppstartNyJobb?.verdi)
+        assertEquals(
+            LocalDate.of(1970, 3, 20),
+            søknad.barn.verdi[0]
+                .annenForelder
+                ?.verdi
+                ?.person
+                ?.verdi
+                ?.fødselsdato
+                ?.verdi,
+        )
+        assertEquals(
+            LocalDate.of(1970, 3, 20),
+            søknad.barn.verdi[1]
+                .annenForelder
+                ?.verdi
+                ?.person
+                ?.verdi
+                ?.fødselsdato
+                ?.verdi,
+        )
+        assertEquals(
+            LocalDate.of(2020, 6, 2),
+            søknad.barn.verdi[0]
+                .samvær
+                ?.verdi
+                ?.nårFlyttetDereFraHverandre
+                ?.verdi,
+        )
+        assertEquals(
+            LocalDate.of(1970, 3, 20),
+            søknad.sivilstandsdetaljer.verdi.samlivsbruddsdato
+                ?.verdi,
+        )
+        assertEquals(
+            LocalDate.of(2020, 7, 5),
+            søknad.situasjon.verdi.oppstartNyJobb
+                ?.verdi,
+        )
     }
 
     @Test
@@ -233,17 +290,71 @@ internal class JsonSisteInnspurtMapperTest {
 
         val søknadRequestData = mapper.mapTilIntern(søknadFraHilde(), innsendingMottatt)
         val søknad = søknadRequestData.søknad
-        assertEquals(LocalDate.of(2015, 11, 18), søknad.barn.verdi[0].fødselTermindato?.verdi)
-        assertEquals(LocalDate.of(2019, 8, 25), søknad.barn.verdi[1].fødselTermindato?.verdi)
-        assertEquals(LocalDate.of(2021, 3, 20), søknad.sivilstandsplaner?.verdi?.fraDato?.verdi)
-        assertEquals(Month.of(5), søknad.stønadsstart.verdi.fraMåned?.verdi)
-        assertEquals(2020, søknad.stønadsstart.verdi.fraÅr?.verdi)
-        assertEquals(LocalDate.of(1970, 3, 20), søknad.sivilstandsdetaljer.verdi.samlivsbruddsdato?.verdi)
+        assertEquals(
+            LocalDate.of(2015, 11, 18),
+            søknad.barn.verdi[0]
+                .fødselTermindato
+                ?.verdi,
+        )
+        assertEquals(
+            LocalDate.of(2019, 8, 25),
+            søknad.barn.verdi[1]
+                .fødselTermindato
+                ?.verdi,
+        )
+        assertEquals(
+            LocalDate.of(2021, 3, 20),
+            søknad.sivilstandsplaner
+                ?.verdi
+                ?.fraDato
+                ?.verdi,
+        )
+        assertEquals(
+            Month.of(5),
+            søknad.stønadsstart.verdi.fraMåned
+                ?.verdi,
+        )
+        assertEquals(
+            2020,
+            søknad.stønadsstart.verdi.fraÅr
+                ?.verdi,
+        )
+        assertEquals(
+            LocalDate.of(1970, 3, 20),
+            søknad.sivilstandsdetaljer.verdi.samlivsbruddsdato
+                ?.verdi,
+        )
 
-        assertEquals(LocalDate.of(1970, 3, 20), søknad.medlemskapsdetaljer.verdi.utenlandsopphold!!.verdi[0].fradato.verdi)
-        assertEquals(LocalDate.of(1970, 3, 21), søknad.medlemskapsdetaljer.verdi.utenlandsopphold!!.verdi[0].tildato.verdi)
-        assertEquals(LocalDate.of(1970, 3, 20), søknad.barn.verdi[0].annenForelder?.verdi?.person?.verdi?.fødselsdato?.verdi)
-        assertEquals(LocalDate.of(1970, 3, 20), søknad.barn.verdi[0].samvær?.verdi?.nårFlyttetDereFraHverandre?.verdi)
+        assertEquals(
+            LocalDate.of(1970, 3, 20),
+            søknad.medlemskapsdetaljer.verdi.utenlandsopphold!!
+                .verdi[0]
+                .fradato.verdi,
+        )
+        assertEquals(
+            LocalDate.of(1970, 3, 21),
+            søknad.medlemskapsdetaljer.verdi.utenlandsopphold!!
+                .verdi[0]
+                .tildato.verdi,
+        )
+        assertEquals(
+            LocalDate.of(1970, 3, 20),
+            søknad.barn.verdi[0]
+                .annenForelder
+                ?.verdi
+                ?.person
+                ?.verdi
+                ?.fødselsdato
+                ?.verdi,
+        )
+        assertEquals(
+            LocalDate.of(1970, 3, 20),
+            søknad.barn.verdi[0]
+                .samvær
+                ?.verdi
+                ?.nårFlyttetDereFraHverandre
+                ?.verdi,
+        )
     }
 
     @Test

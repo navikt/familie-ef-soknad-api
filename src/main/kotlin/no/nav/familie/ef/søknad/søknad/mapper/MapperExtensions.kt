@@ -5,6 +5,4 @@ import no.nav.familie.kontrakter.ef.søknad.Barn
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.ef.søknad.søknad.domain.Barn as BarnDto
 
-fun List<BarnDto>.tilSøknadsfelt(vedlegg: Map<String, DokumentasjonWrapper>): Søknadsfelt<List<Barn>> {
-    return BarnMapper.map(this, vedlegg)
-}
+fun List<BarnDto>.tilSøknadsfelt(vedlegg: Map<String, DokumentasjonWrapper>): Søknadsfelt<List<Barn>> = BarnMapper.map(this, vedlegg)
