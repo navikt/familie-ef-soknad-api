@@ -5,15 +5,10 @@ on:
     branches:
       - 'main'
 
-env:
-  IMAGE: ghcr.io/navikt/familie-ef-soknad-api:${{ github.sha }}
-
 jobs:
   build:
     name: Build, push and deploy to prod-gcp
     runs-on: ubuntu-latest
-    permissions:
-      packages: "write"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -35,20 +30,23 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B --no-transfer-progress package --settings .m2/maven-settings.xml --file pom.xml
       - name: Build and publish Docker image
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          docker build --tag ${IMAGE} .
-          echo ${GITHUB_TOKEN} | docker login ghcr.io --username ${GITHUB_REPOSITORY} --password-stdin
-          docker push ${IMAGE}
+        id: docker-push
+        uses: nais/docker-build-push@v0
+        with:
+          team: teamfamilie
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          byosbom: target/classes/META-INF/sbom/application.cdx.json
       - name: Post build failures to Slack
         if: failure()
         run: |
           curl -X POST --data "{\"text\": \"Build av $GITHUB_REPOSITORY feilet - $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}" $WEBHOOK_URL
         env:
           WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    outputs:
+      image: ${{ steps.docker-push.outputs.image }}
   deploy:
-    name: Deploy to NAIS
+    name: Deploy to GCP
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -56,15 +54,15 @@ jobs:
       - name: Deploy til dev-gcp
         uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: .deploy/nais-dev.yaml
+          IMAGE: ${{ needs.build.outputs.image }}
       - name: Deploy til prod-gcp
         uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: .deploy/nais-prod.yaml
+          IMAGE: ${{ needs.build.outputs.image }}
       - name: Post deploy failures to Slack
         if: failure()
         run: |
