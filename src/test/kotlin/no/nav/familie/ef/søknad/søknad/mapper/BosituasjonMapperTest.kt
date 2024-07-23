@@ -53,7 +53,12 @@ internal class BosituasjonMapperTest {
         // When
         val bosituasjonMapped = BosituasjonMapper.map(bosituasjonSamboer, dokumenter).verdi
         // Then
-        assertThat(bosituasjonMapped.samboerdetaljer?.verdi?.navn?.verdi).isEqualTo("Bob Dyland")
+        assertThat(
+            bosituasjonMapped.samboerdetaljer
+                ?.verdi
+                ?.navn
+                ?.verdi,
+        ).isEqualTo("Bob Dyland")
     }
 
     @Test
@@ -61,7 +66,12 @@ internal class BosituasjonMapperTest {
         // When
         val bosituasjonMapped = BosituasjonMapper.map(bosituasjonSamboer, dokumenter).verdi
         // Then
-        assertThat(bosituasjonMapped.samboerdetaljer?.verdi?.fødselsnummer?.verdi).isEqualTo(Fødselsnummer("26077624804"))
+        assertThat(
+            bosituasjonMapped.samboerdetaljer
+                ?.verdi
+                ?.fødselsnummer
+                ?.verdi,
+        ).isEqualTo(Fødselsnummer("26077624804"))
     }
 
     @Test
@@ -69,7 +79,12 @@ internal class BosituasjonMapperTest {
         // When
         val bosituasjonMapped = BosituasjonMapper.map(bosituasjonSamboer, dokumenter).verdi
         // Then
-        assertThat(bosituasjonMapped.samboerdetaljer?.verdi?.fødselsdato?.verdi).isEqualTo(LocalDate.of(1976, 7, 26))
+        assertThat(
+            bosituasjonMapped.samboerdetaljer
+                ?.verdi
+                ?.fødselsdato
+                ?.verdi,
+        ).isEqualTo(LocalDate.of(1976, 7, 26))
     }
 
     @Test
@@ -85,7 +100,13 @@ internal class BosituasjonMapperTest {
         // When
         val samboerdetaljer = BosituasjonMapper.map(bosituasjonGifteplaner, dokumenter).verdi.samboerdetaljer
         // Then
-        assertThat(samboerdetaljer?.verdi?.fødselsnummer?.verdi?.verdi).isEqualTo("26077624804")
+        assertThat(
+            samboerdetaljer
+                ?.verdi
+                ?.fødselsnummer
+                ?.verdi
+                ?.verdi,
+        ).isEqualTo("26077624804")
     }
 
     @Test

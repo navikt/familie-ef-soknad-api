@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
 @Service
-class SkjemaService(val søknadClient: SøknadClient) {
+class SkjemaService(
+    val søknadClient: SøknadClient,
+) {
     fun sendInn(
         arbeidssøker: Arbeidssøker,
         fnr: String,

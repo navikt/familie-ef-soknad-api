@@ -24,29 +24,18 @@ import java.net.URI
 class SøknadClient(
     private val config: MottakConfig,
     @Qualifier("tokenExchange") operations: RestOperations,
-) :
-    AbstractPingableRestClient(operations, "søknad.innsending") {
+) : AbstractPingableRestClient(operations, "søknad.innsending") {
     override val pingUri: URI = config.pingUri
 
-    fun sendInn(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto {
-        return postForEntity(config.sendInnOvergangsstønadUri, søknadMedVedlegg)
-    }
+    fun sendInn(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto = postForEntity(config.sendInnOvergangsstønadUri, søknadMedVedlegg)
 
-    fun sendInnBarnetilsynsøknad(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto {
-        return postForEntity(config.sendInnBarnetilsynUri, søknadMedVedlegg)
-    }
+    fun sendInnBarnetilsynsøknad(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto = postForEntity(config.sendInnBarnetilsynUri, søknadMedVedlegg)
 
-    fun sendInnSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto {
-        return postForEntity(config.sendInnSkolepengerUri, søknadMedVedlegg)
-    }
+    fun sendInnSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto = postForEntity(config.sendInnSkolepengerUri, søknadMedVedlegg)
 
-    fun sendInnEttersending(ettersending: Map<StønadType, EttersendelseDto>): KvitteringDto {
-        return postForEntity(config.sendInnEttersendingUri, ettersending)
-    }
+    fun sendInnEttersending(ettersending: Map<StønadType, EttersendelseDto>): KvitteringDto = postForEntity(config.sendInnEttersendingUri, ettersending)
 
-    fun sendInnArbeidsRegistreringsskjema(skjema: SkjemaForArbeidssøker): KvitteringDto {
-        return postForEntity(config.sendInnSkjemaArbeidUri, skjema)
-    }
+    fun sendInnArbeidsRegistreringsskjema(skjema: SkjemaForArbeidssøker): KvitteringDto = postForEntity(config.sendInnSkjemaArbeidUri, skjema)
 
     fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
         val søknaderMedDokumentasjonsbehov: List<SøknadMedDokumentasjonsbehovDto> =
@@ -58,20 +47,18 @@ class SøknadClient(
         return filtrerVekkEldreDokumentasjonsbehov(søknaderMedDokumentasjonsbehov)
     }
 
-    fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> {
-        return postForEntity(
+    fun hentEttersendingForPerson(personIdent: String): List<EttersendelseDto> =
+        postForEntity(
             config.hentEttersendingForPersonUri,
             PersonIdent(personIdent),
             HttpHeaders().medContentTypeJsonUTF8(),
         )
-    }
 
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsyn? {
-        return getForEntity(
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsyn? =
+        getForEntity(
             config.hentForrigeBarnetilsynSøknadUri,
             HttpHeaders().medContentTypeJsonUTF8(),
         )
-    }
 
     private fun HttpHeaders.medContentTypeJsonUTF8(): HttpHeaders {
         this.add("Content-Type", "application/json;charset=UTF-8")

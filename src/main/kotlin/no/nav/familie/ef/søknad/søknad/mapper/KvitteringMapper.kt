@@ -8,7 +8,5 @@ object KvitteringMapper {
     fun mapTilEkstern(
         kvitteringDto: KvitteringDto?,
         innsendingMottatt: LocalDateTime?,
-    ): Kvittering {
-        return Kvittering(kvitteringDto?.text ?: "", innsendingMottatt)
-    }
+    ): Kvittering = Kvittering(kvitteringDto?.text ?: "", innsendingMottatt)
 }

@@ -23,7 +23,10 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/soknadbarnetilsyn", "/api/soknad/barnetilsyn"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
-class SøknadBarnetilsynController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
+class SøknadBarnetilsynController(
+    val søknadService: SøknadService,
+    val featureToggleService: FeatureToggleService,
+) {
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     @PostMapping

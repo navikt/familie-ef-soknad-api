@@ -23,11 +23,27 @@ internal class DokumentfeltUtilTest {
 
         val dokumenter = dokumentfelt(DokumentIdentifikator.SYKDOM, vedleggMap)!!
 
-        assertThat(dokumenter.verdi.dokumenter.first().id).isEqualTo("id1")
-        assertThat(dokumenter.verdi.dokumenter.first().navn).isEqualTo("dok1.pdf")
+        assertThat(
+            dokumenter.verdi.dokumenter
+                .first()
+                .id,
+        ).isEqualTo("id1")
+        assertThat(
+            dokumenter.verdi.dokumenter
+                .first()
+                .navn,
+        ).isEqualTo("dok1.pdf")
 
-        assertThat(dokumenter.verdi.dokumenter.last().id).isEqualTo("id2")
-        assertThat(dokumenter.verdi.dokumenter.last().navn).isEqualTo("dok2.pdf")
+        assertThat(
+            dokumenter.verdi.dokumenter
+                .last()
+                .id,
+        ).isEqualTo("id2")
+        assertThat(
+            dokumenter.verdi.dokumenter
+                .last()
+                .navn,
+        ).isEqualTo("dok2.pdf")
 
         assertThat(dokumentfelt(DokumentIdentifikator.SAMLIVSBRUDD, vedleggMap)).isNull()
     }

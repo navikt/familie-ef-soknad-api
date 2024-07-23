@@ -28,8 +28,8 @@ import no.nav.familie.kontrakter.ef.søknad.TidligereUtdanning as TidligereUtdan
 import no.nav.familie.kontrakter.ef.søknad.UnderUtdanning as UnderUtdanningKontrakt
 
 object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(UtdanningenDuSkalTa) {
-    override fun mapDto(data: UnderUtdanning): UnderUtdanningKontrakt {
-        return UnderUtdanningKontrakt(
+    override fun mapDto(data: UnderUtdanning): UnderUtdanningKontrakt =
+        UnderUtdanningKontrakt(
             skoleUtdanningssted = data.skoleUtdanningssted.tilSøknadsfelt(),
             utdanning = null,
             gjeldendeUtdanning =
@@ -56,11 +56,11 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
             studieavgift = mapUtgifterTilUtdanning(data.studieavgift),
             eksamensgebyr = mapUtgifterTilUtdanning(data.eksamensgebyr),
         )
-    }
 
     fun mapTilDto(underUtdanningKontrakt: UnderUtdanningKontrakt?): UnderUtdanning? {
         if (underUtdanningKontrakt != null) {
-            return underUtdanningKontrakt.gjeldendeUtdanning?.let { // For å unngå "Smart cast to is a public API property declared in different module"
+            return underUtdanningKontrakt.gjeldendeUtdanning?.let {
+                // For å unngå "Smart cast to is a public API property declared in different module"
                 UnderUtdanning(
                     skoleUtdanningssted = underUtdanningKontrakt.skoleUtdanningssted.tilTekstFelt(),
                     arbeidsmengde = underUtdanningKontrakt.hvorMyeSkalDuStudere.tilNullableTekstFelt(),
@@ -88,10 +88,18 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
                     Søknadsfelt(
                         NårVarDuElevStudent.hentTekst(),
                         MånedÅrPeriode(
-                            it.periode.fra.tilLocalDate().month,
-                            it.periode.fra.tilLocalDate().year,
-                            it.periode.til.tilLocalDate().month,
-                            it.periode.til.tilLocalDate().year,
+                            it.periode.fra
+                                .tilLocalDate()
+                                .month,
+                            it.periode.fra
+                                .tilLocalDate()
+                                .year,
+                            it.periode.til
+                                .tilLocalDate()
+                                .month,
+                            it.periode.til
+                                .tilLocalDate()
+                                .year,
                         ),
                     ),
                 )
@@ -99,14 +107,13 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
         return Søknadsfelt(SpråkTeksterTidligereUtdanning.hentTekst(), tidligereUtdanningList)
     }
 
-    private fun mapTilTidligereUtdanningDto(tidligereUtdanningKontrakt: List<TidligereUtdanningKontrakt>?): List<TidligereUtdanning> {
-        return tidligereUtdanningKontrakt?.map {
+    private fun mapTilTidligereUtdanningDto(tidligereUtdanningKontrakt: List<TidligereUtdanningKontrakt>?): List<TidligereUtdanning> =
+        tidligereUtdanningKontrakt?.map {
             TidligereUtdanning(
                 it.linjeKursGrad.tilTekstFelt(),
                 it.nårVarSkalDuVæreElevStudent.månedÅrSøknadsfeltTilPeriodeFelt(),
             )
         } ?: emptyList()
-    }
 
     private fun Søknadsfelt<MånedÅrPeriode>.månedÅrSøknadsfeltTilPeriodeFelt() =
         PeriodeFelt(

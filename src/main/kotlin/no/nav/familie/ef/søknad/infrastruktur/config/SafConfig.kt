@@ -10,8 +10,18 @@ import java.net.URI
 class SafConfig(
     @Value("\${SAF_URL}") safUrl: URI,
 ) {
-    val safRestUri: URI = UriComponentsBuilder.fromUri(safUrl).pathSegment(PATH_REST).build().toUri()
-    val safGraphQLUri: URI = UriComponentsBuilder.fromUri(safUrl).pathSegment(PATH_GRAPHQL).build().toUri()
+    val safRestUri: URI =
+        UriComponentsBuilder
+            .fromUri(safUrl)
+            .pathSegment(PATH_REST)
+            .build()
+            .toUri()
+    val safGraphQLUri: URI =
+        UriComponentsBuilder
+            .fromUri(safUrl)
+            .pathSegment(PATH_GRAPHQL)
+            .build()
+            .toUri()
 
     companion object {
         private const val PATH_GRAPHQL = "graphql"
@@ -20,12 +30,11 @@ class SafConfig(
         val safQuery = graphqlQuery("/saf/hentJournalposter.graphql")
 
         private fun graphqlQuery(path: String) =
-            SafConfig::class.java.getResource(path)
+            SafConfig::class.java
+                .getResource(path)
                 .readText()
                 .graphqlCompatible()
 
-        private fun String.graphqlCompatible(): String {
-            return StringUtils.normalizeSpace(this.replace("\n", ""))
-        }
+        private fun String.graphqlCompatible(): String = StringUtils.normalizeSpace(this.replace("\n", ""))
     }
 }

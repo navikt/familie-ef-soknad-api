@@ -33,17 +33,20 @@ internal class OppslagServiceServiceImpl(
         val pdlBarn = pdlApp2AppClient.hentBarn(barnIdentifikatorer)
         val aktuelleBarn =
             pdlBarn
-                .filter { erIAktuellAlder(it.value.fødsel.first().fødselsdato) }
-                .filter { erILive(it.value) }
+                .filter {
+                    erIAktuellAlder(
+                        it.value.fødsel
+                            .first()
+                            .fødselsdato,
+                    )
+                }.filter { erILive(it.value) }
 
         val andreForeldre = hentAndreForeldre(aktuelleBarn, søkersPersonIdent)
         validerAdressesperrePåSøkerMedRelasjoner(pdlSøker, aktuelleBarn, andreForeldre)
         return søkerinfoMapper.mapTilSøkerinfo(pdlSøker, aktuelleBarn, andreForeldre)
     }
 
-    private fun throwException() {
-        throw ApiFeil("adressesperre", HttpStatus.FORBIDDEN)
-    }
+    private fun throwException(): Unit = throw ApiFeil("adressesperre", HttpStatus.FORBIDDEN)
 
     private fun validerAdressesperrePåSøkerMedRelasjoner(
         pdlSøker: PdlSøker,
@@ -59,15 +62,14 @@ internal class OppslagServiceServiceImpl(
         }
     }
 
-    fun adresseNivå(adressebeskyttelseGradering: AdressebeskyttelseGradering?): Int {
-        return when (adressebeskyttelseGradering) {
+    fun adresseNivå(adressebeskyttelseGradering: AdressebeskyttelseGradering?): Int =
+        when (adressebeskyttelseGradering) {
             null -> 0
             AdressebeskyttelseGradering.UGRADERT -> 0
             AdressebeskyttelseGradering.FORTROLIG -> 1
             AdressebeskyttelseGradering.STRENGT_FORTROLIG -> 2
             AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND -> 2
         }
-    }
 
     override fun hentSøkerNavn(): String {
         val søkersPersonIdent = EksternBrukerUtils.hentFnrFraToken()
@@ -78,14 +80,14 @@ internal class OppslagServiceServiceImpl(
     private fun hentAndreForeldre(
         aktuelleBarn: Map<String, PdlBarn>,
         søkersPersonIdent: String,
-    ): Map<String, PdlAnnenForelder> {
-        return aktuelleBarn.map { it.value.forelderBarnRelasjon }
+    ): Map<String, PdlAnnenForelder> =
+        aktuelleBarn
+            .map { it.value.forelderBarnRelasjon }
             .flatten()
             .filter { it.relatertPersonsIdent != søkersPersonIdent && it.relatertPersonsRolle != Familierelasjonsrolle.BARN }
             .mapNotNull { it.relatertPersonsIdent }
             .distinct()
             .let { pdlApp2AppClient.hentAndreForeldre(it) }
-    }
 
     fun erILive(pdlBarn: PdlBarn) = pdlBarn.dødsfall.firstOrNull()?.dødsdato == null
 

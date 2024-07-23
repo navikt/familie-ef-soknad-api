@@ -30,12 +30,26 @@ internal class UnderUtdanningMapperTest {
 
     @Test
     fun `Map arbeidsforhold linjeKursGrad verdi `() {
-        Assertions.assertThat(underUtdanning?.gjeldendeUtdanning?.verdi?.linjeKursGrad?.verdi).isEqualTo("Stor kurs grad")
+        Assertions
+            .assertThat(
+                underUtdanning
+                    ?.gjeldendeUtdanning
+                    ?.verdi
+                    ?.linjeKursGrad
+                    ?.verdi,
+            ).isEqualTo("Stor kurs grad")
     }
 
     @Test
     fun `Map arbeidsforhold linjeKursGrad label `() {
-        Assertions.assertThat(underUtdanning?.gjeldendeUtdanning?.verdi?.linjeKursGrad?.label).isEqualTo("Linje / kurs / grad")
+        Assertions
+            .assertThat(
+                underUtdanning
+                    ?.gjeldendeUtdanning
+                    ?.verdi
+                    ?.linjeKursGrad
+                    ?.label,
+            ).isEqualTo("Linje / kurs / grad")
     }
 
     @Test

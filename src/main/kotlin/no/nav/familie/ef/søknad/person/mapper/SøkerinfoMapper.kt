@@ -27,30 +27,27 @@ import java.time.LocalDate
 import java.time.Period
 
 @Component
-internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
+internal class SøkerinfoMapper(
+    private val kodeverkService: KodeverkService,
+) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    fun hentPoststed(postnummer: String?): String {
-        return hentKodeverdi("poststed", postnummer, kodeverkService::hentPoststed)
-    }
+    fun hentPoststed(postnummer: String?): String = hentKodeverdi("poststed", postnummer, kodeverkService::hentPoststed)
 
-    fun hentLand(landkode: String?): String {
-        return hentKodeverdi("land", landkode, kodeverkService::hentLand)
-    }
+    fun hentLand(landkode: String?): String = hentKodeverdi("land", landkode, kodeverkService::hentLand)
 
     private fun hentKodeverdi(
         type: String,
         kode: String?,
         hentKodeverdiFunction: Function1<String, String?>,
-    ): String {
-        return try {
+    ): String =
+        try {
             kode?.let(hentKodeverdiFunction) ?: kode ?: ""
         } catch (e: Exception) {
             // Ikke la feil fra integrasjon stoppe henting av data
             logger.error("Feilet henting av $type til $kode message=${e.message} cause=${e.cause?.message}")
             ""
         }
-    }
 
     fun mapTilSøkerinfo(
         pdlSøker: PdlSøker,
@@ -67,8 +64,8 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         søkersAdresse: Bostedsadresse?,
         andreForeldre: Map<String, PdlAnnenForelder>,
         søkerPersonIdent: String,
-    ): List<Barn> {
-        return pdlBarn.entries.map { (personIdent, pdlBarn) ->
+    ): List<Barn> =
+        pdlBarn.entries.map { (personIdent, pdlBarn) ->
             val barnNavnOgIdent =
                 if (pdlBarn.adressebeskyttelse.harBeskyttetAdresse()) {
                     BarnNavnOgIdent()
@@ -100,7 +97,6 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                 pdlBarn.adressebeskyttelse.harBeskyttetAdresse(),
             )
         }
-    }
 
     private fun erMedForelderRelasjon(
         forelderBarnRelasjon: ForelderBarnRelasjon,
@@ -170,6 +166,7 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
 
         return Person(
             fnr = EksternBrukerUtils.hentFnrFraToken(),
+            alder = kalkulerAlder(EksternBrukerUtils.hentFnrFraToken()),
             forkortetNavn = navn.first().visningsnavn(),
             adresse = adresse,
             egenansatt = false, // TODO denne er vel i beste fall unødvendig?
@@ -179,6 +176,8 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
         )
     }
 
+    private fun kalkulerAlder(ident: String) = Period.between(Fødselsnummer(ident).fødselsdato, LocalDate.now()).years
+
     private fun formaterAdresse(pdlSøker: PdlSøker): String {
         val bosted = pdlSøker.bostedsadresse.firstOrNull()
         return when {
@@ -186,12 +185,15 @@ internal class SøkerinfoMapper(private val kodeverkService: KodeverkService) {
                 logger.info("Finner ikke bostedadresse")
                 ""
             }
+
             bosted.vegadresse != null -> {
                 tilFormatertAdresse(bosted.vegadresse)
             }
+
             bosted.matrikkeladresse != null -> {
                 join(bosted.matrikkeladresse.tilleggsnavn, hentPoststed(bosted.matrikkeladresse.postnummer)) ?: ""
             }
+
             else -> {
                 logger.info("Søker har hverken vegadresse eller matrikkeladresse")
                 ""

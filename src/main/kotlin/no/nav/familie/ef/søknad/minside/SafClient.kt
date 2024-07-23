@@ -23,10 +23,11 @@ class SafClient(
         dokumentInfoId: String,
         dokumentVariantformat: Variantformat,
     ) = getForEntity<ByteArray>(
-        UriComponentsBuilder.fromUriString(
-            "${safConfig.safRestUri}/hentdokument/" + "$journalpostId/$dokumentInfoId/$dokumentVariantformat",
-        )
-            .build().toUri(),
+        UriComponentsBuilder
+            .fromUriString(
+                "${safConfig.safRestUri}/hentdokument/" + "$journalpostId/$dokumentInfoId/$dokumentVariantformat",
+            ).build()
+            .toUri(),
     )
 
     fun hentJournalposterForBruker(personIdent: String): DokumentoversiktSelvbetjeningResponse {

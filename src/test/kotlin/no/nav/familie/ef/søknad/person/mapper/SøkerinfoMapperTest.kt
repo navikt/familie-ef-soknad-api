@@ -50,7 +50,7 @@ internal class SøkerinfoMapperTest {
         every { kodeverkService.hentPoststed(any()) } returns "OSLO"
         every { kodeverkService.hentLand(any()) } returns "NORGE"
         mockkObject(EksternBrukerUtils)
-        every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
+        every { EksternBrukerUtils.hentFnrFraToken() } returns FnrGenerator.generer()
     }
 
     @AfterEach
@@ -164,7 +164,12 @@ internal class SøkerinfoMapperTest {
         val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
         val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), andreForeldre)
-        assertThat(person.barn.first().medforelder?.navn).isEqualTo("Roy Toy")
+        assertThat(
+            person.barn
+                .first()
+                .medforelder
+                ?.navn,
+        ).isEqualTo("Roy Toy")
     }
 
     @Test
@@ -251,24 +256,21 @@ internal class SøkerinfoMapperTest {
                 bostedsadresse(vegadresse(matrikkelId = 1)),
                 barn(bostedsadresseBarn(vegadresse(matrikkelId = 1))),
             ),
-        )
-            .withFailMessage("MatrikkelId er lik på vegadresse")
+        ).withFailMessage("MatrikkelId er lik på vegadresse")
             .isTrue
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 bostedsadresse(vegadresse(adressenavn = "1")),
                 barn(bostedsadresseBarn(vegadresse(adressenavn = "1"))),
             ),
-        )
-            .withFailMessage("Har samme adressenavn")
+        ).withFailMessage("Har samme adressenavn")
             .isTrue
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 bostedsadresse(vegadresse(adressenavn = "1")),
                 barn(bostedsadresseBarn(vegadresse(adressenavn = "2"))),
             ),
-        )
-            .withFailMessage("Har ulike adressenavn")
+        ).withFailMessage("Har ulike adressenavn")
             .isFalse
     }
 
@@ -284,8 +286,7 @@ internal class SøkerinfoMapperTest {
                 bostedsadresse(vegadresse(matrikkelId = 2)),
                 barn(barnAdresse),
             ),
-        )
-            .withFailMessage("MatrikkelId er lik på vegadresse")
+        ).withFailMessage("MatrikkelId er lik på vegadresse")
             .isFalse
         // Har delt adresse -> forventer true
         assertThat(
@@ -293,8 +294,7 @@ internal class SøkerinfoMapperTest {
                 bostedsadresse(vegadresse(matrikkelId = 2)),
                 barn(barnAdresse, DeltBosted(datoFørIdag, datoEtterIdag)),
             ),
-        )
-            .withFailMessage("har delt adresse")
+        ).withFailMessage("har delt adresse")
             .isTrue
     }
 
@@ -305,16 +305,14 @@ internal class SøkerinfoMapperTest {
                 bostedsadresse(matrikkeladresse = matrikkeladresse(1)),
                 barn(bostedsadresseBarn(matrikkeladresse = matrikkeladresseBarn(1))),
             ),
-        )
-            .withFailMessage("MatrikkelId er lik på matrikkelId")
+        ).withFailMessage("MatrikkelId er lik på matrikkelId")
             .isTrue
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 bostedsadresse(matrikkeladresse = matrikkeladresse(null)),
                 barn(bostedsadresseBarn(matrikkeladresse = matrikkeladresseBarn(null))),
             ),
-        )
-            .isFalse
+        ).isFalse
     }
 
     @Test
@@ -328,16 +326,14 @@ internal class SøkerinfoMapperTest {
                 søkersAdresse,
                 barn(barnAdresse, DeltBosted(datoEtterIdag, null)),
             ),
-        )
-            .withFailMessage("Delt bosted frem i tid")
+        ).withFailMessage("Delt bosted frem i tid")
             .isTrue
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 søkersAdresse,
                 barn(barnAdresse, DeltBosted(datoFørIdag, datoFørIdag)),
             ),
-        )
-            .withFailMessage("Delt bosted avsluttet")
+        ).withFailMessage("Delt bosted avsluttet")
             .isTrue
 
         assertThat(
@@ -345,8 +341,7 @@ internal class SøkerinfoMapperTest {
                 søkersAdresse,
                 barn(barnAdresse, DeltBosted(datoFørIdag, datoEtterIdag)),
             ),
-        )
-            .withFailMessage("Har delt bosted med sluttdato frem i tid")
+        ).withFailMessage("Har delt bosted med sluttdato frem i tid")
             .isTrue
 
         assertThat(
@@ -354,16 +349,15 @@ internal class SøkerinfoMapperTest {
                 søkersAdresse,
                 barn(barnAdresse, DeltBosted(datoFørIdag, null)),
             ),
-        )
-            .withFailMessage("Har delt bosted med sluttdato null")
+        ).withFailMessage("Har delt bosted med sluttdato null")
             .isTrue
     }
 
     private fun pdlSøker(
         adressebeskyttelse: AdressebeskyttelseGradering? = null,
         navn: Navn = Navn("Roy", "", "Toy"),
-    ): PdlSøker {
-        return PdlSøker(
+    ): PdlSøker =
+        PdlSøker(
             adressebeskyttelse = adressebeskyttelse?.let { listOf(Adressebeskyttelse(it)) } ?: emptyList(),
             bostedsadresse = listOf(),
             forelderBarnRelasjon = listOf(),
@@ -371,7 +365,6 @@ internal class SøkerinfoMapperTest {
             sivilstand = listOf(),
             statsborgerskap = listOf(),
         )
-    }
 
     private fun vegadresse(
         matrikkelId: Long? = null,

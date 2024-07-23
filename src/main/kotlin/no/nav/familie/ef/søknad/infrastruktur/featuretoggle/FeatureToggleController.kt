@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/featuretoggle"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @Unprotected
-class FeatureToggleController(private val featureToggleService: FeatureToggleService) {
+class FeatureToggleController(
+    private val featureToggleService: FeatureToggleService,
+) {
     val funksjonsbrytere =
         listOf(
             "familie.ef.soknad.feilsituasjon",
@@ -19,15 +21,11 @@ class FeatureToggleController(private val featureToggleService: FeatureToggleSer
         )
 
     @GetMapping
-    fun sjekkAlle(): Map<String, Boolean> {
-        return funksjonsbrytere.associateWith { featureToggleService.isEnabled(it) }
-    }
+    fun sjekkAlle(): Map<String, Boolean> = funksjonsbrytere.associateWith { featureToggleService.isEnabled(it) }
 
     @GetMapping("/{toggleId}")
     fun sjekkFunksjonsbryter(
         @PathVariable toggleId: String,
         @RequestParam("defaultverdi") defaultVerdi: Boolean? = false,
-    ): Boolean {
-        return featureToggleService.isEnabled(toggleId, defaultVerdi ?: false)
-    }
+    ): Boolean = featureToggleService.isEnabled(toggleId, defaultVerdi ?: false)
 }

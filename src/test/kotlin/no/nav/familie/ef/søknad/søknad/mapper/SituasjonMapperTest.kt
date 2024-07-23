@@ -36,21 +36,24 @@ internal class SituasjonMapperTest {
     @Test
     fun `situasjon label for sagtOppEllerRedusertStilling er mappet`() {
         // Then
-        Assertions.assertThat(situasjon.sagtOppEllerRedusertStilling?.label)
+        Assertions
+            .assertThat(situasjon.sagtOppEllerRedusertStilling?.label)
             .isEqualTo("Har du sagt opp jobben eller redusert arbeidstiden de siste 6 månedene?")
     }
 
     @Test
     fun `situasjon verdi for sagtOppEllerRedusertStilling er mappet`() {
         // Then
-        Assertions.assertThat(situasjon.sagtOppEllerRedusertStilling?.verdi)
+        Assertions
+            .assertThat(situasjon.sagtOppEllerRedusertStilling?.verdi)
             .isEqualTo("Ja, jeg har sagt opp jobben eller tatt frivillig permisjon, men ikke foreldrepermisjon")
     }
 
     @Test
     fun `situasjon label for oppsigelseReduksjonTidspunkt er mappet`() {
         // Then
-        Assertions.assertThat(situasjon.oppsigelseReduksjonTidspunkt?.label)
+        Assertions
+            .assertThat(situasjon.oppsigelseReduksjonTidspunkt?.label)
             .isEqualTo("sagtOppEllerRedusertStilling.datovelger.sagtOpp")
     }
 

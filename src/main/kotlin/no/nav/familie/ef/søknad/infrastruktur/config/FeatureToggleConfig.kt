@@ -14,12 +14,8 @@ class FeatureToggleConfig(
     @Value("\${NAIS_APP_NAME}") private val appName: String,
 ) {
     @Bean
-    fun strategies(): List<Strategy> {
-        return listOf(ByEnvironmentStrategy())
-    }
+    fun strategies(): List<Strategy> = listOf(ByEnvironmentStrategy())
 
     @Bean
-    fun defaultUnleashService(strategies: List<Strategy>): DefaultUnleashService {
-        return DefaultUnleashService(apiUrl, apiToken, appName, strategies)
-    }
+    fun defaultUnleashService(strategies: List<Strategy>): DefaultUnleashService = DefaultUnleashService(apiUrl, apiToken, appName, strategies)
 }

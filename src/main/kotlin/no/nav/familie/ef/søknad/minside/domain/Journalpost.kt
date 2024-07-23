@@ -5,12 +5,18 @@ import no.nav.familie.kontrakter.felles.journalpost.Journalstatus
 import no.nav.familie.kontrakter.felles.journalpost.RelevantDato
 import java.time.LocalDateTime
 
-data class DokumentoversiktSelvbetjeningResponse(val dokumentoversiktSelvbetjening: DokumentoversiktSelvbetjening) {
+data class DokumentoversiktSelvbetjeningResponse(
+    val dokumentoversiktSelvbetjening: DokumentoversiktSelvbetjening,
+) {
     fun efJournalposter(): List<Journalpost> =
-        this.dokumentoversiktSelvbetjening.tema.find { tema -> tema.kode == "ENF" }?.journalposter ?: emptyList()
+        this.dokumentoversiktSelvbetjening.tema
+            .find { tema -> tema.kode == "ENF" }
+            ?.journalposter ?: emptyList()
 }
 
-data class DokumentoversiktSelvbetjening(val tema: List<Tema>)
+data class DokumentoversiktSelvbetjening(
+    val tema: List<Tema>,
+)
 
 data class Tema(
     val navn: String,
@@ -31,9 +37,7 @@ data class Journalpost(
 
     fun harRelevanteDokumenter(): Boolean = this.relevanteDokumenter().isNotEmpty()
 
-    fun mestRelevanteDato(journalpost: Journalpost): LocalDateTime? {
-        return journalpost.relevanteDatoer.maxByOrNull { datoTyperSortert(it.datotype) }?.dato
-    }
+    fun mestRelevanteDato(journalpost: Journalpost): LocalDateTime? = journalpost.relevanteDatoer.maxByOrNull { datoTyperSortert(it.datotype) }?.dato
 }
 
 data class DokumentInfo(
@@ -41,13 +45,12 @@ data class DokumentInfo(
     val tittel: String,
     val dokumentvarianter: List<DokumentVariant>,
 ) {
-    fun mestRelevantDokumentVariant(): DokumentVariant? {
-        return if (dokumentvarianter.any { it.variantformat == Variantformat.SLADDET }) {
+    fun mestRelevantDokumentVariant(): DokumentVariant? =
+        if (dokumentvarianter.any { it.variantformat == Variantformat.SLADDET }) {
             dokumentvarianter.find { it.variantformat == Variantformat.SLADDET }
         } else {
             dokumentvarianter.find { it.variantformat == Variantformat.ARKIV }
         }
-    }
 }
 
 data class DokumentVariant(

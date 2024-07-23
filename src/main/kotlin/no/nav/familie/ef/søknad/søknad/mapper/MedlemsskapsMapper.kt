@@ -15,8 +15,8 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Utenlandsopphold as KontraksUtenlandsopphold
 
 object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekster.OppholdINorge) {
-    override fun mapDto(data: Medlemskap): Medlemskapsdetaljer {
-        return Medlemskapsdetaljer(
+    override fun mapDto(data: Medlemskap): Medlemskapsdetaljer =
+        Medlemskapsdetaljer(
             oppholderDuDegINorge = data.søkerOppholderSegINorge.tilSøknadsfelt(),
             oppholdsland = data.oppholdsland?.tilSøknadsfelt(),
             bosattNorgeSisteÅrene = data.søkerBosattINorgeSisteTreÅr.tilSøknadsfelt(),
@@ -26,10 +26,9 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                     mapUtenlansopphold(data.perioderBoddIUtlandet),
                 ),
         )
-    }
 
-    private fun mapUtenlansopphold(perioderBoddIUtlandet: List<Utenlandsperiode>?): List<KontraksUtenlandsopphold> {
-        return perioderBoddIUtlandet?.map { it ->
+    private fun mapUtenlansopphold(perioderBoddIUtlandet: List<Utenlandsperiode>?): List<KontraksUtenlandsopphold> =
+        perioderBoddIUtlandet?.map { it ->
             KontraksUtenlandsopphold(
                 fradato = it.periode.fra.tilSøknadsfelt(),
                 tildato = it.periode.til.tilSøknadsfelt(),
@@ -41,10 +40,9 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                 kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident,
             )
         } ?: listOf()
-    }
 
-    fun mapTilDto(medlemskapsdetaljer: Medlemskapsdetaljer): Medlemskap {
-        return Medlemskap(
+    fun mapTilDto(medlemskapsdetaljer: Medlemskapsdetaljer): Medlemskap =
+        Medlemskap(
             perioderBoddIUtlandet =
                 medlemskapsdetaljer.utenlandsopphold?.verdi?.map {
                     Utenlandsperiode(
@@ -74,5 +72,4 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                     medlemskapsdetaljer.oppholderDuDegINorge.verdi,
                 ),
         )
-    }
 }

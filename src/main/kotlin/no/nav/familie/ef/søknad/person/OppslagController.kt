@@ -22,9 +22,7 @@ class OppslagController(
     private val kodeverkService: KodeverkService,
 ) {
     @GetMapping("/sokerinfo")
-    fun søkerinfo(): Søkerinfo {
-        return oppslagService.hentSøkerinfo()
-    }
+    fun søkerinfo(): Søkerinfo = oppslagService.hentSøkerinfo()
 
     @GetMapping("/sokerminimum")
     fun søkerinfominimum(): PersonMinimumDto {
@@ -51,7 +49,5 @@ class OppslagController(
         const val OPPSLAG = "/api/oppslag"
     }
 
-    private fun String.tilSøkerMinimumDto(): PersonMinimumDto {
-        return PersonMinimumDto(EksternBrukerUtils.hentFnrFraToken(), this)
-    }
+    private fun String.tilSøkerMinimumDto(): PersonMinimumDto = PersonMinimumDto(EksternBrukerUtils.hentFnrFraToken(), this)
 }

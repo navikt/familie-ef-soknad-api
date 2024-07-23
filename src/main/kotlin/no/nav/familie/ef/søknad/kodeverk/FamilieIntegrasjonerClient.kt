@@ -13,15 +13,10 @@ import java.net.URI
 class FamilieIntegrasjonerClient(
     private val config: FamilieIntegrasjonerConfig,
     @Qualifier("utenAuth") restTemplate: RestOperations,
-) :
-    AbstractPingableRestClient(restTemplate, "familie.integrasjoner") {
+) : AbstractPingableRestClient(restTemplate, "familie.integrasjoner") {
     override val pingUri: URI = config.pingUri
 
-    fun hentKodeverkLandkoder(): KodeverkDto {
-        return getForEntity<Ressurs<KodeverkDto>>(config.kodeverkLandkoderUri).data!!
-    }
+    fun hentKodeverkLandkoder(): KodeverkDto = getForEntity<Ressurs<KodeverkDto>>(config.kodeverkLandkoderUri).data!!
 
-    fun hentKodeverkPoststed(): KodeverkDto {
-        return getForEntity<Ressurs<KodeverkDto>>(config.kodeverkPoststedUri).data!!
-    }
+    fun hentKodeverkPoststed(): KodeverkDto = getForEntity<Ressurs<KodeverkDto>>(config.kodeverkPoststedUri).data!!
 }

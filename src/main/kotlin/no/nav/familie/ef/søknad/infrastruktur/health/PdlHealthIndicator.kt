@@ -5,5 +5,6 @@ import no.nav.familie.http.health.AbstractHealthIndicator
 import org.springframework.stereotype.Component
 
 @Component
-internal class PdlHealthIndicator(pdlClient: PdlClient) :
-    AbstractHealthIndicator(pdlClient, "pdl.personinfo")
+internal class PdlHealthIndicator(
+    pdlClient: PdlClient,
+) : AbstractHealthIndicator(pdlClient, "pdl.personinfo")

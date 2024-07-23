@@ -8,46 +8,57 @@ data class PdlResponse<T>(
     val errors: List<PdlError>?,
     val extensions: PdlExtensions?,
 ) {
-    fun harFeil(): Boolean {
-        return errors != null && errors.isNotEmpty()
-    }
+    fun harFeil(): Boolean = errors != null && errors.isNotEmpty()
 
-    fun harAdvarsel(): Boolean {
-        return !extensions?.warnings.isNullOrEmpty()
-    }
+    fun harAdvarsel(): Boolean = !extensions?.warnings.isNullOrEmpty()
 
-    fun errorMessages(): String {
-        return errors?.joinToString { it -> it.message } ?: ""
-    }
+    fun errorMessages(): String = errors?.joinToString { it -> it.message } ?: ""
 }
 
-data class PdlExtensions(val warnings: List<PdlWarning>?)
+data class PdlExtensions(
+    val warnings: List<PdlWarning>?,
+)
 
-data class PdlWarning(val details: Any?, val id: String?, val message: String?, val query: String?)
+data class PdlWarning(
+    val details: Any?,
+    val id: String?,
+    val message: String?,
+    val query: String?,
+)
 
 data class PdlError(
     val message: String,
     val extensions: PdlErrorExtensions?,
 )
 
-data class PdlErrorExtensions(val code: String?) {
+data class PdlErrorExtensions(
+    val code: String?,
+) {
     fun notFound() = code == "not_found"
 }
 
-data class PdlSøkerData(val person: PdlSøker?)
+data class PdlSøkerData(
+    val person: PdlSøker?,
+)
 
-data class PersonDataBolk<T>(val ident: String, val code: String, val person: T?)
+data class PersonDataBolk<T>(
+    val ident: String,
+    val code: String,
+    val person: T?,
+)
 
-data class PersonBolk<T>(val personBolk: List<PersonDataBolk<T>>)
+data class PersonBolk<T>(
+    val personBolk: List<PersonDataBolk<T>>,
+)
 
-data class PdlBolkResponse<T>(val data: PersonBolk<T>?, val errors: List<PdlError>?, val extensions: PdlExtensions?) {
-    fun errorMessages(): String {
-        return errors?.joinToString { it -> it.message } ?: ""
-    }
+data class PdlBolkResponse<T>(
+    val data: PersonBolk<T>?,
+    val errors: List<PdlError>?,
+    val extensions: PdlExtensions?,
+) {
+    fun errorMessages(): String = errors?.joinToString { it -> it.message } ?: ""
 
-    fun harAdvarsel(): Boolean {
-        return !extensions?.warnings.isNullOrEmpty()
-    }
+    fun harAdvarsel(): Boolean = !extensions?.warnings.isNullOrEmpty()
 }
 
 data class PdlSøker(
@@ -75,7 +86,9 @@ data class PdlAnnenForelder(
     val navn: List<Navn>,
 )
 
-data class Adressebeskyttelse(val gradering: AdressebeskyttelseGradering)
+data class Adressebeskyttelse(
+    val gradering: AdressebeskyttelseGradering,
+)
 
 /**
  * Fra pdl dok 2021-01-14:
@@ -92,11 +105,20 @@ enum class AdressebeskyttelseGradering {
     UGRADERT,
 }
 
-data class DeltBosted(val startdatoForKontrakt: LocalDate, val sluttdatoForKontrakt: LocalDate?)
+data class DeltBosted(
+    val startdatoForKontrakt: LocalDate,
+    val sluttdatoForKontrakt: LocalDate?,
+)
 
-data class Bostedsadresse(val vegadresse: Vegadresse?, val matrikkeladresse: Matrikkeladresse?)
+data class Bostedsadresse(
+    val vegadresse: Vegadresse?,
+    val matrikkeladresse: Matrikkeladresse?,
+)
 
-data class BostedsadresseBarn(val vegadresse: Vegadresse?, val matrikkeladresse: MatrikkeladresseBarn?)
+data class BostedsadresseBarn(
+    val vegadresse: Vegadresse?,
+    val matrikkeladresse: MatrikkeladresseBarn?,
+)
 
 data class Vegadresse(
     val husnummer: String?,
@@ -111,10 +133,15 @@ interface MatrikkelId {
     val matrikkelId: Long?
 }
 
-data class Matrikkeladresse(override val matrikkelId: Long?, val tilleggsnavn: String?, val postnummer: String?) :
-    MatrikkelId
+data class Matrikkeladresse(
+    override val matrikkelId: Long?,
+    val tilleggsnavn: String?,
+    val postnummer: String?,
+) : MatrikkelId
 
-data class MatrikkeladresseBarn(override val matrikkelId: Long?) : MatrikkelId
+data class MatrikkeladresseBarn(
+    override val matrikkelId: Long?,
+) : MatrikkelId
 
 data class Fødsel(
     @JsonProperty("foedselsaar") val fødselsår: Int?,
@@ -137,11 +164,21 @@ enum class Familierelasjonsrolle {
     MEDMOR,
 }
 
-data class Navn(val fornavn: String, val mellomnavn: String?, val etternavn: String)
+data class Navn(
+    val fornavn: String,
+    val mellomnavn: String?,
+    val etternavn: String,
+)
 
-data class Statsborgerskap(val land: String, val gyldigFraOgMed: LocalDate?, val gyldigTilOgMed: LocalDate?)
+data class Statsborgerskap(
+    val land: String,
+    val gyldigFraOgMed: LocalDate?,
+    val gyldigTilOgMed: LocalDate?,
+)
 
-data class Sivilstand(val type: Sivilstandstype)
+data class Sivilstand(
+    val type: Sivilstandstype,
+)
 
 @Suppress("unused")
 enum class Sivilstandstype {

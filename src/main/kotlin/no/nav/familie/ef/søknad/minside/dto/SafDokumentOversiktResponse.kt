@@ -4,13 +4,9 @@ data class SafDokumentOversiktResponse<T>(
     val data: T,
     val errors: List<SafError>? = null,
 ) {
-    fun harFeil(): Boolean {
-        return !errors.isNullOrEmpty()
-    }
+    fun harFeil(): Boolean = !errors.isNullOrEmpty()
 
-    fun errorMessages(): String {
-        return errors?.joinToString { it.message } ?: ""
-    }
+    fun errorMessages(): String = errors?.joinToString { it.message } ?: ""
 }
 
 data class SafError(

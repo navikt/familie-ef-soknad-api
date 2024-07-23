@@ -22,8 +22,8 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
     override fun mapDto(
         data: Sivilstatus,
         vedlegg: Map<String, DokumentasjonWrapper>,
-    ): Sivilstandsdetaljer {
-        return Sivilstandsdetaljer(
+    ): Sivilstandsdetaljer =
+        Sivilstandsdetaljer(
             samlivsbruddsdokumentasjon = dokumentfelt(SAMLIVSBRUDD, vedlegg),
             samlivsbruddsdato = data.datoForSamlivsbrudd?.tilSøknadsfelt(),
             endringSamværsordningDato = data.datoEndretSamvær?.tilSøknadsfelt(),
@@ -45,10 +45,9 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
                     )
                 },
         )
-    }
 
-    fun mapTilDto(sivilstandsdetaljer: Sivilstandsdetaljer): SivilstatusTilGjenbruk {
-        return SivilstatusTilGjenbruk(
+    fun mapTilDto(sivilstandsdetaljer: Sivilstandsdetaljer): SivilstatusTilGjenbruk =
+        SivilstatusTilGjenbruk(
             årsakEnslig = sivilstandsdetaljer.årsakEnslig?.let { TekstFelt(it.label, it.verdi, it.svarId) },
             datoForSamlivsbrudd = sivilstandsdetaljer.samlivsbruddsdato.tilNullableDatoFelt(),
             datoFlyttetFraHverandre = sivilstandsdetaljer.fraflytningsdato.tilNullableDatoFelt(),
@@ -60,5 +59,4 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
                     )
                 },
         )
-    }
 }

@@ -12,7 +12,5 @@ import org.springframework.web.bind.annotation.RestController
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 class AutentiseringController {
     @GetMapping("/innlogget")
-    fun verifiserAutentisering(): String {
-        return "Autentisert kall"
-    }
+    fun verifiserAutentisering(): String = "Autentisert kall"
 }

@@ -17,13 +17,9 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.felles.Fødselsnummer
 
 object PersonMinimumMapper {
-    fun map(samboerDetaljer: SamboerDetaljer): Søknadsfelt<PersonMinimum> {
-        return Søknadsfelt(OmSamboer.hentTekst(), personMinimum(samboerDetaljer))
-    }
+    fun map(samboerDetaljer: SamboerDetaljer): Søknadsfelt<PersonMinimum> = Søknadsfelt(OmSamboer.hentTekst(), personMinimum(samboerDetaljer))
 
-    fun map(annenForelder: AnnenForelder): Søknadsfelt<PersonMinimum> {
-        return Søknadsfelt(Persondata.hentTekst(), personMinimum(annenForelder))
-    }
+    fun map(annenForelder: AnnenForelder): Søknadsfelt<PersonMinimum> = Søknadsfelt(Persondata.hentTekst(), personMinimum(annenForelder))
 
     private fun personMinimum(annenForelder: AnnenForelder): PersonMinimum {
         val søknadsfeltFødselsnummer = mapFødselsnummer(annenForelder.ident)
@@ -56,7 +52,12 @@ object PersonMinimumMapper {
             fødselsdato = personMinimum.fødselsdato.tilNullableDatoFelt(),
             navn = TekstFelt(personMinimum.navn.label, personMinimum.navn.verdi),
             ident = personMinimum.fødselsnummer.fødselsnummerTilTekstFelt(),
-            kjennerIkkeIdent = personMinimum.fødselsnummer?.verdi?.verdi == null || personMinimum.fødselsnummer?.verdi?.verdi?.isBlank() == true,
+            kjennerIkkeIdent =
+                personMinimum.fødselsnummer?.verdi?.verdi == null ||
+                    personMinimum.fødselsnummer
+                        ?.verdi
+                        ?.verdi
+                        ?.isBlank() == true,
         )
     }
 

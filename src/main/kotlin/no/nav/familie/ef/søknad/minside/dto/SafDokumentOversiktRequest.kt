@@ -5,4 +5,6 @@ data class SafDokumentOversiktRequest(
     val query: String,
 )
 
-data class SafDokumentVariables(val ident: String)
+data class SafDokumentVariables(
+    val ident: String,
+)

@@ -19,4 +19,8 @@ object DokumentfeltUtil {
     }
 }
 
-data class DokumentasjonWrapper(val label: String, val harSendtInnTidligere: Søknadsfelt<Boolean>, val vedlegg: List<Vedlegg>)
+data class DokumentasjonWrapper(
+    val label: String,
+    val harSendtInnTidligere: Søknadsfelt<Boolean>,
+    val vedlegg: List<Vedlegg>,
+)
