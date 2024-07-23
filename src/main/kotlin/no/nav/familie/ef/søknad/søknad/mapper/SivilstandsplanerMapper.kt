@@ -7,11 +7,10 @@ import no.nav.familie.ef.søknad.utils.tilSøknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Sivilstandsplaner
 
 object SivilstandsplanerMapper : Mapper<Bosituasjon, Sivilstandsplaner>(Fremtidsplaner) {
-    override fun mapDto(data: Bosituasjon): Sivilstandsplaner {
-        return Sivilstandsplaner(
+    override fun mapDto(data: Bosituasjon): Sivilstandsplaner =
+        Sivilstandsplaner(
             harPlaner = data.skalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
             fraDato = data.datoSkalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
             vordendeSamboerEktefelle = data.vordendeSamboerEktefelle?.let(PersonMinimumMapper::map),
         )
-    }
 }

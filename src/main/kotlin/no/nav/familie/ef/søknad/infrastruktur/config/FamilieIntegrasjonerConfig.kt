@@ -5,14 +5,29 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @ConfigurationProperties("familie.integrasjoner")
-data class FamilieIntegrasjonerConfig(val uri: URI) {
+data class FamilieIntegrasjonerConfig(
+    val uri: URI,
+) {
     val kodeverkLandkoderUri: URI =
-        UriComponentsBuilder.fromUri(uri).pathSegment(PATH_KODEVERK_LANDKODER).build().toUri()
+        UriComponentsBuilder
+            .fromUri(uri)
+            .pathSegment(PATH_KODEVERK_LANDKODER)
+            .build()
+            .toUri()
 
     val kodeverkPoststedUri: URI =
-        UriComponentsBuilder.fromUri(uri).pathSegment(PATH_KODEVERK_POSTSTED).build().toUri()
+        UriComponentsBuilder
+            .fromUri(uri)
+            .pathSegment(PATH_KODEVERK_POSTSTED)
+            .build()
+            .toUri()
 
-    internal val pingUri = UriComponentsBuilder.fromUri(uri).pathSegment(PING).build().toUri()
+    internal val pingUri =
+        UriComponentsBuilder
+            .fromUri(uri)
+            .pathSegment(PING)
+            .build()
+            .toUri()
 
     companion object {
         private const val PATH_KODEVERK_LANDKODER = "kodeverk/landkoder"

@@ -118,7 +118,12 @@ internal class OppslagServiceServiceImplTest {
         mockHentPersonPdlClient(fornavn = "Et navn", adressebeskyttelseGradering = STRENGT_FORTROLIG)
         mockPdlHentAnnenForelder(adressebeskyttelseGradering = STRENGT_FORTROLIG)
         val søkerInfo = oppslagServiceService.hentSøkerinfo()
-        assertThat(søkerInfo.barn.first().medforelder?.ident).isNull()
+        assertThat(
+            søkerInfo.barn
+                .first()
+                .medforelder
+                ?.ident,
+        ).isNull()
     }
 
     @Test
@@ -216,7 +221,8 @@ internal class OppslagServiceServiceImplTest {
         assertThat(
             oppslagServiceService.erIAktuellAlder(
                 fødselsdato =
-                    LocalDate.now()
+                    LocalDate
+                        .now()
                         .minusYears(18),
             ),
         ).isTrue
@@ -224,20 +230,22 @@ internal class OppslagServiceServiceImplTest {
         assertThat(
             oppslagServiceService.erIAktuellAlder(
                 fødselsdato =
-                    LocalDate.now()
-                        .minusYears(19).plusDays(1),
+                    LocalDate
+                        .now()
+                        .minusYears(19)
+                        .plusDays(1),
             ),
-        )
-            .withFailMessage("Personen har ikke fylt 19 ennå")
+        ).withFailMessage("Personen har ikke fylt 19 ennå")
             .isTrue
         assertThat(
             oppslagServiceService.erIAktuellAlder(
                 fødselsdato =
-                    LocalDate.now()
-                        .minusYears(19).minusDays(2),
+                    LocalDate
+                        .now()
+                        .minusYears(19)
+                        .minusDays(2),
             ),
-        )
-            .isFalse
+        ).isFalse
     }
 
     @Test
@@ -286,7 +294,11 @@ internal class OppslagServiceServiceImplTest {
 
         val søkerinfo = oppslagServiceService.hentSøkerinfo()
         assertThat(søkerinfo.barn).hasSize(1)
-        assertThat(søkerinfo.barn.first().fødselsdato).isEqualTo(levendeBarn.second.fødsel.first().fødselsdato)
+        assertThat(søkerinfo.barn.first().fødselsdato).isEqualTo(
+            levendeBarn.second.fødsel
+                .first()
+                .fødselsdato,
+        )
     }
 
     private fun pdlBarn(

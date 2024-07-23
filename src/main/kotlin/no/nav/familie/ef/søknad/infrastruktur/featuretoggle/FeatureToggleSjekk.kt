@@ -26,5 +26,6 @@ fun <T> FeatureToggleService.disabledEllersHttp404(
 }
 
 @ResponseStatus(code = HttpStatus.FORBIDDEN)
-private class FeatureToggleFeilTilstandException(toggle: String) :
-    RuntimeException("(Mangel på) funksjonsbryter stopper forespørselen: $toggle")
+private class FeatureToggleFeilTilstandException(
+    toggle: String,
+) : RuntimeException("(Mangel på) funksjonsbryter stopper forespørselen: $toggle")

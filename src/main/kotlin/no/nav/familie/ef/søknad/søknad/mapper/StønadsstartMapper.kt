@@ -15,9 +15,7 @@ object StønadsstartMapper {
     fun mapStønadsstart(
         søknadsdato: DatoFelt?,
         søkerFraBestemtMåned: BooleanFelt,
-    ): Søknadsfelt<Stønadsstart> {
-        return Søknadsfelt(NårSøkerDuFra.hentTekst(), map(søknadsdato, søkerFraBestemtMåned))
-    }
+    ): Søknadsfelt<Stønadsstart> = Søknadsfelt(NårSøkerDuFra.hentTekst(), map(søknadsdato, søkerFraBestemtMåned))
 
     private fun map(
         søknadsdato: DatoFelt?,

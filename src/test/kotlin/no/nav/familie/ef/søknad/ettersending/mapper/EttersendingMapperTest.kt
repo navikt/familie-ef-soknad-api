@@ -58,7 +58,8 @@ internal class EttersendingMapperTest {
             beskrivelse = "Dokumentasjon på sykdom",
             stønadType = stønadType,
             innsendingstidspunkt =
-                LocalDateTime.now()
+                LocalDateTime
+                    .now()
                     .minusYears(1),
             vedlegg =
                 listOf(

@@ -55,8 +55,8 @@ object SkjemaMapper {
     }
 }
 
-fun Arbeidssøker.toArbeidssøkerKontrakt(): Søknadsfelt<ArbeidssøkerKontrakt> {
-    return Søknadsfelt(
+fun Arbeidssøker.toArbeidssøkerKontrakt(): Søknadsfelt<ArbeidssøkerKontrakt> =
+    Søknadsfelt(
         Språktekster.EnsligMorEllerFarSomErArbeidssøker.hentTekst(),
         ArbeidssøkerKontrakt(
             ønskerDuMinst50ProsentStilling =
@@ -87,4 +87,3 @@ fun Arbeidssøker.toArbeidssøkerKontrakt(): Søknadsfelt<ArbeidssøkerKontrakt>
                 ),
         ),
     )
-}

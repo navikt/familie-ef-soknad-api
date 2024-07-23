@@ -26,29 +26,28 @@ object PdlTestUtil {
         val map =
             konstruktørparametere(
                 entitet,
-            )
-                .map {
-                    val annotation = it.annotations.firstOrNull()
-                    val annotationClass = annotation?.annotationClass
-                    val annotationValue =
-                        annotationClass?.declaredMemberProperties
-                            ?.firstOrNull { kProperty1 -> kProperty1.name == "value" }
-                            ?.getter
-                            ?.call(annotation) as String?
-                    (annotationValue ?: it.name) to
-                        finnSøknadsfelt(
-                            entitet,
-                            it,
-                        )
-                }
-                .associateBy({ it.first!! }, {
-                    finnFeltStruktur(
-                        getFeltverdi(
-                            it.second,
-                            entitet,
-                        ),
+            ).map {
+                val annotation = it.annotations.firstOrNull()
+                val annotationClass = annotation?.annotationClass
+                val annotationValue =
+                    annotationClass
+                        ?.declaredMemberProperties
+                        ?.firstOrNull { kProperty1 -> kProperty1.name == "value" }
+                        ?.getter
+                        ?.call(annotation) as String?
+                (annotationValue ?: it.name) to
+                    finnSøknadsfelt(
+                        entitet,
+                        it,
                     )
-                })
+            }.associateBy({ it.first!! }, {
+                finnFeltStruktur(
+                    getFeltverdi(
+                        it.second,
+                        entitet,
+                    ),
+                )
+            })
 
         return if (map.isEmpty()) null else map
     }
@@ -92,7 +91,11 @@ object PdlTestUtil {
         if (line.trim().startsWith("personBolk: hentPersonBolk")) {
             return "personBolk"
         }
-        return line.trim().substringBefore("{").substringBefore("(").trim()
+        return line
+            .trim()
+            .substringBefore("{")
+            .substringBefore("(")
+            .trim()
     }
 
     /**

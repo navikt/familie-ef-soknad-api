@@ -19,7 +19,10 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/soknad/skolepenger"], produces = [APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
-class SøknadSkolepengerController(val søknadService: SøknadService, val featureToggleService: FeatureToggleService) {
+class SøknadSkolepengerController(
+    val søknadService: SøknadService,
+    val featureToggleService: FeatureToggleService,
+) {
     @PostMapping
     fun sendInn(
         @RequestBody søknad: SøknadSkolepengerDto,

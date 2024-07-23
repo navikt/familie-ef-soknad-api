@@ -14,7 +14,9 @@ import no.nav.familie.kontrakter.felles.erSammenhengende
 import org.springframework.stereotype.Service
 
 @Service
-class SaksbehandlingService(private val saksbehandlingClient: SaksbehandlingClient) {
+class SaksbehandlingService(
+    private val saksbehandlingClient: SaksbehandlingClient,
+) {
     fun hentStønadsperioderForBruker(): MineStønaderDto {
         val stønadsperioder = saksbehandlingClient.hentStønadsperioderForBruker()
 

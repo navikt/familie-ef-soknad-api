@@ -46,13 +46,9 @@ internal class MerOmDinSituasjonMedAlternativerTest {
         assertThat(nySituasjon.verdi.gjelderDetteDeg.alternativer).isEqualTo(nyListe)
     }
 
-    private fun copySøknad(nyListe: List<String>): SøknadOvergangsstønadDto {
-        return søknad.copy(merOmDinSituasjon = copyMerOmDinSituasjon(nyListe))
-    }
+    private fun copySøknad(nyListe: List<String>): SøknadOvergangsstønadDto = søknad.copy(merOmDinSituasjon = copyMerOmDinSituasjon(nyListe))
 
-    private fun copyMerOmDinSituasjon(nyListe: List<String>): Situasjon {
-        return søknad.merOmDinSituasjon.copy(gjelderDetteDeg = copyGjelderDetteDeg(nyListe))
-    }
+    private fun copyMerOmDinSituasjon(nyListe: List<String>): Situasjon = søknad.merOmDinSituasjon.copy(gjelderDetteDeg = copyGjelderDetteDeg(nyListe))
 
     private fun copyGjelderDetteDeg(nyListe: List<String>) =
         søknad.merOmDinSituasjon.gjelderDetteDeg.copy(

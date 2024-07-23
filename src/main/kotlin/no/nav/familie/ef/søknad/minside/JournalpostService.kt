@@ -8,12 +8,15 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
-class JournalpostService(private val safClient: SafClient) {
+class JournalpostService(
+    private val safClient: SafClient,
+) {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     fun hentJournalposterForBruker(): List<JournalpostDto> =
-        safClient.hentJournalposterForBruker(EksternBrukerUtils.hentFnrFraToken())
+        safClient
+            .hentJournalposterForBruker(EksternBrukerUtils.hentFnrFraToken())
             .efJournalposter()
             .filter { it.harRelevanteDokumenter() }
             .map { it.tilDto() }

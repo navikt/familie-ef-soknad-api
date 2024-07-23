@@ -74,13 +74,12 @@ fun String.tilDesimaltall(): Double = this.replace(",", ".").toDouble()
 
 fun String.tilHeltall(): Int = this.tilDesimaltall().toInt()
 
-fun DatoFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? {
-    return if (this.verdi.isNotBlank()) {
+fun DatoFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? =
+    if (this.verdi.isNotBlank()) {
         Søknadsfelt(this.label, fraStrengTilLocalDate(verdi))
     } else {
         null
     }
-}
 
 fun DatoFelt.tilSøknadsfelt(): Søknadsfelt<LocalDate> {
     require(this.verdi.isNotBlank()) { "Kan ikke mappe datoFelt sin verdi når den er tom for ${this.label}" }
@@ -92,16 +91,15 @@ fun DatoFelt.tilLocalDate(): LocalDate {
     return fraStrengTilLocalDate(this.verdi)
 }
 
-fun DatoFelt.tilLocalDateEllerNull(): LocalDate? {
-    return if (this.verdi.isNotBlank()) {
+fun DatoFelt.tilLocalDateEllerNull(): LocalDate? =
+    if (this.verdi.isNotBlank()) {
         fraStrengTilLocalDate(this.verdi)
     } else {
         null
     }
-}
 
-private fun fraStrengTilLocalDate(verdi: String): LocalDate {
-    return if (verdi.length > 10 && verdi[10] == 'T') {
+private fun fraStrengTilLocalDate(verdi: String): LocalDate =
+    if (verdi.length > 10 && verdi[10] == 'T') {
         if (verdi.endsWith("Z")) {
             val offsetDateTime = OffsetDateTime.ofInstant(Instant.parse(verdi), ZoneId.of("Europe/Oslo"))
             offsetDateTime.toLocalDate()
@@ -111,10 +109,9 @@ private fun fraStrengTilLocalDate(verdi: String): LocalDate {
     } else {
         LocalDate.parse(verdi, DateTimeFormatter.ISO_LOCAL_DATE)
     }
-}
 
-fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, DokumentasjonWrapper> {
-    return dokumentasjonsbehov.associate {
+fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map<String, DokumentasjonWrapper> =
+    dokumentasjonsbehov.associate {
         // it.id er dokumenttype/tittel, eks "Gift i utlandet"
         val vedlegg =
             it.opplastedeVedlegg.map { dokumentFelt ->
@@ -127,4 +124,3 @@ fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map
         val harSendtInn = Søknadsfelt(Språktekster.SendtInnTidligere.hentTekst(), it.harSendtInn)
         it.id to DokumentasjonWrapper(it.label, harSendtInn, vedlegg)
     }
-}

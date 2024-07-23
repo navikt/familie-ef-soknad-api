@@ -43,12 +43,11 @@ class PdlClientConfig {
         return pdlClient
     }
 
-    private fun lagBarn(): List<ForelderBarnRelasjon> {
-        return listOf(
+    private fun lagBarn(): List<ForelderBarnRelasjon> =
+        listOf(
             ForelderBarnRelasjon("28021078036", Familierelasjonsrolle.BARN),
             ForelderBarnRelasjon("19411890530", Familierelasjonsrolle.BARN),
         )
-    }
 
     private fun lagNavn(
         fornavn: String = "Fornavn",

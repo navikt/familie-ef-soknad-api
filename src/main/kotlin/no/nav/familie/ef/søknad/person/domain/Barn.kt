@@ -11,7 +11,5 @@ data class Barn(
     val medforelder: Medforelder?,
     val harAdressesperre: Boolean,
 ) {
-    override fun toString(): String {
-        return "Barn(alder=$alder, fødselsdato=$fødselsdato, annenForelder=$medforelder, harAdressesperre=$harAdressesperre)"
-    }
+    override fun toString(): String = "Barn(alder=$alder, fødselsdato=$fødselsdato, annenForelder=$medforelder, harAdressesperre=$harAdressesperre)"
 }

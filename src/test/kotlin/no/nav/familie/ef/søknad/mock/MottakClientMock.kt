@@ -101,7 +101,8 @@ class MottakClientMock {
                 dokumentasjonsbehovDto,
             ),
             SøknadMedDokumentasjonsbehovDto(
-                UUID.randomUUID()
+                UUID
+                    .randomUUID()
                     .toString(),
                 StønadType.BARNETILSYN,
                 LocalDate.now(),

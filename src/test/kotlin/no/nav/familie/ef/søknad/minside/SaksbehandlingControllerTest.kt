@@ -51,8 +51,16 @@ internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
         assertThat(body.overgangsstønad.startDato).isNull()
         assertThat(body.overgangsstønad.sluttDato).isEqualTo(LocalDate.of(2025, 9, 30))
         assertThat(body.overgangsstønad.perioder.size).isEqualTo(3)
-        assertThat(body.overgangsstønad.perioder.last().inntektsgrunnlag).isEqualTo(152000)
-        assertThat(body.overgangsstønad.perioder.last().samordningsfradrag).isEqualTo(300)
+        assertThat(
+            body.overgangsstønad.perioder
+                .last()
+                .inntektsgrunnlag,
+        ).isEqualTo(152000)
+        assertThat(
+            body.overgangsstønad.perioder
+                .last()
+                .samordningsfradrag,
+        ).isEqualTo(300)
 
         assertThat(body.barnetilsyn.periodeStatus).isEqualTo(PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD)
         assertThat(body.barnetilsyn.startDato).isNull()

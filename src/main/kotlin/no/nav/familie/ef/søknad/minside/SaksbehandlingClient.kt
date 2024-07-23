@@ -15,8 +15,7 @@ import java.net.URI
 class SaksbehandlingClient(
     private val config: SaksbehandlingConfig,
     @Qualifier("tokenExchange") operations: RestOperations,
-) :
-    AbstractPingableRestClient(operations, "saksbehandling") {
+) : AbstractPingableRestClient(operations, "saksbehandling") {
     override val pingUri: URI = config.pingUri
 
     fun hentStønadsperioderForBruker() =

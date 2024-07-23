@@ -19,8 +19,7 @@ import org.springframework.web.client.RestOperations
 class PdlApp2AppClient(
     val pdlConfig: PdlConfig,
     @Qualifier("clientCredential") restOperations: RestOperations,
-) :
-    AbstractRestClient(restOperations, "pdl.personinfo") {
+) : AbstractRestClient(restOperations, "pdl.personinfo") {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentBarn(personIdenter: List<String>): Map<String, PdlBarn> {
@@ -55,12 +54,11 @@ class PdlApp2AppClient(
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
-    private fun httpHeaders(): HttpHeaders {
-        return HttpHeaders().apply {
+    private fun httpHeaders(): HttpHeaders =
+        HttpHeaders().apply {
             add("Tema", "ENF")
             add("behandlingsnummer", Tema.ENF.behandlingsnummer)
         }
-    }
 
     private inline fun <reified T : Any> feilsjekkOgReturnerData(pdlResponse: PdlBolkResponse<T>): Map<String, T> {
         if (pdlResponse.data == null) {
@@ -68,7 +66,11 @@ class PdlApp2AppClient(
             throw PdlRequestException("Data er null fra PDL -  ${T::class}. Se secure logg for detaljer.")
         }
 
-        val feil = pdlResponse.data.personBolk.filter { it.code != "ok" }.map { it.ident to it.code }.toMap()
+        val feil =
+            pdlResponse.data.personBolk
+                .filter { it.code != "ok" }
+                .map { it.ident to it.code }
+                .toMap()
         if (feil.isNotEmpty()) {
             secureLogger.error("Feil ved henting av ${T::class} fra PDL: $feil")
             throw PdlRequestException("Feil ved henting av ${T::class} fra PDL. Se secure logg for detaljer.")

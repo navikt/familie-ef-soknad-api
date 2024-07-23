@@ -5,5 +5,6 @@ import no.nav.familie.http.health.AbstractHealthIndicator
 import org.springframework.stereotype.Component
 
 @Component
-internal class FamilieIntegrasjonHealthIndicator(familieIntegrasjonerClient: FamilieIntegrasjonerClient) :
-    AbstractHealthIndicator(familieIntegrasjonerClient, "familie.integrasjoner")
+internal class FamilieIntegrasjonHealthIndicator(
+    familieIntegrasjonerClient: FamilieIntegrasjonerClient,
+) : AbstractHealthIndicator(familieIntegrasjonerClient, "familie.integrasjoner")

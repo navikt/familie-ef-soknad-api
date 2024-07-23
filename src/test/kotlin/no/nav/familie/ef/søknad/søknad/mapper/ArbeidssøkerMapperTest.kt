@@ -14,7 +14,8 @@ internal class ArbeidssøkerMapperTest {
 
     @Test
     fun `Map registrertSomArbeidssøkerNav label `() {
-        Assertions.assertThat((arbeidssøker?.registrertSomArbeidssøkerNav?.label))
+        Assertions
+            .assertThat((arbeidssøker?.registrertSomArbeidssøkerNav?.label))
             .isEqualTo("Er du registrert som arbeidssøker hos NAV?")
     }
 
@@ -25,7 +26,8 @@ internal class ArbeidssøkerMapperTest {
 
     @Test
     fun `Map villigTilÅTaImotTilbudOmArbeid label `() {
-        Assertions.assertThat((arbeidssøker?.villigTilÅTaImotTilbudOmArbeid?.label))
+        Assertions
+            .assertThat((arbeidssøker?.villigTilÅTaImotTilbudOmArbeid?.label))
             .isEqualTo("Er du villig til å ta imot tilbud om arbeid eller arbeidsmarkedstiltak?")
     }
 
@@ -36,7 +38,8 @@ internal class ArbeidssøkerMapperTest {
 
     @Test
     fun `Map kanDuBegynneInnenEnUke label `() {
-        Assertions.assertThat((arbeidssøker?.kanDuBegynneInnenEnUke?.label))
+        Assertions
+            .assertThat((arbeidssøker?.kanDuBegynneInnenEnUke?.label))
             .isEqualTo("Kan du begynne i arbeid senest én uke etter at du har fått tilbud om jobb?")
     }
 
@@ -47,7 +50,8 @@ internal class ArbeidssøkerMapperTest {
 
     @Test
     fun `Map kanDuSkaffeBarnepassInnenEnUke label `() {
-        Assertions.assertThat((arbeidssøker?.kanDuSkaffeBarnepassInnenEnUke?.label))
+        Assertions
+            .assertThat((arbeidssøker?.kanDuSkaffeBarnepassInnenEnUke?.label))
             .isEqualTo(
                 "Har du eller kan du skaffe barnepass senest innen en uke etter at du har fått tilbud om jobb eller arbeidsmarkedtiltak?",
             )
@@ -60,7 +64,8 @@ internal class ArbeidssøkerMapperTest {
 
     @Test
     fun `Map hvorØnskerDuArbeid label `() {
-        Assertions.assertThat((arbeidssøker?.hvorØnskerDuArbeid?.label))
+        Assertions
+            .assertThat((arbeidssøker?.hvorØnskerDuArbeid?.label))
             .isEqualTo("Hvor ønsker du å søke arbeid?")
     }
 
@@ -71,7 +76,8 @@ internal class ArbeidssøkerMapperTest {
 
     @Test
     fun `Map ønskerDuMinst50ProsentStilling label `() {
-        Assertions.assertThat((arbeidssøker?.ønskerDuMinst50ProsentStilling?.label))
+        Assertions
+            .assertThat((arbeidssøker?.ønskerDuMinst50ProsentStilling?.label))
             .isEqualTo("Ønsker du å stå som arbeidssøker til minst 50% stilling?")
     }
 

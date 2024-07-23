@@ -7,18 +7,17 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Vedlegg
 import no.nav.familie.kontrakter.felles.Fødselsnummer
 
-fun personalia(): Personalia {
-    return Personalia(
+fun personalia(): Personalia =
+    Personalia(
         Søknadsfelt("Fødselsnummer", Fødselsnummer("19128449828")),
         Søknadsfelt("Navn", "Kari Nordmann"),
         Søknadsfelt("Statsborgerskap", "NOR"),
         adresseSøknadsfelt(),
         Søknadsfelt("Sivilstatus", "UGIF"),
     )
-}
 
-fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
-    return Søknadsfelt(
+fun adresseSøknadsfelt(): Søknadsfelt<Adresse> =
+    Søknadsfelt(
         "Adresse",
         Adresse(
             "Jerpefaret 5C",
@@ -27,7 +26,6 @@ fun adresseSøknadsfelt(): Søknadsfelt<Adresse> {
             "",
         ),
     )
-}
 
 fun dokumentMap(): Map<String, DokumentasjonWrapper> {
     val vedlegg = Vedlegg("id", "navn", "tittel")
