@@ -2,6 +2,10 @@ name: Deploy DEV
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   build:
     name: Build, push and deploy to dev-gcp
