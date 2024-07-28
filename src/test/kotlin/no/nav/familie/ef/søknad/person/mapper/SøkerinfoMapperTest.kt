@@ -187,7 +187,6 @@ internal class SøkerinfoMapperTest {
         assertThat(person.alder).isEqualTo(forventetAlder)
     }
 
-
     @Test
     fun `AnnenForelder mappes til barn`() {
         val pdlSøker =
@@ -259,14 +258,15 @@ internal class SøkerinfoMapperTest {
     }
 
     private fun opprettPdlSøker(): PdlSøker {
-        val pdlSøker = PdlSøker(
-            listOf(),
-            listOf(),
-            listOf(),
-            navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
-            sivilstand = listOf(Sivilstand(UOPPGITT)),
-            listOf(),
-        )
+        val pdlSøker =
+            PdlSøker(
+                listOf(),
+                listOf(),
+                listOf(),
+                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
+                sivilstand = listOf(Sivilstand(UOPPGITT)),
+                listOf(),
+            )
         return pdlSøker
     }
 
