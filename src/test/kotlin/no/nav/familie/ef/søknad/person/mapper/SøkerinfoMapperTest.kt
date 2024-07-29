@@ -175,6 +175,18 @@ internal class SøkerinfoMapperTest {
     }
 
     @Test
+    fun `skal kalkulere at alder er nøyaktig 20 år`() {
+        val fødselsdato = LocalDate.now().minusYears(20)
+        val fødselsnummer = FnrGenerator.generer(fødselsdato)
+        every { EksternBrukerUtils.hentFnrFraToken() } returns fødselsnummer
+
+        val pdlSøker = opprettPdlSøker()
+        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, emptyMap(), emptyMap()).søker
+
+        assertThat(person.alder).isEqualTo(20)
+    }
+
+    @Test
     fun `AnnenForelder mappes til barn`() {
         val pdlSøker =
             opprettPdlSøker()
