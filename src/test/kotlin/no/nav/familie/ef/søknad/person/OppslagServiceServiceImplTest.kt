@@ -54,7 +54,7 @@ internal class OppslagServiceServiceImplTest {
     @BeforeEach
     fun setUp() {
         mockkObject(EksternBrukerUtils)
-        every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
+        every { EksternBrukerUtils.hentFnrFraToken() } returns FnrGenerator.generer()
         mockPdlHentBarn()
         mockHentPersonPdlClient()
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns (mapOf())

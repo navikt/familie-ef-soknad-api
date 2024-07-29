@@ -34,6 +34,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
+import java.time.Period
 
 internal class SøkerinfoMapperTest {
     private val kodeverkService = mockk<KodeverkService>(relaxed = true)
@@ -50,7 +51,7 @@ internal class SøkerinfoMapperTest {
         every { kodeverkService.hentPoststed(any()) } returns "OSLO"
         every { kodeverkService.hentLand(any()) } returns "NORGE"
         mockkObject(EksternBrukerUtils)
-        every { EksternBrukerUtils.hentFnrFraToken() } returns "12345678911"
+        every { EksternBrukerUtils.hentFnrFraToken() } returns FnrGenerator.generer()
     }
 
     @AfterEach
@@ -135,16 +136,60 @@ internal class SøkerinfoMapperTest {
     }
 
     @Test
+    fun `skal kalkulere alder riktig for en person født i 1990 med D-nummer`() {
+        val fødselsdato = LocalDate.of(1990, 1, 1)
+        val fødselsnummer = FnrGenerator.generer(fødselsdato, erDnummer = true)
+        every { EksternBrukerUtils.hentFnrFraToken() } returns fødselsnummer
+
+        val pdlSøker = opprettPdlSøker()
+        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, emptyMap(), emptyMap()).søker
+        val forventetAlder = Period.between(fødselsdato, LocalDate.now()).years
+
+        assertThat(person.alder).isEqualTo(forventetAlder)
+    }
+
+    @Test
+    fun `skal kalkulere alder riktig for en person født i 1990`() {
+        val fødselsdato = LocalDate.of(1990, 1, 1)
+        val fødselsnummer = FnrGenerator.generer(fødselsdato)
+        every { EksternBrukerUtils.hentFnrFraToken() } returns fødselsnummer
+
+        val pdlSøker = opprettPdlSøker()
+        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, emptyMap(), emptyMap()).søker
+        val forventetAlder = Period.between(fødselsdato, LocalDate.now()).years
+
+        assertThat(person.alder).isEqualTo(forventetAlder)
+    }
+
+    @Test
+    fun `skal kalkulere alder riktig for en person født i 2000`() {
+        val fødselsdato = LocalDate.of(2000, 1, 1)
+        val fødselsnummer = FnrGenerator.generer(fødselsdato)
+        every { EksternBrukerUtils.hentFnrFraToken() } returns fødselsnummer
+
+        val pdlSøker = opprettPdlSøker()
+        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, emptyMap(), emptyMap()).søker
+        val forventetAlder = Period.between(fødselsdato, LocalDate.now()).years
+
+        assertThat(person.alder).isEqualTo(forventetAlder)
+    }
+
+    @Test
+    fun `skal kalkulere at alder er nøyaktig 20 år`() {
+        val fødselsdato = LocalDate.now().minusYears(20)
+        val fødselsnummer = FnrGenerator.generer(fødselsdato)
+        every { EksternBrukerUtils.hentFnrFraToken() } returns fødselsnummer
+
+        val pdlSøker = opprettPdlSøker()
+        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, emptyMap(), emptyMap()).søker
+
+        assertThat(person.alder).isEqualTo(20)
+    }
+
+    @Test
     fun `AnnenForelder mappes til barn`() {
         val pdlSøker =
-            PdlSøker(
-                listOf(),
-                listOf(),
-                listOf(),
-                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
-                sivilstand = listOf(Sivilstand(UOPPGITT)),
-                listOf(),
-            )
+            opprettPdlSøker()
 
         val navn = Navn("Roy", "", "Toy")
         val relatertPersonsIdent = FnrGenerator.generer()
@@ -176,14 +221,7 @@ internal class SøkerinfoMapperTest {
     fun `AnnenForelder en annen forelder, to barn mappes til riktig barn`() {
         // Gitt
         val pdlSøker =
-            PdlSøker(
-                listOf(),
-                listOf(),
-                listOf(),
-                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
-                sivilstand = listOf(Sivilstand(UOPPGITT)),
-                listOf(),
-            )
+            opprettPdlSøker()
 
         val navn = Navn("Roy", "", "Toy")
         val relatertPersonsIdent = FnrGenerator.generer()
@@ -216,6 +254,19 @@ internal class SøkerinfoMapperTest {
         val barn2Dto = person.barn.filter { it.fnr.equals("888") }
         assertThat(barnDto.first().medforelder).isNotNull
         assertThat(barn2Dto.first().medforelder).isNull()
+    }
+
+    private fun opprettPdlSøker(): PdlSøker {
+        val pdlSøker =
+            PdlSøker(
+                listOf(),
+                listOf(),
+                listOf(),
+                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
+                sivilstand = listOf(Sivilstand(UOPPGITT)),
+                listOf(),
+            )
+        return pdlSøker
     }
 
     @Test

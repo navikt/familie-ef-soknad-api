@@ -166,6 +166,7 @@ internal class SøkerinfoMapper(
 
         return Person(
             fnr = EksternBrukerUtils.hentFnrFraToken(),
+            alder = kalkulerAlder(EksternBrukerUtils.hentFnrFraToken()),
             forkortetNavn = navn.first().visningsnavn(),
             adresse = adresse,
             egenansatt = false, // TODO denne er vel i beste fall unødvendig?
@@ -175,6 +176,8 @@ internal class SøkerinfoMapper(
         )
     }
 
+    private fun kalkulerAlder(ident: String) = Period.between(Fødselsnummer(ident).fødselsdato, LocalDate.now()).years
+
     private fun formaterAdresse(pdlSøker: PdlSøker): String {
         val bosted = pdlSøker.bostedsadresse.firstOrNull()
         return when {
@@ -182,12 +185,15 @@ internal class SøkerinfoMapper(
                 logger.info("Finner ikke bostedadresse")
                 ""
             }
+
             bosted.vegadresse != null -> {
                 tilFormatertAdresse(bosted.vegadresse)
             }
+
             bosted.matrikkeladresse != null -> {
                 join(bosted.matrikkeladresse.tilleggsnavn, hentPoststed(bosted.matrikkeladresse.postnummer)) ?: ""
             }
+
             else -> {
                 logger.info("Søker har hverken vegadresse eller matrikkeladresse")
                 ""

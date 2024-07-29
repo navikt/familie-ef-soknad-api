@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.person
 
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
+import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -8,7 +9,7 @@ import org.springframework.boot.test.web.client.exchange
 import org.springframework.http.HttpEntity
 
 class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
-    val tokenSubject = "12345678911"
+    val tokenSubject = FnrGenerator.generer()
 
     @BeforeEach
     fun førAlle() {
