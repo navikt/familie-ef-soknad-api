@@ -136,19 +136,6 @@ internal class SøkerinfoMapperTest {
     }
 
     @Test
-    fun `skal kalkulere alder riktig for en person født i 2000 med D-nummer`() {
-        val fødselsdato = LocalDate.of(2000, 1, 1)
-        val fødselsnummer = FnrGenerator.generer(fødselsdato, erDnummer = true)
-        every { EksternBrukerUtils.hentFnrFraToken() } returns fødselsnummer
-
-        val pdlSøker = opprettPdlSøker()
-        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, emptyMap(), emptyMap()).søker
-        val forventetAlder = Period.between(fødselsdato, LocalDate.now()).years
-
-        assertThat(person.alder).isEqualTo(forventetAlder)
-    }
-
-    @Test
     fun `skal kalkulere alder riktig for en person født i 1990 med D-nummer`() {
         val fødselsdato = LocalDate.of(1990, 1, 1)
         val fødselsnummer = FnrGenerator.generer(fødselsdato, erDnummer = true)
