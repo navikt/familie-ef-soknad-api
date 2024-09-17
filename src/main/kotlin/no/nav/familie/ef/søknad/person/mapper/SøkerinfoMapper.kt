@@ -76,7 +76,7 @@ internal class SøkerinfoMapper(
                     )
                 }
 
-            val fødselsdato = pdlBarn.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
+            val fødselsdato = pdlBarn.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
             val harSammeAdresse = harSammeAdresse(søkersAdresse, pdlBarn)

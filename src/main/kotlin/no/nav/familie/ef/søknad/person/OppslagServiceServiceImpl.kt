@@ -35,7 +35,7 @@ internal class OppslagServiceServiceImpl(
             pdlBarn
                 .filter {
                     erIAktuellAlder(
-                        it.value.fødsel
+                        it.value.fødselsdato
                             .first()
                             .fødselsdato,
                     )

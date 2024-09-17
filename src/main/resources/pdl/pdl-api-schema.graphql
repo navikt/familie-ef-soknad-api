@@ -104,14 +104,9 @@ type FalskIdentitetIdentifiserendeInformasjon {
     statsborgerskap: [String!]!
 }
 
-type Foedsel {
-    foedekommune: String
-    foedeland: String
-    foedested: String
-    foedselsaar: Int
-    foedselsdato: Date
-    folkeregistermetadata: Folkeregistermetadata
-    metadata: Metadata!
+type Foedselsdato {
+    foedselsaar: Int,
+    foedselsdato: LocalDate,
 }
 
 type Folkeregisteridentifikator {

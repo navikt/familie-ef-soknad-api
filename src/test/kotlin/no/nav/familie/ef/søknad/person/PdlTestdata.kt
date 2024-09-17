@@ -9,7 +9,7 @@ import no.nav.familie.ef.søknad.person.dto.Dødsfall
 import no.nav.familie.ef.søknad.person.dto.Familierelasjonsrolle.BARN
 import no.nav.familie.ef.søknad.person.dto.Familierelasjonsrolle.FAR
 import no.nav.familie.ef.søknad.person.dto.ForelderBarnRelasjon
-import no.nav.familie.ef.søknad.person.dto.Fødsel
+import no.nav.familie.ef.søknad.person.dto.Fødselsdato
 import no.nav.familie.ef.søknad.person.dto.Matrikkeladresse
 import no.nav.familie.ef.søknad.person.dto.MatrikkeladresseBarn
 import no.nav.familie.ef.søknad.person.dto.Navn
@@ -90,7 +90,7 @@ object PdlTestdata {
                                 ),
                             ),
                         navn = navn,
-                        fødsel = listOf(Fødsel(1, LocalDate.now())),
+                        fødselsdato = listOf(Fødselsdato(1, LocalDate.now())),
                         dødsfall = listOf(Dødsfall(LocalDate.now())),
                         forelderBarnRelasjon = barnsRelasjoner,
                     ),
