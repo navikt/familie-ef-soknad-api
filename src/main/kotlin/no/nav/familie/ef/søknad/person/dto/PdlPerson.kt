@@ -75,7 +75,7 @@ data class PdlBarn(
     val bostedsadresse: List<BostedsadresseBarn>,
     val deltBosted: List<DeltBosted>,
     val navn: List<Navn>,
-    @JsonProperty("foedsel") val fødselsdato: List<Fødselsdato>,
+    @JsonProperty("foedselsdato") val fødselsdato: List<Fødselsdato>,
     @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
     val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
 )
