@@ -28,7 +28,7 @@ query($identer: [ID!]!){
                 mellomnavn
                 etternavn
             }
-            foedsel {
+            foedselsdato {
                 foedselsaar
                 foedselsdato
             }
