@@ -75,7 +75,7 @@ data class PdlBarn(
     val bostedsadresse: List<BostedsadresseBarn>,
     val deltBosted: List<DeltBosted>,
     val navn: List<Navn>,
-    @JsonProperty("foedsel") val fødsel: List<Fødsel>,
+    @JsonProperty("foedselsdato") val fødselsdato: List<Fødselsdato>,
     @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
     val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
 )
@@ -143,7 +143,7 @@ data class MatrikkeladresseBarn(
     override val matrikkelId: Long?,
 ) : MatrikkelId
 
-data class Fødsel(
+data class Fødselsdato(
     @JsonProperty("foedselsaar") val fødselsår: Int?,
     @JsonProperty("foedselsdato") val fødselsdato: LocalDate?,
 )

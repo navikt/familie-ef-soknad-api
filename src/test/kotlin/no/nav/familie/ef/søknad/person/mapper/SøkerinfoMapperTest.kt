@@ -16,7 +16,7 @@ import no.nav.familie.ef.søknad.person.dto.BostedsadresseBarn
 import no.nav.familie.ef.søknad.person.dto.DeltBosted
 import no.nav.familie.ef.søknad.person.dto.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.person.dto.ForelderBarnRelasjon
-import no.nav.familie.ef.søknad.person.dto.Fødsel
+import no.nav.familie.ef.søknad.person.dto.Fødselsdato
 import no.nav.familie.ef.søknad.person.dto.Matrikkeladresse
 import no.nav.familie.ef.søknad.person.dto.MatrikkeladresseBarn
 import no.nav.familie.ef.søknad.person.dto.Navn
@@ -42,7 +42,7 @@ internal class SøkerinfoMapperTest {
 
     private val barn =
         barn().copy(
-            fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+            fødselsdato = listOf(Fødselsdato(LocalDate.now().year, LocalDate.now())),
             navn = listOf(Navn("fornavn", "", "Etternavn")),
         )
 
@@ -195,7 +195,7 @@ internal class SøkerinfoMapperTest {
         val relatertPersonsIdent = FnrGenerator.generer()
         val barn =
             barn().copy(
-                fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+                fødselsdato = listOf(Fødselsdato(LocalDate.now().year, LocalDate.now())),
                 navn = listOf(Navn("Boy", "", "Moy")),
                 forelderBarnRelasjon =
                     listOf(
@@ -227,7 +227,7 @@ internal class SøkerinfoMapperTest {
         val relatertPersonsIdent = FnrGenerator.generer()
         val barn =
             barn().copy(
-                fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+                fødselsdato = listOf(Fødselsdato(LocalDate.now().year, LocalDate.now())),
                 navn = listOf(Navn("Boy", "", "Moy")),
                 forelderBarnRelasjon =
                     listOf(
@@ -239,7 +239,7 @@ internal class SøkerinfoMapperTest {
             )
         val barn2 =
             barn().copy(
-                fødsel = listOf(Fødsel(LocalDate.now().year, LocalDate.now())),
+                fødselsdato = listOf(Fødselsdato(LocalDate.now().year, LocalDate.now())),
                 navn = listOf(Navn("Boy", "", "Moy")),
                 forelderBarnRelasjon = listOf(),
             )
