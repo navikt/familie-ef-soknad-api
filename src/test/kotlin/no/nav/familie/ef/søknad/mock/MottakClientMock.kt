@@ -22,7 +22,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Configuration
-@Profile("mock-mottak")
+@Profile("mock-mottak-ignore")
 class MottakClientMock {
     @Bean
     @Primary
