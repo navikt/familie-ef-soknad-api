@@ -50,16 +50,16 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
 
     fun mapTilDto(barn: List<Kontraktbarn>): List<Barn> =
         barn.map {
+            val alder :Int = when(it.lagtTilManuelt) {
+                false -> it.hentPdlAlder()
+                else -> 0 // legger bare til terminbarn?
+            }
+
             Barn(
                 alder =
                     TekstFelt(
                         AlderTekst.hentTekst(),
-                        Period
-                            .between(
-                                it.fødselsnummer?.verdi?.fødselsdato ?: it.fødselTermindato?.verdi,
-                                LocalDate.now(),
-                            ).years
-                            .toString(),
+                        alder.toString()
                     ),
                 ident = TekstFelt(FødselsnummerTekst.hentTekst(), it.fødselsnummer?.verdi?.verdi ?: ""),
                 fødselsdato = it.fødselTermindato.tilNullableDatoFelt(),
@@ -246,4 +246,11 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                     ),
             ),
         )
+}
+
+private fun no.nav.familie.kontrakter.ef.søknad.Barn.hentPdlAlder(): Int {
+    return Period.between(
+        this.fødselTermindato?.verdi, // Bare hvis ikke lagt til manuelt
+        LocalDate.now(),
+    ).years
 }
