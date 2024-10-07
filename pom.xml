@@ -25,7 +25,6 @@
         <token-validation-spring.version>5.0.5</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
-        <fasterxml.version>2.18.0</fasterxml.version>
         <felles.version>3.20240913110742_adb42f8</felles.version>
         <kontrakter.version>3.0_20241004134208_2962899</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
@@ -86,7 +85,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
-            <version>${fasterxml.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
