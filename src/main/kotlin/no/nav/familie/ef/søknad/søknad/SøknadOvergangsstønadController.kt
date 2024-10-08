@@ -34,7 +34,7 @@ class SøknadOvergangsstønadController(
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
 
-        if (featureToggleService.isEnabled("familie.ef.soknad-api-logg-stønad")) {
+        if (featureToggleService.isEnabled("familie.ef.soknad-api-logg-stonad")) {
             secureLogger.info("Mottatt søknad: $søknad ")
         }
 
