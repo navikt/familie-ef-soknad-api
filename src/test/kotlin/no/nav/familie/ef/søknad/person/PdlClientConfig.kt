@@ -5,6 +5,7 @@ import io.mockk.mockk
 import no.nav.familie.ef.søknad.person.dto.Bostedsadresse
 import no.nav.familie.ef.søknad.person.dto.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.person.dto.ForelderBarnRelasjon
+import no.nav.familie.ef.søknad.person.dto.Fødselsdato
 import no.nav.familie.ef.søknad.person.dto.Navn
 import no.nav.familie.ef.søknad.person.dto.PdlSøker
 import no.nav.familie.ef.søknad.person.dto.Sivilstand
@@ -30,6 +31,7 @@ class PdlClientConfig {
 
         every { pdlClient.ping() } returns Unit
 
+        val fødselsdato = LocalDate.now().minusYears(30)
         every { pdlClient.hentSøker(any()) } returns
             PdlSøker(
                 adressebeskyttelse = listOf(),
@@ -38,6 +40,7 @@ class PdlClientConfig {
                 navn = lagNavn(),
                 sivilstand = sivilstand(),
                 statsborgerskap = statsborgerskap(),
+                fødselsdato = listOf(Fødselsdato(fødselsdato = fødselsdato, fødselsår = fødselsdato.year)),
             )
 
         return pdlClient

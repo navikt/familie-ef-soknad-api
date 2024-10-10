@@ -34,7 +34,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
-import java.time.Period
 
 internal class SøkerinfoMapperTest {
     private val kodeverkService = mockk<KodeverkService>(relaxed = true)
@@ -87,7 +86,7 @@ internal class SøkerinfoMapperTest {
     fun `MedForelder alder og navn`() {
         // Gitt
         val navn = Navn("Roy", "", "Toy")
-        val medforelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
+        val medforelderFortrolig = PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(FORTROLIG)), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(24))
         val ident = FnrGenerator.generer(år = 1999)
         // Når
         val annenForelder = medforelderFortrolig.tilDto(ident)
@@ -101,11 +100,11 @@ internal class SøkerinfoMapperTest {
     @Test
     fun `AnnenForelder adressebeskyttelse fortrolig mappes til harAdressesperre`() {
         val navn = Navn("Roy", "", "Toy")
-        val annenForelderFortrolig = PdlAnnenForelder(listOf(Adressebeskyttelse(FORTROLIG)), listOf(), listOf(navn))
+        val annenForelderFortrolig = PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(FORTROLIG)), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(24))
         val annenForelderStrengtFortrolig =
-            PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG)), listOf(), listOf(navn))
+            PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(STRENGT_FORTROLIG)), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(23))
         val annenForelderStrengtFortroligUtland =
-            PdlAnnenForelder(listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)), listOf(), listOf(navn))
+            PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(22))
         //
         val ident = FnrGenerator.generer(år = 1999)
         val annenForelder = annenForelderFortrolig.tilDto(ident)
@@ -117,7 +116,7 @@ internal class SøkerinfoMapperTest {
     @Test
     fun `AnnenForelder adressebeskyttelse UGRADERT skal ikke ha adressesperre`() {
         val navn = Navn("Roy", "", "Toy")
-        val pdlAnnenForelder = PdlAnnenForelder(listOf(Adressebeskyttelse(UGRADERT)), listOf(), listOf(navn))
+        val pdlAnnenForelder = PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(35))
         //
         val tilDto = pdlAnnenForelder.tilDto(FnrGenerator.generer())
         //
@@ -128,7 +127,7 @@ internal class SøkerinfoMapperTest {
     fun `AnnenForelder adressebeskyttelse tom skal ikke ha adressesperre`() {
         val navn = Navn("Roy", "", "Toy")
 
-        val pdlAnnenForelder = PdlAnnenForelder(listOf(), listOf(), listOf(navn))
+        val pdlAnnenForelder = PdlAnnenForelder(adressebeskyttelse = listOf(), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(22))
         //
         val tilDto = pdlAnnenForelder.tilDto(FnrGenerator.generer())
         //
@@ -141,35 +140,22 @@ internal class SøkerinfoMapperTest {
         val fødselsnummer = FnrGenerator.generer(fødselsdato, erDnummer = true)
         every { EksternBrukerUtils.hentFnrFraToken() } returns fødselsnummer
 
-        val pdlSøker = opprettPdlSøker()
+        val forventetAlder: Long = 29
+        val pdlSøker = opprettPdlSøker(alder = forventetAlder)
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, emptyMap(), emptyMap()).søker
-        val forventetAlder = Period.between(fødselsdato, LocalDate.now()).years
 
         assertThat(person.alder).isEqualTo(forventetAlder)
     }
 
     @Test
-    fun `skal kalkulere alder riktig for en person født i 1990`() {
+    fun `skal kalkulere alder riktig for en person ikke bruk fnr født i 1990`() {
         val fødselsdato = LocalDate.of(1990, 1, 1)
         val fødselsnummer = FnrGenerator.generer(fødselsdato)
         every { EksternBrukerUtils.hentFnrFraToken() } returns fødselsnummer
 
-        val pdlSøker = opprettPdlSøker()
+        val forventetAlder: Long = 29
+        val pdlSøker = opprettPdlSøker(forventetAlder)
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, emptyMap(), emptyMap()).søker
-        val forventetAlder = Period.between(fødselsdato, LocalDate.now()).years
-
-        assertThat(person.alder).isEqualTo(forventetAlder)
-    }
-
-    @Test
-    fun `skal kalkulere alder riktig for en person født i 2000`() {
-        val fødselsdato = LocalDate.of(2000, 1, 1)
-        val fødselsnummer = FnrGenerator.generer(fødselsdato)
-        every { EksternBrukerUtils.hentFnrFraToken() } returns fødselsnummer
-
-        val pdlSøker = opprettPdlSøker()
-        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, emptyMap(), emptyMap()).søker
-        val forventetAlder = Period.between(fødselsdato, LocalDate.now()).years
 
         assertThat(person.alder).isEqualTo(forventetAlder)
     }
@@ -180,16 +166,16 @@ internal class SøkerinfoMapperTest {
         val fødselsnummer = FnrGenerator.generer(fødselsdato)
         every { EksternBrukerUtils.hentFnrFraToken() } returns fødselsnummer
 
-        val pdlSøker = opprettPdlSøker()
+        val pdlSøker = opprettPdlSøker(alder = 29)
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, emptyMap(), emptyMap()).søker
 
-        assertThat(person.alder).isEqualTo(20)
+        assertThat(person.alder).isEqualTo(29)
     }
 
     @Test
     fun `AnnenForelder mappes til barn`() {
         val pdlSøker =
-            opprettPdlSøker()
+            opprettPdlSøker(29)
 
         val navn = Navn("Roy", "", "Toy")
         val relatertPersonsIdent = FnrGenerator.generer()
@@ -206,7 +192,7 @@ internal class SøkerinfoMapperTest {
                     ),
             )
         val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
-        val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
+        val pdlAnnenForelder = PdlAnnenForelder(adressebeskyttelse = listOf(adressebeskyttelse), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(24))
         val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), andreForeldre)
         assertThat(
@@ -221,7 +207,7 @@ internal class SøkerinfoMapperTest {
     fun `AnnenForelder en annen forelder, to barn mappes til riktig barn`() {
         // Gitt
         val pdlSøker =
-            opprettPdlSøker()
+            opprettPdlSøker(29)
 
         val navn = Navn("Roy", "", "Toy")
         val relatertPersonsIdent = FnrGenerator.generer()
@@ -245,7 +231,7 @@ internal class SøkerinfoMapperTest {
             )
 
         val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
-        val pdlAnnenForelder = PdlAnnenForelder(listOf(adressebeskyttelse), listOf(), listOf(navn))
+        val pdlAnnenForelder = PdlAnnenForelder(adressebeskyttelse = listOf(adressebeskyttelse), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(21))
         val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
         // når
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn, "888" to barn2), andreForeldre)
@@ -256,15 +242,16 @@ internal class SøkerinfoMapperTest {
         assertThat(barn2Dto.first().medforelder).isNull()
     }
 
-    private fun opprettPdlSøker(): PdlSøker {
+    private fun opprettPdlSøker(alder: Long = 29): PdlSøker {
         val pdlSøker =
             PdlSøker(
-                listOf(),
-                listOf(),
-                listOf(),
+                adressebeskyttelse = listOf(),
+                bostedsadresse = listOf(),
+                forelderBarnRelasjon = listOf(),
                 navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
                 sivilstand = listOf(Sivilstand(UOPPGITT)),
-                listOf(),
+                statsborgerskap = listOf(),
+                fødselsdato = lagFødseldato(alder),
             )
         return pdlSøker
     }
@@ -274,12 +261,13 @@ internal class SøkerinfoMapperTest {
         // Gitt
         val pdlSøker =
             PdlSøker(
-                listOf(),
-                listOf(),
-                listOf(),
+                adressebeskyttelse = listOf(),
+                bostedsadresse = listOf(),
+                forelderBarnRelasjon = listOf(),
                 navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
                 sivilstand = listOf(),
-                listOf(),
+                statsborgerskap = listOf(),
+                fødselsdato = lagFødseldato(28),
             )
         // når
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), mapOf())
@@ -415,6 +403,7 @@ internal class SøkerinfoMapperTest {
             navn = listOf(navn),
             sivilstand = listOf(),
             statsborgerskap = listOf(),
+            fødselsdato = lagFødseldato(25),
         )
 
     private fun vegadresse(
@@ -447,12 +436,17 @@ internal class SøkerinfoMapperTest {
         bostedsadresse: BostedsadresseBarn? = null,
         deltBosted: DeltBosted? = null,
     ) = PdlBarn(
-        emptyList(),
-        bostedsadresse?.let { listOf(it) } ?: emptyList(),
-        deltBosted?.let { listOf(it) } ?: emptyList(),
-        emptyList(),
-        emptyList(),
-        emptyList(),
-        emptyList(),
+        adressebeskyttelse = emptyList(),
+        bostedsadresse = bostedsadresse?.let { listOf(it) } ?: emptyList(),
+        deltBosted = deltBosted?.let { listOf(it) } ?: emptyList(),
+        navn = emptyList(),
+        fødselsdato = lagFødseldato(3),
+        dødsfall = emptyList(),
+        forelderBarnRelasjon = emptyList(),
     )
+}
+
+fun lagFødseldato(alder: Long): List<Fødselsdato> {
+    val fødselsdato = LocalDate.now().minusYears(alder)
+    return listOf(Fødselsdato(fødselsår = fødselsdato.year, fødselsdato = fødselsdato))
 }

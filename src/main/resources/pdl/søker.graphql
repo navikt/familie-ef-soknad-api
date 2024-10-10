@@ -3,6 +3,10 @@ query($ident: ID!){
         adressebeskyttelse {
             gradering
         }
+        foedselsdato {
+            foedselsdato
+            foedselsaar
+        }
         bostedsadresse {
             vegadresse {
                 adressenavn

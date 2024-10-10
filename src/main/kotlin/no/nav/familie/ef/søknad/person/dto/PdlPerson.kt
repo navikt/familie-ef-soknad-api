@@ -68,6 +68,7 @@ data class PdlSøker(
     val navn: List<Navn>,
     val sivilstand: List<Sivilstand>,
     val statsborgerskap: List<Statsborgerskap>,
+    @JsonProperty("foedselsdato") val fødselsdato: List<Fødselsdato>,
 )
 
 data class PdlBarn(
@@ -82,8 +83,9 @@ data class PdlBarn(
 
 data class PdlAnnenForelder(
     val adressebeskyttelse: List<Adressebeskyttelse>,
-    @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
     val navn: List<Navn>,
+    @JsonProperty("doedsfall") val dødsfall: List<Dødsfall>,
+    @JsonProperty("foedselsdato") val fødselsdato: List<Fødselsdato>,
 )
 
 data class Adressebeskyttelse(

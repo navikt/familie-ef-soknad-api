@@ -9,6 +9,10 @@ query($identer: [ID!]!){
             doedsfall {
                 doedsdato
             }
+            foedselsdato {
+                foedselsdato
+                foedselsaar
+            }
             navn {
                 fornavn
                 mellomnavn

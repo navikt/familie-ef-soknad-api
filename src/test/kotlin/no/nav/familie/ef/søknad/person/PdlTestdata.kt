@@ -22,6 +22,7 @@ import no.nav.familie.ef.søknad.person.dto.Sivilstand
 import no.nav.familie.ef.søknad.person.dto.Sivilstandstype
 import no.nav.familie.ef.søknad.person.dto.Statsborgerskap
 import no.nav.familie.ef.søknad.person.dto.Vegadresse
+import no.nav.familie.ef.søknad.person.mapper.lagFødseldato
 import java.time.LocalDate
 
 object PdlTestdata {
@@ -70,6 +71,7 @@ object PdlTestdata {
                 navn,
                 listOf(Sivilstand(Sivilstandstype.GIFT)),
                 statsborgerskap,
+                fødselsdato = lagFødseldato(33),
             ),
         )
 

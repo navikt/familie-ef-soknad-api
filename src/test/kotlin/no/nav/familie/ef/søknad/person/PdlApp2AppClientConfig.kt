@@ -41,6 +41,7 @@ class PdlApp2AppClientConfig {
                     ),
             )
 
+        val fødselsdato = LocalDate.now().minusYears(31)
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns
             mapOf(
                 medforelderFnr to
@@ -48,6 +49,10 @@ class PdlApp2AppClientConfig {
                         adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
                         navn = lagNavn("Bjørn", "Borg", "Borgersen"),
                         dødsfall = listOf(),
+                        fødselsdato =
+                            listOf(
+                                Fødselsdato(fødselsår = fødselsdato.year, fødselsdato = fødselsdato),
+                            ),
                     ),
             )
 

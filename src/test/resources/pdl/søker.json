@@ -36,6 +36,10 @@
           "etternavn": "KAMELEON"
         }
       ],
+      "foedselsdato":[ {
+        "foedselsdato": "2000-01-01",
+        "foedselsaar": "2000"
+      }],
       "sivilstand": [
         {
           "type": "UGIFT"
