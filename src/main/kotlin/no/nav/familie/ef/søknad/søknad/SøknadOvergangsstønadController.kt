@@ -21,7 +21,6 @@ import java.time.LocalDateTime
 class SøknadOvergangsstønadController(
     val søknadService: SøknadService,
 ) {
-
     @PostMapping
     fun sendInn(
         @RequestBody søknad: SøknadOvergangsstønadDto,
