@@ -9,6 +9,8 @@ Denne applikasjonen tilbyr apier for Team Enslig Forsørger sine eksterne flater
 ## Kjør på localhost: 
 bruk Launcher : ApplicationLocalLauncher 
 
+hei tester at jeg kan pushe 
+
 ### Hvordan logge inn på localhost:
 Eksempel:
 http://localhost:8091/local/cookie?issuerId=tokenx&audience=familie-app&redirect=
