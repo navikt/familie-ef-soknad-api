@@ -24,6 +24,7 @@ import no.nav.familie.ef.søknad.person.dto.PdlSøker
 import no.nav.familie.ef.søknad.person.dto.Sivilstand
 import no.nav.familie.ef.søknad.person.dto.Sivilstandstype
 import no.nav.familie.ef.søknad.person.mapper.SøkerinfoMapper
+import no.nav.familie.ef.søknad.person.mapper.lagFødseldato
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
@@ -188,15 +189,17 @@ internal class OppslagServiceServiceImplTest {
             mapOf(
                 generer to
                     PdlAnnenForelder(
-                        listOf(),
-                        listOf(),
-                        listOf(
-                            Navn(
-                                "forelder",
-                                "forelder",
-                                "forelder",
+                        adressebeskyttelse = listOf(),
+                        navn =
+                            listOf(
+                                Navn(
+                                    "forelderFornavn",
+                                    "forelder",
+                                    "forelder",
+                                ),
                             ),
-                        ),
+                        dødsfall = listOf(),
+                        fødselsdato = lagFødseldato(23),
                     ),
             )
 
@@ -334,7 +337,12 @@ internal class OppslagServiceServiceImplTest {
 
     private fun mockPdlHentAnnenForelder(adressebeskyttelseGradering: AdressebeskyttelseGradering) {
         val annenForelder =
-            PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(adressebeskyttelseGradering)), listOf(), listOf())
+            PdlAnnenForelder(
+                adressebeskyttelse = listOf(Adressebeskyttelse(adressebeskyttelseGradering)),
+                listOf(),
+                listOf(),
+                listOf(),
+            )
 
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns (mapOf("enIdent" to annenForelder))
     }
@@ -347,12 +355,13 @@ internal class OppslagServiceServiceImplTest {
     ) {
         every { pdlClient.hentSøker(any()) } returns (
             PdlSøker(
-                listOf(Adressebeskyttelse(adressebeskyttelseGradering)),
-                listOf(),
-                listOf(),
+                adressebeskyttelse = listOf(Adressebeskyttelse(adressebeskyttelseGradering)),
+                bostedsadresse = listOf(),
+                forelderBarnRelasjon = listOf(),
                 navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
                 sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
-                listOf(),
+                statsborgerskap = listOf(),
+                fødselsdato = lagFødseldato(34),
             )
         )
     }

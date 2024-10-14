@@ -1,14 +1,11 @@
 package no.nav.familie.ef.søknad.søknad
 
 import no.nav.familie.ef.søknad.infrastruktur.exception.ApiFeil
-import no.nav.familie.ef.søknad.infrastruktur.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
-import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.validation.annotation.Validated
@@ -25,10 +22,7 @@ import java.time.LocalDateTime
 @Validated
 class SøknadBarnetilsynController(
     val søknadService: SøknadService,
-    val featureToggleService: FeatureToggleService,
 ) {
-    private val secureLogger = LoggerFactory.getLogger("secureLogger")
-
     @PostMapping
     fun sendInn(
         @RequestBody søknad: SøknadBarnetilsynDto,
@@ -42,12 +36,5 @@ class SøknadBarnetilsynController(
     }
 
     @GetMapping("forrige")
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
-        val forrigeBarnetilsynSøknad = søknadService.hentForrigeBarnetilsynSøknad()
-        val personIdent = EksternBrukerUtils.hentFnrFraToken()
-        if (forrigeBarnetilsynSøknad != null) {
-            secureLogger.info("forrige barnetilsynsøknad for $personIdent : " + objectMapper.writeValueAsString(forrigeBarnetilsynSøknad))
-        }
-        return forrigeBarnetilsynSøknad
-    }
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknad()
 }
