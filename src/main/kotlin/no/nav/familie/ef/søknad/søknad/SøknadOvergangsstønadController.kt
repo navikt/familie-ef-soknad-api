@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad.søknad
 
 import no.nav.familie.ef.søknad.infrastruktur.exception.ApiFeil
-import no.nav.familie.ef.søknad.infrastruktur.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
@@ -21,7 +20,6 @@ import java.time.LocalDateTime
 @Validated
 class SøknadOvergangsstønadController(
     val søknadService: SøknadService,
-    val featureToggleService: FeatureToggleService,
 ) {
     @PostMapping
     fun sendInn(
@@ -30,6 +28,7 @@ class SøknadOvergangsstønadController(
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
+
         val innsendingMottatt = LocalDateTime.now()
         søknadService.sendInn(søknad, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
