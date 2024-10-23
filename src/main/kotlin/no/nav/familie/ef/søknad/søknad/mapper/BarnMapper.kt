@@ -6,7 +6,6 @@ import no.nav.familie.ef.søknad.person.mapper.PersonMinimumMapper
 import no.nav.familie.ef.søknad.søknad.domain.Barn
 import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.BARN_BOR_HOS_SØKER
-import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.DELT_BOSTED
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.SAMVÆRSAVTALE
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.TERMINBEKREFTELSE
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
@@ -155,7 +154,6 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
                     .fødselsnummerTilTekstFelt(),
             borINorge = annenForelder.bosattNorge.tilNullableBooleanFelt(),
             land = annenForelder.land.tilNullableTekstFelt(),
-            avtaleOmDeltBosted = samvær?.spørsmålAvtaleOmDeltBosted.tilNullableBooleanFelt(),
             harAnnenForelderSamværMedBarn = samvær?.skalAnnenForelderHaSamvær.tilNullableTekstFelt(),
             harDereSkriftligSamværsavtale = samvær?.harDereSkriftligAvtaleOmSamvær.tilNullableTekstFelt(),
             hvordanPraktiseresSamværet = samvær?.hvordanPraktiseresSamværet.tilNullableTekstFelt(),
@@ -212,12 +210,6 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
         Søknadsfelt(
             Språktekster.Samvær.hentTekst(),
             Samvær(
-                spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted?.tilSøknadsfelt(),
-                avtaleOmDeltBosted =
-                    dokumentfelt(
-                        DELT_BOSTED,
-                        dokumentMap,
-                    ),
                 skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
                 harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
                 samværsavtale =
