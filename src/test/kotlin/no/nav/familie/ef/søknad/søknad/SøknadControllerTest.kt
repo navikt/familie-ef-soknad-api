@@ -30,10 +30,10 @@ import org.springframework.test.context.ActiveProfiles
 import java.io.File
 import java.time.LocalDateTime
 
-class SøknadsControllerTest {
-    @Profile("soknads-controller-test")
+class SøknadControllerTest {
+    @Profile("soknad-controller-test")
     @Configuration
-    class SøknadsControllerTestConfiguration {
+    class SøknadControllerTestConfiguration {
         @Primary
         @Bean
         fun søknadService(): SøknadService = mockk()
@@ -44,8 +44,8 @@ class SøknadsControllerTest {
     }
 
     @Nested
-    @ActiveProfiles("soknads-controller-test")
-    internal inner class SøknadsControllerTest : OppslagSpringRunnerTest() {
+    @ActiveProfiles("soknad-controller-test")
+    internal inner class SøknadControllerTest : OppslagSpringRunnerTest() {
         @Autowired
         lateinit var søknadService: SøknadService
 
@@ -60,7 +60,7 @@ class SøknadsControllerTest {
         }
 
         @Test
-        fun `overgangsstønad sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
+        fun `overgangsstønad sendInn returnerer riktig kvittering med riktig Bearer token`() {
             val søknad = søknadOvergangsstønadDto(tokenSubject)
             every { søknadService.sendInn(søknad, any()) } returns
                 Kvittering(

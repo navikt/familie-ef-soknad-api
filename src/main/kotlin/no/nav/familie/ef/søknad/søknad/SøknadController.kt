@@ -25,7 +25,7 @@ import java.time.LocalDateTime
 @RequestMapping(path = ["/api/soknadskvittering"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
-class SøknadsController(
+class SøknadController(
     val søknadService: SøknadService,
 ) {
     @PostMapping("overgangsstonad")
@@ -53,7 +53,6 @@ class SøknadsController(
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 
-    // TODO Viktor, skal denne med?
     @GetMapping("barnetilsyn/forrige")
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknad()
 
