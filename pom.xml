@@ -22,11 +22,11 @@
         <kotlin.version>2.0.21</kotlin.version>
         <springdoc.version>2.6.0</springdoc.version>
         <mockk.version>1.13.13</mockk.version>
-        <token-validation-spring.version>5.0.5</token-validation-spring.version>
+        <token-validation-spring.version>5.0.10</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
 
         <felles.version>3.20240913110742_adb42f8</felles.version>
-        <kontrakter.version>3.0_20241025090301_fcf1202</kontrakter.version>
+        <kontrakter.version>3.0_20241102131210_d65efd1</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
@@ -239,7 +239,7 @@
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>4.0.0.4121</version>
+                    <version>5.0.0.4389</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
@@ -324,7 +324,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>3.5.2</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -367,7 +367,7 @@
                     <dependency>
                         <groupId>com.pinterest.ktlint</groupId>
                         <artifactId>ktlint-cli</artifactId>
-                        <version>1.4.0</version>
+                        <version>1.4.1</version>
                     </dependency>
                     <!-- additional 3rd party ruleset(s) can be specified here -->
                 </dependencies>
