@@ -59,12 +59,6 @@
             "label": "Land",
             "verdi": "Sverige"
           },
-          "avtaleOmDeltBosted": {
-            "spørsmålid": "avtaleOmDeltBosted",
-            "svarid": "NEI",
-            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
-            "verdi": false
-          },
           "harAnnenForelderSamværMedBarn": {
             "spørsmålid": "harAnnenForelderSamværMedBarn",
             "svarid": "jaIkkeMerEnnVanlig",

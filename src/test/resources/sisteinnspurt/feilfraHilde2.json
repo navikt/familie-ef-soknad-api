@@ -59,12 +59,6 @@
             "label": "Bor [0]s andre forelder i Norge?",
             "verdi": true
           },
-          "avtaleOmDeltBosted": {
-            "spørsmålid": "avtaleOmDeltBosted",
-            "svarid": "NEI",
-            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
-            "verdi": false
-          },
           "harAnnenForelderSamværMedBarn": {
             "spørsmålid": "harAnnenForelderSamværMedBarn",
             "svarid": "jaIkkeMerEnnVanlig",
@@ -146,12 +140,6 @@
             "svarid": "JA",
             "label": "Bor [0]s andre forelder i Norge?",
             "verdi": true
-          },
-          "avtaleOmDeltBosted": {
-            "spørsmålid": "avtaleOmDeltBosted",
-            "svarid": "NEI",
-            "label": "Har du og den andre forelderen skriftlig avtale om delt bosted for [0]?",
-            "verdi": false
           },
           "harAnnenForelderSamværMedBarn": {
             "spørsmålid": "harAnnenForelderSamværMedBarn",
