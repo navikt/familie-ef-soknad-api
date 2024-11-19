@@ -6,7 +6,6 @@ import no.nav.familie.ef.søknad.person.mapper.PersonMinimumMapper
 import no.nav.familie.ef.søknad.søknad.domain.Barn
 import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.BARN_BOR_HOS_SØKER
-import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.DELT_BOSTED
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.SAMVÆRSAVTALE
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.TERMINBEKREFTELSE
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
@@ -31,9 +30,9 @@ import java.util.UUID
 import no.nav.familie.ef.søknad.søknad.domain.AnnenForelder as AnnenForelderDto
 import no.nav.familie.ef.søknad.utils.Språktekster.Alder as AlderTekst
 import no.nav.familie.ef.søknad.utils.Språktekster.Fødselsnummer as FødselsnummerTekst
-import no.nav.familie.kontrakter.ef.søknad.Barn as Kontraktbarn
+import no.nav.familie.kontrakter.ef.søknad.Barn as Søknadbarn
 
-object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) {
+object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
     val manglerAnnenForelderTeller: Counter = Metrics.counter("alene.med.barn.soknad.manglerMedforelder")
 
     init {
@@ -43,23 +42,18 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
     override fun mapDto(
         data: List<Barn>,
         vedlegg: Map<String, DokumentasjonWrapper>,
-    ): List<Kontraktbarn> =
+    ): List<Søknadbarn> =
         data.map { barn ->
             tilKontraktBarn(barn, vedlegg)
         }
 
-    fun mapTilDto(barn: List<Kontraktbarn>): List<Barn> =
+    fun mapTilDto(barn: List<Søknadbarn>): List<Barn> =
         barn.map {
             Barn(
                 alder =
                     TekstFelt(
                         AlderTekst.hentTekst(),
-                        Period
-                            .between(
-                                it.fødselsnummer?.verdi?.fødselsdato ?: it.fødselTermindato?.verdi,
-                                LocalDate.now(),
-                            ).years
-                            .toString(),
+                        it.hentPdlAlder(),
                     ),
                 ident = TekstFelt(FødselsnummerTekst.hentTekst(), it.fødselsnummer?.verdi?.verdi ?: ""),
                 fødselsdato = it.fødselTermindato.tilNullableDatoFelt(),
@@ -84,7 +78,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
     private fun tilKontraktBarn(
         barn: Barn,
         vedlegg: Map<String, DokumentasjonWrapper>,
-    ) = Kontraktbarn(
+    ) = Søknadbarn(
         navn = barn.navn?.tilSøknadsfelt(),
         fødselsnummer = mapFødselsnummer(barn),
         harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
@@ -160,7 +154,6 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
                     .fødselsnummerTilTekstFelt(),
             borINorge = annenForelder.bosattNorge.tilNullableBooleanFelt(),
             land = annenForelder.land.tilNullableTekstFelt(),
-            avtaleOmDeltBosted = samvær?.spørsmålAvtaleOmDeltBosted.tilNullableBooleanFelt(),
             harAnnenForelderSamværMedBarn = samvær?.skalAnnenForelderHaSamvær.tilNullableTekstFelt(),
             harDereSkriftligSamværsavtale = samvær?.harDereSkriftligAvtaleOmSamvær.tilNullableTekstFelt(),
             hvordanPraktiseresSamværet = samvær?.hvordanPraktiseresSamværet.tilNullableTekstFelt(),
@@ -217,12 +210,6 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
         Søknadsfelt(
             Språktekster.Samvær.hentTekst(),
             Samvær(
-                spørsmålAvtaleOmDeltBosted = forelder.avtaleOmDeltBosted?.tilSøknadsfelt(),
-                avtaleOmDeltBosted =
-                    dokumentfelt(
-                        DELT_BOSTED,
-                        dokumentMap,
-                    ),
                 skalAnnenForelderHaSamvær = forelder.harAnnenForelderSamværMedBarn?.tilSøknadsfelt(),
                 harDereSkriftligAvtaleOmSamvær = forelder.harDereSkriftligSamværsavtale?.tilSøknadsfelt(),
                 samværsavtale =
@@ -247,3 +234,11 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Kontraktbarn>>(BarnaDine) 
             ),
         )
 }
+
+private fun no.nav.familie.kontrakter.ef.søknad.Barn.hentPdlAlder(): String =
+    Period
+        .between(
+            this.fødselTermindato?.verdi,
+            LocalDate.now(),
+        ).years
+        .toString()

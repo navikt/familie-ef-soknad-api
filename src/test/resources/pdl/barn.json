@@ -38,7 +38,7 @@
               "etternavn": "KAMELEON"
             }
           ],
-          "foedsel": [
+          "foedselsdato": [
             {
               "foedselsaar": null,
               "foedselsdato": "1966-11-18"

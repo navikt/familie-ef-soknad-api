@@ -25,10 +25,10 @@
     "barn": [
       {
         "id": "12345",
-        "fnr": "28021078036",
+        "fnr": "08100368952",
         "ident": {
           "label": "Fødselsnummer (11 siffer) / d-nummer",
-          "verdi": "28021078036"
+          "verdi": "08100368952"
         },
         "navn": {
           "label": "Navn",
@@ -61,7 +61,7 @@
           },
           "personnr": {
             "label": "Personnr",
-            "verdi": "01056638934"
+            "verdi": "08100368952"
           },
           "borINorge": {
             "spørsmålid": "borINorge",
@@ -118,11 +118,11 @@
       {
         "personnummer": {
           "label": "Personnummer",
-          "verdi": "12345678913"
+          "verdi": "08100368952"
         },
         "alder": {
           "label": "Alder",
-          "verdi": 0
+          "verdi": 5
         },
         "navn": {
           "label": "Navn",

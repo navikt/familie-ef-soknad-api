@@ -11,6 +11,7 @@ import no.nav.familie.ef.søknad.person.dto.AdressebeskyttelseGradering
 import no.nav.familie.ef.søknad.person.dto.Bostedsadresse
 import no.nav.familie.ef.søknad.person.dto.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.person.dto.ForelderBarnRelasjon
+import no.nav.familie.ef.søknad.person.dto.Fødselsdato
 import no.nav.familie.ef.søknad.person.dto.MatrikkelId
 import no.nav.familie.ef.søknad.person.dto.PdlAnnenForelder
 import no.nav.familie.ef.søknad.person.dto.PdlBarn
@@ -19,7 +20,6 @@ import no.nav.familie.ef.søknad.person.dto.Sivilstand
 import no.nav.familie.ef.søknad.person.dto.Sivilstandstype
 import no.nav.familie.ef.søknad.person.dto.Vegadresse
 import no.nav.familie.ef.søknad.person.dto.visningsnavn
-import no.nav.familie.kontrakter.felles.Fødselsnummer
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
@@ -76,7 +76,7 @@ internal class SøkerinfoMapper(
                     )
                 }
 
-            val fødselsdato = pdlBarn.fødsel.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
+            val fødselsdato = pdlBarn.fødselsdato.firstOrNull()?.fødselsdato ?: error("Ingen fødselsdato registrert")
             val alder = Period.between(fødselsdato, LocalDate.now()).years
 
             val harSammeAdresse = harSammeAdresse(søkersAdresse, pdlBarn)
@@ -166,7 +166,7 @@ internal class SøkerinfoMapper(
 
         return Person(
             fnr = EksternBrukerUtils.hentFnrFraToken(),
-            alder = kalkulerAlder(EksternBrukerUtils.hentFnrFraToken()),
+            alder = this.fødselsdato.kalkulerAlder(),
             forkortetNavn = navn.first().visningsnavn(),
             adresse = adresse,
             egenansatt = false, // TODO denne er vel i beste fall unødvendig?
@@ -175,8 +175,6 @@ internal class SøkerinfoMapper(
             erStrengtFortrolig = adressebeskyttelse.erStrengtFortrolig(),
         )
     }
-
-    private fun kalkulerAlder(ident: String) = Period.between(Fødselsnummer(ident).fødselsdato, LocalDate.now()).years
 
     private fun formaterAdresse(pdlSøker: PdlSøker): String {
         val bosted = pdlSøker.bostedsadresse.firstOrNull()
@@ -226,10 +224,14 @@ internal class SøkerinfoMapper(
     private fun space(vararg args: String?): String? = join(*args, separator = " ")
 }
 
-fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
-    val fødselsdato = Fødselsnummer(annenForelderPersonsIdent).fødselsdato
-    val alder = Period.between(fødselsdato, LocalDate.now()).years
+private fun List<Fødselsdato>.kalkulerAlder(): Int {
+    return this.first().fødselsdato?.let {
+        return Period.between(it, LocalDate.now()).years
+    } ?: error("Ingen fødselsdato registrert")
+}
 
+fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
+    val alder = this.fødselsdato.kalkulerAlder()
     if (this.adressebeskyttelse.harBeskyttetAdresse()) {
         return Medforelder(
             harAdressesperre = true,

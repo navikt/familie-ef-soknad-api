@@ -7,7 +7,7 @@ import no.nav.familie.ef.søknad.person.dto.AdressebeskyttelseGradering.UGRADERT
 import no.nav.familie.ef.søknad.person.dto.BostedsadresseBarn
 import no.nav.familie.ef.søknad.person.dto.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.person.dto.ForelderBarnRelasjon
-import no.nav.familie.ef.søknad.person.dto.Fødsel
+import no.nav.familie.ef.søknad.person.dto.Fødselsdato
 import no.nav.familie.ef.søknad.person.dto.Navn
 import no.nav.familie.ef.søknad.person.dto.PdlAnnenForelder
 import no.nav.familie.ef.søknad.person.dto.PdlBarn
@@ -35,12 +35,13 @@ class PdlApp2AppClientConfig {
                         bostedsadresse = bostedsadresseBarn(),
                         deltBosted = listOf(),
                         navn = lagNavn("Hei", "På", "Deg"),
-                        fødsel = listOf(Fødsel(2000, LocalDate.now().minusMonths(6))),
+                        fødselsdato = listOf(Fødselsdato(2000, LocalDate.now().minusMonths(6))),
                         dødsfall = listOf(),
                         forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR)),
                     ),
             )
 
+        val fødselsdato = LocalDate.now().minusYears(31)
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns
             mapOf(
                 medforelderFnr to
@@ -48,6 +49,10 @@ class PdlApp2AppClientConfig {
                         adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
                         navn = lagNavn("Bjørn", "Borg", "Borgersen"),
                         dødsfall = listOf(),
+                        fødselsdato =
+                            listOf(
+                                Fødselsdato(fødselsår = fødselsdato.year, fødselsdato = fødselsdato),
+                            ),
                     ),
             )
 

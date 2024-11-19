@@ -55,8 +55,6 @@ internal class BarnMapperTest {
     @Test
     fun `Forelder til folkeregistrert barn må ha samvær`() {
         val samvær = folkeregistrerteBarn.samvær!!.verdi
-        assertThat(samvær.spørsmålAvtaleOmDeltBosted?.verdi).isFalse()
-        // assertThat(samvær.avtaleOmDeltBosted?.verdi).isFalse() //TODO vedlegg
         assertThat(samvær.skalAnnenForelderHaSamvær?.verdi).isEqualTo("Nei")
         assertThat(samvær.harDereSkriftligAvtaleOmSamvær?.verdi).isEqualTo("Nei")
         // assertThat(samvær.samværsavtale?.verdi).isFalse() //TODO vedlegg
