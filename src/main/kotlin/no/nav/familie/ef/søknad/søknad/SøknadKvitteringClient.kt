@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
+import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Service
@@ -14,14 +15,19 @@ class SøknadKvitteringClient(
     @Qualifier("tokenExchange") operations: RestOperations,
 ) : AbstractPingableRestClient(
         operations,
-        "søknad.innsending",
+        "søknad.henting",
     ) {
     override val pingUri: URI = config.pingUri
 
-    fun hentSøknadKvittering(søknadId: String): ByteArray {
-        val søknadURI = URI.create("${config.hentSøknadKvitteringUri}/$søknadId")
-        return getForEntity<ByteArray>(søknadURI, HttpHeaders().medContentTypeJsonUTF8())
-    }
+    fun hentSøknadKvittering(søknadId: String): ByteArray =
+        getForEntity<ByteArray>(
+            UriComponentsBuilder
+                .fromUriString(
+                    "${config.hentSøknadKvitteringUri}/$søknadId",
+                ).build()
+                .toUri(),
+            HttpHeaders().medContentTypeJsonUTF8(),
+        )
 }
 
 fun HttpHeaders.medContentTypeJsonUTF8(): HttpHeaders {

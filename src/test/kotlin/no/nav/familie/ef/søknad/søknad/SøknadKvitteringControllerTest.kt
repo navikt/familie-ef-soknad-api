@@ -205,7 +205,6 @@ class SøknadKvitteringControllerTest {
         @Test
         fun `mottak returnerer pdf kvittering`() {
             every { søknadKvitteringService.hentSøknadPdf("1") } returns "pdf".toByteArray()
-            // every { featureToggleService.isEnabled(any()) } returns true
 
             val response =
                 restTemplate.exchange<ByteArray>(
