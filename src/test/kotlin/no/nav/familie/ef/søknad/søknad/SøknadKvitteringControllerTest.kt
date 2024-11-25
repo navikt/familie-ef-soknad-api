@@ -29,6 +29,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
 import java.io.File
 import java.time.LocalDateTime
+import kotlin.test.assertTrue
 
 class SøknadKvitteringControllerTest {
     @Profile("soknad-controller-test")
@@ -48,6 +49,9 @@ class SøknadKvitteringControllerTest {
     internal inner class SøknadKvitteringControllerTest : OppslagSpringRunnerTest() {
         @Autowired
         lateinit var søknadService: SøknadService
+
+        @Autowired
+        lateinit var søknadKvitteringService: SøknadKvitteringService
 
         @Autowired
         lateinit var featureToggleService: FeatureToggleService
@@ -196,6 +200,20 @@ class SøknadKvitteringControllerTest {
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
             verify(exactly = 0) { søknadService.sendInn(søknadSkolepengerDto, any()) }
+        }
+
+        @Test
+        fun `mottak returnerer pdf kvittering`() {
+            every { søknadKvitteringService.hentSøknadPdf("1") } returns "pdf".toByteArray()
+            // every { featureToggleService.isEnabled(any()) } returns true
+
+            val response =
+                restTemplate.exchange<ByteArray>(
+                    localhost("/api/soknadskvittering/1"),
+                    HttpMethod.GET,
+                    HttpEntity(null, headers),
+                )
+            assertTrue { response.body?.contentEquals("pdf".toByteArray()) ?: false }
         }
     }
 }
