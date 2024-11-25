@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.mock
 
 import io.mockk.every
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.søknad.SøknadClient
+import no.nav.familie.ef.søknad.søknad.MottakClient
 import no.nav.familie.ef.søknad.søknad.dto.KvitteringDto
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
@@ -26,20 +26,21 @@ import java.util.UUID
 class MottakClientMock {
     @Bean
     @Primary
-    fun søknadClient(): SøknadClient {
-        val søknadClient: SøknadClient = mockk()
+    fun mottakClient(): MottakClient {
+        val mottakClient: MottakClient = mockk()
 
-        every { søknadClient.sendInn(any()) } returns KvitteringDto("OK MOCK")
-        every { søknadClient.sendInnArbeidsRegistreringsskjema(any()) } returns KvitteringDto("OK MOCK")
-        every { søknadClient.sendInnBarnetilsynsøknad(any()) } returns KvitteringDto("OK MOCK")
-        every { søknadClient.sendInnSkolepenger(any()) } returns KvitteringDto("OK MOCK")
-        every { søknadClient.sendInnEttersending(any()) } returns KvitteringDto("OK MOCK")
-        every { søknadClient.ping() } returns Unit
-        every { søknadClient.hentSøknaderMedDokumentasjonsbehov(any()) } returns søknaderMedDokumentasjonsbehov
-        every { søknadClient.hentEttersendingForPerson(any()) } returns listOf(ettersendingResponseData)
-        every { søknadClient.hentForrigeBarnetilsynSøknad() } returns null
+        every { mottakClient.sendInn(any()) } returns KvitteringDto("OK MOCK")
+        every { mottakClient.sendInnArbeidsRegistreringsskjema(any()) } returns KvitteringDto("OK MOCK")
+        every { mottakClient.sendInnBarnetilsynsøknad(any()) } returns KvitteringDto("OK MOCK")
+        every { mottakClient.sendInnSkolepenger(any()) } returns KvitteringDto("OK MOCK")
+        every { mottakClient.sendInnEttersending(any()) } returns KvitteringDto("OK MOCK")
+        every { mottakClient.ping() } returns Unit
+        every { mottakClient.hentSøknaderMedDokumentasjonsbehov(any()) } returns søknaderMedDokumentasjonsbehov
+        every { mottakClient.hentEttersendingForPerson(any()) } returns listOf(ettersendingResponseData)
+        every { mottakClient.hentForrigeBarnetilsynSøknad() } returns null
+        every { mottakClient.hentSøknadKvittering(any()) } returns "pdf".toByteArray()
 
-        return søknadClient
+        return mottakClient
     }
 
     private val dokumentasjonsbehovDto =
