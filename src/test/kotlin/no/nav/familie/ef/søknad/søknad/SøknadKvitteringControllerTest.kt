@@ -51,9 +51,6 @@ class SøknadKvitteringControllerTest {
         lateinit var søknadService: SøknadService
 
         @Autowired
-        lateinit var søknadKvitteringService: SøknadKvitteringService
-
-        @Autowired
         lateinit var featureToggleService: FeatureToggleService
 
         val tokenSubject = "12345678911"
@@ -204,7 +201,7 @@ class SøknadKvitteringControllerTest {
 
         @Test
         fun `mottak returnerer pdf kvittering`() {
-            every { søknadKvitteringService.hentSøknadPdf("1") } returns "pdf".toByteArray()
+            every { søknadService.hentSøknadPdf("1") } returns "pdf".toByteArray()
 
             val response =
                 restTemplate.exchange<ByteArray>(

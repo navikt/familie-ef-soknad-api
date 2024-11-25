@@ -32,7 +32,6 @@ import java.util.UUID
     "kodeverk-cache-test",
     "mock-saf",
     "mock-saksbehandling",
-    "mock-søknadkvittering",
 )
 @EnableMockOAuth2Server
 abstract class OppslagSpringRunnerTest {

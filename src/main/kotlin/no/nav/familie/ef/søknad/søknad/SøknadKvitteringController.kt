@@ -28,7 +28,6 @@ import java.time.LocalDateTime
 @Validated
 class SøknadKvitteringController(
     val søknadService: SøknadService,
-    val søknadKvitteringService: SøknadKvitteringService,
 ) {
     @PostMapping("overgangsstonad")
     fun sendInn(
@@ -73,5 +72,5 @@ class SøknadKvitteringController(
     @GetMapping("{søknadId}")
     fun hentSøknad(
         @PathVariable søknadId: String,
-    ): ByteArray = søknadKvitteringService.hentSøknadPdf(søknadId)
+    ): ByteArray = søknadService.hentSøknadPdf(søknadId)
 }
