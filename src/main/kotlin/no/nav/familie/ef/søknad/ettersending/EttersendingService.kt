@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.ettersending
 
 import no.nav.familie.ef.søknad.ettersending.mapper.EttersendingMapper
-import no.nav.familie.ef.søknad.søknad.SøknadClient
+import no.nav.familie.ef.søknad.søknad.MottakClient
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.mapper.KvitteringMapper
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
@@ -11,7 +11,7 @@ import java.time.LocalDateTime
 
 @Service
 class EttersendingService(
-    private val søknadClient: SøknadClient,
+    private val søknadClient: MottakClient,
 ) {
     fun sendInn(
         ettersending: EttersendelseDto,
