@@ -30,7 +30,7 @@ import org.springframework.test.context.ActiveProfiles
 import java.io.File
 import java.time.LocalDateTime
 
-class SøknadControllerTest {
+class SøknadKvitteringControllerTest {
     @Profile("soknad-controller-test")
     @Configuration
     class SøknadControllerTestConfiguration {
@@ -45,7 +45,7 @@ class SøknadControllerTest {
 
     @Nested
     @ActiveProfiles("soknad-controller-test")
-    internal inner class SøknadControllerTest : OppslagSpringRunnerTest() {
+    internal inner class SøknadKvitteringControllerTest : OppslagSpringRunnerTest() {
         @Autowired
         lateinit var søknadService: SøknadService
 
