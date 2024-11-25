@@ -69,6 +69,7 @@ class SøknadKvitteringController(
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 
+    @Profile("!prod")
     @GetMapping("{søknadId}")
     fun hentSøknad(
         @PathVariable søknadId: String,
