@@ -38,7 +38,7 @@ class SøknadKvitteringController(
         }
 
         val innsendingMottatt = LocalDateTime.now()
-        søknadService.sendInn(søknad, innsendingMottatt)
+        søknadService.sendInnSøknadskvittering(søknad, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 

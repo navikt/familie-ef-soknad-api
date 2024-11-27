@@ -46,6 +46,15 @@ class SøknadService(
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
+    fun sendInnSøknadskvittering(
+        søknad: SøknadOvergangsstønadDto,
+        innsendingMottatt: LocalDateTime,
+    ): Kvittering {
+        val søknadRequestData = overgangsstønadMapper.mapTilIntern(søknad, innsendingMottatt)
+        val kvittering = mottakClient.sendInnSøknadskvitteringOvergangsstønad(søknadRequestData)
+        return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
+    }
+
     fun hentSøknadPdf(søknadId: String): ByteArray = mottakClient.hentSøknadKvittering(søknadId)
 
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknad())

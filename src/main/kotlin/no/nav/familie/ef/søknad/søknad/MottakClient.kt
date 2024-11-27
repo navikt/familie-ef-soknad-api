@@ -55,6 +55,8 @@ class MottakClient(
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
+    fun sendInnSøknadskvitteringOvergangsstønad(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto = postForEntity(config.sendInnOvergangsstønadKvitteringUri, søknadMedVedlegg)
+
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsyn? =
         getForEntity(
             config.hentForrigeBarnetilsynSøknadUri,
