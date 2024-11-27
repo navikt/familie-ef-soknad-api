@@ -63,7 +63,7 @@ class SøknadKvitteringControllerTest {
         @Test
         fun `overgangsstønad sendInn returnerer riktig kvittering med riktig Bearer token`() {
             val søknad = søknadOvergangsstønadDto(tokenSubject)
-            every { søknadService.sendInn(søknad, any()) } returns
+            every { søknadService.sendInnSøknadskvittering(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
