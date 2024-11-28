@@ -9,6 +9,7 @@ data class MottakConfig(
     val uri: URI,
 ) {
     internal val sendInnOvergangsstønadUri = byggUri(PATH_SEND_INN_OVERGANGSSTØNAD)
+    internal val sendInnOvergangsstønadKvitteringUri = byggUri(PATH_SEND_INN_OVERGANGSSTØNAD_KVITTERING)
     internal val sendInnSkjemaArbeidUri = byggUri(PATH_SEND_INN_ARBEIDS_SKJEMA)
     internal val sendInnBarnetilsynUri = byggUri(PATH_SEND_INN_BARNETILSYNSØKNAD)
     internal val sendInnSkolepengerUri = byggUri(PATH_SEND_INN_SKOLEPENGERSØKNAD)
@@ -30,6 +31,7 @@ data class MottakConfig(
 
     companion object {
         private const val PATH_SEND_INN_OVERGANGSSTØNAD = "/soknad/overgangsstonad"
+        private const val PATH_SEND_INN_OVERGANGSSTØNAD_KVITTERING = "/pdf-soknad/overgangsstonad"
         private const val PATH_SEND_INN_ARBEIDS_SKJEMA = "/skjema"
         private const val PATH_SEND_INN_BARNETILSYNSØKNAD = "/soknad/barnetilsyn"
         private const val PATH_SEND_INN_SKOLEPENGERSØKNAD = "/soknad/skolepenger"
