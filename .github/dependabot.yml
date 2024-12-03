@@ -21,10 +21,6 @@ updates:
       - dependency-name: org.jetbrains.kotlinx:kotlinx-coroutines-core
         versions:
           - 1.5.0-native-mt
-    groups:
-      all-dependencies:
-        patterns:
-          - "*"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
