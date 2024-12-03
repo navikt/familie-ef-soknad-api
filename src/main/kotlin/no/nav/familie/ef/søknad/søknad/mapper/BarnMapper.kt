@@ -112,9 +112,9 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
             "Barnets andre forelder",
             AnnenForelder(
                 ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.tilSøknadsfelt(),
+                person = PersonMinimumMapper.map(forelder),
                 bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                 land = forelder.land?.tilSøknadsfelt(),
-                person = PersonMinimumMapper.map(forelder),
             ),
         )
 
