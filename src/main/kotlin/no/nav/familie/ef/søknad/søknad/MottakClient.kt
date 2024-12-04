@@ -59,6 +59,8 @@ class MottakClient(
 
     fun sendInnSøknadskvitteringBarnetilsyn(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto = postForEntity(config.sendInnBarnetilsynKvitteringUri, søknadMedVedlegg)
 
+    fun sendInnSøknadskvitteringSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto = postForEntity(config.sendInnSkolepengerKvitteringUri, søknadMedVedlegg)
+
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsyn? =
         getForEntity(
             config.hentForrigeBarnetilsynSøknadUri,

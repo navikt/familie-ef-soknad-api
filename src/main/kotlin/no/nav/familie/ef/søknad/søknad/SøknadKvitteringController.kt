@@ -65,7 +65,7 @@ class SøknadKvitteringController(
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
         val innsendingMottatt = LocalDateTime.now()
-        søknadService.sendInn(søknad, innsendingMottatt)
+        søknadService.sendInnSøknadskvitteringSkolepenger(søknad, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 
