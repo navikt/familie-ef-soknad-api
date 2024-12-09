@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.søknad.mapper
 
 import io.micrometer.core.instrument.Counter
 import io.micrometer.core.instrument.Metrics
+import no.nav.familie.ef.søknad.person.mapper.PersonMinimumMapper
 import no.nav.familie.ef.søknad.søknad.domain.Barn
 import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.BARN_BOR_HOS_SØKER
@@ -113,6 +114,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
                 ikkeOppgittAnnenForelderBegrunnelse = forelder.ikkeOppgittAnnenForelderBegrunnelse?.tilSøknadsfelt(),
                 bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                 land = forelder.land?.tilSøknadsfelt(),
+                person = PersonMinimumMapper.map(forelder),
             ),
         )
 
