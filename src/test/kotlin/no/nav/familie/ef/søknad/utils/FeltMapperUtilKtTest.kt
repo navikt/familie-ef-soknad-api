@@ -2,9 +2,11 @@ package no.nav.familie.ef.søknad.utils
 
 import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.DatoFelt
+import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.TERMINBEKREFTELSE
 import no.nav.familie.ef.søknad.søknad.domain.ListFelt
 import no.nav.familie.ef.søknad.søknad.domain.PeriodeFelt
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
+import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.felles.Fødselsnummer
@@ -133,4 +135,19 @@ internal class FeltMapperUtilKtTest {
     internal fun `Tekst til dato - skal gjøre om tekst med zone data`() {
         assertThrows<DateTimeParseException> { DatoFelt("label", "2007-04-05T23:59+02:00").tilSøknadsDatoFeltEllerNull() }
     }
+
+    @Test
+    internal fun `Barn som er født skal returnere null istedenfor terminbekreftelse`() {
+        val vedlegg = mapOf<String, DokumentasjonWrapper>()
+        val felt = BooleanFelt("label", true).tilTerminbekreftelseDokumentasjonEllerNull(vedlegg)
+        assertEquals(felt?.verdi, null)
+    }
+
+    @Test
+    internal fun `Barn som ikke er født skal returnere terminbekreftelse`() {
+        val vedlegg = mapOf<String, DokumentasjonWrapper>()
+        val felt = BooleanFelt("label", false).tilTerminbekreftelseDokumentasjonEllerNull(vedlegg)
+        assertEquals(felt?.verdi, dokumentfelt(TERMINBEKREFTELSE, vedlegg))
+    }
+
 }
