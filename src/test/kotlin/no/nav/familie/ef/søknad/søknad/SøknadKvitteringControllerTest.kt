@@ -113,7 +113,7 @@ class SøknadKvitteringControllerTest {
                 søknadBarnetilsynDto()
                     .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf()))
 
-            every { søknadService.sendInn(søknad, any()) } returns
+            every { søknadService.sendInnSøknadskvitteringBarnetilsyn(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
@@ -143,7 +143,7 @@ class SøknadKvitteringControllerTest {
                 )
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
-            verify(exactly = 0) { søknadService.sendInn(søknadBarnetilsynDto, any()) }
+            verify(exactly = 0) { søknadService.sendInnSøknadskvitteringBarnetilsyn(søknadBarnetilsynDto, any()) }
         }
 
         fun søknadSkolepenger() =
@@ -164,7 +164,7 @@ class SøknadKvitteringControllerTest {
                             ),
                     )
 
-            every { søknadService.sendInn(søknad, any()) } returns
+            every { søknadService.sendInnSøknadskvitteringSkolepenger(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
@@ -196,7 +196,7 @@ class SøknadKvitteringControllerTest {
                 )
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
-            verify(exactly = 0) { søknadService.sendInn(søknadSkolepengerDto, any()) }
+            verify(exactly = 0) { søknadService.sendInnSøknadskvitteringSkolepenger(søknadSkolepengerDto, any()) }
         }
 
         @Test
