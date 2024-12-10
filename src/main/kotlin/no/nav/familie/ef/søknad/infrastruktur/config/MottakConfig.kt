@@ -33,9 +33,9 @@ data class MottakConfig(
 
     companion object {
         private const val PATH_SEND_INN_OVERGANGSSTØNAD = "/soknad/overgangsstonad"
-        private const val PATH_SEND_INN_OVERGANGSSTØNAD_KVITTERING = "/pdf-soknad/overgangsstonad"
-        private const val PATH_SEND_INN_BARNETILSYNSØKNAD_KVITTERING = "/pdf-soknad/barnetilsyn"
-        private const val PATH_SEND_INN_SKOLEPENGERSØKNAD_KVITTERING = "/pdf-soknad/skolepenger"
+        private const val PATH_SEND_INN_OVERGANGSSTØNAD_KVITTERING = "/soknadskvittering/overgangsstonad"
+        private const val PATH_SEND_INN_BARNETILSYNSØKNAD_KVITTERING = "/soknadskvittering/barnetilsyn"
+        private const val PATH_SEND_INN_SKOLEPENGERSØKNAD_KVITTERING = "/soknadskvittering/skolepenger"
         private const val PATH_SEND_INN_ARBEIDS_SKJEMA = "/skjema"
         private const val PATH_SEND_INN_BARNETILSYNSØKNAD = "/soknad/barnetilsyn"
         private const val PATH_SEND_INN_SKOLEPENGERSØKNAD = "/soknad/skolepenger"
