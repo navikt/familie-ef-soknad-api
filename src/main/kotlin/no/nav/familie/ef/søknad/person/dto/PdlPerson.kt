@@ -96,7 +96,7 @@ data class Adressebeskyttelse(
  * Fra pdl dok 2021-01-14:
  * STRENGT_FORTROLIG, Tidligere spesregkode kode 6 fra TPS
  * STRENGT_FORTROLIG_UTLAND,  Fra pdl dok: Tilsvarer paragraf 19 i Bisys (henvisning til Forvaltningslovens §19).
- * Ved strengt fortrolig utland behandles personen i NAV tilsvarende som ved graderingen strengt fortrolig fra Folkeregisteret.
+ * Ved strengt fortrolig utland behandles personen i Nav tilsvarende som ved graderingen strengt fortrolig fra Folkeregisteret.
  * FORTROLIG,  Tidligere spesregkode kode 7 fra TPS.
  * UGRADERT, Kode vi kan få fra Folkeregisteret. Vi har ingen tilfeller per i dag i produksjon.
  */
