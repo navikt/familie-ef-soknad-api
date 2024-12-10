@@ -2,13 +2,11 @@ package no.nav.familie.ef.søknad.utils
 
 import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.DatoFelt
-import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator.TERMINBEKREFTELSE
 import no.nav.familie.ef.søknad.søknad.domain.Dokumentasjonsbehov
 import no.nav.familie.ef.søknad.søknad.domain.HeltallFelt
 import no.nav.familie.ef.søknad.søknad.domain.ListFelt
 import no.nav.familie.ef.søknad.søknad.domain.PeriodeFelt
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
-import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.kontrakter.ef.søknad.Dokument
 import no.nav.familie.kontrakter.ef.søknad.MånedÅrPeriode
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
@@ -81,13 +79,6 @@ fun DatoFelt.tilSøknadsDatoFeltEllerNull(): Søknadsfelt<LocalDate>? =
         Søknadsfelt(this.label, fraStrengTilLocalDate(verdi))
     } else {
         null
-    }
-
-fun BooleanFelt.tilTerminbekreftelseDokumentasjonEllerNull(vedlegg: Map<String, DokumentasjonWrapper>) =
-    if (this.verdi) {
-        null
-    } else {
-        dokumentfelt(TERMINBEKREFTELSE, vedlegg)
     }
 
 fun DatoFelt.tilSøknadsfelt(): Søknadsfelt<LocalDate> {

@@ -135,19 +135,4 @@ internal class FeltMapperUtilKtTest {
     internal fun `Tekst til dato - skal gjøre om tekst med zone data`() {
         assertThrows<DateTimeParseException> { DatoFelt("label", "2007-04-05T23:59+02:00").tilSøknadsDatoFeltEllerNull() }
     }
-
-    @Test
-    internal fun `Barn som er født skal returnere null istedenfor terminbekreftelse`() {
-        val vedlegg = mapOf<String, DokumentasjonWrapper>()
-        val felt = BooleanFelt("label", true).tilTerminbekreftelseDokumentasjonEllerNull(vedlegg)
-        assertEquals(felt?.verdi, null)
-    }
-
-    @Test
-    internal fun `Barn som ikke er født skal returnere terminbekreftelse`() {
-        val vedlegg = mapOf<String, DokumentasjonWrapper>()
-        val felt = BooleanFelt("label", false).tilTerminbekreftelseDokumentasjonEllerNull(vedlegg)
-        assertEquals(felt?.verdi, dokumentfelt(TERMINBEKREFTELSE, vedlegg))
-    }
-
 }
