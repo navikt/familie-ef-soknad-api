@@ -198,7 +198,7 @@
       "registrertSomArbeidssøkerNav": {
         "spørsmålid": "registrertSomArbeidssøkerNav",
         "svarid": "JA",
-        "label": "Er du registrert som arbeidssøker hos NAV?",
+        "label": "Er du registrert som arbeidssøker hos Nav?",
         "verdi": true
       },
       "villigTilÅTaImotTilbudOmArbeid": {
