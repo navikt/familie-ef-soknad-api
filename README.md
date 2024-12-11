@@ -22,7 +22,7 @@ http://localhost:8091/local/cookie?subject=[gyldigFødselsnummer] dersom du skal
 http://localhost:8091/swagger-ui.html
 https://familie-ef-soknad-api.intern.dev.nav.no/swagger-ui.html
 
-## Henvendelser for NAV-ansatte
+## Henvendelser for Nav-ansatte
 Interne henvendelser kan sendes via Slack i kanalen `#team-familie`.
 
 ## Kode generert av GitHub Copilot
