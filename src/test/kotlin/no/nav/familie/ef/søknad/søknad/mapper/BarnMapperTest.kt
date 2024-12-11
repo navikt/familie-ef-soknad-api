@@ -12,7 +12,10 @@ internal class BarnMapperTest {
     private val søknadDto = søknadDto()
 
     // Når
-    private val terminbarnSøknad = søknadDto.person.barn.first().copy(født = BooleanFelt("Er barnet født", verdi = false), lagtTil = true)
+    private val terminbarnSøknad =
+        søknadDto.person.barn
+            .first()
+            .copy(født = BooleanFelt("Er barnet født", verdi = false), lagtTil = true)
     private val folkeregistrerteBarn = BarnMapper.map(søknadDto.person.barn, dokumenter).verdi.first()
     private val nyregistrertBarn = BarnMapper.map(søknadDto.person.barn, dokumenter).verdi[1]
     private val terminbarn = BarnMapper.map(listOf(terminbarnSøknad), dokumenter).verdi.first()
