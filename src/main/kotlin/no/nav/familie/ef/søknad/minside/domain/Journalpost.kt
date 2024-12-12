@@ -32,8 +32,7 @@ data class Journalpost(
     val relevanteDatoer: List<RelevantDato>,
     val dokumenter: List<DokumentInfo>,
 ) {
-    fun relevanteDokumenter(): List<DokumentInfo> =
-        this.dokumenter.filter { dokument -> dokument.mestRelevantDokumentVariant()?.brukerHarTilgang ?: false }
+    fun relevanteDokumenter(): List<DokumentInfo> = this.dokumenter.filter { dokument -> dokument.mestRelevantDokumentVariant()?.brukerHarTilgang ?: false }
 
     fun harRelevanteDokumenter(): Boolean = this.relevanteDokumenter().isNotEmpty()
 
