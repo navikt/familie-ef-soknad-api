@@ -37,8 +37,7 @@ fun Journalpost.tilVedleggDto(): List<DokumentInfoDto> {
     return dokumenter.subList(1, dokumenter.count()).map { it.tilDto() }
 }
 
-fun Journalpost.erInngåendeEllerUtgåendeJournalpost(): Boolean =
-    this.journalposttype == Journalposttype.I || this.journalposttype == Journalposttype.U
+fun Journalpost.erInngåendeEllerUtgåendeJournalpost(): Boolean = this.journalposttype == Journalposttype.I || this.journalposttype == Journalposttype.U
 
 fun DokumentInfo.tilDto(): DokumentInfoDto {
     val dokumentvariant =

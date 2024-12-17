@@ -87,7 +87,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
                 ?.tilSøknadsfelt(),
         erBarnetFødt = barn.født.tilSøknadsfelt(),
         fødselTermindato = barn.fødselsdato?.tilSøknadsDatoFeltEllerNull(),
-        terminbekreftelse = dokumentfelt(TERMINBEKREFTELSE, vedlegg),
+        terminbekreftelse = mapTerminbekreftelse(barn, vedlegg),
         annenForelder = barn.forelder?.let { mapAnnenForelder(it) },
         samvær = barn.forelder?.let { mapSamvær(it, vedlegg) },
         skalHaBarnepass = barn.skalHaBarnepass?.tilSøknadsfelt(),
@@ -96,6 +96,11 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
         lagtTilManuelt = barn.lagtTil,
         skalBarnetBoHosSøker = barn.forelder?.skalBarnetBoHosSøker?.tilSøknadsfelt(),
     )
+
+    private fun mapTerminbekreftelse(
+        barn: Barn,
+        vedlegg: Map<String, DokumentasjonWrapper>,
+    ) = if (!barn.født.verdi) dokumentfelt(TERMINBEKREFTELSE, vedlegg) else null
 
     private fun mapFødselsnummer(barn: Barn): Søknadsfelt<Fødselsnummer>? {
         return barn.ident?.let {

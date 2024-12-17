@@ -13,7 +13,6 @@ import java.time.LocalDate
 import java.util.UUID
 
 internal class DokumentasjonsbehovControllerTest : OppslagSpringRunnerTest() {
-
     val tokenSubject = "12345678911"
 
     @BeforeEach

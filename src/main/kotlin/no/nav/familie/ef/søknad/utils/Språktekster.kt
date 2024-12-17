@@ -54,8 +54,8 @@ enum class Språktekster(
     OppholdINorge("Opphold i Norge", "Opphold i Norge [English TBA]"),
     Barnepassordninger("Barnepassordninger", "About the child minding arrangements"),
     SendtInnTidligere(
-        "Jeg har sendt inn denne dokumentasjonen til NAV tidligere",
-        "I have already submitted this documentation to NAV in the past",
+        "Jeg har sendt inn denne dokumentasjonen til Nav tidligere",
+        "I have already submitted this documentation to Nav in the past",
     ),
     ArbeidUtanningOgAndreAktiviteter(
         "Arbeid, utdanning og andre aktiviteter",

@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
 import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -11,8 +12,13 @@ internal class BarnMapperTest {
     private val søknadDto = søknadDto()
 
     // Når
+    private val terminbarnSøknad =
+        søknadDto.person.barn
+            .first()
+            .copy(født = BooleanFelt("Er barnet født", verdi = false), lagtTil = true)
     private val folkeregistrerteBarn = BarnMapper.map(søknadDto.person.barn, dokumenter).verdi.first()
     private val nyregistrertBarn = BarnMapper.map(søknadDto.person.barn, dokumenter).verdi[1]
+    private val terminbarn = BarnMapper.map(listOf(terminbarnSøknad), dokumenter).verdi.first()
 
     @Test
     fun `Folkeregistrert barn har riktig fødselsnummer`() {
@@ -71,5 +77,12 @@ internal class BarnMapperTest {
     @Test
     fun `SærligeTilsynsbehov må ha verdi`() {
         assertThat(folkeregistrerteBarn.særligeTilsynsbehov?.verdi).isEqualTo("Har jo fort litt særlige tilsynsbehov da!")
+    }
+
+    @Test
+    fun `terminbarn skal mappe terminbekreftelse, mens fødte barn skal ikke ha terminbekreftelse`() {
+        assertThat(terminbarn.terminbekreftelse).isNotNull()
+        assertThat(folkeregistrerteBarn.terminbekreftelse).isNull()
+        assertThat(nyregistrertBarn.terminbekreftelse).isNull()
     }
 }
