@@ -10,6 +10,7 @@ import no.nav.familie.ef.søknad.utils.Språktekster
 import no.nav.familie.ef.søknad.utils.hentTekst
 import no.nav.familie.ef.søknad.utils.tilNullableTekstFelt
 import no.nav.familie.ef.søknad.utils.tilSøknadsfelt
+import no.nav.familie.ef.søknad.utils.tilSøknadsfeltEllerNull
 import no.nav.familie.kontrakter.ef.søknad.Medlemskapsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Utenlandsopphold as KontraksUtenlandsopphold
@@ -34,8 +35,8 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                 tildato = it.periode.til.tilSøknadsfelt(),
                 land = it.land?.tilSøknadsfelt(),
                 årsakUtenlandsopphold = it.begrunnelse.tilSøknadsfelt(),
-                personidentEøsLand = it.personidentEøsLand?.tilSøknadsfelt(),
-                adresseEøsLand = it.adresseEøsLand?.tilSøknadsfelt(),
+                personidentEøsLand = it.personidentEøsLand?.tilSøknadsfeltEllerNull(),
+                adresseEøsLand = it.adresseEøsLand?.tilSøknadsfeltEllerNull(),
                 erEøsLand = it.erEøsLand,
                 kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident,
             )

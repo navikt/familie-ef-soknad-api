@@ -28,6 +28,15 @@ fun TekstFelt.tilSøknadsfelt(): Søknadsfelt<String> = Søknadsfelt(label = thi
 
 fun <T> TekstFelt.tilSøknadsfelt(t: (String) -> T): Søknadsfelt<T> = Søknadsfelt(label = this.label, verdi = t.invoke(this.verdi))
 
+fun TekstFelt.tilSøknadsfeltEllerNull(): Søknadsfelt<String>? {
+    return if (this.verdi.isNotBlank()) {
+        Søknadsfelt(label = this.label, verdi = this.verdi, svarId = this.svarid)
+    }
+    else {
+        null
+    }
+}
+
 fun Søknadsfelt<Fødselsnummer>?.fødselsnummerTilTekstFelt(): TekstFelt? =
     this?.let {
         TekstFelt(it.label, it.verdi.verdi, it.svarId?.verdi)
