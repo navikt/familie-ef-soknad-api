@@ -49,9 +49,9 @@ enum class Språktekster(
     TidligereUtdanning("Tidligere Utdanning", "Previous education"),
     EnsligMorEllerFarSomErArbeidssøker(
         "Enslig mor og far som er arbeidssøker",
-        "Enslig mor og far som er arbeidssøker [English TBA]",
+        "Single mother or father who is a job seeker",
     ),
-    OppholdINorge("Opphold i Norge", "Opphold i Norge [English TBA]"),
+    OppholdINorge("Opphold i Norge", "Presence in Norway"),
     Barnepassordninger("Barnepassordninger", "About the child minding arrangements"),
     SendtInnTidligere(
         "Jeg har sendt inn denne dokumentasjonen til Nav tidligere",
@@ -59,7 +59,7 @@ enum class Språktekster(
     ),
     ArbeidUtanningOgAndreAktiviteter(
         "Arbeid, utdanning og andre aktiviteter",
-        "Arbeid, utdanning og andre aktiviteter [English TBA]",
+        "Work, education and other activities",
     ),
     Alder("Alder", "Age"),
 }
