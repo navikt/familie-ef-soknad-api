@@ -49,7 +49,7 @@ enum class Språktekster(
     TidligereUtdanning("Tidligere Utdanning", "Previous education"),
     EnsligMorEllerFarSomErArbeidssøker(
         "Enslig mor og far som er arbeidssøker",
-        "Single mom or dad that is a jobseeker",
+        "Single mother or father who is a job seeker",
     ),
     OppholdINorge("Opphold i Norge", "Presence in Norway"),
     Barnepassordninger("Barnepassordninger", "About the child minding arrangements"),
