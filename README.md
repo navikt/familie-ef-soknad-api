@@ -6,17 +6,10 @@ Denne applikasjonen tilbyr apier for Team Enslig Forsørger sine eksterne flater
 * [ettersending av dokumentasjon](https://www.nav.no/familie/alene-med-barn/ettersending)
 * [min side](https://www.nav.no/familie/alene-med-barn/minside)
 
-## Kjør på localhost: 
-bruk Launcher : ApplicationLocalLauncher 
+## Kjør lokalt: 
+Kjør applikasjonen lokalt med: `ApplicationLocalLauncher`
 
-### Hvordan logge inn på localhost:
-Eksempel:
-http://localhost:8091/local/cookie?issuerId=tokenx&audience=familie-app&redirect=
-Med redirect:
-http://localhost:8091/local/cookie?redirect=http://localhost:3000/familie/alene-med-barn/soknad&issuerId=tokenx&audience=familie-app&redirect=
-
-PS. Mapping av fødselsnummer til kontrakt krever gyldig fødselsnummer: Logg f.eks. inn med et fnr fra dolly.
-http://localhost:8091/local/cookie?subject=[gyldigFødselsnummer] dersom du skal teste noe som krever at mapping skal fungere.   
+Start `familie-ef-soknad-frontend` og gå til `http://localhost:3000/familie/alene-med-barn/soknad/` for å vise søknaden.
 
 ### Swagger api kall med autentisering: 
 http://localhost:8091/swagger-ui.html
