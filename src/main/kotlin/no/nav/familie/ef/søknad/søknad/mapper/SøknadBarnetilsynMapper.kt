@@ -72,6 +72,7 @@ class SøknadBarnetilsynMapper {
             vedlegg.values.flatMap { it.vedlegg },
             dto.dokumentasjonsbehov.tilKontrakt(),
             dto.skalBehandlesINySaksbehandling,
+            dto.locale,
         )
     }
 
