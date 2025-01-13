@@ -11,11 +11,11 @@ spec:
   port: 8000
   liveness:
     path: /familie/alene-med-barn/soknad-api/internal/status/isAlive
-    initialDelay: 30
+    initialDelay: 60
     failureThreshold: 10
   readiness:
     path: /familie/alene-med-barn/soknad-api/internal/status/isAlive
-    initialDelay: 30
+    initialDelay: 60
     failureThreshold: 10
   prometheus:
     enabled: true
