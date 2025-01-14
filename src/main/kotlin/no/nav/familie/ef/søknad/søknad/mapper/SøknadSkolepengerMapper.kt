@@ -52,6 +52,7 @@ class SøknadSkolepengerMapper {
             vedlegg.values.flatMap { it.vedlegg },
             dto.dokumentasjonsbehov.tilKontrakt(),
             dto.skalBehandlesINySaksbehandling,
+            dto.locale,
         )
     }
 }

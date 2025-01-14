@@ -22,7 +22,7 @@ enum class Språktekster(
     Samvær("Samvær", "Access/Contact"),
     Adresseopplysninger("Opplysninger om adresse", "Information about address"),
     Bosituasjon("Bosituasjonen din", "Your living situation"),
-    Innsendingsdetaljer("Innsendingsdetaljer", "Innsendingsdetaljer"),
+    Innsendingsdetaljer("Innsendingsdetaljer", "Submission details"),
     DatoMottatt("Dato mottatt", "Date received"),
     Utenlandsopphold("Utenlandsopphold", "Time abroad"),
     Søker("Søker", "Applicant"),
