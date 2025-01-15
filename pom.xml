@@ -161,7 +161,7 @@
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>util</artifactId>
-            <version>3.20241127123724_adfc561</version>
+            <version>3.20250106100611_6ae49d2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
