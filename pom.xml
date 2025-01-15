@@ -22,7 +22,7 @@
         <kotlin.version>2.1.0</kotlin.version>
         <springdoc.version>2.6.0</springdoc.version>
         <mockk.version>1.13.14</mockk.version>
-        <token-validation-spring.version>5.0.10</token-validation-spring.version>
+        <token-validation-spring.version>5.0.14</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
         <felles.version>3.20241127123724_adfc561</felles.version>
         <kontrakter.version>3.0_20250115093204_cbb7a39</kontrakter.version>
