@@ -25,7 +25,7 @@ class SøknadSkolepengerMapper {
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
         val søknadSkolepenger =
             SøknadSkolepenger(
-                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
+                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad, dto.locale),
                 personalia = PersonaliaMapper.map(dto.person.søker),
                 adresseopplysninger =
                     AdresseopplysningerMapper.map(
@@ -52,7 +52,6 @@ class SøknadSkolepengerMapper {
             vedlegg.values.flatMap { it.vedlegg },
             dto.dokumentasjonsbehov.tilKontrakt(),
             dto.skalBehandlesINySaksbehandling,
-            dto.locale,
         )
     }
 }
