@@ -25,7 +25,7 @@ class SøknadOvergangsstønadMapper {
 
         val søknad =
             SøknadOvergangsstønad(
-                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad),
+                innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad, dto.locale),
                 personalia = PersonaliaMapper.map(dto.person.søker),
                 adresseopplysninger =
                     AdresseopplysningerMapper.map(
