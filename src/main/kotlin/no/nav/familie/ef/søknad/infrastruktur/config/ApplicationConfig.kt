@@ -17,6 +17,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
 import org.springframework.web.client.RestClient
@@ -31,7 +32,9 @@ import java.time.temporal.ChronoUnit
     ConsumerIdClientInterceptor::class,
     BearerTokenExchangeClientInterceptor::class,
     BearerTokenClientCredentialsClientInterceptor::class,
+    CorsProperties::class,
 )
+@ComponentScan("no.nav.familie.ef.søknad.infrastruktur.config")
 @ConfigurationPropertiesScan
 internal class ApplicationConfig {
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
