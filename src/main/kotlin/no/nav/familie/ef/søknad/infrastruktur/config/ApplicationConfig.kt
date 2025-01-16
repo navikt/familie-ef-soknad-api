@@ -13,11 +13,9 @@ import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
 import org.springframework.web.client.RestClient
@@ -39,11 +37,20 @@ internal class ApplicationConfig {
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule.Builder().build()
 
+//    @Bean
+//    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
+//        logger.info("Registrerer CORSResponseFilter")
+//        val filterRegistration = FilterRegistrationBean<CORSResponseFilter>()
+//        filterRegistration.filter = CORSResponseFilter(corsProperties)
+//        filterRegistration.order = 0
+//        return filterRegistration
+//    }
+
     @Bean
-    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
+    fun corsFilter(): FilterRegistrationBean<CORSResponseFilter> {
         logger.info("Registrerer CORSResponseFilter")
         val filterRegistration = FilterRegistrationBean<CORSResponseFilter>()
-        filterRegistration.filter = CORSResponseFilter(corsProperties)
+        filterRegistration.filter = CORSResponseFilter(CorsProperties(arrayOf("*")))
         filterRegistration.order = 0
         return filterRegistration
     }
