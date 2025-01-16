@@ -37,20 +37,11 @@ internal class ApplicationConfig {
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule.Builder().build()
 
-//    @Bean
-//    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
-//        logger.info("Registrerer CORSResponseFilter")
-//        val filterRegistration = FilterRegistrationBean<CORSResponseFilter>()
-//        filterRegistration.filter = CORSResponseFilter(corsProperties)
-//        filterRegistration.order = 0
-//        return filterRegistration
-//    }
-
     @Bean
-    fun corsFilter(): FilterRegistrationBean<CORSResponseFilter> {
+    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
         logger.info("Registrerer CORSResponseFilter")
         val filterRegistration = FilterRegistrationBean<CORSResponseFilter>()
-        filterRegistration.filter = CORSResponseFilter(CorsProperties(arrayOf("*")))
+        filterRegistration.filter = CORSResponseFilter(corsProperties)
         filterRegistration.order = 0
         return filterRegistration
     }

@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.person
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
 import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Ignore
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.web.client.exchange
@@ -29,19 +28,19 @@ class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
         assertThat(response.body).doesNotContain("_navn")
     }
 
-//    @Test
-//    fun `Skal bare ha en av hver CORS-header etter et kall`() {
-//        headers.origin = "http://localhost:3000"
-//        val response =
-//            restTemplate.exchange<String>(
-//                localhost("/api/oppslag/sokerinfo"),
-//                org.springframework.http.HttpMethod.GET,
-//                HttpEntity<String>(headers),
-//            )
-//
-//        assertThat(response.headers["Access-Control-Allow-Origin"]).hasSize(1)
-//        assertThat(response.headers["Access-Control-Allow-Headers"]).hasSize(1)
-//        assertThat(response.headers["Access-Control-Allow-Credentials"]).hasSize(1)
-//        assertThat(response.headers["Access-Control-Allow-Methods"]).hasSize(1)
-//    }
+    @Test
+    fun `Skal bare ha en av hver CORS-header etter et kall`() {
+        headers.origin = "http://localhost:3000"
+        val response =
+            restTemplate.exchange<String>(
+                localhost("/api/oppslag/sokerinfo"),
+                org.springframework.http.HttpMethod.GET,
+                HttpEntity<String>(headers),
+            )
+
+        assertThat(response.headers["Access-Control-Allow-Origin"]).hasSize(1)
+        assertThat(response.headers["Access-Control-Allow-Headers"]).hasSize(1)
+        assertThat(response.headers["Access-Control-Allow-Credentials"]).hasSize(1)
+        assertThat(response.headers["Access-Control-Allow-Methods"]).hasSize(1)
+    }
 }
