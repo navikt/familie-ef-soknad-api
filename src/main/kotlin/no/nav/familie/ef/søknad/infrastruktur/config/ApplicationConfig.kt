@@ -32,10 +32,7 @@ import java.time.temporal.ChronoUnit
     ConsumerIdClientInterceptor::class,
     BearerTokenExchangeClientInterceptor::class,
     BearerTokenClientCredentialsClientInterceptor::class,
-    CorsProperties::class,
 )
-@ComponentScan("no.nav.familie.ef.søknad.infrastruktur.config")
-@ConfigurationPropertiesScan
 internal class ApplicationConfig {
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
 
