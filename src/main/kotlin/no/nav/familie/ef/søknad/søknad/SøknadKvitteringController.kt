@@ -1,6 +1,8 @@
 package no.nav.familie.ef.søknad.søknad
 
 import no.nav.familie.ef.søknad.infrastruktur.exception.ApiFeil
+import no.nav.familie.ef.søknad.person.OppslagService
+import no.nav.familie.ef.søknad.søknad.domain.Arbeidssøker
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
@@ -28,6 +30,7 @@ import java.time.LocalDateTime
 @Validated
 class SøknadKvitteringController(
     val søknadService: SøknadService,
+    private val oppslagService: OppslagService,
 ) {
     @PostMapping("overgangsstonad")
     fun sendInn(
@@ -66,6 +69,17 @@ class SøknadKvitteringController(
         }
         val innsendingMottatt = LocalDateTime.now()
         søknadService.sendInnSøknadskvitteringSkolepenger(søknad, innsendingMottatt)
+        return Kvittering("ok", mottattDato = innsendingMottatt)
+    }
+
+    @PostMapping("arbeidssoker")
+    fun sendInn(
+        @RequestBody arbeidssøker: Arbeidssøker,
+    ): Kvittering {
+        val fnrFraToken = EksternBrukerUtils.hentFnrFraToken()
+        val forkortetNavn = oppslagService.hentSøkerNavn()
+        val innsendingMottatt = LocalDateTime.now()
+        søknadService.sendInnSøknadskvitteringArbeidssøker(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 
