@@ -13,7 +13,7 @@ familie:
       uri: http://localhost:8093/api
 
 cors:
-  allowed_origins:
+  allowed-origins:
     - "http://localhost:3000"
     - "http://localhost:8080"
     - "http://localhost:8000"
