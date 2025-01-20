@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
 // TODO: Endre endepunkt til /api/soknad etter at de andre søknadscontrollerne er utfaset
-@Profile("!prod")
 @RestController
 @RequestMapping(path = ["/api/soknadskvittering"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
