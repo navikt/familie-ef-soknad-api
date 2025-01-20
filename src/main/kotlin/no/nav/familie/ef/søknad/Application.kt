@@ -13,7 +13,13 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @ConfigurationPropertiesScan
 @SpringBootApplication(scanBasePackages = ["no.nav.familie.ef.søknad"])
-@EnableConfigurationProperties(MottakConfig::class, CorsProperties::class,FamilieIntegrasjonerConfig::class, RegelverkConfig::class, SaksbehandlingConfig::class)
+@EnableConfigurationProperties(
+    MottakConfig::class,
+    CorsProperties::class,
+    FamilieIntegrasjonerConfig::class,
+    RegelverkConfig::class,
+    SaksbehandlingConfig::class,
+)
 @EnableJwtTokenValidation(ignore = ["org.springframework", "org.springdoc"])
 class Application
 
