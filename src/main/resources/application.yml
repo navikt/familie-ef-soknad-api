@@ -51,9 +51,6 @@ management:
       metrics:
         export:
           enabled: true
-  health:
-    diskspace:
-      enabled: false
 
 cors:
   allowed-origins:
