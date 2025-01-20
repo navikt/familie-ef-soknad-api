@@ -12,6 +12,7 @@ data class MottakConfig(
     internal val sendInnOvergangsstønadKvitteringUri = byggUri(PATH_SEND_INN_OVERGANGSSTØNAD_KVITTERING)
     internal val sendInnBarnetilsynKvitteringUri = byggUri(PATH_SEND_INN_BARNETILSYNSØKNAD_KVITTERING)
     internal val sendInnSkolepengerKvitteringUri = byggUri(PATH_SEND_INN_SKOLEPENGERSØKNAD_KVITTERING)
+    internal val sendInnArbeidssøkerSkjemaKvitteringUri = byggUri(PATH_SEND_INN_ARBEIDSSOKER_SKJEMA_KVITTTERING)
     internal val sendInnSkjemaArbeidUri = byggUri(PATH_SEND_INN_ARBEIDS_SKJEMA)
     internal val sendInnBarnetilsynUri = byggUri(PATH_SEND_INN_BARNETILSYNSØKNAD)
     internal val sendInnSkolepengerUri = byggUri(PATH_SEND_INN_SKOLEPENGERSØKNAD)
@@ -36,6 +37,7 @@ data class MottakConfig(
         private const val PATH_SEND_INN_OVERGANGSSTØNAD_KVITTERING = "/soknadskvittering/overgangsstonad"
         private const val PATH_SEND_INN_BARNETILSYNSØKNAD_KVITTERING = "/soknadskvittering/barnetilsyn"
         private const val PATH_SEND_INN_SKOLEPENGERSØKNAD_KVITTERING = "/soknadskvittering/skolepenger"
+        private const val PATH_SEND_INN_ARBEIDSSOKER_SKJEMA_KVITTTERING = "/soknadskvittering/arbeidssoker"
         private const val PATH_SEND_INN_ARBEIDS_SKJEMA = "/skjema"
         private const val PATH_SEND_INN_BARNETILSYNSØKNAD = "/soknad/barnetilsyn"
         private const val PATH_SEND_INN_SKOLEPENGERSØKNAD = "/soknad/skolepenger"
