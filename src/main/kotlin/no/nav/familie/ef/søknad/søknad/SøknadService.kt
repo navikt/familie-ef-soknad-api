@@ -89,4 +89,6 @@ class SøknadService(
     fun hentSøknadPdf(søknadId: String): ByteArray = mottakClient.hentSøknadKvittering(søknadId)
 
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknad())
+
+    fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknadKvittering())
 }
