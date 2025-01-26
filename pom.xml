@@ -24,7 +24,7 @@
         <mockk.version>1.13.14</mockk.version>
         <token-validation-spring.version>5.0.10</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
-        <felles.version>3.20241127123724_adfc561</felles.version>
+        <felles.version>3.20250122103549_5bcb4dc</felles.version>
         <kontrakter.version>3.0_20250115093204_cbb7a39</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
