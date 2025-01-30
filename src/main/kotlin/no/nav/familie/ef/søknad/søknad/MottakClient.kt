@@ -69,6 +69,12 @@ class MottakClient(
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
+    fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsyn? =
+        getForEntity(
+            config.hentForrigeBarnetilsynSøknadUriKvittering,
+            HttpHeaders().medContentTypeJsonUTF8(),
+        )
+
     fun hentSøknadKvittering(søknadId: String): ByteArray =
         getForEntity<ByteArray>(
             UriComponentsBuilder

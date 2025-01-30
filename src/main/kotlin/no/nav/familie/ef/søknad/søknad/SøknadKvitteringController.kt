@@ -57,7 +57,7 @@ class SøknadKvitteringController(
     }
 
     @GetMapping("barnetilsyn/forrige")
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknad()
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknadKvittering()
 
     @PostMapping("skolepenger")
     fun sendInn(
