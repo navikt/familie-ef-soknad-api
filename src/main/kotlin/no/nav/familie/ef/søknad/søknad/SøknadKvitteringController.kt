@@ -32,7 +32,7 @@ class SøknadKvitteringController(
     private val oppslagService: OppslagService,
 ) {
     @PostMapping("overgangsstonad")
-    private fun sendInn(
+    fun sendInn(
         @RequestBody søknad: SøknadOvergangsstønadDto,
     ): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
