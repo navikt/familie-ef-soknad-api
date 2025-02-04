@@ -24,6 +24,8 @@ data class MottakConfig(
     internal val hentForrigeBarnetilsynSøknadUriKvittering = byggUri(PATH_HENT_FORRIGE_BARNETILSYNSØKNAD_KVITTERING)
     internal val hentSøknadKvitteringUri = byggUri(PATH_HENT_SOKNADKVITTERING)
 
+    internal val hentAktiveSøknaderUri = byggUri(PATH_HENT_AKTIVE_SØKNADER)
+
     internal val pingUri = byggUri(PATH_PING)
 
     private fun byggUri(path: String) =
@@ -49,5 +51,6 @@ data class MottakConfig(
         private const val PATH_HENT_FORRIGE_BARNETILSYNSØKNAD_KVITTERING = "/soknadkvittering/barnetilsyn/forrige"
         private const val PATH_PING = "/ping"
         private const val PATH_HENT_SOKNADKVITTERING = "/soknadskvittering"
+        private const val PATH_HENT_AKTIVE_SØKNADER = "/soknad/aktive"
     }
 }

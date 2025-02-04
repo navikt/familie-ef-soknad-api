@@ -12,6 +12,7 @@ import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Service
@@ -91,4 +92,13 @@ class SøknadService(
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknad())
 
     fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknadKvittering())
+
+    // TODO: Gå gjennom metodenavn og spesifier opprinnelse
+    fun hentAktiveSøknader(): List<GjeldeneSøknad> = mottakClient.hentAktiveSøknader()
+
+    // TODO: Flytt meg og endre meg som du vil
+    data class GjeldeneSøknad(
+        val søknadsdato: LocalDate?,
+        val søknadType: String?,
+    )
 }
