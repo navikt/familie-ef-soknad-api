@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.søknad
 
 import no.nav.familie.ef.søknad.søknad.domain.Arbeidssøker
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
+import no.nav.familie.ef.søknad.søknad.dto.SistInnsendteSøknadDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
@@ -12,7 +13,6 @@ import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
 import org.springframework.stereotype.Service
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Service
@@ -93,12 +93,5 @@ class SøknadService(
 
     fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknadKvittering())
 
-    // TODO: Gå gjennom metodenavn og spesifier opprinnelse
-    fun hentAktiveSøknader(): List<GjeldeneSøknad> = mottakClient.hentAktiveSøknader()
-
-    // TODO: Flytt meg og endre meg som du vil
-    data class GjeldeneSøknad(
-        val søknadsdato: LocalDate?,
-        val søknadType: String?,
-    )
+    fun hentSistInnsendteSøknadPerStønad(): List<SistInnsendteSøknadDto> = mottakClient.hentSistInnsendteSøknadPerStønad()
 }

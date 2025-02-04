@@ -31,10 +31,6 @@ class SøknadKvitteringController(
     val søknadService: SøknadService,
     private val oppslagService: OppslagService,
 ) {
-    // TODO: Jeg skal ikke bo her, flytt meg senere. Kun for testing.
-    @GetMapping("aktiv")
-    fun hentAktiveSøknader() = søknadService.hentAktiveSøknader()
-
     @PostMapping("overgangsstonad")
     private fun sendInn(
         @RequestBody søknad: SøknadOvergangsstønadDto,
@@ -85,6 +81,9 @@ class SøknadKvitteringController(
         søknadService.sendInnSøknadskvitteringArbeidssøker(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
+
+    @GetMapping("/soknad/sist-innsendt-per-stonad")
+    fun hentSistInnsendteSøknadPerStønad() = søknadService.hentSistInnsendteSøknadPerStønad()
 
     @Profile("!prod")
     @GetMapping("{søknadId}")
