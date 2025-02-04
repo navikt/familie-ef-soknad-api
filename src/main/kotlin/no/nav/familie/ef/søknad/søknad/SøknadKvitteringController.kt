@@ -31,8 +31,12 @@ class SøknadKvitteringController(
     val søknadService: SøknadService,
     private val oppslagService: OppslagService,
 ) {
+    // TODO: Jeg skal ikke bo her, flytt meg senere. Kun for testing.
+    @GetMapping("aktiv")
+    fun hentAktiveSøknader() = søknadService.hentAktiveSøknader()
+
     @PostMapping("overgangsstonad")
-    fun sendInn(
+    private fun sendInn(
         @RequestBody søknad: SøknadOvergangsstønadDto,
     ): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
