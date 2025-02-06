@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.søknad.mapper
 
 import no.nav.familie.ef.søknad.mock.søknadDto
 import no.nav.familie.ef.søknad.søknad.domain.Bosituasjon
+import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -18,15 +19,16 @@ internal class SivilstandsplanerMapperTest {
         // When
         val sivilstandsplaner = SivilstandsplanerMapper.map(bosituasjonUtenGifteplaner).verdi
         // Then
-        assertThat(sivilstandsplaner.harPlaner?.verdi).isEqualTo(false)
+        assertThat(sivilstandsplaner?.harPlaner?.verdi).isEqualTo(false)
     }
+
 
     @Test
     fun `Vi mapper sivilstandsplaner til verdi true`() {
         // When
         val sivilstandsplaner = SivilstandsplanerMapper.map(bosituasjonGifteplaner).verdi
         // Then
-        assertThat(sivilstandsplaner.harPlaner?.verdi).isEqualTo(true)
+        assertThat(sivilstandsplaner?.harPlaner?.verdi).isEqualTo(true)
     }
 
     @Test
@@ -34,7 +36,7 @@ internal class SivilstandsplanerMapperTest {
         // When
         val sivilstandsplaner = SivilstandsplanerMapper.map(bosituasjonGifteplaner).verdi
         // Then
-        assertThat(sivilstandsplaner.harPlaner?.label).isEqualTo("Har du konkrete planer om å gifte deg eller bli samboer?")
+        assertThat(sivilstandsplaner?.harPlaner?.label).isEqualTo("Har du konkrete planer om å gifte deg eller bli samboer?")
     }
 
     @Test
@@ -42,7 +44,7 @@ internal class SivilstandsplanerMapperTest {
         // When
         val sivilstandsplaner = SivilstandsplanerMapper.map(bosituasjonGifteplaner).verdi
         // Then
-        assertThat(sivilstandsplaner.fraDato?.verdi).isEqualTo(LocalDate.of(2020, 3, 26))
+        assertThat(sivilstandsplaner?.fraDato?.verdi).isEqualTo(LocalDate.of(2020, 3, 26))
     }
 
     @Test
@@ -50,7 +52,7 @@ internal class SivilstandsplanerMapperTest {
         // When
         val sivilstandsplaner = SivilstandsplanerMapper.map(bosituasjonGifteplaner).verdi
         // Then
-        assertThat(sivilstandsplaner.fraDato?.label).isEqualTo("Når skal dette skje?")
+        assertThat(sivilstandsplaner?.fraDato?.label).isEqualTo("Når skal dette skje?")
     }
 
     private fun getBosituasjon(fileName: String) =
