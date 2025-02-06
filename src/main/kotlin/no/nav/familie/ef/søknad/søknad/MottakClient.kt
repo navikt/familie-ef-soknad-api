@@ -3,7 +3,6 @@ package no.nav.familie.ef.søknad.søknad
 import no.nav.familie.ef.søknad.infrastruktur.config.MottakConfig
 import no.nav.familie.ef.søknad.søknad.SøknadClientUtil.filtrerVekkEldreDokumentasjonsbehov
 import no.nav.familie.ef.søknad.søknad.dto.KvitteringDto
-import no.nav.familie.ef.søknad.søknad.dto.SistInnsendteSøknadDto
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
@@ -15,6 +14,7 @@ import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
 import no.nav.familie.kontrakter.felles.PersonIdent
 import no.nav.familie.kontrakter.felles.Tema
 import no.nav.familie.kontrakter.felles.ef.StønadType
+import no.nav.familie.kontrakter.felles.søknad.SistInnsendtSøknadDto
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
@@ -76,9 +76,9 @@ class MottakClient(
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
-    fun hentSistInnsendteSøknadPerStønad(): List<SistInnsendteSøknadDto> =
+    fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> =
         getForEntity(
-            config.hentSistInnsendteSøknadPerStønad,
+            config.hentSistInnsendtSøknadPerStønad,
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
