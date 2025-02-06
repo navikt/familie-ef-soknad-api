@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.søknad
 
 import no.nav.familie.ef.søknad.søknad.domain.Arbeidssøker
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
+import no.nav.familie.ef.søknad.søknad.dto.SistInnsendteSøknadDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
@@ -89,4 +90,8 @@ class SøknadService(
     fun hentSøknadPdf(søknadId: String): ByteArray = mottakClient.hentSøknadKvittering(søknadId)
 
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknad())
+
+    fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknadKvittering())
+
+    fun hentSistInnsendteSøknadPerStønad(): List<SistInnsendteSøknadDto> = mottakClient.hentSistInnsendteSøknadPerStønad()
 }

@@ -3,6 +3,7 @@ package no.nav.familie.ef.søknad.søknad
 import no.nav.familie.ef.søknad.infrastruktur.config.MottakConfig
 import no.nav.familie.ef.søknad.søknad.SøknadClientUtil.filtrerVekkEldreDokumentasjonsbehov
 import no.nav.familie.ef.søknad.søknad.dto.KvitteringDto
+import no.nav.familie.ef.søknad.søknad.dto.SistInnsendteSøknadDto
 import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.kontrakter.ef.ettersending.SøknadMedDokumentasjonsbehovDto
@@ -66,6 +67,18 @@ class MottakClient(
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsyn? =
         getForEntity(
             config.hentForrigeBarnetilsynSøknadUri,
+            HttpHeaders().medContentTypeJsonUTF8(),
+        )
+
+    fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsyn? =
+        getForEntity(
+            config.hentForrigeBarnetilsynSøknadUriKvittering,
+            HttpHeaders().medContentTypeJsonUTF8(),
+        )
+
+    fun hentSistInnsendteSøknadPerStønad(): List<SistInnsendteSøknadDto> =
+        getForEntity(
+            config.hentSistInnsendteSøknadPerStønad,
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 

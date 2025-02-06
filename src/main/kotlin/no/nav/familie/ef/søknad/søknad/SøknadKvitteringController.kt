@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
 // TODO: Endre endepunkt til /api/soknad etter at de andre søknadscontrollerne er utfaset
-@Profile("!prod")
 @RestController
 @RequestMapping(path = ["/api/soknadskvittering"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
@@ -58,7 +57,7 @@ class SøknadKvitteringController(
     }
 
     @GetMapping("barnetilsyn/forrige")
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknad()
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknadKvittering()
 
     @PostMapping("skolepenger")
     fun sendInn(
@@ -82,6 +81,9 @@ class SøknadKvitteringController(
         søknadService.sendInnSøknadskvitteringArbeidssøker(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
+
+    @GetMapping("sist-innsendt-per-stonad")
+    fun hentSistInnsendteSøknadPerStønad() = søknadService.hentSistInnsendteSøknadPerStønad()
 
     @Profile("!prod")
     @GetMapping("{søknadId}")
