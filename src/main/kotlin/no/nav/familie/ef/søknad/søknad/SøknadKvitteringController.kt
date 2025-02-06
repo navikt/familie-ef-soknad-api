@@ -82,6 +82,9 @@ class SøknadKvitteringController(
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 
+    @GetMapping("sist-innsendt-per-stonad")
+    fun hentSistInnsendteSøknadPerStønad() = søknadService.hentSistInnsendtSøknadPerStønad()
+
     @Profile("!prod")
     @GetMapping("{søknadId}")
     fun hentSøknad(

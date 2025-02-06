@@ -11,6 +11,7 @@ import no.nav.familie.ef.søknad.søknad.mapper.SkjemaMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
+import no.nav.familie.kontrakter.felles.søknad.SistInnsendtSøknadDto
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
@@ -91,4 +92,6 @@ class SøknadService(
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknad())
 
     fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknadKvittering())
+
+    fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> = mottakClient.hentSistInnsendtSøknadPerStønad()
 }
