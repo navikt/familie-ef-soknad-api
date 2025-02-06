@@ -57,7 +57,7 @@ class SøknadKvitteringController(
     }
 
     @GetMapping("barnetilsyn/forrige")
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknad()
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknadKvittering()
 
     @PostMapping("skolepenger")
     fun sendInn(
@@ -81,6 +81,9 @@ class SøknadKvitteringController(
         søknadService.sendInnSøknadskvitteringArbeidssøker(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
+
+    @GetMapping("sist-innsendt-per-stonad")
+    fun hentSistInnsendteSøknadPerStønad() = søknadService.hentSistInnsendtSøknadPerStønad()
 
     @Profile("!prod")
     @GetMapping("{søknadId}")

@@ -21,7 +21,10 @@ data class MottakConfig(
     internal val sendInnEttersendingUri = byggUri(PATH_SEND_INN_ETTERSENDING)
     internal val hentEttersendingForPersonUri = byggUri(PATH_HENT_ETTERSENDING_FOR_PERSON)
     internal val hentForrigeBarnetilsynSøknadUri = byggUri(PATH_HENT_FORRIGE_BARNETILSYNSØKNAD)
+    internal val hentForrigeBarnetilsynSøknadUriKvittering = byggUri(PATH_HENT_FORRIGE_BARNETILSYNSØKNAD_KVITTERING)
     internal val hentSøknadKvitteringUri = byggUri(PATH_HENT_SOKNADKVITTERING)
+
+    internal val hentSistInnsendtSøknadPerStønad = byggUri(PATH_HENT_SIST_INNSENDT_SØKNAD_PER_STØNAD)
 
     internal val pingUri = byggUri(PATH_PING)
 
@@ -45,7 +48,9 @@ data class MottakConfig(
         private const val PATH_SEND_INN_ETTERSENDING = "/ettersending"
         private const val PATH_HENT_ETTERSENDING_FOR_PERSON = "/ettersending/person"
         private const val PATH_HENT_FORRIGE_BARNETILSYNSØKNAD = "/soknad/barnetilsyn/forrige"
+        private const val PATH_HENT_FORRIGE_BARNETILSYNSØKNAD_KVITTERING = "/soknadkvittering/barnetilsyn/forrige"
         private const val PATH_PING = "/ping"
         private const val PATH_HENT_SOKNADKVITTERING = "/soknadskvittering"
+        private const val PATH_HENT_SIST_INNSENDT_SØKNAD_PER_STØNAD = "/soknad/sist-innsendt-per-stonad"
     }
 }

@@ -14,6 +14,7 @@ import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
 import no.nav.familie.kontrakter.felles.PersonIdent
 import no.nav.familie.kontrakter.felles.Tema
 import no.nav.familie.kontrakter.felles.ef.StønadType
+import no.nav.familie.kontrakter.felles.søknad.SistInnsendtSøknadDto
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
@@ -66,6 +67,18 @@ class MottakClient(
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsyn? =
         getForEntity(
             config.hentForrigeBarnetilsynSøknadUri,
+            HttpHeaders().medContentTypeJsonUTF8(),
+        )
+
+    fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsyn? =
+        getForEntity(
+            config.hentForrigeBarnetilsynSøknadUriKvittering,
+            HttpHeaders().medContentTypeJsonUTF8(),
+        )
+
+    fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> =
+        getForEntity(
+            config.hentSistInnsendtSøknadPerStønad,
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
