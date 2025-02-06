@@ -14,6 +14,8 @@ import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
 import no.nav.familie.kontrakter.felles.søknad.SistInnsendtSøknadDto
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
+import no.nav.familie.kontrakter.felles.objectMapper
+import org.slf4j.LoggerFactory
 
 @Service
 class SøknadService(
@@ -54,6 +56,8 @@ class SøknadService(
         innsendingMottatt: LocalDateTime,
     ): Kvittering {
         val søknadRequestData = overgangsstønadMapper.mapTilIntern(søknad, innsendingMottatt)
+        val logger = LoggerFactory.getLogger(this::class.java)
+        logger.info("SøknadRequestData: ${objectMapper.writeValueAsString(søknadRequestData)}")
         val kvittering = mottakClient.sendInnSøknadskvitteringOvergangsstønad(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
