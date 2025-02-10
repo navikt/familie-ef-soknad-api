@@ -41,6 +41,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
         vedlegg: Map<String, DokumentasjonWrapper>,
     ): Aktivitet =
         Aktivitet(
+            erIArbeid = data.erIArbeid?.tilSøknadsfelt(),
             hvordanErArbeidssituasjonen = data.hvaErDinArbeidssituasjon.tilSøknadsfelt(),
             arbeidsforhold =
                 data.arbeidsforhold?.let {
@@ -62,12 +63,12 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                         },
                     )
                 },
-            erIArbeid = data.erIArbeid?.tilSøknadsfelt(),
             erIArbeidDokumentasjon = dokumentfelt(DokumentIdentifikator.FOR_SYK_TIL_Å_JOBBE, vedlegg),
         )
 
     fun mapTilDto(aktivitet: Aktivitet): AktivitetDto =
         AktivitetDto(
+            erIArbeid = aktivitet.erIArbeid.tilNullableTekstFelt(),
             arbeidsforhold = mapTilArbeidsgiverDto(aktivitet.arbeidsforhold?.verdi),
             arbeidssøker = mapTilArbeidssøkerDto(aktivitet.arbeidssøker?.verdi),
             firmaer = mapTilFirmaerDto(aktivitet.firmaer?.verdi),
@@ -79,7 +80,6 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
                     ?.virksomhetsbeskrivelse
                     .tilNullableTekstFelt(),
             egetAS = mapTilAksjeselskapDto(aktivitet.aksjeselskap?.verdi),
-            erIArbeid = aktivitet.erIArbeid.tilNullableTekstFelt(),
         )
 
     private fun mapArbeidssøker(
