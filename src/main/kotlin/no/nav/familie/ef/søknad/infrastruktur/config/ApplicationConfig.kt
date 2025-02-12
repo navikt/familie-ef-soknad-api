@@ -7,6 +7,7 @@ import no.nav.familie.http.interceptor.BearerTokenClientCredentialsClientInterce
 import no.nav.familie.http.interceptor.BearerTokenExchangeClientInterceptor
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
+import no.nav.familie.log.NavSystemtype
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
 import no.nav.security.token.support.client.core.http.OAuth2HttpClient
@@ -50,7 +51,7 @@ internal class ApplicationConfig {
     fun logFilter(): FilterRegistrationBean<LogFilter> {
         logger.info("Registering LogFilter filter")
         val filterRegistration = FilterRegistrationBean<LogFilter>()
-        filterRegistration.filter = LogFilter()
+        filterRegistration.filter = LogFilter(systemtype = NavSystemtype.NAV_EKSTERN_BRUKERFLATE)
         filterRegistration.order = 1
         return filterRegistration
     }
@@ -71,8 +72,8 @@ internal class ApplicationConfig {
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
     ): RestOperations =
         RestTemplateBuilder()
-            .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
-            .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
+            .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+            .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
             .interceptors(
                 bearerTokenExchangeClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
@@ -86,8 +87,8 @@ internal class ApplicationConfig {
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
     ): RestOperations =
         RestTemplateBuilder()
-            .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
-            .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
+            .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+            .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
             .interceptors(
                 consumerIdClientInterceptor,
                 bearerTokenClientCredentialsClientInterceptor,
@@ -100,8 +101,8 @@ internal class ApplicationConfig {
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
     ): RestOperations =
         RestTemplateBuilder()
-            .setConnectTimeout(Duration.of(5, ChronoUnit.SECONDS))
-            .setReadTimeout(Duration.of(25, ChronoUnit.SECONDS))
+            .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+            .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
             .additionalInterceptors(
                 consumerIdClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
@@ -113,8 +114,8 @@ internal class ApplicationConfig {
         RetryOAuth2HttpClient(
             RestClient.create(
                 RestTemplateBuilder()
-                    .setConnectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-                    .setReadTimeout(Duration.of(4, ChronoUnit.SECONDS))
+                    .connectTimeout(Duration.of(2, ChronoUnit.SECONDS))
+                    .readTimeout(Duration.of(4, ChronoUnit.SECONDS))
                     .build(),
             ),
         )

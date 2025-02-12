@@ -1,6 +1,8 @@
 package no.nav.familie.ef.søknad.søknad
 
 import no.nav.familie.ef.søknad.infrastruktur.exception.ApiFeil
+import no.nav.familie.ef.søknad.person.OppslagService
+import no.nav.familie.ef.søknad.søknad.domain.Arbeidssøker
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
@@ -21,13 +23,13 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
 // TODO: Endre endepunkt til /api/soknad etter at de andre søknadscontrollerne er utfaset
-@Profile("!prod")
 @RestController
 @RequestMapping(path = ["/api/soknadskvittering"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
 class SøknadKvitteringController(
     val søknadService: SøknadService,
+    private val oppslagService: OppslagService,
 ) {
     @PostMapping("overgangsstonad")
     fun sendInn(
@@ -55,7 +57,7 @@ class SøknadKvitteringController(
     }
 
     @GetMapping("barnetilsyn/forrige")
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknad()
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknadKvittering()
 
     @PostMapping("skolepenger")
     fun sendInn(
@@ -68,6 +70,20 @@ class SøknadKvitteringController(
         søknadService.sendInnSøknadskvitteringSkolepenger(søknad, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
+
+    @PostMapping("arbeidssoker")
+    fun sendInn(
+        @RequestBody arbeidssøker: Arbeidssøker,
+    ): Kvittering {
+        val fnrFraToken = EksternBrukerUtils.hentFnrFraToken()
+        val forkortetNavn = oppslagService.hentSøkerNavn()
+        val innsendingMottatt = LocalDateTime.now()
+        søknadService.sendInnSøknadskvitteringArbeidssøker(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
+        return Kvittering("ok", mottattDato = innsendingMottatt)
+    }
+
+    @GetMapping("sist-innsendt-per-stonad")
+    fun hentSistInnsendteSøknadPerStønad() = søknadService.hentSistInnsendtSøknadPerStønad()
 
     @Profile("!prod")
     @GetMapping("{søknadId}")
