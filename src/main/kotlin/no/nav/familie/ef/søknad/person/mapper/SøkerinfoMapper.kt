@@ -159,7 +159,7 @@ internal class SøkerinfoMapper(
                 poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
                 postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ",
             )
-        statsborgerskap.forEach {logger.info("Statsborgerskap TEST:" + it.metadata?.historisk.toString() + it.land)}
+        statsborgerskap.forEach { logger.info("Statsborgerskap TEST:" + it.metadata?.historisk.toString() + it.land) }
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 

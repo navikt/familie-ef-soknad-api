@@ -61,7 +61,7 @@ object PdlTestdata {
     private val forelderBarnRelasjon = listOf(ForelderBarnRelasjon("", BARN))
     private val barnsRelasjoner = listOf(ForelderBarnRelasjon("", FAR))
 
-    private val statsborgerskap = listOf(Statsborgerskap("", LocalDate.now(), LocalDate.now(),metadata = Historisk(false),))
+    private val statsborgerskap = listOf(Statsborgerskap("", LocalDate.now(), LocalDate.now(), metadata = Historisk(false)))
 
     val pdlSøkerData =
         PdlSøkerData(
