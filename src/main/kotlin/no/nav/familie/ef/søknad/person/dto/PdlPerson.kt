@@ -176,11 +176,11 @@ data class Statsborgerskap(
     val land: String,
     val gyldigFraOgMed: LocalDate?,
     val gyldigTilOgMed: LocalDate?,
-    val metadata: Historisk,
+    val metadata: Historisk?,
 )
 
 data class Historisk(
-    val historisk: Boolean,
+    val historisk: Boolean?,
 )
 
 data class Sivilstand(
