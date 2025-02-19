@@ -14,14 +14,16 @@ import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
 import no.nav.familie.kontrakter.felles.PersonIdent
 import no.nav.familie.kontrakter.felles.Tema
 import no.nav.familie.kontrakter.felles.ef.StønadType
+import no.nav.familie.kontrakter.felles.søknad.SistInnsendtSøknadDto
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
+import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Service
-class SøknadClient(
+class MottakClient(
     private val config: MottakConfig,
     @Qualifier("tokenExchange") operations: RestOperations,
 ) : AbstractPingableRestClient(operations, "søknad.innsending") {
@@ -54,9 +56,39 @@ class SøknadClient(
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
+    fun sendInnSøknadskvitteringOvergangsstønad(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto = postForEntity(config.sendInnOvergangsstønadKvitteringUri, søknadMedVedlegg)
+
+    fun sendInnSøknadskvitteringBarnetilsyn(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto = postForEntity(config.sendInnBarnetilsynKvitteringUri, søknadMedVedlegg)
+
+    fun sendInnSøknadskvitteringSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto = postForEntity(config.sendInnSkolepengerKvitteringUri, søknadMedVedlegg)
+
+    fun sendInnSøknadskvitteringArbeidssøker(skjema: SkjemaForArbeidssøker): KvitteringDto = postForEntity(config.sendInnArbeidssøkerSkjemaKvitteringUri, skjema)
+
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsyn? =
         getForEntity(
             config.hentForrigeBarnetilsynSøknadUri,
+            HttpHeaders().medContentTypeJsonUTF8(),
+        )
+
+    fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsyn? =
+        getForEntity(
+            config.hentForrigeBarnetilsynSøknadUriKvittering,
+            HttpHeaders().medContentTypeJsonUTF8(),
+        )
+
+    fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> =
+        getForEntity(
+            config.hentSistInnsendtSøknadPerStønad,
+            HttpHeaders().medContentTypeJsonUTF8(),
+        )
+
+    fun hentSøknadKvittering(søknadId: String): ByteArray =
+        getForEntity<ByteArray>(
+            UriComponentsBuilder
+                .fromUriString(
+                    "${config.hentSøknadKvitteringUri}/$søknadId",
+                ).build()
+                .toUri(),
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 

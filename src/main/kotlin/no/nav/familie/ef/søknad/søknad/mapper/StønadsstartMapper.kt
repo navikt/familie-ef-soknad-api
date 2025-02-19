@@ -24,9 +24,9 @@ object StønadsstartMapper {
         val month = søknadsdato?.tilLocalDateEllerNull()?.month
         val year = søknadsdato?.tilLocalDateEllerNull()?.year
         return Stønadsstart(
-            month?.let { Søknadsfelt(FraMåned.hentTekst(), month) },
-            year?.let { Søknadsfelt(FraÅr.hentTekst(), year) },
-            søkerFraBestemtMåned.tilSøknadsfelt(),
+            søkerFraBestemtMåned = søkerFraBestemtMåned.tilSøknadsfelt(),
+            fraMåned = month?.let { Søknadsfelt(FraMåned.hentTekst(), month) },
+            fraÅr = year?.let { Søknadsfelt(FraÅr.hentTekst(), year) },
         )
     }
 }

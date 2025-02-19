@@ -37,7 +37,7 @@ object SkjemaMapper {
             arbeidssøker = arbeidssøkerKontrakt,
             personaliaArbeidssøker =
                 Søknadsfelt(
-                    "NAV 15-08.01",
+                    Språktekster.Søker.hentTekst(),
                     PersonaliaArbeidssøker(
                         navn =
                             Søknadsfelt(

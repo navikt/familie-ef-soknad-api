@@ -29,8 +29,9 @@ import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
 import java.io.File
 import java.time.LocalDateTime
+import kotlin.test.assertTrue
 
-class SøknadControllerTest {
+class SøknadKvitteringControllerTest {
     @Profile("soknad-controller-test")
     @Configuration
     class SøknadControllerTestConfiguration {
@@ -45,7 +46,7 @@ class SøknadControllerTest {
 
     @Nested
     @ActiveProfiles("soknad-controller-test")
-    internal inner class SøknadControllerTest : OppslagSpringRunnerTest() {
+    internal inner class SøknadKvitteringControllerTest : OppslagSpringRunnerTest() {
         @Autowired
         lateinit var søknadService: SøknadService
 
@@ -62,7 +63,7 @@ class SøknadControllerTest {
         @Test
         fun `overgangsstønad sendInn returnerer riktig kvittering med riktig Bearer token`() {
             val søknad = søknadOvergangsstønadDto(tokenSubject)
-            every { søknadService.sendInn(søknad, any()) } returns
+            every { søknadService.sendInnSøknadskvittering(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
@@ -112,7 +113,7 @@ class SøknadControllerTest {
                 søknadBarnetilsynDto()
                     .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf()))
 
-            every { søknadService.sendInn(søknad, any()) } returns
+            every { søknadService.sendInnSøknadskvitteringBarnetilsyn(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
@@ -142,7 +143,7 @@ class SøknadControllerTest {
                 )
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
-            verify(exactly = 0) { søknadService.sendInn(søknadBarnetilsynDto, any()) }
+            verify(exactly = 0) { søknadService.sendInnSøknadskvitteringBarnetilsyn(søknadBarnetilsynDto, any()) }
         }
 
         fun søknadSkolepenger() =
@@ -163,7 +164,7 @@ class SøknadControllerTest {
                             ),
                     )
 
-            every { søknadService.sendInn(søknad, any()) } returns
+            every { søknadService.sendInnSøknadskvitteringSkolepenger(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
@@ -195,7 +196,20 @@ class SøknadControllerTest {
                 )
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
-            verify(exactly = 0) { søknadService.sendInn(søknadSkolepengerDto, any()) }
+            verify(exactly = 0) { søknadService.sendInnSøknadskvitteringSkolepenger(søknadSkolepengerDto, any()) }
+        }
+
+        @Test
+        fun `mottak returnerer pdf kvittering`() {
+            every { søknadService.hentSøknadPdf("1") } returns "pdf".toByteArray()
+
+            val response =
+                restTemplate.exchange<ByteArray>(
+                    localhost("/api/soknadskvittering/1"),
+                    HttpMethod.GET,
+                    HttpEntity(null, headers),
+                )
+            assertTrue { response.body?.contentEquals("pdf".toByteArray()) ?: false }
         }
     }
 }

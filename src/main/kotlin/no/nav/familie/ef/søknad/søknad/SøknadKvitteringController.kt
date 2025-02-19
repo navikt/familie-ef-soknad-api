@@ -1,6 +1,8 @@
 package no.nav.familie.ef.søknad.søknad
 
 import no.nav.familie.ef.søknad.infrastruktur.exception.ApiFeil
+import no.nav.familie.ef.søknad.person.OppslagService
+import no.nav.familie.ef.søknad.søknad.domain.Arbeidssøker
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -20,13 +23,13 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
 
 // TODO: Endre endepunkt til /api/soknad etter at de andre søknadscontrollerne er utfaset
-@Profile("!prod")
 @RestController
 @RequestMapping(path = ["/api/soknadskvittering"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
-class SøknadController(
+class SøknadKvitteringController(
     val søknadService: SøknadService,
+    private val oppslagService: OppslagService,
 ) {
     @PostMapping("overgangsstonad")
     fun sendInn(
@@ -37,7 +40,7 @@ class SøknadController(
         }
 
         val innsendingMottatt = LocalDateTime.now()
-        søknadService.sendInn(søknad, innsendingMottatt)
+        søknadService.sendInnSøknadskvittering(søknad, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 
@@ -49,12 +52,12 @@ class SøknadController(
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
         val innsendingMottatt = LocalDateTime.now()
-        søknadService.sendInn(søknad, innsendingMottatt)
+        søknadService.sendInnSøknadskvitteringBarnetilsyn(søknad, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 
     @GetMapping("barnetilsyn/forrige")
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknad()
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknadKvittering()
 
     @PostMapping("skolepenger")
     fun sendInn(
@@ -64,7 +67,27 @@ class SøknadController(
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
         val innsendingMottatt = LocalDateTime.now()
-        søknadService.sendInn(søknad, innsendingMottatt)
+        søknadService.sendInnSøknadskvitteringSkolepenger(søknad, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
+
+    @PostMapping("arbeidssoker")
+    fun sendInn(
+        @RequestBody arbeidssøker: Arbeidssøker,
+    ): Kvittering {
+        val fnrFraToken = EksternBrukerUtils.hentFnrFraToken()
+        val forkortetNavn = oppslagService.hentSøkerNavn()
+        val innsendingMottatt = LocalDateTime.now()
+        søknadService.sendInnSøknadskvitteringArbeidssøker(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
+        return Kvittering("ok", mottattDato = innsendingMottatt)
+    }
+
+    @GetMapping("sist-innsendt-per-stonad")
+    fun hentSistInnsendteSøknadPerStønad() = søknadService.hentSistInnsendtSøknadPerStønad()
+
+    @Profile("!prod")
+    @GetMapping("{søknadId}")
+    fun hentSøknad(
+        @PathVariable søknadId: String,
+    ): ByteArray = søknadService.hentSøknadPdf(søknadId)
 }

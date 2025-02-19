@@ -22,7 +22,7 @@ enum class Språktekster(
     Samvær("Samvær", "Access/Contact"),
     Adresseopplysninger("Opplysninger om adresse", "Information about address"),
     Bosituasjon("Bosituasjonen din", "Your living situation"),
-    Innsendingsdetaljer("Innsendingsdetaljer", "Innsendingsdetaljer"),
+    Innsendingsdetaljer("Innsendingsdetaljer", "Submission details"),
     DatoMottatt("Dato mottatt", "Date received"),
     Utenlandsopphold("Utenlandsopphold", "Time abroad"),
     Søker("Søker", "Applicant"),
@@ -49,17 +49,17 @@ enum class Språktekster(
     TidligereUtdanning("Tidligere Utdanning", "Previous education"),
     EnsligMorEllerFarSomErArbeidssøker(
         "Enslig mor og far som er arbeidssøker",
-        "Enslig mor og far som er arbeidssøker [English TBA]",
+        "Single mother or father who is a job seeker",
     ),
-    OppholdINorge("Opphold i Norge", "Opphold i Norge [English TBA]"),
+    OppholdINorge("Opphold i Norge", "Presence in Norway"),
     Barnepassordninger("Barnepassordninger", "About the child minding arrangements"),
     SendtInnTidligere(
-        "Jeg har sendt inn denne dokumentasjonen til NAV tidligere",
-        "I have already submitted this documentation to NAV in the past",
+        "Jeg har sendt inn denne dokumentasjonen til Nav tidligere",
+        "I have already submitted this documentation to Nav in the past",
     ),
     ArbeidUtanningOgAndreAktiviteter(
         "Arbeid, utdanning og andre aktiviteter",
-        "Arbeid, utdanning og andre aktiviteter [English TBA]",
+        "Work, education and other activities",
     ),
     Alder("Alder", "Age"),
 }

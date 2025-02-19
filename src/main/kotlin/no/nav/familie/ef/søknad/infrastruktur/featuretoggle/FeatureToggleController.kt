@@ -18,6 +18,8 @@ class FeatureToggleController(
         listOf(
             "familie.ef.soknad.feilsituasjon",
             "familie.ef.soknad.nynorsk",
+            "familie.ef.soknad-ny-pdfkvittering",
+            "familie.ef.soknad.frontend.hent-sist-innsendte-soknad-per-stonad",
         )
 
     @GetMapping

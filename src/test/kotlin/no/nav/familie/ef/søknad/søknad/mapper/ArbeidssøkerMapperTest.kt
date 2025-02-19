@@ -16,7 +16,7 @@ internal class ArbeidssøkerMapperTest {
     fun `Map registrertSomArbeidssøkerNav label `() {
         Assertions
             .assertThat((arbeidssøker?.registrertSomArbeidssøkerNav?.label))
-            .isEqualTo("Er du registrert som arbeidssøker hos NAV?")
+            .isEqualTo("Er du registrert som arbeidssøker hos Nav?")
     }
 
     @Test
