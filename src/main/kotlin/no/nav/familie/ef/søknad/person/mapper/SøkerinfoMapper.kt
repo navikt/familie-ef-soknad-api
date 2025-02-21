@@ -159,14 +159,11 @@ internal class SøkerinfoMapper(
                 poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
                 postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ",
             )
-        statsborgerskap.forEach { logger.info("Statsborgerskap TEST:" + it.metadata?.historisk.toString() + it.land) }
 
         val statsborgerskapListe =
             statsborgerskap
-                .filter { it.metadata?.historisk == false }
+                .filter { it.gyldigTilOgMed?.isAfter(LocalDate.now()) == false }
                 .joinToString(", ") { hentLand(it.land) }
-
-        logger.info("Statsborger full string: $statsborgerskapListe")
 
         val sivilstand: Sivilstand = sivilstand.firstOrNull() ?: Sivilstand(type = Sivilstandstype.UOPPGITT)
 
