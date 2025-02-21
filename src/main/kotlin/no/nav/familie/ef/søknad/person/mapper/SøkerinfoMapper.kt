@@ -163,9 +163,8 @@ internal class SøkerinfoMapper(
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
-        if (statsborgerskap.any { it.metadata?.historisk == true }) {
-            secureLogger.info(EksternBrukerUtils.hentFnrFraToken() + statsborgerskap.map { ", $it, " })
-        }
+        secureLogger.info("Statsborgerskap info: " + EksternBrukerUtils.hentFnrFraToken() + statsborgerskap.map { ", $it, " })
+
         val sivilstand: Sivilstand = sivilstand.firstOrNull() ?: Sivilstand(type = Sivilstandstype.UOPPGITT)
 
         return Person(
