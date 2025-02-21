@@ -31,6 +31,7 @@ internal class SøkerinfoMapper(
     private val kodeverkService: KodeverkService,
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     fun hentPoststed(postnummer: String?): String = hentKodeverdi("poststed", postnummer, kodeverkService::hentPoststed)
 
@@ -162,6 +163,9 @@ internal class SøkerinfoMapper(
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
+        if (statsborgerskap.any{ it.metadata?.historisk == true }) {
+            secureLogger.info(EksternBrukerUtils.hentFnrFraToken() + statsborgerskap.map { ", $it, " })
+        }
         val sivilstand: Sivilstand = sivilstand.firstOrNull() ?: Sivilstand(type = Sivilstandstype.UOPPGITT)
 
         return Person(
