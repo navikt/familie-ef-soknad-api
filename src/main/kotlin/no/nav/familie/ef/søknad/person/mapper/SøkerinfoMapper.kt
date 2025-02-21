@@ -161,7 +161,12 @@ internal class SøkerinfoMapper(
             )
         statsborgerskap.forEach { logger.info("Statsborgerskap TEST:" + it.metadata?.historisk.toString() + it.land) }
 
-        val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
+        val statsborgerskapListe =
+            statsborgerskap
+                .filter { it.metadata?.historisk == false }
+                .joinToString(", ") { it.land }
+
+        logger.info("Statsborger full string: $statsborgerskapListe")
 
         val sivilstand: Sivilstand = sivilstand.firstOrNull() ?: Sivilstand(type = Sivilstandstype.UOPPGITT)
 
