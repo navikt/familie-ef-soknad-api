@@ -162,7 +162,7 @@ internal class SøkerinfoMapper(
 
         val statsborgerskapListe =
             statsborgerskap
-                .filter { it.gyldigTilOgMed?.isBefore(LocalDate.now()) == false }
+                .filter { it.gyldigTilOgMed?.isAfter(LocalDate.now()) == true}
                 .joinToString(", ") { hentLand(it.land) }
 
         val sivilstand: Sivilstand = sivilstand.firstOrNull() ?: Sivilstand(type = Sivilstandstype.UOPPGITT)
