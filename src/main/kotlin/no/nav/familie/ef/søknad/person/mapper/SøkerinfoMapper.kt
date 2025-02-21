@@ -164,7 +164,7 @@ internal class SøkerinfoMapper(
         val statsborgerskapListe =
             statsborgerskap
                 .filter { it.metadata?.historisk == false }
-                .joinToString(", ") { it.land }
+                .joinToString(", ") { hentLand(it.land) }
 
         logger.info("Statsborger full string: $statsborgerskapListe")
 
