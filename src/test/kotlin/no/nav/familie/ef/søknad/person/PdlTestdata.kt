@@ -10,6 +10,7 @@ import no.nav.familie.ef.søknad.person.dto.Familierelasjonsrolle.BARN
 import no.nav.familie.ef.søknad.person.dto.Familierelasjonsrolle.FAR
 import no.nav.familie.ef.søknad.person.dto.ForelderBarnRelasjon
 import no.nav.familie.ef.søknad.person.dto.Fødselsdato
+import no.nav.familie.ef.søknad.person.dto.Historisk
 import no.nav.familie.ef.søknad.person.dto.Matrikkeladresse
 import no.nav.familie.ef.søknad.person.dto.MatrikkeladresseBarn
 import no.nav.familie.ef.søknad.person.dto.Navn
@@ -60,7 +61,7 @@ object PdlTestdata {
     private val forelderBarnRelasjon = listOf(ForelderBarnRelasjon("", BARN))
     private val barnsRelasjoner = listOf(ForelderBarnRelasjon("", FAR))
 
-    private val statsborgerskap = listOf(Statsborgerskap("", LocalDate.now(), LocalDate.now()))
+    private val statsborgerskap = listOf(Statsborgerskap("", LocalDate.now(), LocalDate.now(), metadata = Historisk(false)))
 
     val pdlSøkerData =
         PdlSøkerData(
