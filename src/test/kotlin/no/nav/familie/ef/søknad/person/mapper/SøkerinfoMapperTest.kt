@@ -25,7 +25,6 @@ import no.nav.familie.ef.søknad.person.dto.PdlBarn
 import no.nav.familie.ef.søknad.person.dto.PdlSøker
 import no.nav.familie.ef.søknad.person.dto.Sivilstand
 import no.nav.familie.ef.søknad.person.dto.Sivilstandstype.UOPPGITT
-import no.nav.familie.ef.søknad.person.dto.Statsborgerskap
 import no.nav.familie.ef.søknad.person.dto.Vegadresse
 import no.nav.familie.ef.søknad.person.dto.visningsnavn
 import no.nav.familie.sikkerhet.EksternBrukerUtils
@@ -353,35 +352,6 @@ internal class SøkerinfoMapperTest {
                 barn(bostedsadresseBarn(matrikkeladresse = matrikkeladresseBarn(null))),
             ),
         ).isFalse
-    }
-
-    @Test
-    fun `Skal filtrere bort utgått statsborgerskap og ikke filtrere hvis null verdi`() {
-        val pdlSøker =
-            PdlSøker(
-                adressebeskyttelse = listOf(),
-                bostedsadresse = listOf(),
-                forelderBarnRelasjon = listOf(),
-                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
-                sivilstand = listOf(),
-                statsborgerskap = listOf(Statsborgerskap("NOR", null, LocalDate.now().minusYears(2))),
-                fødselsdato = lagFødseldato(28),
-            )
-        val pdlSøker2 =
-            PdlSøker(
-                adressebeskyttelse = listOf(),
-                bostedsadresse = listOf(),
-                forelderBarnRelasjon = listOf(),
-                navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
-                sivilstand = listOf(),
-                statsborgerskap = listOf(Statsborgerskap("NOR", null, null)),
-                fødselsdato = lagFødseldato(28),
-            )
-        val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), mapOf())
-        val person2 = søkerinfoMapper.mapTilSøkerinfo(pdlSøker2, mapOf("999" to barn), mapOf())
-
-        assertThat(person.søker.statsborgerskap).isEqualTo("")
-        assertThat(person2.søker.statsborgerskap).isEqualTo("NORGE")
     }
 
     @Test
