@@ -160,9 +160,7 @@ internal class SøkerinfoMapper(
                 postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ",
             )
 
-        val statsborgerskapListe =
-            statsborgerskap
-                .joinToString(", ") { hentLand(it.land) }
+        val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
 
         val sivilstand: Sivilstand = sivilstand.firstOrNull() ?: Sivilstand(type = Sivilstandstype.UOPPGITT)
 
