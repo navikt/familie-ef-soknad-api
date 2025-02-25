@@ -6,7 +6,6 @@ import no.nav.familie.ef.søknad.person.dto.Bostedsadresse
 import no.nav.familie.ef.søknad.person.dto.Familierelasjonsrolle
 import no.nav.familie.ef.søknad.person.dto.ForelderBarnRelasjon
 import no.nav.familie.ef.søknad.person.dto.Fødselsdato
-import no.nav.familie.ef.søknad.person.dto.Historisk
 import no.nav.familie.ef.søknad.person.dto.Navn
 import no.nav.familie.ef.søknad.person.dto.PdlSøker
 import no.nav.familie.ef.søknad.person.dto.Sivilstand
@@ -72,13 +71,11 @@ class PdlClientConfig {
                 land = "NOR",
                 gyldigFraOgMed = startdato,
                 gyldigTilOgMed = null,
-                metadata = Historisk(false),
             ),
             Statsborgerskap(
                 land = "SWE",
                 gyldigFraOgMed = startdato.minusYears(3),
                 gyldigTilOgMed = startdato,
-                metadata = Historisk(false),
             ),
         )
 

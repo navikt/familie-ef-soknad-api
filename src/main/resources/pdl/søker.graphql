@@ -38,9 +38,6 @@ query($ident: ID!){
             land
             gyldigFraOgMed
             gyldigTilOgMed
-            metadata{
-                historisk
-            }
         }
     }
 }
