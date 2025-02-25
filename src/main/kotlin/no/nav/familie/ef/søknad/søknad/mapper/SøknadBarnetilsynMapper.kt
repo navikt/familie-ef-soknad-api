@@ -33,7 +33,7 @@ class SøknadBarnetilsynMapper {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
 
-        logger.info("DEBUG MODE --- SøknadOvergamgstønadDto sin locale er: ${dto.locale}")
+        logger.info("DEBUG MODE --- SøknadBarnetilsynDto sin locale er: ${dto.locale}")
         logger.info("DEBUG MODE --- Språkkontekst er: ${språk()}")
 
         val barnetilsynSøknad =
