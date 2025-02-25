@@ -9,11 +9,13 @@ import no.nav.familie.ef.søknad.søknad.domain.PersonTilGjenbruk
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.søknad.mapper.FellesMapper.mapInnsendingsdetaljer
+import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper.Companion.logger
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.utils.Språk
 import no.nav.familie.ef.søknad.utils.kontekst
 import no.nav.familie.ef.søknad.utils.lagDokumentasjonWrapper
+import no.nav.familie.ef.søknad.utils.språk
 import no.nav.familie.ef.søknad.utils.tilKontrakt
 import no.nav.familie.kontrakter.ef.søknad.BarnetilsynDokumentasjon
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
@@ -30,6 +32,9 @@ class SøknadBarnetilsynMapper {
     ): SøknadMedVedlegg<SøknadBarnetilsyn> {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
+
+        logger.info("DEBUG MODE --- SøknadOvergamgstønadDto sin locale er: ${dto.locale}")
+        logger.info("DEBUG MODE --- Språkkontekst er: ${språk()}")
 
         val barnetilsynSøknad =
             SøknadBarnetilsyn(

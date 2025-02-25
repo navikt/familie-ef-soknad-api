@@ -2,11 +2,13 @@ package no.nav.familie.ef.søknad.søknad.mapper
 
 import no.nav.familie.ef.søknad.søknad.domain.DokumentIdentifikator
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
+import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper.Companion.logger
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.DokumentfeltUtil.dokumentfelt
 import no.nav.familie.ef.søknad.utils.Språk
 import no.nav.familie.ef.søknad.utils.kontekst
 import no.nav.familie.ef.søknad.utils.lagDokumentasjonWrapper
+import no.nav.familie.ef.søknad.utils.språk
 import no.nav.familie.ef.søknad.utils.tilKontrakt
 import no.nav.familie.kontrakter.ef.søknad.SkolepengerDokumentasjon
 import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
@@ -23,6 +25,10 @@ class SøknadSkolepengerMapper {
     ): SøknadMedVedlegg<SøknadSkolepenger> {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
+
+        logger.info("DEBUG MODE --- SøknadOvergamgstønadDto sin locale er: ${dto.locale}")
+        logger.info("DEBUG MODE --- Språkkontekst er: ${språk()}")
+
         val søknadSkolepenger =
             SøknadSkolepenger(
                 innsendingsdetaljer = FellesMapper.mapInnsendingsdetaljer(innsendingMottatt, dto.datoPåbegyntSøknad, dto.locale),
