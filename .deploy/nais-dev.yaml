@@ -45,10 +45,10 @@ spec:
         - application: familie-ef-ettersending
         - application: familie-ef-minside
         - application: tokenx-token-generator
-          namespace: aura
+          namespace: nais
           cluster: dev-gcp
         - application: wonderwalled-idporten
-          namespace: aura
+          namespace: nais
           cluster: dev-gcp
     outbound:
       rules:
