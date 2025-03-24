@@ -4,7 +4,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
-import no.nav.familie.ef.søknad.infrastruktur.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.mock.søkerMedDefaultVerdier
 import no.nav.familie.ef.søknad.mock.søknadDto
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
@@ -31,9 +30,6 @@ class SøknadOvergangsstønadControllerTestConfiguration {
     @Bean
     fun søknadService(): SøknadService = mockk()
 
-    @Primary
-    @Bean
-    fun featureToggleService(): FeatureToggleService = mockk()
 }
 
 @ActiveProfiles("overgangsstonad-controller-test")
@@ -41,8 +37,6 @@ internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest()
     @Autowired
     lateinit var søknadService: SøknadService
 
-    @Autowired
-    lateinit var featureToggleService: FeatureToggleService
 
     val tokenSubject = "12345678911"
 

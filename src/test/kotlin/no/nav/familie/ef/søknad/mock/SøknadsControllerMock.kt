@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad.mock
 
-import no.nav.familie.ef.søknad.infrastruktur.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
@@ -15,9 +14,7 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping(path = ["/api/soknad/test"], produces = [MediaType.APPLICATION_JSON_VALUE])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
-class SøknadsControllerMock(
-    val featureToggleService: FeatureToggleService,
-) {
+class SøknadsControllerMock() {
     private val innsendingMottatt = LocalDateTime.now()
 
     @PostMapping

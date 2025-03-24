@@ -1,6 +1,5 @@
 package no.nav.familie.ef.søknad.søknad
 
-import no.nav.familie.ef.søknad.infrastruktur.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.person.OppslagService
 import no.nav.familie.ef.søknad.søknad.domain.Arbeidssøker
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
@@ -20,7 +19,6 @@ import java.time.LocalDateTime
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 class RegistrerArbeidsaktivitetController(
     val skjemaService: SkjemaService,
-    val featureToggleService: FeatureToggleService,
     private val oppslagService: OppslagService,
 ) {
     @PostMapping

@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad.søknad
 
 import no.nav.familie.ef.søknad.infrastruktur.exception.ApiFeil
-import no.nav.familie.ef.søknad.infrastruktur.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
@@ -21,7 +20,6 @@ import java.time.LocalDateTime
 @Validated
 class SøknadSkolepengerController(
     val søknadService: SøknadService,
-    val featureToggleService: FeatureToggleService,
 ) {
     @PostMapping
     fun sendInn(
