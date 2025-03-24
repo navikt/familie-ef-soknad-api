@@ -29,14 +29,12 @@ class SøknadOvergangsstønadControllerTestConfiguration {
     @Primary
     @Bean
     fun søknadService(): SøknadService = mockk()
-
 }
 
 @ActiveProfiles("overgangsstonad-controller-test")
 internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest() {
     @Autowired
     lateinit var søknadService: SøknadService
-
 
     val tokenSubject = "12345678911"
 
@@ -53,7 +51,6 @@ internal class SøknadOvergangsstønadControllerTest : OppslagSpringRunnerTest()
                 "Mottatt søknad: $søknad",
                 LocalDateTime.now(),
             )
-        every { featureToggleService.isEnabled(any()) } returns true
 
         val response =
             restTemplate.exchange<Kvittering>(

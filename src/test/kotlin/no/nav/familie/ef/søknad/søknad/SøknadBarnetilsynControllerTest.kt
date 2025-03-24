@@ -31,7 +31,6 @@ class SøknadBarnetilsynControllerTestConfiguration {
     @Primary
     @Bean
     fun søknadService(): SøknadService = mockk()
-
 }
 
 @ActiveProfiles("overgangsstonad-controller-test")
@@ -64,7 +63,6 @@ internal class SøknadBarnetilsynControllerTest : OppslagSpringRunnerTest() {
                 "Mottatt søknad: $søknad",
                 LocalDateTime.now(),
             )
-        every { featureToggleService.isEnabled(any()) } returns true
 
         val response =
             restTemplate.exchange<Kvittering>(

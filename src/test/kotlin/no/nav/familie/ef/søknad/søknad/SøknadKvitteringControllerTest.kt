@@ -37,7 +37,6 @@ class SøknadKvitteringControllerTest {
         @Primary
         @Bean
         fun søknadService(): SøknadService = mockk()
-
     }
 
     @Nested
@@ -61,7 +60,6 @@ class SøknadKvitteringControllerTest {
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
                 )
-            every { featureToggleService.isEnabled(any()) } returns true
 
             val response =
                 restTemplate.exchange<Kvittering>(
@@ -111,7 +109,6 @@ class SøknadKvitteringControllerTest {
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
                 )
-            every { featureToggleService.isEnabled(any()) } returns true
 
             val response =
                 restTemplate.exchange<Kvittering>(
@@ -162,7 +159,6 @@ class SøknadKvitteringControllerTest {
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
                 )
-            every { featureToggleService.isEnabled(any()) } returns true
 
             val response =
                 restTemplate.exchange<Kvittering>(
