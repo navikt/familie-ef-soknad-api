@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -8,7 +8,7 @@ internal class SivilstandsdetaljerMapperTest {
     @Test
     fun `mapSivilstandsdetaljer mapper dto fra frontend til forventet Sivilstandsdetaljer`() {
         // Given
-        val sivilstatus = søknadDto().sivilstatus
+        val sivilstatus = søknadOvergangsstønadDto().sivilstatus
         // When
         val kontrakt = SivilstandsdetaljerMapper.map(sivilstatus, dokumentMap()).verdi
         // Then

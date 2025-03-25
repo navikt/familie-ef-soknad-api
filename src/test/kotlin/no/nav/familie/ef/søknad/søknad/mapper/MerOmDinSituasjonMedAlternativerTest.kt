@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.domain.Situasjon
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import org.assertj.core.api.Assertions.assertThat
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 internal class MerOmDinSituasjonMedAlternativerTest {
     // Gitt
-    private val søknad = søknadDto()
+    private val søknad = søknadOvergangsstønadDto()
 
     // Når
     private val situasjon = SituasjonsMapper.map(søknad, mapOf())

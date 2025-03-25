@@ -22,74 +22,43 @@ class SøknadService(
     private val barnetilsynMapper: SøknadBarnetilsynMapper,
     private val skolepengerMapper: SøknadSkolepengerMapper,
 ) {
-    fun sendInn(
+    fun sendInnSøknadOvergangsstønad(
         søknad: SøknadOvergangsstønadDto,
         innsendingMottatt: LocalDateTime,
     ): Kvittering {
         val søknadRequestData = overgangsstønadMapper.mapTilIntern(søknad, innsendingMottatt)
-        val kvittering = mottakClient.sendInn(søknadRequestData)
+        val kvittering = mottakClient.sendInnSøknadOvergangsstønad(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-    fun sendInn(
+    fun sendInnSøknadBarnetilsyn(
         søknad: SøknadBarnetilsynDto,
         innsendingMottatt: LocalDateTime,
     ): Kvittering {
         val søknadRequestData = barnetilsynMapper.mapTilIntern(søknad, innsendingMottatt)
-        val kvittering = mottakClient.sendInnBarnetilsynsøknad(søknadRequestData)
+        val kvittering = mottakClient.sendInnSøknadBarnetilsyn(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-    fun sendInn(
+    fun sendInnSøknadSkolepenger(
         søknad: SøknadSkolepengerDto,
         innsendingMottatt: LocalDateTime,
     ): Kvittering {
         val søknadRequestData = skolepengerMapper.mapTilIntern(søknad, innsendingMottatt)
-        val kvittering = mottakClient.sendInnSkolepenger(søknadRequestData)
+        val kvittering = mottakClient.sendInnSøknadSkolepenger(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-    fun sendInnSøknadskvittering(
-        søknad: SøknadOvergangsstønadDto,
-        innsendingMottatt: LocalDateTime,
-    ): Kvittering {
-        val søknadRequestData = overgangsstønadMapper.mapTilIntern(søknad, innsendingMottatt)
-        val kvittering = mottakClient.sendInnSøknadskvitteringOvergangsstønad(søknadRequestData)
-        return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
-    }
-
-    fun sendInnSøknadskvitteringBarnetilsyn(
-        søknad: SøknadBarnetilsynDto,
-        innsendingMottatt: LocalDateTime,
-    ): Kvittering {
-        val søknadRequestData = barnetilsynMapper.mapTilIntern(søknad, innsendingMottatt)
-        val kvittering = mottakClient.sendInnSøknadskvitteringBarnetilsyn(søknadRequestData)
-        return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
-    }
-
-    fun sendInnSøknadskvitteringSkolepenger(
-        søknad: SøknadSkolepengerDto,
-        innsendingMottatt: LocalDateTime,
-    ): Kvittering {
-        val søknadRequestData = skolepengerMapper.mapTilIntern(søknad, innsendingMottatt)
-        val kvittering = mottakClient.sendInnSøknadskvitteringSkolepenger(søknadRequestData)
-        return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
-    }
-
-    fun sendInnSøknadskvitteringArbeidssøker(
+    fun sendInnArbeidssøkerSkjema(
         arbeidssøker: Arbeidssøker,
         fnr: String,
         navn: String,
         innsendingMottatt: LocalDateTime,
     ): Kvittering {
         val søknadDto = SkjemaMapper.mapTilKontrakt(arbeidssøker, fnr, navn, innsendingMottatt)
-        val kvittering = mottakClient.sendInnSøknadskvitteringArbeidssøker(søknadDto)
+        val kvittering = mottakClient.sendInnArbeidssøkerSkjema(søknadDto)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
-
-    fun hentSøknadPdf(søknadId: String): ByteArray = mottakClient.hentSøknadKvittering(søknadId)
-
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknad())
 
     fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknadKvittering())
 

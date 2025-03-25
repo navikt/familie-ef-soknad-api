@@ -29,10 +29,6 @@ class MottakClientMock {
     fun mottakClient(): MottakClient {
         val mottakClient: MottakClient = mockk()
 
-        every { mottakClient.sendInn(any()) } returns KvitteringDto("OK MOCK")
-        every { mottakClient.sendInnArbeidsRegistreringsskjema(any()) } returns KvitteringDto("OK MOCK")
-        every { mottakClient.sendInnBarnetilsynsøknad(any()) } returns KvitteringDto("OK MOCK")
-        every { mottakClient.sendInnSkolepenger(any()) } returns KvitteringDto("OK MOCK")
         every { mottakClient.sendInnEttersending(any()) } returns KvitteringDto("OK MOCK")
         every { mottakClient.ping() } returns Unit
         every { mottakClient.hentSøknaderMedDokumentasjonsbehov(any()) } returns søknaderMedDokumentasjonsbehov

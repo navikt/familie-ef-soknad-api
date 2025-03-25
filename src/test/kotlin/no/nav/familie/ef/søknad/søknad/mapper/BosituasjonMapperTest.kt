@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.domain.Bosituasjon
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.kontrakter.felles.Fødselsnummer
@@ -11,7 +11,7 @@ import java.io.File
 import java.time.LocalDate
 
 internal class BosituasjonMapperTest {
-    private val bosituasjon = søknadDto().bosituasjon
+    private val bosituasjon = søknadOvergangsstønadDto().bosituasjon
     private val bosituasjonSamboer = getBosituasjon("bosituasjonSamboer.json")
     private val bosituasjonGifteplaner = getBosituasjon("sivilstandsplaner.json")
     private val dokumenter = emptyMap<String, DokumentasjonWrapper>()
