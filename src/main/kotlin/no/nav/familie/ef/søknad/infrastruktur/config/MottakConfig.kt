@@ -32,10 +32,10 @@ data class MottakConfig(
             .toUri()
 
     companion object {
-        private const val PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD = "/soknadskvittering/overgangsstonad"
-        private const val PATH_SEND_INN_SØKNAD_BARNETILSYN = "/soknadskvittering/barnetilsyn"
-        private const val PATH_SEND_INN_SØKNAD_SKOLEPENGER = "/soknadskvittering/skolepenger"
-        private const val PATH_SEND_INN_ARBEIDSSOKER_SKJEMA = "/soknadskvittering/arbeidssoker"
+        private const val PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD = "/soknad/overgangsstonad"
+        private const val PATH_SEND_INN_SØKNAD_BARNETILSYN = "/soknad/barnetilsyn"
+        private const val PATH_SEND_INN_SØKNAD_SKOLEPENGER = "/soknad/skolepenger"
+        private const val PATH_SEND_INN_ARBEIDSSOKER_SKJEMA = "/soknad/arbeidssoker"
         private const val PATH_HENT_SØKNADER = "/person/soknader"
         private const val PATH_SEND_INN_ETTERSENDING = "/ettersending"
         private const val PATH_HENT_ETTERSENDING_FOR_PERSON = "/ettersending/person"

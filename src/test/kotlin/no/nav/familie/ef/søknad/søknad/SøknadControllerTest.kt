@@ -68,7 +68,7 @@ class SøknadControllerTest {
 
             val response =
                 restTemplate.exchange<Kvittering>(
-                    localhost("/api/soknadskvittering/overgangsstonad"),
+                    localhost("/api/soknad/overgangsstonad"),
                     POST,
                     HttpEntity(søknad, headers),
                 )
@@ -84,7 +84,7 @@ class SøknadControllerTest {
 
             val response =
                 restTemplate.exchange<Any>(
-                    localhost("/api/soknadskvittering/overgangsstonad"),
+                    localhost("/api/soknad/overgangsstonad"),
                     POST,
                     HttpEntity(søknad, headers),
                 )
@@ -108,7 +108,7 @@ class SøknadControllerTest {
 
             val response =
                 restTemplate.exchange<Kvittering>(
-                    localhost("/api/soknadskvittering/barnetilsyn"),
+                    localhost("/api/soknad/barnetilsyn"),
                     POST,
                     HttpEntity(søknad, headers),
                 )
@@ -124,7 +124,7 @@ class SøknadControllerTest {
 
             val response =
                 restTemplate.exchange<Any>(
-                    localhost("/api/soknadskvittering/barnetilsyn"),
+                    localhost("/api/soknad/barnetilsyn"),
                     POST,
                     HttpEntity(søknad, headers),
                 )
@@ -154,7 +154,7 @@ class SøknadControllerTest {
 
             val response =
                 restTemplate.exchange<Kvittering>(
-                    localhost("/api/soknadskvittering/skolepenger"),
+                    localhost("/api/soknad/skolepenger"),
                     POST,
                     HttpEntity(søknad, headers),
                 )
@@ -170,7 +170,7 @@ class SøknadControllerTest {
 
             val response =
                 restTemplate.exchange<Any>(
-                    localhost("/api/soknadskvittering/skolepenger"),
+                    localhost("/api/soknad/skolepenger"),
                     POST,
                     HttpEntity(søknad, headers),
                 )
