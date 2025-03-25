@@ -18,7 +18,6 @@ class FeatureToggleController(
         setOf(
             Toggle.NYNORSK,
             Toggle.NY_PDFKVITTERING,
-            Toggle.HENT_SIST_INNSENDTE_SOKNAD_PER_STONAD,
         )
 
     @GetMapping

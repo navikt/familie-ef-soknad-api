@@ -6,7 +6,6 @@ enum class Toggle(
 ) {
     NYNORSK("familie.ef.soknad.nynorsk"),
     NY_PDFKVITTERING("familie.ef.soknad-ny-pdfkvittering"),
-    HENT_SIST_INNSENDTE_SOKNAD_PER_STONAD("familie.ef.soknad.frontend.hent-sist-innsendte-soknad-per-stonad"),
     ;
 
     companion object {
