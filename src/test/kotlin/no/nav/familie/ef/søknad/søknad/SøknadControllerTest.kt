@@ -6,12 +6,11 @@ import io.mockk.verify
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
 import no.nav.familie.ef.søknad.infrastruktur.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.mock.søkerMedDefaultVerdier
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadBarnetilsynDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
+import no.nav.familie.ef.søknad.mock.søknadSkolepengerDto
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.domain.Person
-import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
-import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
-import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
@@ -23,15 +22,12 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpEntity
-import org.springframework.http.HttpMethod
 import org.springframework.http.HttpMethod.POST
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
-import java.io.File
 import java.time.LocalDateTime
-import kotlin.test.assertTrue
 
-class SøknadKvitteringControllerTest {
+class SøknadControllerTest {
     @Profile("soknad-controller-test")
     @Configuration
     class SøknadControllerTestConfiguration {
@@ -46,7 +42,7 @@ class SøknadKvitteringControllerTest {
 
     @Nested
     @ActiveProfiles("soknad-controller-test")
-    internal inner class SøknadKvitteringControllerTest : OppslagSpringRunnerTest() {
+    internal inner class SøknadControllerTest : OppslagSpringRunnerTest() {
         @Autowired
         lateinit var søknadService: SøknadService
 
@@ -61,9 +57,9 @@ class SøknadKvitteringControllerTest {
         }
 
         @Test
-        fun `overgangsstønad sendInn returnerer riktig kvittering med riktig Bearer token`() {
-            val søknad = søknadOvergangsstønadDto(tokenSubject)
-            every { søknadService.sendInnSøknadskvittering(søknad, any()) } returns
+        fun `innsending av søknad for overgangsstønad skal returnere kvittering med riktig Bearer token`() {
+            val søknad = søknadOvergangsstønadDto().copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf()))
+            every { søknadService.sendInnSøknadOvergangsstønad(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
@@ -73,7 +69,7 @@ class SøknadKvitteringControllerTest {
             val response =
                 restTemplate.exchange<Kvittering>(
                     localhost("/api/soknadskvittering/overgangsstonad"),
-                    HttpMethod.POST,
+                    POST,
                     HttpEntity(søknad, headers),
                 )
 
@@ -81,39 +77,29 @@ class SøknadKvitteringControllerTest {
             assertThat(response.body?.text).isEqualTo("ok")
         }
 
-        private fun søknadOvergangsstønadDto(fnr: String) =
-            søknadDto()
-                .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = fnr), barn = listOf()))
-
         @Test
-        fun `overgangsstønad sendInn returnerer 403 ved ulik fnr i token og søknad`() {
-            val søknad = søknadDto()
+        fun `innsending av overgangsstønad skal returnere 403 ved ulik fnr i token og søknad`() {
+            val søknad = søknadOvergangsstønadDto()
+            assertThat(søknad.person.søker.fnr).isNotEqualTo(tokenSubject)
 
             val response =
                 restTemplate.exchange<Any>(
                     localhost("/api/soknadskvittering/overgangsstonad"),
-                    HttpMethod.POST,
+                    POST,
                     HttpEntity(søknad, headers),
                 )
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
-            verify(exactly = 0) { søknadService.sendInn(søknad, any()) }
+            verify(exactly = 0) { søknadService.sendInnSøknadOvergangsstønad(søknad, any()) }
         }
 
-        fun søknadBarnetilsynDto(): SøknadBarnetilsynDto =
-            objectMapper
-                .readValue(
-                    File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
-                    SøknadBarnetilsynDto::class.java,
-                )
-
         @Test
-        fun `barnetilsyn sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
+        fun `innsending av søknad for barnetilsyn skal returnere kvittering med riktig Bearer token`() {
             val søknad =
                 søknadBarnetilsynDto()
                     .copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf()))
 
-            every { søknadService.sendInnSøknadskvitteringBarnetilsyn(søknad, any()) } returns
+            every { søknadService.sendInnSøknadBarnetilsyn(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
@@ -123,7 +109,7 @@ class SøknadKvitteringControllerTest {
             val response =
                 restTemplate.exchange<Kvittering>(
                     localhost("/api/soknadskvittering/barnetilsyn"),
-                    HttpMethod.POST,
+                    POST,
                     HttpEntity(søknad, headers),
                 )
 
@@ -132,30 +118,25 @@ class SøknadKvitteringControllerTest {
         }
 
         @Test
-        fun `barnetilsyn sendInn returnerer 403 ved ulik fnr i token og søknad`() {
-            val søknadBarnetilsynDto = søknadBarnetilsynDto()
+        fun `innsending av søknad for barnetilsyn skal returnere 403 ved ulik fnr i token og søknad`() {
+            val søknad = søknadBarnetilsynDto()
+            assertThat(søknad.person.søker.fnr).isNotEqualTo(tokenSubject)
 
             val response =
                 restTemplate.exchange<Any>(
                     localhost("/api/soknadskvittering/barnetilsyn"),
-                    HttpMethod.POST,
-                    HttpEntity(søknadBarnetilsynDto, headers),
+                    POST,
+                    HttpEntity(søknad, headers),
                 )
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
-            verify(exactly = 0) { søknadService.sendInnSøknadskvitteringBarnetilsyn(søknadBarnetilsynDto, any()) }
+            verify(exactly = 0) { søknadService.sendInnSøknadBarnetilsyn(søknad, any()) }
         }
 
-        fun søknadSkolepenger() =
-            objectMapper.readValue(
-                File("src/test/resources/skolepenger/skolepenger.json"),
-                SøknadSkolepengerDto::class.java,
-            )
-
         @Test
-        fun `skolepenger sendInn returnerer kvittering riktig kvittering med riktig Bearer token`() {
+        fun `innsending av søknad for skolepenger skal returnere kvittering med riktig Bearer token`() {
             val søknad =
-                søknadSkolepenger()
+                søknadSkolepengerDto()
                     .copy(
                         person =
                             Person(
@@ -164,7 +145,7 @@ class SøknadKvitteringControllerTest {
                             ),
                     )
 
-            every { søknadService.sendInnSøknadskvitteringSkolepenger(søknad, any()) } returns
+            every { søknadService.sendInnSøknadSkolepenger(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
@@ -183,33 +164,19 @@ class SøknadKvitteringControllerTest {
         }
 
         @Test
-        fun `skolepenger sendInn returnerer 403 ved ulik fnr i token og søknad`() {
-            val søknadSkolepengerDto = søknadSkolepenger()
-            // guard
-            assertThat(søknadSkolepengerDto.person.søker.fnr).isNotEqualTo(tokenSubject)
+        fun `innsending av søknad for skolepenger skal returnere 403 ved ulik fnr i token og søknad`() {
+            val søknad = søknadSkolepengerDto()
+            assertThat(søknad.person.søker.fnr).isNotEqualTo(tokenSubject)
 
             val response =
                 restTemplate.exchange<Any>(
                     localhost("/api/soknadskvittering/skolepenger"),
                     POST,
-                    HttpEntity(søknadSkolepengerDto, headers),
+                    HttpEntity(søknad, headers),
                 )
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
-            verify(exactly = 0) { søknadService.sendInnSøknadskvitteringSkolepenger(søknadSkolepengerDto, any()) }
-        }
-
-        @Test
-        fun `mottak returnerer pdf kvittering`() {
-            every { søknadService.hentSøknadPdf("1") } returns "pdf".toByteArray()
-
-            val response =
-                restTemplate.exchange<ByteArray>(
-                    localhost("/api/soknadskvittering/1"),
-                    HttpMethod.GET,
-                    HttpEntity(null, headers),
-                )
-            assertTrue { response.body?.contentEquals("pdf".toByteArray()) ?: false }
+            verify(exactly = 0) { søknadService.sendInnSøknadSkolepenger(søknad, any()) }
         }
     }
 }

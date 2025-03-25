@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -9,7 +9,7 @@ val dokumenter = dokumentMap()
 
 internal class BarnMapperTest {
     // Gitt
-    private val søknadDto = søknadDto()
+    private val søknadDto = søknadOvergangsstønadDto()
 
     // Når
     private val terminbarnSøknad =

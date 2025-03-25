@@ -1,12 +1,12 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 internal class ArbeidssøkerMapperTest {
     // Gitt
-    private val søknadDto = søknadDto()
+    private val søknadDto = søknadOvergangsstønadDto()
 
     // Når
     private val aktivitet = AktivitetsMapper.map(søknadDto.aktivitet, mapOf()).verdi

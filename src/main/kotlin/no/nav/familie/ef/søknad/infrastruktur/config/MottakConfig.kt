@@ -8,14 +8,10 @@ import java.net.URI
 data class MottakConfig(
     val uri: URI,
 ) {
-    internal val sendInnOvergangsstønadUri = byggUri(PATH_SEND_INN_OVERGANGSSTØNAD)
-    internal val sendInnOvergangsstønadKvitteringUri = byggUri(PATH_SEND_INN_OVERGANGSSTØNAD_KVITTERING)
-    internal val sendInnBarnetilsynKvitteringUri = byggUri(PATH_SEND_INN_BARNETILSYNSØKNAD_KVITTERING)
-    internal val sendInnSkolepengerKvitteringUri = byggUri(PATH_SEND_INN_SKOLEPENGERSØKNAD_KVITTERING)
-    internal val sendInnArbeidssøkerSkjemaKvitteringUri = byggUri(PATH_SEND_INN_ARBEIDSSOKER_SKJEMA_KVITTTERING)
-    internal val sendInnSkjemaArbeidUri = byggUri(PATH_SEND_INN_ARBEIDS_SKJEMA)
-    internal val sendInnBarnetilsynUri = byggUri(PATH_SEND_INN_BARNETILSYNSØKNAD)
-    internal val sendInnSkolepengerUri = byggUri(PATH_SEND_INN_SKOLEPENGERSØKNAD)
+    internal val sendInnOvergangsstønadKvitteringUri = byggUri(PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD)
+    internal val sendInnBarnetilsynKvitteringUri = byggUri(PATH_SEND_INN_SØKNAD_BARNETILSYN)
+    internal val sendInnSkolepengerKvitteringUri = byggUri(PATH_SEND_INN_SØKNAD_SKOLEPENGER)
+    internal val sendInnArbeidssøkerSkjemaKvitteringUri = byggUri(PATH_SEND_INN_ARBEIDSSOKER_SKJEMA)
 
     internal val hentSøknaderMedDokumentasjonsbehovUri = byggUri(PATH_HENT_SØKNADER)
     internal val sendInnEttersendingUri = byggUri(PATH_SEND_INN_ETTERSENDING)
@@ -36,14 +32,10 @@ data class MottakConfig(
             .toUri()
 
     companion object {
-        private const val PATH_SEND_INN_OVERGANGSSTØNAD = "/soknad/overgangsstonad"
-        private const val PATH_SEND_INN_OVERGANGSSTØNAD_KVITTERING = "/soknadskvittering/overgangsstonad"
-        private const val PATH_SEND_INN_BARNETILSYNSØKNAD_KVITTERING = "/soknadskvittering/barnetilsyn"
-        private const val PATH_SEND_INN_SKOLEPENGERSØKNAD_KVITTERING = "/soknadskvittering/skolepenger"
-        private const val PATH_SEND_INN_ARBEIDSSOKER_SKJEMA_KVITTTERING = "/soknadskvittering/arbeidssoker"
-        private const val PATH_SEND_INN_ARBEIDS_SKJEMA = "/skjema"
-        private const val PATH_SEND_INN_BARNETILSYNSØKNAD = "/soknad/barnetilsyn"
-        private const val PATH_SEND_INN_SKOLEPENGERSØKNAD = "/soknad/skolepenger"
+        private const val PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD = "/soknadskvittering/overgangsstonad"
+        private const val PATH_SEND_INN_SØKNAD_BARNETILSYN = "/soknadskvittering/barnetilsyn"
+        private const val PATH_SEND_INN_SØKNAD_SKOLEPENGER = "/soknadskvittering/skolepenger"
+        private const val PATH_SEND_INN_ARBEIDSSOKER_SKJEMA = "/soknadskvittering/arbeidssoker"
         private const val PATH_HENT_SØKNADER = "/person/soknader"
         private const val PATH_SEND_INN_ETTERSENDING = "/ettersending"
         private const val PATH_HENT_ETTERSENDING_FOR_PERSON = "/ettersending/person"
