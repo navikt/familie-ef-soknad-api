@@ -1,13 +1,13 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class AdresseopplysningerMapperTest {
-    private val søknadDto = søknadDto()
+    private val søknadDto = søknadOvergangsstønadDto()
     private val adresseopplysningerData =
         AdresseopplysningerData(søknadDto.søkerBorPåRegistrertAdresse, søknadDto.adresseopplysninger)
     private val dokumenter = mapOf<String, DokumentasjonWrapper>()

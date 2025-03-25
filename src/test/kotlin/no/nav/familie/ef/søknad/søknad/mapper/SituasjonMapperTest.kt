@@ -1,12 +1,12 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 internal class SituasjonMapperTest {
-    private val søknadDto = søknadDto()
+    private val søknadDto = søknadOvergangsstønadDto()
     private val situasjon = SituasjonsMapper.map(søknadDto, mapOf()).verdi
 
     @Test

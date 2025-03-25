@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.domain.Bosituasjon
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
@@ -14,7 +14,7 @@ internal class SivilstandsplanerMapperTest {
     @Test
     fun `Vi mapper sivilstandsplaner verdi false`() {
         // Given
-        val bosituasjonUtenGifteplaner = søknadDto().bosituasjon
+        val bosituasjonUtenGifteplaner = søknadOvergangsstønadDto().bosituasjon
         // When
         val sivilstandsplaner = SivilstandsplanerMapper.map(bosituasjonUtenGifteplaner).verdi
         // Then

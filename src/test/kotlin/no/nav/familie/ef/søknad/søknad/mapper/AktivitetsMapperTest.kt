@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import no.nav.familie.kontrakter.ef.søknad.Aksjeselskap
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -9,7 +9,7 @@ import java.time.LocalDate
 
 internal class AktivitetsMapperTest {
     // Gitt
-    private val aktivitet = søknadDto().aktivitet
+    private val aktivitet = søknadOvergangsstønadDto().aktivitet
 
     // Når
     private val aktivitetMapped = AktivitetsMapper.map(aktivitet, mapOf()).verdi
