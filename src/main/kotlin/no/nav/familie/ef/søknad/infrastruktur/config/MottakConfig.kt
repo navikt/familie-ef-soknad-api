@@ -13,7 +13,7 @@ data class MottakConfig(
     internal val sendInnSøknadSkolepengerUri = byggUri(PATH_SEND_INN_SØKNAD_SKOLEPENGER)
     internal val sendInnSkjemaArbeidssøkerUri = byggUri(PATH_SEND_INN_SKJEMA_ARBEIDSSØKER)
     internal val hentForrigeSøknadBarnetilsynUri = byggUri(PATH_HENT_FORRIGE_SØKNAD_BARNETILSYN)
-    internal val hentSistInnsendteSøknadPerStønadUri = byggUri(PATH_HENT_SIST_INNSENDTe_SØKNAD_PER_STØNAD)
+    internal val hentSistInnsendteSøknadPerStønadUri = byggUri(PATH_HENT_SIST_INNSENDTE_SØKNAD_PER_STØNAD)
 
     internal val sendInnEttersendingUri = byggUri(PATH_SEND_INN_ETTERSENDING)
     internal val hentEttersendingForPersonUri = byggUri(PATH_HENT_ETTERSENDING_FOR_PERSON)
@@ -34,7 +34,7 @@ data class MottakConfig(
         private const val PATH_SEND_INN_SØKNAD_SKOLEPENGER = "/soknad/skolepenger"
         private const val PATH_SEND_INN_SKJEMA_ARBEIDSSØKER = "/soknad/arbeidssoker"
         private const val PATH_HENT_FORRIGE_SØKNAD_BARNETILSYN = "/soknad/barnetilsyn/forrige"
-        private const val PATH_HENT_SIST_INNSENDTe_SØKNAD_PER_STØNAD = "/soknad/sist-innsendt-per-stonad"
+        private const val PATH_HENT_SIST_INNSENDTE_SØKNAD_PER_STØNAD = "/soknad/sist-innsendt-per-stonad"
         private const val PATH_SEND_INN_ETTERSENDING = "/ettersending"
         private const val PATH_HENT_ETTERSENDING_FOR_PERSON = "/ettersending/person"
         private const val PATH_HENT_SØKNADER = "/person/soknader"
