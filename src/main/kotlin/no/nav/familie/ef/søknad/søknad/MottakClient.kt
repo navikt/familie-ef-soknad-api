@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
-import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Service
@@ -48,39 +47,23 @@ class MottakClient(
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
-    fun sendInnSøknadOvergangsstønad(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto = postForEntity(config.sendInnOvergangsstønadKvitteringUri, søknadMedVedlegg)
+    fun sendInnSøknadOvergangsstønad(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto = postForEntity(config.sendInnSøknadOverganggstønadUri, søknadMedVedlegg)
 
-    fun sendInnSøknadBarnetilsyn(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto = postForEntity(config.sendInnBarnetilsynKvitteringUri, søknadMedVedlegg)
+    fun sendInnSøknadBarnetilsyn(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto = postForEntity(config.sendInnSøknadBarnetilsynUri, søknadMedVedlegg)
 
-    fun sendInnSøknadSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto = postForEntity(config.sendInnSkolepengerKvitteringUri, søknadMedVedlegg)
+    fun sendInnSøknadSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto = postForEntity(config.sendInnSøknadSkolepengerUri, søknadMedVedlegg)
 
-    fun sendInnArbeidssøkerSkjema(skjema: SkjemaForArbeidssøker): KvitteringDto = postForEntity(config.sendInnArbeidssøkerSkjemaKvitteringUri, skjema)
-
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsyn? =
-        getForEntity(
-            config.hentForrigeBarnetilsynSøknadUri,
-            HttpHeaders().medContentTypeJsonUTF8(),
-        )
+    fun sendInnArbeidssøkerSkjema(skjema: SkjemaForArbeidssøker): KvitteringDto = postForEntity(config.sendInnSkjemaArbeidssøkerUri, skjema)
 
     fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsyn? =
         getForEntity(
-            config.hentForrigeBarnetilsynSøknadUriKvittering,
+            config.hentForrigeSøknadBarnetilsynUri,
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
     fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> =
         getForEntity(
-            config.hentSistInnsendtSøknadPerStønad,
-            HttpHeaders().medContentTypeJsonUTF8(),
-        )
-
-    fun hentSøknadKvittering(søknadId: String): ByteArray =
-        getForEntity<ByteArray>(
-            UriComponentsBuilder
-                .fromUriString(
-                    "${config.hentSøknadKvitteringUri}/$søknadId",
-                ).build()
-                .toUri(),
+            config.hentSistInnsendteSøknadPerStønadUri,
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
