@@ -40,7 +40,7 @@ data class MottakConfig(
         private const val PATH_SEND_INN_ETTERSENDING = "/ettersending"
         private const val PATH_HENT_ETTERSENDING_FOR_PERSON = "/ettersending/person"
         private const val PATH_HENT_FORRIGE_BARNETILSYNSØKNAD = "/soknad/barnetilsyn/forrige"
-        private const val PATH_HENT_FORRIGE_BARNETILSYNSØKNAD_KVITTERING = "/soknadkvittering/barnetilsyn/forrige"
+        private const val PATH_HENT_FORRIGE_BARNETILSYNSØKNAD_KVITTERING = "/soknadskvittering/barnetilsyn/forrige"
         private const val PATH_PING = "/ping"
         private const val PATH_HENT_SOKNADKVITTERING = "/soknadskvittering"
         private const val PATH_HENT_SIST_INNSENDT_SØKNAD_PER_STØNAD = "/soknad/sist-innsendt-per-stonad"
