@@ -4,7 +4,6 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
-import no.nav.familie.ef.søknad.infrastruktur.featuretoggle.FeatureToggleService
 import no.nav.familie.ef.søknad.mock.søkerMedDefaultVerdier
 import no.nav.familie.ef.søknad.mock.søknadBarnetilsynDto
 import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
@@ -34,10 +33,6 @@ class SøknadControllerTest {
         @Primary
         @Bean
         fun søknadService(): SøknadService = mockk()
-
-        @Primary
-        @Bean
-        fun featureToggleService(): FeatureToggleService = mockk()
     }
 
     @Nested
@@ -45,9 +40,6 @@ class SøknadControllerTest {
     internal inner class SøknadControllerTest : OppslagSpringRunnerTest() {
         @Autowired
         lateinit var søknadService: SøknadService
-
-        @Autowired
-        lateinit var featureToggleService: FeatureToggleService
 
         val tokenSubject = "12345678911"
 
@@ -64,7 +56,6 @@ class SøknadControllerTest {
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
                 )
-            every { featureToggleService.isEnabled(any()) } returns true
 
             val response =
                 restTemplate.exchange<Kvittering>(
@@ -104,7 +95,6 @@ class SøknadControllerTest {
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
                 )
-            every { featureToggleService.isEnabled(any()) } returns true
 
             val response =
                 restTemplate.exchange<Kvittering>(
@@ -150,7 +140,6 @@ class SøknadControllerTest {
                     "Mottatt søknad: $søknad",
                     LocalDateTime.now(),
                 )
-            every { featureToggleService.isEnabled(any()) } returns true
 
             val response =
                 restTemplate.exchange<Kvittering>(
