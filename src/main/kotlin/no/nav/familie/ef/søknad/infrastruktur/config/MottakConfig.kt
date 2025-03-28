@@ -8,20 +8,17 @@ import java.net.URI
 data class MottakConfig(
     val uri: URI,
 ) {
-    internal val sendInnOvergangsstønadKvitteringUri = byggUri(PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD)
-    internal val sendInnBarnetilsynKvitteringUri = byggUri(PATH_SEND_INN_SØKNAD_BARNETILSYN)
-    internal val sendInnSkolepengerKvitteringUri = byggUri(PATH_SEND_INN_SØKNAD_SKOLEPENGER)
-    internal val sendInnArbeidssøkerSkjemaKvitteringUri = byggUri(PATH_SEND_INN_ARBEIDSSOKER_SKJEMA)
+    internal val sendInnSøknadOverganggstønadUri = byggUri(PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD)
+    internal val sendInnSøknadBarnetilsynUri = byggUri(PATH_SEND_INN_SØKNAD_BARNETILSYN)
+    internal val sendInnSøknadSkolepengerUri = byggUri(PATH_SEND_INN_SØKNAD_SKOLEPENGER)
+    internal val sendInnSkjemaArbeidssøkerUri = byggUri(PATH_SEND_INN_SKJEMA_ARBEIDSSØKER)
+    internal val hentForrigeSøknadBarnetilsynUri = byggUri(PATH_HENT_FORRIGE_SØKNAD_BARNETILSYN)
+    internal val hentSistInnsendteSøknadPerStønadUri = byggUri(PATH_HENT_SIST_INNSENDTE_SØKNAD_PER_STØNAD)
 
-    internal val hentSøknaderMedDokumentasjonsbehovUri = byggUri(PATH_HENT_SØKNADER)
     internal val sendInnEttersendingUri = byggUri(PATH_SEND_INN_ETTERSENDING)
     internal val hentEttersendingForPersonUri = byggUri(PATH_HENT_ETTERSENDING_FOR_PERSON)
-    internal val hentForrigeBarnetilsynSøknadUri = byggUri(PATH_HENT_FORRIGE_BARNETILSYNSØKNAD)
-    internal val hentForrigeBarnetilsynSøknadUriKvittering = byggUri(PATH_HENT_FORRIGE_BARNETILSYNSØKNAD_KVITTERING)
-    internal val hentSøknadKvitteringUri = byggUri(PATH_HENT_SOKNADKVITTERING)
 
-    internal val hentSistInnsendtSøknadPerStønad = byggUri(PATH_HENT_SIST_INNSENDT_SØKNAD_PER_STØNAD)
-
+    internal val hentSøknaderMedDokumentasjonsbehovUri = byggUri(PATH_HENT_SØKNADER)
     internal val pingUri = byggUri(PATH_PING)
 
     private fun byggUri(path: String) =
@@ -32,17 +29,15 @@ data class MottakConfig(
             .toUri()
 
     companion object {
-        private const val PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD = "/soknadskvittering/overgangsstonad"
-        private const val PATH_SEND_INN_SØKNAD_BARNETILSYN = "/soknadskvittering/barnetilsyn"
-        private const val PATH_SEND_INN_SØKNAD_SKOLEPENGER = "/soknadskvittering/skolepenger"
-        private const val PATH_SEND_INN_ARBEIDSSOKER_SKJEMA = "/soknadskvittering/arbeidssoker"
-        private const val PATH_HENT_SØKNADER = "/person/soknader"
+        private const val PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD = "/soknad/overgangsstonad"
+        private const val PATH_SEND_INN_SØKNAD_BARNETILSYN = "/soknad/barnetilsyn"
+        private const val PATH_SEND_INN_SØKNAD_SKOLEPENGER = "/soknad/skolepenger"
+        private const val PATH_SEND_INN_SKJEMA_ARBEIDSSØKER = "/soknad/arbeidssoker"
+        private const val PATH_HENT_FORRIGE_SØKNAD_BARNETILSYN = "/soknad/barnetilsyn/forrige"
+        private const val PATH_HENT_SIST_INNSENDTE_SØKNAD_PER_STØNAD = "/soknad/sist-innsendt-per-stonad"
         private const val PATH_SEND_INN_ETTERSENDING = "/ettersending"
         private const val PATH_HENT_ETTERSENDING_FOR_PERSON = "/ettersending/person"
-        private const val PATH_HENT_FORRIGE_BARNETILSYNSØKNAD = "/soknad/barnetilsyn/forrige"
-        private const val PATH_HENT_FORRIGE_BARNETILSYNSØKNAD_KVITTERING = "/soknadkvittering/barnetilsyn/forrige"
+        private const val PATH_HENT_SØKNADER = "/person/soknader"
         private const val PATH_PING = "/ping"
-        private const val PATH_HENT_SOKNADKVITTERING = "/soknadskvittering"
-        private const val PATH_HENT_SIST_INNSENDT_SØKNAD_PER_STØNAD = "/soknad/sist-innsendt-per-stonad"
     }
 }

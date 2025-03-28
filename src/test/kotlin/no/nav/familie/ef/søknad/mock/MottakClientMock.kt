@@ -33,8 +33,6 @@ class MottakClientMock {
         every { mottakClient.ping() } returns Unit
         every { mottakClient.hentSøknaderMedDokumentasjonsbehov(any()) } returns søknaderMedDokumentasjonsbehov
         every { mottakClient.hentEttersendingForPerson(any()) } returns listOf(ettersendingResponseData)
-        every { mottakClient.hentForrigeBarnetilsynSøknad() } returns null
-        every { mottakClient.hentSøknadKvittering(any()) } returns "pdf".toByteArray()
 
         return mottakClient
     }

@@ -17,7 +17,6 @@ class FeatureToggleController(
     private val featureTogglesIBruk =
         setOf(
             Toggle.NYNORSK,
-            Toggle.NY_PDFKVITTERING,
         )
 
     @GetMapping
