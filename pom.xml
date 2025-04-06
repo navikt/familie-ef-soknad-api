@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.2</version>
+        <version>3.4.4</version>
     </parent>
 
 
@@ -19,13 +19,13 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <kotlin.version>2.1.10</kotlin.version>
-        <springdoc.version>2.8.4</springdoc.version>
-        <mockk.version>1.13.16</mockk.version>
-        <token-validation-spring.version>5.0.16</token-validation-spring.version>
+        <kotlin.version>2.1.20</kotlin.version>
+        <springdoc.version>2.8.6</springdoc.version>
+        <mockk.version>1.13.17</mockk.version>
+        <token-validation-spring.version>5.0.24</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
-        <felles.version>3.20250320122046_7ca9dae</felles.version>
-        <kontrakter.version>3.0_20250328102435_154d3a4</kontrakter.version>
+        <felles.version>3.20250330150138_0502cea</felles.version>
+        <kontrakter.version>3.0_20250401151544_aae9e33</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
@@ -161,7 +161,7 @@
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>util</artifactId>
-            <version>3.20250122103549_5bcb4dc</version>
+            <version>3.20250330150138_0502cea</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -238,12 +238,12 @@
                 <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>5.0.0.4389</version>
+                    <version>5.1.0.4751</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.12</version>
+                    <version>0.8.13</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -323,7 +323,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.2</version>
+                <version>3.5.3</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
