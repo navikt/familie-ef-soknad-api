@@ -1,13 +1,13 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.domain.BooleanFelt
 import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 internal class MedlemskapDtoMapperTest {
-    private val medlemskap = søknadDto().medlemskap
+    private val medlemskap = søknadOvergangsstønadDto().medlemskap
 
     @Test
     fun `mapPersonalia mapper dto mapper bosatt til false`() {

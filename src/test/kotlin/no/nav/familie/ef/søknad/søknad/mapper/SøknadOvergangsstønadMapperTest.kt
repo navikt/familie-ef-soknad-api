@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.søknad.mapper
 
 import no.nav.familie.ef.søknad.mock.søkerMedDefaultVerdier
-import no.nav.familie.ef.søknad.mock.søknadDto
+import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.domain.Person
 import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
 import org.assertj.core.api.Assertions.assertThat
@@ -14,7 +14,7 @@ fun SøknadOvergangsstønad.getSøkerNavn() = personalia.verdi.navn.verdi
 
 internal class SøknadOvergangsstønadMapperTest {
     private val mapper = SøknadOvergangsstønadMapper()
-    private val søknadDto = søknadDto()
+    private val søknadDto = søknadOvergangsstønadDto()
 
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 

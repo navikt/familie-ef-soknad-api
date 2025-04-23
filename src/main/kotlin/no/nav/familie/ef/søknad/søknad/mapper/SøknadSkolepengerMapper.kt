@@ -44,6 +44,7 @@ class SøknadSkolepengerMapper {
                 dokumentasjon =
                     SkolepengerDokumentasjon(
                         utdanningsutgifter = dokumentfelt(DokumentIdentifikator.UTGIFTER_UTDANNING, vedlegg),
+                        utdanningDokumentasjon = dokumentfelt(DokumentIdentifikator.UTDANNING, vedlegg)
                     ),
             )
 

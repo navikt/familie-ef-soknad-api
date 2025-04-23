@@ -14,11 +14,11 @@ import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
 import no.nav.familie.kontrakter.felles.PersonIdent
 import no.nav.familie.kontrakter.felles.Tema
 import no.nav.familie.kontrakter.felles.ef.StønadType
+import no.nav.familie.kontrakter.felles.søknad.SistInnsendtSøknadDto
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestOperations
-import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 
 @Service
@@ -28,15 +28,7 @@ class MottakClient(
 ) : AbstractPingableRestClient(operations, "søknad.innsending") {
     override val pingUri: URI = config.pingUri
 
-    fun sendInn(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto = postForEntity(config.sendInnOvergangsstønadUri, søknadMedVedlegg)
-
-    fun sendInnBarnetilsynsøknad(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto = postForEntity(config.sendInnBarnetilsynUri, søknadMedVedlegg)
-
-    fun sendInnSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto = postForEntity(config.sendInnSkolepengerUri, søknadMedVedlegg)
-
     fun sendInnEttersending(ettersending: Map<StønadType, EttersendelseDto>): KvitteringDto = postForEntity(config.sendInnEttersendingUri, ettersending)
-
-    fun sendInnArbeidsRegistreringsskjema(skjema: SkjemaForArbeidssøker): KvitteringDto = postForEntity(config.sendInnSkjemaArbeidUri, skjema)
 
     fun hentSøknaderMedDokumentasjonsbehov(personIdent: String): List<SøknadMedDokumentasjonsbehovDto> {
         val søknaderMedDokumentasjonsbehov: List<SøknadMedDokumentasjonsbehovDto> =
@@ -55,25 +47,23 @@ class MottakClient(
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
-    fun sendInnSøknadskvitteringOvergangsstønad(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto = postForEntity(config.sendInnOvergangsstønadKvitteringUri, søknadMedVedlegg)
+    fun sendInnSøknadOvergangsstønad(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto = postForEntity(config.sendInnSøknadOverganggstønadUri, søknadMedVedlegg)
 
-    fun sendInnSøknadskvitteringBarnetilsyn(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto = postForEntity(config.sendInnBarnetilsynKvitteringUri, søknadMedVedlegg)
+    fun sendInnSøknadBarnetilsyn(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto = postForEntity(config.sendInnSøknadBarnetilsynUri, søknadMedVedlegg)
 
-    fun sendInnSøknadskvitteringSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto = postForEntity(config.sendInnSkolepengerKvitteringUri, søknadMedVedlegg)
+    fun sendInnSøknadSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto = postForEntity(config.sendInnSøknadSkolepengerUri, søknadMedVedlegg)
 
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsyn? =
+    fun sendInnArbeidssøkerSkjema(skjema: SkjemaForArbeidssøker): KvitteringDto = postForEntity(config.sendInnSkjemaArbeidssøkerUri, skjema)
+
+    fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsyn? =
         getForEntity(
-            config.hentForrigeBarnetilsynSøknadUri,
+            config.hentForrigeSøknadBarnetilsynUri,
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
-    fun hentSøknadKvittering(søknadId: String): ByteArray =
-        getForEntity<ByteArray>(
-            UriComponentsBuilder
-                .fromUriString(
-                    "${config.hentSøknadKvitteringUri}/$søknadId",
-                ).build()
-                .toUri(),
+    fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> =
+        getForEntity(
+            config.hentSistInnsendteSøknadPerStønadUri,
             HttpHeaders().medContentTypeJsonUTF8(),
         )
 
