@@ -21,7 +21,7 @@
         <changelist>-SNAPSHOT</changelist>
         <kotlin.version>2.1.20</kotlin.version>
         <springdoc.version>2.8.6</springdoc.version>
-        <mockk.version>1.14.0</mockk.version>
+        <mockk.version>1.14.2</mockk.version>
         <token-validation-spring.version>5.0.25</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
         <felles.version>3.20250422130733_4d831f9</felles.version>
