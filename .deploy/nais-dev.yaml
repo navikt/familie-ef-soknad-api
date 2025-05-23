@@ -69,3 +69,11 @@ spec:
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: dev
+  observability:
+    logging:
+      destinations:
+        - id: elastic
+        - id: loki
+    autoInstrumentation:
+      enabled: true
+      runtime: java
