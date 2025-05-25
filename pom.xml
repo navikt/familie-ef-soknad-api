@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version>
+        <version>3.5.0</version>
     </parent>
 
 
@@ -22,10 +22,10 @@
         <kotlin.version>2.1.21</kotlin.version>
         <springdoc.version>2.8.8</springdoc.version>
         <mockk.version>1.14.2</mockk.version>
-        <token-validation-spring.version>5.0.27</token-validation-spring.version>
+        <token-validation-spring.version>5.0.28</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
         <felles.version>3.20250505101905_835431d</felles.version>
-        <kontrakter.version>3.0_20250513140227_11db730</kontrakter.version>
+        <kontrakter.version>3.0_20250520105353_6584047</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
@@ -366,7 +366,7 @@
                     <dependency>
                         <groupId>com.pinterest.ktlint</groupId>
                         <artifactId>ktlint-cli</artifactId>
-                        <version>1.5.0</version>
+                        <version>1.6.0</version>
                     </dependency>
                     <!-- additional 3rd party ruleset(s) can be specified here -->
                 </dependencies>
