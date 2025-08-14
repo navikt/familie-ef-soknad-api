@@ -17,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # ratchet:actions/checkout@v4
       - name: Read/save maven cache
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # ratchet:actions/cache@v4
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # ratchet:actions/cache@v4
         with:
           path: ~/.github/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
