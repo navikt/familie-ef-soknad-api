@@ -2,6 +2,7 @@ package no.nav.familie.ef.søknad.søknad
 
 import no.nav.familie.ef.søknad.søknad.domain.Arbeidssøker
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
+import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
@@ -11,7 +12,9 @@ import no.nav.familie.ef.søknad.søknad.mapper.SkjemaMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
+import no.nav.familie.kontrakter.ef.iverksett.SvarId
 import no.nav.familie.kontrakter.felles.søknad.SistInnsendtSøknadDto
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 
@@ -22,6 +25,8 @@ class SøknadService(
     private val barnetilsynMapper: SøknadBarnetilsynMapper,
     private val skolepengerMapper: SøknadSkolepengerMapper,
 ) {
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     fun sendInnSøknadOvergangsstønad(
         søknad: SøknadOvergangsstønadDto,
         innsendingMottatt: LocalDateTime,
@@ -63,4 +68,26 @@ class SøknadService(
     fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknadKvittering())
 
     fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> = mottakClient.hentSistInnsendtSøknadPerStønad()
+
+    fun validerSøknadTilGjenbruk(søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto?) {
+        søknadBarnetilsynGjenbrukDto?.let { søknadBT ->
+            søknadBT.person.barn
+                .filter { it.forelder != null }
+                .all { barn -> barn.forelder?.harDereSkriftligSamværsavtale?.harGyldigSvarId() ?: true && barn.forelder?.harAnnenForelderSamværMedBarn.harGyldigSvarId() && barn.forelder?.borAnnenForelderISammeHus.harGyldigSvarId() && barn.forelder?.hvorMyeSammen.harGyldigSvarId() }
+        }
+    }
+
+    fun TekstFelt?.harGyldigSvarId(): Boolean = this?.svarid.kanMappesTilSvarIdEnum(this?.label ?: "ukjent TekstFelt")
+
+    fun String?.kanMappesTilSvarIdEnum(feltNavn: String): Boolean {
+        if (this == null) return true
+        try {
+            enumValueOf<SvarId>(this)
+        } catch (e: IllegalArgumentException) {
+            logger.error("Ugyldig svarId-verdi '$this' i felt '$feltNavn' \n ${e.message}")
+            return false
+        }
+
+        return true
+    }
 }
