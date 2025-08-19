@@ -12,12 +12,10 @@ class SvarIdValidatorTest {
         assertThat(booleanFelt.requireSvarIdIfPresent()).isNull()
 
         val booleanFeltMedSvarId = BooleanFelt("Bor du på denne adressen?", true, SvarId.JA.name)
-        assertThat(booleanFeltMedSvarId.requireSvarIdIfPresent()).isEqualTo(SvarId.JA)
+        assertThat(booleanFeltMedSvarId.requireSvarIdIfPresent()).isEqualTo(true)
 
         val booleanFeltMedSvarIdSomIkkeFinnes = BooleanFelt("Bor du på denne adressen?", true, "null")
-        assertThrows<IllegalStateException> {
-            booleanFeltMedSvarIdSomIkkeFinnes.requireSvarIdIfPresent()
-        }
+        assertThat(booleanFeltMedSvarIdSomIkkeFinnes.requireSvarIdIfPresent()).isEqualTo(false)
     }
 
     @Test
@@ -29,6 +27,6 @@ class SvarIdValidatorTest {
         assertThat(tekstFeltMedSvarId.tilSvarIdOrNull()).isEqualTo(SvarId.JA)
 
         val tekstFeltMedSvarIdSomIkkeFinnes = TekstFelt("Bor du på denne adressen?", "Samlivsbrudd med den andre forelderen", "null")
-        assertThat(tekstFeltMedSvarIdSomIkkeFinnes).isNull()
+        assertThat(tekstFeltMedSvarIdSomIkkeFinnes.harGyldigSvarId()).isEqualTo(false)
     }
 }
