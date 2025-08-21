@@ -69,8 +69,8 @@ class SøknadService(
 
     fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> = mottakClient.hentSistInnsendtSøknadPerStønad()
 
-    fun validerSøknadTilGjenbruk(søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto?) {
-        søknadBarnetilsynGjenbrukDto?.let { søknadBT ->
+    fun harSøknadGyldigeVerdier(søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto?): Boolean? {
+        return søknadBarnetilsynGjenbrukDto?.let { søknadBT ->
             søknadBT.person.barn
                 .filter { it.forelder != null }
                 .all { barn -> barn.forelder?.harDereSkriftligSamværsavtale?.harGyldigSvarId() ?: true && barn.forelder?.harAnnenForelderSamværMedBarn.harGyldigSvarId() && barn.forelder?.borAnnenForelderISammeHus.harGyldigSvarId() && barn.forelder?.hvorMyeSammen.harGyldigSvarId() }
