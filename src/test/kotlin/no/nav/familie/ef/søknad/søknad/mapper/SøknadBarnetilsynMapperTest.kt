@@ -24,7 +24,7 @@ internal class SøknadBarnetilsynMapperTest {
 
     private val søknad: SøknadBarnetilsynDto =
         objectMapper.readValue(
-            File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
+            File("src/test/resources/barnetilsyn/BarnetilsynsøknadDto.json"),
             SøknadBarnetilsynDto::class.java,
         )
 

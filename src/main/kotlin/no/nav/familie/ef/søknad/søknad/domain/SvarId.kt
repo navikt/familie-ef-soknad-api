@@ -39,4 +39,11 @@ enum class SvarId(
     // under utdanning - offentligEllerPrivat, heltidEllerDeltid
     PRIVAT("privat"),
     OFFENTLIG("offentlig"),
+    ;
+
+    companion object {
+        private val map = entries.associateBy { it.verdi }
+
+        fun fromVerdi(verdi: String): SvarId? = map[verdi]
+    }
 }
