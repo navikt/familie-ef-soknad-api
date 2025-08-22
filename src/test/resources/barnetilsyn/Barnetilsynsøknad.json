@@ -447,7 +447,7 @@
               "label": "Hvor mye er du sammen med den andre forelderen til Solveig?",
               "verdi": "Vi møtes ikke",
               "alternativer": null,
-              "svarId": null
+              "svarId": "møtesIkke"
             },
             "beskrivSamværUtenBarn": {
               "label": "Har den andre forelderen samvær med [0]?",
