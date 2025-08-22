@@ -69,7 +69,7 @@ class SøknadService(
 
     fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> = mottakClient.hentSistInnsendtSøknadPerStønad()
 
-    fun harSøknadGyldigeVerdier(søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto?): Boolean? {
+    fun harSøknadGyldigeVerdier(søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto?): Boolean {
         val gyldigeSvarIds =
             søknadBarnetilsynGjenbrukDto?.let { søknadBT ->
                 søknadBT.person.barn
@@ -79,8 +79,10 @@ class SøknadService(
         if (gyldigeSvarIds == false) {
             logger.warn("Fant ugyldige SvarIds for barnetilsyn-søknad. Se securelogs for mer informasjon.")
             logger.warn("Fant ugyldige SvarIds for barnetilsyn-søknad. Gjelder ${søknadBarnetilsynGjenbrukDto.person.barn.map { barn -> barn.forelder }}")
+            return false
+        } else {
+            return true
         }
-        return gyldigeSvarIds
     }
 
     fun TekstFelt?.harGyldigSvarId(): Boolean = this == null || this.svarid == null || SvarId.fromVerdi(this.svarid) != null
