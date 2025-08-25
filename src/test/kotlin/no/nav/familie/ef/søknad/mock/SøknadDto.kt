@@ -10,7 +10,7 @@ import java.io.File
 
 fun søknadOvergangsstønadDto(): SøknadOvergangsstønadDto = objectMapper.readValue(File("src/test/resources/søknadDto.json"), SøknadOvergangsstønadDto::class.java)
 
-fun søknadBarnetilsynDto(): SøknadBarnetilsynDto = objectMapper.readValue(File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"), SøknadBarnetilsynDto::class.java)
+fun søknadBarnetilsynDto(): SøknadBarnetilsynDto = objectMapper.readValue(File("src/test/resources/barnetilsyn/BarnetilsynsøknadDto.json"), SøknadBarnetilsynDto::class.java)
 
 fun søknadSkolepengerDto(): SøknadSkolepengerDto = objectMapper.readValue(File("src/test/resources/skolepenger/skolepenger.json"), SøknadSkolepengerDto::class.java)
 

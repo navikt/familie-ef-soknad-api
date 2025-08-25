@@ -79,7 +79,14 @@ class SøknadController(
     }
 
     @GetMapping("barnetilsyn/forrige")
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? = søknadService.hentForrigeBarnetilsynSøknadKvittering()
+    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
+        val søknad = søknadService.hentForrigeBarnetilsynSøknadKvittering()
+        return if (søknadService.harSøknadGyldigeVerdier(søknad)) {
+            søknad
+        } else {
+            null
+        }
+    }
 
     @GetMapping("sist-innsendt-per-stonad")
     fun hentSistInnsendteSøknadPerStønad() = søknadService.hentSistInnsendtSøknadPerStønad()
