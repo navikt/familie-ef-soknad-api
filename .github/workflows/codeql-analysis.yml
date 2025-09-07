@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # ratchet:actions/checkout@v4
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@3c3833e0f8c1c83d449a7478aa59c036a9165498 # ratchet:github/codeql-action/init@v3
+        uses: github/codeql-action/init@f1f6e5f6af878fb37288ce1c627459e94dbf7d01 # ratchet:github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
       - name: Setup java
@@ -33,6 +33,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: mvn -B --no-transfer-progress package --settings .m2/maven-settings.xml --file pom.xml
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@3c3833e0f8c1c83d449a7478aa59c036a9165498 # ratchet:github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@f1f6e5f6af878fb37288ce1c627459e94dbf7d01 # ratchet:github/codeql-action/analyze@v3
         with:
           category: "/language:${{matrix.language}}"
