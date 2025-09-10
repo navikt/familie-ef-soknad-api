@@ -20,12 +20,12 @@
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
         <kotlin.version>2.2.10</kotlin.version>
-        <springdoc.version>2.8.11</springdoc.version>
+        <springdoc.version>2.8.12</springdoc.version>
         <mockk.version>1.14.5</mockk.version>
-        <token-validation-spring.version>5.0.35</token-validation-spring.version>
+        <token-validation-spring.version>5.0.36</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
         <felles.version>3.20250804101327_a0f5fad</felles.version>
-        <kontrakter.version>3.0_20250828110046_0cd2211</kontrakter.version>
+        <kontrakter.version>3.0_20250902143555_da31aa4</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
