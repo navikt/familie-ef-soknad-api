@@ -52,7 +52,7 @@ class SøknadServiceTest {
     }
 
     @Test
-    fun `sjekk gyldige svarIds i barnetilsynsøknad - borISammeHus mangler svarId (og blir mappet til 'null' som string)`() {
+    fun `sjekk gyldige svarIds i barnetilsynsøknad - borISammeHus mangler svarId (blir null og er derfor gyldig)`() {
         val søknadBT =
             objectMapper.readValue(
                 File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
@@ -61,6 +61,6 @@ class SøknadServiceTest {
 
         val søknadTilGjenbruk = SøknadBarnetilsynMapper().mapTilDto(søknadBT)
         val skalHaGyldigeVerdier = søknadService.harSøknadGyldigeVerdier(søknadTilGjenbruk)
-        assertThat(skalHaGyldigeVerdier).isFalse
+        assertThat(skalHaGyldigeVerdier).isTrue
     }
 }
