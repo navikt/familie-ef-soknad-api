@@ -77,6 +77,7 @@ class SøknadService(
                     .filter { it.forelder != null }
                     .all { barn -> barn.forelder?.harDereSkriftligSamværsavtale?.harGyldigSvarId() ?: true && barn.forelder?.harAnnenForelderSamværMedBarn.harGyldigSvarId() && barn.forelder?.borAnnenForelderISammeHus.harGyldigSvarId() && barn.forelder?.hvorMyeSammen.harGyldigSvarId() }
             }
+
         if (gyldigeSvarIds == false) {
             logger.warn("Fant ugyldige SvarIds for barnetilsyn-søknad. Se securelogs for mer informasjon.")
             secureLogger.warn("Fant ugyldige SvarIds for barnetilsyn-søknad. Gjelder ${søknadBarnetilsynGjenbrukDto.person.barn.map { barn -> barn.forelder }}")
