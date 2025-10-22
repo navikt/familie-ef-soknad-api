@@ -17,6 +17,7 @@ class FeatureToggleController(
     private val featureTogglesIBruk =
         setOf(
             Toggle.NYNORSK,
+            Toggle.VIS_NEDETIDMELDING
         )
 
     @GetMapping

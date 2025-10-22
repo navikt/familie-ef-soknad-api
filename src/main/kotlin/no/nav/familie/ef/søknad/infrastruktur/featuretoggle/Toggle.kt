@@ -5,6 +5,7 @@ enum class Toggle(
     val beskrivelse: String? = null,
 ) {
     NYNORSK("familie.ef.soknad.nynorsk"),
+    VIS_NEDETIDMELDING("familie.ef.minside.vis-nedetidmelding"),
     ;
 
     companion object {
