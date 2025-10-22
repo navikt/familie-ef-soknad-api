@@ -17,10 +17,14 @@ enum class SvarId(
     JA_KONKRETE_TIDSPUNKTER("jaKonkreteTidspunkter"),
     JA_IKKE_KONKRETE_TIDSPUNKTER("jaIkkeKonkreteTidspunkter"),
 
-    // Kontakt mellom foreldre
+    // Kontakt mellom foreldre (hvorMyeSammen)
     MØTES_IKKE("møtesIkke"),
     KUN_NÅR_LEVERES("kunNårLeveres"),
     MØTES_UTENOM("møtesUtenom"),
+
+    // harAnnenForelderSamværMedBarn
+    JA_IKKE_MER_ENN_VANLIG("jaIkkeMerEnnVanlig"),
+    JA_MER_ENN_VANLIG("jaMerEnnVanlig"),
 
     // Medlemskap - Oppholdsland
 
