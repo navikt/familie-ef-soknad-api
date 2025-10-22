@@ -25,6 +25,7 @@ class SøknadService(
     private val barnetilsynMapper: SøknadBarnetilsynMapper,
     private val skolepengerMapper: SøknadSkolepengerMapper,
 ) {
+    private val logger = LoggerFactory.getLogger(javaClass)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
     fun sendInnSøknadOvergangsstønad(
@@ -78,6 +79,7 @@ class SøknadService(
             }
 
         if (gyldigeSvarIds == false) {
+            logger.warn("Fant ugyldige SvarIds for barnetilsyn-søknad. Se securelogs for mer informasjon.")
             secureLogger.warn("Fant ugyldige SvarIds for barnetilsyn-søknad. Gjelder ${søknadBarnetilsynGjenbrukDto.person.barn.map { barn -> barn.forelder }}")
             return false
         } else {
