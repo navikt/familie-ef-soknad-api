@@ -8,7 +8,6 @@ import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
-import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.slf4j.LoggerFactory
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
-import kotlin.math.log
 
 @RestController
 @RequestMapping("/api/soknad", produces = [MediaType.APPLICATION_JSON_VALUE])

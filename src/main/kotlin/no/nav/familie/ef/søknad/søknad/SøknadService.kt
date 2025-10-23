@@ -13,7 +13,6 @@ import no.nav.familie.ef.søknad.søknad.mapper.SkjemaMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
-import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.kontrakter.felles.søknad.SistInnsendtSøknadDto
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
