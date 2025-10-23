@@ -77,21 +77,28 @@ class SøknadService(
     fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> = mottakClient.hentSistInnsendtSøknadPerStønad()
 
     fun harSøknadGyldigeVerdier(søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto?): Boolean {
-        val gyldigeSvarIds =
-            søknadBarnetilsynGjenbrukDto?.let { søknadBT ->
-                søknadBT.person.barn
-                    .filter { it.forelder != null }
-                    .all { barn -> barn.forelder?.harDereSkriftligSamværsavtale?.harGyldigSvarId() ?: true && barn.forelder?.harAnnenForelderSamværMedBarn.harGyldigSvarId() && barn.forelder?.borAnnenForelderISammeHus.harGyldigSvarId() && barn.forelder?.hvorMyeSammen.harGyldigSvarId() }
-            }
+        if (søknadBarnetilsynGjenbrukDto == null) return true
 
-        if (gyldigeSvarIds == false) {
+        val ugyldigeSvarIder: List<String> =
+            søknadBarnetilsynGjenbrukDto.person.barn
+                .mapNotNull { it.forelder }
+                .flatMap { forelder ->
+                    listOfNotNull(
+                        forelder.harDereSkriftligSamværsavtale.ugyldigSvarId(),
+                        forelder.harAnnenForelderSamværMedBarn.ugyldigSvarId(),
+                        forelder.borAnnenForelderISammeHus.ugyldigSvarId(),
+                        forelder.hvorMyeSammen.ugyldigSvarId(),
+                    )
+                }.distinct()
+
+        return if (ugyldigeSvarIder.isNotEmpty()) {
             logger.warn("Fant ugyldige SvarIds for barnetilsyn-søknad. Se securelogs for mer informasjon.")
-            secureLogger.warn("Fant ugyldige SvarIds for barnetilsyn-søknad. Gjelder ${søknadBarnetilsynGjenbrukDto.person.barn.map { barn -> barn.forelder }}")
-            return false
+            secureLogger.warn("Ugyldige svarId: ${ugyldigeSvarIder.joinToString()}")
+            false
         } else {
-            return true
+            true
         }
     }
 
-    fun TekstFelt?.harGyldigSvarId(): Boolean = this == null || this.svarid == null || SvarId.fromVerdi(this.svarid) != null
+    private fun TekstFelt?.ugyldigSvarId(): String? = this?.svarid?.takeIf { SvarId.fromVerdi(it) == null }
 }
