@@ -8,8 +8,10 @@ import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
+import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.validation.annotation.Validated
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDateTime
+import kotlin.math.log
 
 @RestController
 @RequestMapping("/api/soknad", produces = [MediaType.APPLICATION_JSON_VALUE])
@@ -28,6 +31,8 @@ class SøknadController(
     private val søknadService: SøknadService,
     private val oppslagService: OppslagService,
 ) {
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     @PostMapping("overgangsstonad")
     fun sendInn(
         @RequestBody søknad: SøknadOvergangsstønadDto,
@@ -48,6 +53,10 @@ class SøknadController(
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
+
+        // TODO: Fjern meg, kun for debug.
+        val søknadSomJson = objectMapper.writeValueAsString(søknad)
+        logger.info("DEBUG-BARNETILSYN-GJENBRUK: Barnetilsynsøknad ETTER parsing og FØR mapping er: $søknadSomJson")
 
         val innsendingMottatt = LocalDateTime.now()
         søknadService.sendInnSøknadBarnetilsyn(søknad, innsendingMottatt)
@@ -81,6 +90,10 @@ class SøknadController(
     @GetMapping("barnetilsyn/forrige")
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
         val søknad = søknadService.hentForrigeBarnetilsynSøknadKvittering()
+
+        // TODO: Fjern meg, kun for debug.
+        val søknadSomJson = objectMapper.writeValueAsString(søknad)
+        logger.info("DEBUG-BARNETILSYN-GJENBRUK: Barnetilsynsøknad ETTER gjenbruk er: $søknadSomJson")
 
         return if (søknadService.harSøknadGyldigeVerdier(søknad)) {
             søknad

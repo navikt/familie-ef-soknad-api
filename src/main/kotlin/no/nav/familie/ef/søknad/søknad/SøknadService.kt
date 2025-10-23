@@ -13,6 +13,7 @@ import no.nav.familie.ef.søknad.søknad.mapper.SkjemaMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
+import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.kontrakter.felles.søknad.SistInnsendtSøknadDto
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -42,6 +43,11 @@ class SøknadService(
         innsendingMottatt: LocalDateTime,
     ): Kvittering {
         val søknadRequestData = barnetilsynMapper.mapTilIntern(søknad, innsendingMottatt)
+
+        // TODO: Fjern meg, kun for debug.
+        val søknadRequestDataSomJson = objectMapper.writeValueAsString(søknadRequestData)
+        logger.info("DEBUG-BARNETILSYN-GJENBRUK: søknadRequestDataSomJson ETTER mapping er: $søknadRequestDataSomJson")
+
         val kvittering = mottakClient.sendInnSøknadBarnetilsyn(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
