@@ -43,11 +43,6 @@ class SøknadService(
         innsendingMottatt: LocalDateTime,
     ): Kvittering {
         val søknadRequestData = barnetilsynMapper.mapTilIntern(søknad, innsendingMottatt)
-
-        // TODO: Fjern meg, kun for debug.
-        val søknadRequestDataSomJson = objectMapper.writeValueAsString(søknadRequestData)
-        logger.info("DEBUG-BARNETILSYN-GJENBRUK: søknadRequestDataSomJson ETTER mapping er: $søknadRequestDataSomJson")
-
         val kvittering = mottakClient.sendInnSøknadBarnetilsyn(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
@@ -93,7 +88,7 @@ class SøknadService(
 
         return if (ugyldigeSvarIder.isNotEmpty()) {
             logger.warn("Fant ugyldige SvarIds for barnetilsyn-søknad. Se securelogs for mer informasjon.")
-            secureLogger.warn("Ugyldige svarId: ${ugyldigeSvarIder.joinToString()}")
+            secureLogger.warn("Ugyldige svarId'er: ${ugyldigeSvarIder.joinToString()}")
             false
         } else {
             true

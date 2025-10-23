@@ -54,10 +54,6 @@ class SøknadController(
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
         }
 
-        // TODO: Fjern meg, kun for debug.
-        val søknadSomJson = objectMapper.writeValueAsString(søknad)
-        logger.info("DEBUG-BARNETILSYN-GJENBRUK: Barnetilsynsøknad ETTER parsing og FØR mapping er: $søknadSomJson")
-
         val innsendingMottatt = LocalDateTime.now()
         søknadService.sendInnSøknadBarnetilsyn(søknad, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
@@ -90,10 +86,6 @@ class SøknadController(
     @GetMapping("barnetilsyn/forrige")
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
         val søknad = søknadService.hentForrigeBarnetilsynSøknadKvittering()
-
-        // TODO: Fjern meg, kun for debug.
-        val søknadSomJson = objectMapper.writeValueAsString(søknad)
-        logger.info("DEBUG-BARNETILSYN-GJENBRUK: Barnetilsynsøknad ETTER gjenbruk er: $søknadSomJson")
 
         return if (søknadService.harSøknadGyldigeVerdier(søknad)) {
             søknad
