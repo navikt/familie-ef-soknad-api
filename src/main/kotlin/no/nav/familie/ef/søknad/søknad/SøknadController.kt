@@ -10,7 +10,6 @@ import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
-import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.validation.annotation.Validated
@@ -29,8 +28,6 @@ class SøknadController(
     private val søknadService: SøknadService,
     private val oppslagService: OppslagService,
 ) {
-    private val logger = LoggerFactory.getLogger(javaClass)
-
     @PostMapping("overgangsstonad")
     fun sendInn(
         @RequestBody søknad: SøknadOvergangsstønadDto,
