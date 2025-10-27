@@ -5,6 +5,7 @@ enum class SvarId(
 ) {
     JA("ja"),
     NEI("nei"),
+    VET_IKKE("vetikke"),
 
     // val årsakEnslig: TekstFelt? = null,
     SAMLIVSBRUDD_FOREDLRE("samlivsbruddForeldre"),

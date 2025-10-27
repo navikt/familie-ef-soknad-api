@@ -81,6 +81,7 @@ class SøknadController(
     @GetMapping("barnetilsyn/forrige")
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
         val søknad = søknadService.hentForrigeBarnetilsynSøknadKvittering()
+
         return if (søknadService.harSøknadGyldigeVerdier(søknad)) {
             søknad
         } else {
