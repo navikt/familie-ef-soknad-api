@@ -120,7 +120,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
                 bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                 land = forelder.land?.tilSøknadsfelt(),
                 person = PersonMinimumMapper.map(forelder),
-                erKopiertFraAnnetBarn = forelder.erKopiertFraAnnetBarn
+                erKopiertFraAnnetBarn = forelder.erKopiertFraAnnetBarn,
             ),
         )
 
@@ -170,7 +170,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
             hvorMyeSammen = samvær?.hvorMyeErDuSammenMedAnnenForelder.tilNullableTekstFelt(),
             beskrivSamværUtenBarn = samvær?.beskrivSamværUtenBarn.tilNullableTekstFelt(),
             skalBarnetBoHosSøker = skalBarnetBoHosSøker.tilNullableTekstFelt(),
-            erKopiertFraAnnetBarn = annenForelder.erKopiertFraAnnetBarn
+            erKopiertFraAnnetBarn = annenForelder.erKopiertFraAnnetBarn,
         )
     }
 

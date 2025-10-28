@@ -37,13 +37,13 @@ fun <T> Søknadsfelt<T>?.tilNullableDatoFelt() = this?.let { DatoFelt(it.label, 
 
 fun <T> Søknadsfelt<T>.tilDatoFelt() = DatoFelt(this.label, this.verdi.toString())
 
-fun Søknadsfelt<Boolean>?.tilNullableBooleanFelt() = this?.let { BooleanFelt(it.label, it.verdi, it.svarId.toString()) }
+fun Søknadsfelt<Boolean>?.tilNullableBooleanFelt() = this?.let { BooleanFelt(it.label, it.verdi, it.svarId?.toString()) }
 
-fun Søknadsfelt<Boolean>.tilBooleanFelt() = BooleanFelt(this.label, this.verdi, this.svarId.toString())
+fun Søknadsfelt<Boolean>.tilBooleanFelt() = BooleanFelt(this.label, this.verdi, this.svarId?.toString())
 
-fun <T> Søknadsfelt<T>?.tilNullableTekstFelt() = this?.let { TekstFelt(it.label, it.verdi.toString(), it.svarId.toString()) }
+fun <T> Søknadsfelt<T>?.tilNullableTekstFelt() = this?.let { TekstFelt(it.label, it.verdi.toString(), it.svarId?.toString()) }
 
-fun <T> Søknadsfelt<T>.tilTekstFelt() = TekstFelt(this.label, this.verdi.toString(), this.svarId.toString())
+fun <T> Søknadsfelt<T>.tilTekstFelt() = TekstFelt(this.label, this.verdi.toString(), this.svarId?.toString())
 
 fun Søknadsfelt<List<String>>.tilListFelt() = ListFelt(label, verdi.map { it }, alternativer, svarId)
 
