@@ -109,6 +109,13 @@
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
 
+        <!-- Http Client - nyeste versjon fra spring skaper problemer. Issue: HTTPCLIENT-2405 -->
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.5</version>
+        </dependency>
+
         <!-- Interne avhengigheter -->
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
