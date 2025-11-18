@@ -7,7 +7,7 @@ import kotlin.reflect.full.primaryConstructor
 
 object PdlTestUtil {
     fun parseSpørring(filnavn: String): Map<String, *> {
-        val query = this::class.java.getResource(filnavn).readText()
+        val query = this::class.java.getResource(filnavn)!!.readText()
         val readLines = query.reader().readLines()
         return toMap(readLines.listIterator())
     }
@@ -66,9 +66,11 @@ object PdlTestUtil {
                             stringLines,
                         )
                 }
+
                 it.trim().endsWith("}") -> {
                     return map
                 }
+
                 else -> {
                     map[
                         parseToLabel(

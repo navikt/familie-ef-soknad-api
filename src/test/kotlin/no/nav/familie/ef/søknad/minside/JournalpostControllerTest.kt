@@ -31,10 +31,10 @@ internal class JournalpostControllerTest : OppslagSpringRunnerTest() {
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.body?.isNotEmpty())
-        /**
-         * Totalt 6 journalposter - én blankett (N) og én som går til advokat (ikke tilgang)
-         * Siste skal filtreres vekk
-         */
+
+        // Totalt 6 journalposter - én blankett (N) og én som går til advokat (ikke tilgang)
+        // Siste skal filtreres vekk
+
         assertThat(response.body?.size).isEqualTo(5)
 
         val journalpostMedSladdetVariantformat = response.body?.find { it.journalpostId == "453853070" }
