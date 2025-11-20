@@ -13,7 +13,8 @@ Start `familie-ef-soknad-frontend` og gå til `http://localhost:3000/familie/ale
 
 ### Swagger api kall med autentisering: 
 http://localhost:8091/swagger-ui.html
-https://familie-ef-soknad-api.intern.dev.nav.no/swagger-ui.html
+~~https://familie-ef-soknad-api.intern.dev.nav.no/swagger-ui.html~~
+Preprod/dev: https://familie-ef-soknad-api.intern.dev.nav.no/familie/alene-med-barn/soknad-api/swagger-ui/index.html
 
 ## Henvendelser for Nav-ansatte
 Interne henvendelser kan sendes via Slack i kanalen `#team-familie`.

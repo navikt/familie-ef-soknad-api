@@ -51,6 +51,8 @@ spec:
         - application: "safselvbetjening"
           namespace: "teamdokumenthandtering"
           cluster: "prod-fss"
+        - application: logging
+          namespace: nais-system
       external:
         - host: familie-integrasjoner.prod-fss-pub.nais.io
         - host: pdl-api.prod-fss-pub.nais.io
