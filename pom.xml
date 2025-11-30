@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.7</version>
+        <version>4.0.0</version>
     </parent>
 
 
@@ -20,12 +20,12 @@
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
         <kotlin.version>2.2.21</kotlin.version>
-        <springdoc.version>2.8.14</springdoc.version>
+        <springdoc.version>3.0.0</springdoc.version>
         <mockk.version>1.14.6</mockk.version>
-        <token-validation-spring.version>5.0.39</token-validation-spring.version>
+        <token-validation-spring.version>6.0.0</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
-        <felles.version>3.20251105152539_b03ed80</felles.version>
-        <kontrakter.version>3.0_20251112142340_c5baa9c</kontrakter.version>
+        <felles.version>4.20251125150711_2fff585</felles.version>
+        <kontrakter.version>3.0_20251128100735_eaf6aa1</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
@@ -168,7 +168,7 @@
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>util</artifactId>
-            <version>3.20251105152539_b03ed80</version>
+            <version>4.20251125150711_2fff585</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -305,7 +305,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.7.1</version>
+                <version>3.8.0</version>
                 <executions>
                     <execution>
                         <id>make-assembly</id>
