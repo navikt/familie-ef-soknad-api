@@ -1,6 +1,14 @@
 package no.nav.familie.ef.søknad.infrastruktur.config
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect
+import com.fasterxml.jackson.annotation.PropertyAccessor
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.datatype.jsr310.deser.YearMonthDeserializer
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import no.nav.familie.ef.søknad.infrastruktur.sikkerhet.CORSResponseFilter
 import no.nav.familie.http.client.RetryOAuth2HttpClient
 import no.nav.familie.http.interceptor.BearerTokenClientCredentialsClientInterceptor
@@ -14,7 +22,7 @@ import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -23,6 +31,8 @@ import org.springframework.context.annotation.Primary
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestOperations
 import java.time.Duration
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 @SpringBootConfiguration
@@ -40,32 +50,45 @@ internal class ApplicationConfig {
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule.Builder().build()
 
+    @Primary
     @Bean
-    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
-        logger.info("Registrerer CORSResponseFilter")
-        val filterRegistration = FilterRegistrationBean<CORSResponseFilter>()
-        filterRegistration.filter = CORSResponseFilter(corsProperties)
-        filterRegistration.order = 0
-        return filterRegistration
-    }
+    fun objectMapper(): ObjectMapper =
+        ObjectMapper()
+            .setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE)
+            .setVisibility(PropertyAccessor.SETTER, JsonAutoDetect.Visibility.NONE)
+            .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
+            .setVisibility(PropertyAccessor.CREATOR, JsonAutoDetect.Visibility.ANY)
+            .registerKotlinModule()
+            .registerModule(
+                JavaTimeModule()
+                    .addDeserializer(
+                        YearMonth::class.java,
+                        YearMonthDeserializer(DateTimeFormatter.ofPattern("u-MM")), // Denne trengs for å parse år over 9999 riktig.
+                    ),
+            ).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 
     @Bean
-    fun logFilter(): FilterRegistrationBean<LogFilter> {
-        logger.info("Registering LogFilter filter")
-        val filterRegistration = FilterRegistrationBean<LogFilter>()
-        filterRegistration.filter = LogFilter(systemtype = NavSystemtype.NAV_EKSTERN_BRUKERFLATE)
-        filterRegistration.order = 1
-        return filterRegistration
-    }
+    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> =
+        FilterRegistrationBean(CORSResponseFilter(corsProperties)).apply {
+            logger.info("Registrerer CORSResponseFilter")
+            order = 0
+        }
 
     @Bean
-    fun requestTimeFilter(): FilterRegistrationBean<RequestTimeFilter> {
-        logger.info("Registering RequestTimeFilter filter")
-        val filterRegistration = FilterRegistrationBean<RequestTimeFilter>()
-        filterRegistration.filter = RequestTimeFilter()
-        filterRegistration.order = 2
-        return filterRegistration
-    }
+    fun logFilter(): FilterRegistrationBean<LogFilter> =
+        FilterRegistrationBean(LogFilter(systemtype = NavSystemtype.NAV_EKSTERN_BRUKERFLATE)).apply {
+            logger.info("Registering LogFilter filter")
+            order = 1
+        }
+
+    @Bean
+    fun requestTimeFilter(): FilterRegistrationBean<RequestTimeFilter> =
+        FilterRegistrationBean(RequestTimeFilter()).apply {
+            logger.info("Registering RequestTimeFilter filter")
+            order = 2
+        }
 
     @Bean("tokenExchange")
     fun restTemplate(
