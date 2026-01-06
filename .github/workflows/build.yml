@@ -1,12 +1,9 @@
-name: Java CI
-
+name: Build
 on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # ratchet:actions/checkout@v4
       - name: Set up JDK 1.11
@@ -15,7 +12,6 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Build with Maven
-        if: github.actor == 'dependabot[bot]'
         env:
           GITHUB_USERNAME: x-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
