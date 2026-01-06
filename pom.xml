@@ -24,7 +24,7 @@
         <token-validation-spring.version>6.0.1</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
         <felles.version>4.20251203153147_ca40cc5</felles.version>
-        <kontrakter.version>3.0_20251112142340_c5baa9c</kontrakter.version>
+        <kontrakter.version>3.0_20260105094547_ba7be0b</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
         <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
         <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
