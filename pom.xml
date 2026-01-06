@@ -26,12 +26,6 @@
         <felles.version>4.20251203153147_ca40cc5</felles.version>
         <kontrakter.version>3.0_20260105094547_ba7be0b</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
-        <!--suppress UnresolvedMavenProperty  Ligger som secret i github-->
-        <sonar.projectKey>${SONAR_PROJECTKEY}</sonar.projectKey>
-        <sonar.organization>navit</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <!--suppress UnresolvedMavenProperty Ligger som secret i github-->
-        <sonar.login>${SONAR_LOGIN}</sonar.login>
     </properties>
 
 
@@ -241,11 +235,6 @@
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <pluginManagement>
             <plugins>
-                <plugin>
-                    <groupId>org.sonarsource.scanner.maven</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>5.3.0.6276</version>
-                </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
