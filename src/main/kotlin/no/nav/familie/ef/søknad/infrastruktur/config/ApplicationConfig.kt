@@ -50,25 +50,6 @@ internal class ApplicationConfig {
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule.Builder().build()
 
-    @Primary
-    @Bean
-    fun objectMapper(): ObjectMapper =
-        ObjectMapper()
-            .setVisibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE)
-            .setVisibility(PropertyAccessor.SETTER, JsonAutoDetect.Visibility.NONE)
-            .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
-            .setVisibility(PropertyAccessor.CREATOR, JsonAutoDetect.Visibility.ANY)
-            .registerKotlinModule()
-            .registerModule(
-                JavaTimeModule()
-                    .addDeserializer(
-                        YearMonth::class.java,
-                        YearMonthDeserializer(DateTimeFormatter.ofPattern("u-MM")), // Denne trengs for å parse år over 9999 riktig.
-                    ),
-            ).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-
     @Bean
     fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> =
         FilterRegistrationBean(CORSResponseFilter(corsProperties)).apply {
