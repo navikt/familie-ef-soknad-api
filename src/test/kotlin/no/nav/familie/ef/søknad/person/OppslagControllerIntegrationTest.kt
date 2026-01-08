@@ -1,14 +1,12 @@
 package no.nav.familie.ef.søknad.person
 
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
-import no.nav.familie.ef.søknad.person.domain.Søkerinfo
-import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.springframework.boot.test.web.client.exchange
 import org.springframework.http.HttpEntity
-import org.springframework.web.client.exchange
 
 class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
     val tokenSubject = FnrGenerator.generer()
@@ -21,21 +19,20 @@ class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
     @Test
     fun `Få response uten _navn fra sokerinfo endepunkt - skal feile hvis noen fjerner private fra _navn`() {
         val response =
-            restTemplate.exchange<Søkerinfo>(
+            restTemplate.exchange<String>(
                 localhost("/api/oppslag/sokerinfo"),
                 org.springframework.http.HttpMethod.GET,
                 HttpEntity<String>(headers),
             )
-
-        assertThat(objectMapper.writeValueAsString(response)).contains(tokenSubject) // guard
-        assertThat(objectMapper.writeValueAsString(response)).doesNotContain("_navn")
+        assertThat(response.body).contains(tokenSubject) // guard
+        assertThat(response.body).doesNotContain("_navn")
     }
 
     @Test
     fun `Skal bare ha en av hver CORS-header etter et kall`() {
         headers.origin = "http://localhost:3000"
         val response =
-            restTemplate.exchange<Søkerinfo>(
+            restTemplate.exchange<String>(
                 localhost("/api/oppslag/sokerinfo"),
                 org.springframework.http.HttpMethod.GET,
                 HttpEntity<String>(headers),
