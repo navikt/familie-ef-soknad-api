@@ -1,14 +1,6 @@
 package no.nav.familie.ef.søknad.infrastruktur.config
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect
-import com.fasterxml.jackson.annotation.PropertyAccessor
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.datatype.jsr310.deser.YearMonthDeserializer
 import com.fasterxml.jackson.module.kotlin.KotlinModule
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import no.nav.familie.ef.søknad.infrastruktur.sikkerhet.CORSResponseFilter
 import no.nav.familie.http.client.RetryOAuth2HttpClient
 import no.nav.familie.http.interceptor.BearerTokenClientCredentialsClientInterceptor
@@ -31,8 +23,6 @@ import org.springframework.context.annotation.Primary
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestOperations
 import java.time.Duration
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 @SpringBootConfiguration
