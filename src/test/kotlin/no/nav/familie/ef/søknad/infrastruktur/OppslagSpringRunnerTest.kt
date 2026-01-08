@@ -4,6 +4,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.read.ListAppender
 import com.github.tomakehurst.wiremock.WireMockServer
 import no.nav.familie.ef.søknad.ApplicationLocalTestLauncher
+import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.util.FnrGenerator
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
@@ -11,13 +12,15 @@ import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.context.ApplicationContext
 import org.springframework.http.HttpHeaders
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.web.client.RestTemplate
 import java.util.UUID
 
 @ExtendWith(SpringExtension::class)
@@ -37,7 +40,9 @@ import java.util.UUID
 abstract class OppslagSpringRunnerTest {
     protected val listAppender = initLoggingEventListAppender()
     protected var loggingEvents: MutableList<ILoggingEvent> = listAppender.list
-    protected val restTemplate = TestRestTemplate()
+    val jackson2HttpMessageConverter = MappingJackson2HttpMessageConverter(objectMapper)
+    val restTemplate = RestTemplateBuilder().additionalMessageConverters(listOf(jackson2HttpMessageConverter) + RestTemplate().messageConverters).build()
+
     protected val headers = HttpHeaders()
 
     @Suppress("SpringJavaInjectionPointsAutowiringInspection")

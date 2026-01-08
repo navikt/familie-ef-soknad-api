@@ -14,7 +14,7 @@ import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
@@ -41,31 +41,25 @@ internal class ApplicationConfig {
     fun kotlinModule(): KotlinModule = KotlinModule.Builder().build()
 
     @Bean
-    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
-        logger.info("Registrerer CORSResponseFilter")
-        val filterRegistration = FilterRegistrationBean<CORSResponseFilter>()
-        filterRegistration.filter = CORSResponseFilter(corsProperties)
-        filterRegistration.order = 0
-        return filterRegistration
-    }
+    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> =
+        FilterRegistrationBean(CORSResponseFilter(corsProperties)).apply {
+            logger.info("Registrerer CORSResponseFilter")
+            order = 0
+        }
 
     @Bean
-    fun logFilter(): FilterRegistrationBean<LogFilter> {
-        logger.info("Registering LogFilter filter")
-        val filterRegistration = FilterRegistrationBean<LogFilter>()
-        filterRegistration.filter = LogFilter(systemtype = NavSystemtype.NAV_EKSTERN_BRUKERFLATE)
-        filterRegistration.order = 1
-        return filterRegistration
-    }
+    fun logFilter(): FilterRegistrationBean<LogFilter> =
+        FilterRegistrationBean(LogFilter(systemtype = NavSystemtype.NAV_EKSTERN_BRUKERFLATE)).apply {
+            logger.info("Registering LogFilter filter")
+            order = 1
+        }
 
     @Bean
-    fun requestTimeFilter(): FilterRegistrationBean<RequestTimeFilter> {
-        logger.info("Registering RequestTimeFilter filter")
-        val filterRegistration = FilterRegistrationBean<RequestTimeFilter>()
-        filterRegistration.filter = RequestTimeFilter()
-        filterRegistration.order = 2
-        return filterRegistration
-    }
+    fun requestTimeFilter(): FilterRegistrationBean<RequestTimeFilter> =
+        FilterRegistrationBean(RequestTimeFilter()).apply {
+            logger.info("Registering RequestTimeFilter filter")
+            order = 2
+        }
 
     @Bean("tokenExchange")
     fun restTemplate(

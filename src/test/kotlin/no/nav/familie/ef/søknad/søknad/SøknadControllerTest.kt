@@ -14,8 +14,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.exchange
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -24,6 +24,8 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod.POST
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.web.client.HttpClientErrorException
+import org.springframework.web.client.exchange
 import java.time.LocalDateTime
 
 class SøknadControllerTest {
@@ -74,12 +76,13 @@ class SøknadControllerTest {
             assertThat(søknad.person.søker.fnr).isNotEqualTo(tokenSubject)
 
             val response =
-                restTemplate.exchange<Any>(
-                    localhost("/api/soknad/overgangsstonad"),
-                    POST,
-                    HttpEntity(søknad, headers),
-                )
-
+                assertThrows<HttpClientErrorException.Forbidden> {
+                    restTemplate.exchange<Any>(
+                        localhost("/api/soknad/overgangsstonad"),
+                        POST,
+                        HttpEntity(søknad, headers),
+                    )
+                }
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
             verify(exactly = 0) { søknadService.sendInnSøknadOvergangsstønad(søknad, any()) }
         }
@@ -113,11 +116,13 @@ class SøknadControllerTest {
             assertThat(søknad.person.søker.fnr).isNotEqualTo(tokenSubject)
 
             val response =
-                restTemplate.exchange<Any>(
-                    localhost("/api/soknad/barnetilsyn"),
-                    POST,
-                    HttpEntity(søknad, headers),
-                )
+                assertThrows<HttpClientErrorException.Forbidden> {
+                    restTemplate.exchange<Any>(
+                        localhost("/api/soknad/barnetilsyn"),
+                        POST,
+                        HttpEntity(søknad, headers),
+                    )
+                }
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
             verify(exactly = 0) { søknadService.sendInnSøknadBarnetilsyn(søknad, any()) }
@@ -158,11 +163,13 @@ class SøknadControllerTest {
             assertThat(søknad.person.søker.fnr).isNotEqualTo(tokenSubject)
 
             val response =
-                restTemplate.exchange<Any>(
-                    localhost("/api/soknad/skolepenger"),
-                    POST,
-                    HttpEntity(søknad, headers),
-                )
+                assertThrows<HttpClientErrorException.Forbidden> {
+                    restTemplate.exchange<Any>(
+                        localhost("/api/soknad/skolepenger"),
+                        POST,
+                        HttpEntity(søknad, headers),
+                    )
+                }
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
             verify(exactly = 0) { søknadService.sendInnSøknadSkolepenger(søknad, any()) }
