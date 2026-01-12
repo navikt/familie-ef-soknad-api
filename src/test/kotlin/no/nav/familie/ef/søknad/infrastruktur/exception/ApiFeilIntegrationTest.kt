@@ -1,6 +1,7 @@
 package no.nav.familie.ef.søknad.infrastruktur.exception
 
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
+import no.nav.familie.ef.søknad.infrastruktur.sikkerhet.AuthResponse
 import no.nav.security.token.support.core.api.Unprotected
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -38,15 +40,14 @@ class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
 
     @Test
     fun `skal få 200 når autentisert og vi bruker get`() {
-        val exchange: ResponseEntity<String> =
-            restTemplate.exchange(
+        val exchange: ResponseEntity<AuthResponse> =
+            restTemplate.exchange<AuthResponse>(
                 localhost("/api/innlogget"),
                 HttpMethod.GET,
                 HttpEntity<Any>(headers),
-                String::class.java,
             )
         assertThat(exchange.statusCode).isEqualTo(HttpStatus.OK)
-        assertThat(exchange.body).isEqualTo("Autentisert kall")
+        assertThat(exchange.body).isEqualTo(AuthResponse("Autentisert kall"))
     }
 
     @Test

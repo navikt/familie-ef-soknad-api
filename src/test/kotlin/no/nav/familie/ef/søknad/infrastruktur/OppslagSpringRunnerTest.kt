@@ -40,6 +40,7 @@ import java.util.UUID
 abstract class OppslagSpringRunnerTest {
     protected val listAppender = initLoggingEventListAppender()
     protected var loggingEvents: MutableList<ILoggingEvent> = listAppender.list
+
     val jackson2HttpMessageConverter = MappingJackson2HttpMessageConverter(objectMapper)
     val restTemplate = RestTemplateBuilder().additionalMessageConverters(listOf(jackson2HttpMessageConverter) + RestTemplate().messageConverters).build()
 
