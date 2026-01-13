@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(path = ["/api"], produces = [MediaType.TEXT_PLAIN_VALUE])
+@RequestMapping(path = ["/api"])
 @ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 class AutentiseringController {
     @GetMapping("/innlogget")
-    fun verifiserAutentisering(): String = "Autentisert kall"
+    fun verifiserAutentisering(): AuthResponse = AuthResponse("Autentisert kall")
 }
+
+data class AuthResponse(
+    val message: String,
+)
