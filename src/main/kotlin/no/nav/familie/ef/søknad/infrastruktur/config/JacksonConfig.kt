@@ -11,11 +11,7 @@ class JacksonConfig : WebMvcConfigurer {
         converters: MutableList<org.springframework.http.converter.HttpMessageConverter<*>>,
     ) {
         val jackson2Converter = MappingJackson2HttpMessageConverter(objectMapper)
-
-        // Fjern evt. eksisterende Jackson2-converters for å unngå duplikater
         converters.removeIf { it is MappingJackson2HttpMessageConverter }
-
-        // Legg vår først
         converters.add(0, jackson2Converter)
     }
 }

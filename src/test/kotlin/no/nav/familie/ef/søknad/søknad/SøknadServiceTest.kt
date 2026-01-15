@@ -11,6 +11,7 @@ import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.felles.objectMapper
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.Test
 import java.io.File
 import java.time.LocalDateTime
@@ -59,7 +60,7 @@ class SøknadServiceTest {
                 SøknadBarnetilsyn::class.java,
             )
 
-        val søknadTilGjenbruk = SøknadBarnetilsynMapper().mapTilDto(søknadBT)
+        val søknadTilGjenbruk = SøknadBarnetilsynMapper().mapTilDto(søknadBT) ?: fail("Mapping av gyldig barnetilsynsøknad feilet")
         val skalHaGyldigeVerdier = søknadService.harSøknadGyldigeVerdier(søknadTilGjenbruk)
         assertThat(skalHaGyldigeVerdier).isTrue
     }
