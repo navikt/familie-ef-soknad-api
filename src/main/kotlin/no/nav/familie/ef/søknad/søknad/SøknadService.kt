@@ -66,13 +66,19 @@ class SøknadService(
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 
-    fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsynGjenbrukDto? = SøknadBarnetilsynMapper().mapTilDto(mottakClient.hentForrigeBarnetilsynSøknadKvittering())
+    fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsynGjenbrukDto? {
+        val søknadBarnetilsyn =
+            try {
+                mottakClient.hentForrigeBarnetilsynSøknadKvittering()
+            } catch (e: NullPointerException) {
+                return null
+            }
+        return SøknadBarnetilsynMapper().mapTilDto(søknadBarnetilsyn)
+    }
 
     fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> = mottakClient.hentSistInnsendtSøknadPerStønad()
 
-    fun harSøknadGyldigeVerdier(søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto?): Boolean {
-        if (søknadBarnetilsynGjenbrukDto == null) return true
-
+    fun harSøknadGyldigeVerdier(søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto): Boolean {
         val ugyldigeSvarIder: List<String> =
             søknadBarnetilsynGjenbrukDto.person.barn
                 .mapNotNull { it.forelder }
