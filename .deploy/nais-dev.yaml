@@ -29,8 +29,6 @@ spec:
     requests:
       memory: 256Mi
       cpu: 100m
-  secureLogs:
-    enabled: true
   ingresses:
     - https://familie-ef-soknad-api.intern.dev.nav.no
   azure:
