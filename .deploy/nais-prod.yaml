@@ -29,8 +29,6 @@ spec:
     requests:
       memory: 512Mi
       cpu: 100m
-  secureLogs:
-    enabled: true
   ingresses:
     - https://www.nav.no/familie/alene-med-barn/soknad-api
   azure:
