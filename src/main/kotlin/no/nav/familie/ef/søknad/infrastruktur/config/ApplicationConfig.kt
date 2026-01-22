@@ -1,5 +1,7 @@
 package no.nav.familie.ef.søknad.infrastruktur.config
 
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.infrastruktur.sikkerhet.CORSResponseFilter
 import no.nav.familie.http.client.RetryOAuth2HttpClient
@@ -7,6 +9,7 @@ import no.nav.familie.http.interceptor.BearerTokenClientCredentialsClientInterce
 import no.nav.familie.http.interceptor.BearerTokenExchangeClientInterceptor
 import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
+import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.NavSystemtype
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
@@ -14,14 +17,16 @@ import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestOperations
+import org.springframework.web.client.RestTemplate
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 
@@ -41,31 +46,25 @@ internal class ApplicationConfig {
     fun kotlinModule(): KotlinModule = KotlinModule.Builder().build()
 
     @Bean
-    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> {
-        logger.info("Registrerer CORSResponseFilter")
-        val filterRegistration = FilterRegistrationBean<CORSResponseFilter>()
-        filterRegistration.filter = CORSResponseFilter(corsProperties)
-        filterRegistration.order = 0
-        return filterRegistration
-    }
+    fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> =
+        FilterRegistrationBean(CORSResponseFilter(corsProperties)).apply {
+            logger.info("Registrerer CORSResponseFilter")
+            order = 0
+        }
 
     @Bean
-    fun logFilter(): FilterRegistrationBean<LogFilter> {
-        logger.info("Registering LogFilter filter")
-        val filterRegistration = FilterRegistrationBean<LogFilter>()
-        filterRegistration.filter = LogFilter(systemtype = NavSystemtype.NAV_EKSTERN_BRUKERFLATE)
-        filterRegistration.order = 1
-        return filterRegistration
-    }
+    fun logFilter(): FilterRegistrationBean<LogFilter> =
+        FilterRegistrationBean(LogFilter(systemtype = NavSystemtype.NAV_EKSTERN_BRUKERFLATE)).apply {
+            logger.info("Registering LogFilter filter")
+            order = 1
+        }
 
     @Bean
-    fun requestTimeFilter(): FilterRegistrationBean<RequestTimeFilter> {
-        logger.info("Registering RequestTimeFilter filter")
-        val filterRegistration = FilterRegistrationBean<RequestTimeFilter>()
-        filterRegistration.filter = RequestTimeFilter()
-        filterRegistration.order = 2
-        return filterRegistration
-    }
+    fun requestTimeFilter(): FilterRegistrationBean<RequestTimeFilter> =
+        FilterRegistrationBean(RequestTimeFilter()).apply {
+            logger.info("Registering RequestTimeFilter filter")
+            order = 2
+        }
 
     @Bean("tokenExchange")
     fun restTemplate(
@@ -76,6 +75,7 @@ internal class ApplicationConfig {
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
+            .additionalMessageConverters(listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters)
             .interceptors(
                 bearerTokenExchangeClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
@@ -91,6 +91,7 @@ internal class ApplicationConfig {
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
+            .additionalMessageConverters(listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters)
             .interceptors(
                 consumerIdClientInterceptor,
                 bearerTokenClientCredentialsClientInterceptor,
@@ -105,6 +106,7 @@ internal class ApplicationConfig {
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
+            .additionalMessageConverters(listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters)
             .additionalInterceptors(
                 consumerIdClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
@@ -118,6 +120,7 @@ internal class ApplicationConfig {
                 RestTemplateBuilder()
                     .connectTimeout(Duration.of(2, ChronoUnit.SECONDS))
                     .readTimeout(Duration.of(4, ChronoUnit.SECONDS))
+                    .additionalMessageConverters(listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters)
                     .build(),
             ),
         )

@@ -3,7 +3,7 @@ package no.nav.familie.ef.søknad
 import no.nav.familie.ef.søknad.infrastruktur.config.ApplicationConfig
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+import org.springframework.boot.webmvc.autoconfigure.error.ErrorMvcAutoConfiguration
 import org.springframework.context.annotation.Import
 
 @SpringBootApplication(
