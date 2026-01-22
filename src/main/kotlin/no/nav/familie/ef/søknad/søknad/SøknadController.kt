@@ -82,7 +82,7 @@ class SøknadController(
     fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
         val søknad = søknadService.hentForrigeBarnetilsynSøknadKvittering()
 
-        return if (søknadService.harSøknadGyldigeVerdier(søknad)) {
+        return if (søknad != null && søknadService.harSøknadGyldigeVerdier(søknad)) {
             søknad
         } else {
             null

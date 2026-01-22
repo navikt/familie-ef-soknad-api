@@ -5,6 +5,7 @@ enum class Toggle(
     val beskrivelse: String? = null,
 ) {
     NYNORSK("familie.ef.soknad.nynorsk"),
+    GJENBRUK_BARNETILSYN("familie.ef.soknad.gjenbruk-barnetilsyn"),
     ;
 
     companion object {
