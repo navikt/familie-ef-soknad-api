@@ -1,20 +1,17 @@
 package no.nav.familie.ef.søknad.søknad
 
 import io.mockk.mockk
-import no.nav.familie.ef.søknad.søknad.domain.AnnenForelder
 import no.nav.familie.ef.søknad.søknad.domain.PersonTilGjenbruk
 import no.nav.familie.ef.søknad.søknad.domain.SvarId
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
-import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
-import no.nav.familie.kontrakter.felles.objectMapper
+import no.nav.familie.kontrakter.felles.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.Test
 import java.io.File
-import java.time.LocalDateTime
 
 class SøknadServiceTest {
     private val mottakClient = mockk<MottakClient>()
@@ -30,7 +27,7 @@ class SøknadServiceTest {
     @Test
     fun `sjekk gyldige svarIds i barnetilsynsøknad - har bare gyldige verdier`() {
         val søknadBT =
-            objectMapper.readValue(
+            jsonMapper.readValue(
                 File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
                 SøknadBarnetilsyn::class.java,
             )
@@ -55,7 +52,7 @@ class SøknadServiceTest {
     @Test
     fun `sjekk gyldige svarIds i barnetilsynsøknad - borISammeHus mangler svarId (blir null og er derfor gyldig)`() {
         val søknadBT =
-            objectMapper.readValue(
+            jsonMapper.readValue(
                 File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
                 SøknadBarnetilsyn::class.java,
             )

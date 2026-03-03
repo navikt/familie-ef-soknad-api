@@ -1,9 +1,10 @@
 package no.nav.familie.ef.søknad.person
 
-import com.fasterxml.jackson.databind.SerializationFeature
-import no.nav.familie.kontrakter.felles.objectMapper
+import no.nav.familie.kontrakter.felles.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import tools.jackson.databind.SerializationFeature
+import tools.jackson.databind.json.JsonMapper
 
 class PdlDtoTest {
     @Test
@@ -21,10 +22,8 @@ class PdlDtoTest {
 
         val dtoFelter = PdlTestUtil.finnFeltStruktur(PdlTestdata.pdlBarnData)!!
 
-        val writerWithDefaultPrettyPrinter =
-            objectMapper
-                .configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true)
-                .writerWithDefaultPrettyPrinter()
+        val writerWithDefaultPrettyPrinter: JsonMapper = jsonMapper.rebuild().enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS).build()
+
         assertThat(writerWithDefaultPrettyPrinter.writeValueAsString(dtoFelter))
             .isEqualTo(writerWithDefaultPrettyPrinter.writeValueAsString(spørringsfelter["data"]))
     }

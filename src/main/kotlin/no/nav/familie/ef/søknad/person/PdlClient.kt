@@ -7,8 +7,8 @@ import no.nav.familie.ef.søknad.person.dto.PdlPersonRequestVariables
 import no.nav.familie.ef.søknad.person.dto.PdlResponse
 import no.nav.familie.ef.søknad.person.dto.PdlSøker
 import no.nav.familie.ef.søknad.person.dto.PdlSøkerData
-import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.kontrakter.felles.Tema
+import no.nav.familie.restklient.client.AbstractPingableRestClient
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders

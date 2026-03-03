@@ -4,7 +4,7 @@ import no.nav.familie.ef.søknad.mock.søknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.domain.Bosituasjon
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.kontrakter.felles.Fødselsnummer
-import no.nav.familie.kontrakter.felles.objectMapper
+import no.nav.familie.kontrakter.felles.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -118,7 +118,7 @@ internal class BosituasjonMapperTest {
     }
 
     private fun getBosituasjon(fileName: String) =
-        objectMapper.readValue(
+        jsonMapper.readValue(
             File("src/test/resources/$fileName"),
             Bosituasjon::class.java,
         )
