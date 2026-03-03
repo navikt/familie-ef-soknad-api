@@ -27,7 +27,7 @@ spec:
     limits:
       memory: 2Gi
     requests:
-      memory: 512Mi
+      memory: 1024Mi
       cpu: 100m
   ingresses:
     - https://www.nav.no/familie/alene-med-barn/soknad-api
