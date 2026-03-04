@@ -24,10 +24,13 @@ import org.springframework.http.client.ClientHttpRequestExecution
 import org.springframework.http.client.ClientHttpRequestInterceptor
 import org.springframework.http.client.ClientHttpResponse
 import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter
+import org.springframework.util.StreamUtils
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestOperations
 import org.springframework.web.client.RestTemplate
 import tools.jackson.databind.json.JsonMapper
+import java.io.IOException
+import java.nio.charset.Charset
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
@@ -136,15 +139,12 @@ class LoggingInterceptor : ClientHttpRequestInterceptor {
 
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
 
-    override fun intercept(
-        request: HttpRequest,
-        body: ByteArray,
-        execution: ClientHttpRequestExecution,
-    ): ClientHttpResponse {
-
+    @Throws(IOException::class)
+    override fun intercept(request: HttpRequest, body: ByteArray, execution: ClientHttpRequestExecution): ClientHttpResponse {
         val response = execution.execute(request, body)
-        // Read and log response.getBody() here
-        secureLogger.info("Response body buffered: ${response.body.bufferedReader().use { it.readText() }}")
+        // Log response body here before it's consumed
+        val bodyString = StreamUtils.copyToString(response.getBody(), Charset.defaultCharset())
+        secureLogger.warn("Response body: " + bodyString)
         return response
     }
 }
