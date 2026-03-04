@@ -19,6 +19,10 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
+import org.springframework.http.HttpRequest
+import org.springframework.http.client.ClientHttpRequestExecution
+import org.springframework.http.client.ClientHttpRequestInterceptor
+import org.springframework.http.client.ClientHttpResponse
 import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter
 import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestOperations
@@ -27,6 +31,7 @@ import tools.jackson.databind.json.JsonMapper
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
+
 
 @SpringBootConfiguration
 @EnableOAuth2Client(cacheEnabled = true)
@@ -79,6 +84,7 @@ internal class ApplicationConfig {
                 bearerTokenExchangeClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
                 consumerIdClientInterceptor,
+                LoggingInterceptor(),
             ).build()
 
     @Bean("clientCredential")
@@ -95,6 +101,7 @@ internal class ApplicationConfig {
                 consumerIdClientInterceptor,
                 bearerTokenClientCredentialsClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
+                LoggingInterceptor(),
             ).build()
 
     @Bean("utenAuth")
@@ -124,3 +131,21 @@ internal class ApplicationConfig {
             ),
         )
 }
+
+class LoggingInterceptor : ClientHttpRequestInterceptor {
+
+    private val secureLogger = LoggerFactory.getLogger("secureLogger")
+
+    override fun intercept(
+        request: HttpRequest,
+        body: ByteArray,
+        execution: ClientHttpRequestExecution,
+    ): ClientHttpResponse {
+
+        val response = execution.execute(request, body)
+        // Read and log response.getBody() here
+        secureLogger.info("Response body buffered: ${response.body.bufferedReader().use { it.readText() }}")
+        return response
+    }
+}
+
