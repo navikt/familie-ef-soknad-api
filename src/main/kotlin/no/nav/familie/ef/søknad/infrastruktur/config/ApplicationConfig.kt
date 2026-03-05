@@ -28,7 +28,6 @@ import java.time.Duration
 import java.time.temporal.ChronoUnit
 import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
 
-
 @SpringBootConfiguration
 @EnableOAuth2Client(cacheEnabled = true)
 @Import(
@@ -75,7 +74,6 @@ internal class ApplicationConfig {
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
-            .additionalMessageConverters(listOf(JacksonJsonHttpMessageConverter(kontraktJsonMapper)) + RestTemplate().messageConverters)
             .interceptors(
                 bearerTokenExchangeClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,

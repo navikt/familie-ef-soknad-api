@@ -34,68 +34,75 @@ class PdlDtoTest {
     @Test
     fun `Skal kunne mappe resultat fra pdl`() {
         val returFraPdlSøker: String =
-            """{
-                  "data": {
-                    "person": {
-                      "adressebeskyttelse": [],
-                      "foedselsdato": [
-                        {
-                          "foedselsdato": "1993-08-18",
-                          "foedselsaar": 1993
-                        }
-                      ],
-                      "bostedsadresse": [
-                        {
-                          "vegadresse": {
-                            "adressenavn": "Borggata",
-                            "bruksenhetsnummer": "H0101",
-                            "husbokstav": null,
-                            "husnummer": "78",
-                            "matrikkelId": 191692212,
-                            "postnummer": "5417"
-                          },
-                          "matrikkeladresse": null
-                        }
-                      ],
-                      "forelderBarnRelasjon": [
-                        {
-                          "relatertPersonsIdent": "30906398490",
-                          "relatertPersonsRolle": "MOR"
-                        },
-                        {
-                          "relatertPersonsIdent": "29816197315",
-                          "relatertPersonsRolle": "FAR"
-                        },
-                        {
-                          "relatertPersonsIdent": "19812288930",
-                          "relatertPersonsRolle": "BARN"
-                        }
-                      ],
-                      "navn": [
-                        {
-                          "fornavn": "FYLDIG",
-                          "mellomnavn": null,
-                          "etternavn": "JORDSKORPE"
-                        }
-                      ],
-                      "sivilstand": [
-                        {
-                          "type": "UGIFT"
-                        }
-                      ],
-                      "statsborgerskap": [
-                        {
-                          "land": "NOR",
-                          "gyldigFraOgMed": "1993-08-18",
-                          "gyldigTilOgMed": null
-                        }
-                      ]
+            """
+            {
+              "data": {
+                "person": {
+                  "adressebeskyttelse": [],
+                  "foedselsdato": [
+                    {
+                      "foedselsdato": "1993-08-18",
+                      "foedselsaar": 1993
                     }
-                  }
-                }""".trimIndent()
+                  ],
+                  "bostedsadresse": [
+                    {
+                      "vegadresse": {
+                        "adressenavn": "Borggata",
+                        "bruksenhetsnummer": "H0101",
+                        "husbokstav": null,
+                        "husnummer": "78",
+                        "matrikkelId": 191692212,
+                        "postnummer": "5417"
+                      },
+                      "matrikkeladresse": null
+                    }
+                  ],
+                  "forelderBarnRelasjon": [
+                    {
+                      "relatertPersonsIdent": "30906398490",
+                      "relatertPersonsRolle": "MOR"
+                    },
+                    {
+                      "relatertPersonsIdent": "29816197315",
+                      "relatertPersonsRolle": "FAR"
+                    },
+                    {
+                      "relatertPersonsIdent": "19812288930",
+                      "relatertPersonsRolle": "BARN"
+                    }
+                  ],
+                  "navn": [
+                    {
+                      "fornavn": "FYLDIG",
+                      "mellomnavn": null,
+                      "etternavn": "JORDSKORPE"
+                    }
+                  ],
+                  "sivilstand": [
+                    {
+                      "type": "UGIFT"
+                    }
+                  ],
+                  "statsborgerskap": [
+                    {
+                      "land": "NOR",
+                      "gyldigFraOgMed": "1993-08-18",
+                      "gyldigTilOgMed": null
+                    }
+                  ]
+                }
+              }
+            }
+            """.trimIndent()
 
         val readValue = jsonMapper.readValue<PdlResponse<PdlSøkerData>>(returFraPdlSøker)
 
-        assertThat(readValue.data.person!!.navn.first().fornavn).isEqualTo("FYLDIG")
+        assertThat(
+            readValue.data.person!!
+                .navn
+                .first()
+                .fornavn,
+        ).isEqualTo("FYLDIG")
     }
 }
