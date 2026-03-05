@@ -24,11 +24,13 @@ class PdlClient(
     private val logger = LoggerFactory.getLogger(javaClass)
 
     fun hentSøker(personIdent: String): PdlSøker {
+        secureLogger.info("Skal hente søkerdata med request: $personIdent fra PDL")
         val pdlPersonRequest =
             PdlPersonRequest(
                 variables = PdlPersonRequestVariables(personIdent),
                 query = PdlConfig.søkerQuery,
             )
+        secureLogger.info("Henter søkerdata med request: $pdlPersonRequest fra PDL")
         val pdlResponse: PdlResponse<PdlSøkerData> =
             postForEntity(
                 pdlConfig.pdlUri,
