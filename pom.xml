@@ -21,7 +21,7 @@
         <kotlin.version>2.3.10</kotlin.version>
         <springdoc.version>3.0.1</springdoc.version>
         <mockk.version>1.14.9</mockk.version>
-        <token-validation-spring.version>6.0.3</token-validation-spring.version>
+        <token-validation-spring.version>6.0.1</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
         <felles.version>4.20260301040348_4280733</felles.version>
         <kontrakter.version>4.0_20260227102250_91258ac</kontrakter.version>
@@ -123,6 +123,12 @@
             <artifactId>unleash</artifactId>
             <version>${felles.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>token-validation-spring</artifactId>
+            <version>${token-validation-spring.version}</version>
+        </dependency>
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>token-client-spring</artifactId>
@@ -131,11 +137,6 @@
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>token-client-core</artifactId>
-            <version>${token-validation-spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.security</groupId>
-            <artifactId>token-validation-spring</artifactId>
             <version>${token-validation-spring.version}</version>
         </dependency>
         <dependency>
