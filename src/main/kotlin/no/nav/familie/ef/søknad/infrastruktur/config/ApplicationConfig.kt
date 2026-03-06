@@ -4,12 +4,10 @@ import no.nav.familie.ef.søknad.infrastruktur.sikkerhet.CORSResponseFilter
 import no.nav.familie.log.NavSystemtype
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
-import no.nav.familie.restklient.client.RetryOAuth2HttpClient
 import no.nav.familie.restklient.interceptor.BearerTokenClientCredentialsClientInterceptor
 import no.nav.familie.restklient.interceptor.BearerTokenExchangeClientInterceptor
 import no.nav.familie.restklient.interceptor.ConsumerIdClientInterceptor
 import no.nav.familie.restklient.interceptor.MdcValuesPropagatingClientInterceptor
-import no.nav.security.token.support.client.core.http.OAuth2HttpClient
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
@@ -20,7 +18,6 @@ import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
 import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter
-import org.springframework.web.client.RestClient
 import org.springframework.web.client.RestOperations
 import org.springframework.web.client.RestTemplate
 import tools.jackson.databind.json.JsonMapper
@@ -111,16 +108,16 @@ internal class ApplicationConfig {
                 mdcValuesPropagatingClientInterceptor,
             ).build()
 
-    @Primary
-    @Bean
-    fun oAuth2HttpClient(): OAuth2HttpClient =
-        RetryOAuth2HttpClient(
-            RestClient.create(
-                RestTemplateBuilder()
-                    .connectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-                    .readTimeout(Duration.of(4, ChronoUnit.SECONDS))
-                    .additionalMessageConverters(listOf(JacksonJsonHttpMessageConverter(kontraktJsonMapper)) + RestTemplate().messageConverters)
-                    .build(),
-            ),
-        )
+//    @Primary
+//    @Bean
+//    fun oAuth2HttpClient(): OAuth2HttpClient =
+//        RetryOAuth2HttpClient(
+//            RestClient.create(
+//                RestTemplateBuilder()
+//                    .connectTimeout(Duration.of(2, ChronoUnit.SECONDS))
+//                    .readTimeout(Duration.of(4, ChronoUnit.SECONDS))
+//                    .additionalMessageConverters(listOf(JacksonJsonHttpMessageConverter(kontraktJsonMapper)) + RestTemplate().messageConverters)
+//                    .build(),
+//            ),
+//        )
 }
