@@ -107,17 +107,4 @@ internal class ApplicationConfig {
                 consumerIdClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
             ).build()
-
-//    @Primary
-//    @Bean
-//    fun oAuth2HttpClient(): OAuth2HttpClient =
-//        RetryOAuth2HttpClient(
-//            RestClient.create(
-//                RestTemplateBuilder()
-//                    .connectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-//                    .readTimeout(Duration.of(4, ChronoUnit.SECONDS))
-//                    .additionalMessageConverters(listOf(JacksonJsonHttpMessageConverter(kontraktJsonMapper)) + RestTemplate().messageConverters)
-//                    .build(),
-//            ),
-//        )
 }
