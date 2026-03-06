@@ -74,6 +74,7 @@ internal class ApplicationConfig {
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
+            .additionalMessageConverters(listOf(JacksonJsonHttpMessageConverter(kontraktJsonMapper)) + RestTemplate().messageConverters)
             .interceptors(
                 bearerTokenExchangeClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
