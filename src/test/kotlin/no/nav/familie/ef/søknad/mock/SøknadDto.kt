@@ -5,14 +5,14 @@ import no.nav.familie.ef.søknad.søknad.domain.Søker
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
-import no.nav.familie.kontrakter.felles.jsonMapper
+import no.nav.familie.kontrakter.felles.objectMapper
 import java.io.File
 
-fun søknadOvergangsstønadDto(): SøknadOvergangsstønadDto = jsonMapper.readValue(File("src/test/resources/søknadDto.json"), SøknadOvergangsstønadDto::class.java)
+fun søknadOvergangsstønadDto(): SøknadOvergangsstønadDto = objectMapper.readValue(File("src/test/resources/søknadDto.json"), SøknadOvergangsstønadDto::class.java)
 
-fun søknadBarnetilsynDto(): SøknadBarnetilsynDto = jsonMapper.readValue(File("src/test/resources/barnetilsyn/BarnetilsynsøknadDto.json"), SøknadBarnetilsynDto::class.java)
+fun søknadBarnetilsynDto(): SøknadBarnetilsynDto = objectMapper.readValue(File("src/test/resources/barnetilsyn/BarnetilsynsøknadDto.json"), SøknadBarnetilsynDto::class.java)
 
-fun søknadSkolepengerDto(): SøknadSkolepengerDto = jsonMapper.readValue(File("src/test/resources/skolepenger/skolepenger.json"), SøknadSkolepengerDto::class.java)
+fun søknadSkolepengerDto(): SøknadSkolepengerDto = objectMapper.readValue(File("src/test/resources/skolepenger/skolepenger.json"), SøknadSkolepengerDto::class.java)
 
 fun søkerMedDefaultVerdier(
     forventetFnr: String = "19128449828",

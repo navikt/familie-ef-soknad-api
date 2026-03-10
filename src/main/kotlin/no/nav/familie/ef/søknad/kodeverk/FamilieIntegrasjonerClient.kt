@@ -1,9 +1,9 @@
 package no.nav.familie.ef.søknad.kodeverk
 
 import no.nav.familie.ef.søknad.infrastruktur.config.FamilieIntegrasjonerConfig
+import no.nav.familie.http.client.AbstractPingableRestClient
 import no.nav.familie.kontrakter.felles.Ressurs
 import no.nav.familie.kontrakter.felles.kodeverk.KodeverkDto
-import no.nav.familie.restklient.client.AbstractPingableRestClient
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations

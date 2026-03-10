@@ -7,7 +7,7 @@ import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
-import no.nav.familie.kontrakter.felles.jsonMapper
+import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -23,13 +23,13 @@ internal class SøknadBarnetilsynMapperTest {
     private val innsendingMottatt: LocalDateTime = LocalDateTime.now()
 
     private val søknad: SøknadBarnetilsynDto =
-        jsonMapper.readValue(
+        objectMapper.readValue(
             File("src/test/resources/barnetilsyn/BarnetilsynsøknadDto.json"),
             SøknadBarnetilsynDto::class.java,
         )
 
     val søknadBTDto =
-        jsonMapper.readValue(
+        objectMapper.readValue(
             File("src/test/resources/barnetilsyn/BarnetilsynsøknadBarnMedFeilAlderIFnr.json"),
             SøknadBarnetilsynDto::class.java,
         )
