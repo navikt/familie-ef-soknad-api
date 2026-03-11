@@ -45,12 +45,15 @@ class PdlApp2AppClient(
                 variables = PdlPersonBolkRequestVariables(personIdenter),
                 query = PdlConfig.annenForelderQuery,
             )
+        secureLogger.info("Skal hente andre foreldre med request: $pdlPersonRequest ")
         val pdlResponse: PdlBolkResponse<PdlAnnenForelder> =
             postForEntity(
                 pdlConfig.pdlUri,
                 pdlPersonRequest,
                 httpHeaders(),
             )
+        secureLogger.info("Hentet andre foreldre med request: $pdlResponse")
+
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
