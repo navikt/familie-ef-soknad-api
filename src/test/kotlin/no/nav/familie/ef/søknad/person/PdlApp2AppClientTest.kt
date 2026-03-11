@@ -82,6 +82,6 @@ class PdlApp2AppClientTest {
     }
 
     private fun readFile(filnavn: String): String = this::class.java
-        .getResource("/pdl/$filnavn")!!
+        .getResource("/pdl/$filnavn")
         .readText()
 }
