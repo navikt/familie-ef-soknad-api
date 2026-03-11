@@ -21,6 +21,7 @@ import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter
 import org.springframework.web.client.RestOperations
 import org.springframework.web.client.RestTemplate
 import tools.jackson.databind.json.JsonMapper
+import tools.jackson.module.kotlin.KotlinModule
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
@@ -40,6 +41,9 @@ internal class ApplicationConfig {
     @Bean
     @Primary
     fun jsonMapper(): JsonMapper = kontraktJsonMapper
+
+    @Bean
+    fun kotlinModule(): KotlinModule = KotlinModule.Builder().build()
 
     @Bean
     fun corsFilter(corsProperties: CorsProperties): FilterRegistrationBean<CORSResponseFilter> =
