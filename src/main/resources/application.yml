@@ -7,7 +7,7 @@ server:
 
 spring:
   main:
-    allow-bean-definition-overriding: true
+    allow-bean-definition-overriding: false
 
 springdoc:
   packagesToScan: no.nav.familie.ef.søknad

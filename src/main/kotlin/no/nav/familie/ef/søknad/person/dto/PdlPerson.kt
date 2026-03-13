@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDate
 
 data class PdlResponse<T>(
-    val data: T,
-    val errors: List<PdlError>?,
-    val extensions: PdlExtensions?,
+    @JsonProperty("data") val data: T,
+    @JsonProperty("errors") val errors: List<PdlError>?,
+    @JsonProperty("extensions") val extensions: PdlExtensions?,
 ) {
     fun harFeil(): Boolean = errors != null && errors.isNotEmpty()
 
@@ -62,12 +62,12 @@ data class PdlBolkResponse<T>(
 }
 
 data class PdlSøker(
-    val adressebeskyttelse: List<Adressebeskyttelse>,
-    val bostedsadresse: List<Bostedsadresse>,
-    val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
-    val navn: List<Navn>,
-    val sivilstand: List<Sivilstand>,
-    val statsborgerskap: List<Statsborgerskap>,
+    @JsonProperty("adressebeskyttelse") val adressebeskyttelse: List<Adressebeskyttelse>,
+    @JsonProperty("bostedsadresse") val bostedsadresse: List<Bostedsadresse>,
+    @JsonProperty("forelderBarnRelasjon") val forelderBarnRelasjon: List<ForelderBarnRelasjon>,
+    @JsonProperty("navn") val navn: List<Navn>,
+    @JsonProperty("sivilstand") val sivilstand: List<Sivilstand>,
+    @JsonProperty("statsborgerskap") val statsborgerskap: List<Statsborgerskap>,
     @JsonProperty("foedselsdato") val fødselsdato: List<Fødselsdato>,
 )
 
