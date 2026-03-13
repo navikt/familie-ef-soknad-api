@@ -77,13 +77,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
-        <!-- Source: https://mvnrepository.com/artifact/tools.jackson.module/jackson-module-kotlin -->
-        <dependency>
-            <groupId>tools.jackson.module</groupId>
-            <artifactId>jackson-module-kotlin</artifactId>
-            <version>3.1.0</version>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
