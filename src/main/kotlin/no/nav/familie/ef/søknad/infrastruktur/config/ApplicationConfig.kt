@@ -26,6 +26,7 @@ import tools.jackson.databind.json.JsonMapper
 import tools.jackson.module.kotlin.KotlinModule
 import java.time.Duration
 import java.time.temporal.ChronoUnit
+
 import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
 
 
@@ -118,14 +119,7 @@ internal class ApplicationConfig {
 }
 
 private fun RestTemplateBuilder.withByteArrayConverterForPdf(): RestTemplateBuilder {
-    // Create the converter
     val converter = ByteArrayHttpMessageConverter()
-
-    // Set supported media types to include application/pdf
-    val supportedTypes: MutableList<MediaType?> = ArrayList<MediaType?>()
-    supportedTypes.add(MediaType.APPLICATION_PDF)
-    supportedTypes.add(MediaType.APPLICATION_OCTET_STREAM) // Often needed
-    converter.setSupportedMediaTypes(supportedTypes)
-    this.additionalMessageConverters(converter)
-    return this
+    converter.supportedMediaTypes = listOf(MediaType.APPLICATION_PDF, MediaType.APPLICATION_OCTET_STREAM)
+    return this.additionalMessageConverters(converter)
 }
