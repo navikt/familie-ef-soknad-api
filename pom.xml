@@ -11,19 +11,19 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.3</version>
+        <version>4.0.4</version>
     </parent>
 
     <properties>
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <kotlin.version>2.3.10</kotlin.version>
-        <springdoc.version>3.0.1</springdoc.version>
+        <kotlin.version>2.3.20</kotlin.version>
+        <springdoc.version>3.0.2</springdoc.version>
         <mockk.version>1.14.9</mockk.version>
-        <token-validation-spring.version>6.0.3</token-validation-spring.version>
-        <felles.version>4.20260301040348_4280733</felles.version>
-        <kontrakter.version>4.0_20260227102250_91258ac</kontrakter.version>
+        <token-validation-spring.version>6.0.4</token-validation-spring.version>
+        <felles.version>4.20260315040337_2316c82</felles.version>
+        <kontrakter.version>4.0_20260316070955_5ff27c3</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
     </properties>
 
@@ -159,7 +159,7 @@
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>util</artifactId>
-            <version>3.20251105152539_b03ed80</version>
+            <version>4.20260315040337_2316c82</version>
             <scope>test</scope>
         </dependency>
         <dependency>
