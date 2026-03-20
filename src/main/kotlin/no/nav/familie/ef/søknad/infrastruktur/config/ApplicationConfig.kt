@@ -1,19 +1,13 @@
 package no.nav.familie.ef.søknad.infrastruktur.config
 
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 import no.nav.familie.ef.søknad.infrastruktur.sikkerhet.CORSResponseFilter
-import no.nav.familie.http.client.RetryOAuth2HttpClient
-import no.nav.familie.http.interceptor.BearerTokenClientCredentialsClientInterceptor
-import no.nav.familie.http.interceptor.BearerTokenExchangeClientInterceptor
-import no.nav.familie.http.interceptor.ConsumerIdClientInterceptor
-import no.nav.familie.http.interceptor.MdcValuesPropagatingClientInterceptor
-import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.log.NavSystemtype
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
-import no.nav.security.token.support.client.core.http.OAuth2HttpClient
+import no.nav.familie.restklient.interceptor.BearerTokenClientCredentialsClientInterceptor
+import no.nav.familie.restklient.interceptor.BearerTokenExchangeClientInterceptor
+import no.nav.familie.restklient.interceptor.ConsumerIdClientInterceptor
+import no.nav.familie.restklient.interceptor.MdcValuesPropagatingClientInterceptor
 import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
 import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringBootConfiguration
@@ -23,12 +17,14 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import org.springframework.web.client.RestClient
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter
 import org.springframework.web.client.RestOperations
 import org.springframework.web.client.RestTemplate
+import tools.jackson.databind.json.JsonMapper
+import tools.jackson.module.kotlin.KotlinModule
 import java.time.Duration
 import java.time.temporal.ChronoUnit
+import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
 
 @SpringBootConfiguration
 @EnableOAuth2Client(cacheEnabled = true)
@@ -41,6 +37,10 @@ import java.time.temporal.ChronoUnit
 @ComponentScan(basePackages = ["no.nav.familie.unleash"])
 internal class ApplicationConfig {
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
+
+    @Bean
+    @Primary
+    fun jsonMapper(): JsonMapper = kontraktJsonMapper
 
     @Bean
     fun kotlinModule(): KotlinModule = KotlinModule.Builder().build()
@@ -75,7 +75,7 @@ internal class ApplicationConfig {
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
-            .additionalMessageConverters(listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters)
+            .messageConverters(JacksonJsonHttpMessageConverter(kontraktJsonMapper))
             .interceptors(
                 bearerTokenExchangeClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
@@ -91,7 +91,7 @@ internal class ApplicationConfig {
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
-            .additionalMessageConverters(listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters)
+            .messageConverters(JacksonJsonHttpMessageConverter(kontraktJsonMapper))
             .interceptors(
                 consumerIdClientInterceptor,
                 bearerTokenClientCredentialsClientInterceptor,
@@ -106,22 +106,9 @@ internal class ApplicationConfig {
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
-            .additionalMessageConverters(listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters)
+            .additionalMessageConverters(listOf(JacksonJsonHttpMessageConverter(kontraktJsonMapper)) + RestTemplate().messageConverters)
             .additionalInterceptors(
                 consumerIdClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
             ).build()
-
-    @Primary
-    @Bean
-    fun oAuth2HttpClient(): OAuth2HttpClient =
-        RetryOAuth2HttpClient(
-            RestClient.create(
-                RestTemplateBuilder()
-                    .connectTimeout(Duration.of(2, ChronoUnit.SECONDS))
-                    .readTimeout(Duration.of(4, ChronoUnit.SECONDS))
-                    .additionalMessageConverters(listOf(MappingJackson2HttpMessageConverter(objectMapper)) + RestTemplate().messageConverters)
-                    .build(),
-            ),
-        )
 }

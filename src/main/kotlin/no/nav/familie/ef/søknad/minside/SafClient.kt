@@ -6,7 +6,7 @@ import no.nav.familie.ef.søknad.minside.domain.Variantformat
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentOversiktRequest
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentOversiktResponse
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentVariables
-import no.nav.familie.http.client.AbstractPingableRestClient
+import no.nav.familie.restklient.client.AbstractPingableRestClient
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestOperations
