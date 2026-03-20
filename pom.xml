@@ -11,20 +11,20 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.1</version>
+        <version>4.0.4</version>
     </parent>
 
     <properties>
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <kotlin.version>2.3.0</kotlin.version>
-        <springdoc.version>3.0.1</springdoc.version>
-        <mockk.version>1.14.7</mockk.version>
-        <token-validation-spring.version>6.0.1</token-validation-spring.version>
+        <kotlin.version>2.3.20</kotlin.version>
+        <springdoc.version>3.0.2</springdoc.version>
+        <mockk.version>1.14.9</mockk.version>
+        <token-validation-spring.version>6.0.4</token-validation-spring.version>
         <okhttp3.version>4.9.1</okhttp3.version> <!-- overskriver spring sin versjon, blir brukt av mock-oauth2-server -->
-        <felles.version>4.20251203153147_ca40cc5</felles.version>
-        <kontrakter.version>3.0_20260105094547_ba7be0b</kontrakter.version>
+        <felles.version>4.20260315040337_2316c82</felles.version>
+        <kontrakter.version>4.0_20260316070955_5ff27c3</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
     </properties>
 
@@ -106,7 +106,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents.client5</groupId>
             <artifactId>httpclient5</artifactId>
-            <version>5.5.1</version>
+            <version>5.6</version>
         </dependency>
 
         <!-- Interne avhengigheter -->
@@ -161,7 +161,7 @@
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>util</artifactId>
-            <version>3.20251105152539_b03ed80</version>
+            <version>4.20260315040337_2316c82</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -318,7 +318,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.4</version>
+                <version>3.5.5</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
