@@ -17,6 +17,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Primary
+import org.springframework.http.MediaType
+import org.springframework.http.converter.ByteArrayHttpMessageConverter
 import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter
 import org.springframework.web.client.RestOperations
 import org.springframework.web.client.RestTemplate
@@ -25,6 +27,7 @@ import tools.jackson.module.kotlin.KotlinModule
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
+
 
 @SpringBootConfiguration
 @EnableOAuth2Client(cacheEnabled = true)
@@ -76,6 +79,7 @@ internal class ApplicationConfig {
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
             .messageConverters(JacksonJsonHttpMessageConverter(kontraktJsonMapper))
+            .withByteArrayConverterForPdf()
             .interceptors(
                 bearerTokenExchangeClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
@@ -111,4 +115,17 @@ internal class ApplicationConfig {
                 consumerIdClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
             ).build()
+}
+
+private fun RestTemplateBuilder.withByteArrayConverterForPdf(): RestTemplateBuilder {
+    // Create the converter
+    val converter = ByteArrayHttpMessageConverter()
+
+    // Set supported media types to include application/pdf
+    val supportedTypes: MutableList<MediaType?> = ArrayList<MediaType?>()
+    supportedTypes.add(MediaType.APPLICATION_PDF)
+    supportedTypes.add(MediaType.APPLICATION_OCTET_STREAM) // Often needed
+    converter.setSupportedMediaTypes(supportedTypes)
+    this.additionalMessageConverters(converter)
+    return this
 }
