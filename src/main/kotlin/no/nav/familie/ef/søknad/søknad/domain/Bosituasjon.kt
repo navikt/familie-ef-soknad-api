@@ -11,7 +11,7 @@ data class Bosituasjon(
 )
 
 data class SamboerDetaljer(
-    val kjennerIkkeIdent: Boolean = false,
+    val kjennerIkkeIdent: Boolean,
     val fødselsdato: DatoFelt?,
     val navn: TekstFelt,
     val ident: TekstFelt? = null,

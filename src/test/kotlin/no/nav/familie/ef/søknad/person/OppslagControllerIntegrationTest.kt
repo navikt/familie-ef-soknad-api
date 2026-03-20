@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.person
 
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
 import no.nav.familie.ef.søknad.person.domain.Søkerinfo
-import no.nav.familie.kontrakter.felles.jsonMapper
+import no.nav.familie.kontrakter.felles.objectMapper
 import no.nav.familie.util.FnrGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -27,8 +27,8 @@ class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
                 HttpEntity<String>(headers),
             )
 
-        assertThat(jsonMapper.writeValueAsString(response)).contains(tokenSubject) // guard
-        assertThat(jsonMapper.writeValueAsString(response)).doesNotContain("_navn")
+        assertThat(objectMapper.writeValueAsString(response)).contains(tokenSubject) // guard
+        assertThat(objectMapper.writeValueAsString(response)).doesNotContain("_navn")
     }
 
     @Test

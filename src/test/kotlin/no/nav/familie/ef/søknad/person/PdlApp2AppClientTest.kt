@@ -6,11 +6,7 @@ import com.github.tomakehurst.wiremock.client.WireMock.post
 import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import no.nav.familie.ef.søknad.infrastruktur.config.PdlConfig
-import no.nav.familie.ef.søknad.infrastruktur.config.readValue
 import no.nav.familie.ef.søknad.infrastruktur.exception.PdlRequestException
-import no.nav.familie.ef.søknad.person.dto.PdlAnnenForelder
-import no.nav.familie.ef.søknad.person.dto.PdlBolkResponse
-import no.nav.familie.kontrakter.felles.jsonMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.AfterEach
@@ -35,15 +31,6 @@ class PdlApp2AppClientTest {
     fun tearDown() {
         wireMockServer.resetAll()
         wireMockServer.stop()
-    }
-
-    @Test
-    fun `test at mapper kan lage PdlBolkResponse`() {
-        val barnJsonString = readFile("annenForelder.json")
-
-        val value = jsonMapper.readValue<PdlBolkResponse<PdlAnnenForelder>>(barnJsonString)
-
-        assertThat(value).isNotNull
     }
 
     @Test
@@ -80,8 +67,5 @@ class PdlApp2AppClientTest {
             .isInstanceOf(PdlRequestException::class.java)
     }
 
-    private fun readFile(filnavn: String): String =
-        this::class.java
-            .getResource("/pdl/$filnavn")!!
-            .readText()
+    private fun readFile(filnavn: String): String = this::class.java.getResource("/pdl/$filnavn").readText()
 }

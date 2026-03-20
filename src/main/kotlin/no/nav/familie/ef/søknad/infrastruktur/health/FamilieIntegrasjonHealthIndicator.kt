@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.infrastruktur.health
 
 import no.nav.familie.ef.søknad.kodeverk.FamilieIntegrasjonerClient
-import no.nav.familie.restklient.health.AbstractHealthIndicator
+import no.nav.familie.http.health.AbstractHealthIndicator
 import org.springframework.stereotype.Component
 
 @Component

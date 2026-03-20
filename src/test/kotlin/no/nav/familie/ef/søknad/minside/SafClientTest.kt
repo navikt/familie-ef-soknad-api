@@ -1,9 +1,9 @@
 package no.nav.familie.ef.søknad.minside
 
-import no.nav.familie.ef.søknad.infrastruktur.config.readValue
+import com.fasterxml.jackson.module.kotlin.readValue
 import no.nav.familie.ef.søknad.minside.domain.DokumentoversiktSelvbetjeningResponse
 import no.nav.familie.ef.søknad.minside.dto.SafDokumentOversiktResponse
-import no.nav.familie.kontrakter.felles.jsonMapper
+import no.nav.familie.kontrakter.felles.objectMapper
 import org.junit.jupiter.api.Test
 
 class SafClientTest {
@@ -25,6 +25,6 @@ class SafClientTest {
               }
             }
             """.trimIndent()
-        jsonMapper.readValue<SafDokumentOversiktResponse<DokumentoversiktSelvbetjeningResponse>>(response)
+        objectMapper.readValue<SafDokumentOversiktResponse<DokumentoversiktSelvbetjeningResponse>>(response)
     }
 }

@@ -22,7 +22,6 @@
     <root level="${ROOT_LOG_LEVEL:-INFO}">
         <!-- nais+local -->
         <appender-ref ref="stdout_json"/>
-        <appender-ref ref="team-logs"/>
     </root>
 
     <logger name="no.nav" level="WARN"/>
