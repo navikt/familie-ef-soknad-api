@@ -7,8 +7,8 @@ import no.nav.familie.ef.søknad.person.dto.PdlBarn
 import no.nav.familie.ef.søknad.person.dto.PdlBolkResponse
 import no.nav.familie.ef.søknad.person.dto.PdlPersonBolkRequest
 import no.nav.familie.ef.søknad.person.dto.PdlPersonBolkRequestVariables
+import no.nav.familie.http.client.AbstractRestClient
 import no.nav.familie.kontrakter.felles.Tema
-import no.nav.familie.restklient.client.AbstractRestClient
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.HttpHeaders
@@ -45,15 +45,12 @@ class PdlApp2AppClient(
                 variables = PdlPersonBolkRequestVariables(personIdenter),
                 query = PdlConfig.annenForelderQuery,
             )
-        secureLogger.info("Skal hente andre foreldre med request: $pdlPersonRequest ")
         val pdlResponse: PdlBolkResponse<PdlAnnenForelder> =
             postForEntity(
                 pdlConfig.pdlUri,
                 pdlPersonRequest,
                 httpHeaders(),
             )
-        secureLogger.info("Hentet andre foreldre med request: $pdlResponse")
-
         return feilsjekkOgReturnerData(pdlResponse)
     }
 
