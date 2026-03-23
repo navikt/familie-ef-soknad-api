@@ -1,6 +1,6 @@
 package no.nav.familie.ef.søknad.mock
 
-import no.nav.familie.kontrakter.felles.objectMapper
+import no.nav.familie.kontrakter.felles.jsonMapper
 import no.nav.security.token.support.core.api.Unprotected
 import no.nav.security.token.support.core.context.TokenValidationContextHolder
 import no.nav.security.token.support.core.exceptions.JwtTokenValidatorException
@@ -118,7 +118,7 @@ class DokumentMockController(
 
     private fun validerGyldigJson(verdi: String) {
         try {
-            objectMapper.readTree(verdi)
+            jsonMapper.readTree(verdi)
         } catch (e: Exception) {
             error("Forsøker å mellomlagre søknad som ikke er gyldig json-verdi")
         }
