@@ -10,6 +10,7 @@ springdoc:
   pathsToMatch: /v3/api-docs,/api/**
   swagger-ui:
     disable-swagger-default-url: true
+    enabled=false:
 
 familie:
   ef:
