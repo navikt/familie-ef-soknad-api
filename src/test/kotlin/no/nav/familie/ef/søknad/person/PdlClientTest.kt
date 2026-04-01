@@ -51,6 +51,7 @@ class PdlClientTest {
             post(urlEqualTo("/${PdlConfig.PATH_GRAPHQL}"))
                 .willReturn(okJson("{\"data\": {}}")),
         )
+
         assertThat(catchThrowable { pdlClient.hentSøker("") })
             .hasMessageStartingWith("Manglende ")
             .isInstanceOf(PdlRequestException::class.java)

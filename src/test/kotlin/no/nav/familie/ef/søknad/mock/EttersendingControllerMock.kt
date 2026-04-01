@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.mock
 
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
-import no.nav.familie.kontrakter.felles.objectMapper
+import no.nav.familie.kontrakter.felles.jsonMapper
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.web.bind.annotation.PostMapping
@@ -18,7 +18,7 @@ class EttersendingControllerMock {
     fun postEttersending(
         @RequestBody msgBody: Map<Any, Any>,
     ): Kvittering {
-        val valueAsString = objectMapper.writeValueAsString((msgBody))
+        val valueAsString = jsonMapper.writeValueAsString((msgBody))
         return Kvittering("Kontakt med api, ettersending er ikke sendt inn. Du forsøkte å sende inn:  $valueAsString", innsendingMottatt)
     }
 }

@@ -1,10 +1,10 @@
 package no.nav.familie.ef.søknad.minside
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import io.mockk.every
 import io.mockk.mockk
+import no.nav.familie.ef.søknad.infrastruktur.config.readValue
 import no.nav.familie.ef.søknad.minside.domain.DokumentoversiktSelvbetjeningResponse
-import no.nav.familie.kontrakter.felles.objectMapper
+import no.nav.familie.kontrakter.felles.jsonMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -16,8 +16,10 @@ class SafClientConfig {
     @Bean
     @Primary
     fun safClient(): SafClient {
+        val content: String = readFile("dummy-journalposter.json")
         val dummyJournalposter =
-            objectMapper.readValue<DokumentoversiktSelvbetjeningResponse>(readFile("dummy-journalposter.json"))
+            jsonMapper.readValue<DokumentoversiktSelvbetjeningResponse>(content)
+
         val dummyPdf =
             this::class.java.classLoader
                 .getResource("minside/pdf_dummy.pdf")
