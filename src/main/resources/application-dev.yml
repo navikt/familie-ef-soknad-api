@@ -23,3 +23,7 @@ PDL_SCOPE: api://dev-fss.pdl.pdl-api/.default
 
 SAF_URL: https://safselvbetjening.dev-fss-pub.nais.io
 SAF_AUDIENCE: dev-fss:teamdokumenthandtering:safselvbetjening
+
+springdoc:
+  swagger-ui:
+    enabled=true:
