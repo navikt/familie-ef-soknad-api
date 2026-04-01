@@ -6,8 +6,8 @@ server:
     context-path: /familie/alene-med-barn/soknad-api
 
 springdoc:
-  packagesToScan: no.nav.familie.ef.søknad
-  pathsToMatch: /v3/api-docs,/api/**
+  api-docs:
+    enabled=false:
   swagger-ui:
     disable-swagger-default-url: true
     enabled=false:
