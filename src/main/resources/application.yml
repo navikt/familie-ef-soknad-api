@@ -7,10 +7,10 @@ server:
 
 springdoc:
   api-docs:
-    enabled=false:
+    enabled: false
   swagger-ui:
     disable-swagger-default-url: true
-    enabled=false:
+    enabled: false
 
 familie:
   ef:
