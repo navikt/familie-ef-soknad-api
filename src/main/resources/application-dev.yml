@@ -25,5 +25,10 @@ SAF_URL: https://safselvbetjening.dev-fss-pub.nais.io
 SAF_AUDIENCE: dev-fss:teamdokumenthandtering:safselvbetjening
 
 springdoc:
+  api-docs:
+    enabled: true
+  packagesToScan: no.nav.familie.ef.søknad
+  pathsToMatch: /v3/api-docs,/api/**
   swagger-ui:
-    enabled=true:
+    enabled: true
+    disable-swagger-default-url: true
