@@ -18,6 +18,7 @@ class FeatureToggleController(
         setOf(
             Toggle.NYNORSK,
             Toggle.GJENBRUK_BARNETILSYN,
+            Toggle.OVERGANGSSTØNAD_REGELENDRINGER_2026,
         )
 
     @GetMapping

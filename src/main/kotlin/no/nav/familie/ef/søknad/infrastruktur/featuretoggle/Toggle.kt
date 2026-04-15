@@ -6,6 +6,7 @@ enum class Toggle(
 ) {
     NYNORSK("familie.ef.soknad.nynorsk"),
     GJENBRUK_BARNETILSYN("familie.ef.soknad.gjenbruk-barnetilsyn"),
+    OVERGANGSSTØNAD_REGELENDRINGER_2026("familie.ef.soknad.overgangsstonad-regelendringer-2026"),
     ;
 
     companion object {
