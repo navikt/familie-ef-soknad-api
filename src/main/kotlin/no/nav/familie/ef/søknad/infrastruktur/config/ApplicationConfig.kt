@@ -26,9 +26,7 @@ import tools.jackson.databind.json.JsonMapper
 import tools.jackson.module.kotlin.KotlinModule
 import java.time.Duration
 import java.time.temporal.ChronoUnit
-
 import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
-
 
 @SpringBootConfiguration
 @EnableOAuth2Client(cacheEnabled = true)
