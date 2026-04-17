@@ -17,6 +17,14 @@ object StønadsstartMapper {
         søkerFraBestemtMåned: BooleanFelt,
     ): Søknadsfelt<Stønadsstart> = Søknadsfelt(NårSøkerDuFra.hentTekst(), map(søknadsdato, søkerFraBestemtMåned))
 
+    fun mapStønadsstartNullable(
+        søknadsdato: DatoFelt?,
+        søkerFraBestemtMåned: BooleanFelt?,
+    ): Søknadsfelt<Stønadsstart> {
+        val ikkeSpesifisertMåned = BooleanFelt(label = "Søker du fra en bestemt måned?", verdi = false)
+        return mapStønadsstart(søknadsdato, søkerFraBestemtMåned ?: ikkeSpesifisertMåned)
+    }
+
     private fun map(
         søknadsdato: DatoFelt?,
         søkerFraBestemtMåned: BooleanFelt,
