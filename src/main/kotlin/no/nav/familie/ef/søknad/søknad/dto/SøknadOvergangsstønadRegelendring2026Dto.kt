@@ -22,7 +22,7 @@ data class SøknadOvergangsstønadRegelendring2026Dto(
     val medlemskap: Medlemskap,
     val bosituasjon: Bosituasjon,
     val hvaSituasjon: ListFelt<String>,
-    val harInntekt: ListFelt<String>,
+    val inntekter: ListFelt<String>,
     val firmaer: List<Firma>? = null,
     val sagtOppEllerRedusertStilling: TekstFelt? = null,
     val begrunnelseSagtOppEllerRedusertStilling: TekstFelt? = null,

@@ -45,7 +45,7 @@ class SøknadOvergangsstønadRegelendring2026Mapper {
                 sivilstandsplaner = SivilstandsplanerMapper.map(dto.bosituasjon),
                 barn = dto.person.barn.tilSøknadsfelt(vedlegg),
                 hvaSituasjon = dto.hvaSituasjon.tilSøknadsfelt(),
-                harInntekt = dto.harInntekt.tilSøknadsfelt(),
+                inntekter = dto.inntekter.tilSøknadsfelt(),
                 firmaer = dto.firmaer?.let { Søknadsfelt(OmFirmaDuDriver.hentTekst(), mapOmFirmaer(it)) },
                 sagtOppEllerRedusertStilling = dto.sagtOppEllerRedusertStilling?.tilSøknadsfelt(),
                 begrunnelseSagtOppEllerRedusertStilling = dto.begrunnelseSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
