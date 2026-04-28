@@ -7,6 +7,7 @@ import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
+import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadRegelendring2026Dto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
@@ -38,6 +39,19 @@ class SøknadController(
 
         val innsendingMottatt = LocalDateTime.now()
         søknadService.sendInnSøknadOvergangsstønad(søknad, innsendingMottatt)
+        return Kvittering("ok", mottattDato = innsendingMottatt)
+    }
+
+    @PostMapping("overgangsstonad-regelendring-2026")
+    fun sendInn(
+        @RequestBody søknad: SøknadOvergangsstønadRegelendring2026Dto,
+    ): Kvittering {
+        if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
+            throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
+        }
+
+        val innsendingMottatt = LocalDateTime.now()
+        søknadService.sendInnSøknadOvergangsstønadRegelendring2026(søknad, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
     }
 

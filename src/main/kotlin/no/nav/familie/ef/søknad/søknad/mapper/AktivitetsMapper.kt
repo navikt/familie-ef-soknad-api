@@ -132,7 +132,7 @@ object AktivitetsMapper : MapperMedVedlegg<AktivitetDto, Aktivitet>(ArbeidUtanni
             ),
         )
 
-    private fun mapOmFirmaer(firmaer: List<Firma>): List<Selvstendig> = firmaer.map { firma -> mapOmFirma(firma) }
+    internal fun mapOmFirmaer(firmaer: List<Firma>): List<Selvstendig> = firmaer.map { firma -> mapOmFirma(firma) }
 
     private fun mapOmFirma(firma: Firma): Selvstendig =
         Selvstendig(
