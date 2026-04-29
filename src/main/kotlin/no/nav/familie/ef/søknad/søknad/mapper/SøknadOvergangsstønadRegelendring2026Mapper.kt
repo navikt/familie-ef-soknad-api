@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.søknad.mapper
 
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadRegelendring2026Dto
 import no.nav.familie.ef.søknad.søknad.mapper.AktivitetsMapper.mapOmFirmaer
-import no.nav.familie.ef.søknad.søknad.mapper.StønadsstartMapper.mapStønadsstartNullable
+import no.nav.familie.ef.søknad.søknad.mapper.StønadsstartMapper.mapStønadsstart
 import no.nav.familie.ef.søknad.utils.DokumentasjonWrapper
 import no.nav.familie.ef.søknad.utils.Språk
 import no.nav.familie.ef.søknad.utils.Språktekster.OmFirmaDuDriver
@@ -50,7 +50,7 @@ class SøknadOvergangsstønadRegelendring2026Mapper {
                 sagtOppEllerRedusertStilling = dto.sagtOppEllerRedusertStilling?.tilSøknadsfelt(),
                 begrunnelseSagtOppEllerRedusertStilling = dto.begrunnelseSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
                 datoSagtOppEllerRedusertStilling = dto.datoSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
-                stønadsstart = mapStønadsstartNullable(dto.søknadsdato, dto.søkerFraBestemtMåned),
+                stønadsstart = mapStønadsstart(dto.søknadsdato, dto.søkerFraBestemtMåned),
             )
 
         return SøknadMedVedlegg<SøknadOvergangsstønadRegelendring2026>(

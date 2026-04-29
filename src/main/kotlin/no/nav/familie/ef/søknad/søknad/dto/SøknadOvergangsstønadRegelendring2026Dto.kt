@@ -27,7 +27,7 @@ data class SøknadOvergangsstønadRegelendring2026Dto(
     val sagtOppEllerRedusertStilling: TekstFelt? = null,
     val begrunnelseSagtOppEllerRedusertStilling: TekstFelt? = null,
     val datoSagtOppEllerRedusertStilling: DatoFelt? = null,
-    val søkerFraBestemtMåned: BooleanFelt? = null,
+    val søkerFraBestemtMåned: BooleanFelt,
     val søknadsdato: DatoFelt? = null,
     val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
     val locale: String = "nb",
