@@ -58,9 +58,10 @@ open class KodeverkService(
                     } ?: return@mapNotNull null
 
                 val navnFraKodeverk = gjeldendeBetydning.beskrivelser["nb"]?.tekst?.takeIf { it.isNotBlank() }
-                val navn = lokalisertLandnavn(alpha3 = alpha3, språk = språk)
-                    ?: navnFraKodeverk?.let { tilTitlecase(input = it, locale = språk.locale) }
-                    ?: return@mapNotNull null
+                val navn =
+                    lokalisertLandnavn(alpha3 = alpha3, språk = språk)
+                        ?: navnFraKodeverk?.let { tilTitlecase(input = it, locale = språk.locale) }
+                        ?: return@mapNotNull null
 
                 Landkode(kode = alpha3, navn = navn, erEøsland = alpha3 in EOS_LAND)
             }.sortedWith(compareBy(språk.collator()) { it.navn })
