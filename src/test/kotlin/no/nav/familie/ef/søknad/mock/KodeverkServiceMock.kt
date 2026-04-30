@@ -3,7 +3,7 @@ package no.nav.familie.ef.søknad.mock
 import io.mockk.mockk
 import no.nav.familie.ef.søknad.kodeverk.KodeverkService
 import no.nav.familie.ef.søknad.kodeverk.Landkode
-import no.nav.familie.ef.søknad.kodeverk.Spraak
+import no.nav.familie.ef.søknad.kodeverk.Språk
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
@@ -20,7 +20,7 @@ class KodeverkServiceMock {
 
             override fun hentPoststed(postnummer: String): String? = "Oslo"
 
-            override fun hentLandkoder(spraak: Spraak): List<Landkode> =
+            override fun hentLandkoder(språk: Språk): List<Landkode> =
                 listOf(
                     Landkode(kode = "BRA", navn = "Brasil", erEøsland = false),
                     Landkode(kode = "DNK", navn = "Danmark", erEøsland = true),

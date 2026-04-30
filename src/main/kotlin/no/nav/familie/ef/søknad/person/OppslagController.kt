@@ -2,7 +2,7 @@ package no.nav.familie.ef.søknad.person
 
 import no.nav.familie.ef.søknad.kodeverk.KodeverkService
 import no.nav.familie.ef.søknad.kodeverk.Landkode
-import no.nav.familie.ef.søknad.kodeverk.Spraak
+import no.nav.familie.ef.søknad.kodeverk.Språk
 import no.nav.familie.ef.søknad.person.domain.Søkerinfo
 import no.nav.familie.ef.søknad.person.dto.PersonMinimumDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
@@ -50,14 +50,14 @@ class OppslagController(
 
     @GetMapping("/landkoder")
     fun landkoder(
-        @RequestParam(defaultValue = "nb") spraak: String,
+        @RequestParam(name = "spraak", defaultValue = "nb") språk: String,
     ): List<Landkode> {
-        val parsetSpraak =
-            runCatching { Spraak.fra(spraak) }
+        val parsetSpråk =
+            runCatching { Språk.fra(språk) }
                 .getOrElse {
                     throw ResponseStatusException(HttpStatus.BAD_REQUEST, it.message ?: "Ukjent språk")
                 }
-        return kodeverkService.hentLandkoder(parsetSpraak)
+        return kodeverkService.hentLandkoder(parsetSpråk)
     }
 
     private fun gyldigPostnummer(postnummer: String) = Regex("""^[0-9]{4}$""").matches(postnummer)

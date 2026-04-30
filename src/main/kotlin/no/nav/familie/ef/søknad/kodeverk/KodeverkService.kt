@@ -28,41 +28,41 @@ open class KodeverkService(
 
     fun hentPoststed(postnummer: String): String? = cachedKodeverkService.hentPoststed().hentGjeldende(postnummer, LocalDate.now())
 
-    fun hentLandkoder(spraak: Spraak): List<Landkode> =
+    fun hentLandkoder(språk: Språk): List<Landkode> =
         try {
-            val resultat = mapTilLandkoder(kodeverkDto = cachedKodeverkService.hentLandkoder(), spraak = spraak)
+            val resultat = mapTilLandkoder(kodeverkDto = cachedKodeverkService.hentLandkoder(), språk = språk)
+
             if (resultat.isEmpty()) {
-                logger.error("Tom landkode-liste fra kodeverk for språk=${spraak.tag} – bruker fallback-liste")
-                fallbackLandliste(spraak)
+                logger.error("Tom landkodeliste fra kodeverk for språk: ${språk.tag} – bruker fallbackliste")
+                fallbackLandliste(språk)
             } else {
                 resultat
             }
         } catch (e: Exception) {
-            logger.warn("Kunne ikke hente landkoder fra kodeverk, bruker fallback-liste", e)
-            fallbackLandliste(spraak)
+            logger.warn("Kunne ikke hente landkoder fra kodeverk, bruker fallbackliste", e)
+            fallbackLandliste(språk)
         }
 
     private fun mapTilLandkoder(
         kodeverkDto: KodeverkDto,
-        spraak: Spraak,
+        språk: Språk,
     ): List<Landkode> {
         val idag = LocalDate.now()
         return kodeverkDto.betydninger
-            .mapNotNull { (alpha3, betydninger) ->
+            .mapNotNull { (alpha3, betydningerForKode) ->
                 if (alpha3.isBlank()) return@mapNotNull null
 
-                val gjeldende =
-                    betydninger.firstOrNull { betydning ->
+                val gjeldendeBetydning =
+                    betydningerForKode.firstOrNull { betydning ->
                         !betydning.gyldigFra.isAfter(idag) && !betydning.gyldigTil.isBefore(idag)
                     } ?: return@mapNotNull null
 
-                val navnFraKodeverk = gjeldende.beskrivelser["nb"]?.tekst?.takeIf { it.isNotBlank() }
-                val navn =
-                    lokalisertLandnavn(alpha3 = alpha3, spraak = spraak)
-                        ?: navnFraKodeverk?.let { tilTitlecase(input = it, locale = spraak.locale) }
-                        ?: return@mapNotNull null
+                val navnFraKodeverk = gjeldendeBetydning.beskrivelser["nb"]?.tekst?.takeIf { it.isNotBlank() }
+                val navn = lokalisertLandnavn(alpha3 = alpha3, språk = språk)
+                    ?: navnFraKodeverk?.let { tilTitlecase(input = it, locale = språk.locale) }
+                    ?: return@mapNotNull null
 
                 Landkode(kode = alpha3, navn = navn, erEøsland = alpha3 in EOS_LAND)
-            }.sortedWith(compareBy(spraak.collator) { it.navn })
+            }.sortedWith(compareBy(språk.collator()) { it.navn })
     }
 }

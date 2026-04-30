@@ -9,7 +9,7 @@ data class Landkode(
     val erEøsland: Boolean,
 )
 
-enum class Spraak(
+enum class Språk(
     val tag: String,
 ) {
     NB("nb"),
@@ -17,11 +17,12 @@ enum class Spraak(
     EN("en"),
     ;
 
-    val locale: Locale get() = Locale.forLanguageTag(tag)
-    val collator: Collator get() = Collator.getInstance(locale)
+    val locale: Locale = Locale.forLanguageTag(tag)
+
+    fun collator(): Collator = Collator.getInstance(locale)
 
     companion object {
-        fun fra(verdi: String): Spraak =
+        fun fra(verdi: String): Språk =
             entries.firstOrNull { it.tag.equals(other = verdi, ignoreCase = true) }
                 ?: throw IllegalArgumentException(
                     "Ukjent språk: '$verdi'. Forventet en av: ${entries.joinToString { it.tag }}",
@@ -67,17 +68,17 @@ private val alpha3TilAlpha2: Map<String, String> by lazy {
     Locale
         .getISOCountries()
         .mapNotNull { alpha2 ->
-            val alpha3 = Locale("", alpha2).isO3Country
+            val alpha3 = Locale.of("", alpha2).isO3Country
             if (alpha3.isNotBlank()) alpha3 to alpha2 else null
         }.toMap()
 }
 
 fun lokalisertLandnavn(
     alpha3: String,
-    spraak: Spraak,
+    språk: Språk,
 ): String? {
     val alpha2 = alpha3TilAlpha2[alpha3] ?: return null
-    val displayName = Locale("", alpha2).getDisplayCountry(spraak.locale)
+    val displayName = Locale.of("", alpha2).getDisplayCountry(språk.locale)
     return displayName.takeIf { it.isNotBlank() && it != alpha2 }
 }
 
@@ -103,9 +104,9 @@ fun tilTitlecase(
     return resultat.toString()
 }
 
-fun fallbackLandliste(spraak: Spraak): List<Landkode> =
+fun fallbackLandliste(språk: Språk): List<Landkode> =
     alpha3TilAlpha2.keys
         .mapNotNull { alpha3 ->
-            val navn = lokalisertLandnavn(alpha3 = alpha3, spraak = spraak) ?: return@mapNotNull null
+            val navn = lokalisertLandnavn(alpha3 = alpha3, språk = språk) ?: return@mapNotNull null
             Landkode(kode = alpha3, navn = navn, erEøsland = alpha3 in EOS_LAND)
-        }.sortedWith(compareBy(spraak.collator) { it.navn })
+        }.sortedWith(compareBy(språk.collator()) { it.navn })

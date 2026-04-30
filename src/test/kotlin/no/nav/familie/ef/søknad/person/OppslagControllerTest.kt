@@ -4,7 +4,7 @@ import io.mockk.every
 import io.mockk.mockk
 import no.nav.familie.ef.søknad.kodeverk.KodeverkService
 import no.nav.familie.ef.søknad.kodeverk.Landkode
-import no.nav.familie.ef.søknad.kodeverk.Spraak
+import no.nav.familie.ef.søknad.kodeverk.Språk
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 import org.springframework.web.server.ResponseStatusException
@@ -57,28 +57,28 @@ internal class OppslagControllerTest {
 
     @Test
     fun `landkoder delegerer til kodeverkService med default språk nb`() {
-        val forventet = listOf(Landkode(kode = "NOR", navn = "Norge", erEøsland = true))
-        every { kodeverkService.hentLandkoder(Spraak.NB) } returns forventet
+        val forventetSpråk = listOf(Landkode(kode = "NOR", navn = "Norge", erEøsland = true))
+        every { kodeverkService.hentLandkoder(Språk.NB) } returns forventetSpråk
 
-        val land = oppslagsController.landkoder(spraak = "nb")
+        val land = oppslagsController.landkoder(språk = "nb")
 
-        assertEquals(actual = land, expected = forventet)
+        assertEquals(actual = land, expected = forventetSpråk)
     }
 
     @Test
     fun `landkoder aksepterer nn og en`() {
-        every { kodeverkService.hentLandkoder(Spraak.NN) } returns emptyList()
-        every { kodeverkService.hentLandkoder(Spraak.EN) } returns emptyList()
+        every { kodeverkService.hentLandkoder(Språk.NN) } returns emptyList()
+        every { kodeverkService.hentLandkoder(Språk.EN) } returns emptyList()
 
-        oppslagsController.landkoder(spraak = "nn")
-        oppslagsController.landkoder(spraak = "en")
+        oppslagsController.landkoder(språk = "nn")
+        oppslagsController.landkoder(språk = "en")
     }
 
     @Test
     fun `landkoder feiler med 400 ved ulovlig språk`() {
         val exception =
             assertFailsWith(ResponseStatusException::class) {
-                oppslagsController.landkoder(spraak = "tysk")
+                oppslagsController.landkoder(språk = "tysk")
             }
         assertEquals(actual = exception.statusCode, expected = HttpStatus.BAD_REQUEST)
     }

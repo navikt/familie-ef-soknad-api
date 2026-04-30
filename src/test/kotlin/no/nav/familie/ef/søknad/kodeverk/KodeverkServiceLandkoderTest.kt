@@ -24,7 +24,7 @@ internal class KodeverkServiceLandkoderTest {
                 "BRA" to "Brasil",
             )
 
-        val land = kodeverkService.hentLandkoder(Spraak.NB)
+        val land = kodeverkService.hentLandkoder(Språk.NB)
 
         assertThat(land.map { it.kode }).containsExactlyInAnyOrder("NOR", "SWE", "BRA")
         assertThat(land.first { it.kode == "SWE" }.navn).isEqualTo("Sverige")
@@ -41,7 +41,7 @@ internal class KodeverkServiceLandkoderTest {
                 "ISL" to "Island",
             )
 
-        val land = kodeverkService.hentLandkoder(Spraak.NB).associateBy { it.kode }
+        val land = kodeverkService.hentLandkoder(Språk.NB).associateBy { it.kode }
 
         assertThat(land["SWE"]?.erEøsland).isTrue
         assertThat(land["DEU"]?.erEøsland).isTrue
@@ -63,7 +63,7 @@ internal class KodeverkServiceLandkoderTest {
             )
         every { integrasjonerClient.hentKodeverkLandkoder() } returns gyldigKodeverk
 
-        val land = kodeverkService.hentLandkoder(Spraak.NB)
+        val land = kodeverkService.hentLandkoder(Språk.NB)
 
         assertThat(land.map { it.kode }).containsExactly("NOR")
     }
@@ -77,7 +77,7 @@ internal class KodeverkServiceLandkoderTest {
                 "DNK" to "Danmark",
             )
 
-        val land = kodeverkService.hentLandkoder(Spraak.NB)
+        val land = kodeverkService.hentLandkoder(Språk.NB)
 
         assertThat(land.map { it.kode }).containsExactly("DNK", "ZWE", "AUT")
     }
@@ -87,8 +87,8 @@ internal class KodeverkServiceLandkoderTest {
         every { integrasjonerClient.hentKodeverkLandkoder() } returns
             kodeverk("DEU" to "Tyskland")
 
-        val nb = kodeverkService.hentLandkoder(Spraak.NB).first()
-        val en = kodeverkService.hentLandkoder(Spraak.EN).first()
+        val nb = kodeverkService.hentLandkoder(Språk.NB).first()
+        val en = kodeverkService.hentLandkoder(Språk.EN).first()
 
         assertThat(nb.navn).isEqualTo("Tyskland")
         assertThat(en.navn).isEqualTo("Germany")
@@ -98,7 +98,7 @@ internal class KodeverkServiceLandkoderTest {
     fun `fallback til statisk liste når kodeverk returnerer tom liste`() {
         every { integrasjonerClient.hentKodeverkLandkoder() } returns KodeverkDto(betydninger = emptyMap())
 
-        val land = kodeverkService.hentLandkoder(Spraak.NB)
+        val land = kodeverkService.hentLandkoder(Språk.NB)
 
         assertThat(land).isNotEmpty
         assertThat(land.map { it.kode }).contains("NOR", "SWE", "DEU")
@@ -108,7 +108,7 @@ internal class KodeverkServiceLandkoderTest {
     fun `fallback til statisk liste når kodeverk feiler`() {
         every { integrasjonerClient.hentKodeverkLandkoder() } throws RestClientException("Kodeverk nede")
 
-        val land = kodeverkService.hentLandkoder(Spraak.NB)
+        val land = kodeverkService.hentLandkoder(Språk.NB)
 
         assertThat(land).isNotEmpty
         assertThat(land.map { it.kode }).contains("NOR", "SWE", "DEU", "BRA")
@@ -121,7 +121,7 @@ internal class KodeverkServiceLandkoderTest {
         every { integrasjonerClient.hentKodeverkLandkoder() } returns
             kodeverk("AFG" to "AFGHANISTAN")
 
-        val land = kodeverkService.hentLandkoder(Spraak.NB)
+        val land = kodeverkService.hentLandkoder(Språk.NB)
 
         assertThat(land.first { it.kode == "AFG" }.navn).isEqualTo("Afghanistan")
     }
@@ -131,7 +131,7 @@ internal class KodeverkServiceLandkoderTest {
         every { integrasjonerClient.hentKodeverkLandkoder() } returns
             kodeverk("XYZ" to "STOR-BRITANNIA OG NORD-IRLAND")
 
-        val land = kodeverkService.hentLandkoder(Spraak.NB)
+        val land = kodeverkService.hentLandkoder(Språk.NB)
 
         assertThat(land.map { it.navn }).containsExactly("Stor-Britannia Og Nord-Irland")
     }
@@ -148,7 +148,7 @@ internal class KodeverkServiceLandkoderTest {
                     ),
             )
 
-        val land = kodeverkService.hentLandkoder(Spraak.NB)
+        val land = kodeverkService.hentLandkoder(Språk.NB)
 
         assertThat(land.map { it.kode }).containsExactly("NOR")
     }
@@ -164,7 +164,7 @@ internal class KodeverkServiceLandkoderTest {
                     ),
             )
 
-        val land = kodeverkService.hentLandkoder(Spraak.NB)
+        val land = kodeverkService.hentLandkoder(Språk.NB)
 
         assertThat(land.map { it.kode }).containsExactly("NOR")
     }
