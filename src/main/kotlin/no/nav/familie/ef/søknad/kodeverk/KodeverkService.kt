@@ -30,7 +30,13 @@ open class KodeverkService(
 
     fun hentLandkoder(spraak: Spraak): List<Landkode> =
         try {
-            mapTilLandkoder(kodeverkDto = cachedKodeverkService.hentLandkoder(), spraak = spraak)
+            val resultat = mapTilLandkoder(kodeverkDto = cachedKodeverkService.hentLandkoder(), spraak = spraak)
+            if (resultat.isEmpty()) {
+                logger.error("Tom landkode-liste fra kodeverk for språk=${spraak.tag} – bruker fallback-liste")
+                fallbackLandliste(spraak)
+            } else {
+                resultat
+            }
         } catch (e: Exception) {
             logger.warn("Kunne ikke hente landkoder fra kodeverk, bruker fallback-liste", e)
             fallbackLandliste(spraak)

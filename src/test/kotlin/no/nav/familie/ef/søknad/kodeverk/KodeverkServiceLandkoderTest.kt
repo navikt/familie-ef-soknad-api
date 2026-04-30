@@ -95,6 +95,16 @@ internal class KodeverkServiceLandkoderTest {
     }
 
     @Test
+    fun `fallback til statisk liste når kodeverk returnerer tom liste`() {
+        every { integrasjonerClient.hentKodeverkLandkoder() } returns KodeverkDto(betydninger = emptyMap())
+
+        val land = kodeverkService.hentLandkoder(Spraak.NB)
+
+        assertThat(land).isNotEmpty
+        assertThat(land.map { it.kode }).contains("NOR", "SWE", "DEU")
+    }
+
+    @Test
     fun `fallback til statisk liste når kodeverk feiler`() {
         every { integrasjonerClient.hentKodeverkLandkoder() } throws RestClientException("Kodeverk nede")
 
