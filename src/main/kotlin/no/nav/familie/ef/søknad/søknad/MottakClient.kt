@@ -9,7 +9,6 @@ import no.nav.familie.kontrakter.ef.søknad.SkjemaForArbeidssøker
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
 import no.nav.familie.kontrakter.ef.søknad.SøknadMedVedlegg
 import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønad
-import no.nav.familie.kontrakter.ef.søknad.SøknadOvergangsstønadRegelendring2026
 import no.nav.familie.kontrakter.ef.søknad.SøknadSkolepenger
 import no.nav.familie.kontrakter.felles.PersonIdent
 import no.nav.familie.kontrakter.felles.Tema
@@ -49,8 +48,6 @@ class MottakClient(
         )
 
     fun sendInnSøknadOvergangsstønad(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto = postForEntity(config.sendInnSøknadOverganggstønadUri, søknadMedVedlegg)
-
-    fun sendInnSøknadOvergangsstønadRegelendring2026(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønadRegelendring2026>): KvitteringDto = postForEntity(config.sendInnSøknadOvergangsstønadRegelendring2026Uri, søknadMedVedlegg)
 
     fun sendInnSøknadBarnetilsyn(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto = postForEntity(config.sendInnSøknadBarnetilsynUri, søknadMedVedlegg)
 
