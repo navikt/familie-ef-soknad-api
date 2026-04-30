@@ -2,14 +2,17 @@ package no.nav.familie.ef.søknad.kodeverk
 
 import no.nav.familie.kontrakter.felles.kodeverk.KodeverkDto
 import no.nav.familie.kontrakter.felles.kodeverk.hentGjeldende
+import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class KodeverkService(
+open class KodeverkService(
     private val cachedKodeverkService: CachedKodeverkService,
 ) {
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     @Service
     class CachedKodeverkService(
         private val integrasjonerClient: FamilieIntegrasjonerClient,
@@ -24,4 +27,34 @@ class KodeverkService(
     fun hentLand(landkode: String): String? = cachedKodeverkService.hentLandkoder().hentGjeldende(landkode, LocalDate.now())
 
     fun hentPoststed(postnummer: String): String? = cachedKodeverkService.hentPoststed().hentGjeldende(postnummer, LocalDate.now())
+
+    fun hentLandkoder(spraak: Spraak): List<Landkode> =
+        try {
+            mapTilLandkoder(kodeverkDto = cachedKodeverkService.hentLandkoder(), spraak = spraak)
+        } catch (e: Exception) {
+            logger.warn("Kunne ikke hente landkoder fra kodeverk, bruker fallback-liste", e)
+            fallbackLandliste(spraak)
+        }
+
+    private fun mapTilLandkoder(
+        kodeverkDto: KodeverkDto,
+        spraak: Spraak,
+    ): List<Landkode> {
+        val idag = LocalDate.now()
+        return kodeverkDto.betydninger
+            .mapNotNull { (alpha3, betydninger) ->
+                val gjeldende =
+                    betydninger.firstOrNull { betydning ->
+                        !betydning.gyldigFra.isAfter(idag) && !betydning.gyldigTil.isBefore(idag)
+                    } ?: return@mapNotNull null
+                val navnFraKodeverk = gjeldende.beskrivelser["nb"]?.tekst ?: return@mapNotNull null
+                val navn =
+                    if (spraak == Spraak.NB) {
+                        navnFraKodeverk
+                    } else {
+                        lokalisertLandnavn(alpha3 = alpha3, spraak = spraak) ?: navnFraKodeverk
+                    }
+                Landkode(kode = alpha3, navn = navn, erEøsland = alpha3 in EOS_LAND)
+            }.sortedWith(compareBy(spraak.collator) { it.navn })
+    }
 }

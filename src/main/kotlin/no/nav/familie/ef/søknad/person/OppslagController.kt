@@ -1,17 +1,22 @@
 package no.nav.familie.ef.søknad.person
 
 import no.nav.familie.ef.søknad.kodeverk.KodeverkService
+import no.nav.familie.ef.søknad.kodeverk.Landkode
+import no.nav.familie.ef.søknad.kodeverk.Spraak
 import no.nav.familie.ef.søknad.person.domain.Søkerinfo
 import no.nav.familie.ef.søknad.person.dto.PersonMinimumDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
 import no.nav.security.token.support.core.api.ProtectedWithClaims
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping(path = [OppslagController.OPPSLAG], produces = [APPLICATION_JSON_VALUE])
@@ -41,6 +46,18 @@ class OppslagController(
         } else {
             ResponseEntity.noContent().build()
         }
+    }
+
+    @GetMapping("/landkoder")
+    fun landkoder(
+        @RequestParam(defaultValue = "nb") spraak: String,
+    ): List<Landkode> {
+        val parsetSpraak =
+            runCatching { Spraak.fra(spraak) }
+                .getOrElse {
+                    throw ResponseStatusException(HttpStatus.BAD_REQUEST, it.message ?: "Ukjent språk")
+                }
+        return kodeverkService.hentLandkoder(parsetSpraak)
     }
 
     private fun gyldigPostnummer(postnummer: String) = Regex("""^[0-9]{4}$""").matches(postnummer)
