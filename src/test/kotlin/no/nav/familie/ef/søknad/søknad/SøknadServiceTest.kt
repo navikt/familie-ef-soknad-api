@@ -5,7 +5,6 @@ import no.nav.familie.ef.søknad.søknad.domain.PersonTilGjenbruk
 import no.nav.familie.ef.søknad.søknad.domain.SvarId
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
-import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadRegelendring2026Mapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
 import no.nav.familie.kontrakter.ef.søknad.SøknadBarnetilsyn
 import no.nav.familie.kontrakter.felles.jsonMapper
@@ -21,7 +20,6 @@ class SøknadServiceTest {
         SøknadService(
             mottakClient = mottakClient,
             overgangsstønadMapper = SøknadOvergangsstønadMapper(),
-            overgangsstønadRegelendring2026Mapper = SøknadOvergangsstønadRegelendring2026Mapper(),
             barnetilsynMapper = SøknadBarnetilsynMapper(),
             skolepengerMapper = SøknadSkolepengerMapper(),
         )
