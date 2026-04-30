@@ -7,13 +7,11 @@ import no.nav.familie.ef.søknad.søknad.domain.TekstFelt
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
-import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadRegelendring2026Dto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
 import no.nav.familie.ef.søknad.søknad.mapper.KvitteringMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SkjemaMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadBarnetilsynMapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadMapper
-import no.nav.familie.ef.søknad.søknad.mapper.SøknadOvergangsstønadRegelendring2026Mapper
 import no.nav.familie.ef.søknad.søknad.mapper.SøknadSkolepengerMapper
 import no.nav.familie.kontrakter.felles.søknad.SistInnsendtSøknadDto
 import org.slf4j.LoggerFactory
@@ -24,7 +22,6 @@ import java.time.LocalDateTime
 class SøknadService(
     private val mottakClient: MottakClient,
     private val overgangsstønadMapper: SøknadOvergangsstønadMapper,
-    private val overgangsstønadRegelendring2026Mapper: SøknadOvergangsstønadRegelendring2026Mapper,
     private val barnetilsynMapper: SøknadBarnetilsynMapper,
     private val skolepengerMapper: SøknadSkolepengerMapper,
 ) {
@@ -37,15 +34,6 @@ class SøknadService(
     ): Kvittering {
         val søknadRequestData = overgangsstønadMapper.mapTilIntern(søknad, innsendingMottatt)
         val kvittering = mottakClient.sendInnSøknadOvergangsstønad(søknadRequestData)
-        return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
-    }
-
-    fun sendInnSøknadOvergangsstønadRegelendring2026(
-        søknad: SøknadOvergangsstønadRegelendring2026Dto,
-        innsendingMottatt: LocalDateTime,
-    ): Kvittering {
-        val søknadRequestData = overgangsstønadRegelendring2026Mapper.mapTilIntern(søknad, innsendingMottatt)
-        val kvittering = mottakClient.sendInnSøknadOvergangsstønadRegelendring2026(søknadRequestData)
         return KvitteringMapper.mapTilEkstern(kvittering, innsendingMottatt)
     }
 

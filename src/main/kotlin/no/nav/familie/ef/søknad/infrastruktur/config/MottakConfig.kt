@@ -12,7 +12,6 @@ data class MottakConfig(
     internal val sendInnSøknadBarnetilsynUri = byggUri(PATH_SEND_INN_SØKNAD_BARNETILSYN)
     internal val sendInnSøknadSkolepengerUri = byggUri(PATH_SEND_INN_SØKNAD_SKOLEPENGER)
     internal val sendInnSkjemaArbeidssøkerUri = byggUri(PATH_SEND_INN_SKJEMA_ARBEIDSSØKER)
-    internal val sendInnSøknadOvergangsstønadRegelendring2026Uri = byggUri(PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD_REGELENDRING_2026)
     internal val hentForrigeSøknadBarnetilsynUri = byggUri(PATH_HENT_FORRIGE_SØKNAD_BARNETILSYN)
     internal val hentSistInnsendteSøknadPerStønadUri = byggUri(PATH_HENT_SIST_INNSENDTE_SØKNAD_PER_STØNAD)
 
@@ -31,7 +30,6 @@ data class MottakConfig(
 
     companion object {
         private const val PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD = "/soknad/overgangsstonad"
-        private const val PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD_REGELENDRING_2026 = "/soknad/overgangsstonad-regelendring-2026"
         private const val PATH_SEND_INN_SØKNAD_BARNETILSYN = "/soknad/barnetilsyn"
         private const val PATH_SEND_INN_SØKNAD_SKOLEPENGER = "/soknad/skolepenger"
         private const val PATH_SEND_INN_SKJEMA_ARBEIDSSØKER = "/soknad/arbeidssoker"
