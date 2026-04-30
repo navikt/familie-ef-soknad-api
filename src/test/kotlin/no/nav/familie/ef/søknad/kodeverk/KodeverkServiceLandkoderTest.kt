@@ -107,6 +107,43 @@ internal class KodeverkServiceLandkoderTest {
     }
 
     @Test
+    fun `returnerer titlecase navn istedenfor kodeverks i caps`() {
+        every { integrasjonerClient.hentKodeverkLandkoder() } returns
+            kodeverk("AFG" to "AFGHANISTAN")
+
+        val land = kodeverkService.hentLandkoder(Spraak.NB)
+
+        assertThat(land.first { it.kode == "AFG" }.navn).isEqualTo("Afghanistan")
+    }
+
+    @Test
+    fun `titlecaser kodeverk-tekst når JDK ikke kjenner alpha3`() {
+        every { integrasjonerClient.hentKodeverkLandkoder() } returns
+            kodeverk("XYZ" to "STOR-BRITANNIA OG NORD-IRLAND")
+
+        val land = kodeverkService.hentLandkoder(Spraak.NB)
+
+        assertThat(land.map { it.navn }).containsExactly("Stor-Britannia Og Nord-Irland")
+    }
+
+    @Test
+    fun `dropper kodeverk-entries med tom tekst eller blank alpha3`() {
+        every { integrasjonerClient.hentKodeverkLandkoder() } returns
+            KodeverkDto(
+                betydninger =
+                    mapOf(
+                        "NOR" to listOf(BetydningDto(LocalDate.MIN, LocalDate.MAX, mapOf("nb" to BeskrivelseDto("Norge", "Norge")))),
+                        "" to listOf(BetydningDto(LocalDate.MIN, LocalDate.MAX, mapOf("nb" to BeskrivelseDto("Skal droppes", "Skal droppes")))),
+                        "QQQ" to listOf(BetydningDto(LocalDate.MIN, LocalDate.MAX, mapOf("nb" to BeskrivelseDto("", "")))),
+                    ),
+            )
+
+        val land = kodeverkService.hentLandkoder(Spraak.NB)
+
+        assertThat(land.map { it.kode }).containsExactly("NOR")
+    }
+
+    @Test
     fun `dropper koder uten gyldig norsk beskrivelse`() {
         every { integrasjonerClient.hentKodeverkLandkoder() } returns
             KodeverkDto(

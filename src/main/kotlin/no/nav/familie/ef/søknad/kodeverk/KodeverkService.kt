@@ -43,17 +43,19 @@ open class KodeverkService(
         val idag = LocalDate.now()
         return kodeverkDto.betydninger
             .mapNotNull { (alpha3, betydninger) ->
+                if (alpha3.isBlank()) return@mapNotNull null
+
                 val gjeldende =
                     betydninger.firstOrNull { betydning ->
                         !betydning.gyldigFra.isAfter(idag) && !betydning.gyldigTil.isBefore(idag)
                     } ?: return@mapNotNull null
-                val navnFraKodeverk = gjeldende.beskrivelser["nb"]?.tekst ?: return@mapNotNull null
+
+                val navnFraKodeverk = gjeldende.beskrivelser["nb"]?.tekst?.takeIf { it.isNotBlank() }
                 val navn =
-                    if (spraak == Spraak.NB) {
-                        navnFraKodeverk
-                    } else {
-                        lokalisertLandnavn(alpha3 = alpha3, spraak = spraak) ?: navnFraKodeverk
-                    }
+                    lokalisertLandnavn(alpha3 = alpha3, spraak = spraak)
+                        ?: navnFraKodeverk?.let { tilTitlecase(input = it, locale = spraak.locale) }
+                        ?: return@mapNotNull null
+
                 Landkode(kode = alpha3, navn = navn, erEøsland = alpha3 in EOS_LAND)
             }.sortedWith(compareBy(spraak.collator) { it.navn })
     }

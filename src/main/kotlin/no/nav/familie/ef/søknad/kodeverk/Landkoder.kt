@@ -81,6 +81,28 @@ fun lokalisertLandnavn(
     return displayName.takeIf { it.isNotBlank() && it != alpha2 }
 }
 
+fun tilTitlecase(
+    input: String,
+    locale: Locale,
+): String {
+    if (input.isBlank()) return input
+
+    val resultat = StringBuilder(input.length)
+    var nesteErStor = true
+
+    for (c in input) {
+        if (c == ' ' || c == '-') {
+            resultat.append(c)
+            nesteErStor = true
+        } else {
+            resultat.append(if (nesteErStor) c.toString().uppercase(locale) else c.toString().lowercase(locale))
+            nesteErStor = false
+        }
+    }
+
+    return resultat.toString()
+}
+
 fun fallbackLandliste(spraak: Spraak): List<Landkode> =
     alpha3TilAlpha2.keys
         .mapNotNull { alpha3 ->
