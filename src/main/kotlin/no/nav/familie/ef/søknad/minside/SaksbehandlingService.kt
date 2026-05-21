@@ -30,6 +30,8 @@ class SaksbehandlingService(
         return mineStønaderDto
     }
 
+    fun harTidligereInnvilgetVedtak(): String = saksbehandlingClient.harTidligereInnvilgetVedtak()
+
     private fun utledStønad(stønader: List<StønadsperiodeDto>): Stønad {
         val perioderSortertPåDato = stønader.sortedBy { it.fraDato }
 
