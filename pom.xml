@@ -22,7 +22,7 @@
         <springdoc.version>3.0.3</springdoc.version>
         <mockk.version>1.14.9</mockk.version>
         <token-validation-spring.version>6.0.8</token-validation-spring.version>
-        <felles.version>4.20260529121328_2754f7c</felles.version>
+        <felles.version>4.20260315040340_f2acdc7</felles.version>
         <kontrakter.version>4.0_20260527090809_893fcba</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
     </properties>
@@ -159,7 +159,7 @@
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>util</artifactId>
-            <version>4.20260529121328_2754f7c</version>
+            <version>${felles.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
