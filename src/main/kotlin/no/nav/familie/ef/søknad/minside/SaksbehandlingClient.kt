@@ -25,6 +25,6 @@ class SaksbehandlingClient(
 
     fun harTidligereInnvilgetVedtak(): String =
         getForEntity<Ressurs<String>>(
-            UriComponentsBuilder.fromUriString("${config.harTidligereInnvilgetVedtakUri}").build().toUri(),
+            UriComponentsBuilder.fromUriString("${config.harVedtakPåGammeltRegelverkUri}").build().toUri(),
         ).getDataOrThrow()
 }
