@@ -9,7 +9,7 @@ data class SaksbehandlingConfig(
     val uri: URI,
 ) {
     internal val hentStønadsperioderUri = byggUri(PATH_HENT_STØNADSPERIODER)
-    internal val harTidligereInnvilgetVedtakUri = byggUri(PATH_HAR_TIDLIGERE_INNVILGET_VEDTAK)
+    internal val harVedtakPåGammeltRegelverkUri = byggUri(PATH_HAR_VEDTAK_PÅ_GAMMELT_REGELVERK)
     internal val pingUri = byggUri(PATH_PING)
 
     private fun byggUri(path: String) =
@@ -21,7 +21,7 @@ data class SaksbehandlingConfig(
 
     companion object {
         private const val PATH_HENT_STØNADSPERIODER = "/ekstern/minside/stonadsperioder"
-        private const val PATH_HAR_TIDLIGERE_INNVILGET_VEDTAK = "/ekstern/soknad/har-tidligere-innvilget-vedtak"
+        private const val PATH_HAR_VEDTAK_PÅ_GAMMELT_REGELVERK = "/ekstern/soknad/har-vedtak-pa-gammelt-regelverk"
         private const val PATH_PING = "ping"
     }
 }
