@@ -22,4 +22,9 @@ class SaksbehandlingClient(
         getForEntity<Ressurs<StønadsperioderDto>>(
             UriComponentsBuilder.fromUriString("${config.hentStønadsperioderUri}").build().toUri(),
         ).getDataOrThrow()
+
+    fun harTidligereInnvilgetVedtak(): String =
+        getForEntity<Ressurs<String>>(
+            UriComponentsBuilder.fromUriString("${config.harVedtakPåGammeltRegelverkUri}").build().toUri(),
+        ).getDataOrThrow()
 }
