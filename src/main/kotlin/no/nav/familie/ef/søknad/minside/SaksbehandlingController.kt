@@ -14,4 +14,7 @@ class SaksbehandlingController(
 ) {
     @GetMapping("/stonadsperioder")
     fun hentStønadsperioderForBruker() = saksbehandlingService.hentStønadsperioderForBruker()
+
+    @GetMapping("/har-vedtak-pa-gammelt-regelverk")
+    fun harVedtakPåGammeltRegelverk() = saksbehandlingService.harVedtakPåGammeltRegelverk()
 }
