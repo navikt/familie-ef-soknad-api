@@ -25,7 +25,7 @@ import java.net.URI
 @Service
 class MottakClient(
     private val config: MottakConfig,
-    @Qualifier("tokenExchange") operations: RestOperations,
+    @Qualifier("mottakRestTemplate") operations: RestOperations,
 ) : AbstractPingableRestClient(operations, "søknad.innsending") {
     override val pingUri: URI = config.pingUri
 

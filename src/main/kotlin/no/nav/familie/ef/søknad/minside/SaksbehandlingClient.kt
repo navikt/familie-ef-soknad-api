@@ -14,7 +14,7 @@ import java.net.URI
 @Service
 class SaksbehandlingClient(
     private val config: SaksbehandlingConfig,
-    @Qualifier("tokenExchange") operations: RestOperations,
+    @Qualifier("saksbehandlingRestTemplate") operations: RestOperations,
 ) : AbstractPingableRestClient(operations, "saksbehandling") {
     override val pingUri: URI = config.pingUri
 

@@ -1,17 +1,17 @@
 package no.nav.familie.ef.søknad
 
-import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
+import no.nav.security.mock.oauth2.MockOAuth2Server
 import org.springframework.boot.builder.SpringApplicationBuilder
 
-@EnableMockOAuth2Server
 class ApplicationLocalLauncher : ApplicationLocalTestLauncher()
 
-/**
- * Denne settes til en fixed port for å kunne bruke samme port som familie-dokument
- */
-private val mockOauth2ServerPort: String = "11588"
+private val mockOauth2ServerPort: Int = 11588
 
 fun main(args: Array<String>) {
+    val mockOAuth2Server = MockOAuth2Server()
+    mockOAuth2Server.start(mockOauth2ServerPort)
+    Runtime.getRuntime().addShutdownHook(Thread { mockOAuth2Server.shutdown() })
+
     SpringApplicationBuilder(ApplicationLocalLauncher::class.java)
         .profiles(
             "local",
@@ -23,6 +23,5 @@ fun main(args: Array<String>) {
             "mock-integrasjoner",
             "mock-saf",
             "mock-saksbehandling",
-        ).properties(mapOf("mock-oauth2-server.port" to mockOauth2ServerPort))
-        .run(*args)
+        ).run(*args)
 }
