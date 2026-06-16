@@ -18,12 +18,12 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
-        <kotlin.version>2.3.21</kotlin.version>
+        <kotlin.version>2.4.0</kotlin.version>
         <springdoc.version>3.0.3</springdoc.version>
-        <mockk.version>1.14.9</mockk.version>
-        <token-validation-spring.version>6.0.8</token-validation-spring.version>
+        <mockk.version>1.14.11</mockk.version>
+        <token-validation-spring.version>6.0.10</token-validation-spring.version>
         <felles.version>4.20260315040340_f2acdc7</felles.version>
-        <kontrakter.version>4.0_20260609150326_d2259dc</kontrakter.version>
+        <kontrakter.version>4.0_20260611084408_a47ed94</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
     </properties>
 
@@ -236,7 +236,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.14</version>
+                    <version>0.8.15</version>
                 </plugin>
             </plugins>
         </pluginManagement>
