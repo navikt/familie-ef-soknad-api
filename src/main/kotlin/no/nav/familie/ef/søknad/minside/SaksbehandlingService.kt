@@ -32,6 +32,8 @@ class SaksbehandlingService(
 
     fun harVedtakPåGammeltRegelverk(): String = saksbehandlingClient.harTidligereInnvilgetVedtak()
 
+    fun harGyldigBarnetilsynVedRegelendring(): Boolean = saksbehandlingClient.harGyldigBarnetilsynVedRegelendring()
+
     private fun utledStønad(stønader: List<StønadsperiodeDto>): Stønad {
         val perioderSortertPåDato = stønader.sortedBy { it.fraDato }
 

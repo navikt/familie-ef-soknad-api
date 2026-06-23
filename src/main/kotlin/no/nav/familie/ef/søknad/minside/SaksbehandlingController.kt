@@ -17,4 +17,7 @@ class SaksbehandlingController(
 
     @GetMapping("/har-vedtak-pa-gammelt-regelverk")
     fun harVedtakPåGammeltRegelverk() = saksbehandlingService.harVedtakPåGammeltRegelverk()
+
+    @GetMapping("/har-gyldig-barnetilsyn-ved-regelendring")
+    fun harGyldigBarnetilsynVedRegelendring() = saksbehandlingService.harGyldigBarnetilsynVedRegelendring()
 }

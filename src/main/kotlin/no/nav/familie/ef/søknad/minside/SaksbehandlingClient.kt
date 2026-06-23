@@ -27,4 +27,9 @@ class SaksbehandlingClient(
         getForEntity<Ressurs<String>>(
             UriComponentsBuilder.fromUriString("${config.harVedtakPåGammeltRegelverkUri}").build().toUri(),
         ).getDataOrThrow()
+
+    fun harGyldigBarnetilsynVedRegelendring() =
+        getForEntity<Ressurs<Boolean>>(
+            UriComponentsBuilder.fromUriString("${config.harGyldigBarnetilsynVedRegelendringUri}").build().toUri(),
+        ).getDataOrThrow()
 }
