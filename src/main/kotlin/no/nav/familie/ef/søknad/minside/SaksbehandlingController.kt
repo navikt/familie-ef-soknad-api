@@ -15,8 +15,8 @@ class SaksbehandlingController(
     @GetMapping("/stonadsperioder")
     fun hentStønadsperioderForBruker() = saksbehandlingService.hentStønadsperioderForBruker()
 
-    @GetMapping("/har-vedtak-pa-gammelt-regelverk")
-    fun harVedtakPåGammeltRegelverk() = saksbehandlingService.harVedtakPåGammeltRegelverk()
+    @GetMapping("/har-overgangsstonad-pa-gammelt-regelverk")
+    fun harOvergangsstønadPåGammeltRegelverk() = saksbehandlingService.harOvergangsstønadPåGammeltRegelverk()
 
     @GetMapping("/har-gyldig-barnetilsyn-ved-regelendring")
     fun harGyldigBarnetilsynVedRegelendring() = saksbehandlingService.harGyldigBarnetilsynVedRegelendring()

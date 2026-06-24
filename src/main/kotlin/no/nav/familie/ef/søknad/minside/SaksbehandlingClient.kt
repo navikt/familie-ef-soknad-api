@@ -23,9 +23,9 @@ class SaksbehandlingClient(
             UriComponentsBuilder.fromUriString("${config.hentStønadsperioderUri}").build().toUri(),
         ).getDataOrThrow()
 
-    fun harTidligereInnvilgetVedtak(): String =
+    fun harTidligereInnvilgetOvergangsstønad(): String =
         getForEntity<Ressurs<String>>(
-            UriComponentsBuilder.fromUriString("${config.harVedtakPåGammeltRegelverkUri}").build().toUri(),
+            UriComponentsBuilder.fromUriString("${config.harOvergangsstønadPåGammeltRegelverkUri}").build().toUri(),
         ).getDataOrThrow()
 
     fun harGyldigBarnetilsynVedRegelendring() =

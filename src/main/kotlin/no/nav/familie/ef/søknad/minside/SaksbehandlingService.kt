@@ -30,7 +30,7 @@ class SaksbehandlingService(
         return mineStønaderDto
     }
 
-    fun harVedtakPåGammeltRegelverk(): String = saksbehandlingClient.harTidligereInnvilgetVedtak()
+    fun harOvergangsstønadPåGammeltRegelverk(): String = saksbehandlingClient.harTidligereInnvilgetOvergangsstønad()
 
     fun harGyldigBarnetilsynVedRegelendring(): Boolean = saksbehandlingClient.harGyldigBarnetilsynVedRegelendring()
 
