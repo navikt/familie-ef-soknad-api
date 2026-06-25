@@ -22,7 +22,7 @@ data class SaksbehandlingConfig(
 
     companion object {
         private const val PATH_HENT_STØNADSPERIODER = "/ekstern/minside/stonadsperioder"
-        private const val PATH_HAR_OVERGANGSSTØNAD_PÅ_GAMMELT_REGELVERK = "/ekstern/soknad/har-overgangsstønad-pa-gammelt-regelverk"
+        private const val PATH_HAR_OVERGANGSSTØNAD_PÅ_GAMMELT_REGELVERK = "/ekstern/soknad/har-overgangsstonad-pa-gammelt-regelverk"
         private const val PATH_HAR_GYLDIG_BARNETILSYN_VED_REGELENDRING = "/ekstern/soknad/har-gyldig-barnetilsyn-ved-regelendring"
         private const val PATH_PING = "ping"
     }
