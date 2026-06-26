@@ -18,7 +18,7 @@ import org.springframework.web.client.RestOperations
 @Component
 class PdlApp2AppClient(
     val pdlConfig: PdlConfig,
-    @Qualifier("clientCredential") restOperations: RestOperations,
+    @Qualifier("pdlClientCredentialRestTemplate") restOperations: RestOperations,
 ) : AbstractRestClient(restOperations, "pdl.personinfo") {
     private val logger = LoggerFactory.getLogger(javaClass)
 

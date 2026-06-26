@@ -2,8 +2,6 @@ package no.nav.familie.ef.søknad.mock
 
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.kontrakter.felles.jsonMapper
-import no.nav.familie.sikkerhet.EksternBrukerUtils
-import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -13,7 +11,6 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping(path = ["/api/soknad/test"], produces = [MediaType.APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 class SøknadsControllerMock {
     private val innsendingMottatt = LocalDateTime.now()
 
