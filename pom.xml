@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.6</version>
+        <version>4.1.0</version>
     </parent>
 
     <properties>
@@ -21,9 +21,9 @@
         <kotlin.version>2.4.0</kotlin.version>
         <springdoc.version>3.0.3</springdoc.version>
         <mockk.version>1.14.11</mockk.version>
-        <token-validation-spring.version>6.0.10</token-validation-spring.version>
-        <felles.version>4.20260315040340_f2acdc7</felles.version>
-        <kontrakter.version>4.0_20260611084408_a47ed94</kontrakter.version>
+        <token-validation-spring.version>6.0.11</token-validation-spring.version>
+        <felles.version>4.20260622095330_affbfcf</felles.version>
+        <kontrakter.version>4.0_20260622103258_a3e0997</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
     </properties>
 
@@ -368,7 +368,7 @@
                 <!-- For å få dependency graph i SLSA som pushes av docker-build-push parameter byosbom -->
                 <groupId>org.cyclonedx</groupId>
                 <artifactId>cyclonedx-maven-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>2.9.2</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
