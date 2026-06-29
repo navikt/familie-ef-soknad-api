@@ -21,8 +21,7 @@
         <kotlin.version>2.4.0</kotlin.version>
         <springdoc.version>3.0.3</springdoc.version>
         <mockk.version>1.14.11</mockk.version>
-        <token-validation-spring.version>6.0.10</token-validation-spring.version>
-        <felles.version>4.20260315040340_f2acdc7</felles.version>
+        <felles.version>4.20260529121328_2754f7c</felles.version>
         <kontrakter.version>4.0_20260611084408_a47ed94</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
     </properties>
@@ -108,6 +107,14 @@
 
         <!-- Interne avhengigheter -->
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>log</artifactId>
             <version>${felles.version}</version>
@@ -124,19 +131,14 @@
         </dependency>
 
         <dependency>
-            <groupId>no.nav.security</groupId>
-            <artifactId>token-validation-spring</artifactId>
-            <version>${token-validation-spring.version}</version>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>sikkerhet-spring-security</artifactId>
+            <version>${felles.version}</version>
         </dependency>
         <dependency>
-            <groupId>no.nav.security</groupId>
-            <artifactId>token-client-spring</artifactId>
-            <version>${token-validation-spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>no.nav.security</groupId>
-            <artifactId>token-client-core</artifactId>
-            <version>${token-validation-spring.version}</version>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>token-klient</artifactId>
+            <version>${felles.version}</version>
         </dependency>
         <dependency>
             <groupId>no.nav.familie.kontrakter</groupId>
@@ -152,8 +154,8 @@
         <!-- Test -->
         <dependency>
             <groupId>no.nav.security</groupId>
-            <artifactId>token-validation-spring-test</artifactId>
-            <version>${token-validation-spring.version}</version>
+            <artifactId>mock-oauth2-server</artifactId>
+            <version>4.0.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>

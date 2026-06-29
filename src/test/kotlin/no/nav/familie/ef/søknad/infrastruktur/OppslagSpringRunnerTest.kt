@@ -8,7 +8,6 @@ import no.nav.familie.kontrakter.felles.jsonMapper
 import no.nav.familie.util.FnrGenerator
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback
-import no.nav.security.token.support.spring.test.EnableMockOAuth2Server
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,6 +18,8 @@ import org.springframework.context.ApplicationContext
 import org.springframework.http.HttpHeaders
 import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.DynamicPropertyRegistry
+import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.web.client.RestTemplate
 import java.util.UUID
@@ -36,7 +37,6 @@ import java.util.UUID
     "mock-saf",
     "mock-saksbehandling",
 )
-@EnableMockOAuth2Server
 abstract class OppslagSpringRunnerTest {
     protected val listAppender = initLoggingEventListAppender()
     protected var loggingEvents: MutableList<ILoggingEvent> = listAppender.list
@@ -45,9 +45,6 @@ abstract class OppslagSpringRunnerTest {
     val restTemplate = RestTemplateBuilder().additionalMessageConverters(listOf(jackson2HttpMessageConverter) + RestTemplate().messageConverters).build()
 
     protected val headers = HttpHeaders()
-
-    @Autowired
-    private lateinit var mockOAuth2Server: MockOAuth2Server
 
     @Autowired private lateinit var applicationContext: ApplicationContext
 
@@ -77,7 +74,7 @@ abstract class OppslagSpringRunnerTest {
         subject: String,
         issuerId: String = "tokenx",
         clientId: String = UUID.randomUUID().toString(),
-        audience: String = "familie-app",
+        audience: String = TOKEN_X_CLIENT_ID,
         claims: Map<String, Any> = mapOf("acr" to "Level4"),
     ): String =
         this
@@ -95,6 +92,20 @@ abstract class OppslagSpringRunnerTest {
 
     companion object {
         private const val LOCALHOST = "http://localhost:"
+        private const val TOKEN_X_CLIENT_ID = "familie-app"
+
+        val mockOAuth2Server: MockOAuth2Server by lazy {
+            MockOAuth2Server().also { it.start() }
+        }
+
+        @JvmStatic
+        @DynamicPropertySource
+        @Suppress("unused") // method is used via reflection by Spring's test framework (the @DynamicPropertySource annotation).
+        fun mockOAuth2ServerProperties(registry: DynamicPropertyRegistry) {
+            registry.add("TOKEN_X_ISSUER") { mockOAuth2Server.issuerUrl("tokenx").toString() }
+            registry.add("TOKEN_X_CLIENT_ID") { TOKEN_X_CLIENT_ID }
+            registry.add("TOKEN_X_JWKS_URI") { mockOAuth2Server.jwksUrl("tokenx").toString() }
+        }
 
         protected fun initLoggingEventListAppender(): ListAppender<ILoggingEvent> {
             val listAppender = ListAppender<ILoggingEvent>()

@@ -10,7 +10,6 @@ import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadRegelendring2026Dto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
-import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.validation.annotation.Validated
@@ -23,7 +22,6 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/soknad", produces = [MediaType.APPLICATION_JSON_VALUE])
-@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 @Validated
 class SøknadController(
     private val søknadService: SøknadService,

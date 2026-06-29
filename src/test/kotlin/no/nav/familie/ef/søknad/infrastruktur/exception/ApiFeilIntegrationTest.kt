@@ -2,14 +2,12 @@ package no.nav.familie.ef.søknad.infrastruktur.exception
 
 import no.nav.familie.ef.søknad.infrastruktur.OppslagSpringRunnerTest
 import no.nav.familie.ef.søknad.infrastruktur.sikkerhet.AuthResponse
-import no.nav.security.token.support.core.api.Unprotected
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -24,7 +22,6 @@ import org.springframework.web.client.exchange
 
 @Profile("feil-controller")
 @RestController
-@Unprotected
 @RequestMapping(path = ["/api/feil"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class FeilController {
     @GetMapping
