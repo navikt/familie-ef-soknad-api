@@ -19,7 +19,7 @@ import java.net.URI
 @Component
 class PdlClient(
     val pdlConfig: PdlConfig,
-    @Qualifier("tokenExchange") restOperations: RestOperations,
+    @Qualifier("pdlRestTemplate") restOperations: RestOperations,
 ) : AbstractPingableRestClient(restOperations, "pdl.personinfo") {
     private val logger = LoggerFactory.getLogger(javaClass)
 
