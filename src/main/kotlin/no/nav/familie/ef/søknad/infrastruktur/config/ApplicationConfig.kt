@@ -1,15 +1,19 @@
 package no.nav.familie.ef.søknad.infrastruktur.config
 
 import no.nav.familie.ef.søknad.infrastruktur.sikkerhet.CORSResponseFilter
+import no.nav.familie.felles.tokenklient.entraid.EntraIDClient
+import no.nav.familie.felles.tokenklient.entraid.MaskinTilMaskinTokenInterceptor
+import no.nav.familie.felles.tokenklient.tokenx.TokenXClient
+import no.nav.familie.felles.tokenklient.tokenx.TokenXInterceptor
 import no.nav.familie.log.NavSystemtype
 import no.nav.familie.log.filter.LogFilter
 import no.nav.familie.log.filter.RequestTimeFilter
-import no.nav.familie.restklient.interceptor.BearerTokenClientCredentialsClientInterceptor
-import no.nav.familie.restklient.interceptor.BearerTokenExchangeClientInterceptor
-import no.nav.familie.restklient.interceptor.ConsumerIdClientInterceptor
-import no.nav.familie.restklient.interceptor.MdcValuesPropagatingClientInterceptor
-import no.nav.security.token.support.client.spring.oauth2.EnableOAuth2Client
+import no.nav.familie.log.interceptor.ConsumerIdClientInterceptor
+import no.nav.familie.log.interceptor.MdcValuesPropagatingClientInterceptor
+import no.nav.familie.sikkerhet.EksternBrukerUtils
+import no.nav.familie.sikkerhet.context.FamilieFellesSpringSecurityKonfigurasjon
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.boot.web.servlet.FilterRegistrationBean
@@ -29,14 +33,17 @@ import java.time.temporal.ChronoUnit
 import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
 
 @SpringBootConfiguration
-@EnableOAuth2Client(cacheEnabled = true)
+@ComponentScan(
+    basePackages = [
+        "no.nav.familie.unleash",
+        "no.nav.familie.felles.tokenklient",
+    ],
+)
 @Import(
+    FamilieFellesSpringSecurityKonfigurasjon::class,
     MdcValuesPropagatingClientInterceptor::class,
     ConsumerIdClientInterceptor::class,
-    BearerTokenExchangeClientInterceptor::class,
-    BearerTokenClientCredentialsClientInterceptor::class,
 )
-@ComponentScan(basePackages = ["no.nav.familie.unleash"])
 internal class ApplicationConfig {
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
 
@@ -68,37 +75,62 @@ internal class ApplicationConfig {
             order = 2
         }
 
-    @Bean("tokenExchange")
-    fun restTemplate(
-        bearerTokenExchangeClientInterceptor: BearerTokenExchangeClientInterceptor,
+    @Bean("mottakRestTemplate")
+    fun mottakRestTemplate(
+        tokenXClient: TokenXClient,
+        @Value("\${familie.ef.mottak.audience}") scope: String,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
     ): RestOperations =
-        RestTemplateBuilder()
-            .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
-            .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
-            .messageConverters(JacksonJsonHttpMessageConverter(kontraktJsonMapper))
+        lagTokenXRestTemplate(tokenXClient, scope, mdcValuesPropagatingClientInterceptor, consumerIdClientInterceptor)
             .withByteArrayConverterForPdf()
-            .interceptors(
-                bearerTokenExchangeClientInterceptor,
-                mdcValuesPropagatingClientInterceptor,
-                consumerIdClientInterceptor,
-            ).build()
+            .build()
 
-    @Bean("clientCredential")
-    fun clientCredentialRestTemplateMedApiKey(
-        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-        bearerTokenClientCredentialsClientInterceptor: BearerTokenClientCredentialsClientInterceptor,
+    @Bean("saksbehandlingRestTemplate")
+    fun saksbehandlingRestTemplate(
+        tokenXClient: TokenXClient,
+        @Value("\${familie.ef.saksbehandling.audience}") scope: String,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+    ): RestOperations =
+        lagTokenXRestTemplate(tokenXClient, scope, mdcValuesPropagatingClientInterceptor, consumerIdClientInterceptor)
+            .build()
+
+    @Bean("pdlRestTemplate")
+    fun pdlRestTemplate(
+        tokenXClient: TokenXClient,
+        @Value("\${PDL_AUDIENCE}") scope: String,
+        mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+    ): RestOperations =
+        lagTokenXRestTemplate(tokenXClient, scope, mdcValuesPropagatingClientInterceptor, consumerIdClientInterceptor)
+            .build()
+
+    @Bean("safRestTemplate")
+    fun safRestTemplate(
+        tokenXClient: TokenXClient,
+        @Value("\${SAF_AUDIENCE}") scope: String,
+        mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+    ): RestOperations =
+        lagTokenXRestTemplate(tokenXClient, scope, mdcValuesPropagatingClientInterceptor, consumerIdClientInterceptor)
+            .build()
+
+    @Bean("pdlClientCredentialRestTemplate")
+    fun pdlClientCredentialRestTemplate(
+        entraIDClient: EntraIDClient,
+        @Value("\${PDL_SCOPE}") scope: String,
+        mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
     ): RestOperations =
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
             .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
             .messageConverters(JacksonJsonHttpMessageConverter(kontraktJsonMapper))
             .interceptors(
-                consumerIdClientInterceptor,
-                bearerTokenClientCredentialsClientInterceptor,
+                MaskinTilMaskinTokenInterceptor(entraIDClient, scope),
                 mdcValuesPropagatingClientInterceptor,
+                consumerIdClientInterceptor,
             ).build()
 
     @Bean("utenAuth")
@@ -114,6 +146,22 @@ internal class ApplicationConfig {
                 consumerIdClientInterceptor,
                 mdcValuesPropagatingClientInterceptor,
             ).build()
+
+    private fun lagTokenXRestTemplate(
+        tokenXClient: TokenXClient,
+        scope: String,
+        mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+    ): RestTemplateBuilder =
+        RestTemplateBuilder()
+            .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
+            .readTimeout(Duration.of(25, ChronoUnit.SECONDS))
+            .messageConverters(JacksonJsonHttpMessageConverter(kontraktJsonMapper))
+            .interceptors(
+                TokenXInterceptor(tokenXClient, scope) { EksternBrukerUtils.getBearerTokenForLoggedInUser() },
+                mdcValuesPropagatingClientInterceptor,
+                consumerIdClientInterceptor,
+            )
 }
 
 private fun RestTemplateBuilder.withByteArrayConverterForPdf(): RestTemplateBuilder {

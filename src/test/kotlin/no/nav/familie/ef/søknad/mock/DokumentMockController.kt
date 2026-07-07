@@ -1,9 +1,7 @@
 package no.nav.familie.ef.søknad.mock
 
 import no.nav.familie.kontrakter.felles.jsonMapper
-import no.nav.security.token.support.core.api.Unprotected
-import no.nav.security.token.support.core.context.TokenValidationContextHolder
-import no.nav.security.token.support.core.exceptions.JwtTokenValidatorException
+import no.nav.familie.sikkerhet.EksternBrukerUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
@@ -26,21 +24,14 @@ import java.util.UUID
 @Suppress("SpringJavaInjectionPointsAutowiringInspection") // dokumentlager er definiert i DokumentConfiguration
 @RestController
 @RequestMapping(path = ["/dokumentmock/"], produces = [MediaType.APPLICATION_JSON_VALUE])
-@Unprotected
 class DokumentMockController(
     @Qualifier("dokumentlager") private val dokumenter: MutableMap<String, ByteArray>,
-    private val contextHolder: TokenValidationContextHolder,
 ) {
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
     private val mellomlager = mutableMapOf<String, String>()
 
-    fun TokenValidationContextHolder.hentFnr(): String =
-        this
-            .getTokenValidationContext()
-            .getJwtToken(
-                "tokenx",
-            )?.subject ?: throw JwtTokenValidatorException("Klarte ikke hente fnr tokenx-token")
+    private fun hentFnr(): String = EksternBrukerUtils.hentFnrFraToken()
 
     @PostMapping(
         path = ["dokument/{bucket}"],
@@ -80,7 +71,7 @@ class DokumentMockController(
         log.info("Mellomlagrer søknad om overgangsstønad")
 
         validerGyldigJson(søknad)
-        val directory = contextHolder.hentFnr()
+        val directory = hentFnr()
 
         try {
             mellomlager[directory] = søknad
@@ -94,7 +85,7 @@ class DokumentMockController(
 
     @GetMapping("mellomlager", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun hentMellomlagretSøknad(): ResponseEntity<String> {
-        val directory = contextHolder.hentFnr()
+        val directory = hentFnr()
         return try {
             ResponseEntity.ok(mellomlager[directory])
         } catch (e: RuntimeException) {
@@ -105,7 +96,7 @@ class DokumentMockController(
 
     @DeleteMapping("mellomlager", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun slettMellomlagretSøknad(): ResponseEntity<String> {
-        val directory = contextHolder.hentFnr()
+        val directory = hentFnr()
         return try {
             log.debug("Sletter mellomlagret overgangsstønad")
             mellomlager.remove(directory)
