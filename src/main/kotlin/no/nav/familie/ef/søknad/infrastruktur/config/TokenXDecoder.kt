@@ -32,5 +32,5 @@ class TokenXDecoder(
         decoder
     }
 
-    override fun decode(token: String?): org.springframework.security.oauth2.jwt.Jwt? = delegate.decode(token)
+    override fun decode(token: String): org.springframework.security.oauth2.jwt.Jwt = delegate.decode(token)
 }

@@ -36,7 +36,8 @@ import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
 @ComponentScan(
     basePackages = [
         "no.nav.familie.unleash",
-        "no.nav.familie.felles.tokenklient",
+        "no.nav.familie.felles.tokenklient.tokenx",
+        "no.nav.familie.felles.tokenklient.entraid",
     ],
 )
 @Import(
