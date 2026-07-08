@@ -4,7 +4,6 @@ import no.nav.familie.ef.søknad.infrastruktur.exception.ApiFeil
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.kontrakter.ef.ettersending.EttersendelseDto
 import no.nav.familie.sikkerhet.EksternBrukerUtils
-import no.nav.security.token.support.core.api.ProtectedWithClaims
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,7 +15,6 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping(path = ["/api/ettersending"])
-@ProtectedWithClaims(issuer = EksternBrukerUtils.ISSUER_TOKENX, claimMap = ["acr=Level4"])
 class EttersendingController(
     val ettersendingService: EttersendingService,
 ) {

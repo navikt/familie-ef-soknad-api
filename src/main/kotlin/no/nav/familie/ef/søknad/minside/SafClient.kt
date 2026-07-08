@@ -16,7 +16,7 @@ import java.net.URI
 @Component
 class SafClient(
     val safConfig: SafConfig,
-    @Qualifier("tokenExchange") restOperations: RestOperations,
+    @Qualifier("safRestTemplate") restOperations: RestOperations,
 ) : AbstractPingableRestClient(restOperations, "saf.dokument") {
     fun hentDokument(
         journalpostId: String,

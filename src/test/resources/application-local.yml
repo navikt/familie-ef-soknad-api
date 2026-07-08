@@ -24,32 +24,12 @@ cors:
 
 logging:
   config: classpath:logback-test.xml
-no.nav.security.jwt:
-  issuer:
-    tokenx:
-      discovery-url: https://fakedings.intern.dev.nav.no/fake/.well-known/openid-configuration
-      accepted-audience: dev-gcp:teamfamilie:familie-ef-soknad-api
-  client.registration:
-    mottak:
-      token-endpoint-url: http://metadata
-    saksbehandling:
-      token-endpoint-url: http://metadata
-    pdl:
-      token-endpoint-url: http://metadata
-    pdl-clientcredentials:
-      token-endpoint-url: http://metadata
-    saf:
-      token-endpoint-url: http://metadata
-
-TOKEN_X_WELL_KNOWN_URL: https://fakedings.intern.dev.nav.no/fake/.well-known/openid-configuration
-TOKEN_X_PRIVATE_JWK: '{
-    "kty" : "RSA",
-    "e" : "AQAB",
-    "use" : "sig",
-    "kid" : "mock-oauth2-server-key",
-    "n" : ""
-  }'
+TOKEN_X_ISSUER: http://localhost:11588/tokenx
+TOKEN_X_CLIENT_ID: dev-gcp:teamfamilie:familie-ef-soknad-api
+TOKEN_X_JWKS_URI: http://localhost:11588/tokenx/jwks
 
 UNLEASH_SERVER_API_URL: http://localhost:4242/api
 UNLEASH_SERVER_API_TOKEN: token
 NAIS_APP_NAME: familie-ef-soknad-api
+NAIS_TOKEN_EXCHANGE_ENDPOINT: http://localhost/token/exchange
+NAIS_TOKEN_ENDPOINT: http://localhost/token

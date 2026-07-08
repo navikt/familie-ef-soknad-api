@@ -1,7 +1,6 @@
 package no.nav.familie.ef.søknad.infrastruktur.exception
 
 import no.nav.familie.ef.søknad.infrastruktur.exception.dto.FeilDto
-import no.nav.security.token.support.spring.validation.interceptor.JwtTokenUnauthorizedException
 import org.slf4j.LoggerFactory
 import org.springframework.core.NestedExceptionUtils
 import org.springframework.http.HttpHeaders
@@ -68,17 +67,9 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
                 " reason=${responseStatus.reason}" +
                 " status=$status"
 
-        loggFeil(throwable, loggMelding)
-        return ResponseEntity.status(status).body("Håndtert feil")
-    }
+        // is JwtTokenUnauthorizedException -> logger.debug(loggMelding)
+        secureLogger.error(loggMelding)
 
-    private fun loggFeil(
-        throwable: Throwable,
-        loggMelding: String,
-    ) {
-        when (throwable) {
-            is JwtTokenUnauthorizedException -> logger.debug(loggMelding)
-            else -> logger.error(loggMelding)
-        }
+        return ResponseEntity.status(status).body("Håndtert feil")
     }
 }
