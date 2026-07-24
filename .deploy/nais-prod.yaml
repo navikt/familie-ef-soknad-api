@@ -25,10 +25,10 @@ spec:
     max: 4
   resources:
     limits:
-      memory: 2Gi
+      memory: 1152Mi
     requests:
-      memory: 2Gi
-      cpu: 100m
+      memory: 1152Mi
+      cpu: 400m
   ingresses:
     - https://www.nav.no/familie/alene-med-barn/soknad-api
   azure:

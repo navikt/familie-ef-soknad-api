@@ -25,10 +25,10 @@ spec:
     max: 2
   resources:
     limits:
-      memory: 2Gi
+      memory: 1Gi
     requests:
-      memory: 2Gi
-      cpu: 100m
+      memory: 1Gi
+      cpu: 75m
   ingresses:
     - https://familie-ef-soknad-api.intern.dev.nav.no
   azure:
