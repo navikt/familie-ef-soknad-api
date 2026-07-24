@@ -27,7 +27,7 @@ spec:
     limits:
       memory: 2Gi
     requests:
-      memory: 256Mi
+      memory: 2Gi
       cpu: 100m
   ingresses:
     - https://familie-ef-soknad-api.intern.dev.nav.no
