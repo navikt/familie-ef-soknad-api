@@ -24,9 +24,9 @@ cors:
 
 logging:
   config: classpath:logback-test.xml
-TOKEN_X_ISSUER: http://localhost:11588/tokenx
+TOKEN_X_ISSUER: https://fakedings.intern.dev.nav.no/fake
 TOKEN_X_CLIENT_ID: dev-gcp:teamfamilie:familie-ef-soknad-api
-TOKEN_X_JWKS_URI: http://localhost:11588/tokenx/jwks
+TOKEN_X_JWKS_URI: https://fakedings.intern.dev.nav.no/fake/jwks
 
 UNLEASH_SERVER_API_URL: http://localhost:4242/api
 UNLEASH_SERVER_API_TOKEN: token
