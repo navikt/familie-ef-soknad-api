@@ -5,7 +5,6 @@ import no.nav.familie.ef.søknad.person.OppslagService
 import no.nav.familie.ef.søknad.søknad.domain.Arbeidssøker
 import no.nav.familie.ef.søknad.søknad.domain.Kvittering
 import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynDto
-import no.nav.familie.ef.søknad.søknad.dto.SøknadBarnetilsynGjenbrukDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadDto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadOvergangsstønadRegelendring2026Dto
 import no.nav.familie.ef.søknad.søknad.dto.SøknadSkolepengerDto
@@ -88,17 +87,6 @@ class SøknadController(
         val innsendingMottatt = LocalDateTime.now()
         søknadService.sendInnArbeidssøkerSkjema(arbeidssøker, fnrFraToken, forkortetNavn, innsendingMottatt)
         return Kvittering("ok", mottattDato = innsendingMottatt)
-    }
-
-    @GetMapping("barnetilsyn/forrige")
-    fun hentForrigeBarnetilsynSøknad(): SøknadBarnetilsynGjenbrukDto? {
-        val søknad = søknadService.hentForrigeBarnetilsynSøknadKvittering()
-
-        return if (søknad != null && søknadService.harSøknadGyldigeVerdier(søknad)) {
-            søknad
-        } else {
-            null
-        }
     }
 
     @GetMapping("sist-innsendt-per-stonad")
