@@ -34,19 +34,19 @@ object BarnepassMapper : Mapper<BarnepassDto, Barnepass>(OmBarnepassordning) {
                                         ?: error("Savner label"),
                                     Datoperiode(
                                         it.periode.fra.tilLocalDate(),
-                                        it.periode.til.tilLocalDate(),
-                                    ),
+                                        it.periode.til.tilLocalDate()
+                                    )
                                 ),
-                            belop = it.belop.tilSøknadsfelt(String::tilDesimaltall),
+                            belop = it.belop.tilSøknadsfelt(String::tilDesimaltall)
                         )
-                    },
-                ),
+                    }
+                )
         )
 
     fun mapTilDto(barnepass: Barnepass?): BarnepassDto =
         BarnepassDto(
             årsakBarnepass = barnepass?.årsakBarnepass.tilNullableTekstFelt(),
-            barnepassordninger = mapBarnepassordningerTilDto(barnepass?.barnepassordninger?.verdi ?: emptyList()),
+            barnepassordninger = mapBarnepassordningerTilDto(barnepass?.barnepassordninger?.verdi ?: emptyList())
         )
 
     fun mapBarnepassordningerTilDto(barnepassOrdning: List<BarnepassOrdning>): List<BarnepassOrdningDto> =
@@ -56,7 +56,7 @@ object BarnepassMapper : Mapper<BarnepassDto, Barnepass>(OmBarnepassordning) {
                     TekstFelt(
                         it.hvaSlagsBarnepassOrdning.label,
                         it.hvaSlagsBarnepassOrdning.verdi,
-                        it.hvaSlagsBarnepassOrdning.svarId,
+                        it.hvaSlagsBarnepassOrdning.svarId
                     ),
                 navn = TekstFelt(it.navn.label, it.navn.verdi, it.navn.svarId),
                 periode =
@@ -67,17 +67,17 @@ object BarnepassMapper : Mapper<BarnepassDto, Barnepass>(OmBarnepassordning) {
                             it.datoperiode
                                 ?.verdi
                                 ?.fra
-                                .toString(),
+                                .toString()
                         ),
                         DatoFelt(
                             it.datoperiode?.label ?: "Sluttdato",
                             it.datoperiode
                                 ?.verdi
                                 ?.til
-                                .toString(),
-                        ),
+                                .toString()
+                        )
                     ),
-                belop = TekstFelt(it.belop.label, it.belop.verdi.toString(), it.belop.svarId.toString()),
+                belop = TekstFelt(it.belop.label, it.belop.verdi.toString(), it.belop.svarId.toString())
             )
         }
 }

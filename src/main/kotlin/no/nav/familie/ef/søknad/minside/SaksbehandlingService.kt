@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class SaksbehandlingService(
-    private val saksbehandlingClient: SaksbehandlingClient,
+    private val saksbehandlingClient: SaksbehandlingClient
 ) {
     fun hentStønadsperioderForBruker(): MineStønaderDto {
         val stønadsperioder = saksbehandlingClient.hentStønadsperioderForBruker()
@@ -24,7 +24,7 @@ class SaksbehandlingService(
             MineStønaderDto(
                 overgangsstønad = utledStønad(stønadsperioder.overgangsstønad),
                 barnetilsyn = utledStønad(stønadsperioder.barnetilsyn),
-                skolepenger = utledStønad(stønadsperioder.skolepenger),
+                skolepenger = utledStønad(stønadsperioder.skolepenger)
             )
 
         return mineStønaderDto
@@ -45,19 +45,15 @@ class SaksbehandlingService(
             periodeStatus = periodeStatus,
             startDato = startDato,
             sluttDato = sluttDato,
-            perioder = perioderSortertPåDato,
+            perioder = perioderSortertPåDato
         )
     }
 
-    private fun utledTilDato(
-        periodeStatus: PeriodeStatus,
-        relevantePerioder: List<StønadsperiodeDto>,
-    ) = if (periodeStatus === FREMTIDIG_UTEN_OPPHOLD || periodeStatus === LØPENDE_UTEN_OPPHOLD) relevantePerioder.last().tilDato else null
+    private fun utledTilDato(periodeStatus: PeriodeStatus, relevantePerioder: List<StønadsperiodeDto>) =
+        if (periodeStatus === FREMTIDIG_UTEN_OPPHOLD || periodeStatus === LØPENDE_UTEN_OPPHOLD) relevantePerioder.last().tilDato else null
 
-    private fun utledStartDato(
-        periodeStatus: PeriodeStatus,
-        relevantePerioder: List<StønadsperiodeDto>,
-    ) = if (periodeStatus === FREMTIDIG_UTEN_OPPHOLD) relevantePerioder.first().fraDato else null
+    private fun utledStartDato(periodeStatus: PeriodeStatus, relevantePerioder: List<StønadsperiodeDto>) =
+        if (periodeStatus === FREMTIDIG_UTEN_OPPHOLD) relevantePerioder.first().fraDato else null
 
     private fun utledPeriodeStatusMedPerioder(perioder: List<StønadsperiodeDto>): Pair<PeriodeStatus, List<StønadsperiodeDto>> {
         if (perioder.isEmpty()) {
@@ -75,10 +71,7 @@ class SaksbehandlingService(
         }
     }
 
-    private fun utledPeriodeStatus(
-        stønadsperioderMedFremtidigSluttDato: List<StønadsperiodeDto>,
-        harPerioderSiste6mnd: Boolean,
-    ): PeriodeStatus {
+    private fun utledPeriodeStatus(stønadsperioderMedFremtidigSluttDato: List<StønadsperiodeDto>, harPerioderSiste6mnd: Boolean): PeriodeStatus {
         val datoPerioderMedFremtidigSluttdato =
             stønadsperioderMedFremtidigSluttDato.map { Datoperiode(fom = it.fraDato, tom = it.tilDato) }
         val harFremtidigePerioderOgErSammenhengende =

@@ -22,7 +22,7 @@ class AuthenticationIntegrationTest : OppslagSpringRunnerTest() {
             restTemplate.exchange<AuthResponse>(
                 beskyttetEndepunkt,
                 HttpMethod.GET,
-                HttpEntity<Any>(HttpHeaders().apply { setBearerAuth(søkerBearerToken()) }),
+                HttpEntity<Any>(HttpHeaders().apply { setBearerAuth(søkerBearerToken()) })
             )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
@@ -36,7 +36,7 @@ class AuthenticationIntegrationTest : OppslagSpringRunnerTest() {
                 restTemplate.exchange<String>(
                     beskyttetEndepunkt,
                     HttpMethod.GET,
-                    HttpEntity<Any>(HttpHeaders()),
+                    HttpEntity<Any>(HttpHeaders())
                 )
             }
 
@@ -55,8 +55,8 @@ class AuthenticationIntegrationTest : OppslagSpringRunnerTest() {
                         subject = "12345678901",
                         audience = listOf("familie-app"),
                         claims = mapOf("acr" to "Level3"),
-                        expiry = 3600,
-                    ),
+                        expiry = 3600
+                    )
                 ).serialize()
 
         val exception =
@@ -64,7 +64,7 @@ class AuthenticationIntegrationTest : OppslagSpringRunnerTest() {
                 restTemplate.exchange<String>(
                     beskyttetEndepunkt,
                     HttpMethod.GET,
-                    HttpEntity<Any>(HttpHeaders().apply { setBearerAuth(tokenMedLavtSikkerhetsnivå) }),
+                    HttpEntity<Any>(HttpHeaders().apply { setBearerAuth(tokenMedLavtSikkerhetsnivå) })
                 )
             }
 
@@ -83,8 +83,8 @@ class AuthenticationIntegrationTest : OppslagSpringRunnerTest() {
                         subject = "12345678901",
                         audience = listOf("annen-app"),
                         claims = mapOf("acr" to "Level4"),
-                        expiry = 3600,
-                    ),
+                        expiry = 3600
+                    )
                 ).serialize()
 
         val exception =
@@ -92,7 +92,7 @@ class AuthenticationIntegrationTest : OppslagSpringRunnerTest() {
                 restTemplate.exchange<String>(
                     beskyttetEndepunkt,
                     HttpMethod.GET,
-                    HttpEntity<Any>(HttpHeaders().apply { setBearerAuth(tokenMedFeilAudience) }),
+                    HttpEntity<Any>(HttpHeaders().apply { setBearerAuth(tokenMedFeilAudience) })
                 )
             }
 

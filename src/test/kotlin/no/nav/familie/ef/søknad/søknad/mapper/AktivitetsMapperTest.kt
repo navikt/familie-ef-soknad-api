@@ -113,7 +113,7 @@ internal class AktivitetsMapperTest {
                         ?.verdi
                         ?.virksomhetsbeskrivelse
                         ?.label
-                ),
+                )
             ).isEqualTo("Hva er din arbeidsituasjon?")
     }
 
@@ -124,7 +124,7 @@ internal class AktivitetsMapperTest {
                 aktivitetMapped.virksomhet
                     ?.verdi
                     ?.virksomhetsbeskrivelse
-                    ?.verdi,
+                    ?.verdi
             ).isEqualTo("Dette er en spennende gründerbedrift")
     }
 

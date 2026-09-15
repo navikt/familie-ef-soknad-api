@@ -13,7 +13,7 @@ fun personalia(): Personalia =
         Søknadsfelt("Navn", "Kari Nordmann"),
         Søknadsfelt("Statsborgerskap", "NOR"),
         adresseSøknadsfelt(),
-        Søknadsfelt("Sivilstatus", "UGIF"),
+        Søknadsfelt("Sivilstatus", "UGIF")
     )
 
 fun adresseSøknadsfelt(): Søknadsfelt<Adresse> =
@@ -23,14 +23,14 @@ fun adresseSøknadsfelt(): Søknadsfelt<Adresse> =
             "Jerpefaret 5C",
             "1440",
             "",
-            "",
-        ),
+            ""
+        )
     )
 
 fun dokumentMap(): Map<String, DokumentasjonWrapper> {
     val vedlegg = Vedlegg("id", "navn", "tittel")
     return mapOf(
         "samlivsbrudd" to DokumentasjonWrapper("label", Søknadsfelt("Har allerede sendt inn", false), listOf(vedlegg)),
-        "TERMINBEKREFTELSE" to DokumentasjonWrapper("Terminbekreftelse", Søknadsfelt("Har allerede sendt inn", false), listOf(vedlegg)),
+        "TERMINBEKREFTELSE" to DokumentasjonWrapper("Terminbekreftelse", Søknadsfelt("Har allerede sendt inn", false), listOf(vedlegg))
     )
 }

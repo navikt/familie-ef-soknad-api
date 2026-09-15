@@ -24,7 +24,7 @@ class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
             restTemplate.exchange<Søkerinfo>(
                 localhost("/api/oppslag/sokerinfo"),
                 org.springframework.http.HttpMethod.GET,
-                HttpEntity<String>(headers),
+                HttpEntity<String>(headers)
             )
 
         assertThat(jsonMapper.writeValueAsString(response)).contains(tokenSubject) // guard
@@ -38,7 +38,7 @@ class OppslagControllerIntegrationTest : OppslagSpringRunnerTest() {
             restTemplate.exchange<Søkerinfo>(
                 localhost("/api/oppslag/sokerinfo"),
                 org.springframework.http.HttpMethod.GET,
-                HttpEntity<String>(headers),
+                HttpEntity<String>(headers)
             )
 
         assertThat(response.headers["Access-Control-Allow-Origin"]).hasSize(1)

@@ -15,6 +15,6 @@ fun main(args: Array<String>) {
             "mock-mottak",
             "mock-integrasjoner",
             "mock-saf",
-            "mock-saksbehandling",
+            "mock-saksbehandling"
         ).run(*args)
 }

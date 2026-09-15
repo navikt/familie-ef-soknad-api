@@ -25,7 +25,7 @@ import java.net.URI
 @Service
 class MottakClient(
     private val config: MottakConfig,
-    @Qualifier("mottakRestTemplate") operations: RestOperations,
+    @Qualifier("mottakRestTemplate") operations: RestOperations
 ) : AbstractPingableRestClient(operations, "søknad.innsending") {
     override val pingUri: URI = config.pingUri
 
@@ -36,7 +36,7 @@ class MottakClient(
             postForEntity(
                 config.hentSøknaderMedDokumentasjonsbehovUri,
                 PersonIdent(personIdent),
-                HttpHeaders().medContentTypeJsonUTF8(),
+                HttpHeaders().medContentTypeJsonUTF8()
             )
         return filtrerVekkEldreDokumentasjonsbehov(søknaderMedDokumentasjonsbehov)
     }
@@ -45,29 +45,33 @@ class MottakClient(
         postForEntity(
             config.hentEttersendingForPersonUri,
             PersonIdent(personIdent),
-            HttpHeaders().medContentTypeJsonUTF8(),
+            HttpHeaders().medContentTypeJsonUTF8()
         )
 
-    fun sendInnSøknadOvergangsstønad(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto = postForEntity(config.sendInnSøknadOverganggstønadUri, søknadMedVedlegg)
+    fun sendInnSøknadOvergangsstønad(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønad>): KvitteringDto =
+        postForEntity(config.sendInnSøknadOverganggstønadUri, søknadMedVedlegg)
 
-    fun sendInnSøknadOvergangsstønadRegelendring2026(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønadRegelendring2026>): KvitteringDto = postForEntity(config.sendInnSøknadOvergangsstønadRegelendring2026Uri, søknadMedVedlegg)
+    fun sendInnSøknadOvergangsstønadRegelendring2026(søknadMedVedlegg: SøknadMedVedlegg<SøknadOvergangsstønadRegelendring2026>): KvitteringDto =
+        postForEntity(config.sendInnSøknadOvergangsstønadRegelendring2026Uri, søknadMedVedlegg)
 
-    fun sendInnSøknadBarnetilsyn(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto = postForEntity(config.sendInnSøknadBarnetilsynUri, søknadMedVedlegg)
+    fun sendInnSøknadBarnetilsyn(søknadMedVedlegg: SøknadMedVedlegg<SøknadBarnetilsyn>): KvitteringDto =
+        postForEntity(config.sendInnSøknadBarnetilsynUri, søknadMedVedlegg)
 
-    fun sendInnSøknadSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto = postForEntity(config.sendInnSøknadSkolepengerUri, søknadMedVedlegg)
+    fun sendInnSøknadSkolepenger(søknadMedVedlegg: SøknadMedVedlegg<SøknadSkolepenger>): KvitteringDto =
+        postForEntity(config.sendInnSøknadSkolepengerUri, søknadMedVedlegg)
 
     fun sendInnArbeidssøkerSkjema(skjema: SkjemaForArbeidssøker): KvitteringDto = postForEntity(config.sendInnSkjemaArbeidssøkerUri, skjema)
 
     fun hentForrigeBarnetilsynSøknadKvittering(): SøknadBarnetilsyn? =
         getForEntity(
             config.hentForrigeSøknadBarnetilsynUri,
-            HttpHeaders().medContentTypeJsonUTF8(),
+            HttpHeaders().medContentTypeJsonUTF8()
         )
 
     fun hentSistInnsendtSøknadPerStønad(): List<SistInnsendtSøknadDto> =
         getForEntity(
             config.hentSistInnsendteSøknadPerStønadUri,
-            HttpHeaders().medContentTypeJsonUTF8(),
+            HttpHeaders().medContentTypeJsonUTF8()
         )
 
     private fun HttpHeaders.medContentTypeJsonUTF8(): HttpHeaders {

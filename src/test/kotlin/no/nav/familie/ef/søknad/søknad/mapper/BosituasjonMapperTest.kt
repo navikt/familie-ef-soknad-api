@@ -57,7 +57,7 @@ internal class BosituasjonMapperTest {
             bosituasjonMapped.samboerdetaljer
                 ?.verdi
                 ?.navn
-                ?.verdi,
+                ?.verdi
         ).isEqualTo("Bob Dyland")
     }
 
@@ -70,7 +70,7 @@ internal class BosituasjonMapperTest {
             bosituasjonMapped.samboerdetaljer
                 ?.verdi
                 ?.fødselsnummer
-                ?.verdi,
+                ?.verdi
         ).isEqualTo(Fødselsnummer("26077624804"))
     }
 
@@ -83,7 +83,7 @@ internal class BosituasjonMapperTest {
             bosituasjonMapped.samboerdetaljer
                 ?.verdi
                 ?.fødselsdato
-                ?.verdi,
+                ?.verdi
         ).isEqualTo(LocalDate.of(1976, 7, 26))
     }
 
@@ -105,7 +105,7 @@ internal class BosituasjonMapperTest {
                 ?.verdi
                 ?.fødselsnummer
                 ?.verdi
-                ?.verdi,
+                ?.verdi
         ).isEqualTo("26077624804")
     }
 
@@ -120,6 +120,6 @@ internal class BosituasjonMapperTest {
     private fun getBosituasjon(fileName: String) =
         jsonMapper.readValue(
             File("src/test/resources/$fileName"),
-            Bosituasjon::class.java,
+            Bosituasjon::class.java
         )
 }

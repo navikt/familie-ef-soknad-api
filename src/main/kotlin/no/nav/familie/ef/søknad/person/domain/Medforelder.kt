@@ -5,7 +5,7 @@ data class Medforelder(
     val harAdressesperre: Boolean,
     val død: Boolean = false,
     val ident: String = "",
-    val alder: Int,
+    val alder: Int
 ) {
     override fun toString(): String = "MedForelder(harAdressesperre=$harAdressesperre, død=$død, alder=$alder)"
 }

@@ -41,7 +41,7 @@ class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
             restTemplate.exchange<AuthResponse>(
                 localhost("/api/innlogget"),
                 HttpMethod.GET,
-                HttpEntity<Any>(headers),
+                HttpEntity<Any>(headers)
             )
         assertThat(exchange.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(exchange.body).isEqualTo(AuthResponse("Autentisert kall"))
@@ -54,7 +54,7 @@ class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
                 restTemplate.exchange<ResponseEntity<String>>(
                     localhost("/api/finnesIkke"),
                     HttpMethod.GET,
-                    HttpEntity<Any>(headers),
+                    HttpEntity<Any>(headers)
                 )
             }
         assertThat(exception.statusCode).isEqualTo(HttpStatus.NOT_FOUND)
@@ -67,7 +67,7 @@ class ApiFeilIntegrationTest : OppslagSpringRunnerTest() {
                 restTemplate.exchange<ResponseEntity<String>>(
                     localhost("/api/feil"),
                     HttpMethod.GET,
-                    HttpEntity<Any>(headers),
+                    HttpEntity<Any>(headers)
                 )
             }
         assertThat(exception.statusCode).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR)

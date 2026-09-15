@@ -11,6 +11,6 @@ object SivilstandsplanerMapper : Mapper<Bosituasjon, Sivilstandsplaner>(Fremtids
         Sivilstandsplaner(
             harPlaner = data.skalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
             fraDato = data.datoSkalGifteSegEllerBliSamboer?.tilSøknadsfelt(),
-            vordendeSamboerEktefelle = data.vordendeSamboerEktefelle?.let(PersonMinimumMapper::map),
+            vordendeSamboerEktefelle = data.vordendeSamboerEktefelle?.let(PersonMinimumMapper::map)
         )
 }

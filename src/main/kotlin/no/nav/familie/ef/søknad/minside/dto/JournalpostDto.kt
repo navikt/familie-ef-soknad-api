@@ -11,14 +11,14 @@ data class JournalpostDto(
     val journalpostType: Journalposttype,
     val dato: LocalDateTime?,
     val hovedDokument: DokumentInfoDto,
-    val vedlegg: List<DokumentInfoDto>,
+    val vedlegg: List<DokumentInfoDto>
 )
 
 data class DokumentInfoDto(
     val dokumentId: String,
     val tittel: String,
     val variantformat: Variantformat,
-    val filtype: String,
+    val filtype: String
 )
 
 fun Journalpost.tilDto() =
@@ -27,7 +27,7 @@ fun Journalpost.tilDto() =
         journalpostType = this.journalposttype,
         dato = mestRelevanteDato(this),
         hovedDokument = this.tilHovedDokumentDto(),
-        vedlegg = this.tilVedleggDto(),
+        vedlegg = this.tilVedleggDto()
     )
 
 fun Journalpost.tilHovedDokumentDto() = this.relevanteDokumenter().first().tilDto()
@@ -47,6 +47,6 @@ fun DokumentInfo.tilDto(): DokumentInfoDto {
         dokumentId = this.dokumentInfoId,
         tittel = this.tittel,
         variantformat = dokumentvariant.variantformat,
-        filtype = dokumentvariant.filtype,
+        filtype = dokumentvariant.filtype
     )
 }

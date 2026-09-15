@@ -19,7 +19,7 @@ import java.net.URI
 @Component
 class PdlClient(
     val pdlConfig: PdlConfig,
-    @Qualifier("pdlRestTemplate") restOperations: RestOperations,
+    @Qualifier("pdlRestTemplate") restOperations: RestOperations
 ) : AbstractPingableRestClient(restOperations, "pdl.personinfo") {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -28,14 +28,14 @@ class PdlClient(
         val pdlPersonRequest =
             PdlPersonRequest(
                 variables = PdlPersonRequestVariables(personIdent),
-                query = PdlConfig.søkerQuery,
+                query = PdlConfig.søkerQuery
             )
         secureLogger.info("Henter søkerdata med request: $pdlPersonRequest fra PDL")
         val pdlResponse: PdlResponse<PdlSøkerData> =
             postForEntity(
                 pdlConfig.pdlUri,
                 pdlPersonRequest,
-                httpHeaders(),
+                httpHeaders()
             )
         return feilsjekkOgReturnerData(personIdent, pdlResponse) { it.person }
     }
@@ -46,7 +46,7 @@ class PdlClient(
     private inline fun <reified DATA : Any, reified T : Any> feilsjekkOgReturnerData(
         ident: String,
         pdlResponse: PdlResponse<DATA>,
-        dataMapper: (DATA) -> T?,
+        dataMapper: (DATA) -> T?
     ): T {
         if (pdlResponse.harFeil()) {
             secureLogger.error("Feil ved henting av ${T::class} fra PDL: ${pdlResponse.errorMessages()}")
@@ -60,7 +60,7 @@ class PdlClient(
         if (data == null) {
             secureLogger.error(
                 "Feil ved oppslag på ident $ident. " +
-                    "PDL rapporterte ingen feil men returnerte tomt datafelt",
+                    "PDL rapporterte ingen feil men returnerte tomt datafelt"
             )
             throw PdlRequestException("Manglende ${T::class} ved feilfri respons fra PDL. Se secure logg for detaljer.")
         }

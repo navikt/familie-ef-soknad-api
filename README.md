@@ -6,18 +6,28 @@ Denne applikasjonen tilbyr apier for Team Enslig Forsørger sine eksterne flater
 * [ettersending av dokumentasjon](https://www.nav.no/familie/alene-med-barn/ettersending)
 * [min side](https://www.nav.no/familie/alene-med-barn/minside)
 
-## Kjør lokalt: 
+## Kjør lokalt:
 Kjør applikasjonen lokalt med: `ApplicationLocalLauncher`
 
 Start `familie-ef-soknad-frontend` og gå til `http://localhost:3000/familie/alene-med-barn/soknad/` for å vise søknaden.
 
-### Swagger api kall med autentisering: 
+### Swagger api kall med autentisering:
 http://localhost:8091/swagger-ui.html
 ~~https://familie-ef-soknad-api.intern.dev.nav.no/swagger-ui.html~~
 Preprod/dev: https://familie-ef-soknad-api.intern.dev.nav.no/familie/alene-med-barn/soknad-api/swagger-ui/index.html
 
 ## Henvendelser for Nav-ansatte
 Interne henvendelser kan sendes via Slack i kanalen `#team-familie`.
+
+### Kodeformattering (ktlint)
+`mvn package` kjører ktlint som en sjekk i `process-sources`.Bygget feiler hvis koden ikke følger formatteringsreglene i `.editorconfig`. Det gjelder også i CI — der rettes ingenting automatisk.
+
+Rett opp formatteringsfeil lokalt før du pusher:
+
+```
+mvn validate -Pformat
+```
+
 
 ## Kode generert av GitHub Copilot
 Dette repoet bruker GitHub Copilot til å generere kode.

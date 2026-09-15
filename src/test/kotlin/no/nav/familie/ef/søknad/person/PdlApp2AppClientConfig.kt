@@ -37,8 +37,8 @@ class PdlApp2AppClientConfig {
                         navn = lagNavn("Hei", "På", "Deg"),
                         fødselsdato = listOf(Fødselsdato(2000, LocalDate.now().minusMonths(6))),
                         dødsfall = listOf(),
-                        forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR)),
-                    ),
+                        forelderBarnRelasjon = listOf(ForelderBarnRelasjon(medforelderFnr, Familierelasjonsrolle.MEDMOR))
+                    )
             )
 
         val fødselsdato = LocalDate.now().minusYears(31)
@@ -51,9 +51,9 @@ class PdlApp2AppClientConfig {
                         dødsfall = listOf(),
                         fødselsdato =
                             listOf(
-                                Fødselsdato(fødselsår = fødselsdato.year, fødselsdato = fødselsdato),
-                            ),
-                    ),
+                                Fødselsdato(fødselsår = fødselsdato.year, fødselsdato = fødselsdato)
+                            )
+                    )
             )
 
         return pdlApp2AppClient
@@ -62,22 +62,22 @@ class PdlApp2AppClientConfig {
     private fun lagNavn(
         fornavn: String = "Fornavn",
         mellomnavn: String? = "mellomnavn",
-        etternavn: String = "Etternavn",
+        etternavn: String = "Etternavn"
     ): List<Navn> =
         listOf(
             Navn(
                 fornavn,
                 mellomnavn,
-                etternavn,
-            ),
+                etternavn
+            )
         )
 
     private fun bostedsadresseBarn(): List<BostedsadresseBarn> =
         listOf(
             BostedsadresseBarn(
                 vegadresse = vegadresse(),
-                matrikkeladresse = null,
-            ),
+                matrikkeladresse = null
+            )
         )
 
     private fun vegadresse(): Vegadresse =
@@ -87,6 +87,6 @@ class PdlApp2AppClientConfig {
             adressenavn = "Charlies vei",
             postnummer = "0575",
             bruksenhetsnummer = "",
-            matrikkelId = 1L,
+            matrikkelId = 1L
         )
 }

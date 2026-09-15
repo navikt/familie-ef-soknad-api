@@ -16,7 +16,7 @@ class SøknadsControllerMock {
 
     @PostMapping
     fun sendInnTest(
-        @RequestBody søknad: Map<Any, Any>,
+        @RequestBody søknad: Map<Any, Any>
     ): Kvittering {
         val valueAsString = jsonMapper.writeValueAsString(søknad)
         // val readValue : SøknadDto= jsonMapper.readValue(valueAsString)

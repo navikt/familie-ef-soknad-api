@@ -61,7 +61,7 @@ internal class MedlemskapDtoMapperTest {
                 ?.verdi
                 ?.get(0)
                 ?.land
-                ?.svarId,
+                ?.svarId
         ).isEqualTo("SWE")
     }
 }

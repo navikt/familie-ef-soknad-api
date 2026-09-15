@@ -31,5 +31,5 @@ data class SøknadOvergangsstønadRegelendring2026Dto(
     val søknadsdato: DatoFelt? = null,
     val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
     val locale: String = "nb",
-    val datoPåbegyntSøknad: LocalDate? = null,
+    val datoPåbegyntSøknad: LocalDate? = null
 )

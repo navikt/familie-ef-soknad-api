@@ -54,8 +54,8 @@ fun PeriodeFelt.tilSøknadsfelt(): Søknadsfelt<MånedÅrPeriode> =
             this.fra.tilLocalDate().month,
             this.fra.tilLocalDate().year,
             this.til.tilLocalDate().month,
-            this.til.tilLocalDate().year,
-        ),
+            this.til.tilLocalDate().year
+        )
     )
 
 fun <T> ListFelt<T>.tilSøknadsfelt(): Søknadsfelt<List<T>> = Søknadsfelt(this.label, this.verdi, this.alternativer, this.svarid)
@@ -66,7 +66,7 @@ fun List<Dokumentasjonsbehov>.tilKontrakt(): List<DokumentasjonsbehovKontrakt> =
             it.label,
             it.id,
             it.harSendtInn,
-            it.opplastedeVedlegg.map { vedlegg -> Dokument(vedlegg.dokumentId, vedlegg.navn) },
+            it.opplastedeVedlegg.map { vedlegg -> Dokument(vedlegg.dokumentId, vedlegg.navn) }
         )
     }
 
@@ -118,7 +118,7 @@ fun lagDokumentasjonWrapper(dokumentasjonsbehov: List<Dokumentasjonsbehov>): Map
                 Vedlegg(
                     id = dokumentFelt.dokumentId,
                     navn = dokumentFelt.navn,
-                    tittel = it.label,
+                    tittel = it.label
                 )
             }
         val harSendtInn = Søknadsfelt(Språktekster.SendtInnTidligere.hentTekst(), it.harSendtInn)

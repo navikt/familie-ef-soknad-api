@@ -25,13 +25,13 @@ internal class SøknadBarnetilsynMapperTest {
     private val søknad: SøknadBarnetilsynDto =
         jsonMapper.readValue(
             File("src/test/resources/barnetilsyn/BarnetilsynsøknadDto.json"),
-            SøknadBarnetilsynDto::class.java,
+            SøknadBarnetilsynDto::class.java
         )
 
     val søknadBTDto =
         jsonMapper.readValue(
             File("src/test/resources/barnetilsyn/BarnetilsynsøknadBarnMedFeilAlderIFnr.json"),
-            SøknadBarnetilsynDto::class.java,
+            SøknadBarnetilsynDto::class.java
         )
 
     @Test
@@ -42,7 +42,7 @@ internal class SøknadBarnetilsynMapperTest {
             mapped.søknad.barn.verdi
                 .first()
                 .navn
-                ?.verdi,
+                ?.verdi
         )
     }
 
@@ -61,10 +61,7 @@ internal class SøknadBarnetilsynMapperTest {
         assertThatBarnHarRiktigAlder(søknadBarnetilsynGjenbrukDto, barn2, fødseldato1)
     }
 
-    private fun lagBarnMedFødselsdato(
-        søknadBT: SøknadBarnetilsyn,
-        fødseldato1: LocalDate,
-    ): no.nav.familie.kontrakter.ef.søknad.Barn {
+    private fun lagBarnMedFødselsdato(søknadBT: SøknadBarnetilsyn, fødseldato1: LocalDate): no.nav.familie.kontrakter.ef.søknad.Barn {
         val barnSøknadsfelt1 =
             søknadBT.barn.verdi
                 .first()
@@ -81,22 +78,16 @@ internal class SøknadBarnetilsynMapperTest {
     private fun assertThatBarnHarRiktigAlder(
         søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto?,
         barn1: no.nav.familie.kontrakter.ef.søknad.Barn,
-        fødseldato1: LocalDate,
+        fødseldato1: LocalDate
     ) {
         assertThat(
-            alderBarn(søknadBarnetilsynGjenbrukDto, plukk = { it.find { barn -> erSammeBarn(barn, barn1) }!! }),
+            alderBarn(søknadBarnetilsynGjenbrukDto, plukk = { it.find { barn -> erSammeBarn(barn, barn1) }!! })
         ).isEqualTo(fødseldato1.årTilNå())
     }
 
-    private fun erSammeBarn(
-        barn: Barn,
-        barn1: no.nav.familie.kontrakter.ef.søknad.Barn,
-    ) = barn.ident!!.verdi == barn1.fødselsnummer!!.verdi.verdi
+    private fun erSammeBarn(barn: Barn, barn1: no.nav.familie.kontrakter.ef.søknad.Barn) = barn.ident!!.verdi == barn1.fødselsnummer!!.verdi.verdi
 
-    private fun alderBarn(
-        søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto?,
-        plukk: (List<Barn>) -> Barn,
-    ): Int =
+    private fun alderBarn(søknadBarnetilsynGjenbrukDto: SøknadBarnetilsynGjenbrukDto?, plukk: (List<Barn>) -> Barn): Int =
         søknadBarnetilsynGjenbrukDto
             ?.person
             ?.barn
@@ -111,11 +102,9 @@ internal class SøknadBarnetilsynMapperTest {
         val person = søknad.person
         val barn = person.barn
 
-        fun lagBarn(
-            ident: String,
-            skalHaBarnepass: Boolean?,
-        ) = barn[0]
-            .copy(id = ident, ident = TekstFelt("", ident), skalHaBarnepass = skalHaBarnepass?.let { BooleanFelt("", it) })
+        fun lagBarn(ident: String, skalHaBarnepass: Boolean?) =
+            barn[0]
+                .copy(id = ident, ident = TekstFelt("", ident), skalHaBarnepass = skalHaBarnepass?.let { BooleanFelt("", it) })
 
         val mapped =
             mapper.mapTilIntern(
@@ -126,11 +115,11 @@ internal class SøknadBarnetilsynMapperTest {
                                 listOf(
                                     lagBarn(FnrGenerator.generer(LocalDate.now().minusDays(1)), false),
                                     lagBarn(identForBarnMedBarnepass, true),
-                                    lagBarn(FnrGenerator.generer(LocalDate.now().plusDays(1)), null),
-                                ),
-                        ),
+                                    lagBarn(FnrGenerator.generer(LocalDate.now().plusDays(1)), null)
+                                )
+                        )
                 ),
-                innsendingMottatt,
+                innsendingMottatt
             )
         val mappedBarn = mapped.søknad.barn.verdi
         assertThat(mappedBarn).hasSize(1)

@@ -23,7 +23,7 @@ class SøknadServiceTest {
             overgangsstønadMapper = SøknadOvergangsstønadMapper(),
             overgangsstønadRegelendring2026Mapper = SøknadOvergangsstønadRegelendring2026Mapper(),
             barnetilsynMapper = SøknadBarnetilsynMapper(),
-            skolepengerMapper = SøknadSkolepengerMapper(),
+            skolepengerMapper = SøknadSkolepengerMapper()
         )
 
     @Test
@@ -31,7 +31,7 @@ class SøknadServiceTest {
         val søknadBT =
             jsonMapper.readValue(
                 File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
-                SøknadBarnetilsyn::class.java,
+                SøknadBarnetilsyn::class.java
             )
 
         val søknadTilGjenbruk = SøknadBarnetilsynMapper().mapTilDto(søknadBT)
@@ -45,7 +45,10 @@ class SøknadServiceTest {
                 ?.forelder
                 ?.borAnnenForelderISammeHus
                 ?.copy(svarid = SvarId.NEI.verdi)
-        val barnMedGyldigSvarId = barn?.copy(forelder = annenForelder?.copy(borAnnenForelderISammeHus = borAnnenForelderISammeHusMedGyldigSvarId))!!
+        val barnMedGyldigSvarId =
+            barn?.copy(
+                forelder = annenForelder?.copy(borAnnenForelderISammeHus = borAnnenForelderISammeHusMedGyldigSvarId)
+            )!!
         val oppdatertSøknadTilGjenbruk = søknadTilGjenbruk.copy(person = PersonTilGjenbruk(barn = listOf(barnMedGyldigSvarId)))
         val skalHaGyldigeVerdier = søknadService.harSøknadGyldigeVerdier(oppdatertSøknadTilGjenbruk)
         assertThat(skalHaGyldigeVerdier).isTrue
@@ -56,7 +59,7 @@ class SøknadServiceTest {
         val søknadBT =
             jsonMapper.readValue(
                 File("src/test/resources/barnetilsyn/Barnetilsynsøknad.json"),
-                SøknadBarnetilsyn::class.java,
+                SøknadBarnetilsyn::class.java
             )
 
         val søknadTilGjenbruk = SøknadBarnetilsynMapper().mapTilDto(søknadBT) ?: fail("Mapping av gyldig barnetilsynsøknad feilet")

@@ -6,7 +6,7 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import org.slf4j.LoggerFactory
 
 abstract class Mapper<T, R>(
-    private val rootLabel: Språktekster,
+    private val rootLabel: Språktekster
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 

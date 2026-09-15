@@ -39,10 +39,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
         manglerAnnenForelderTeller.count() // For å initialisere telleren til 0 ved første søknad etter oppstart
     }
 
-    override fun mapDto(
-        data: List<Barn>,
-        vedlegg: Map<String, DokumentasjonWrapper>,
-    ): List<Søknadbarn> =
+    override fun mapDto(data: List<Barn>, vedlegg: Map<String, DokumentasjonWrapper>): List<Søknadbarn> =
         data.map { barn ->
             tilKontraktBarn(barn, vedlegg)
         }
@@ -53,7 +50,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
                 alder =
                     TekstFelt(
                         AlderTekst.hentTekst(),
-                        it.hentPdlAlder(),
+                        it.hentPdlAlder()
                     ),
                 ident = TekstFelt(FødselsnummerTekst.hentTekst(), it.fødselsnummer?.verdi?.verdi ?: ""),
                 fødselsdato = it.fødselTermindato.tilNullableDatoFelt(),
@@ -67,40 +64,36 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
                     mapAnnenForelderOgSamværTilDto(
                         it.annenForelder?.verdi,
                         it.samvær?.verdi,
-                        it.skalBarnetBoHosSøker,
+                        it.skalBarnetBoHosSøker
                     ),
                 skalHaBarnepass = it.skalHaBarnepass.tilNullableBooleanFelt(),
                 særligeTilsynsbehov = it.særligeTilsynsbehov.tilNullableTekstFelt(),
-                barnepass = null,
+                barnepass = null
             )
         }
 
-    private fun tilKontraktBarn(
-        barn: Barn,
-        vedlegg: Map<String, DokumentasjonWrapper>,
-    ) = Søknadbarn(
-        navn = barn.navn?.tilSøknadsfelt(),
-        fødselsnummer = mapFødselsnummer(barn),
-        harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
-        ikkeRegistrertPåSøkersAdresseBeskrivelse =
-            barn.ikkeRegistrertPåSøkersAdresseBeskrivelse
-                ?.tilSøknadsfelt(),
-        erBarnetFødt = barn.født.tilSøknadsfelt(),
-        fødselTermindato = barn.fødselsdato?.tilSøknadsDatoFeltEllerNull(),
-        terminbekreftelse = mapTerminbekreftelse(barn, vedlegg),
-        annenForelder = barn.forelder?.let { mapAnnenForelder(it) },
-        samvær = barn.forelder?.let { mapSamvær(it, vedlegg) },
-        skalHaBarnepass = barn.skalHaBarnepass?.tilSøknadsfelt(),
-        særligeTilsynsbehov = barn.særligeTilsynsbehov?.tilSøknadsfelt(),
-        barnepass = barn.barnepass?.let { BarnepassMapper.map(it) },
-        lagtTilManuelt = barn.lagtTil,
-        skalBarnetBoHosSøker = barn.forelder?.skalBarnetBoHosSøker?.tilSøknadsfelt(),
-    )
+    private fun tilKontraktBarn(barn: Barn, vedlegg: Map<String, DokumentasjonWrapper>) =
+        Søknadbarn(
+            navn = barn.navn?.tilSøknadsfelt(),
+            fødselsnummer = mapFødselsnummer(barn),
+            harSkalHaSammeAdresse = barn.harSammeAdresse.tilSøknadsfelt(),
+            ikkeRegistrertPåSøkersAdresseBeskrivelse =
+                barn.ikkeRegistrertPåSøkersAdresseBeskrivelse
+                    ?.tilSøknadsfelt(),
+            erBarnetFødt = barn.født.tilSøknadsfelt(),
+            fødselTermindato = barn.fødselsdato?.tilSøknadsDatoFeltEllerNull(),
+            terminbekreftelse = mapTerminbekreftelse(barn, vedlegg),
+            annenForelder = barn.forelder?.let { mapAnnenForelder(it) },
+            samvær = barn.forelder?.let { mapSamvær(it, vedlegg) },
+            skalHaBarnepass = barn.skalHaBarnepass?.tilSøknadsfelt(),
+            særligeTilsynsbehov = barn.særligeTilsynsbehov?.tilSøknadsfelt(),
+            barnepass = barn.barnepass?.let { BarnepassMapper.map(it) },
+            lagtTilManuelt = barn.lagtTil,
+            skalBarnetBoHosSøker = barn.forelder?.skalBarnetBoHosSøker?.tilSøknadsfelt()
+        )
 
-    private fun mapTerminbekreftelse(
-        barn: Barn,
-        vedlegg: Map<String, DokumentasjonWrapper>,
-    ) = if (!barn.født.verdi) dokumentfelt(TERMINBEKREFTELSE, vedlegg) else null
+    private fun mapTerminbekreftelse(barn: Barn, vedlegg: Map<String, DokumentasjonWrapper>) =
+        if (!barn.født.verdi) dokumentfelt(TERMINBEKREFTELSE, vedlegg) else null
 
     private fun mapFødselsnummer(barn: Barn): Søknadsfelt<Fødselsnummer>? {
         return barn.ident?.let {
@@ -120,31 +113,31 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
                 bosattNorge = forelder.borINorge?.tilSøknadsfelt(),
                 land = forelder.land?.tilSøknadsfelt(),
                 person = PersonMinimumMapper.map(forelder),
-                erKopiertFraAnnetBarn = forelder.erKopiertFraAnnetBarn,
-            ),
+                erKopiertFraAnnetBarn = forelder.erKopiertFraAnnetBarn
+            )
         )
 
     private fun mapAnnenForelderOgSamværTilDto(
         annenForelder: AnnenForelder?,
         samvær: Samvær?,
-        skalBarnetBoHosSøker: Søknadsfelt<String>?,
+        skalBarnetBoHosSøker: Søknadsfelt<String>?
     ): AnnenForelderDto? {
         if (annenForelder == null) return null
         return AnnenForelderDto(
             kanIkkeOppgiAnnenForelderFar =
                 BooleanFelt(
                     "Jeg kan ikke oppgi den andre forelderen?",
-                    annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi.erIkkeBlankEllerNull(),
+                    annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi.erIkkeBlankEllerNull()
                 ),
             hvorforIkkeOppgi =
                 hvorforIkkeOppgiTilTekstfeltEllerNullBasertPåBegrunnelse(
-                    annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi,
+                    annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.verdi
                 ),
             ikkeOppgittAnnenForelderBegrunnelse =
                 annenForelder.ikkeOppgittAnnenForelderBegrunnelse?.let {
                     TekstFelt(
                         "Hvorfor kan du ikke oppgi den andre forelderen?",
-                        it.verdi,
+                        it.verdi
                     )
                 },
             navn = lagNullableTekstfeltAvNavnHvisHvorforIkkeOppgiManglerVerdi(annenForelder),
@@ -170,7 +163,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
             hvorMyeSammen = samvær?.hvorMyeErDuSammenMedAnnenForelder.tilNullableTekstFelt(),
             beskrivSamværUtenBarn = samvær?.beskrivSamværUtenBarn.tilNullableTekstFelt(),
             skalBarnetBoHosSøker = skalBarnetBoHosSøker.tilNullableTekstFelt(),
-            erKopiertFraAnnetBarn = annenForelder.erKopiertFraAnnetBarn,
+            erKopiertFraAnnetBarn = annenForelder.erKopiertFraAnnetBarn
         )
     }
 
@@ -210,10 +203,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
                 .tilNullableTekstFelt()
         }
 
-    private fun mapSamvær(
-        forelder: AnnenForelderDto,
-        dokumentMap: Map<String, DokumentasjonWrapper>,
-    ): Søknadsfelt<Samvær> =
+    private fun mapSamvær(forelder: AnnenForelderDto, dokumentMap: Map<String, DokumentasjonWrapper>): Søknadsfelt<Samvær> =
         Søknadsfelt(
             Språktekster.Samvær.hentTekst(),
             Samvær(
@@ -222,7 +212,7 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
                 samværsavtale =
                     dokumentfelt(
                         SAMVÆRSAVTALE,
-                        dokumentMap,
+                        dokumentMap
                     ),
                 borAnnenForelderISammeHus = forelder.borAnnenForelderISammeHus?.tilSøknadsfelt(),
                 borAnnenForelderISammeHusBeskrivelse = forelder.borAnnenForelderISammeHusBeskrivelse?.tilSøknadsfelt(),
@@ -236,9 +226,9 @@ object BarnMapper : MapperMedVedlegg<List<Barn>, List<Søknadbarn>>(BarnaDine) {
                 skalBarnetBoHosSøkerMenAnnenForelderSamarbeiderIkke =
                     dokumentfelt(
                         BARN_BOR_HOS_SØKER,
-                        dokumentMap,
-                    ),
-            ),
+                        dokumentMap
+                    )
+            )
         )
 }
 
@@ -246,6 +236,6 @@ private fun no.nav.familie.kontrakter.ef.søknad.Barn.hentPdlAlder(): String =
     Period
         .between(
             this.fødselTermindato?.verdi,
-            LocalDate.now(),
+            LocalDate.now()
         ).years
         .toString()
