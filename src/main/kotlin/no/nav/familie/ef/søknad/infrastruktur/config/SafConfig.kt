@@ -8,7 +8,7 @@ import java.net.URI
 
 @Configuration
 class SafConfig(
-    @Value("\${SAF_URL}") safUrl: URI,
+    @Value("\${SAF_URL}") safUrl: URI
 ) {
     val safRestUri: URI =
         UriComponentsBuilder

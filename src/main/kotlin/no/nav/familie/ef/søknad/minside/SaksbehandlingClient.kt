@@ -14,22 +14,22 @@ import java.net.URI
 @Service
 class SaksbehandlingClient(
     private val config: SaksbehandlingConfig,
-    @Qualifier("saksbehandlingRestTemplate") operations: RestOperations,
+    @Qualifier("saksbehandlingRestTemplate") operations: RestOperations
 ) : AbstractPingableRestClient(operations, "saksbehandling") {
     override val pingUri: URI = config.pingUri
 
     fun hentStønadsperioderForBruker() =
         getForEntity<Ressurs<StønadsperioderDto>>(
-            UriComponentsBuilder.fromUriString("${config.hentStønadsperioderUri}").build().toUri(),
+            UriComponentsBuilder.fromUriString("${config.hentStønadsperioderUri}").build().toUri()
         ).getDataOrThrow()
 
     fun harTidligereInnvilgetOvergangsstønad(): String =
         getForEntity<Ressurs<String>>(
-            UriComponentsBuilder.fromUriString("${config.harOvergangsstønadPåGammeltRegelverkUri}").build().toUri(),
+            UriComponentsBuilder.fromUriString("${config.harOvergangsstønadPåGammeltRegelverkUri}").build().toUri()
         ).getDataOrThrow()
 
     fun harGyldigBarnetilsynVedRegelendring() =
         getForEntity<Ressurs<Boolean>>(
-            UriComponentsBuilder.fromUriString("${config.harGyldigBarnetilsynVedRegelendringUri}").build().toUri(),
+            UriComponentsBuilder.fromUriString("${config.harGyldigBarnetilsynVedRegelendringUri}").build().toUri()
         ).getDataOrThrow()
 }

@@ -25,7 +25,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
         body: Any?,
         headers: HttpHeaders,
         status: HttpStatusCode,
-        request: WebRequest,
+        request: WebRequest
     ): ResponseEntity<Any>? {
         secureLogger.error("En feil har oppstått", ex)
         logger.error("En feil har oppstått - throwable=${rootCause(ex)} status=${status.value()}")
@@ -56,10 +56,7 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     }
 
     // Denne håndterer eks JwtTokenUnauthorizedException
-    private fun håndtertResponseStatusFeil(
-        throwable: Throwable,
-        responseStatus: ResponseStatus,
-    ): ResponseEntity<String> {
+    private fun håndtertResponseStatusFeil(throwable: Throwable, responseStatus: ResponseStatus): ResponseEntity<String> {
         val status = if (responseStatus.value != HttpStatus.INTERNAL_SERVER_ERROR) responseStatus.value else responseStatus.code
         val loggMelding =
             "En håndtert feil har oppstått" +

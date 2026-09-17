@@ -4,9 +4,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties("regelverk")
 data class RegelverkConfig(
-    val alder: Alder,
+    val alder: Alder
 ) {
     data class Alder(
-        val maks: Int,
+        val maks: Int
     )
 }

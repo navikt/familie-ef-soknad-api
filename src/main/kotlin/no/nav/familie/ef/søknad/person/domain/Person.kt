@@ -8,5 +8,5 @@ data class Person(
     val egenansatt: Boolean,
     val sivilstand: String,
     val statsborgerskap: String,
-    val erStrengtFortrolig: Boolean,
+    val erStrengtFortrolig: Boolean
 )

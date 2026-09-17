@@ -16,8 +16,8 @@ internal class DokumentfeltUtilTest {
                 Søknadsfelt("Har sendt inn tidligere", false),
                 listOf(
                     Vedlegg("id1", "dok1.pdf", "Tittel på dok"),
-                    Vedlegg("id2", "dok2.pdf", "Annen tittel på dok"),
-                ),
+                    Vedlegg("id2", "dok2.pdf", "Annen tittel på dok")
+                )
             )
         val vedleggMap = mapOf(DokumentIdentifikator.SYKDOM.name to dokumentasjonWrapper)
 
@@ -26,23 +26,23 @@ internal class DokumentfeltUtilTest {
         assertThat(
             dokumenter.verdi.dokumenter
                 .first()
-                .id,
+                .id
         ).isEqualTo("id1")
         assertThat(
             dokumenter.verdi.dokumenter
                 .first()
-                .navn,
+                .navn
         ).isEqualTo("dok1.pdf")
 
         assertThat(
             dokumenter.verdi.dokumenter
                 .last()
-                .id,
+                .id
         ).isEqualTo("id2")
         assertThat(
             dokumenter.verdi.dokumenter
                 .last()
-                .navn,
+                .navn
         ).isEqualTo("dok2.pdf")
 
         assertThat(dokumentfelt(DokumentIdentifikator.SAMLIVSBRUDD, vedleggMap)).isNull()
@@ -54,7 +54,7 @@ internal class DokumentfeltUtilTest {
             DokumentasjonWrapper(
                 "label",
                 Søknadsfelt("Har sendt inn tidligere", true),
-                listOf(),
+                listOf()
             )
         val vedleggMap = mapOf(DokumentIdentifikator.SYKDOM.name to dokumentasjonWrapper)
 

@@ -11,18 +11,15 @@ import no.nav.familie.kontrakter.ef.søknad.Adresseopplysninger as KontraktAdres
 
 data class AdresseopplysningerData(
     val søkerBorPåRegistrertAdresse: BooleanFelt?,
-    val adresseopplysninger: Adresseopplysninger?,
+    val adresseopplysninger: Adresseopplysninger?
 )
 
 object AdresseopplysningerMapper :
     MapperMedVedlegg<AdresseopplysningerData, KontraktAdresseopplysninger>(Språktekster.Adresseopplysninger) {
-    override fun mapDto(
-        data: AdresseopplysningerData,
-        vedlegg: Map<String, DokumentasjonWrapper>,
-    ): KontraktAdresseopplysninger =
+    override fun mapDto(data: AdresseopplysningerData, vedlegg: Map<String, DokumentasjonWrapper>): KontraktAdresseopplysninger =
         KontraktAdresseopplysninger(
             søkerBorPåRegistrertAdresse = data.søkerBorPåRegistrertAdresse?.tilSøknadsfelt(),
             harMeldtAdresseendring = data.adresseopplysninger?.harMeldtAdresseendring?.tilSøknadsfelt(),
-            dokumentasjonAdresseendring = DokumentfeltUtil.dokumentfelt(DokumentIdentifikator.MELDT_ADRESSEENDRING, vedlegg),
+            dokumentasjonAdresseendring = DokumentfeltUtil.dokumentfelt(DokumentIdentifikator.MELDT_ADRESSEENDRING, vedlegg)
         )
 }

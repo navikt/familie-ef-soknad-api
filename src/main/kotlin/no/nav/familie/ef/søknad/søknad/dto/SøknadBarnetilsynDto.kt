@@ -26,7 +26,7 @@ data class SøknadBarnetilsynDto(
     val dokumentasjonsbehov: List<Dokumentasjonsbehov>,
     val locale: String = "nb",
     val skalBehandlesINySaksbehandling: Boolean = false,
-    val datoPåbegyntSøknad: LocalDate? = null,
+    val datoPåbegyntSøknad: LocalDate? = null
 )
 
 data class SøknadBarnetilsynGjenbrukDto(
@@ -34,5 +34,5 @@ data class SøknadBarnetilsynGjenbrukDto(
     val medlemskap: Medlemskap,
     val bosituasjon: Bosituasjon,
     val person: PersonTilGjenbruk,
-    val aktivitet: Aktivitet,
+    val aktivitet: Aktivitet
 )

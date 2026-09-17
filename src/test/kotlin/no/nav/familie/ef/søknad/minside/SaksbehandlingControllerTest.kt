@@ -41,7 +41,7 @@ internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
             restTemplate.exchange<MineStønaderDto>(
                 localhost("/api/saksbehandling/stonadsperioder"),
                 HttpMethod.GET,
-                HttpEntity<String>(headers),
+                HttpEntity<String>(headers)
             )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
@@ -54,12 +54,12 @@ internal class SaksbehandlingControllerTest : OppslagSpringRunnerTest() {
         assertThat(
             body.overgangsstønad.perioder
                 .last()
-                .inntektsgrunnlag,
+                .inntektsgrunnlag
         ).isEqualTo(152000)
         assertThat(
             body.overgangsstønad.perioder
                 .last()
-                .samordningsfradrag,
+                .samordningsfradrag
         ).isEqualTo(300)
 
         assertThat(body.barnetilsyn.periodeStatus).isEqualTo(PeriodeStatus.TIDLIGERE_ELLER_OPPHOLD)

@@ -13,5 +13,5 @@ class PingController {
 }
 
 data class PingDto(
-    val message: String,
+    val message: String
 )

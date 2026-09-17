@@ -4,5 +4,5 @@ import org.springframework.http.HttpStatus
 
 data class ApiFeil(
     val feil: String,
-    val httpStatus: HttpStatus,
+    val httpStatus: HttpStatus
 ) : RuntimeException()

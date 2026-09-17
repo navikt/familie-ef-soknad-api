@@ -9,7 +9,7 @@ data class Barn(
     val fødselsdato: LocalDate,
     val harSammeAdresse: Boolean,
     val medforelder: Medforelder?,
-    val harAdressesperre: Boolean,
+    val harAdressesperre: Boolean
 ) {
     override fun toString(): String = "Barn(alder=$alder, fødselsdato=$fødselsdato, annenForelder=$medforelder, harAdressesperre=$harAdressesperre)"
 }

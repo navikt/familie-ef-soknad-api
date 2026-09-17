@@ -18,7 +18,7 @@ import org.springframework.web.client.RestOperations
 @Component
 class PdlApp2AppClient(
     val pdlConfig: PdlConfig,
-    @Qualifier("pdlClientCredentialRestTemplate") restOperations: RestOperations,
+    @Qualifier("pdlClientCredentialRestTemplate") restOperations: RestOperations
 ) : AbstractRestClient(restOperations, "pdl.personinfo") {
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -27,13 +27,13 @@ class PdlApp2AppClient(
         val pdlPersonRequest =
             PdlPersonBolkRequest(
                 variables = PdlPersonBolkRequestVariables(personIdenter),
-                query = PdlConfig.barnQuery,
+                query = PdlConfig.barnQuery
             )
         val pdlResponse: PdlBolkResponse<PdlBarn> =
             postForEntity(
                 pdlConfig.pdlUri,
                 pdlPersonRequest,
-                httpHeaders(),
+                httpHeaders()
             )
         return feilsjekkOgReturnerData(pdlResponse)
     }
@@ -43,14 +43,14 @@ class PdlApp2AppClient(
         val pdlPersonRequest =
             PdlPersonBolkRequest(
                 variables = PdlPersonBolkRequestVariables(personIdenter),
-                query = PdlConfig.annenForelderQuery,
+                query = PdlConfig.annenForelderQuery
             )
         secureLogger.info("Skal hente andre foreldre med request: $pdlPersonRequest ")
         val pdlResponse: PdlBolkResponse<PdlAnnenForelder> =
             postForEntity(
                 pdlConfig.pdlUri,
                 pdlPersonRequest,
-                httpHeaders(),
+                httpHeaders()
             )
         secureLogger.info("Hentet andre foreldre med request: $pdlResponse")
 

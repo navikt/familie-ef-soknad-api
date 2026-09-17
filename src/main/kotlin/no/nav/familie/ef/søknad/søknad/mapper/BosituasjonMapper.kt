@@ -17,16 +17,13 @@ import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 import no.nav.familie.kontrakter.ef.søknad.Bosituasjon as KontraktBosituasjon
 
 object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>(Språktekster.Bosituasjon) {
-    override fun mapDto(
-        data: Bosituasjon,
-        vedlegg: Map<String, DokumentasjonWrapper>,
-    ): KontraktBosituasjon =
+    override fun mapDto(data: Bosituasjon, vedlegg: Map<String, DokumentasjonWrapper>): KontraktBosituasjon =
         KontraktBosituasjon(
             delerDuBolig = mapSøkerDelerBoligMedAndre(data),
             samboerdetaljer = mapSamboer(data),
             sammenflyttingsdato = data.datoFlyttetSammenMedSamboer?.tilSøknadsfelt(),
             tidligereSamboerFortsattRegistrertPåAdresse = dokumentfelt(BOR_PÅ_ULIKE_ADRESSER, vedlegg),
-            datoFlyttetFraHverandre = data.datoFlyttetFraHverandre?.tilSøknadsfelt(),
+            datoFlyttetFraHverandre = data.datoFlyttetFraHverandre?.tilSøknadsfelt()
         )
 
     private fun mapSøkerDelerBoligMedAndre(bosituasjon: Bosituasjon) = bosituasjon.delerBoligMedAndreVoksne.tilSøknadsfelt()
@@ -36,10 +33,7 @@ object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>(Sp
             PersonMinimumMapper.map(it)
         }
 
-    fun mapTilDto(
-        bosituasjon: KontraktBosituasjon,
-        sivilstandsplaner: Sivilstandsplaner?,
-    ): Bosituasjon =
+    fun mapTilDto(bosituasjon: KontraktBosituasjon, sivilstandsplaner: Sivilstandsplaner?): Bosituasjon =
         Bosituasjon(
             delerBoligMedAndreVoksne = bosituasjon.delerDuBolig.tilNullableTekstFelt() ?: TekstFelt("", ""),
             datoFlyttetSammenMedSamboer = bosituasjon.sammenflyttingsdato.tilNullableDatoFelt(),
@@ -47,6 +41,6 @@ object BosituasjonMapper : MapperMedVedlegg<Bosituasjon, KontraktBosituasjon>(Sp
             datoSkalGifteSegEllerBliSamboer = sivilstandsplaner?.fraDato.tilNullableDatoFelt(),
             skalGifteSegEllerBliSamboer = sivilstandsplaner?.harPlaner.tilNullableBooleanFelt(),
             datoFlyttetFraHverandre = bosituasjon.datoFlyttetFraHverandre.tilNullableDatoFelt(),
-            vordendeSamboerEktefelle = PersonMinimumMapper.mapTilDto(sivilstandsplaner?.vordendeSamboerEktefelle?.verdi),
+            vordendeSamboerEktefelle = PersonMinimumMapper.mapTilDto(sivilstandsplaner?.vordendeSamboerEktefelle?.verdi)
         )
 }

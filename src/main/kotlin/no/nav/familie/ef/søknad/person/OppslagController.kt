@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 @Validated
 class OppslagController(
     private val oppslagService: OppslagService,
-    private val kodeverkService: KodeverkService,
+    private val kodeverkService: KodeverkService
 ) {
     @GetMapping("/sokerinfo")
     fun søkerinfo(): Søkerinfo = oppslagService.hentSøkerinfo()
@@ -30,7 +30,7 @@ class OppslagController(
 
     @GetMapping("/poststed/{postnummer}")
     fun postnummer(
-        @PathVariable postnummer: String,
+        @PathVariable postnummer: String
     ): ResponseEntity<String> {
         require(gyldigPostnummer(postnummer))
         val poststed = kodeverkService.hentPoststed(postnummer)

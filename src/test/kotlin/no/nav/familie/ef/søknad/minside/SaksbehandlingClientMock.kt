@@ -22,7 +22,7 @@ class SaksbehandlingClientMock {
             StønadsperioderDto(
                 overgangsstønad = stønadsperioderOvergangsstønad,
                 barnetilsyn = stønadsperioderBarnetilsyn,
-                skolepenger = stønadsperioderSkolepenger,
+                skolepenger = stønadsperioderSkolepenger
             )
 
         every { saksbehandlingCLient.hentStønadsperioderForBruker() } returns stønadsperioderDto
@@ -37,22 +37,22 @@ class SaksbehandlingClientMock {
                 tilDato = LocalDate.of(2025, 9, 30),
                 beløp = 19065,
                 inntektsgrunnlag = 152000,
-                samordningsfradrag = 300,
+                samordningsfradrag = 300
             ),
             StønadsperiodeDto(
                 fraDato = LocalDate.of(2023, 12, 1),
                 tilDato = LocalDate.of(2023, 12, 31),
                 beløp = 4215,
                 inntektsgrunnlag = 0,
-                samordningsfradrag = 0,
+                samordningsfradrag = 0
             ),
             StønadsperiodeDto(
                 fraDato = LocalDate.of(2023, 11, 1),
                 tilDato = LocalDate.of(2023, 11, 30),
                 beløp = 13665,
                 inntektsgrunnlag = 0,
-                samordningsfradrag = 0,
-            ),
+                samordningsfradrag = 0
+            )
         )
 
     private val stønadsperioderBarnetilsyn: List<StønadsperiodeDto> =
@@ -62,22 +62,22 @@ class SaksbehandlingClientMock {
                 tilDato = LocalDate.of(2023, 9, 30),
                 beløp = 19065,
                 inntektsgrunnlag = 0,
-                samordningsfradrag = 0,
+                samordningsfradrag = 0
             ),
             StønadsperiodeDto(
                 fraDato = LocalDate.of(2021, 12, 1),
                 tilDato = LocalDate.of(2021, 12, 31),
                 beløp = 4215,
                 inntektsgrunnlag = 0,
-                samordningsfradrag = 0,
+                samordningsfradrag = 0
             ),
             StønadsperiodeDto(
                 fraDato = LocalDate.of(2021, 11, 1),
                 tilDato = LocalDate.of(2021, 11, 30),
                 beløp = 13665,
                 inntektsgrunnlag = 0,
-                samordningsfradrag = 0,
-            ),
+                samordningsfradrag = 0
+            )
         )
 
     private val stønadsperioderSkolepenger: List<StønadsperiodeDto> =
@@ -87,7 +87,7 @@ class SaksbehandlingClientMock {
                 tilDato = LocalDate.of(2027, 1, 31),
                 beløp = 19065,
                 inntektsgrunnlag = 0,
-                samordningsfradrag = 0,
-            ),
+                samordningsfradrag = 0
+            )
         )
 }

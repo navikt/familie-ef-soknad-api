@@ -17,7 +17,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
     CorsProperties::class,
     FamilieIntegrasjonerConfig::class,
     RegelverkConfig::class,
-    SaksbehandlingConfig::class,
+    SaksbehandlingConfig::class
 )
 class Application
 

@@ -25,7 +25,7 @@ import java.util.UUID
 @RestController
 @RequestMapping(path = ["/dokumentmock/"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class DokumentMockController(
-    @Qualifier("dokumentlager") private val dokumenter: MutableMap<String, ByteArray>,
+    @Qualifier("dokumentlager") private val dokumenter: MutableMap<String, ByteArray>
 ) {
     private val log: Logger = LoggerFactory.getLogger(this::class.java)
 
@@ -36,11 +36,11 @@ class DokumentMockController(
     @PostMapping(
         path = ["dokument/{bucket}"],
         consumes = [MediaType.MULTIPART_FORM_DATA_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun addAttachment(
         @PathVariable("bucket") bucket: String,
-        @RequestParam("file") multipartFile: MultipartFile,
+        @RequestParam("file") multipartFile: MultipartFile
     ): ResponseEntity<Map<String, String>> {
         if (multipartFile.isEmpty) {
             return ResponseEntity.ok(emptyMap())
@@ -63,10 +63,10 @@ class DokumentMockController(
     @PostMapping(
         "mellomlager",
         consumes = [MediaType.APPLICATION_JSON_VALUE],
-        produces = [MediaType.APPLICATION_JSON_VALUE],
+        produces = [MediaType.APPLICATION_JSON_VALUE]
     )
     fun mellomlagreSøknad(
-        @RequestBody(required = true) søknad: String,
+        @RequestBody(required = true) søknad: String
     ): ResponseEntity<Unit> {
         log.info("Mellomlagrer søknad om overgangsstønad")
 

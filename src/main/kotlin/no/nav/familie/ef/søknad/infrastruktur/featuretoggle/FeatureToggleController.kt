@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/featuretoggle"], produces = [MediaType.APPLICATION_JSON_VALUE])
 class FeatureToggleController(
-    private val unleashService: UnleashService,
+    private val unleashService: UnleashService
 ) {
     private val featureTogglesIBruk =
         setOf(
             Toggle.NYNORSK,
             Toggle.GJENBRUK_BARNETILSYN,
-            Toggle.OVERGANGSSTØNAD_REGELENDRINGER_2026,
+            Toggle.OVERGANGSSTØNAD_REGELENDRINGER_2026
         )
 
     @GetMapping
@@ -24,7 +24,7 @@ class FeatureToggleController(
 
     @GetMapping("/{toggleId}")
     fun sjekkFunksjonsbryter(
-        @PathVariable toggleId: String,
+        @PathVariable toggleId: String
     ): Boolean {
         val toggle = Toggle.byToggleId(toggleId)
         return unleashService.isEnabled(toggle.toggleId)

@@ -36,7 +36,7 @@ internal class UnderUtdanningMapperTest {
                     ?.gjeldendeUtdanning
                     ?.verdi
                     ?.linjeKursGrad
-                    ?.verdi,
+                    ?.verdi
             ).isEqualTo("Stor kurs grad")
     }
 
@@ -48,7 +48,7 @@ internal class UnderUtdanningMapperTest {
                     ?.gjeldendeUtdanning
                     ?.verdi
                     ?.linjeKursGrad
-                    ?.label,
+                    ?.label
             ).isEqualTo("Linje / kurs / grad")
     }
 

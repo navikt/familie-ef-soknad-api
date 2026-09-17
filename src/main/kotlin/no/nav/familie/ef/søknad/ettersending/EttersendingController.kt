@@ -16,11 +16,11 @@ import java.time.LocalDateTime
 @RestController
 @RequestMapping(path = ["/api/ettersending"])
 class EttersendingController(
-    val ettersendingService: EttersendingService,
+    val ettersendingService: EttersendingService
 ) {
     @PostMapping
     fun postEttersending(
-        @RequestBody ettersending: EttersendelseDto,
+        @RequestBody ettersending: EttersendelseDto
     ): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(ettersending.personIdent)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)

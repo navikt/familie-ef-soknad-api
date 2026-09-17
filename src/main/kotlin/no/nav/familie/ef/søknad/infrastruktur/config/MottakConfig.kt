@@ -6,7 +6,7 @@ import java.net.URI
 
 @ConfigurationProperties("familie.ef.mottak")
 data class MottakConfig(
-    val uri: URI,
+    val uri: URI
 ) {
     internal val sendInnSøknadOverganggstønadUri = byggUri(PATH_SEND_INN_SØKNAD_OVERGANGSSTØNAD)
     internal val sendInnSøknadBarnetilsynUri = byggUri(PATH_SEND_INN_SØKNAD_BARNETILSYN)

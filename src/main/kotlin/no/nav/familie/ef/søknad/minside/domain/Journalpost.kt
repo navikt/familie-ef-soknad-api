@@ -6,7 +6,7 @@ import no.nav.familie.kontrakter.felles.journalpost.RelevantDato
 import java.time.LocalDateTime
 
 data class DokumentoversiktSelvbetjeningResponse(
-    val dokumentoversiktSelvbetjening: DokumentoversiktSelvbetjening,
+    val dokumentoversiktSelvbetjening: DokumentoversiktSelvbetjening
 ) {
     fun efJournalposter(): List<Journalpost> =
         this.dokumentoversiktSelvbetjening.tema
@@ -15,13 +15,13 @@ data class DokumentoversiktSelvbetjeningResponse(
 }
 
 data class DokumentoversiktSelvbetjening(
-    val tema: List<Tema>,
+    val tema: List<Tema>
 )
 
 data class Tema(
     val navn: String,
     val kode: String,
-    val journalposter: List<Journalpost>,
+    val journalposter: List<Journalpost>
 )
 
 data class Journalpost(
@@ -30,19 +30,27 @@ data class Journalpost(
     val journalposttype: Journalposttype,
     val journalstatus: Journalstatus,
     val relevanteDatoer: List<RelevantDato>,
-    val dokumenter: List<DokumentInfo>,
+    val dokumenter: List<DokumentInfo>
 ) {
-    fun relevanteDokumenter(): List<DokumentInfo> = this.dokumenter.filter { dokument -> dokument.mestRelevantDokumentVariant()?.brukerHarTilgang ?: false }
+    fun relevanteDokumenter(): List<DokumentInfo> =
+        this.dokumenter.filter { dokument ->
+            dokument.mestRelevantDokumentVariant()?.brukerHarTilgang
+                ?: false
+        }
 
     fun harRelevanteDokumenter(): Boolean = this.relevanteDokumenter().isNotEmpty()
 
-    fun mestRelevanteDato(journalpost: Journalpost): LocalDateTime? = journalpost.relevanteDatoer.maxByOrNull { datoTyperSortert(it.datotype) }?.dato
+    fun mestRelevanteDato(journalpost: Journalpost): LocalDateTime? =
+        journalpost.relevanteDatoer
+            .maxByOrNull {
+                datoTyperSortert(it.datotype)
+            }?.dato
 }
 
 data class DokumentInfo(
     val dokumentInfoId: String,
     val tittel: String,
-    val dokumentvarianter: List<DokumentVariant>,
+    val dokumentvarianter: List<DokumentVariant>
 ) {
     fun mestRelevantDokumentVariant(): DokumentVariant? =
         if (dokumentvarianter.any { it.variantformat == Variantformat.SLADDET }) {
@@ -55,12 +63,12 @@ data class DokumentInfo(
 data class DokumentVariant(
     val variantformat: Variantformat,
     val brukerHarTilgang: Boolean,
-    val filtype: String,
+    val filtype: String
 )
 
 enum class Variantformat {
     ARKIV,
-    SLADDET,
+    SLADDET
 }
 
 private fun datoTyperSortert(datoType: String) =

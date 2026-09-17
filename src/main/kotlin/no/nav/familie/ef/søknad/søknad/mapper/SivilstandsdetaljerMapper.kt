@@ -19,10 +19,7 @@ import no.nav.familie.kontrakter.ef.søknad.Sivilstandsdetaljer
 import no.nav.familie.kontrakter.ef.søknad.Søknadsfelt
 
 object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdetaljer>(ÅrsakTilAleneMedBarn) {
-    override fun mapDto(
-        data: Sivilstatus,
-        vedlegg: Map<String, DokumentasjonWrapper>,
-    ): Sivilstandsdetaljer =
+    override fun mapDto(data: Sivilstatus, vedlegg: Map<String, DokumentasjonWrapper>): Sivilstandsdetaljer =
         Sivilstandsdetaljer(
             samlivsbruddsdokumentasjon = dokumentfelt(SAMLIVSBRUDD, vedlegg),
             samlivsbruddsdato = data.datoForSamlivsbrudd?.tilSøknadsfelt(),
@@ -41,9 +38,9 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
                 data.tidligereSamboerDetaljer?.let {
                     Søknadsfelt(
                         OmDenTidligereSamboeren.hentTekst(),
-                        PersonMinimumMapper.personMinimum(it),
+                        PersonMinimumMapper.personMinimum(it)
                     )
-                },
+                }
         )
 
     fun mapTilDto(sivilstandsdetaljer: Sivilstandsdetaljer): SivilstatusTilGjenbruk =
@@ -55,8 +52,8 @@ object SivilstandsdetaljerMapper : MapperMedVedlegg<Sivilstatus, Sivilstandsdeta
             tidligereSamboerDetaljer =
                 sivilstandsdetaljer.tidligereSamboerdetaljer?.let {
                     PersonMinimumMapper.mapTilDto(
-                        it.verdi,
+                        it.verdi
                     )
-                },
+                }
         )
 }

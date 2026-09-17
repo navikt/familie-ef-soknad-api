@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import
 
 @SpringBootApplication(
     scanBasePackages = ["no.nav.familie.ef.søknad"],
-    exclude = [ErrorMvcAutoConfiguration::class],
+    exclude = [ErrorMvcAutoConfiguration::class]
 )
 @Import(ApplicationConfig::class)
 class ApplicationLocalTestLauncher

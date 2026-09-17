@@ -6,7 +6,7 @@ import java.net.URI
 
 @ConfigurationProperties("familie.integrasjoner")
 data class FamilieIntegrasjonerConfig(
-    val uri: URI,
+    val uri: URI
 ) {
     val kodeverkLandkoderUri: URI =
         UriComponentsBuilder

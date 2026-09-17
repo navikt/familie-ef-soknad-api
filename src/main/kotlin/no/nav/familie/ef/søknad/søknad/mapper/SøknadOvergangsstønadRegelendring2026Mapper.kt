@@ -19,10 +19,7 @@ import java.time.LocalDateTime
 
 @Component
 class SøknadOvergangsstønadRegelendring2026Mapper {
-    fun mapTilIntern(
-        dto: SøknadOvergangsstønadRegelendring2026Dto,
-        innsendingMottatt: LocalDateTime,
-    ): SøknadMedVedlegg<SøknadOvergangsstønadRegelendring2026> {
+    fun mapTilIntern(dto: SøknadOvergangsstønadRegelendring2026Dto, innsendingMottatt: LocalDateTime): SøknadMedVedlegg<SøknadOvergangsstønadRegelendring2026> {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
 
@@ -35,9 +32,9 @@ class SøknadOvergangsstønadRegelendring2026Mapper {
                     AdresseopplysningerMapper.map(
                         AdresseopplysningerData(
                             dto.søkerBorPåRegistrertAdresse,
-                            dto.adresseopplysninger,
+                            dto.adresseopplysninger
                         ),
-                        vedlegg,
+                        vedlegg
                     ),
                 sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
                 medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
@@ -50,13 +47,13 @@ class SøknadOvergangsstønadRegelendring2026Mapper {
                 sagtOppEllerRedusertStilling = dto.sagtOppEllerRedusertStilling?.tilSøknadsfelt(),
                 begrunnelseSagtOppEllerRedusertStilling = dto.begrunnelseSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
                 datoSagtOppEllerRedusertStilling = dto.datoSagtOppEllerRedusertStilling?.tilSøknadsfelt(),
-                stønadsstart = mapStønadsstart(dto.søknadsdato, dto.søkerFraBestemtMåned),
+                stønadsstart = mapStønadsstart(dto.søknadsdato, dto.søkerFraBestemtMåned)
             )
 
         return SøknadMedVedlegg<SøknadOvergangsstønadRegelendring2026>(
             søknad = søknad,
             vedlegg = vedlegg.values.flatMap { it.vedlegg },
-            dokumentasjonsbehov = dto.dokumentasjonsbehov.tilKontrakt(),
+            dokumentasjonsbehov = dto.dokumentasjonsbehov.tilKontrakt()
         )
     }
 }

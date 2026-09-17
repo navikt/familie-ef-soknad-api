@@ -45,24 +45,24 @@ class MottakClientMock {
                         "Arbeidskontrakt som viser at du har fått tilbud om arbeid.",
                         "ARBEIDSKONTRAKT",
                         false,
-                        listOf(Dokument("4648edd4-25bf-4881-b346-9edc6c1a5b4d", "dokument_soknad_2.pdf")),
+                        listOf(Dokument("4648edd4-25bf-4881-b346-9edc6c1a5b4d", "dokument_soknad_2.pdf"))
                     ),
                     Dokumentasjonsbehov(
                         "Dokumentasjon på barnets sykdom",
                         "SYKT_BARN",
                         false,
-                        emptyList(),
+                        emptyList()
                     ),
                     Dokumentasjonsbehov(
                         "Dokumentasjon på arbeidsforholdet og årsaken til at du reduserte arbeidstiden",
                         "ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID",
                         false,
-                        emptyList(),
-                    ),
+                        emptyList()
+                    )
                 ),
             LocalDateTime.now(),
             SøknadType.OVERGANGSSTØNAD,
-            "12345678910",
+            "12345678910"
         )
 
     private val dokumentasjonsbehovDto2 =
@@ -73,18 +73,18 @@ class MottakClientMock {
                         "Arbeidskontrakt som viser at du har fått tilbud om arbeid.",
                         "ARBEIDSKONTRAKT",
                         false,
-                        listOf(Dokument("4648edd4-25bf-4881-b346-9edc6c1a5b4d", "dummy-pdf_2.pdf")),
+                        listOf(Dokument("4648edd4-25bf-4881-b346-9edc6c1a5b4d", "dummy-pdf_2.pdf"))
                     ),
                     Dokumentasjonsbehov(
                         "Dokumentasjon på at du mangler barnepass",
                         "DOKUMENTASJON_BARNEPASS_MANGEL",
                         false,
-                        emptyList(),
-                    ),
+                        emptyList()
+                    )
                 ),
             LocalDateTime.now(),
             SøknadType.OVERGANGSSTØNAD,
-            "12345678910",
+            "12345678910"
         )
 
     private val søknaderMedDokumentasjonsbehov =
@@ -93,7 +93,7 @@ class MottakClientMock {
                 "b017ccb7-43e6-4040-ab9b-aab2d0d4fe98",
                 StønadType.OVERGANGSSTØNAD,
                 LocalDate.now(),
-                dokumentasjonsbehovDto,
+                dokumentasjonsbehovDto
             ),
             SøknadMedDokumentasjonsbehovDto(
                 UUID
@@ -101,8 +101,8 @@ class MottakClientMock {
                     .toString(),
                 StønadType.BARNETILSYN,
                 LocalDate.now(),
-                dokumentasjonsbehovDto2,
-            ),
+                dokumentasjonsbehovDto2
+            )
         )
 
     private val ettersendingUtenSøknad =
@@ -118,9 +118,9 @@ class MottakClientMock {
                     Vedlegg(
                         "093aaa5e-0bd3-4580-9db1-a15e109b3cdb",
                         "dokuemnt_tidliger_ettersending.pdf",
-                        "Et kult dokument",
-                    ),
-                ),
+                        "Et kult dokument"
+                    )
+                )
         )
 
     private val ettersendingForSøknad =
@@ -131,7 +131,7 @@ class MottakClientMock {
                     søknadId = "b017ccb7-43e6-4040-ab9b-aab2d0d4fe98",
                     søknadsdato = LocalDate.of(2021, 3, 12),
                     dokumentasjonsbehovId = "SYKT_BARN",
-                    harSendtInnTidligere = false,
+                    harSendtInnTidligere = false
                 ),
             dokumenttype = "SYKT_BARN",
             beskrivelse = "Dokumentasjon på barnets sykdom",
@@ -142,9 +142,9 @@ class MottakClientMock {
                     Vedlegg(
                         "e2943989-932a-40fc-a1f0-db912ea8ccce",
                         "dokuemnt_tidliger_ettersending.pdf",
-                        "Et kult dokument",
-                    ),
-                ),
+                        "Et kult dokument"
+                    )
+                )
         )
 
     private val ettersendingForSøknadMangler =
@@ -155,18 +155,18 @@ class MottakClientMock {
                     søknadId = "b017ccb7-43e6-4040-ab9b-aab2d0d4fe98",
                     søknadsdato = LocalDate.of(2021, 3, 12),
                     dokumentasjonsbehovId = "ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID",
-                    harSendtInnTidligere = true,
+                    harSendtInnTidligere = true
                 ),
             dokumenttype = "ARBEIDSFORHOLD_REDUSERT_ARBEIDSTID",
             beskrivelse = "Dokumentasjon på arbeidsforholdet og årsaken til at du reduserte arbeidstiden",
             stønadType = StønadType.OVERGANGSSTØNAD,
             innsendingstidspunkt = null,
-            vedlegg = emptyList(),
+            vedlegg = emptyList()
         )
 
     private val ettersendingResponseData =
         EttersendelseDto(
             personIdent = "01010172272",
-            dokumentasjonsbehov = listOf(ettersendingForSøknad, ettersendingForSøknadMangler, ettersendingUtenSøknad),
+            dokumentasjonsbehov = listOf(ettersendingForSøknad, ettersendingForSøknadMangler, ettersendingUtenSøknad)
         )
 }

@@ -21,6 +21,7 @@
         <kotlin.version>2.4.0</kotlin.version>
         <springdoc.version>3.0.3</springdoc.version>
         <mockk.version>1.14.11</mockk.version>
+        <ktlint.version>1.8.0</ktlint.version>
         <felles.version>4.20260702124222_2415d74</felles.version>
         <kontrakter.version>4.0_20260702124405_ce34af2</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
@@ -202,6 +203,36 @@
     </dependencies>
     <profiles>
         <profile>
+            <id>format</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>ktlint-format</id>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <target name="ktlint">
+                                        <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
+                                            <jvmarg value="--add-opens"/>
+                                            <jvmarg value="java.base/java.lang=ALL-UNNAMED"/>
+                                            <arg value="-F"/>
+                                            <arg value="src/**/*.kt"/>
+                                        </java>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>coverage</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -239,6 +270,18 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.15</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.pinterest.ktlint</groupId>
+                            <artifactId>ktlint-cli</artifactId>
+                            <version>${ktlint.version}</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -323,31 +366,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>ktlint</id>
-                        <phase>verify</phase>
-                        <configuration>
-                            <target name="ktlint">
-                                <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
-                                    <arg value="src/**/*.kt"/>
-                                </java>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>ktlint-format</id>
-                        <phase>validate</phase>
+                        <phase>process-sources</phase>
                         <configuration>
                             <target name="ktlint">
                                 <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
                                     <jvmarg value="--add-opens"/>
                                     <jvmarg value="java.base/java.lang=ALL-UNNAMED"/>
-                                    <arg value="-F"/>
                                     <arg value="src/**/*.kt"/>
                                 </java>
                             </target>
@@ -357,14 +384,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.pinterest.ktlint</groupId>
-                        <artifactId>ktlint-cli</artifactId>
-                        <version>1.8.0</version>
-                    </dependency>
-                    <!-- additional 3rd party ruleset(s) can be specified here -->
-                </dependencies>
             </plugin>
             <plugin>
                 <!-- For å få dependency graph i SLSA som pushes av docker-build-push parameter byosbom -->

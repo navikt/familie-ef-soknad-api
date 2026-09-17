@@ -13,7 +13,7 @@ class EttersendingControllerMock {
 
     @PostMapping("/api/ettersending/test")
     fun postEttersending(
-        @RequestBody msgBody: Map<Any, Any>,
+        @RequestBody msgBody: Map<Any, Any>
     ): Kvittering {
         val valueAsString = jsonMapper.writeValueAsString((msgBody))
         return Kvittering("Kontakt med api, ettersending er ikke sendt inn. Du forsøkte å sende inn:  $valueAsString", innsendingMottatt)
