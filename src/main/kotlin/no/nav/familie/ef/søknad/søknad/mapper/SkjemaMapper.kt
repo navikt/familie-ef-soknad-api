@@ -19,7 +19,7 @@ object SkjemaMapper {
         arbeidssøker: Arbeidssøker,
         fnr: String,
         navn: String,
-        innsendingMottatt: LocalDateTime,
+        innsendingMottatt: LocalDateTime
     ): SkjemaForArbeidssøker {
         kontekst.set(Språk.fromString(arbeidssøker.locale))
         val arbeidssøkerKontrakt = arbeidssøker.toArbeidssøkerKontrakt()
@@ -30,9 +30,9 @@ object SkjemaMapper {
                     Innsendingsdetaljer(
                         Søknadsfelt(
                             Språktekster.DatoMottatt.hentTekst(),
-                            innsendingMottatt,
-                        ),
-                    ),
+                            innsendingMottatt
+                        )
+                    )
                 ),
             arbeidssøker = arbeidssøkerKontrakt,
             personaliaArbeidssøker =
@@ -42,15 +42,15 @@ object SkjemaMapper {
                         navn =
                             Søknadsfelt(
                                 Språktekster.Navn.hentTekst(),
-                                navn,
+                                navn
                             ),
                         fødselsnummer =
                             Søknadsfelt(
                                 Språktekster.Fødselsnummer.hentTekst(),
-                                Fødselsnummer(fnr),
-                            ),
-                    ),
-                ),
+                                Fødselsnummer(fnr)
+                            )
+                    )
+                )
         )
     }
 }
@@ -62,28 +62,28 @@ fun Arbeidssøker.toArbeidssøkerKontrakt(): Søknadsfelt<ArbeidssøkerKontrakt>
             ønskerDuMinst50ProsentStilling =
                 Søknadsfelt(
                     ønskerSøker50ProsentStilling.label,
-                    ønskerSøker50ProsentStilling.verdi,
+                    ønskerSøker50ProsentStilling.verdi
                 ),
             hvorØnskerDuArbeid =
                 Søknadsfelt(
                     hvorØnskerSøkerArbeid.label,
-                    hvorØnskerSøkerArbeid.verdi,
+                    hvorØnskerSøkerArbeid.verdi
                 ),
             kanDuSkaffeBarnepassInnenEnUke = kanSkaffeBarnepassInnenEnUke?.tilSøknadsfelt(),
             kanDuBegynneInnenEnUke =
                 Søknadsfelt(
                     kanBegynneInnenEnUke.label,
-                    kanBegynneInnenEnUke.verdi,
+                    kanBegynneInnenEnUke.verdi
                 ),
             villigTilÅTaImotTilbudOmArbeid =
                 Søknadsfelt(
                     villigTilÅTaImotTilbudOmArbeid.label,
-                    villigTilÅTaImotTilbudOmArbeid.verdi,
+                    villigTilÅTaImotTilbudOmArbeid.verdi
                 ),
             registrertSomArbeidssøkerNav =
                 Søknadsfelt(
                     registrertSomArbeidssøkerNav.label,
-                    registrertSomArbeidssøkerNav.verdi,
-                ),
-        ),
+                    registrertSomArbeidssøkerNav.verdi
+                )
+        )
     )

@@ -1,7 +1,7 @@
 package no.nav.familie.ef.søknad.søknad.domain
 
 enum class SvarId(
-    val verdi: String,
+    val verdi: String
 ) {
     JA("ja"),
     NEI("nei"),
@@ -43,7 +43,7 @@ enum class SvarId(
     // arbeidsforhold = Arbeidsgiver fast eller midlertidig
     // under utdanning - offentligEllerPrivat, heltidEllerDeltid
     PRIVAT("privat"),
-    OFFENTLIG("offentlig"),
+    OFFENTLIG("offentlig")
     ;
 
     companion object {

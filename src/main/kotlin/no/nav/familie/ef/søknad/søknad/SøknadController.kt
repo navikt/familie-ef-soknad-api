@@ -24,11 +24,11 @@ import java.time.LocalDateTime
 @Validated
 class SøknadController(
     private val søknadService: SøknadService,
-    private val oppslagService: OppslagService,
+    private val oppslagService: OppslagService
 ) {
     @PostMapping("overgangsstonad")
     fun sendInn(
-        @RequestBody søknad: SøknadOvergangsstønadDto,
+        @RequestBody søknad: SøknadOvergangsstønadDto
     ): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
@@ -41,7 +41,7 @@ class SøknadController(
 
     @PostMapping("overgangsstonad-regelendring-2026")
     fun sendInn(
-        @RequestBody søknad: SøknadOvergangsstønadRegelendring2026Dto,
+        @RequestBody søknad: SøknadOvergangsstønadRegelendring2026Dto
     ): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
@@ -54,7 +54,7 @@ class SøknadController(
 
     @PostMapping("barnetilsyn")
     fun sendInn(
-        @RequestBody søknad: SøknadBarnetilsynDto,
+        @RequestBody søknad: SøknadBarnetilsynDto
     ): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
@@ -67,7 +67,7 @@ class SøknadController(
 
     @PostMapping("skolepenger")
     fun sendInn(
-        @RequestBody søknad: SøknadSkolepengerDto,
+        @RequestBody søknad: SøknadSkolepengerDto
     ): Kvittering {
         if (!EksternBrukerUtils.personIdentErLikInnloggetBruker(søknad.person.søker.fnr)) {
             throw ApiFeil("Fnr fra token matcher ikke fnr på søknaden", HttpStatus.FORBIDDEN)
@@ -80,7 +80,7 @@ class SøknadController(
 
     @PostMapping("arbeidssoker")
     fun sendInn(
-        @RequestBody arbeidssøker: Arbeidssøker,
+        @RequestBody arbeidssøker: Arbeidssøker
     ): Kvittering {
         val fnrFraToken = EksternBrukerUtils.hentFnrFraToken()
         val forkortetNavn = oppslagService.hentSøkerNavn()

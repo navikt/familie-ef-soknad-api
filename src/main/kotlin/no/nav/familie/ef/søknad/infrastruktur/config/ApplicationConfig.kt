@@ -37,13 +37,13 @@ import no.nav.familie.kontrakter.felles.jsonMapper as kontraktJsonMapper
     basePackages = [
         "no.nav.familie.unleash",
         "no.nav.familie.felles.tokenklient.tokenx",
-        "no.nav.familie.felles.tokenklient.entraid",
-    ],
+        "no.nav.familie.felles.tokenklient.entraid"
+    ]
 )
 @Import(
     FamilieFellesSpringSecurityKonfigurasjon::class,
     MdcValuesPropagatingClientInterceptor::class,
-    ConsumerIdClientInterceptor::class,
+    ConsumerIdClientInterceptor::class
 )
 internal class ApplicationConfig {
     private val logger = LoggerFactory.getLogger(ApplicationConfig::class.java)
@@ -81,7 +81,7 @@ internal class ApplicationConfig {
         tokenXClient: TokenXClient,
         @Value("\${familie.ef.mottak.audience}") scope: String,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor
     ): RestOperations =
         lagTokenXRestTemplate(tokenXClient, scope, mdcValuesPropagatingClientInterceptor, consumerIdClientInterceptor)
             .withByteArrayConverterForPdf()
@@ -92,7 +92,7 @@ internal class ApplicationConfig {
         tokenXClient: TokenXClient,
         @Value("\${familie.ef.saksbehandling.audience}") scope: String,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor
     ): RestOperations =
         lagTokenXRestTemplate(tokenXClient, scope, mdcValuesPropagatingClientInterceptor, consumerIdClientInterceptor)
             .build()
@@ -102,7 +102,7 @@ internal class ApplicationConfig {
         tokenXClient: TokenXClient,
         @Value("\${PDL_AUDIENCE}") scope: String,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor
     ): RestOperations =
         lagTokenXRestTemplate(tokenXClient, scope, mdcValuesPropagatingClientInterceptor, consumerIdClientInterceptor)
             .build()
@@ -112,7 +112,7 @@ internal class ApplicationConfig {
         tokenXClient: TokenXClient,
         @Value("\${SAF_AUDIENCE}") scope: String,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor
     ): RestOperations =
         lagTokenXRestTemplate(tokenXClient, scope, mdcValuesPropagatingClientInterceptor, consumerIdClientInterceptor)
             .build()
@@ -122,7 +122,7 @@ internal class ApplicationConfig {
         entraIDClient: EntraIDClient,
         @Value("\${PDL_SCOPE}") scope: String,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor
     ): RestOperations =
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
@@ -131,13 +131,13 @@ internal class ApplicationConfig {
             .interceptors(
                 MaskinTilMaskinTokenInterceptor(entraIDClient, scope),
                 mdcValuesPropagatingClientInterceptor,
-                consumerIdClientInterceptor,
+                consumerIdClientInterceptor
             ).build()
 
     @Bean("utenAuth")
     fun restTemplateUtenAuth(
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-        mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+        mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor
     ): RestOperations =
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
@@ -145,14 +145,14 @@ internal class ApplicationConfig {
             .additionalMessageConverters(listOf(JacksonJsonHttpMessageConverter(kontraktJsonMapper)) + RestTemplate().messageConverters)
             .additionalInterceptors(
                 consumerIdClientInterceptor,
-                mdcValuesPropagatingClientInterceptor,
+                mdcValuesPropagatingClientInterceptor
             ).build()
 
     private fun lagTokenXRestTemplate(
         tokenXClient: TokenXClient,
         scope: String,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-        consumerIdClientInterceptor: ConsumerIdClientInterceptor,
+        consumerIdClientInterceptor: ConsumerIdClientInterceptor
     ): RestTemplateBuilder =
         RestTemplateBuilder()
             .connectTimeout(Duration.of(5, ChronoUnit.SECONDS))
@@ -161,7 +161,7 @@ internal class ApplicationConfig {
             .interceptors(
                 TokenXInterceptor(tokenXClient, scope) { EksternBrukerUtils.getBearerTokenForLoggedInUser() },
                 mdcValuesPropagatingClientInterceptor,
-                consumerIdClientInterceptor,
+                consumerIdClientInterceptor
             )
 }
 

@@ -30,7 +30,7 @@ internal class AdresseopplysningerMapperTest {
         val data =
             adresseopplysningerData.copy(
                 søkerBorPåRegistrertAdresse = BooleanFelt("Spørsmål 1", true),
-                adresseopplysninger = null,
+                adresseopplysninger = null
             )
         val bosituasjonMapped = AdresseopplysningerMapper.map(data, dokumenter).verdi
 

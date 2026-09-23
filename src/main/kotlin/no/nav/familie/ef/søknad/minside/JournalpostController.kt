@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/journalpost")
 @Validated
 class JournalpostController(
-    private val journalpostService: JournalpostService,
+    private val journalpostService: JournalpostService
 ) {
     @GetMapping
     fun hentJournalposter(): List<JournalpostDto> = journalpostService.hentJournalposterForBruker()
 
     @GetMapping(
         "/{journalpostId}/dokument-pdf/{dokumentInfoId}/variantformat/{dokumentVariantFormat}",
-        produces = [MediaType.APPLICATION_PDF_VALUE],
+        produces = [MediaType.APPLICATION_PDF_VALUE]
     )
     fun hentPdfDokument(
         @PathVariable journalpostId: String,
         @PathVariable dokumentInfoId: String,
-        @PathVariable dokumentVariantFormat: Variantformat,
+        @PathVariable dokumentVariantFormat: Variantformat
     ): ByteArray = journalpostService.hentPdfDokument(journalpostId, dokumentInfoId, dokumentVariantFormat)
 }

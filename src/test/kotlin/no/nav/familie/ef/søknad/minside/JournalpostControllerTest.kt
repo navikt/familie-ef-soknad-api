@@ -26,7 +26,7 @@ internal class JournalpostControllerTest : OppslagSpringRunnerTest() {
             restTemplate.exchange<List<JournalpostDto>>(
                 localhost("/api/journalpost"),
                 HttpMethod.GET,
-                HttpEntity<String>(headers),
+                HttpEntity<String>(headers)
             )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
@@ -56,7 +56,7 @@ internal class JournalpostControllerTest : OppslagSpringRunnerTest() {
             restTemplate.exchange<ByteArray>(
                 localhost("/api/journalpost/1234/dokument-pdf/8/variantformat/ARKIV"),
                 HttpMethod.GET,
-                HttpEntity<String>(headers),
+                HttpEntity<String>(headers)
             )
 
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)

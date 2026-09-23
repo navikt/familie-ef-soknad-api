@@ -30,10 +30,7 @@ class KodeverkTestConfig {
         return mockk
     }
 
-    private fun kodeverk(
-        kode: String,
-        verdi: String,
-    ): KodeverkDto =
+    private fun kodeverk(kode: String, verdi: String): KodeverkDto =
         KodeverkDto(
             mapOf(
                 kode to
@@ -41,10 +38,10 @@ class KodeverkTestConfig {
                         BetydningDto(
                             LocalDate.MIN,
                             LocalDate.MAX,
-                            mapOf("nb" to BeskrivelseDto(verdi, verdi)),
-                        ),
-                    ),
-            ),
+                            mapOf("nb" to BeskrivelseDto(verdi, verdi))
+                        )
+                    )
+            )
         )
 }
 

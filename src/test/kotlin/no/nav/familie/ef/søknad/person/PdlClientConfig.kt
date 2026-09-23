@@ -40,7 +40,7 @@ class PdlClientConfig {
                 navn = lagNavn(),
                 sivilstand = sivilstand(),
                 statsborgerskap = statsborgerskap(),
-                fødselsdato = listOf(Fødselsdato(fødselsdato = fødselsdato, fødselsår = fødselsdato.year)),
+                fødselsdato = listOf(Fødselsdato(fødselsdato = fødselsdato, fødselsår = fødselsdato.year))
             )
 
         return pdlClient
@@ -49,20 +49,20 @@ class PdlClientConfig {
     private fun lagBarn(): List<ForelderBarnRelasjon> =
         listOf(
             ForelderBarnRelasjon("28021078036", Familierelasjonsrolle.BARN),
-            ForelderBarnRelasjon("19411890530", Familierelasjonsrolle.BARN),
+            ForelderBarnRelasjon("19411890530", Familierelasjonsrolle.BARN)
         )
 
     private fun lagNavn(
         fornavn: String = "Fornavn",
         mellomnavn: String? = "mellomnavn",
-        etternavn: String = "Etternavn",
+        etternavn: String = "Etternavn"
     ): List<Navn> =
         listOf(
             Navn(
                 fornavn,
                 mellomnavn,
-                etternavn,
-            ),
+                etternavn
+            )
         )
 
     private fun statsborgerskap(): List<Statsborgerskap> =
@@ -70,13 +70,13 @@ class PdlClientConfig {
             Statsborgerskap(
                 land = "NOR",
                 gyldigFraOgMed = startdato,
-                gyldigTilOgMed = null,
+                gyldigTilOgMed = null
             ),
             Statsborgerskap(
                 land = "SWE",
                 gyldigFraOgMed = startdato.minusYears(3),
-                gyldigTilOgMed = startdato,
-            ),
+                gyldigTilOgMed = startdato
+            )
         )
 
     private fun sivilstand(): List<Sivilstand> = listOf(Sivilstand(type = Sivilstandstype.SKILT))
@@ -85,8 +85,8 @@ class PdlClientConfig {
         listOf(
             Bostedsadresse(
                 vegadresse = vegadresse(),
-                matrikkeladresse = null,
-            ),
+                matrikkeladresse = null
+            )
         )
 
     private fun vegadresse(): Vegadresse =
@@ -96,6 +96,6 @@ class PdlClientConfig {
             adressenavn = "Charlies vei",
             postnummer = "0575",
             bruksenhetsnummer = "",
-            matrikkelId = 1L,
+            matrikkelId = 1L
         )
 }

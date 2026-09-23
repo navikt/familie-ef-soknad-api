@@ -12,5 +12,5 @@ class AutentiseringController {
 }
 
 data class AuthResponse(
-    val message: String,
+    val message: String
 )

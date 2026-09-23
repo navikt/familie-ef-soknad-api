@@ -49,7 +49,7 @@ internal class OppslagServiceServiceImplTest {
             pdlClient,
             pdlApp2AppClient,
             regelverkConfig,
-            søkerinfoMapper,
+            søkerinfoMapper
         )
 
     @BeforeEach
@@ -123,7 +123,7 @@ internal class OppslagServiceServiceImplTest {
             søkerInfo.barn
                 .first()
                 .medforelder
-                ?.ident,
+                ?.ident
         ).isNull()
     }
 
@@ -182,7 +182,7 @@ internal class OppslagServiceServiceImplTest {
         val copy =
             pdlBarn.second.copy(
                 forelderBarnRelasjon = listOf(ForelderBarnRelasjon(generer, Familierelasjonsrolle.FAR)),
-                navn = listOf(Navn("navn", "navn", "navn")),
+                navn = listOf(Navn("navn", "navn", "navn"))
             )
         every { pdlApp2AppClient.hentBarn(any()) } returns (mapOf(pdlBarn.first to copy))
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns
@@ -195,12 +195,12 @@ internal class OppslagServiceServiceImplTest {
                                 Navn(
                                     "forelderFornavn",
                                     "forelder",
-                                    "forelder",
-                                ),
+                                    "forelder"
+                                )
                             ),
                         dødsfall = listOf(),
-                        fødselsdato = lagFødseldato(23),
-                    ),
+                        fødselsdato = lagFødseldato(23)
+                    )
             )
 
         val søkerinfo2 = oppslagServiceService.hentSøkerinfo()
@@ -226,8 +226,8 @@ internal class OppslagServiceServiceImplTest {
                 fødselsdato =
                     LocalDate
                         .now()
-                        .minusYears(18),
-            ),
+                        .minusYears(18)
+            )
         ).isTrue
 
         assertThat(
@@ -236,8 +236,8 @@ internal class OppslagServiceServiceImplTest {
                     LocalDate
                         .now()
                         .minusYears(19)
-                        .plusDays(1),
-            ),
+                        .plusDays(1)
+            )
         ).withFailMessage("Personen har ikke fylt 19 ennå")
             .isTrue
         assertThat(
@@ -246,8 +246,8 @@ internal class OppslagServiceServiceImplTest {
                     LocalDate
                         .now()
                         .minusYears(19)
-                        .minusDays(2),
-            ),
+                        .minusDays(2)
+            )
         ).isFalse
     }
 
@@ -259,7 +259,7 @@ internal class OppslagServiceServiceImplTest {
                 pdlClient,
                 pdlApp2AppClient,
                 regelverkConfig,
-                mapper,
+                mapper
             )
 
         every { pdlApp2AppClient.hentBarn(any()) } returns mapOf(pdlBarn(dødsfall = Dødsfall(LocalDate.MIN)))
@@ -277,7 +277,7 @@ internal class OppslagServiceServiceImplTest {
                 pdlClient,
                 pdlApp2AppClient,
                 regelverkConfig,
-                mapper,
+                mapper
             )
         every { pdlApp2AppClient.hentBarn(any()) } returns mapOf(pdlBarn())
         mockHentPersonPdlClient()
@@ -300,7 +300,7 @@ internal class OppslagServiceServiceImplTest {
         assertThat(søkerinfo.barn.first().fødselsdato).isEqualTo(
             levendeBarn.second.fødselsdato
                 .first()
-                .fødselsdato,
+                .fødselsdato
         )
     }
 
@@ -308,7 +308,7 @@ internal class OppslagServiceServiceImplTest {
         adressebeskyttelse: Adressebeskyttelse? = null,
         dødsfall: Dødsfall? = null,
         fødselsdato: LocalDate = LocalDate.now().minusMonths(6),
-        forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf(),
+        forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf()
     ): Pair<String, PdlBarn> {
         val fødsel = Fødselsdato(fødselsdato.year, fødselsdato)
         return Pair(
@@ -320,15 +320,15 @@ internal class OppslagServiceServiceImplTest {
                 fødselsdato = listOf(fødsel),
                 navn = emptyList(),
                 dødsfall = dødsfall?.let { listOf(dødsfall) } ?: emptyList(),
-                forelderBarnRelasjon = forelderBarnRelasjon,
-            ),
+                forelderBarnRelasjon = forelderBarnRelasjon
+            )
         )
     }
 
     private fun mockPdlHentBarn(
         navn: String = "Ola",
         adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT,
-        forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf(),
+        forelderBarnRelasjon: List<ForelderBarnRelasjon> = listOf()
     ) {
         val pdlBarn = pdlBarn(Adressebeskyttelse(adressebeskyttelseGradering), forelderBarnRelasjon = forelderBarnRelasjon)
         val copy = pdlBarn.second.copy(navn = listOf(Navn(navn, navn, navn)))
@@ -341,7 +341,7 @@ internal class OppslagServiceServiceImplTest {
                 adressebeskyttelse = listOf(Adressebeskyttelse(adressebeskyttelseGradering)),
                 listOf(),
                 listOf(),
-                listOf(),
+                listOf()
             )
 
         every { pdlApp2AppClient.hentAndreForeldre(any()) } returns (mapOf("enIdent" to annenForelder))
@@ -351,7 +351,7 @@ internal class OppslagServiceServiceImplTest {
         fornavn: String = "TestNavn",
         mellomnavn: String = "TestNavn",
         etternavn: String = "TestNavn",
-        adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT,
+        adressebeskyttelseGradering: AdressebeskyttelseGradering = UGRADERT
     ) {
         every { pdlClient.hentSøker(any()) } returns (
             PdlSøker(
@@ -361,7 +361,7 @@ internal class OppslagServiceServiceImplTest {
                 navn = listOf(Navn(fornavn, mellomnavn, etternavn)),
                 sivilstand = listOf(Sivilstand(Sivilstandstype.UOPPGITT)),
                 statsborgerskap = listOf(),
-                fødselsdato = lagFødseldato(34),
+                fødselsdato = lagFødseldato(34)
             )
         )
     }

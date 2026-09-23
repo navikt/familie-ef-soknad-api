@@ -53,7 +53,7 @@ internal class ArbeidssøkerMapperTest {
         Assertions
             .assertThat((arbeidssøker?.kanDuSkaffeBarnepassInnenEnUke?.label))
             .isEqualTo(
-                "Har du eller kan du skaffe barnepass senest innen en uke etter at du har fått tilbud om jobb eller arbeidsmarkedtiltak?",
+                "Har du eller kan du skaffe barnepass senest innen en uke etter at du har fått tilbud om jobb eller arbeidsmarkedtiltak?"
             )
     }
 

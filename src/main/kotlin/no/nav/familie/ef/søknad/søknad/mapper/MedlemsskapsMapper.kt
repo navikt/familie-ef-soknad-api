@@ -23,8 +23,8 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
             utenlandsopphold =
                 Søknadsfelt(
                     Språktekster.Utenlandsopphold.hentTekst(),
-                    mapUtenlansopphold(data.perioderBoddIUtlandet),
-                ),
+                    mapUtenlansopphold(data.perioderBoddIUtlandet)
+                )
         )
 
     private fun mapUtenlansopphold(perioderBoddIUtlandet: List<Utenlandsperiode>?): List<KontraksUtenlandsopphold> =
@@ -37,7 +37,7 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                 personidentEøsLand = it.personidentEøsLand?.tilSøknadsfelt(),
                 adresseEøsLand = it.adresseEøsLand?.tilSøknadsfelt(),
                 erEøsLand = it.erEøsLand,
-                kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident,
+                kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident
             )
         } ?: listOf()
 
@@ -51,25 +51,25 @@ object MedlemsskapsMapper : Mapper<Medlemskap, Medlemskapsdetaljer>(Språktekste
                             PeriodeFelt(
                                 fra = DatoFelt(it.fradato.label, it.fradato.verdi.toString()),
                                 til = DatoFelt(it.tildato.label, it.tildato.verdi.toString()),
-                                label = null,
+                                label = null
                             ),
                         land = it.land.tilNullableTekstFelt(),
                         personidentEøsLand = it.personidentEøsLand.tilNullableTekstFelt(),
                         adresseEøsLand = it.adresseEøsLand.tilNullableTekstFelt(),
                         erEøsLand = it.erEøsLand,
-                        kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident,
+                        kanIkkeOppgiPersonident = it.kanIkkeOppgiPersonident
                     )
                 },
             søkerBosattINorgeSisteTreÅr =
                 BooleanFelt(
                     medlemskapsdetaljer.bosattNorgeSisteÅrene.label,
-                    medlemskapsdetaljer.bosattNorgeSisteÅrene.verdi,
+                    medlemskapsdetaljer.bosattNorgeSisteÅrene.verdi
                 ),
             oppholdsland = medlemskapsdetaljer.oppholdsland.tilNullableTekstFelt(),
             søkerOppholderSegINorge =
                 BooleanFelt(
                     medlemskapsdetaljer.oppholderDuDegINorge.label,
-                    medlemskapsdetaljer.oppholderDuDegINorge.verdi,
-                ),
+                    medlemskapsdetaljer.oppholderDuDegINorge.verdi
+                )
         )
 }

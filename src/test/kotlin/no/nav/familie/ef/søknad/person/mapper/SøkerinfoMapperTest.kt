@@ -42,7 +42,7 @@ internal class SøkerinfoMapperTest {
     private val barn =
         barn().copy(
             fødselsdato = listOf(Fødselsdato(LocalDate.now().year, LocalDate.now())),
-            navn = listOf(Navn("fornavn", "", "Etternavn")),
+            navn = listOf(Navn("fornavn", "", "Etternavn"))
         )
 
     @BeforeEach
@@ -65,7 +65,7 @@ internal class SøkerinfoMapperTest {
             Pair(pdlSøker(UGRADERT), false),
             Pair(pdlSøker(FORTROLIG), false),
             Pair(pdlSøker(STRENGT_FORTROLIG), true),
-            Pair(pdlSøker(STRENGT_FORTROLIG_UTLAND), true),
+            Pair(pdlSøker(STRENGT_FORTROLIG_UTLAND), true)
         ).forEach {
             val søkerinfo = søkerinfoMapper.mapTilSøkerinfo(it.first, emptyMap(), emptyMap())
             assertThat(søkerinfo.søker.erStrengtFortrolig).isEqualTo(it.second)
@@ -86,7 +86,13 @@ internal class SøkerinfoMapperTest {
     fun `MedForelder alder og navn`() {
         // Gitt
         val navn = Navn("Roy", "", "Toy")
-        val medforelderFortrolig = PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(FORTROLIG)), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(24))
+        val medforelderFortrolig =
+            PdlAnnenForelder(
+                adressebeskyttelse = listOf(Adressebeskyttelse(FORTROLIG)),
+                navn = listOf(navn),
+                dødsfall = listOf(),
+                fødselsdato = lagFødseldato(24)
+            )
         val ident = FnrGenerator.generer(år = 1999)
         // Når
         val annenForelder = medforelderFortrolig.tilDto(ident)
@@ -100,11 +106,27 @@ internal class SøkerinfoMapperTest {
     @Test
     fun `AnnenForelder adressebeskyttelse fortrolig mappes til harAdressesperre`() {
         val navn = Navn("Roy", "", "Toy")
-        val annenForelderFortrolig = PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(FORTROLIG)), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(24))
+        val annenForelderFortrolig =
+            PdlAnnenForelder(
+                adressebeskyttelse = listOf(Adressebeskyttelse(FORTROLIG)),
+                navn = listOf(navn),
+                dødsfall = listOf(),
+                fødselsdato = lagFødseldato(24)
+            )
         val annenForelderStrengtFortrolig =
-            PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(STRENGT_FORTROLIG)), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(23))
+            PdlAnnenForelder(
+                adressebeskyttelse = listOf(Adressebeskyttelse(STRENGT_FORTROLIG)),
+                navn = listOf(navn),
+                dødsfall = listOf(),
+                fødselsdato = lagFødseldato(23)
+            )
         val annenForelderStrengtFortroligUtland =
-            PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(22))
+            PdlAnnenForelder(
+                adressebeskyttelse = listOf(Adressebeskyttelse(STRENGT_FORTROLIG_UTLAND)),
+                navn = listOf(navn),
+                dødsfall = listOf(),
+                fødselsdato = lagFødseldato(22)
+            )
         //
         val ident = FnrGenerator.generer(år = 1999)
         val annenForelder = annenForelderFortrolig.tilDto(ident)
@@ -116,7 +138,13 @@ internal class SøkerinfoMapperTest {
     @Test
     fun `AnnenForelder adressebeskyttelse UGRADERT skal ikke ha adressesperre`() {
         val navn = Navn("Roy", "", "Toy")
-        val pdlAnnenForelder = PdlAnnenForelder(adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(35))
+        val pdlAnnenForelder =
+            PdlAnnenForelder(
+                adressebeskyttelse = listOf(Adressebeskyttelse(UGRADERT)),
+                navn = listOf(navn),
+                dødsfall = listOf(),
+                fødselsdato = lagFødseldato(35)
+            )
         //
         val tilDto = pdlAnnenForelder.tilDto(FnrGenerator.generer())
         //
@@ -127,7 +155,8 @@ internal class SøkerinfoMapperTest {
     fun `AnnenForelder adressebeskyttelse tom skal ikke ha adressesperre`() {
         val navn = Navn("Roy", "", "Toy")
 
-        val pdlAnnenForelder = PdlAnnenForelder(adressebeskyttelse = listOf(), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(22))
+        val pdlAnnenForelder =
+            PdlAnnenForelder(adressebeskyttelse = listOf(), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(22))
         //
         val tilDto = pdlAnnenForelder.tilDto(FnrGenerator.generer())
         //
@@ -187,19 +216,25 @@ internal class SøkerinfoMapperTest {
                     listOf(
                         ForelderBarnRelasjon(
                             relatertPersonsIdent,
-                            Familierelasjonsrolle.FAR,
-                        ),
-                    ),
+                            Familierelasjonsrolle.FAR
+                        )
+                    )
             )
         val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
-        val pdlAnnenForelder = PdlAnnenForelder(adressebeskyttelse = listOf(adressebeskyttelse), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(24))
+        val pdlAnnenForelder =
+            PdlAnnenForelder(
+                adressebeskyttelse = listOf(adressebeskyttelse),
+                navn = listOf(navn),
+                dødsfall = listOf(),
+                fødselsdato = lagFødseldato(24)
+            )
         val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), andreForeldre)
         assertThat(
             person.barn
                 .first()
                 .medforelder
-                ?.navn,
+                ?.navn
         ).isEqualTo("Roy Toy")
     }
 
@@ -219,19 +254,25 @@ internal class SøkerinfoMapperTest {
                     listOf(
                         ForelderBarnRelasjon(
                             relatertPersonsIdent,
-                            Familierelasjonsrolle.FAR,
-                        ),
-                    ),
+                            Familierelasjonsrolle.FAR
+                        )
+                    )
             )
         val barn2 =
             barn().copy(
                 fødselsdato = listOf(Fødselsdato(LocalDate.now().year, LocalDate.now())),
                 navn = listOf(Navn("Boy", "", "Moy")),
-                forelderBarnRelasjon = listOf(),
+                forelderBarnRelasjon = listOf()
             )
 
         val adressebeskyttelse = Adressebeskyttelse(UGRADERT)
-        val pdlAnnenForelder = PdlAnnenForelder(adressebeskyttelse = listOf(adressebeskyttelse), navn = listOf(navn), dødsfall = listOf(), fødselsdato = lagFødseldato(21))
+        val pdlAnnenForelder =
+            PdlAnnenForelder(
+                adressebeskyttelse = listOf(adressebeskyttelse),
+                navn = listOf(navn),
+                dødsfall = listOf(),
+                fødselsdato = lagFødseldato(21)
+            )
         val andreForeldre = mapOf(relatertPersonsIdent to pdlAnnenForelder)
         // når
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn, "888" to barn2), andreForeldre)
@@ -251,7 +292,7 @@ internal class SøkerinfoMapperTest {
                 navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
                 sivilstand = listOf(Sivilstand(UOPPGITT)),
                 statsborgerskap = listOf(),
-                fødselsdato = lagFødseldato(alder),
+                fødselsdato = lagFødseldato(alder)
             )
         return pdlSøker
     }
@@ -267,7 +308,7 @@ internal class SøkerinfoMapperTest {
                 navn = listOf(Navn("fornavn", "mellomnavn", "etternavn")),
                 sivilstand = listOf(),
                 statsborgerskap = listOf(),
-                fødselsdato = lagFødseldato(28),
+                fødselsdato = lagFødseldato(28)
             )
         // når
         val person = søkerinfoMapper.mapTilSøkerinfo(pdlSøker, mapOf("999" to barn), mapOf())
@@ -293,22 +334,22 @@ internal class SøkerinfoMapperTest {
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 bostedsadresse(vegadresse(matrikkelId = 1)),
-                barn(bostedsadresseBarn(vegadresse(matrikkelId = 1))),
-            ),
+                barn(bostedsadresseBarn(vegadresse(matrikkelId = 1)))
+            )
         ).withFailMessage("MatrikkelId er lik på vegadresse")
             .isTrue
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 bostedsadresse(vegadresse(adressenavn = "1")),
-                barn(bostedsadresseBarn(vegadresse(adressenavn = "1"))),
-            ),
+                barn(bostedsadresseBarn(vegadresse(adressenavn = "1")))
+            )
         ).withFailMessage("Har samme adressenavn")
             .isTrue
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 bostedsadresse(vegadresse(adressenavn = "1")),
-                barn(bostedsadresseBarn(vegadresse(adressenavn = "2"))),
-            ),
+                barn(bostedsadresseBarn(vegadresse(adressenavn = "2")))
+            )
         ).withFailMessage("Har ulike adressenavn")
             .isFalse
     }
@@ -323,16 +364,16 @@ internal class SøkerinfoMapperTest {
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 bostedsadresse(vegadresse(matrikkelId = 2)),
-                barn(barnAdresse),
-            ),
+                barn(barnAdresse)
+            )
         ).withFailMessage("MatrikkelId er lik på vegadresse")
             .isFalse
         // Har delt adresse -> forventer true
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 bostedsadresse(vegadresse(matrikkelId = 2)),
-                barn(barnAdresse, DeltBosted(datoFørIdag, datoEtterIdag)),
-            ),
+                barn(barnAdresse, DeltBosted(datoFørIdag, datoEtterIdag))
+            )
         ).withFailMessage("har delt adresse")
             .isTrue
     }
@@ -342,15 +383,15 @@ internal class SøkerinfoMapperTest {
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 bostedsadresse(matrikkeladresse = matrikkeladresse(1)),
-                barn(bostedsadresseBarn(matrikkeladresse = matrikkeladresseBarn(1))),
-            ),
+                barn(bostedsadresseBarn(matrikkeladresse = matrikkeladresseBarn(1)))
+            )
         ).withFailMessage("MatrikkelId er lik på matrikkelId")
             .isTrue
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 bostedsadresse(matrikkeladresse = matrikkeladresse(null)),
-                barn(bostedsadresseBarn(matrikkeladresse = matrikkeladresseBarn(null))),
-            ),
+                barn(bostedsadresseBarn(matrikkeladresse = matrikkeladresseBarn(null)))
+            )
         ).isFalse
     }
 
@@ -363,39 +404,36 @@ internal class SøkerinfoMapperTest {
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 søkersAdresse,
-                barn(barnAdresse, DeltBosted(datoEtterIdag, null)),
-            ),
+                barn(barnAdresse, DeltBosted(datoEtterIdag, null))
+            )
         ).withFailMessage("Delt bosted frem i tid")
             .isTrue
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 søkersAdresse,
-                barn(barnAdresse, DeltBosted(datoFørIdag, datoFørIdag)),
-            ),
+                barn(barnAdresse, DeltBosted(datoFørIdag, datoFørIdag))
+            )
         ).withFailMessage("Delt bosted avsluttet")
             .isTrue
 
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 søkersAdresse,
-                barn(barnAdresse, DeltBosted(datoFørIdag, datoEtterIdag)),
-            ),
+                barn(barnAdresse, DeltBosted(datoFørIdag, datoEtterIdag))
+            )
         ).withFailMessage("Har delt bosted med sluttdato frem i tid")
             .isTrue
 
         assertThat(
             søkerinfoMapper.harSammeAdresse(
                 søkersAdresse,
-                barn(barnAdresse, DeltBosted(datoFørIdag, null)),
-            ),
+                barn(barnAdresse, DeltBosted(datoFørIdag, null))
+            )
         ).withFailMessage("Har delt bosted med sluttdato null")
             .isTrue
     }
 
-    private fun pdlSøker(
-        adressebeskyttelse: AdressebeskyttelseGradering? = null,
-        navn: Navn = Navn("Roy", "", "Toy"),
-    ): PdlSøker =
+    private fun pdlSøker(adressebeskyttelse: AdressebeskyttelseGradering? = null, navn: Navn = Navn("Roy", "", "Toy")): PdlSøker =
         PdlSøker(
             adressebeskyttelse = adressebeskyttelse?.let { listOf(Adressebeskyttelse(it)) } ?: emptyList(),
             bostedsadresse = listOf(),
@@ -403,47 +441,38 @@ internal class SøkerinfoMapperTest {
             navn = listOf(navn),
             sivilstand = listOf(),
             statsborgerskap = listOf(),
-            fødselsdato = lagFødseldato(25),
+            fødselsdato = lagFødseldato(25)
         )
 
-    private fun vegadresse(
-        matrikkelId: Long? = null,
-        adressenavn: String? = null,
-    ) = Vegadresse(
-        null,
-        null,
-        null,
-        adressenavn,
-        null,
-        matrikkelId,
-    )
+    private fun vegadresse(matrikkelId: Long? = null, adressenavn: String? = null) =
+        Vegadresse(
+            null,
+            null,
+            null,
+            adressenavn,
+            null,
+            matrikkelId
+        )
 
-    private fun bostedsadresse(
-        vegadresse: Vegadresse? = null,
-        matrikkeladresse: Matrikkeladresse? = null,
-    ) = Bostedsadresse(vegadresse, matrikkeladresse)
+    private fun bostedsadresse(vegadresse: Vegadresse? = null, matrikkeladresse: Matrikkeladresse? = null) = Bostedsadresse(vegadresse, matrikkeladresse)
 
-    private fun bostedsadresseBarn(
-        vegadresse: Vegadresse? = null,
-        matrikkeladresse: MatrikkeladresseBarn? = null,
-    ) = BostedsadresseBarn(vegadresse, matrikkeladresse)
+    private fun bostedsadresseBarn(vegadresse: Vegadresse? = null, matrikkeladresse: MatrikkeladresseBarn? = null) =
+        BostedsadresseBarn(vegadresse, matrikkeladresse)
 
     private fun matrikkeladresse(matrikkelId: Long?) = Matrikkeladresse(matrikkelId, "", "0572")
 
     private fun matrikkeladresseBarn(matrikkelId: Long?) = MatrikkeladresseBarn(matrikkelId)
 
-    private fun barn(
-        bostedsadresse: BostedsadresseBarn? = null,
-        deltBosted: DeltBosted? = null,
-    ) = PdlBarn(
-        adressebeskyttelse = emptyList(),
-        bostedsadresse = bostedsadresse?.let { listOf(it) } ?: emptyList(),
-        deltBosted = deltBosted?.let { listOf(it) } ?: emptyList(),
-        navn = emptyList(),
-        fødselsdato = lagFødseldato(3),
-        dødsfall = emptyList(),
-        forelderBarnRelasjon = emptyList(),
-    )
+    private fun barn(bostedsadresse: BostedsadresseBarn? = null, deltBosted: DeltBosted? = null) =
+        PdlBarn(
+            adressebeskyttelse = emptyList(),
+            bostedsadresse = bostedsadresse?.let { listOf(it) } ?: emptyList(),
+            deltBosted = deltBosted?.let { listOf(it) } ?: emptyList(),
+            navn = emptyList(),
+            fødselsdato = lagFødseldato(3),
+            dødsfall = emptyList(),
+            forelderBarnRelasjon = emptyList()
+        )
 }
 
 fun lagFødseldato(alder: Long): List<Fødselsdato> {

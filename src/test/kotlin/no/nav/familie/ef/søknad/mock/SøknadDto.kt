@@ -10,21 +10,23 @@ import java.io.File
 
 fun søknadOvergangsstønadDto(): SøknadOvergangsstønadDto = jsonMapper.readValue(File("src/test/resources/søknadDto.json"), SøknadOvergangsstønadDto::class.java)
 
-fun søknadBarnetilsynDto(): SøknadBarnetilsynDto = jsonMapper.readValue(File("src/test/resources/barnetilsyn/BarnetilsynsøknadDto.json"), SøknadBarnetilsynDto::class.java)
+fun søknadBarnetilsynDto(): SøknadBarnetilsynDto =
+    jsonMapper.readValue(File("src/test/resources/barnetilsyn/BarnetilsynsøknadDto.json"), SøknadBarnetilsynDto::class.java)
 
-fun søknadSkolepengerDto(): SøknadSkolepengerDto = jsonMapper.readValue(File("src/test/resources/skolepenger/skolepenger.json"), SøknadSkolepengerDto::class.java)
+fun søknadSkolepengerDto(): SøknadSkolepengerDto =
+    jsonMapper.readValue(File("src/test/resources/skolepenger/skolepenger.json"), SøknadSkolepengerDto::class.java)
 
 fun søkerMedDefaultVerdier(
     forventetFnr: String = "19128449828",
     forkortetNavn: String = "Kari Nordmann",
     adresse: Adresse = Adresse("Jerpefaret 5C", "1440", ""),
     statsborgerskap: String = "Norsk",
-    sivilstatus: String = "Ugift",
+    sivilstatus: String = "Ugift"
 ) = Søker(
     fnr = forventetFnr,
     forkortetNavn = forkortetNavn,
     adresse = adresse,
     statsborgerskap = statsborgerskap,
     sivilstand = sivilstatus,
-    egenansatt = false,
+    egenansatt = false
 )

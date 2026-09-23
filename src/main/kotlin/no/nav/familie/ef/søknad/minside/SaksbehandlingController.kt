@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/saksbehandling")
 class SaksbehandlingController(
-    private val saksbehandlingService: SaksbehandlingService,
+    private val saksbehandlingService: SaksbehandlingService
 ) {
     @GetMapping("/stonadsperioder")
     fun hentStønadsperioderForBruker() = saksbehandlingService.hentStønadsperioderForBruker()

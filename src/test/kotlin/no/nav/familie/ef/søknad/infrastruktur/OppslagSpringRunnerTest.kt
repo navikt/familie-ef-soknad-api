@@ -35,14 +35,15 @@ import java.util.UUID
     "mock-mottak",
     "kodeverk-cache-test",
     "mock-saf",
-    "mock-saksbehandling",
+    "mock-saksbehandling"
 )
 abstract class OppslagSpringRunnerTest {
     protected val listAppender = initLoggingEventListAppender()
     protected var loggingEvents: MutableList<ILoggingEvent> = listAppender.list
 
     val jackson2HttpMessageConverter = JacksonJsonHttpMessageConverter(jsonMapper)
-    val restTemplate = RestTemplateBuilder().additionalMessageConverters(listOf(jackson2HttpMessageConverter) + RestTemplate().messageConverters).build()
+    val restTemplate =
+        RestTemplateBuilder().additionalMessageConverters(listOf(jackson2HttpMessageConverter) + RestTemplate().messageConverters).build()
 
     protected val headers = HttpHeaders()
 
@@ -75,7 +76,7 @@ abstract class OppslagSpringRunnerTest {
         issuerId: String = "tokenx",
         clientId: String = UUID.randomUUID().toString(),
         audience: String = TOKEN_X_CLIENT_ID,
-        claims: Map<String, Any> = mapOf("acr" to "Level4"),
+        claims: Map<String, Any> = mapOf("acr" to "Level4")
     ): String =
         this
             .issueToken(
@@ -86,8 +87,8 @@ abstract class OppslagSpringRunnerTest {
                     subject = subject,
                     audience = listOf(audience),
                     claims = claims,
-                    expiry = 3600,
-                ),
+                    expiry = 3600
+                )
             ).serialize()
 
     companion object {

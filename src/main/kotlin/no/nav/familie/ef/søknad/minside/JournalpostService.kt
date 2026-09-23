@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class JournalpostService(
-    private val safClient: SafClient,
+    private val safClient: SafClient
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
     private val secureLogger = LoggerFactory.getLogger("secureLogger")
@@ -25,6 +25,6 @@ class JournalpostService(
     fun hentPdfDokument(
         journalpostId: String,
         dokumentInfoId: String,
-        dokumentVariantformat: Variantformat,
+        dokumentVariantformat: Variantformat
     ): ByteArray = safClient.hentDokument(journalpostId, dokumentInfoId, dokumentVariantformat)
 }

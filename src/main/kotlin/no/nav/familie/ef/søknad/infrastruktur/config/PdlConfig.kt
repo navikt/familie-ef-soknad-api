@@ -8,7 +8,7 @@ import java.net.URI
 
 @Configuration
 class PdlConfig(
-    @Value("\${PDL_URL}") pdlUrl: URI,
+    @Value("\${PDL_URL}") pdlUrl: URI
 ) {
     val pdlUri: URI =
         UriComponentsBuilder

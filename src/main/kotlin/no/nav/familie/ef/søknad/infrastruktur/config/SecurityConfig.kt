@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val tokenXDecoder: TokenXDecoder,
+    private val tokenXDecoder: TokenXDecoder
 ) {
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
@@ -22,7 +22,7 @@ class SecurityConfig(
                     .requestMatchers(
                         "/internal/**",
                         "/api/ping",
-                        "/api/featuretoggle/**",
+                        "/api/featuretoggle/**"
                     ).permitAll()
                 it.anyRequest().authenticated()
             }.oauth2ResourceServer { it.jwt { jwt -> jwt.decoder(tokenXDecoder) } }

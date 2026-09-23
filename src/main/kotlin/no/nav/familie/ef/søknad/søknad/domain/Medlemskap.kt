@@ -4,7 +4,7 @@ data class Medlemskap(
     val perioderBoddIUtlandet: List<Utenlandsperiode>? = listOf(),
     val søkerBosattINorgeSisteTreÅr: BooleanFelt,
     val oppholdsland: TekstFelt? = null,
-    val søkerOppholderSegINorge: BooleanFelt,
+    val søkerOppholderSegINorge: BooleanFelt
 )
 
 data class Utenlandsperiode(
@@ -14,5 +14,5 @@ data class Utenlandsperiode(
     val personidentEøsLand: TekstFelt? = null,
     val adresseEøsLand: TekstFelt? = null,
     val erEøsLand: Boolean? = null,
-    val kanIkkeOppgiPersonident: Boolean? = null,
+    val kanIkkeOppgiPersonident: Boolean? = null
 )

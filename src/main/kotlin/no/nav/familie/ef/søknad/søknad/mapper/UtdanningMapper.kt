@@ -41,10 +41,10 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
                             NårSkalDuVæreElevStudent.hentTekst(),
                             Datoperiode(
                                 data.periode.fra.tilLocalDate(),
-                                data.periode.til.tilLocalDate(),
-                            ),
-                        ),
-                    ),
+                                data.periode.til.tilLocalDate()
+                            )
+                        )
+                    )
                 ),
             offentligEllerPrivat = data.offentligEllerPrivat.tilSøknadsfelt(),
             hvorMyeSkalDuStudere = data.arbeidsmengde?.tilSøknadsfelt(String::tilHeltall),
@@ -54,7 +54,7 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
             tidligereUtdanninger = data.tidligereUtdanning?.let { mapTidligereUtdanning(it) },
             semesteravgift = mapUtgifterTilUtdanning(data.semesteravgift),
             studieavgift = mapUtgifterTilUtdanning(data.studieavgift),
-            eksamensgebyr = mapUtgifterTilUtdanning(data.eksamensgebyr),
+            eksamensgebyr = mapUtgifterTilUtdanning(data.eksamensgebyr)
         )
 
     fun mapTilDto(underUtdanningKontrakt: UnderUtdanningKontrakt?): UnderUtdanning? {
@@ -73,7 +73,7 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
                     semesteravgift = underUtdanningKontrakt.semesteravgift.tilNullableTekstFelt(),
                     studieavgift = underUtdanningKontrakt.studieavgift.tilNullableTekstFelt(),
                     eksamensgebyr = underUtdanningKontrakt.eksamensgebyr.tilNullableTekstFelt(),
-                    tidligereUtdanning = mapTilTidligereUtdanningDto(underUtdanningKontrakt.tidligereUtdanninger?.verdi),
+                    tidligereUtdanning = mapTilTidligereUtdanningDto(underUtdanningKontrakt.tidligereUtdanninger?.verdi)
                 )
             }
         }
@@ -99,9 +99,9 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
                                 .month,
                             it.periode.til
                                 .tilLocalDate()
-                                .year,
-                        ),
-                    ),
+                                .year
+                        )
+                    )
                 )
             }
         return Søknadsfelt(SpråkTeksterTidligereUtdanning.hentTekst(), tidligereUtdanningList)
@@ -111,7 +111,7 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
         tidligereUtdanningKontrakt?.map {
             TidligereUtdanning(
                 it.linjeKursGrad.tilTekstFelt(),
-                it.nårVarSkalDuVæreElevStudent.månedÅrSøknadsfeltTilPeriodeFelt(),
+                it.nårVarSkalDuVæreElevStudent.månedÅrSøknadsfeltTilPeriodeFelt()
             )
         } ?: emptyList()
 
@@ -119,14 +119,14 @@ object UtdanningMapper : Mapper<UnderUtdanning, UnderUtdanningKontrakt>(Utdannin
         PeriodeFelt(
             label = label,
             fra = DatoFelt(label, LocalDate.of(verdi.fraÅr, verdi.fraMåned, 1).toString()),
-            til = DatoFelt(label, YearMonth.of(verdi.tilÅr, verdi.tilMåned).atEndOfMonth().toString()),
+            til = DatoFelt(label, YearMonth.of(verdi.tilÅr, verdi.tilMåned).atEndOfMonth().toString())
         )
 
     private fun Søknadsfelt<Datoperiode>.tilPeriodeFelt() =
         PeriodeFelt(
             label = label,
             fra = DatoFelt(label, verdi.fra.toString()),
-            til = DatoFelt(label, verdi.til.toString()),
+            til = DatoFelt(label, verdi.til.toString())
         )
 
     private fun mapUtgifterTilUtdanning(utgift: TekstFelt?): Søknadsfelt<Double>? {

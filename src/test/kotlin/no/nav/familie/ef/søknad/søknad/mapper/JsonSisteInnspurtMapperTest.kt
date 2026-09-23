@@ -22,7 +22,7 @@ internal class JsonSisteInnspurtMapperTest {
         val mapped: SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/tea-1554.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(mapped, innsendingMottatt)
     }
@@ -32,7 +32,7 @@ internal class JsonSisteInnspurtMapperTest {
         val mapped: SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/tea-1561.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(mapped, innsendingMottatt)
     }
@@ -42,7 +42,7 @@ internal class JsonSisteInnspurtMapperTest {
         val mapped: SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/favro-tea1565.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(mapped, innsendingMottatt)
     }
@@ -52,7 +52,7 @@ internal class JsonSisteInnspurtMapperTest {
         val mapped: SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/utlandOpphold.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         val medUtenlandsopphold = mapper.mapTilIntern(mapped, innsendingMottatt)
 
@@ -63,7 +63,7 @@ internal class JsonSisteInnspurtMapperTest {
                 ?.first()
                 ?.årsakUtenlandsopphold
                 ?.verdi,
-            "Jobbgreie",
+            "Jobbgreie"
         )
 
         assertEquals(
@@ -72,7 +72,7 @@ internal class JsonSisteInnspurtMapperTest {
                 ?.first()
                 ?.fradato
                 ?.verdi,
-            LocalDate.of(2020, 5, 1),
+            LocalDate.of(2020, 5, 1)
         )
 
         assertEquals(
@@ -81,7 +81,7 @@ internal class JsonSisteInnspurtMapperTest {
                 ?.first()
                 ?.tildato
                 ?.verdi,
-            LocalDate.of(2020, 5, 31),
+            LocalDate.of(2020, 5, 31)
         )
     }
 
@@ -90,13 +90,13 @@ internal class JsonSisteInnspurtMapperTest {
         val mapped: SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/barnTomStrengFødselsdato.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         val mappetTilBarnUtenFødselsTermindato = mapper.mapTilIntern(mapped, innsendingMottatt)
         assertNull(
             mappetTilBarnUtenFødselsTermindato.søknad.barn.verdi
                 .first()
-                .fødselTermindato,
+                .fødselTermindato
         )
     }
 
@@ -105,7 +105,7 @@ internal class JsonSisteInnspurtMapperTest {
         val mapped: SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/hildeFeil400.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(mapped, innsendingMottatt)
     }
@@ -116,7 +116,7 @@ internal class JsonSisteInnspurtMapperTest {
         val mapped: SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/kariFeil400.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(mapped, innsendingMottatt)
     }
@@ -126,7 +126,7 @@ internal class JsonSisteInnspurtMapperTest {
         val mapped: SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/mirjaFeil.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(mapped, innsendingMottatt)
     }
@@ -136,7 +136,7 @@ internal class JsonSisteInnspurtMapperTest {
         val donorbarn: SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/donorbarn.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(donorbarn, innsendingMottatt)
     }
@@ -155,7 +155,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun identTest3(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/feilFraPreprod.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(identTest3(), innsendingMottatt)
     }
@@ -165,7 +165,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun identTest3(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/identTest3.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
 
         val mapped = mapper.mapTilIntern(identTest3(), innsendingMottatt)
@@ -176,7 +176,7 @@ internal class JsonSisteInnspurtMapperTest {
                 ?.verdi
                 ?.person
                 ?.verdi
-                ?.fødselsnummer,
+                ?.fødselsnummer
         )
     }
 
@@ -185,7 +185,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun testfeil(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/testFntIdent.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(testfeil(), innsendingMottatt)
     }
@@ -195,7 +195,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun testfeil(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/testfeil.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(testfeil(), innsendingMottatt)
     }
@@ -205,7 +205,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun fnrTilIdent(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/fnrTilIdent.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(fnrTilIdent(), innsendingMottatt)
     }
@@ -215,7 +215,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun søknad(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/underUtanningFeil.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(søknad(), innsendingMottatt)
     }
@@ -225,7 +225,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun søknadFraEivind(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/feilfraEivind.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(søknadFraEivind(), innsendingMottatt)
     }
@@ -235,7 +235,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun søknadFraHilde(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/feilfraHilde.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
 
         val søknadRequestData = mapper.mapTilIntern(søknadFraHilde(), innsendingMottatt)
@@ -248,7 +248,7 @@ internal class JsonSisteInnspurtMapperTest {
                 ?.person
                 ?.verdi
                 ?.fødselsdato
-                ?.verdi,
+                ?.verdi
         )
         assertEquals(
             LocalDate.of(1970, 3, 20),
@@ -258,7 +258,7 @@ internal class JsonSisteInnspurtMapperTest {
                 ?.person
                 ?.verdi
                 ?.fødselsdato
-                ?.verdi,
+                ?.verdi
         )
         assertEquals(
             LocalDate.of(2020, 6, 2),
@@ -266,17 +266,17 @@ internal class JsonSisteInnspurtMapperTest {
                 .samvær
                 ?.verdi
                 ?.nårFlyttetDereFraHverandre
-                ?.verdi,
+                ?.verdi
         )
         assertEquals(
             LocalDate.of(1970, 3, 20),
             søknad.sivilstandsdetaljer.verdi.samlivsbruddsdato
-                ?.verdi,
+                ?.verdi
         )
         assertEquals(
             LocalDate.of(2020, 7, 5),
             søknad.situasjon.verdi.oppstartNyJobb
-                ?.verdi,
+                ?.verdi
         )
     }
 
@@ -285,7 +285,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun søknadFraHilde(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/feilfraHilde2.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
 
         val søknadRequestData = mapper.mapTilIntern(søknadFraHilde(), innsendingMottatt)
@@ -294,48 +294,48 @@ internal class JsonSisteInnspurtMapperTest {
             LocalDate.of(2015, 11, 18),
             søknad.barn.verdi[0]
                 .fødselTermindato
-                ?.verdi,
+                ?.verdi
         )
         assertEquals(
             LocalDate.of(2019, 8, 25),
             søknad.barn.verdi[1]
                 .fødselTermindato
-                ?.verdi,
+                ?.verdi
         )
         assertEquals(
             LocalDate.of(2021, 3, 20),
             søknad.sivilstandsplaner
                 ?.verdi
                 ?.fraDato
-                ?.verdi,
+                ?.verdi
         )
         assertEquals(
             Month.of(5),
             søknad.stønadsstart.verdi.fraMåned
-                ?.verdi,
+                ?.verdi
         )
         assertEquals(
             2020,
             søknad.stønadsstart.verdi.fraÅr
-                ?.verdi,
+                ?.verdi
         )
         assertEquals(
             LocalDate.of(1970, 3, 20),
             søknad.sivilstandsdetaljer.verdi.samlivsbruddsdato
-                ?.verdi,
+                ?.verdi
         )
 
         assertEquals(
             LocalDate.of(1970, 3, 20),
             søknad.medlemskapsdetaljer.verdi.utenlandsopphold!!
                 .verdi[0]
-                .fradato.verdi,
+                .fradato.verdi
         )
         assertEquals(
             LocalDate.of(1970, 3, 21),
             søknad.medlemskapsdetaljer.verdi.utenlandsopphold!!
                 .verdi[0]
-                .tildato.verdi,
+                .tildato.verdi
         )
         assertEquals(
             LocalDate.of(1970, 3, 20),
@@ -345,7 +345,7 @@ internal class JsonSisteInnspurtMapperTest {
                 ?.person
                 ?.verdi
                 ?.fødselsdato
-                ?.verdi,
+                ?.verdi
         )
         assertEquals(
             LocalDate.of(1970, 3, 20),
@@ -353,7 +353,7 @@ internal class JsonSisteInnspurtMapperTest {
                 .samvær
                 ?.verdi
                 ?.nårFlyttetDereFraHverandre
-                ?.verdi,
+                ?.verdi
         )
     }
 
@@ -362,7 +362,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun søknadNyttBarn(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/nyttBarnFeil.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
         mapper.mapTilIntern(søknadNyttBarn(), innsendingMottatt)
     }
@@ -372,7 +372,7 @@ internal class JsonSisteInnspurtMapperTest {
         fun søknadMedugyldigFødselsnummer(): SøknadOvergangsstønadDto =
             jsonMapper.readValue(
                 File("src/test/resources/sisteinnspurt/søknadMedUgyldigFødselsnummer.json"),
-                SøknadOvergangsstønadDto::class.java,
+                SøknadOvergangsstønadDto::class.java
             )
 
         val frontendDto = søknadMedugyldigFødselsnummer()

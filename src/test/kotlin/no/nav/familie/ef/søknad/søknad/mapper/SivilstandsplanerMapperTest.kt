@@ -56,6 +56,6 @@ internal class SivilstandsplanerMapperTest {
     private fun getBosituasjon(fileName: String) =
         jsonMapper.readValue(
             File("src/test/resources/$fileName"),
-            Bosituasjon::class.java,
+            Bosituasjon::class.java
         )
 }

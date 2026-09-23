@@ -28,7 +28,7 @@ import java.time.Period
 
 @Component
 internal class SøkerinfoMapper(
-    private val kodeverkService: KodeverkService,
+    private val kodeverkService: KodeverkService
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
@@ -39,7 +39,7 @@ internal class SøkerinfoMapper(
     private fun hentKodeverdi(
         type: String,
         kode: String?,
-        hentKodeverdiFunction: Function1<String, String?>,
+        hentKodeverdiFunction: Function1<String, String?>
     ): String =
         try {
             kode?.let(hentKodeverdiFunction) ?: kode ?: ""
@@ -52,7 +52,7 @@ internal class SøkerinfoMapper(
     fun mapTilSøkerinfo(
         pdlSøker: PdlSøker,
         pdlBarn: Map<String, PdlBarn>,
-        andreForeldre: Map<String, PdlAnnenForelder>,
+        andreForeldre: Map<String, PdlAnnenForelder>
     ): Søkerinfo {
         val søker: Person = pdlSøker.tilPersonDto()
         val barn: List<Barn> = tilBarneListeDto(pdlBarn, pdlSøker.bostedsadresse.firstOrNull(), andreForeldre, søker.fnr)
@@ -63,7 +63,7 @@ internal class SøkerinfoMapper(
         pdlBarn: Map<String, PdlBarn>,
         søkersAdresse: Bostedsadresse?,
         andreForeldre: Map<String, PdlAnnenForelder>,
-        søkerPersonIdent: String,
+        søkerPersonIdent: String
     ): List<Barn> =
         pdlBarn.entries.map { (personIdent, pdlBarn) ->
             val barnNavnOgIdent =
@@ -72,7 +72,7 @@ internal class SøkerinfoMapper(
                 } else {
                     BarnNavnOgIdent(
                         personIdent,
-                        pdlBarn.navn.firstOrNull()?.visningsnavn() ?: "",
+                        pdlBarn.navn.firstOrNull()?.visningsnavn() ?: ""
                     )
                 }
 
@@ -94,20 +94,15 @@ internal class SøkerinfoMapper(
                 fødselsdato,
                 harSammeAdresse,
                 medforelder,
-                pdlBarn.adressebeskyttelse.harBeskyttetAdresse(),
+                pdlBarn.adressebeskyttelse.harBeskyttetAdresse()
             )
         }
 
-    private fun erMedForelderRelasjon(
-        forelderBarnRelasjon: ForelderBarnRelasjon,
-        søkersPersonIdent: String,
-    ) = forelderBarnRelasjon.relatertPersonsIdent != søkersPersonIdent &&
-        forelderBarnRelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
+    private fun erMedForelderRelasjon(forelderBarnRelasjon: ForelderBarnRelasjon, søkersPersonIdent: String) =
+        forelderBarnRelasjon.relatertPersonsIdent != søkersPersonIdent &&
+            forelderBarnRelasjon.relatertPersonsRolle != Familierelasjonsrolle.BARN
 
-    fun harSammeAdresse(
-        søkersAdresse: Bostedsadresse?,
-        pdlBarn: PdlBarn,
-    ): Boolean {
+    fun harSammeAdresse(søkersAdresse: Bostedsadresse?, pdlBarn: PdlBarn): Boolean {
         val barnetsAdresse = pdlBarn.bostedsadresse.firstOrNull()
 
         if (harDeltBosted(pdlBarn)) {
@@ -142,10 +137,8 @@ internal class SøkerinfoMapper(
                 (it.sluttdatoForKontrakt == null || it.sluttdatoForKontrakt.isAfter(LocalDate.now()))
         }
 
-    private fun harIkkeMatrikkelId(
-        vegadresse: Vegadresse?,
-        matrikkeladresse: MatrikkelId?,
-    ) = harIkkeMatrikkelId(vegadresse) || harIkkeMatrikkelId(matrikkeladresse)
+    private fun harIkkeMatrikkelId(vegadresse: Vegadresse?, matrikkeladresse: MatrikkelId?) =
+        harIkkeMatrikkelId(vegadresse) || harIkkeMatrikkelId(matrikkeladresse)
 
     private fun harIkkeMatrikkelId(adresse: Vegadresse?) = adresse != null && adresse.matrikkelId == null
 
@@ -157,7 +150,7 @@ internal class SøkerinfoMapper(
             Adresse(
                 adresse = formatertAdresse,
                 poststed = hentPoststed(bostedsadresse.firstOrNull()?.vegadresse?.postnummer),
-                postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " ",
+                postnummer = bostedsadresse.firstOrNull()?.vegadresse?.postnummer ?: " "
             )
 
         val statsborgerskapListe = statsborgerskap.map { hentLand(it.land) }.joinToString(", ")
@@ -172,7 +165,7 @@ internal class SøkerinfoMapper(
             egenansatt = false, // TODO denne er vel i beste fall unødvendig?
             sivilstand = sivilstand.type.name,
             statsborgerskap = statsborgerskapListe,
-            erStrengtFortrolig = adressebeskyttelse.erStrengtFortrolig(),
+            erStrengtFortrolig = adressebeskyttelse.erStrengtFortrolig()
         )
     }
 
@@ -205,14 +198,11 @@ internal class SøkerinfoMapper(
                 vegadresse.adressenavn ?: "",
                 vegadresse.husnummer ?: "",
                 vegadresse.husbokstav ?: "",
-                vegadresse.bruksenhetsnummer ?: "",
-            ),
+                vegadresse.bruksenhetsnummer ?: ""
+            )
         ) ?: ""
 
-    private fun join(
-        vararg args: String?,
-        separator: String = ", ",
-    ): String? {
+    private fun join(vararg args: String?, separator: String = ", "): String? {
         val filterNotNull = args.filterNotNull().filterNot(String::isEmpty)
         return if (filterNotNull.isEmpty()) {
             null
@@ -235,7 +225,7 @@ fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
     if (this.adressebeskyttelse.harBeskyttetAdresse()) {
         return Medforelder(
             harAdressesperre = true,
-            alder = alder,
+            alder = alder
         )
     }
     val annenForelderNavn = this.navn.first()
@@ -244,7 +234,7 @@ fun PdlAnnenForelder.tilDto(annenForelderPersonsIdent: String): Medforelder {
         this.adressebeskyttelse.harBeskyttetAdresse(),
         this.dødsfall.any(),
         annenForelderPersonsIdent,
-        alder,
+        alder
     )
 }
 
@@ -260,10 +250,10 @@ private val kreverAdressebeskyttelse =
     listOf(
         AdressebeskyttelseGradering.FORTROLIG,
         AdressebeskyttelseGradering.STRENGT_FORTROLIG,
-        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND,
+        AdressebeskyttelseGradering.STRENGT_FORTROLIG_UTLAND
     )
 
 data class BarnNavnOgIdent(
     val ident: String = "",
-    val navn: String = "",
+    val navn: String = ""
 )

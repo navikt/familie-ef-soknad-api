@@ -52,18 +52,21 @@ class SøknadControllerTest {
 
         @Test
         fun `innsending av søknad for overgangsstønad skal returnere kvittering med riktig Bearer token`() {
-            val søknad = søknadOvergangsstønadDto().copy(person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf()))
+            val søknad =
+                søknadOvergangsstønadDto().copy(
+                    person = Person(søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject), barn = listOf())
+                )
             every { søknadService.sendInnSøknadOvergangsstønad(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
-                    LocalDateTime.now(),
+                    LocalDateTime.now()
                 )
 
             val response =
                 restTemplate.exchange<Kvittering>(
                     localhost("/api/soknad/overgangsstonad"),
                     POST,
-                    HttpEntity(søknad, headers),
+                    HttpEntity(søknad, headers)
                 )
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
@@ -80,7 +83,7 @@ class SøknadControllerTest {
                     restTemplate.exchange<Any>(
                         localhost("/api/soknad/overgangsstonad"),
                         POST,
-                        HttpEntity(søknad, headers),
+                        HttpEntity(søknad, headers)
                     )
                 }
             assertThat(response.statusCode).isEqualTo(HttpStatus.FORBIDDEN)
@@ -96,14 +99,14 @@ class SøknadControllerTest {
             every { søknadService.sendInnSøknadBarnetilsyn(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
-                    LocalDateTime.now(),
+                    LocalDateTime.now()
                 )
 
             val response =
                 restTemplate.exchange<Kvittering>(
                     localhost("/api/soknad/barnetilsyn"),
                     POST,
-                    HttpEntity(søknad, headers),
+                    HttpEntity(søknad, headers)
                 )
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
@@ -120,7 +123,7 @@ class SøknadControllerTest {
                     restTemplate.exchange<Any>(
                         localhost("/api/soknad/barnetilsyn"),
                         POST,
-                        HttpEntity(søknad, headers),
+                        HttpEntity(søknad, headers)
                     )
                 }
 
@@ -136,21 +139,21 @@ class SøknadControllerTest {
                         person =
                             Person(
                                 søker = søkerMedDefaultVerdier(forventetFnr = tokenSubject),
-                                barn = listOf(),
-                            ),
+                                barn = listOf()
+                            )
                     )
 
             every { søknadService.sendInnSøknadSkolepenger(søknad, any()) } returns
                 Kvittering(
                     "Mottatt søknad: $søknad",
-                    LocalDateTime.now(),
+                    LocalDateTime.now()
                 )
 
             val response =
                 restTemplate.exchange<Kvittering>(
                     localhost("/api/soknad/skolepenger"),
                     POST,
-                    HttpEntity(søknad, headers),
+                    HttpEntity(søknad, headers)
                 )
 
             assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
@@ -167,7 +170,7 @@ class SøknadControllerTest {
                     restTemplate.exchange<Any>(
                         localhost("/api/soknad/skolepenger"),
                         POST,
-                        HttpEntity(søknad, headers),
+                        HttpEntity(søknad, headers)
                     )
                 }
 

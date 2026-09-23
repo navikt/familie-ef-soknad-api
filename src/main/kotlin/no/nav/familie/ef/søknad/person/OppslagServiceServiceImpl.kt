@@ -21,7 +21,7 @@ internal class OppslagServiceServiceImpl(
     private val pdlClient: PdlClient,
     private val pdlApp2AppClient: PdlApp2AppClient,
     private val regelverkConfig: RegelverkConfig,
-    private val søkerinfoMapper: SøkerinfoMapper,
+    private val søkerinfoMapper: SøkerinfoMapper
 ) : OppslagService {
     override fun hentSøkerinfo(): Søkerinfo {
         val søkersPersonIdent = EksternBrukerUtils.hentFnrFraToken()
@@ -37,7 +37,7 @@ internal class OppslagServiceServiceImpl(
                     erIAktuellAlder(
                         it.value.fødselsdato
                             .first()
-                            .fødselsdato,
+                            .fødselsdato
                     )
                 }.filter { erILive(it.value) }
 
@@ -51,7 +51,7 @@ internal class OppslagServiceServiceImpl(
     private fun validerAdressesperrePåSøkerMedRelasjoner(
         pdlSøker: PdlSøker,
         aktuelleBarn: Map<String, PdlBarn>,
-        andreForeldre: Map<String, PdlAnnenForelder>,
+        andreForeldre: Map<String, PdlAnnenForelder>
     ) {
         val søkernivå = adresseNivå(pdlSøker.adressebeskyttelse.firstOrNull()?.gradering)
         val barnNivå = aktuelleBarn.values.maxOfOrNull { adresseNivå(it.adressebeskyttelse.firstOrNull()?.gradering) } ?: 0
@@ -77,10 +77,7 @@ internal class OppslagServiceServiceImpl(
         return pdlSøker.navn.first().visningsnavn()
     }
 
-    private fun hentAndreForeldre(
-        aktuelleBarn: Map<String, PdlBarn>,
-        søkersPersonIdent: String,
-    ): Map<String, PdlAnnenForelder> =
+    private fun hentAndreForeldre(aktuelleBarn: Map<String, PdlBarn>, søkersPersonIdent: String): Map<String, PdlAnnenForelder> =
         aktuelleBarn
             .map { it.value.forelderBarnRelasjon }
             .flatten()

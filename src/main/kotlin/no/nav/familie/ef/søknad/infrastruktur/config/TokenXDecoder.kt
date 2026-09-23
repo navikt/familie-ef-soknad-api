@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 class TokenXDecoder(
     @Value("\${TOKEN_X_ISSUER}") private val tokenXIssuer: String,
     @Value("\${TOKEN_X_CLIENT_ID}") private val tokenXClientId: String,
-    @Value("\${TOKEN_X_JWKS_URI}") private val tokenXJwksUri: String,
+    @Value("\${TOKEN_X_JWKS_URI}") private val tokenXJwksUri: String
 ) : JwtDecoder {
     companion object {
         const val LEVEL4 = "Level4"
@@ -26,8 +26,8 @@ class TokenXDecoder(
             JwtValidators.createDefaultWithValidators(
                 JwtIssuerValidator(tokenXIssuer),
                 JwtAudienceValidator(tokenXClientId),
-                JwtClaimValidator<String>("acr") { acr -> acr == LEVEL4 || acr == IDPORTEN_LOA_HIGH },
-            ),
+                JwtClaimValidator<String>("acr") { acr -> acr == LEVEL4 || acr == IDPORTEN_LOA_HIGH }
+            )
         )
         decoder
     }

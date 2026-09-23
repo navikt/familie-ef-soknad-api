@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component
 
 @Component
 internal class SøknadHealthIndicator(
-    søknadClient: MottakClient,
+    søknadClient: MottakClient
 ) : AbstractHealthIndicator(søknadClient, "familie.ef.mottak")

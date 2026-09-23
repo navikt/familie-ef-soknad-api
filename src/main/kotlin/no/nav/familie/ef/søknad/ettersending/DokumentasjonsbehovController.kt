@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping(path = ["/api/dokumentasjonsbehov"])
 class DokumentasjonsbehovController(
-    private val søknadClient: MottakClient,
+    private val søknadClient: MottakClient
 ) {
     @GetMapping("/person")
     fun hentDokumentasjonsbehovForPerson(): ResponseEntity<List<SøknadMedDokumentasjonsbehovDto>> {

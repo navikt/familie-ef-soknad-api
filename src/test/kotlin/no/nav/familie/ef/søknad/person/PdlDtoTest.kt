@@ -102,7 +102,7 @@ class PdlDtoTest {
             readValue.data.person!!
                 .navn
                 .first()
-                .fornavn,
+                .fornavn
         ).isEqualTo("FYLDIG")
     }
 }

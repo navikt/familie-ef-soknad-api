@@ -21,7 +21,7 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
             navn = Søknadsfelt(Navn.hentTekst(), data.forkortetNavn),
             adresse = lagAdresseSøknadsFelt(data.adresse),
             statsborgerskap = Søknadsfelt(Statsborgerskap.hentTekst(), data.statsborgerskap),
-            sivilstatus = Søknadsfelt(Sivilstatus.hentTekst(), data.sivilstand),
+            sivilstatus = Søknadsfelt(Sivilstatus.hentTekst(), data.sivilstand)
         )
 
     private fun lagAdresseSøknadsFelt(frontendAdresse: AdresseDto): Søknadsfelt<Adresse> =
@@ -31,14 +31,14 @@ object PersonaliaMapper : Mapper<Søker, Personalia>(SpråkTeksterSøker) {
                 adresse = frontendAdresse.adresse,
                 postnummer = frontendAdresse.postnummer,
                 poststedsnavn = frontendAdresse.poststed ?: "",
-                land = "",
-            ),
+                land = ""
+            )
         )
 
     private fun mapAdresseTilDto(adresse: Adresse): AdresseDto =
         AdresseDto(
             adresse = adresse.adresse ?: "",
             postnummer = adresse.postnummer,
-            poststed = adresse.poststedsnavn,
+            poststed = adresse.poststedsnavn
         )
 }

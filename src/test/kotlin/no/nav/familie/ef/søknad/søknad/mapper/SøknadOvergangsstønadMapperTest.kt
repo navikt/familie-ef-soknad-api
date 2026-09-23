@@ -35,8 +35,8 @@ internal class SøknadOvergangsstønadMapperTest {
                 person =
                     Person(
                         søker = søkerMedDefaultVerdier(forventetFnr = forventetFnr),
-                        barn = søknadDto.person.barn,
-                    ),
+                        barn = søknadDto.person.barn
+                    )
             )
         // When
         val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad
@@ -53,8 +53,8 @@ internal class SøknadOvergangsstønadMapperTest {
                 person =
                     Person(
                         barn = søknadDto.person.barn,
-                        søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn),
-                    ),
+                        søker = søkerMedDefaultVerdier(forkortetNavn = forventetNavn)
+                    )
             )
         // When
         val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad
@@ -71,8 +71,8 @@ internal class SøknadOvergangsstønadMapperTest {
                 person =
                     Person(
                         søker = søkerMedDefaultVerdier(sivilstatus = forventetSivilstatus),
-                        barn = søknadDto.person.barn,
-                    ),
+                        barn = søknadDto.person.barn
+                    )
             )
         // When
         val søknad = mapper.mapTilIntern(søknadDto, innsendingMottatt).søknad

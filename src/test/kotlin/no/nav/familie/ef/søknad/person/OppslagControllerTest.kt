@@ -13,7 +13,7 @@ internal class OppslagControllerTest {
     private val oppslagsController =
         OppslagController(
             oppslagService = oppslagService,
-            kodeverkService = kodeverkService,
+            kodeverkService = kodeverkService
         )
 
     @Test

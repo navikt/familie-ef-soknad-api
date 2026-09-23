@@ -4,5 +4,5 @@ import java.time.LocalDateTime
 
 data class Kvittering(
     val text: String,
-    val mottattDato: LocalDateTime?,
+    val mottattDato: LocalDateTime?
 )

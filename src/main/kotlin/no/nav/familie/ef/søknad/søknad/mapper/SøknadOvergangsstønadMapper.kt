@@ -18,7 +18,7 @@ class SøknadOvergangsstønadMapper {
     fun mapTilIntern(
         dto: SøknadOvergangsstønadDto,
         innsendingMottatt: LocalDateTime,
-        skalHenteVedlegg: Boolean = true,
+        skalHenteVedlegg: Boolean = true
     ): SøknadMedVedlegg<SøknadOvergangsstønad> {
         kontekst.set(Språk.fromString(dto.locale))
         val vedlegg: Map<String, DokumentasjonWrapper> = lagDokumentasjonWrapper(dto.dokumentasjonsbehov)
@@ -31,9 +31,9 @@ class SøknadOvergangsstønadMapper {
                     AdresseopplysningerMapper.map(
                         AdresseopplysningerData(
                             dto.søkerBorPåRegistrertAdresse,
-                            dto.adresseopplysninger,
+                            dto.adresseopplysninger
                         ),
-                        vedlegg,
+                        vedlegg
                     ),
                 sivilstandsdetaljer = SivilstandsdetaljerMapper.map(dto.sivilstatus, vedlegg),
                 medlemskapsdetaljer = MedlemsskapsMapper.map(dto.medlemskap),
@@ -42,7 +42,7 @@ class SøknadOvergangsstønadMapper {
                 barn = dto.person.barn.tilSøknadsfelt(vedlegg),
                 aktivitet = AktivitetsMapper.map(dto.aktivitet, vedlegg),
                 situasjon = SituasjonsMapper.map(dto, vedlegg),
-                stønadsstart = mapStønadsstart(dto.merOmDinSituasjon.søknadsdato, dto.merOmDinSituasjon.søkerFraBestemtMåned),
+                stønadsstart = mapStønadsstart(dto.merOmDinSituasjon.søknadsdato, dto.merOmDinSituasjon.søkerFraBestemtMåned)
             )
 
         OvergangsstønadValidering.validate(søknad)
@@ -51,7 +51,7 @@ class SøknadOvergangsstønadMapper {
             søknad,
             vedlegg.values.flatMap { it.vedlegg },
             dto.dokumentasjonsbehov.tilKontrakt(),
-            dto.skalBehandlesINySaksbehandling,
+            dto.skalBehandlesINySaksbehandling
         )
     }
 }

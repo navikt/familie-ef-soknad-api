@@ -16,25 +16,25 @@ import java.net.URI
 @Component
 class SafClient(
     val safConfig: SafConfig,
-    @Qualifier("safRestTemplate") restOperations: RestOperations,
+    @Qualifier("safRestTemplate") restOperations: RestOperations
 ) : AbstractPingableRestClient(restOperations, "saf.dokument") {
     fun hentDokument(
         journalpostId: String,
         dokumentInfoId: String,
-        dokumentVariantformat: Variantformat,
+        dokumentVariantformat: Variantformat
     ) = getForEntity<ByteArray>(
         UriComponentsBuilder
             .fromUriString(
-                "${safConfig.safRestUri}/hentdokument/" + "$journalpostId/$dokumentInfoId/$dokumentVariantformat",
+                "${safConfig.safRestUri}/hentdokument/" + "$journalpostId/$dokumentInfoId/$dokumentVariantformat"
             ).build()
-            .toUri(),
+            .toUri()
     )
 
     fun hentJournalposterForBruker(personIdent: String): DokumentoversiktSelvbetjeningResponse {
         val safDokumentRequest =
             SafDokumentOversiktRequest(
                 variables = SafDokumentVariables(personIdent),
-                query = SafConfig.safQuery,
+                query = SafConfig.safQuery
             )
 
         val safDokumentResponse: SafDokumentOversiktResponse<DokumentoversiktSelvbetjeningResponse> =
@@ -42,14 +42,14 @@ class SafClient(
 
         return feilsjekkOgReturnerData(
             personIdent,
-            safDokumentResponse,
+            safDokumentResponse
         ) { it }
     }
 
     private inline fun <reified DATA : Any, reified T : Any> feilsjekkOgReturnerData(
         ident: String,
         safResponse: SafDokumentOversiktResponse<DATA>,
-        dataMapper: (DATA) -> T?,
+        dataMapper: (DATA) -> T?
     ): T {
         if (safResponse.harFeil()) {
             secureLogger.error("Feil ved henting av ${T::class} fra SAF: ${safResponse.errorMessages()}")
@@ -58,7 +58,7 @@ class SafClient(
         val data = dataMapper.invoke(safResponse.data)
         if (data == null) {
             secureLogger.error(
-                "Feil ved uthenting av dokumenter for ident $ident.",
+                "Feil ved uthenting av dokumenter for ident $ident."
             )
             throw IllegalStateException("Manglende ${T::class} ved feilfri respons fra SAF. Se secure logg for detaljer.")
         }

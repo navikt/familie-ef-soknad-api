@@ -6,7 +6,7 @@ import java.net.URI
 
 @ConfigurationProperties("familie.ef.saksbehandling")
 data class SaksbehandlingConfig(
-    val uri: URI,
+    val uri: URI
 ) {
     internal val hentStønadsperioderUri = byggUri(PATH_HENT_STØNADSPERIODER)
     internal val harOvergangsstønadPåGammeltRegelverkUri = byggUri(PATH_HAR_OVERGANGSSTØNAD_PÅ_GAMMELT_REGELVERK)
