@@ -22,7 +22,7 @@
         <springdoc.version>3.1.1</springdoc.version>
         <mockk.version>1.14.11</mockk.version>
         <felles.version>4.20260818093920_16ad74a</felles.version>
-        <kontrakter.version>4.0_20260918153552_a46909e</kontrakter.version>
+        <kontrakter.version>4.0_20261002154824_b2c190a</kontrakter.version>
         <start-class>no.nav.familie.ef.søknad.ApplicationKt</start-class>
     </properties>
 
@@ -155,7 +155,7 @@
         <dependency>
             <groupId>no.nav.security</groupId>
             <artifactId>mock-oauth2-server</artifactId>
-            <version>6.0.2</version>
+            <version>6.0.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
