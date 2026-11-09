@@ -17,7 +17,6 @@ class FeatureToggleController(
             Toggle.NYNORSK,
             Toggle.GJENBRUK_BARNETILSYN,
             Toggle.OVERGANGSSTØNAD_REGELENDRINGER_2026,
-            Toggle.VARSLING_NEDETID,
         )
 
     @GetMapping
