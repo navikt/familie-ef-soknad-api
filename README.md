@@ -7,6 +7,8 @@ Denne applikasjonen tilbyr apier for Team Enslig Forsørger sine eksterne flater
 * [min side](https://www.nav.no/familie/alene-med-barn/minside)
 
 ## Kjør lokalt: 
+Bruk JDK 25.
+
 Kjør applikasjonen lokalt med: `ApplicationLocalLauncher`
 
 Start `familie-ef-soknad-frontend` og gå til `http://localhost:3000/familie/alene-med-barn/soknad/` for å vise søknaden.
