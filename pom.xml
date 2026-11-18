@@ -18,6 +18,7 @@
         <revision>1.0</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
+        <java.version>25</java.version>
         <kotlin.version>2.4.21</kotlin.version>
         <springdoc.version>3.2.0</springdoc.version>
         <mockk.version>1.14.12</mockk.version>
@@ -258,7 +259,7 @@
                     <compilerPlugins>
                         <plugin>spring</plugin>
                     </compilerPlugins>
-                    <jvmTarget>21</jvmTarget>
+                    <jvmTarget>${java.version}</jvmTarget>
                 </configuration>
                 <executions>
                     <execution>
